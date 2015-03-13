@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0">
+    <script src="http://fb.me/react-0.12.2.min.js"></script>
+    <title>React Todo ES6</title>
+</head>
+
+<body>
+	<script>
+	for(var i=0; i< 1000; i++){
+		document.body.insertAdjacentHTML('afterbegin','<div id="'+i+'"></div>');
+		var Timer = React.createClass({displayName: "Timer"+i,
+		  getInitialState: function() {
+		    return {secondsElapsed: 0};
+		  },
+		  tick: function() {
+		    this.setState({secondsElapsed: this.state.secondsElapsed + 1});
+		  },
+		  componentDidMount: function() {
+		    this.interval = setInterval(this.tick, 20);
+		  },
+		  componentWillUnmount: function() {
+		    clearInterval(this.interval);
+		  },
+		  render: function() {
+		    return (
+		      React.createElement("div", null, "Seconds Elapsed: ", this.state.secondsElapsed)
+		    );
+		  }
+		});
+
+		React.render(React.createElement(Timer, null), document.getElementById(i));
+	}
+	</script>
+</body>
+</html>

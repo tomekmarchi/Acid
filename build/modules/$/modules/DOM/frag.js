@@ -1,0 +1,2 @@
+//fragment
+$.frag = $frag;

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0">
+    <link href='http://fonts.googleapis.com/css?family=Alice' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,500italic,700,400italic' rel='stylesheet' type='text/css'>
+    <link type="text/css" href="site/styles/blotr.css" rel="stylesheet">
+    <link type="text/css" href="site/styles/theme.css" rel="stylesheet">
+    <link type="text/css" href="site/styles/icon.css" rel="stylesheet">
+    <script async src="compiled/acid.js" id="acid-lib" data-core="site/scripts/models/" type="text/javascript"></script>
+
+    <title>ACID</title>
+    <meta class="remove" property="og:description" content="Front-end engine for the modern web" />
+    <meta class="remove" name="description" content="Front-end engine for the modern web" />
+    <meta class="remove" name="twitter:description" content="Front-end engine for the modern web" />
+</head>
+
+<body data-resize="events/resize">
+    <header data-mouseover="plugins/tip.show" data-mouseout="plugins/tip.hide" data-tooltip="Scroll Up" class="side_panel nohl fadein theme theme_bg text_navigation navigation_bar" data-click="events/scroll.up">
+        <a class="nav_item" data-mouseover="plugins/tip.show" data-mouseout="plugins/tip.hide" data-tooltip="Home"><i class="icon icon-home-3"></i></a>
+        <a class="nav_item" data-click="scroll.to" data-scrollto="demos" data-mouseover="plugins/tip.show" data-mouseout="plugins/tip.hide" data-tooltip="Example Apps">Demos</a>
+        <a class="nav_item right" data-mouseover="plugins/tip.show" data-mouseout="plugins/tip.hide" data-tooltip="Contact" href="mailto:tom@lnkit.com">
+	    	<i class="icon icon-mail-2"></i>
+	    </a>
+	    <a class="nav_item right" data-mouseover="plugins/tip.show" data-mouseout="plugins/tip.hide" data-tooltip="Github" href="//github.com/tomekmarchi/ACID.JS/" target="_blank">
+	    	<i class="icon icon-github"></i>
+	    </a>
+    </header>
+
+    <div id="api_overlay" class="gpu_hide_top gpu absolute container_minus_navbar trans_all"></div>
+
+    <div class="fill absolute scroll container_minus_navbar" data-scroll="events/scroll.move" id="scroll_wrap">
+        <div class="full header small slideinft center-bg trans-all shadow-inset-2px">
+            <div class="absolute bottom full center white bold pad_box textshadow">
+	            <h1 class="center margin-bottom-10">ACID</h1>
+                <div class="f16">A Javascript Framework From The Future. <i>Light, Fast, Easy, Scalable</i>. <br /><b class="babyblue">It's strange but it's cool man.</b></div>
+            </div>
+        </div>
+
+        <div class="pad_box">
+            <h3 class="center">About <i class="icon icon-info"></i></h3>
+
+            <p class="center"><span class="h4">A</span>cid is a modern front-end javascript framework with a focus on current APIs.<br />
+	            Most Acid methods are accessed directly from native objects, <b>however <i>all</i> methods can be pre-fixed</b>.<br />
+
+	        <b class="center">Status:BETA v5.7 - Experimental (Nearing API design freeze).</b> <span class="underline">Documentation is currently under construction!</span>
+			</p>
+
+            <div class="border-sep twopix-line margin-top-10 left margin-bottom-10"></div>
+			<h3 class="center">API <i class="icon icon-code"></i></h3>
+			<div class="border-sep twopix-line left margin-bottom-10"></div>
+            <div id="stacks" class="max-full pad_box"></div>
+
+        </div>
+    </div>
+</body>
+</html>

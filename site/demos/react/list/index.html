@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0">
+    <script src="../../../../compiled/acid.js" id="acid-lib"></script>
+    <script>
+	//core model used for onready
+	$.model('core', function () {
+
+		$.define(['model','tag','reactModel'],function(model,tag,reactModel){
+			var list=reactModel('list', {
+					template: $id('ACIDapp'),
+					componentData:{
+						list:[]
+					},
+					list: function (change) {
+						this.nodes.mount.ap(tag('li').tc(change.object[change.index]));
+					}
+				});
+
+			window.componentApp=list.render();
+			window.componentList=componentApp.data.list;
+		});
+
+		for (var i = 0; i < 100; i++){
+			componentList.push('item'+i);
+		}
+
+	});
+    </script>
+    <title>List of data using O.o</title>
+</head>
+
+<body id="wrapper">
+
+<!-- ACID -->
+<div id="ACIDapp">
+  ACID Push data from console with this command componentList.push('ITEM'); <ul acid="mount" class="standardlist"></ul>
+</div>
+</body>
+</html>
