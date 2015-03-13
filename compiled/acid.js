@@ -4038,8 +4038,7 @@ Math Related cached functions
             //changes that happen to level 0 of data
             view_changes = function (observer_object, changes) {
                 var model = observer_object.model,
-                    len = changes.length,
-                    batch = {};
+                    len = changes.length;
                 for (var i = 0; i < len; i++) {
                     var change = changes[i],
                         method = model[change.name];
