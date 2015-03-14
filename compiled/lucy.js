@@ -365,7 +365,12 @@ This is for finding an object method via a string used througout events
                 if (wrap) {
                     var item = wrap(item);
                 }
-                ext[acid_lib_prefix + key] = item;
+                Object.defineProperty(ext, acid_lib_prefix + key, {
+                    enumerable: false,
+                    configurable: true,
+                    writable: true,
+                    value: item
+                });
             }
         }
     },
@@ -415,9 +420,9 @@ This is for finding an object method via a string used througout events
         },
         //make promise array
         _promise = function (arry, name, callback, calls) {
-            $.promises[name] = function () {
+            _promises[name] = function () {
                 var len = arry.length,
-                    fn = $.promises[name],
+                    fn = _promises[name],
                     go = 0;
                 for (var i = 0; i < len; i++) {
                     if (fn[arry[i]] == 1) {
@@ -432,20 +437,19 @@ This is for finding an object method via a string used througout events
                 }
                 return false;
             };
-            $.promises[name].call = {};
+            _promises[name].call = {};
             if (calls) {
-                $.promises[name].call = calls;
+                _promises[name].call = calls;
             }
         },
         //promised
         _promised = function (self, fn) {
-            var promval = $.promises,
-                val = promval[fn];
-            $.promises[fn][self] = 1;
-            if (promval) {
+            var val = _promises[fn];
+            _promises[fn][self] = 1;
+            if (val) {
                 var funn = val();
                 if (funn) {
-                    $.promises[fn] = null;
+                    _promises[fn] = null;
                 }
             }
             var item = null,
@@ -2409,13 +2413,13 @@ rearg(1,2,3);
         return model_function;
     })();
     //make a promise
-    $.promise = function (array, name, fun) {
+    var _promoiseFN = $.promise = function (array, name, fun) {
         if (!fun) {
             return _promised(array, name);
         }
         return _promise(array, name, fun);
     };
-    $.promises = {};
+    var _promises = $.promises = {};
     var _service = $.service = (function () {
         var checkservice = function (root, obj, items) {
             if (_isFunction(obj)) {

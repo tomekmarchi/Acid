@@ -52,9 +52,6 @@ React.render(React.createElement(Timer, null), mountNode);
                 <h3>Acid Version</h3>
                 <pre><code>var Timer=$.reactModel(&#39;Timer&#39;, {
 	template: &#39;&lt;div&gt;Seconds Elapsed: &lt;span acid=&quot;timer&quot;&gt;&lt;/span&gt;&lt;/div&gt;&#39;,
-	componentData:{
-		secondsElapsed:&#39;&#39;,
-	},
 	componentMount: function () {
 		this.interval = setInterval(this.model.tick, 1000);
 	},

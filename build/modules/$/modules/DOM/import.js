@@ -238,6 +238,11 @@ NODE TYPE OBJECT
 		return false;
 	};
 	$.import = function(key,value){
+		if(_isFunction(value)){
+			var value={
+				call:value
+			};
+		}
 		if(_isString(key)){
 			return import_it(key,value);
 		}

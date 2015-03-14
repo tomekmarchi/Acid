@@ -411,7 +411,12 @@ This is for finding an object method via a string used througout events
                 if (wrap) {
                     var item = wrap(item);
                 }
-                ext[acid_lib_prefix + key] = item;
+                Object.defineProperty(ext, acid_lib_prefix + key, {
+                    enumerable: false,
+                    configurable: true,
+                    writable: true,
+                    value: item
+                });
             }
         }
     },
@@ -461,9 +466,9 @@ This is for finding an object method via a string used througout events
         },
         //make promise array
         _promise = function (arry, name, callback, calls) {
-            $.promises[name] = function () {
+            _promises[name] = function () {
                 var len = arry.length,
-                    fn = $.promises[name],
+                    fn = _promises[name],
                     go = 0;
                 for (var i = 0; i < len; i++) {
                     if (fn[arry[i]] == 1) {
@@ -478,20 +483,19 @@ This is for finding an object method via a string used througout events
                 }
                 return false;
             };
-            $.promises[name].call = {};
+            _promises[name].call = {};
             if (calls) {
-                $.promises[name].call = calls;
+                _promises[name].call = calls;
             }
         },
         //promised
         _promised = function (self, fn) {
-            var promval = $.promises,
-                val = promval[fn];
-            $.promises[fn][self] = 1;
-            if (promval) {
+            var val = _promises[fn];
+            _promises[fn][self] = 1;
+            if (val) {
                 var funn = val();
                 if (funn) {
-                    $.promises[fn] = null;
+                    _promises[fn] = null;
                 }
             }
             var item = null,
@@ -3621,13 +3625,13 @@ rearg(1,2,3);
         return model_function;
     })();
     //make a promise
-    $.promise = function (array, name, fun) {
+    var _promoiseFN = $.promise = function (array, name, fun) {
         if (!fun) {
             return _promised(array, name);
         }
         return _promise(array, name, fun);
     };
-    $.promises = {};
+    var _promises = $.promises = {};
     var _service = $.service = (function () {
         var checkservice = function (root, obj, items) {
             if (_isFunction(obj)) {
@@ -4036,9 +4040,25 @@ Math Related cached functions
                 return false;
             },
             //changes that happen to level 0 of data
-            view_changes = function (observer_object, changes) {
-                var model = observer_object.model,
-                    len = changes.length;
+            view_changes = function (model) {
+                var returned = function (changes) {
+                    var len = changes.length;
+                    for (var i = 0; i < len; i++) {
+                        var change = changes[i],
+                            method = model[change.name];
+                        if (method) {
+                            add_to_batch(method, change);
+                        }
+                    }
+                    if (cancelFrame === false) {
+                        cancelFrame = _RAF(makechanges);
+                    }
+                    return false;
+                };
+                return returned;
+            },
+            manual_changes = function (model, changes) {
+                var len = changes.length;
                 for (var i = 0; i < len; i++) {
                     var change = changes[i],
                         method = model[change.name];
@@ -4052,7 +4072,7 @@ Math Related cached functions
                 return false;
             },
             data_added = function (observer_object, changes) {
-                var model = observer_object.model,
+                var model = observer_object,
                     len = changes.length,
                     batch = {};
                 for (var i = 0; i < len; i++) {
@@ -4066,7 +4086,7 @@ Math Related cached functions
             },
             //changes that happen to level 1 of data
             sub_view_changes = function (object, changes, name) {
-                var model = object.model,
+                var model = object,
                     len = changes.length,
                     loose = model[name];
                 for (var i = 0; i < len; i++) {
@@ -4083,7 +4103,7 @@ Math Related cached functions
             },
             //changes that happen to arrays level 0
             array_changes = function (observer_object, changes, name) {
-                var model = observer_object.model,
+                var model = observer_object,
                     len = changes.length,
                     loose = model[name];
                 for (var i = 0; i < len; i++) {
@@ -4099,8 +4119,8 @@ Math Related cached functions
             },
             //kills observer logic and launches an unmount function
             componentKill = function (object, funct, watcher) {
-                _componentsMade[object.OGModelName][object.modelName] = null;
-                _unobserve(object.hidden, funct);
+                _componentsMade[object.OGModelName][objectName] = null;
+                _unobserve(object.props, funct);
                 _unobserve(object.data, watcher);
                 if (object.observers) {
                     _each_object(object.observers, function (item) {
@@ -4121,7 +4141,7 @@ Math Related cached functions
             //kills observer logic and launches an unmount function
             modelKill = function (object, funct, watcher) {
                 _componentsMade[object._.name] = null;
-                _unobserve(object.hidden, funct);
+                _unobserve(object.props, funct);
                 _unobserve(object.data, watcher);
                 if (object.observers) {
                     _each_object(object.observers, function (item) {
@@ -4162,8 +4182,8 @@ Math Related cached functions
                 object.kill();
             },
             //custom notify data
-            componentNotify = function (object, changes, fn) {
-                view_changes(object, changes);
+            componentNotify = function (object, changes) {
+                manual_changes(object, changes);
             },
             //set to data
             componentSet = function (object, key, value) {
@@ -4177,7 +4197,7 @@ Math Related cached functions
                 return object.data[key];
             },
             //build the initial model
-            build_model = function (object, config) {
+            build_model = function (config) {
                 //model name proxy
                 if (_isString(config)) {
                     var ogModelName = config,
@@ -4186,35 +4206,41 @@ Math Related cached functions
                     var ogModelName = config.name || config._.name;
                 }
                 var modelName = ogModelName + (_componentids++);
-                //model name save
-                object.modelName = modelName;
-                //original model name
-                object.OGModelName = ogModelName;
                 //save to models
-                _model[modelName] = {};
-
-                if (config.data) {
-                    object.share = config.data;
-                }
-
+                _model[modelName] = {
+                    OGModelName: ogModelName,
+                    modelName: modelName,
+                    data: {},
+                    node: {},
+                    nodes: {},
+                    observers: {},
+                    props: {},
+                    share: config.data
+                };
                 if (!_componentsMade[ogModelName]) {
                     _componentsMade[ogModelName] = {};
                 }
 
-                _componentsMade[ogModelName][modelName] = object;
-                return config;
+                _componentsMade[ogModelName][modelName] = _model[modelName];
+                return {
+                    model: _model[modelName],
+                    config: config
+                };
             },
             define_prop = function (object, item, key, observers, optionalFNobj, optionalFNarray) {
-                object.hidden[key] = item;
                 var isAr = _isArray(item),
+                    object_data = object.data,
+                    object_props = object.props,
                     isOb = isPlainObject(item);
+
+                object_props[key] = item;
                 //build the prop
-                _defineProperty(object.data, key, {
+                _defineProperty(object_data, key, {
                     get: function () {
-                        return object.hidden[key];
+                        return object_props[key];
                     },
                     set: function (newValue) {
-                        var oldValue = object.hidden[key],
+                        var oldValue = object_props[key],
                             this_observer = observers[key];
                         if (isPlainObject(oldValue)) {
                             _unobserve(this_observer[0], this_observer[1]);
@@ -4223,22 +4249,22 @@ Math Related cached functions
                         }
                         var oldValue = null,
                             this_observer = null;
-                        object.hidden[key] = newValue;
+                        object_props[key] = newValue;
                         if (_isArray(newValue)) {
                             var funct = (optionalFNarray) ? optionalFNarray(key) : function (changes) {
                                 array_changes(object, changes, key);
                                 return false;
                             };
-                            _array_observe(object.data[key], funct);
+                            _array_observe(object_props[key], funct);
                         } else if (isPlainObject(newValue)) {
                             var funct = (optionalFNobj) ? optionalFNobj(key) : function (changes) {
                                 sub_view_changes(object, changes, key);
                                 return false;
                             };
-                            _observe(object.data[key], funct);
+                            _observe(object_props[key], funct);
                         }
                         if (funct) {
-                            observers[key] = [object.data[key], funct];
+                            observers[key] = [object_props[key], funct];
                         }
                     },
                     enumerable: true,
@@ -4251,16 +4277,16 @@ Math Related cached functions
                         array_changes(object, changes, key);
                         return false;
                     };
-                    _array_observe(object.data[key], funct);
+                    _array_observe(object_props[key], funct);
                 } else if (isOb) {
                     var funct = (optionalFNobj) ? optionalFNobj(key) : function (changes) {
                         sub_view_changes(object, changes, key);
                         return false;
                     };
-                    _observe(object.data[key], funct);
+                    _observe(object_props[key], funct);
                 }
                 if (funct) {
-                    observers[key] = ([object.data[key], funct]);
+                    observers[key] = ([object_props[key], funct]);
                 }
             },
             compile_data = function (object, data, optionalFNobj, optionalFNarray) {
@@ -4350,26 +4376,25 @@ Math Related cached functions
                 return object;
             },
             //some cases this may prove to be faster if methods are required to be cached
-            avoid_regex = /name|template|data|mount|unMount|model|componentMount|kill|componentUnMount|render|componentData|_|component|hidden|component|observers|share|subscribe|unSubscribe/g,
+            avoid_regex = /name|template|data|mount|unMount|model|componentMount|kill|componentUnMount|render|componentData|_|component|props|component|observers|share|subscribe|unSubscribe/g,
             generate_methods = function (object, config) {
                 if (config.model) {
                     if (isPlainObject(config.model)) {
                         var config = config.model;
                     } else if (_isFunction(config.model)) {
                         var config = config.model.call(object);
-                        console.log(config);
                     }
                 }
                 _each_object(config, function (item, key) {
                     if (!key.match(avoid_regex)) {
                         if (_isFunction(item)) {
-                            object.model[key] = _bind_call(item, object);
+                            object[key] = _bind_call(item, object);
                         } else {
-                            object.model[key] = item;
+                            object[key] = item;
                         }
                     }
                 });
-                _defineProperty(object.model, 'component', {
+                _defineProperty(object, 'component', {
                     get: function () {
                         return object;
                     },
@@ -4380,7 +4405,6 @@ Math Related cached functions
                     configurable: true,
                     writeable: false
                 });
-                _model[object.modelName] = object.model;
             },
             compile_faceplate = function (object, config) {
                 if (_isString(config.view)) {
@@ -4391,13 +4415,11 @@ Math Related cached functions
                 }
             },
             generate_component_methods = function (object, config) {
-                var funct = function (changes) {
-                    view_changes(object, changes);
-                },
+                var funct = view_changes(object),
                     watcher = function (changes) {
                         data_added(object, changes);
                     },
-                    observer = _observe(object.hidden, funct),
+                    observer = _observe(object.props, funct),
                     observer_add_data = _observe(object.data, watcher),
                     mount = config.componentMount,
                     unMount = config.componentUnMount;
@@ -4426,7 +4448,7 @@ Math Related cached functions
                     return componentSet(object, key, value);
                 };
                 object.notify = function (data) {
-                    return componentNotify(object, data, funct);
+                    return componentNotify(object, data);
                 };
                 object.notifySub = function (data) {
                     return componentNotify(object, data, funct);
@@ -4440,25 +4462,14 @@ Math Related cached functions
             },
             //build a view for a node
             build_component = function (config) {
-                var object = {
-                    data: {},
-                    model: {},
-                    node: {},
-                    nodes: {},
-                    observers: {}
-                };
-                _defineProperty(object, 'hidden', {
-                    enumerable: true,
-                    configurable: false,
-                    writable: false,
-                    value: {}
-                });
                 //uses a porxy for super fast binding plus avoiding mem usage
                 if (_isFunction(config)) {
-                    var config = _bind_call(object, config);
+                    var config = _bind_call(config);
                 }
 
-                var config = build_model(object, config);
+                var compiled = build_model(config),
+                    object = compiled.model,
+                    config = compiled.config;
                 //compile initial state
                 compile_data(object, config.componentData);
                 //compile DOM
@@ -4536,7 +4547,7 @@ Math Related cached functions
             var watcher = function (changes) {
                 data_added(object, changes);
             };
-            model.hidden = {};
+            model.props = {};
             if (model.data) {
                 compile_data(model, model.data, subObserverFN, arrayObserverFN);
             } else {
@@ -4548,7 +4559,15 @@ Math Related cached functions
                 observerFN = null;
                 return null;
             };
-            _observe(model.hidden, observerFN);
+            var mount = model.mount,
+                unMount = model.unMount;
+            mount.unMount = function () {
+                return componentUnMount(model, unMount);
+            };
+            mount.mount = function (set) {
+                return componentMount(model, mount, set);
+            };
+            _observe(model.props, observerFN);
             _observe(model.data, watcher);
             return model;
         };
@@ -5060,6 +5079,11 @@ NODE TYPE OBJECT
             return false;
         };
         $.import = function (key, value) {
+            if (_isFunction(value)) {
+                var value = {
+                    call: value
+                };
+            }
             if (_isString(key)) {
                 return import_it(key, value);
             }
@@ -5148,6 +5172,26 @@ NODE TYPE OBJECT
 	$.module(['template','model','toDOM','isNative','console','docs/api.js'],module,callback);
 
 */
+    var _plugin = $.plugin = (function () {
+
+        var plugin = function (plugins, callback) {
+            var importLibs = [];
+            _each_object(plugins, function (item, key) {
+                importLibs.push(item.url);
+            });
+            _import(importLibs, function () {
+                _each_object(plugins, function (item, key) {
+                    $[item.name || key] = window[key];
+                });
+                if (callback) {
+                    callback();
+                }
+            });
+        };
+
+        return plugin;
+
+    })();
     //set/get/compile template
     var _template = $.template = function (string, data) {
         //store template

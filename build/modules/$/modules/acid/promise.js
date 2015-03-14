@@ -1,8 +1,8 @@
 //make a promise
-$.promise = function (array, name, fun) {
+var _promoiseFN = $.promise = function (array, name, fun) {
 	if (!fun) {
 		return _promised(array, name);
 	}
 	return _promise(array, name, fun);
 };
-$.promises = {};
+var _promises = $.promises = {};

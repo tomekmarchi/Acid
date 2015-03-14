@@ -29,9 +29,9 @@ _timer = function (fun, time, callback) {
 },
 //make promise array
 _promise = function (arry, name, callback, calls) {
-	$.promises[name] = function () {
+	_promises[name] = function () {
 		var len = arry.length,
-			fn = $.promises[name],
+			fn = _promises[name],
 			go = 0;
 		for (var i = 0; i < len; i++) {
 			if (fn[arry[i]] == 1) {
@@ -46,20 +46,19 @@ _promise = function (arry, name, callback, calls) {
 		}
 		return false;
 	};
-	$.promises[name].call = {};
+	_promises[name].call = {};
 	if (calls) {
-		$.promises[name].call = calls;
+		_promises[name].call = calls;
 	}
 },
 //promised
 _promised = function (self, fn) {
-	var promval = $.promises,
-		val = promval[fn];
-	$.promises[fn][self] = 1;
-	if (promval) {
+	var val = _promises[fn];
+	_promises[fn][self] = 1;
+	if (val) {
 		var funn = val();
 		if (funn) {
-			$.promises[fn] = null;
+			_promises[fn] = null;
 		}
 	}
 	var item = null,

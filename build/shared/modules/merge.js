@@ -7,7 +7,12 @@ var extend = function (obj, ext, wrap) {
 				if (wrap) {
 					var item = wrap(item);
 				}
-				ext[acid_lib_prefix + key] = item;
+				Object.defineProperty(ext, acid_lib_prefix + key, {
+				  enumerable: false,
+				  configurable: true,
+				  writable: true,
+				  value: item
+				});
 			}
 		}
 	},

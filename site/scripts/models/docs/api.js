@@ -67,139 +67,139 @@
 		}
 	};
 	$.model.api.checking = {
-		'isArray': {
+		isArray: {
 			descrip: 'Check if object is array',
 			example: '$.isArray(obj)'
 		},
-		'isString': {
+		isString: {
 			descrip: 'Check if object is string',
 			example: '$.isString(obj)'
 		},
-		'isDom': {
+		isDom: {
 			descrip: 'Check if object is node',
 			example: '$.isDom(obj)'
 		},
-		'isNumber': {
+		isNumber: {
 			descrip: 'Check if object is number',
 			example: '$.isNumber(obj)'
 		},
-		'isObject': {
+		isObject: {
 			descrip: 'Check if thing is an object',
 			example: '$.isObject(obj)'
 		},
-		'isPlainObject': {
+		isPlainObject: {
 			descrip: 'Check if object is plainobject',
 			example: '$.isPlainObject(obj)'
 		},
-		'isFunction': {
+		isFunction: {
 			descrip: 'Check if object is function',
 			example: '$.isFunction(obj)'
 		},
-		'toArray': {
+		toArray: {
 			descrip: 'Convert list to array',
 			example: '$.toArray(arguments)'
 		},
-		'isRegex': {
+		isRegex: {
 			descrip: 'Check if object is regex',
 			example: '$.isRegex(obj)'
 		},
-		'isArgs': {
+		isArgs: {
 			descrip: 'Check if object is arguments',
 			example: '$.isArgs(obj)'
 		},
-		'isBool': {
+		isBool: {
 			descrip: 'Check if object is bool',
 			example: '$.isBool(obj)'
 		},
-		'isDate': {
+		isDate: {
 			descrip: 'Check if object is date',
 			example: '$.isDate(obj)'
 		},
-		'isError': {
+		isError: {
 			descrip: 'Check if object is error',
 			example: '$.isError(obj)'
 		},
-		'isMap': {
+		isMap: {
 			descrip: 'Check if object is map',
 			example: '$.isMap(obj)'
 		},
-		'isSet': {
+		isSet: {
 			descrip: 'Check if object is a set',
 			example: '$.isSet(obj)'
 		},
-		'isWeakMap': {
+		isWeakMap: {
 			descrip: 'Check if object is weakmap',
 			example: '$.isWeakMap(obj)'
 		},
-		'isFloat32': {
+		isFloat32: {
 			descrip: 'Check if object is float32',
 			example: '$.isFloat32(obj)'
 		},
-		'isFloat64': {
+		isFloat64: {
 			descrip: 'Check if object is float64',
 			example: '$.isFloat64(obj)'
 		},
-		'isInt8': {
+		isInt8: {
 			descrip: 'Check if object is int8',
 			example: '$.isInt8(obj)'
 		},
-		'isInt16': {
+		isInt16: {
 			descrip: 'Check if object is int16',
 			example: '$.isInt16(obj)'
 		},
-		'isInt32': {
+		isInt32: {
 			descrip: 'Check if object is int32',
 			example: '$.isInt32(obj)'
 		},
-		'isUnit8': {
+		isUnit8: {
 			descrip: 'Check if object is unit8',
 			example: '$.isUnit8(obj)'
 		},
-		'isUnit8clamped': {
+		isUnit8clamped: {
 			descrip: 'Check if object is unit8clamped',
 			example: '$.isUnit8clamped(obj)'
 		},
-		'isUnit16': {
+		isUnit16: {
 			descrip: 'Check if object is unit16',
 			example: '$.isUnit16(obj)'
 		},
-		'isUnit32': {
+		isUnit32: {
 			descrip: 'Check if object is unit32',
 			example: '$.isUnit32(obj)'
 		},
-		'isNative': {
+		isNative: {
 			descrip: 'Check if object is native',
 			example: '$.isNative(obj)'
 		},
-		'isUndefined': {
+		isUndefined: {
 			descrip: 'Check if object is undefined',
 			example: '$.isUndefined(obj)'
 		},
-		'isNaN': {
+		isNaN: {
 			descrip: 'Check if object is NaN',
 			example: '$.isNaN(obj)'
 		},
-		'isNaN': {
+		isNaN: {
 			descrip: 'Check if object is NaN',
 			example: '$.isNaN(obj)'
 		},
-		'isFinite': {
+		isFinite: {
 			descrip: 'Check if object is Finite',
 			example: '$.isFinite(obj)'
 		},
-		'isAgent': {
+		isAgent: {
 			descrip: 'Check user agent',
 			example: '$.agent(\'chrome\')'
 		},
-		'hasValue': {
+		hasValue: {
 			descrip: 'Check if object has value',
 			example: '$.hasValue(obj)'
 		},
-		'isEmpty': {
+		isEmpty: {
 			descrip: 'Check if an object is empty',
 			example: '$.isEmpty(obj)'
 		},
-		'has': {
+		has: {
 			descrip: 'Check if an object has something via indexof',
 			example: '$.has(\'acid\',\'a\')'
 		}
@@ -305,6 +305,10 @@
 			descrip: 'Import from a URL with object syntax - Accepts an array to import',
 			example: '$.import(\'plugins/tip.js\',obj)'
 		},
+		plugin: {
+			descrip: 'Import & extend extrernal libraries to the acid namespace',
+			example: '$.plugin({pluginsObject},callback)'
+		},
 		json: {
 			descrip: 'Convert string to JSON object',
 			example: '$.json(\'{"acid":1}\')'
@@ -342,7 +346,7 @@
 			example: '$.linkParse(\'http://lnkit.com/signup\')'
 		},
 		react: {
-			descrip: 'Compile a react like view that is compiled then observed',
+			descrip: 'Compile a react like view then observe it',
 			example: '$.react(object_syntax)'
 		},
 		reactModel: {

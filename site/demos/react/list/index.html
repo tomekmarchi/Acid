@@ -8,20 +8,18 @@
 	//core model used for onready
 	$.model('core', function () {
 
-		$.define(['model','tag','reactModel'],function(model,tag,reactModel){
-			var list=reactModel('list', {
-					template: $id('ACIDapp'),
-					componentData:{
-						list:[]
-					},
-					list: function (change) {
-						this.nodes.mount.ap(tag('li').tc(change.object[change.index]));
-					}
-				});
-
-			window.componentApp=list.render();
-			window.componentList=componentApp.data.list;
+		var list=$.reactModel('list', {
+			template: $id('ACIDapp'),
+			componentData:{
+				list:[]
+			},
+			list: function (change) {
+				this.nodes.mount.ap($.tag('li').tc(change.object[change.index]));
+			}
 		});
+
+		window.componentApp=list.render();
+		window.componentList=componentApp.data.list;
 
 		for (var i = 0; i < 100; i++){
 			componentList.push('item'+i);

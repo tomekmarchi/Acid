@@ -1,0 +1,20 @@
+Default
+1.Test all functions
+
+2.Organize
+
+3.Expand on functions
+
+4.Make sure everything can work with a prefix
+
+5.More documentation
+
+
+Need to
+
+Review onReady for DOM and simplify it
+
+Compile for lucy.js
+
+Extras
+(indexby,groupby) need to be expanded upon
