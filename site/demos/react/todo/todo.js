@@ -10,7 +10,7 @@
 		onChange: function (obj,e) {
 			this.text = obj.value;
 			if(e.isEnter()){
-				this.model.handleSubmit();
+				this.handleSubmit();
 			}
 		},
 		list:function(change){

@@ -1,6 +1,8 @@
 (function () {
 	//core model used for onready
 	$.model('core', function () {
+		$.ensureInvoke('/site/scripts/models/css/css.js');
+
 		var child = $.reactModel('child', {
 			data: {
 				text:''

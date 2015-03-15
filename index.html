@@ -17,13 +17,14 @@
 </head>
 
 <body data-resize="events/resize">
-    <header data-mouseover="plugins/tip.show" data-mouseout="plugins/tip.hide" data-tooltip="Scroll Up" class="side_panel nohl fadein theme theme_bg text_navigation navigation_bar" data-click="events/scroll.up">
-        <a class="nav_item" data-mouseover="plugins/tip.show" data-mouseout="plugins/tip.hide" data-tooltip="Home"><i class="icon icon-home-3"></i></a>
-        <a class="nav_item" data-click="scroll.to" data-scrollto="demos" data-mouseover="plugins/tip.show" data-mouseout="plugins/tip.hide" data-tooltip="Example Apps">Demos</a>
-        <a class="nav_item right" data-mouseover="plugins/tip.show" data-mouseout="plugins/tip.hide" data-tooltip="Contact" href="mailto:tom@lnkit.com">
+    <header data-mouseover="plugins/tip.unpack"  data-tooltip="Scroll Up" class="side_panel nohl fadein theme theme_bg text_navigation navigation_bar" data-click="events/scroll.up">
+        <a class="nav_item" data-mouseover="plugins/tip.unpack" data-tooltip="Home"><i class="icon icon-home-3"></i></a>
+        <a class="nav_item" target="_blank" href="/site/demos/" data-mouseover="plugins/tip.unpack"  data-tooltip="Example Apps">Demos</a>
+		<a class="nav_item" target="_blank" href="http://acidjs.com/blog/" data-mouseover="plugins/tip.unpack"  data-tooltip="Acid Blog">Blog</a>
+        <a class="nav_item right" data-mouseover="plugins/tip.unpack"  data-tooltip="Contact" href="mailto:tom@lnkit.com">
 	    	<i class="icon icon-mail-2"></i>
 	    </a>
-	    <a class="nav_item right" data-mouseover="plugins/tip.show" data-mouseout="plugins/tip.hide" data-tooltip="Github" href="//github.com/tomekmarchi/ACID/" target="_blank">
+	    <a class="nav_item right" data-mouseover="plugins/tip.unpack"  data-tooltip="Github" href="//github.com/tomekmarchi/ACID/" target="_blank">
 	    	<i class="icon icon-github"></i>
 	    </a>
     </header>

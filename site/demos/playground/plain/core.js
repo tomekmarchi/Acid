@@ -4,8 +4,4 @@
 		//acid has loaded
 	});
 
-
-	//start ACID
-	$.acid.start({});
-
 })();

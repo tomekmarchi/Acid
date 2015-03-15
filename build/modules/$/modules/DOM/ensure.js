@@ -80,3 +80,11 @@ var _ensure = $.ensure =(function () {
 	};
 
 })();
+
+$.ensureInvoke=function(ensures){
+	_ensure(ensures,function(){
+		_each_array(_toArray(arguments),function(item){
+			item();
+		});
+	});
+};

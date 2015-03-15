@@ -109,12 +109,22 @@
 			return false;
 		}.debounce(200);
 
-	$.model.tip={
+	var tip_model=$.model.tip={
 		show:show_tip,
 		hide:function(){
 			tip_pos.removeAttr('style').cl('gpu_hide_top','opacity0');
 			text_pos.removeAttr('style').cl('gpu_hide_top','opacity0');
 			show_tip.clear();
+		},
+		unpack:function(obj,e){
+			tip_model.show(obj,e);
+			var replacethis=obj.attr('data-mouseover'),
+				path=replacethis.match(/([^,](.*)\/)?tip.unpack/),
+				out='tip.hide';
+			if(path[1]){
+				var out=path[1]+out;
+			}
+			obj.attr('data-mouseover',replacethis.replace(/tip.unpack/,'tip.show')).attr('data-mouseout',out);
 		}
 	};
 

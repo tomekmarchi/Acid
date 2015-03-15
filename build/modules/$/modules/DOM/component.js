@@ -55,22 +55,19 @@ var _react = $.react = (function () {
 			return false;
 		},
 		//changes that happen to level 0 of data
-		view_changes = function(model){
-			var returned=function (changes) {
-				var len = changes.length;
-				for (var i = 0; i < len; i++) {
-					var change = changes[i],
-						method = model[change.name];
-					if (method) {
-						add_to_batch(method, change);
-					}
+		view_changes = function(model,changes){
+			var len = changes.length;
+			for (var i = 0; i < len; i++) {
+				var change = changes[i],
+					method = model[change.name];
+				if (method) {
+					add_to_batch(method, change);
 				}
-				if (cancelFrame === false) {
-					cancelFrame = _RAF(makechanges);
-				}
-				return false;
-			};
-			return returned;
+			}
+			if (cancelFrame === false) {
+				cancelFrame = _RAF(makechanges);
+			}
+			return false;
 		},
 		manual_changes=function (model,changes) {
 			var len = changes.length;
@@ -100,9 +97,8 @@ var _react = $.react = (function () {
 			return false;
 		},
 		//changes that happen to level 1 of data
-		sub_view_changes = function (object, changes, name) {
-			var model = object,
-				len = changes.length,
+		sub_view_changes = function (model, changes, name) {
+			var len = changes.length,
 				loose = model[name];
 			for (var i = 0; i < len; i++) {
 				var change = changes[i],
@@ -117,9 +113,8 @@ var _react = $.react = (function () {
 			return false;
 		},
 		//changes that happen to arrays level 0
-		array_changes = function (observer_object, changes, name) {
-			var model = observer_object,
-				len = changes.length,
+		array_changes = function (model, changes, name) {
+			var len = changes.length,
 				loose = model[name];
 			for (var i = 0; i < len; i++) {
 				var change = changes[i];
@@ -187,7 +182,7 @@ var _react = $.react = (function () {
 				componentSet(object, set);
 			}
 			if (mount) {
-				mount(object);
+				mount.call(object);
 			}
 			return object.node;
 		},
@@ -322,7 +317,7 @@ var _react = $.react = (function () {
 				template = config.template;
 			if (view_name) {
 				if (_isFunction(view_name)) {
-					var node = view_name(modelName);
+					var node = view_name.call(object,object);
 					if (_isString(node)) {
 						var node = _toDOM(node, 0);
 					}
@@ -336,14 +331,17 @@ var _react = $.react = (function () {
 				if (_isString(template)) {
 					var node = _toDOM(template, 0);
 				} else if (_isFunction(template)) {
-					var node = _toDOM(template.call(object), 0);
+					var node = template.call(object,object);
+					if(_isString(node)){
+						var node=_toDOM(node, 0);
+					}
 				} else {
 					var node = template;
 				}
 			}
 			if (node instanceof _HTMLElement) {
-				node.setAttribute('data-component-root', modelName);
-				node.setAttribute('data-component-root-'+modelName,'');
+				node.setAttribute('data-react-root', modelName);
+				node.setAttribute('data-react-root-'+modelName,'');
 			}
 			object.node = node;
 			return object;
@@ -369,7 +367,7 @@ var _react = $.react = (function () {
 					});
 				}
 			}
-			item.setAttribute('data-component', modelName);
+			item.setAttribute('data-react', modelName);
 			item.removeAttribute('acid');
 		},
 		compile_nodes = function (object) {
@@ -388,14 +386,10 @@ var _react = $.react = (function () {
 			return object;
 		},
 		//some cases this may prove to be faster if methods are required to be cached
-		avoid_regex=/name|template|data|mount|unMount|model|componentMount|kill|componentUnMount|render|componentData|_|component|props|component|observers|share|subscribe|unSubscribe/g,
+		avoid_regex=/name|template|data|mount|unMount|componentModel|componentMount|kill|componentUnMount|render|componentData|_|component|props|observers|share|subscribe|unSubscribe/g,
 		generate_methods = function (object, config) {
-			if (config.model) {
-				if (isPlainObject(config.model)) {
-					var config = config.model;
-				} else if (_isFunction(config.model)) {
-					var config = config.model.call(object);
-				}
+			if (_isFunction(config)) {
+				var config = config.call(object);
 			}
 			_each_object(config, function (item, key) {
 				if (!key.match(avoid_regex)) {
@@ -405,17 +399,6 @@ var _react = $.react = (function () {
 						object[key] = item;
 					}
 				}
-			});
-			_defineProperty(object, 'component', {
-				get: function () {
-					return object;
-				},
-				set:function(){
-					return false;
-				},
-				enumerable: true,
-				configurable: true,
-				writeable: false
 			});
 		},
 		compile_faceplate = function (object, config) {
@@ -427,14 +410,21 @@ var _react = $.react = (function () {
 			}
 		},
 		generate_component_methods = function (object, config) {
-			var funct = view_changes(object),
+			var funct = function (changes) {
+					view_changes(object, changes);
+				},
 				watcher = function (changes) {
 					data_added(object, changes);
-				},
-				observer = _observe(object.props, funct),
-				observer_add_data = _observe(object.data, watcher),
-				mount = config.componentMount,
-				unMount = config.componentUnMount;
+				};
+			_observe(object.props, funct);
+			_observe(object.data, watcher);
+			if(config.componentModel){
+				var mount = config.componentModel.componentMount,
+				unMount = config.componentModel.componentUnMount;
+			}else{
+				var mount = config.componentMount,
+					unMount = config.componentUnMount;
+			}
 			if (mount) {
 				var mount = _bind.call(mount, object);
 			}
@@ -491,7 +481,7 @@ var _react = $.react = (function () {
 			//faceplate
 			compile_faceplate(object, config);
 			//bind methods to new model
-			generate_methods(object, config);
+			generate_methods(object, config.componentModel || config);
 			//generate component specific methods
 			generate_component_methods(object, config);
 			return object;
@@ -504,6 +494,31 @@ var _react = $.react = (function () {
 		register_node(object, node);
 		return node;
 	};
+
+	var modelSubChanges=function(_componentsMade,changes,subKey,func){
+		_each_object(_componentsMade,function(item,key){
+			func(item,changes,subKey);
+		});
+	},
+	reactModelFN=function(changes,name){
+		var copiesOfComponent=_componentsMade[name];
+		if(copiesOfComponent){
+			_each_object(copiesOfComponent,function(item,key){
+				item.notify(changes);
+			});
+		}
+		_each_object(model.subscribe,function(item,key){
+			if(item){
+				var copiesOfComponent=_componentsMade[key];
+				if(copiesOfComponent){
+					_each_object(copiesOfComponent,function(subItem,key){
+						subItem.notify(changes);
+					});
+				}
+			}
+		});
+	};
+
 	//build the component model
 	$.reactModel = function (name, object, lean) {
 		var model = _model(name, object, lean),
@@ -525,35 +540,16 @@ var _react = $.react = (function () {
 			model.subscribe[item]=null;
 		};
 		var observerFN=function(changes){
-			var copiesOfComponent=_componentsMade[name];
-			if(copiesOfComponent){
-				_each_object(copiesOfComponent,function(item,key){
-					item.notify(changes);
-				});
-			}
-			_each_object(model.subscribe,function(item,key){
-				if(item){
-					var copiesOfComponent=_componentsMade[key];
-					if(copiesOfComponent){
-						_each_object(copiesOfComponent,function(subItem,key){
-							subItem.notify(changes);
-						});
-					}
-				}
-			});
+			reactModelFN(changes,name);
 		};
 		var subObserverFN=function(subKey){
 			return function(changes){
-				_each_object(_componentsMade[name],function(item,key){
-					sub_view_changes(item,changes,subKey);
-				});
+				modelSubChanges(_componentsMade[name],changes,subKey,sub_view_changes);
 			};
 		};
 		var arrayObserverFN=function(subKey){
 			return function(changes){
-				_each_object(_componentsMade[name],function(item,key){
-					array_changes(item,changes,subKey);
-				});
+				modelSubChanges(_componentsMade[name],changes,subKey,array_changes);
 			};
 		};
 		var watcher = function (changes) {
@@ -573,12 +569,15 @@ var _react = $.react = (function () {
 		};
 		var mount = model.mount,
 			unMount = model.unMount;
-		mount.unMount = function () {
+		model.unMount = function () {
 			return componentUnMount(model, unMount);
 		};
-		mount.mount = function (set) {
+		model.mount = function (set) {
 			return componentMount(model, mount, set);
 		};
+		if(model.componentModel){
+			generate_methods(model, model);
+		}
 		_observe(model.props, observerFN);
 		_observe(model.data, watcher);
 		return model;
@@ -586,9 +585,9 @@ var _react = $.react = (function () {
 	//look up the tree
 	$.findReact = function (node, name) {
 		if (!name) {
-			var name = 'data-component-root';
+			var name = 'data-react-root';
 		} else {
-			var name = 'data-component-' + name;
+			var name = 'data-react-' + name;
 		}
 		var root = _upTo(node, '[' + name + ']');
 		if (root) {
@@ -598,7 +597,7 @@ var _react = $.react = (function () {
 	};
 	//get the observer object that is attached to DOM node
 	var _getReact = $.getReact = function (node) {
-			var modelName = node.getAttribute('data-component-root') || node.getAttribute('data-component');
+			var modelName = node.getAttribute('data-react-root') || node.getAttribute('data-react');
 			if (modelName) {
 				return _model[modelName];
 			}

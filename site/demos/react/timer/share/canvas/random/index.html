@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0">
+    <script src="/compiled/acid.js" id="acid-lib"></script>
+    <script>
+	//core model used for onready
+	$.model('core', function () {
+		$.ensureInvoke('/site/scripts/models/css/css.js');
+		var Timer=$.reactModel('Timer', {
+			template: function(){
+				return '<div class="left"><canvas acid="canvas" class="slideinfl"></canvas></div>';
+			},
+			data: {
+				list:['!','@','#','$','%','^','*','©','ƒ','∂','ß','√','≈','Ω','å','µ','˜','∫','π','¬','˚','∆','ø','ˆ','¨','¥','†','®','∑','œ','¡','™','£','¢','∞','§','¶','•','ª','º'],
+				secondsElapsed:0
+			},
+			mount: function () {
+				this.interval = setInterval(this.tick, 1000);
+			},
+			unMount: function () {
+				clearInterval(this.interval);
+			},
+			tick: function () {
+				Timer.data.secondsElapsed = Timer.data.secondsElapsed + 1;
+			},
+			componentModel:{
+				componentMount:function(){
+					this.nodes.canvas.width  = 25;
+					this.nodes.canvas.height = 12;
+					this.data.context=this.nodes.canvas.getContext("2d");
+					this.secondsElapsed();
+				},
+				secondsElapsed: function (change) {
+					this.data.context.font="12px Helvetica";
+					this.data.context.clearRect(0, 0, 25, 12);
+					this.data.context.fillText(this.share.list.sample(),10,12);
+				}
+			}
+		});
+
+		Timer.mount();
+
+		function addTimer(i){
+			(function(){
+				$('#wrapper').ap(Timer.render().mount());
+			}).timer(10*i);
+		};
+
+		for(var i=0; i< 2000; i++){
+			addTimer(i);
+		}
+	});
+    </script>
+    <title>ACID Reactive Timer ES7 Shared data</title>
+</head>
+
+<body class="scroll">
+	<div class="pad_box">A Reactive Timer ES7 with Shared data on canvas</div>
+	<div id="wrapper"></div>
+</body>
+</html>
