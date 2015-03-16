@@ -861,7 +861,7 @@ METHODS FOR CLASS MODS
                 return node.clientHeight;
             };
         //copynode
-        var _copy = function (node, bool) {
+        var _clone = function (node, bool) {
             return node.cloneNode(bool);
         };
         //btn + adding
@@ -890,15 +890,24 @@ METHODS FOR CLASS MODS
             },
             //quick changes
             _hide = function (node) { //hide class toggle
-                node.classList.add('hide');
+                node.style.display = 'none';
                 return node;
             },
             _show = function (node) { //show class toggle
-                node.classList.remove('hide');
+                node.style.display = '';
                 return node;
             },
-            _toggle = function (node, i) {
-                node.classList.toggle(i || 'hide');
+            _toggle = function (node, classname) {
+                if (classname) {
+                    node.classList.toggle(classname);
+                } else {
+                    var display = node.style.display;
+                    if (display == 'none') {
+                        node.style.display = '';
+                    } else {
+                        node.style.display = 'none';
+                    }
+                }
                 return node;
             };
         var _html = function (node, n) {
@@ -1202,8 +1211,8 @@ METHODS FOR CLASS MODS
                 return _upTo(this, name);
             },
             //copynode
-            copy: function (bool) {
-                return _copy(this, bool);
+            clone: function (bool) {
+                return _clone(this, bool);
             },
             //center object
             center: function (data) {
@@ -1487,7 +1496,7 @@ METHODS FOR CLASS MODS
             //transverse up based on a match or number
             upTo: generate_loop_single_return(_upTo),
             //copynode
-            copy: generate_loop_single_return(_copy),
+            copy: generate_loop_single_return(_clone),
             //center object
             center: generate_loop_single_return(_center),
             html: generate_loop_single_return(_html),
@@ -3909,9 +3918,9 @@ Math Related cached functions
     //Get useragent info
     $.isAgent = function (name) {
         if (!name) {
-            return $.agent;
+            return _agentinfo;
         }
-        return $.agent[name];
+        return _agentinfo[name];
     };
 /*
 
@@ -4532,8 +4541,7 @@ Math Related cached functions
             return false;
         },
             define = function (methods, fn) {
-                _module(methods, fn, callback);
-                return false;
+                return _module(methods, fn, callback)();
             };
 
         //export
@@ -4544,11 +4552,11 @@ Math Related cached functions
 	Example
 
 	//function to be defined
-	var define=function(template,model,toDOM,isNative,console,api){
+	var define=function(template,model,toDOM,isNative,console){
 		console(arguments);
 	},
 	//definitions for variables
-	require=['template','model','toDOM','isNative','console','docs/api.js'];
+	require=['template','model','toDOM','isNative','console'];
 
 	// Define our function
 	//NOTE: executes once resources are loaded
@@ -4599,7 +4607,8 @@ Math Related cached functions
             _promise(array, name, function () {
                 for (var i = 0; i < array.length; i++) {
                     var item = array[i];
-                    var model = _find(item.split('/').last().split('.')[0], _model);
+                    var splitIt = item.split('/'),
+                        model = _find(splitIt[splitIt.length - 1].split('.js')[0], _model);
                     if (model) {
                         array_model[i] = model;
                     }
@@ -4614,7 +4623,8 @@ Math Related cached functions
             //make imports
             for (var i = 0; i < len; i++) {
                 (function (item, n) {
-                    _import(item + '.js', {
+                    var url = (_has(item, '.js')) ? item : item + '.js';
+                    _import(url, {
                         call: function () {
                             _promised(item, n);
                             item = null;
@@ -4639,10 +4649,16 @@ Math Related cached functions
     })();
 
     $.ensureInvoke = function (ensures) {
+        var ensures = (_isArray(ensures)) ? ensures : [ensures];
         _ensure(ensures, function () {
-            _each_array(_toArray(arguments), function (item) {
-                item();
+            _each_array(ensures, function (item) {
+                var splitIt = item.split('/'),
+                    model = _find(splitIt[splitIt.length - 1].split('.js')[0], _model);
+                if (model) {
+                    model();
+                }
             });
+            ensures = null;
         });
     };
     //export and cache faceplate function
@@ -5034,7 +5050,7 @@ NODE TYPE OBJECT
     //create a function that takes an object that is apart of the main $ and applies/calls it to the functions arguments useful for caching functions
     var _module = $.module = (function () {
         //module function
-        var module = function (methods, fn, callback) {
+        var compile_module = function (methods, fn, callback) {
             var temp = [],
                 import_it = [],
                 methods = (_isArray(methods)) ? methods : [methods],
@@ -5082,6 +5098,25 @@ NODE TYPE OBJECT
             return compiled;
         };
         //export
+        var module = function (data, fn, callback) {
+
+            if (!fn) {
+                return _module[data];
+            }
+
+            var compiled = function () {
+                var returned = compile_module(data, fn, callback);
+                if (_isFunction(returned)) {
+                    return returned();
+                }
+                return returned;
+            };
+            compiled.save = function (name) {
+                return _module[name] = compiled;
+            };
+            return compiled;
+        };
+
         return module;
     })();
 /*
@@ -5185,7 +5220,7 @@ NODE TYPE OBJECT
         cores: $cores
     };
     //useragent info plus mobile
-    $.agent = {};
+    var _agentinfo = $.agent = {};
     //acid platform information
     $.acid = {
         //lib name
@@ -5210,40 +5245,40 @@ NODE TYPE OBJECT
             len = list.length,
             addcls = [];
 
-        $.sys.agent.string = str.toLowerCase();
+        var agent = _agentinfo;
+
+        agent.string = str.toLowerCase();
 
         for (var i = 0; i < len; i++) {
             var item = list[i];
-            $.sys.agent[item] = _has(str, item);
+            agent[item] = _has(str, item);
         }
 
-        var agent = $.sys.agent;
-        for (var i = 0, keys = _object_keys(agent), len = keys.length; i < len; i++) {
-            var key = keys[i];
-            var item = agent[key];
+        _each_object(agent, function (item, key) {
             if (key == 'string') {
-                continue;
+                return;
             }
             if (key == 'mobile') {
                 if (!item) {
                     addcls.push('desktop');
-                    continue;
+                    return;
                 }
             }
             if (item) {
                 addcls.push(key);
             }
-        }
+        });
 
-        var len = addcls.length,
-            cl = _body.classList;
+        var cl = document.body.classList;
 
-        for (var i = 0; i < len; i++) {
-            cl.add(addcls[i]);
-        }
+        _each_array(addcls, function (item) {
+            cl.add(item);
+        });
 
         return false;
     };
+
+    _isDocumentReady(_agentInfo);
     (function () {
         var userConfig = $.cache.config = {};
         var config = function () {
@@ -5409,17 +5444,17 @@ NODE TYPE OBJECT
                             root = action.split('.')[0],
                             ismodel = _find(action, $.model);
                         if (ismodel) {
-                            ismodel(obj, e);
+                            ismodel.apply(_find(action.split('.')[0], _model), [obj, e]);
                         } else {
                             (function (action, analytics, obj, e, type) {
                                 _ensure(root, function () {
                                     if (action) {
-                                        var fn = _find(action, $.model);
+                                        var fn = _find(action, _model);
                                         if (fn) {
                                             if ($debug) {
                                                 console.log(action);
                                             }
-                                            fn.apply(obj, e);
+                                            fn.apply(_find(action.split('.')[0], _model), [obj, e]);
                                             fn = null;
                                             action = null;
                                             obj = null;

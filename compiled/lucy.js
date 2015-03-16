@@ -2775,7 +2775,7 @@ Math Related cached functions
         cores: $cores
     };
     //useragent info plus mobile
-    $.agent = {};
+    var _agentinfo = $.agent = {};
     //acid platform information
     $.acid = {
         //lib name
@@ -2800,40 +2800,40 @@ Math Related cached functions
             len = list.length,
             addcls = [];
 
-        $.sys.agent.string = str.toLowerCase();
+        var agent = _agentinfo;
+
+        agent.string = str.toLowerCase();
 
         for (var i = 0; i < len; i++) {
             var item = list[i];
-            $.sys.agent[item] = _has(str, item);
+            agent[item] = _has(str, item);
         }
 
-        var agent = $.sys.agent;
-        for (var i = 0, keys = _object_keys(agent), len = keys.length; i < len; i++) {
-            var key = keys[i];
-            var item = agent[key];
+        _each_object(agent, function (item, key) {
             if (key == 'string') {
-                continue;
+                return;
             }
             if (key == 'mobile') {
                 if (!item) {
                     addcls.push('desktop');
-                    continue;
+                    return;
                 }
             }
             if (item) {
                 addcls.push(key);
             }
-        }
+        });
 
-        var len = addcls.length,
-            cl = _body.classList;
+        var cl = document.body.classList;
 
-        for (var i = 0; i < len; i++) {
-            cl.add(addcls[i]);
-        }
+        _each_array(addcls, function (item) {
+            cl.add(item);
+        });
 
         return false;
     };
+
+    _isDocumentReady(_agentInfo);
     (function () {
         var userConfig = $.cache.config = {};
         var config = function () {
@@ -2987,17 +2987,17 @@ Math Related cached functions
                             root = action.split('.')[0],
                             ismodel = _find(action, $.model);
                         if (ismodel) {
-                            ismodel(obj, e);
+                            ismodel.apply(_find(action.split('.')[0], _model), [obj, e]);
                         } else {
                             (function (action, analytics, obj, e, type) {
                                 _ensure(root, function () {
                                     if (action) {
-                                        var fn = _find(action, $.model);
+                                        var fn = _find(action, _model);
                                         if (fn) {
                                             if ($debug) {
                                                 console.log(action);
                                             }
-                                            fn.apply(obj, e);
+                                            fn.apply(_find(action.split('.')[0], _model), [obj, e]);
                                             fn = null;
                                             action = null;
                                             obj = null;

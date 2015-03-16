@@ -13,7 +13,7 @@ $.hardware = {
 	cores: $cores
 };
 //useragent info plus mobile
-$.agent = {};
+var _agentinfo = $.agent = {};
 //acid platform information
 $.acid = {
 	//lib name

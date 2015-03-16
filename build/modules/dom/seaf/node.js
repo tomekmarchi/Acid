@@ -95,8 +95,8 @@ var nodeOnly = {
 		return _upTo(this, name);
 	},
 	//copynode
-	copy: function (bool) {
-		return _copy(this, bool);
+	clone: function (bool) {
+		return _clone(this, bool);
 	},
 	//center object
 	center: function (data) {

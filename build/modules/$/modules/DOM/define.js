@@ -7,8 +7,7 @@ var _define=$.define=(function(){
 			return false;
 		},
 		define=function(methods,fn){
-			_module(methods,fn,callback);
-			return false;
+			return _module(methods,fn,callback)();
 		};
 
 	//export
@@ -19,11 +18,11 @@ var _define=$.define=(function(){
 	Example
 
 	//function to be defined
-	var define=function(template,model,toDOM,isNative,console,api){
+	var define=function(template,model,toDOM,isNative,console){
 		console(arguments);
 	},
 	//definitions for variables
-	require=['template','model','toDOM','isNative','console','docs/api.js'];
+	require=['template','model','toDOM','isNative','console'];
 
 	// Define our function
 	//NOTE: executes once resources are loaded

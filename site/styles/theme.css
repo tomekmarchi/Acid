@@ -14,7 +14,7 @@ body{
 }
 
 .container_minus_navbar{
-	background-image: linear-gradient(to bottom,rgba(255,255,255,0.7) 50%,rgba(140,140,140,0.1) 100%),url('imgs/noise.png');
+	background-image: url('imgs/noise.png');
 }
 
 h1,h2,h3,h4,h5,h6,h7{

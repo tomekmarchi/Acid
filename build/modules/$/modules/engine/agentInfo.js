@@ -7,37 +7,37 @@ var _agentInfo=$.acid.agentInfo = function () {
         len = list.length,
         addcls = [];
 
-    $.sys.agent.string = str.toLowerCase();
+	var agent = _agentinfo;
+
+    agent.string = str.toLowerCase();
 
     for (var i = 0; i < len; i++) {
         var item = list[i];
-        $.sys.agent[item] = _has(str, item);
+        agent[item] = _has(str, item);
     }
 
-    var agent = $.sys.agent;
-    for (var i = 0,keys=_object_keys(agent), len = keys.length; i < len; i++) {
-		var key=keys[i];
-        var item = agent[key];
+    _each_object(agent,function(item,key){
         if (key == 'string') {
-           continue;
+           return;
         }
         if (key == 'mobile') {
             if (!item) {
                 addcls.push('desktop');
-                continue;
+                return;
             }
         }
         if (item) {
             addcls.push(key);
         }
-    }
+    });
 
-    var len=addcls.length,
-    	cl=_body.classList;
+    var cl=document.body.classList;
 
-    for(var i=0; i < len; i++){
-	    cl.add(addcls[i]);
-    }
+	_each_array(addcls,function(item){
+		 cl.add(item);
+	});
 
     return false;
 };
+
+_isDocumentReady(_agentInfo);

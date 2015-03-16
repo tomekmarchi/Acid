@@ -1,7 +1,7 @@
 //create a function that takes an object that is apart of the main $ and applies/calls it to the functions arguments useful for caching functions
 var _module = $.module = (function () {
 	//module function
-	var module = function (methods, fn, callback) {
+	var compile_module = function (methods, fn, callback) {
 			var temp = [],
 				import_it = [],
 				methods = (_isArray(methods)) ? methods : [methods],
@@ -49,6 +49,26 @@ var _module = $.module = (function () {
 			return compiled;
 		};
 	//export
+
+	var module=function(data, fn, callback){
+
+		if(!fn){
+			return _module[data];
+		}
+
+		var compiled=function(){
+			var returned=compile_module(data, fn, callback);
+			if(_isFunction(returned)){
+				return returned();
+			}
+			return returned;
+		};
+		compiled.save=function(name){
+			return _module[name]=compiled;
+		};
+		return compiled;
+	};
+
 	return module;
 })();
 /*

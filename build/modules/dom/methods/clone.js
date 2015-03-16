@@ -1,4 +1,4 @@
 //copynode
-var _copy = function (node, bool) {
+var _clone = function (node, bool) {
 	return node.cloneNode(bool);
 };

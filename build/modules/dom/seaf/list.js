@@ -147,7 +147,7 @@ var listOnly = {
 	//transverse up based on a match or number
 	upTo:generate_loop_single_return(_upTo),
 	//copynode
-	copy:generate_loop_single_return(_copy),
+	copy:generate_loop_single_return(_clone),
 	//center object
 	center:generate_loop_single_return(_center),
 	html:generate_loop_single_return(_html),

@@ -158,16 +158,17 @@
 			//console.log it
 			$.console('Module Callback - All resources loaded -> launched in async');
 		};
+	//acid modules you would like to be defined and models you would like to load
+	var define = [];
+	//push acid functions to define
+	define.push.apply(define,['isNative', 'isFunction', 'template', 'cache', 'todom', 'model', 'frag', 'service', 'serviceCreate', 'view', 'ensure', 'console']);
+	//push files needed to be loaded
+	define.push.apply(define,['docs/api.js', 'plugins/reserve.js', 'plugins/art.js', 'plugins/tip.js', 'templates/template.js']);
+	//module is used to import modules from the main function $ for repeated use inside a function also is performant based it will return a module
+	//module_callback is optional if not supplied app will be launched as a callback
+	$.module(define, app, module_callback).save('coreReady');
 	$.model('core', function () {
-		//acid modules you would like to be defined and models you would like to load
-		var define = [];
-		//push acid functions to define
-		define.push.apply(define,['isNative', 'isFunction', 'template', 'cache', 'todom', 'model', 'frag', 'service', 'serviceCreate', 'view', 'ensure', 'console']);
-		//push files needed to be loaded
-		define.push.apply(define,['docs/api.js', 'plugins/reserve.js', 'plugins/art.js', 'plugins/tip.js', 'templates/template.js']);
-		//module is used to import modules from the main function $ for repeated use inside a function also is performant based it will return a module
-		//module_callback is optional if not supplied app will be launched as a callback
-		$.module(define, app, module_callback);
+		$.module('coreReady')();
 		//core function executed
 		$.console('CORE INITILIZED');
 	}, true); //lean model with true set meaning no model methods attached

@@ -1,7 +1,7 @@
 //Get useragent info
 $.isAgent=function(name){
 	if(!name){
-		return $.agent;
+		return _agentinfo;
 	}
-	return $.agent[name];
+	return _agentinfo[name];
 };

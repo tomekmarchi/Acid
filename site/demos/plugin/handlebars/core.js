@@ -2,7 +2,7 @@
 
 	//core module
 	var required = ['hb', '../../../scripts/models/css/css.js', '../../../scripts/models/libs/hl.js'],
-		module = function (hb, css, hl) {
+		module = $.module(required, function (hb, css, hl) {
 			$.promise(['css', 'hl'], 'payload', function () {
 				var template = hb.compile('<div class="pad_box"><h1>{{title}}</h1><div class="body">{{body}}</div></div>');
 				var context = {
@@ -14,9 +14,10 @@
 			});
 			css('css', 'payload');
 			hl('hl', 'payload');
-		};
+		});
+
 	$.promise(['plugins', 'core'], 'appReady', function () {
-		$.module(required, module); //launched in async
+		module(); //launched in async
 	});
 	$.plugin({
 		Handlebars: {

@@ -24,14 +24,23 @@ var _ison = function (node, n) {
 	},
 	//quick changes
 	_hide = function (node) { //hide class toggle
-		node.classList.add('hide');
+		node.style.display='none';
 		return node;
 	},
 	_show = function (node) { //show class toggle
-		node.classList.remove('hide');
+		node.style.display='';
 		return node;
 	},
-	_toggle = function (node, i) {
-		node.classList.toggle(i || 'hide');
+	_toggle = function (node, classname) {
+		if(classname){
+			node.classList.toggle(classname);
+		}else{
+			var display=node.style.display;
+			if(display=='none'){
+				node.style.display='';
+			}else {
+				node.style.display='none';
+			}
+		}
 		return node;
 	};

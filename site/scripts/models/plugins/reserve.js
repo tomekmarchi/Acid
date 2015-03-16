@@ -1,6 +1,7 @@
 (function () {
 	"use strict";
 	var frag = $.frag,
+		column_node=$.tag('div').cn('left column max-full'),
 		math_random = Math.random,
 		add_items = function (self, posts, type, columns) {
 			if (self.column_number == 1) {
@@ -47,7 +48,7 @@
 				items_len = [],
 				items = [];
 			for (var i = 0; i < column_number; i++) {
-				html.appendChild($.tag('div').cn('left column column_' + i + ' max-full').attr('style', 'width:' + cls + '%'));
+				html.appendChild(column_node.clone().cl('column_' + i).attr('style', 'width:' + cls + '%'));
 				out[i] = [];
 				data[i] = [];
 				empty[i] = [];
@@ -67,11 +68,11 @@
 				item_width = data.item_width_min,
 				optimal_max = data.optimal_max,
 				optimal_min = data.optimal_min;
-			if (data.column_number == 1) {
+			if (data.column_number) {
 				var column_number = 1,
-					cls = 100;
+					cls = 100/column_number;
 			} else {
-				var column_number = 2,
+				var column_number = 1,
 					possible = [];
 				while (column_number) {
 					var wrap_test = width / column_number;

@@ -289,6 +289,10 @@
 			descrip: 'Ensure a model is loaded',
 			example: '$.ensure(\'plugins/tip\')'
 		},
+		ensureInvoke:{
+			descrip: 'Ensure a model is loaded and invoke the model if it is a function ASAP',
+			example: '$.ensureInvoke(\'modelLocation\')'
+		},
 		exec: {
 			descrip: 'execCommand',
 			example: '$.exec(String aCommandName, Boolean aShowDefaultUI, String aValueArgument)'
@@ -358,8 +362,12 @@
 			example: '$.view(name,template_node,function)'
 		},
 		module: {
-			descrip: 'Creates a module takes acid ($[*]) methods as strings and uses them as arguments in function',
-			example: '$.module(\'model\',function(model){ console.log(model);});'
+			descrip: 'Creates a module takes [acid ($[*]) methods,css files,js files] as strings and uses them as arguments in a function. This returns a compiled function as a module.',
+			example: '$.module([\'model\',\'post.js\'],function(model,post){ console.log(model);},callback);'
+		},
+		define: {
+			descrip: 'Creates a module with ASAP execution.',
+			example: '$.define(\'model\',function(model){ console.log(model);});'
 		},
 		model: {
 			descrip: 'Set/get a Model',
@@ -374,6 +382,14 @@
 			example: 'obj.eventadd(type, listener[, useCapture])'
 		}
 	};
+
+	$.module.module={
+		'save': {
+			descrip: 'Get/Save a compiled module.',
+			example: '$.module([\'model\',\'post.js\'],function(model,post){ console.log(model);},callback).save(\'moduleName\'); $.module(\'moduleName\');'
+		}
+	};
+
 	//object prototype
 	$.model.api.object = {
 		clone: {

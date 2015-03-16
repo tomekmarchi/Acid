@@ -42,7 +42,8 @@ var _ensure = $.ensure =(function () {
 		_promise(array, name, function () {
 			for (var i = 0; i < array.length; i++) {
 				var item = array[i];
-					var model = _find(item.split('/').last().split('.')[0], _model);
+				var splitIt=item.split('/'),
+					model = _find(splitIt[splitIt.length-1].split('.js')[0], _model);
 					if (model) {
 						array_model[i]=model;
 					}
@@ -57,7 +58,8 @@ var _ensure = $.ensure =(function () {
 		//make imports
 		for (var i = 0; i < len; i++) {
 			(function (item, n) {
-				_import(item + '.js',{
+				var url=(_has(item,'.js'))? item:item + '.js';
+				_import(url,{
 					call: function () {
 						_promised(item, n);
 						item = null;
@@ -82,9 +84,15 @@ var _ensure = $.ensure =(function () {
 })();
 
 $.ensureInvoke=function(ensures){
+	var ensures=(_isArray(ensures))? ensures : [ensures];
 	_ensure(ensures,function(){
-		_each_array(_toArray(arguments),function(item){
-			item();
+		_each_array(ensures,function(item){
+			var splitIt=item.split('/'),
+				model = _find(splitIt[splitIt.length-1].split('.js')[0], _model);
+			if(model){
+				model();
+			}
 		});
+		ensures=null;
 	});
 };

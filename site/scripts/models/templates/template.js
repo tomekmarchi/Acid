@@ -1,6 +1,6 @@
 (function () {
 	//compact style module
-	$.module(['template', 'model', 'view', 'console'], function (template, model, view, console) {
+	$.define(['template', 'model', 'view', 'console'], function (template, model, view, console) {
 		/*
 
 			Create templates and faceplates
@@ -18,7 +18,7 @@
 			item.attr('id', data);
 		});
 		//api item template
-		view('item_method', '<li data-click="nav.go" class="griditem slow_2"><a data-mouseover="plugins/tip.show" data-mouseout="plugins/tip.hide"></a><span></span></li>', function (data, item) {
+		view('item_method', '<li data-click="nav.go" class="griditem slow_2"><a data-mouseover="plugins/tip.unpack"></a><span></span></li>', function (data, item) {
 			item.firstChild.tc(data.name).attr('data-tooltip', data.example || '');
 		});
 		//simple break line template
@@ -32,5 +32,6 @@
 		model('templates',{},true);
 		//end of function
 		return false;
-	})();
+	});
+
 })();

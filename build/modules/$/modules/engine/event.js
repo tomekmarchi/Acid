@@ -116,17 +116,17 @@
 						root = action.split('.')[0],
 						ismodel = _find(action, $.model);
 					if (ismodel) {
-						ismodel(obj, e);
+						ismodel.apply(_find(action.split('.')[0], _model), [obj,e]);
 					} else {
 						(function (action, analytics, obj, e, type) {
 							_ensure(root, function () {
 								if (action) {
-									var fn = _find(action, $.model);
+									var fn = _find(action, _model);
 									if (fn) {
 										if ($debug) {
 											console.log(action);
 										}
-										fn.apply(obj, e);
+										fn.apply(_find(action.split('.')[0], _model), [obj,e]);
 										fn = null;
 										action = null;
 										obj = null;
