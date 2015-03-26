@@ -1,6 +1,6 @@
 /**
  * ACID JS BETA.
- * @version 5.7
+ * @version 5.8
  * @author Thomas Marchi
  * @copyright 2014 Thomas Marchi
  * @acidjs.com
@@ -37,8 +37,10 @@
         _math = Math,
         //boolean object
         _boolean = Boolean,
+        //undefined cache
+        _undefined = undefined,
         //weakmap
-        weak_map = WeakMap,
+        weak_map = _global.WeakMap,
         new_weak_map = function () {
             return new weak_map();
         },
@@ -47,10 +49,10 @@
         //number
         number_object = Number,
         //worker object
-        _worker = Worker,
+        _worker = _global.Worker,
         //web socket
-        _socket = WebSocket,
-        _RAF = requestAnimationFrame,
+        _socket = _global.WebSocket,
+        _RAF = _global.requestAnimationFrame,
         //storage
         //local
         _localstorage = localStorage,
@@ -232,18 +234,23 @@
             return obj === undefined;
         },
         //is NaN
-        isNaN = isNaN,
+        _isNaN = (isNaN) ? isNaN : number_object.isNaN,
+        //is int
+        _isInt = (number_object.isInteger) ? number_object.isInteger : function (num) {
+            if (num % 1 === 0) {
+                return true;
+            }
+            return false;
+        },
         //is equal to null
         isNull = function (obj) {
             return obj === null;
         },
         isFinite = isFinite,
         //check if object is array returns true or false
-        _isArray = (function (_array) {
-            return function (a) {
-                return a instanceof _array
-            };
-        })(_array),
+        _isArray = function (object) {
+            return object instanceof _array
+        },
         //checks to see if is string returns true or false
         _isString = function (obj) {
             return (hasValue(obj)) ? obj.constructor === _string : false;
@@ -321,6 +328,20 @@
             var key = keys[i];
             //call function get result
             results[key] = fn(object[key], key, object);
+        }
+        return results;
+    };
+    //loop through based on number
+    var _each_number = function (start, end, fn) {
+        if (!fn) {
+            var fn = end;
+            var end = start;
+            var start = 0;
+        }
+        var results = [];
+        for (; start < end; start++) {
+            //call function get result
+            results[start] = fn(start);
         }
         return results;
     };
@@ -781,6 +802,9 @@ This is for finding an object method via a string used througout events
         };
     //initialize array object for array prototype
     var array_extend = {};
+    array_extend.pushApply = function (array) {
+        return _array_push.apply(this, array);
+    };
     //Creates an array of elements split into groups the length of size. If collection can't be split evenly, the final chunk will be the remaining elements.
     array_extend.chunk = function (max) {
         var array = this,
@@ -1202,7 +1226,7 @@ right will just allow you to reverse the order of the args
             i = 0,
             len = temp.length;
         while (i < len) {
-            array.push(temp.splice(Math.round(Math.random() * temp.length), 1)[0]);
+            array.push(temp.splice(Math.round(Math.random() * (temp.length - 1)), 1)[0]);
             i++;
         }
         return array;
@@ -1378,6 +1402,13 @@ STRING Prototype object
 */
     //initialize
     var string_extend = {};
+
+    var rawURLDecode_regex = /%(?![\da-f]{2})/gi,
+        and_regex = /&/g,
+        less_than_regex = /</g,
+        more_than_regex = />/g,
+        double_quote_regex = /"/g,
+        slash_regex = /\//g;
     //get characters in a range in a string
     string_extend.range = function (start, end, insert) {
         var text = this,
@@ -1443,13 +1474,13 @@ STRING Prototype object
     };
     //raw URL encode
     string_extend.rawURLDecode = function () {
-        return decodeURIComponent((this + '').replace(/%(?![\da-f]{2})/gi, function () {
+        return decodeURIComponent((this + '').replace(rawURLDecode_regex, function () {
             return '%25';
         }));
     };
     //html entities
     string_extend.htmlEntities = function () {
-        return this.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        return this.replace(and_regex, '&amp;').replace(less_than_regex, '&lt;').replace(more_than_regex, '&gt;').replace(double_quote_regex, '&quot;').replace(slash_regex, '&quot;');
     };
     //decode then htmlentities
     string_extend.sanitize = function () {
@@ -1462,6 +1493,21 @@ STRING Prototype object
     //encode URI Component
     string_extend.euc = function () {
         return encodeURIComponent(this);
+    };
+
+    //encode URI Component
+    string_extend.unescapeHTML = function () {
+        var empty = _empty_node_div;
+        empty.innerHTML = this;
+        return empty.textContent;
+    };
+    //tokenize split by groups of characters that are not whitespace
+    string_extend.tokenize = function () {
+        return this.match(/\S+/g) || [];
+    };
+    //match by alphanumeric+underscore
+    string_extend.words = function () {
+        return this.match(/\w+/g);
     };
     //uppercase first letter lower case the rest
     string_extend.ucFirst = function () {
@@ -1994,13 +2040,33 @@ rearg(1,2,3);
     };
     //initilize number for Number prototype
     var number_extend = {};
+    //loop through a range of numbers
+    number_extend.each = function (start, funct) {
+        var end = this;
+        if (!funct) {
+            var funct = start;
+            var start = 0;
+        }
+        var returned = _each_number(start, end, funct);
+        return returned;
+    };
+
     //is number zero
     number_extend.isZero = function () {
         return this === 0;
     };
-    //
-    number_extend.isEqual = function (i) {
-        return this === i;
+    //is strict equal to
+    number_extend.isEqual = function (num) {
+        return this === num;
+    };
+    //is In range of two numbers
+    number_extend.isInRange = function (start, end) {
+        var num = this;
+        if (end === _undefined) {
+            var end = start;
+            var start = 0;
+        }
+        return num > start && num < end;
     };
     //Math.js math utilities
     (function () {
@@ -2176,11 +2242,17 @@ rearg(1,2,3);
         };
         //Returns a random number between min (inclusive) and max (exclusive)
         number_extend.randomArbitrary = function (min) {
+            if (!min) {
+                var min = 0;
+            }
             return random() * (this - min) + min;
         };
         // Returns a random integer between min (included) and max (excluded)
         // Using Math.round() will give you a non-uniform distribution!
         number_extend.randomInt = function (min) {
+            if (!min) {
+                var min = 0;
+            }
             return floor(random() * (this - min)) + min;
         };
         //random wrapper
@@ -2661,6 +2733,20 @@ rearg(1,2,3);
 
     //console.log
     $.console = _console;
+    var _each = $.each = (function () {
+        function each(object, funct) {
+            if (_isArray(object)) {
+                var returned = _each_array(object, funct);
+            } else if (isPlainObject(object)) {
+                var returned = _each_object(object, funct);
+            } else if (isNumber(object)) {
+                var returned = _each_number(object, funct);
+            }
+            return returned;
+        }
+
+        return each;
+    })();
     //add event
     $.eventAdd = function (obj, name, func, capture) {
         return $eventadd(obj, name, func, capture);
@@ -2703,7 +2789,8 @@ rearg(1,2,3);
     $.isUnit32 = isUnit32;
     $.isNative = isNative;
     $.isUndefined = isUndefined;
-    $.isNaN = isNaN;
+    $.isNaN = _isNaN;
+    $.isInt = _isInt;
     $.isNull = isNull;
     $.isEmpty = isEmpty;
     //convert from json string to json object cache it to use across lib
@@ -2781,7 +2868,7 @@ Math Related cached functions
         //lib name
         name: 'ACID',
         //lib version
-        version: 5.7,
+        version: 5.8,
         //platform type
         platform: 'development',
         //website

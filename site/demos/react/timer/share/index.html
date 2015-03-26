@@ -11,7 +11,7 @@
 
 		var Timer=$.reactModel('Timer', {
 			template: function(){
-				return '<span acid="timer" class="slideinft left pad_box">'+this.share.secondsElapsed+'</span>';
+				return '<span data-node="timer" class="slideinft left pad_box">'+this.share.secondsElapsed+'</span>';
 			},
 			data: {
 				secondsElapsed:0

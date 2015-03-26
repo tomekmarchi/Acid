@@ -2,10 +2,10 @@
 var _id = function (node, n) {
 	return node.getElementById(n);
 },
-_cls = function (node, n) {
+_clsDOM = function (node, n) {
 	return node.getElementsByClassName(n);
 },
-_tag = function (node, n) {
+_tagDOM = function (node, n) {
 	return node.getElementsByTagName(n);
 },
 _qsa = function (node, n) {

@@ -9,9 +9,9 @@ var _val = function (node, n) {
 	}
 	return node.value;
 },
-_sty = function (node, n) {
-	if (hasValue(n)) {
-		node.style = n;
+_sty = function (node, attr , value) {
+	if (hasValue(value)) {
+		node.style[attr] = value;
 		return node;
 	}
 	return node.style;

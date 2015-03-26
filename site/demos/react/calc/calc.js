@@ -23,7 +23,7 @@
 			this.data.addList.push.apply(this.data.addList,number);
 		},
 		template: '<div>\
-		Result: <span acid="result"></span>\
+		Result: <span data-node="result"></span>\
 		<br />To add type this into console calcfn.add(2,3)\
 		</div>'
 	});

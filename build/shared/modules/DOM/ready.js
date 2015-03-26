@@ -1,6 +1,6 @@
 var _isDocumentReady=function(func){
 	var state=document.readyState;
-	if(state=='interactive' || state=='completed'){
+	if(state=='interactive' || state=='completed' || state=='complete'){
 		if(func){
 			func();
 		}

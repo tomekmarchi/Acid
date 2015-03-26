@@ -172,11 +172,17 @@
 	};
 	//Returns a random number between min (inclusive) and max (exclusive)
 	number_extend.randomArbitrary = function (min) {
+		if(!min){
+			var min=0;
+		}
 		return random() * (this - min) + min;
 	};
 	// Returns a random integer between min (included) and max (excluded)
 	// Using Math.round() will give you a non-uniform distribution!
 	number_extend.randomInt = function (min) {
+		if(!min){
+			var min=0;
+		}
 		return floor(random() * (this - min)) + min;
 	};
 	//random wrapper

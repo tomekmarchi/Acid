@@ -105,18 +105,23 @@
 			return obj === undefined;
 		},
 		//is NaN
-		isNaN = isNaN ,
+		_isNaN = (isNaN)? isNaN : number_object.isNaN ,
+		//is int
+		_isInt=(number_object.isInteger)? number_object.isInteger :  function(num){
+			if(num % 1 === 0){
+		      return true;
+		    }
+		    return false;
+		},
 		//is equal to null
 		isNull = function (obj) {
 			return obj === null;
 		},
 		isFinite= isFinite,
 		//check if object is array returns true or false
-		_isArray = (function (_array) {
-			return function (a) {
-				return a instanceof _array
-			};
-		})(_array),
+		_isArray = function (object) {
+				return object instanceof _array
+		},
 		//checks to see if is string returns true or false
 		_isString = function (obj) {
 			return (hasValue(obj)) ? obj.constructor === _string : false;

@@ -2,7 +2,7 @@
 	//core model used for onready
 	$.model('core', function () {
 		var Timer=$.reactModel('Timer', {
-			template: '<div>Seconds Elapsed: <span acid="timer"></span></div>',
+			template: '<div>Seconds Elapsed: <span data-node="timer"></span></div>',
 			componentMount: function () {
 				this.interval = setInterval(this.tick, 1000);
 			},

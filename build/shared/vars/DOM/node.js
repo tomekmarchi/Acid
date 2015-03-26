@@ -20,3 +20,6 @@ var acid_lib = _document.getElementById('acid-lib'),
 	_body={},
 	//cache document head
 	head_node = _document.getElementsByTagName('head')[0];
+
+//cache div for DOM functions
+var _empty_node_div = _createElement.call(_document,'div');

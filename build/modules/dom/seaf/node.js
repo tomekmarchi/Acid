@@ -63,10 +63,10 @@ var nodeOnly = {
 		return _id(this, n);
 	},
 	cls: function (n) {
-		return _cls(this, n);
+		return _clsDOM(this, n);
 	},
 	tag: function (n) {
-		return _tag(this, n);
+		return _tagDOM(this, n);
 	},
 	qsa: function (n) {
 		return _qsa(this, n);
@@ -129,8 +129,8 @@ var nodeOnly = {
 	val: function (n) {
 		return _val(this, n);
 	},
-	sty: function (n) {
-		return _sty(this, n);
+	sty: function (attr,value) {
+		return _sty(this, attr,value);
 	},
 	sel: function (n) {
 		return _sel(this, n);

@@ -1,6 +1,6 @@
 /**
  * ACID JS BETA.
- * @version 5.7
+ * @version 5.8
  * @author Thomas Marchi
  * @copyright 2014 Thomas Marchi
  * @acidjs.com
@@ -37,8 +37,10 @@
         _math = Math,
         //boolean object
         _boolean = Boolean,
+        //undefined cache
+        _undefined = undefined,
         //weakmap
-        weak_map = WeakMap,
+        weak_map = _global.WeakMap,
         new_weak_map = function () {
             return new weak_map();
         },
@@ -47,10 +49,10 @@
         //number
         number_object = Number,
         //worker object
-        _worker = Worker,
+        _worker = _global.Worker,
         //web socket
-        _socket = WebSocket,
-        _RAF = requestAnimationFrame,
+        _socket = _global.WebSocket,
+        _RAF = _global.requestAnimationFrame,
         //storage
         //local
         _localstorage = localStorage,
@@ -150,6 +152,9 @@
         //cache document head
         head_node = _document.getElementsByTagName('head')[0];
 
+    //cache div for DOM functions
+    var _empty_node_div = _createElement.call(_document, 'div');
+
     //node prototype
     var node_prototype = node[$prototype],
         //nodelist prototype
@@ -158,19 +163,6 @@
         _Element_prototype = _Element[$prototype],
         //htmlcollection prototype
         htmlcollection_prototype = _htmlcollection[$prototype];
-    var _isDocumentReady = function (func) {
-        var state = document.readyState;
-        if (state == 'interactive' || state == 'completed') {
-            if (func) {
-                func();
-            }
-            return true;
-        }
-        if (func) {
-            $eventadd(document, "DOMContentLoaded", func);
-        }
-        return false;
-    };
 /*
 	This is for object checking is or isnot
 	*/
@@ -278,18 +270,23 @@
             return obj === undefined;
         },
         //is NaN
-        isNaN = isNaN,
+        _isNaN = (isNaN) ? isNaN : number_object.isNaN,
+        //is int
+        _isInt = (number_object.isInteger) ? number_object.isInteger : function (num) {
+            if (num % 1 === 0) {
+                return true;
+            }
+            return false;
+        },
         //is equal to null
         isNull = function (obj) {
             return obj === null;
         },
         isFinite = isFinite,
         //check if object is array returns true or false
-        _isArray = (function (_array) {
-            return function (a) {
-                return a instanceof _array
-            };
-        })(_array),
+        _isArray = function (object) {
+            return object instanceof _array
+        },
         //checks to see if is string returns true or false
         _isString = function (obj) {
             return (hasValue(obj)) ? obj.constructor === _string : false;
@@ -367,6 +364,20 @@
             var key = keys[i];
             //call function get result
             results[key] = fn(object[key], key, object);
+        }
+        return results;
+    };
+    //loop through based on number
+    var _each_number = function (start, end, fn) {
+        if (!fn) {
+            var fn = end;
+            var end = start;
+            var start = 0;
+        }
+        var results = [];
+        for (; start < end; start++) {
+            //call function get result
+            results[start] = fn(start);
         }
         return results;
     };
@@ -534,7 +545,11 @@ This is for finding an object method via a string used througout events
         }
 
         if (_isString(name)) { //faster
-            var face = _faceplate[node.getAttribute(name)];
+            if (_has(name, 'data-')) {
+                var face = _faceplate[node.getAttribute(name)];
+            } else {
+                var face = _faceplate[name];
+            }
         } else { //fastest
             var face = name;
         }
@@ -546,6 +561,19 @@ This is for finding an object method via a string used througout events
     var $frag = function () {
         return _frag.call(_document);
     };
+    var _isDocumentReady = function (func) {
+        var state = document.readyState;
+        if (state == 'interactive' || state == 'completed' || state == 'complete') {
+            if (func) {
+                func();
+            }
+            return true;
+        }
+        if (func) {
+            $eventadd(document, "DOMContentLoaded", func);
+        }
+        return false;
+    };
     //checks for native remove function
     var isremovenative = (_Element_prototype.remove) ? true : false;
     //removes a node also checks if native is there
@@ -555,17 +583,29 @@ This is for finding an object method via a string used througout events
             par.removeChild(node);
         }
         var par = null;
-        return null;
-    };
-    var removeloop = function (node) {
-        node.remove();
-        return null;
+        return node;
     };
 
     var _removeNode = ($remove) ? $remove : function (node) {
-        node.remove();
+        return node.remove();
     };
 
+    var removeloop = function (node) {
+        return _removeNode(node);
+    };
+
+    var _removeRange = function (node, start, end) {
+        if (!end) {
+            var end = start,
+                start = 0;
+        }
+        var nodes = _toArray(node),
+            temp = [];
+        for (; start < end; start++) {
+            temp.push(_removeNode(nodes[start]));
+        }
+        return temp;
+    };
     //transverse up based on a match or number
     var _upTpParentLevel = function (node, i) {
         var i = (i) ? i : Number(node.getAttribute('data-lv')),
@@ -594,6 +634,420 @@ This is for finding an object method via a string used througout events
                 }
             }
             return node;
+        };
+    var afterNth = function (node, new_child, position) {
+        var child = node.children[position + 1];
+        if (!child) {
+            node.appendChild(new_child);
+        } else {
+            node.insertBefore(new_child, child);
+        }
+        return node;
+    };
+    var _append = function (node, child) {
+        node.appendChild(child);
+        return node;
+    };
+    //attr functions
+    var _hasAttr = function (node, n) {
+        return node.hasAttribute(n);
+    },
+        //set/get attribute
+        _attr = function (node, key, value) {
+            if (_isString(key)) {
+                if (hasValue(value)) {
+                    node.setAttribute(key, value);
+                } else {
+                    return node.getAttribute(key);
+                }
+            } else if (isPlainObject(key)) {
+                for (var i = 0, keys = _object_keys(key), len = keys.length; i < len; i++) {
+                    var keyed = keys[i];
+                    var item = key[keyed];
+                    node.setAttribute(keyed, item);
+                }
+            }
+            return node;
+        },
+        _removeAttr = function (node, n) {
+            node.removeAttribute(n);
+            return node;
+        };
+    var beforeNth = function (node, new_child, position) {
+        var child = node.children[position];
+        if (!child) {
+            node.appendChild(new_child);
+        } else {
+            node.insertBefore(new_child, child);
+        }
+        return node;
+    };
+    //center object
+    var _center = function (node, item) {
+        if (item) {
+            if (item === true) {
+                var item = node.parentNode;
+            }
+            var w = Number(item.offsetWidth),
+                h = Number(item.offsetHeight);
+        } else {
+            var w = Number(_cache.bodyWidth),
+                h = Number(_cache.bodyHeight);
+        }
+        var divW = node.offsetWidth,
+            divH = node.offsetHeight;
+        if (divH > h) {
+            node.style.position = '';
+            node.style.transform = node.style['-webkit-transform'] = '';
+        } else {
+            var left = parseInt((w - divW) / 2) + 'px',
+                top = parseInt((h - divH) / 2) + 'px';
+            node.style.position = 'absolute';
+            node.style.transform = node.style['-webkit-transform'] = 'translate3d(' + left + ',' + top + ',0)';
+        }
+        return node;
+    };
+    //change the tagname of a node and returns the a new node with the new tagname
+    var changeTag = function (node, tagename) {
+        var attrs = node.attributes,
+            object = {},
+            len = attrs.length;
+        for (var i = 0; i < len; i++) {
+            var item = attrs[i];
+            object[item.name] = item.value;
+        }
+        var attrs = null;
+        return _dom(tagename, {
+            attr: object
+        });
+    };
+/*
+METHODS FOR CLASS MODS
+*/
+    //classname
+    var _cn = function (node, n) {
+        if (hasValue(n)) {
+            node.className = n;
+            return node;
+        }
+        return node.className;
+    },
+        //classlist
+        _cl = function (node, args) {
+            var node_classList = node.classList;
+            if (args) {
+                if (!_isArray(args)) {
+                    if (!node_classList.contains(args)) {
+                        node_classList.add(args);
+                    }
+                } else {
+                    _each_array(args, function (item) {
+                        if (!node_classList.contains(item)) {
+                            node_classList.add(item);
+                        }
+                    });
+                }
+                return node;
+            }
+            return node_classList;
+        },
+        //classlist functions
+        _clHas = function (node, key) {
+            return node.classList.contains(key);
+        },
+        _clRemove = function (node, args) {
+            var node_classList = node.classList;
+            if (!_isArray(args)) {
+                if (node_classList.contains(args)) {
+                    node_classList.remove(args);
+                }
+            } else {
+                _each_array(args, function (item) {
+                    if (node_classList.contains(item)) {
+                        node_classList.remove(item);
+                    }
+                });
+            }
+            return node;
+        },
+        _clTog = function (node, args) {
+            var node_classList = node.classList;
+            if (!_isArray(args)) {
+                node_classList.toggle(args);
+            } else {
+                _each_array(args, function (item) {
+                    node_classList.toggle(item);
+                });
+            }
+            return node;
+        };
+
+    //clear
+    var _clear = function (node) {
+        while (node.firstChild) {
+            node.firstChild.remove();
+        }
+        return node;
+    };
+    var _clw = function (node) {
+        return node.clientWidth;
+    },
+        _clh = function (node) {
+            return node.clientHeight;
+        };
+    //copynode
+    var _clone = function (node, bool) {
+        return node.cloneNode(bool);
+    };
+    //btn + adding
+    var _ison = function (node, n) {
+        var cls = node.classList;
+        if (cls.contains('ison')) {
+            if (n) {
+                node.textContent = Number(node.textContent) - Number(n);
+            }
+            cls.remove('ison');
+        } else {
+            if (n) {
+                node.textContent = Number(node.textContent) + Number(n);
+            }
+            cls.add('ison');
+        }
+        return node;
+    },
+        _add = function (node, n) { //get number add 1 to it
+            node.textContent = Number(node.textContent) + Number(n || 1);
+            return node;
+        },
+        _sub = function (node, n) { //get number subtract 1
+            node.textContent = Number(node.textContent) - Number(n || 1);
+            return node;
+        },
+        //quick changes
+        _hide = function (node) { //hide class toggle
+            node.style.display = 'none';
+            return node;
+        },
+        _show = function (node) { //show class toggle
+            node.style.display = '';
+            return node;
+        },
+        _toggle = function (node, classname) {
+            if (classname) {
+                node.classList.toggle(classname);
+            } else {
+                var display = node.style.display;
+                if (display == 'none') {
+                    node.style.display = '';
+                } else {
+                    node.style.display = 'none';
+                }
+            }
+            return node;
+        };
+    var _html = function (node, n) {
+        if (hasValue(n)) {
+            if (_isFunction(n)) {
+                var n = n.apply(this, []);
+            }
+            node.innerHTML = n;
+            return node;
+        }
+        return node.innerHTML;
+    },
+        _ohtml = function (node, n) {
+            if (hasValue(n)) {
+                if (_isFunction(n)) {
+                    var n = n.apply(this, []);
+                }
+                node.outerHTML = n;
+                return node;
+            }
+            return node.outerHTML;
+        };
+    //insertAdjacentHTML
+    var _generate_insertAdjacentHTML = function (type) {
+        var returned = function (node, data) {
+            node.insertAdjacentHTML(type, data);
+            return node;
+        };
+        return returned;
+    },
+        _be = _generate_insertAdjacentHTML('beforeEnd'),
+        _ab = _generate_insertAdjacentHTML('afterbegin'),
+        _bb = _generate_insertAdjacentHTML('beforeBegin'),
+        _ae = _generate_insertAdjacentHTML('afterEnd');
+    var insertAfter = function (child, new_node) {
+        child.parentNode.insertBefore(new_node, child.nextSibling);
+        return new_node;
+    };
+    var insertBefore = function (child, new_node) {
+        child.parentNode.insertBefore(new_node, child);
+        return new_node;
+    };
+    var _next = function (node) {
+        return node.nextSibling;
+    };
+    //offsets
+    var _ow = function (node) {
+        return node.offsetWidth;
+    },
+        _oh = function (node) {
+            return node.offsetHeight;
+        },
+        _ot = function (node) {
+            return node.offsetTop;
+        },
+        _offset = function (node) {
+            var i = node.getBoundingClientRect();
+            var returned = {
+                top: i.top + _body.scrollTop,
+                left: i.left + _body.scrollLeft
+            };
+            return returned;
+        };
+    var _last = function (node) {
+        return node.lastChild;
+    },
+        _first = function (node) {
+            return node.firstChild;
+        };
+    var _parNode = function (node) {
+        return node.parentNode;
+    };
+    var _plugInto = function (node, string, object) {
+        var model = _find(string, _model);
+        if (model) {
+            return model(node, object);
+        } else {
+            _ensure(string, function () {
+                var model = _find(string, _model);
+                if (model) {
+                    model(node, object);
+                }
+                string = null;
+                object = null;
+                node = null;
+            });
+        }
+        return node;
+    };
+    var prepend = function (node, child) {
+        var first = node.firstChild;
+        if (first) {
+            node.insertBefore(child, first);
+        } else {
+            node.appendChild(child);
+        }
+        return node;
+    };
+    var _previous = function (node) {
+        return node.previousSibling;
+    };
+    //props
+    var _val = function (node, n) {
+        if (hasValue(n)) {
+            if (_isFunction(n)) {
+                var n = n.apply(this, []);
+            }
+            node.value = n;
+            return node;
+        }
+        return node.value;
+    },
+        _sty = function (node, attr, value) {
+            if (hasValue(value)) {
+                node.style[attr] = value;
+                return node;
+            }
+            return node.style;
+        },
+        _sel = function (node, n) {
+            if (n) {
+                node.selected = n;
+                return o;
+            }
+            return node.selected;
+        };
+    //replace a child node wrapper
+    var replaceChild = function (obj, born) {
+        obj.parentNode.replaceChild(born, obj);
+        return born;
+    };
+    //resets html good for clearing uploaded item
+    var _resetHTML = function (node) {
+        var obj = node.parentNode;
+        obj.innerHTML = obj.innerHTML;
+        return true;
+    };
+    //scroll this node
+    var scrollIt = function (node, x, y) {
+        if (hasValue(x)) {
+            node.scrollTop = x;
+        }
+        if (hasValue(y)) {
+            node.scrollLeft = y;
+        }
+        return node;
+    };
+    //scroll info
+    var scrollInfo = function (node) {
+        var returned = {
+            top: node.scrollTop,
+            left: node.scrollLeft
+        };
+        return returned;
+    };
+    //scroll
+    var scrollInto = function (node, node_to_scroll_into_view) {
+        node.scrollIntoView(node_to_scroll_into_view);
+        return node;
+    };
+    //select text in node
+    var selectIt = function (node) {
+        var range = document.createRange();
+        range.selectNodeContents(node);
+        var sel = _window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        return node;
+    };
+    //selectors
+    var _id = function (node, n) {
+        return node.getElementById(n);
+    },
+        _clsDOM = function (node, n) {
+            return node.getElementsByClassName(n);
+        },
+        _tagDOM = function (node, n) {
+            return node.getElementsByTagName(n);
+        },
+        _qsa = function (node, n) {
+            return node.querySelectorAll(n);
+        },
+        _qs = function (node, n) {
+            return node.querySelector(n);
+        };
+    //text
+    var _tc = function (node, n) {
+        if (hasValue(n)) {
+            if (_isFunction(n)) {
+                var n = n.apply(this, []);
+            }
+            node.textContent = n;
+            return node;
+        }
+        return node.textContent;
+    },
+        _txt = function (node, n) {
+            if (hasValue(n)) {
+                if (_isFunction(n)) {
+                    var n = n.apply(this, []);
+                }
+                node.innerText = n;
+                return node;
+            }
+            return node.innerText;
         };
 
     //store internal data for selectors
@@ -688,432 +1142,6 @@ This is for finding an object method via a string used througout events
         _global.$ = $;
     }
     var _domMethods = (function () {
-        var afterNth = function (node, new_child, position) {
-            var child = node.children[position + 1];
-            if (!child) {
-                node.appendChild(new_child);
-            } else {
-                node.insertBefore(new_child, child);
-            }
-            return node;
-        };
-        var _append = function (node, child) {
-            node.appendChild(child);
-            return node;
-        };
-        //attr functions
-        var _hasAttr = function (node, n) {
-            return node.hasAttribute(n);
-        },
-            //set/get attribute
-            _attr = function (node, key, value) {
-                if (_isString(key)) {
-                    if (hasValue(value)) {
-                        node.setAttribute(key, value);
-                    } else {
-                        return node.getAttribute(key);
-                    }
-                } else if (isPlainObject(key)) {
-                    for (var i = 0, keys = _object_keys(key), len = keys.length; i < len; i++) {
-                        var keyed = keys[i];
-                        var item = key[keyed];
-                        node.setAttribute(keyed, item);
-                    }
-                }
-                return node;
-            },
-            _removeAttr = function (node, n) {
-                node.removeAttribute(n);
-                return node;
-            };
-        var beforeNth = function (node, new_child, position) {
-            var child = node.children[position];
-            if (!child) {
-                node.appendChild(new_child);
-            } else {
-                node.insertBefore(new_child, child);
-            }
-            return node;
-        };
-        //center object
-        var _center = function (node, data) {
-            var item = obj.getAttribute('data-centerobj'),
-                itemname = item;
-            if (item) {
-                var wh = _cache.wh[itemname];
-                if (!wh) {
-                    var item = $(item);
-                    if (item.length) {
-                        var item = item[0];
-                    }
-                    var w = Number(item.offsetWidth.toString()),
-                        h = Number(item.offsetHeight.toString());
-                    if (h && w && item) {
-                        $.cache.wh[itemname] = [w, h];
-                    }
-                } else {
-                    var w = Number(wh[0]),
-                        h = Number(wh[1]);
-                }
-            } else {
-                var w = Number(_cache.body_width),
-                    h = Number(_cache.body_height);
-            }
-            var divW = node.offsetWidth,
-                divH = node.offsetHeight;
-            if (divH > h) {
-                obj.removeAttribute('style');
-            } else {
-                var left = parseInt((w - divW) / 2) + 'px',
-                    top = parseInt((h - divH) / 2) + 'px';
-                node.setAttribute("style", 'position:absolute;\
-	-webkit-transform:translate3d(' + left + ',' + top + ',0);\
-	transform:translate3d(' + left + ',' + top + ',0)');
-            }
-            return node;
-        };
-        //change the tagname of a node and returns the a new node with the new tagname
-        var changeTag = function (node, tagename) {
-            var attrs = node.attributes,
-                object = {},
-                len = attrs.length;
-            for (var i = 0; i < len; i++) {
-                var item = attrs[i];
-                object[item.name] = item.value;
-            }
-            var attrs = null;
-            return _dom(tagename, {
-                attr: object
-            });
-        };
-/*
-METHODS FOR CLASS MODS
-*/
-        //classname
-        var _cn = function (node, n) {
-            if (hasValue(n)) {
-                node.className = n;
-                return node;
-            }
-            return node.className;
-        },
-            //classlist
-            _cl = function (node, args) {
-                var node_classList = node.classList;
-                if (args) {
-                    if (!_isArray(args)) {
-                        if (!node_classList.contains(args)) {
-                            node_classList.add(args);
-                        }
-                    } else {
-                        _each_array(args, function (item) {
-                            if (!node_classList.contains(item)) {
-                                node_classList.add(item);
-                            }
-                        });
-                    }
-                    return node;
-                }
-                return node_classList;
-            },
-            //classlist functions
-            _clHas = function (node, key) {
-                return node.classList.contains(key);
-            },
-            _clRemove = function (node, args) {
-                var node_classList = node.classList;
-                if (!_isArray(args)) {
-                    if (node_classList.contains(args)) {
-                        node_classList.remove(args);
-                    }
-                } else {
-                    _each_array(args, function (item) {
-                        if (node_classList.contains(item)) {
-                            node_classList.remove(item);
-                        }
-                    });
-                }
-                return node;
-            },
-            _clTog = function (node, args) {
-                var node_classList = node.classList;
-                if (!_isArray(args)) {
-                    node_classList.toggle(args);
-                } else {
-                    _each_array(args, function (item) {
-                        node_classList.toggle(item);
-                    });
-                }
-                return node;
-            };
-
-        //clear
-        var _clear = function (node) {
-            while (node.firstChild) {
-                node.firstChild.remove();
-            }
-            return node;
-        };
-        var _clw = function (node) {
-            return node.clientWidth;
-        },
-            _clh = function (node) {
-                return node.clientHeight;
-            };
-        //copynode
-        var _clone = function (node, bool) {
-            return node.cloneNode(bool);
-        };
-        //btn + adding
-        var _ison = function (node, n) {
-            var cls = node.classList;
-            if (cls.contains('ison')) {
-                if (n) {
-                    node.textContent = Number(node.textContent) - Number(n);
-                }
-                cls.remove('ison');
-            } else {
-                if (n) {
-                    node.textContent = Number(node.textContent) + Number(n);
-                }
-                cls.add('ison');
-            }
-            return node;
-        },
-            _add = function (node, n) { //get number add 1 to it
-                node.textContent = Number(node.textContent) + Number(n || 1);
-                return node;
-            },
-            _sub = function (node, n) { //get number subtract 1
-                node.textContent = Number(node.textContent) - Number(n || 1);
-                return node;
-            },
-            //quick changes
-            _hide = function (node) { //hide class toggle
-                node.style.display = 'none';
-                return node;
-            },
-            _show = function (node) { //show class toggle
-                node.style.display = '';
-                return node;
-            },
-            _toggle = function (node, classname) {
-                if (classname) {
-                    node.classList.toggle(classname);
-                } else {
-                    var display = node.style.display;
-                    if (display == 'none') {
-                        node.style.display = '';
-                    } else {
-                        node.style.display = 'none';
-                    }
-                }
-                return node;
-            };
-        var _html = function (node, n) {
-            if (hasValue(n)) {
-                if (_isFunction(n)) {
-                    var n = n.apply(this, []);
-                }
-                node.innerHTML = n;
-                return node;
-            }
-            return node.innerHTML;
-        },
-            _ohtml = function (node, n) {
-                if (hasValue(n)) {
-                    if (_isFunction(n)) {
-                        var n = n.apply(this, []);
-                    }
-                    node.outerHTML = n;
-                    return node;
-                }
-                return node.outerHTML;
-            };
-        //insertAdjacentHTML
-        var _generate_insertAdjacentHTML = function (type) {
-            var returned = function (node, data) {
-                node.insertAdjacentHTML(type, data);
-                return node;
-            };
-            return returned;
-        },
-            _be = _generate_insertAdjacentHTML('beforeEnd'),
-            _ab = _generate_insertAdjacentHTML('afterbegin'),
-            _bb = _generate_insertAdjacentHTML('beforeBegin'),
-            _ae = _generate_insertAdjacentHTML('afterEnd');
-        var insertAfter = function (child, new_node) {
-            child.parentNode.insertBefore(new_node, child.nextSibling);
-            return new_node;
-        };
-        var insertBefore = function (child, new_node) {
-            child.parentNode.insertBefore(new_node, child);
-            return new_node;
-        };
-        var _next = function (node) {
-            return node.nextSibling;
-        };
-        //offsets
-        var _ow = function (node) {
-            return node.offsetWidth;
-        },
-            _oh = function (node) {
-                return node.offsetHeight;
-            },
-            _ot = function (node) {
-                return node.offsetTop;
-            },
-            _offset = function (node) {
-                var i = node.getBoundingClientRect();
-                var returned = {
-                    top: i.top + _body.scrollTop,
-                    left: i.left + _body.scrollLeft
-                };
-                return returned;
-            };
-        var _last = function (node) {
-            return node.lastChild;
-        },
-            _first = function (node) {
-                return node.firstChild;
-            };
-        var _parNode = function (node) {
-            return node.parentNode;
-        };
-        var _plugInto = function (node, string, object) {
-            var model = _find(string, _model);
-            if (model) {
-                return model(node, object);
-            } else {
-                _ensure(string, function () {
-                    var model = _find(string, _model);
-                    if (model) {
-                        model(node, object);
-                    }
-                    string = null;
-                    object = null;
-                    node = null;
-                });
-            }
-            return node;
-        };
-        var prepend = function (node, child) {
-            var first = node.firstChild;
-            if (first) {
-                node.insertBefore(child, first);
-            } else {
-                node.appendChild(child);
-            }
-            return node;
-        };
-        var _previous = function (node) {
-            return node.previousSibling;
-        };
-        //props
-        var _val = function (node, n) {
-            if (hasValue(n)) {
-                if (_isFunction(n)) {
-                    var n = n.apply(this, []);
-                }
-                node.value = n;
-                return node;
-            }
-            return node.value;
-        },
-            _sty = function (node, n) {
-                if (hasValue(n)) {
-                    node.style = n;
-                    return node;
-                }
-                return node.style;
-            },
-            _sel = function (node, n) {
-                if (n) {
-                    node.selected = n;
-                    return o;
-                }
-                return node.selected;
-            };
-        //replace a child node wrapper
-        var replaceChild = function (obj, born) {
-            obj.parentNode.replaceChild(born, obj);
-            return born;
-        };
-        //resets html good for clearing uploaded item
-        var _resetHTML = function (node) {
-            var obj = node.parentNode;
-            obj.innerHTML = obj.innerHTML;
-            return true;
-        };
-        //scroll this node
-        var scrollIt = function (node, x, y) {
-            if (hasValue(x)) {
-                node.scrollTop = x;
-            }
-            if (hasValue(y)) {
-                node.scrollLeft = y;
-            }
-            return node;
-        };
-        //scroll info
-        var scrollInfo = function (node) {
-            var returned = {
-                top: node.scrollTop,
-                left: node.scrollLeft
-            };
-            return returned;
-        };
-        //scroll
-        var scrollInto = function (node, node_to_scroll_into_view) {
-            node.scrollIntoView(node_to_scroll_into_view);
-            return node;
-        };
-        //select text in node
-        var selectIt = function (node) {
-            var range = document.createRange();
-            range.selectNodeContents(node);
-            var sel = _window.getSelection();
-            sel.removeAllRanges();
-            sel.addRange(range);
-            return node;
-        };
-        //selectors
-        var _id = function (node, n) {
-            return node.getElementById(n);
-        },
-            _cls = function (node, n) {
-                return node.getElementsByClassName(n);
-            },
-            _tag = function (node, n) {
-                return node.getElementsByTagName(n);
-            },
-            _qsa = function (node, n) {
-                return node.querySelectorAll(n);
-            },
-            _qs = function (node, n) {
-                return node.querySelector(n);
-            };
-        //text
-        var _tc = function (node, n) {
-            if (hasValue(n)) {
-                if (_isFunction(n)) {
-                    var n = n.apply(this, []);
-                }
-                node.textContent = n;
-                return node;
-            }
-            return node.textContent;
-        },
-            _txt = function (node, n) {
-                if (hasValue(n)) {
-                    if (_isFunction(n)) {
-                        var n = n.apply(this, []);
-                    }
-                    node.innerText = n;
-                    return node;
-                }
-                return node.innerText;
-            };
         //node only
         var nodeOnly = {
             isMatch: function (match_string) {
@@ -1179,10 +1207,10 @@ METHODS FOR CLASS MODS
                 return _id(this, n);
             },
             cls: function (n) {
-                return _cls(this, n);
+                return _clsDOM(this, n);
             },
             tag: function (n) {
-                return _tag(this, n);
+                return _tagDOM(this, n);
             },
             qsa: function (n) {
                 return _qsa(this, n);
@@ -1245,8 +1273,8 @@ METHODS FOR CLASS MODS
             val: function (n) {
                 return _val(this, n);
             },
-            sty: function (n) {
-                return _sty(this, n);
+            sty: function (attr, value) {
+                return _sty(this, attr, value);
             },
             sel: function (n) {
                 return _sel(this, n);
@@ -1477,13 +1505,16 @@ METHODS FOR CLASS MODS
             afterNth: generate_loop_nth(afterNth),
             beforeNth: generate_loop_nth(beforeNth),
             remove: generate_loop_return(removeloop),
+            splice: function (start, end) {
+                return _removeRange(this, start, end);
+            },
             resetHTML: generate_loop_return(_resetHTML),
             next: generate_loop_return(_next),
             previous: generate_loop_return(_previous),
             //selectors
             id: generate_loop_single_return(_id),
-            cls: generate_loop_single_return(_cls),
-            tag: generate_loop_single_return(_tag),
+            cls: generate_loop_single_return(_clsDOM),
+            tag: generate_loop_single_return(_tagDOM),
             qsa: generate_loop_single_return(_qsa),
             qs: generate_loop_single_return(_qs),
             //class functions
@@ -1510,7 +1541,7 @@ METHODS FOR CLASS MODS
             first: generate_loop_return(_first),
             //props
             val: generate_loop_single_return(_val),
-            sty: generate_loop_single_return(_sty),
+            sty: generate_loop_return_triple(_sty),
             sel: generate_loop_single_return(_sel),
             //offsets
             ow: generate_loop_return(_ow),
@@ -1870,6 +1901,9 @@ METHODS FOR CLASS MODS
         };
     //initialize array object for array prototype
     var array_extend = {};
+    array_extend.pushApply = function (array) {
+        return _array_push.apply(this, array);
+    };
     //Creates an array of elements split into groups the length of size. If collection can't be split evenly, the final chunk will be the remaining elements.
     array_extend.chunk = function (max) {
         var array = this,
@@ -2291,7 +2325,7 @@ right will just allow you to reverse the order of the args
             i = 0,
             len = temp.length;
         while (i < len) {
-            array.push(temp.splice(Math.round(Math.random() * temp.length), 1)[0]);
+            array.push(temp.splice(Math.round(Math.random() * (temp.length - 1)), 1)[0]);
             i++;
         }
         return array;
@@ -2467,6 +2501,13 @@ STRING Prototype object
 */
     //initialize
     var string_extend = {};
+
+    var rawURLDecode_regex = /%(?![\da-f]{2})/gi,
+        and_regex = /&/g,
+        less_than_regex = /</g,
+        more_than_regex = />/g,
+        double_quote_regex = /"/g,
+        slash_regex = /\//g;
     //get characters in a range in a string
     string_extend.range = function (start, end, insert) {
         var text = this,
@@ -2532,13 +2573,13 @@ STRING Prototype object
     };
     //raw URL encode
     string_extend.rawURLDecode = function () {
-        return decodeURIComponent((this + '').replace(/%(?![\da-f]{2})/gi, function () {
+        return decodeURIComponent((this + '').replace(rawURLDecode_regex, function () {
             return '%25';
         }));
     };
     //html entities
     string_extend.htmlEntities = function () {
-        return this.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        return this.replace(and_regex, '&amp;').replace(less_than_regex, '&lt;').replace(more_than_regex, '&gt;').replace(double_quote_regex, '&quot;').replace(slash_regex, '&quot;');
     };
     //decode then htmlentities
     string_extend.sanitize = function () {
@@ -2551,6 +2592,21 @@ STRING Prototype object
     //encode URI Component
     string_extend.euc = function () {
         return encodeURIComponent(this);
+    };
+
+    //encode URI Component
+    string_extend.unescapeHTML = function () {
+        var empty = _empty_node_div;
+        empty.innerHTML = this;
+        return empty.textContent;
+    };
+    //tokenize split by groups of characters that are not whitespace
+    string_extend.tokenize = function () {
+        return this.match(/\S+/g) || [];
+    };
+    //match by alphanumeric+underscore
+    string_extend.words = function () {
+        return this.match(/\w+/g);
     };
     //uppercase first letter lower case the rest
     string_extend.ucFirst = function () {
@@ -3083,13 +3139,33 @@ rearg(1,2,3);
     };
     //initilize number for Number prototype
     var number_extend = {};
+    //loop through a range of numbers
+    number_extend.each = function (start, funct) {
+        var end = this;
+        if (!funct) {
+            var funct = start;
+            var start = 0;
+        }
+        var returned = _each_number(start, end, funct);
+        return returned;
+    };
+
     //is number zero
     number_extend.isZero = function () {
         return this === 0;
     };
-    //
-    number_extend.isEqual = function (i) {
-        return this === i;
+    //is strict equal to
+    number_extend.isEqual = function (num) {
+        return this === num;
+    };
+    //is In range of two numbers
+    number_extend.isInRange = function (start, end) {
+        var num = this;
+        if (end === _undefined) {
+            var end = start;
+            var start = 0;
+        }
+        return num > start && num < end;
     };
     //Math.js math utilities
     (function () {
@@ -3265,11 +3341,17 @@ rearg(1,2,3);
         };
         //Returns a random number between min (inclusive) and max (exclusive)
         number_extend.randomArbitrary = function (min) {
+            if (!min) {
+                var min = 0;
+            }
             return random() * (this - min) + min;
         };
         // Returns a random integer between min (included) and max (excluded)
         // Using Math.round() will give you a non-uniform distribution!
         number_extend.randomInt = function (min) {
+            if (!min) {
+                var min = 0;
+            }
             return floor(random() * (this - min)) + min;
         };
         //random wrapper
@@ -3811,6 +3893,20 @@ rearg(1,2,3);
 
     //console.log
     $.console = _console;
+    var _each = $.each = (function () {
+        function each(object, funct) {
+            if (_isArray(object)) {
+                var returned = _each_array(object, funct);
+            } else if (isPlainObject(object)) {
+                var returned = _each_object(object, funct);
+            } else if (isNumber(object)) {
+                var returned = _each_number(object, funct);
+            }
+            return returned;
+        }
+
+        return each;
+    })();
     //add event
     $.eventAdd = function (obj, name, func, capture) {
         return $eventadd(obj, name, func, capture);
@@ -3853,7 +3949,8 @@ rearg(1,2,3);
     $.isUnit32 = isUnit32;
     $.isNative = isNative;
     $.isUndefined = isUndefined;
-    $.isNaN = isNaN;
+    $.isNaN = _isNaN;
+    $.isInt = _isInt;
     $.isNull = isNull;
     $.isEmpty = isEmpty;
     //convert from json string to json object cache it to use across lib
@@ -3922,616 +4019,6 @@ Math Related cached functions
         }
         return _agentinfo[name];
     };
-/*
-
-	HIGHLY EXPERIMENTAL YOU HAVE BEEN WARNED ES6+ES7 only
-	WELCOME TO THE DANGER ZONE
-
-	This is advanced web components with ES7+ES6 browser support is limited
-
-*/
-    var _react = $.react = (function () {
-        if (!_observe) {
-            return false;
-        }
-        var //component list
-        _componentsMade = {},
-            //template regex for adding nodes and event data
-            regex = /(.*)\[(.*)\]/,
-            //keep track of components to avoid clashing
-            _componentids = 0,
-            //batch updating in progress
-            asyncChanges = [],
-            asyncChangesCount = 0,
-            cancelFrame = false,
-            makechanges = function () {
-                var items = asyncChanges,
-                    len = asyncChangesCount;
-                for (var i = 0; i < len; i++) {
-                    items[i]();
-                }
-                asyncChangesCount = 0;
-                asyncChanges = [];
-                cancelFrame = false;
-                return false;
-            },
-            //add elements to the batch
-            add_to_batch = function (func, change) {
-                asyncChanges[asyncChangesCount] = function () {
-                    func(change);
-                    change = null;
-                    func = null;
-                    return false;
-                };
-                asyncChangesCount = asyncChangesCount + 1;
-                return false;
-            },
-            //add elements to the batch
-            add_to_batch_call = function (object, func, change) {
-                asyncChanges[asyncChangesCount] = function () {
-                    func.call(object, change);
-                    change = null;
-                    func = null;
-                    object = null;
-                    return false;
-                };
-                asyncChangesCount = asyncChangesCount + 1;
-                return false;
-            },
-            //changes that happen to level 0 of data
-            view_changes = function (model, changes) {
-                var len = changes.length;
-                for (var i = 0; i < len; i++) {
-                    var change = changes[i],
-                        method = model[change.name];
-                    if (method) {
-                        add_to_batch(method, change);
-                    }
-                }
-                if (cancelFrame === false) {
-                    cancelFrame = _RAF(makechanges);
-                }
-                return false;
-            },
-            manual_changes = function (model, changes) {
-                var len = changes.length;
-                for (var i = 0; i < len; i++) {
-                    var change = changes[i],
-                        method = model[change.name];
-                    if (method) {
-                        add_to_batch(method, change);
-                    }
-                }
-                if (cancelFrame === false) {
-                    cancelFrame = _RAF(makechanges);
-                }
-                return false;
-            },
-            data_added = function (observer_object, changes) {
-                var model = observer_object,
-                    len = changes.length,
-                    batch = {};
-                for (var i = 0; i < len; i++) {
-                    var change = changes[i],
-                        name = change.name;
-                    if (change.type == 'add') {
-                        define_prop(observer_object, change.object[name], name, observer_object.observers);
-                    }
-                }
-                return false;
-            },
-            //changes that happen to level 1 of data
-            sub_view_changes = function (model, changes, name) {
-                var len = changes.length,
-                    loose = model[name];
-                for (var i = 0; i < len; i++) {
-                    var change = changes[i],
-                        method = loose[change.name];
-                    if (method) {
-                        add_to_batch_call(object, method, change);
-                    }
-                }
-                if (cancelFrame === false) {
-                    cancelFrame = _RAF(makechanges);
-                }
-                return false;
-            },
-            //changes that happen to arrays level 0
-            array_changes = function (model, changes, name) {
-                var len = changes.length,
-                    loose = model[name];
-                for (var i = 0; i < len; i++) {
-                    var change = changes[i];
-                    if (loose) {
-                        add_to_batch(loose, change);
-                    }
-                }
-                if (cancelFrame === false) {
-                    cancelFrame = _RAF(makechanges);
-                }
-                return false;
-            },
-            //kills observer logic and launches an unmount function
-            componentKill = function (object, funct, watcher) {
-                _componentsMade[object.OGModelName][objectName] = null;
-                _unobserve(object.props, funct);
-                _unobserve(object.data, watcher);
-                if (object.observers) {
-                    _each_object(object.observers, function (item) {
-                        var type = item[0];
-                        if (isPlainObject(type)) {
-                            _unobserve(item[0], item[1]);
-                        } else if (_isArray(type)) {
-                            _array_unobserve(item[0], item[1]);
-                        }
-                    });
-                }
-                if (object.modelName) {
-                    _model[object.modelName] = null;
-                    _componentids--;
-                }
-                return null;
-            },
-            //kills observer logic and launches an unmount function
-            modelKill = function (object, funct, watcher) {
-                _componentsMade[object._.name] = null;
-                _unobserve(object.props, funct);
-                _unobserve(object.data, watcher);
-                if (object.observers) {
-                    _each_object(object.observers, function (item) {
-                        var type = item[0];
-                        if (isPlainObject(type)) {
-                            _unobserve(item[0], item[1]);
-                        } else if (_isArray(type)) {
-                            _array_unobserve(item[0], item[1]);
-                        }
-                    });
-                }
-                if (object.modelName) {
-                    _model[object.modelName._.name] = null;
-                }
-                return null;
-            },
-            //unmount function on component
-            componentUnMount = function (object, unMount) {
-                if (unMount) {
-                    unMount(object);
-                }
-                _removeNode(object.node);
-                return object;
-            },
-            //mount function on component
-            componentMount = function (object, mount, set) {
-                if (set) {
-                    componentSet(object, set);
-                }
-                if (mount) {
-                    mount.call(object);
-                }
-                return object.node;
-            },
-            //remove node plus kill
-            componentDestroy = function (object) {
-                object.unMount();
-                object.kill();
-            },
-            //custom notify data
-            componentNotify = function (object, changes) {
-                manual_changes(object, changes);
-            },
-            //set to data
-            componentSet = function (object, key, value) {
-                if (value) {
-                    object.data[key] = value;
-                } else if (isPlainObject(key)) {
-                    _each_object(key, function (item, key) {
-                        object.data[key] = item;
-                    });
-                }
-                return object.data[key];
-            },
-            //build the initial model
-            build_model = function (config) {
-                //model name proxy
-                if (_isString(config)) {
-                    var ogModelName = config,
-                        config = _model(ogModelName);
-                } else {
-                    var ogModelName = config.name || config._.name;
-                }
-                var modelName = ogModelName + (_componentids++);
-                //save to models
-                _model[modelName] = {
-                    OGModelName: ogModelName,
-                    modelName: modelName,
-                    data: {},
-                    node: {},
-                    nodes: {},
-                    observers: {},
-                    props: {},
-                    share: config.data
-                };
-                if (!_componentsMade[ogModelName]) {
-                    _componentsMade[ogModelName] = {};
-                }
-
-                _componentsMade[ogModelName][modelName] = _model[modelName];
-                return {
-                    model: _model[modelName],
-                    config: config
-                };
-            },
-            define_prop = function (object, item, key, observers, optionalFNobj, optionalFNarray) {
-                var isAr = _isArray(item),
-                    object_data = object.data,
-                    object_props = object.props,
-                    isOb = isPlainObject(item);
-
-                object_props[key] = item;
-                //build the prop
-                _defineProperty(object_data, key, {
-                    get: function () {
-                        return object_props[key];
-                    },
-                    set: function (newValue) {
-                        var oldValue = object_props[key],
-                            this_observer = observers[key];
-                        if (isPlainObject(oldValue)) {
-                            _unobserve(this_observer[0], this_observer[1]);
-                        } else if (_isArray(oldValue)) {
-                            _array_unobserve(this_observer[0], this_observer[1]);
-                        }
-                        var oldValue = null,
-                            this_observer = null;
-                        object_props[key] = newValue;
-                        if (_isArray(newValue)) {
-                            var funct = (optionalFNarray) ? optionalFNarray(key) : function (changes) {
-                                array_changes(object, changes, key);
-                                return false;
-                            };
-                            _array_observe(object_props[key], funct);
-                        } else if (isPlainObject(newValue)) {
-                            var funct = (optionalFNobj) ? optionalFNobj(key) : function (changes) {
-                                sub_view_changes(object, changes, key);
-                                return false;
-                            };
-                            _observe(object_props[key], funct);
-                        }
-                        if (funct) {
-                            observers[key] = [object_props[key], funct];
-                        }
-                    },
-                    enumerable: true,
-                    configurable: true,
-                    writeable: false
-                });
-                //start observing
-                if (isAr) {
-                    var funct = (optionalFNarray) ? optionalFNarray(key) : function (changes) {
-                        array_changes(object, changes, key);
-                        return false;
-                    };
-                    _array_observe(object_props[key], funct);
-                } else if (isOb) {
-                    var funct = (optionalFNobj) ? optionalFNobj(key) : function (changes) {
-                        sub_view_changes(object, changes, key);
-                        return false;
-                    };
-                    _observe(object_props[key], funct);
-                }
-                if (funct) {
-                    observers[key] = ([object_props[key], funct]);
-                }
-            },
-            compile_data = function (object, data, optionalFNobj, optionalFNarray) {
-                if (_isFunction(data)) {
-                    var data = data.call(object);
-                }
-                if (!data) {
-                    return false;
-                }
-                //experimental array changes
-                var observers = {};
-                _each_object(data, function (item, key) {
-                    define_prop(object, item, key, observers, optionalFNobj, optionalFNarray);
-                });
-                object.observers = observers;
-                return object;
-            },
-            compile_view = function (object, config) {
-                var modelName = object.modelName,
-                    view_name = config.view,
-                    template = config.template;
-                if (view_name) {
-                    if (_isFunction(view_name)) {
-                        var node = view_name.call(object, object);
-                        if (_isString(node)) {
-                            var node = _toDOM(node, 0);
-                        }
-                    } else if (_isString(view_name)) {
-                        var node = _template(view_name);
-                        if (_isFunction(node)) {
-                            var node = _toDOM(node(modelName), 0);
-                        }
-                    }
-                } else if (template) {
-                    if (_isString(template)) {
-                        var node = _toDOM(template, 0);
-                    } else if (_isFunction(template)) {
-                        var node = template.call(object, object);
-                        if (_isString(node)) {
-                            var node = _toDOM(node, 0);
-                        }
-                    } else {
-                        var node = template;
-                    }
-                }
-                if (node instanceof _HTMLElement) {
-                    node.setAttribute('data-react-root', modelName);
-                    node.setAttribute('data-react-root-' + modelName, '');
-                }
-                object.node = node;
-                return object;
-            },
-            this_regex_replace = /(this)./g,
-            register_node = function (object, item, rootName) {
-                var componentData = item.getAttribute('acid'),
-                    modelName = object.modelName,
-                    rootName = rootName || modelName + '.',
-                    attributes = componentData.match(regex);
-                if (!attributes) {
-                    object.nodes[componentData] = item;
-                } else {
-                    var componentNode = attributes[1],
-                        attrs = attributes[2].split(';');
-                    if (componentNode) {
-                        object.nodes[componentNode] = item;
-                    }
-                    if (attrs) {
-                        _each_array(attrs, function (event) {
-                            var event_sub = event.split(':');
-                            item.setAttribute('data-' + event_sub[0], event_sub[1].replace(this_regex_replace, rootName));
-                        });
-                    }
-                }
-                item.setAttribute('data-react', modelName);
-                item.removeAttribute('acid');
-            },
-            compile_nodes = function (object) {
-                var register_nodes = object.node.querySelectorAll('[acid]'),
-                    modelName = object.modelName,
-                    rootName = modelName + '.';
-                if (register_nodes) {
-                    _each_array(_toArray(register_nodes), function (item) {
-                        register_node(object, item, rootName);
-                    });
-                }
-                if (_isMatch_dom(object.node, '[acid]')) {
-                    register_node(object, object.node, rootName);
-                }
-                var register_nodes = null;
-                return object;
-            },
-            //some cases this may prove to be faster if methods are required to be cached
-            avoid_regex = /name|template|data|mount|unMount|componentModel|componentMount|kill|componentUnMount|render|componentData|_|component|props|observers|share|subscribe|unSubscribe/g,
-            generate_methods = function (object, config) {
-                if (_isFunction(config)) {
-                    var config = config.call(object);
-                }
-                _each_object(config, function (item, key) {
-                    if (!key.match(avoid_regex)) {
-                        if (_isFunction(item)) {
-                            object[key] = _bind_call(item, object);
-                        } else {
-                            object[key] = item;
-                        }
-                    }
-                });
-            },
-            compile_faceplate = function (object, config) {
-                if (_isString(config.view)) {
-                    var face = _faceplate[config.view];
-                    if (face) {
-                        face(object, object.node);
-                    }
-                }
-            },
-            generate_component_methods = function (object, config) {
-                var funct = function (changes) {
-                    view_changes(object, changes);
-                },
-                    watcher = function (changes) {
-                        data_added(object, changes);
-                    };
-                _observe(object.props, funct);
-                _observe(object.data, watcher);
-                if (config.componentModel) {
-                    var mount = config.componentModel.componentMount,
-                        unMount = config.componentModel.componentUnMount;
-                } else {
-                    var mount = config.componentMount,
-                        unMount = config.componentUnMount;
-                }
-                if (mount) {
-                    var mount = _bind.call(mount, object);
-                }
-                if (unMount) {
-                    var unMount = _bind.call(unMount, object);
-                }
-                object.kill = function () {
-                    componentKill(object, funct, watcher);
-                    object = null;
-                    funct = null;
-                    return null;
-                };
-                object.unMount = function () {
-                    return componentUnMount(object, unMount);
-                };
-                object.mount = function (set) {
-                    return componentMount(object, mount, set);
-                };
-                object.destroy = function () {
-                    return componentDestroy(object);
-                };
-                object.set = function (key, value) {
-                    return componentSet(object, key, value);
-                };
-                object.notify = function (data) {
-                    return componentNotify(object, data);
-                };
-                object.notifySub = function (data) {
-                    return componentNotify(object, data, funct);
-                };
-                object.notifyArray = function (data) {
-                    return componentNotify(object, data, funct);
-                };
-                object.deliver = function () {
-                    _deliverChangeRecords(funct);
-                };
-            },
-            //build a view for a node
-            build_component = function (config) {
-                //uses a porxy for super fast binding plus avoiding mem usage
-                if (_isFunction(config)) {
-                    var config = _bind_call(config);
-                }
-
-                var compiled = build_model(config),
-                    object = compiled.model,
-                    config = compiled.config;
-                //compile initial state
-                compile_data(object, config.componentData);
-                //compile DOM
-                compile_view(object, config);
-                //cache nodes and correct actions
-                compile_nodes(object);
-                //faceplate
-                compile_faceplate(object, config);
-                //bind methods to new model
-                generate_methods(object, config.componentModel || config);
-                //generate component specific methods
-                generate_component_methods(object, config);
-                return object;
-            };
-        //create a component component
-        $.reactNode = function (object, node) {
-            if (_isString(node)) {
-                var node = _toDOM(node, 0);
-            }
-            register_node(object, node);
-            return node;
-        };
-
-        var modelSubChanges = function (_componentsMade, changes, subKey, func) {
-            _each_object(_componentsMade, function (item, key) {
-                func(item, changes, subKey);
-            });
-        },
-            reactModelFN = function (changes, name) {
-                var copiesOfComponent = _componentsMade[name];
-                if (copiesOfComponent) {
-                    _each_object(copiesOfComponent, function (item, key) {
-                        item.notify(changes);
-                    });
-                }
-                _each_object(model.subscribe, function (item, key) {
-                    if (item) {
-                        var copiesOfComponent = _componentsMade[key];
-                        if (copiesOfComponent) {
-                            _each_object(copiesOfComponent, function (subItem, key) {
-                                subItem.notify(changes);
-                            });
-                        }
-                    }
-                });
-            };
-
-        //build the component model
-        $.reactModel = function (name, object, lean) {
-            var model = _model(name, object, lean),
-                subscribeTo = model.subscribe;
-
-            model.render = function () {
-                return _react(model);
-            };
-            if (subscribeTo) {
-                var subscribeTo = (_isArray(subscribeTo)) ? subscribeTo : [subscribeTo];
-                _each_array(subscribeTo, function (item) {
-                    _model[item].subscribe[name] = 1;
-                });
-            }
-            model.subscribe = function (item) {
-                model.subscribe[item] = 1;
-            };
-            model.unSubscribe = function (item) {
-                model.subscribe[item] = null;
-            };
-            var observerFN = function (changes) {
-                reactModelFN(changes, name);
-            };
-            var subObserverFN = function (subKey) {
-                return function (changes) {
-                    modelSubChanges(_componentsMade[name], changes, subKey, sub_view_changes);
-                };
-            };
-            var arrayObserverFN = function (subKey) {
-                return function (changes) {
-                    modelSubChanges(_componentsMade[name], changes, subKey, array_changes);
-                };
-            };
-            var watcher = function (changes) {
-                data_added(object, changes);
-            };
-            model.props = {};
-            if (model.data) {
-                compile_data(model, model.data, subObserverFN, arrayObserverFN);
-            } else {
-                model.data = {};
-            }
-            model.kill = function () {
-                modelKill(model, observerFN, watcher);
-                model = null;
-                observerFN = null;
-                return null;
-            };
-            var mount = model.mount,
-                unMount = model.unMount;
-            model.unMount = function () {
-                return componentUnMount(model, unMount);
-            };
-            model.mount = function (set) {
-                return componentMount(model, mount, set);
-            };
-            if (model.componentModel) {
-                generate_methods(model, model);
-            }
-            _observe(model.props, observerFN);
-            _observe(model.data, watcher);
-            return model;
-        };
-        //look up the tree
-        $.findReact = function (node, name) {
-            if (!name) {
-                var name = 'data-react-root';
-            } else {
-                var name = 'data-react-' + name;
-            }
-            var root = _upTo(node, '[' + name + ']');
-            if (root) {
-                return _getReact(root);
-            }
-            return false;
-        };
-        //get the observer object that is attached to DOM node
-        var _getReact = $.getReact = function (node) {
-            var modelName = node.getAttribute('data-react-root') || node.getAttribute('data-react');
-            if (modelName) {
-                return _model[modelName];
-            }
-            return false;
-        };
-        return build_component;
-    })();
     //create a function that takes an object that is apart of the main $ and applies/calls it to the functions arguments useful for caching functions
     var _define = $.define = (function () {
 
@@ -4779,18 +4266,20 @@ Math Related cached functions
     };
 
     //string to DOM
-    var _toDOM = $.toDOM = function (html, a) {
-        var i = _createElement.call(_document, 'div');
-        i.innerHTML = html;
-        var f = $frag();
-        while (i.firstChild) {
-            f.appendChild(i.firstChild);
+    var _toDOM = $.toDOM = function (html, childNumber) {
+        var empty = _empty_node_div;
+        empty.innerHTML = html;
+        var frag = $frag(),
+            first = null;
+        while (first = empty.firstChild) {
+            frag.appendChild(first);
         }
-        var i = null;
-        if (a === 0) {
-            return f.childNodes[0];
+        var empty = null,
+            first = null;
+        if (hasValue(childNumber)) {
+            return frag.childNodes[childNumber];
         }
-        return f;
+        return frag;
     };
     //Compiled import function
     (function () {
@@ -5205,6 +4694,728 @@ NODE TYPE OBJECT
         _template(name, html);
         return true;
     };
+/*
+
+	HIGHLY EXPERIMENTAL YOU HAVE BEEN WARNED ES7 only
+	WELCOME TO THE DANGER ZONE
+
+	This is advanced web components with ES7, browser support is limited
+
+*/
+
+    (function () {
+        if (!_observe) {
+            return false;
+        }
+        //return the build data
+        $.react = _react;
+    })();
+    //add elements to the batch
+    var batchAdd = function (func, change) {
+        asyncChanges[asyncChangesCount] = function () {
+            func(change);
+            change = null;
+            func = null;
+            return false;
+        };
+        asyncChangesCount = asyncChangesCount + 1;
+        return false;
+    },
+        //add elements to the batch
+        batchAddCall = function (object, func, change) {
+            asyncChanges[asyncChangesCount] = function () {
+                func.call(object, change);
+                change = null;
+                func = null;
+                object = null;
+                return false;
+            };
+            asyncChangesCount = asyncChangesCount + 1;
+            return false;
+        };
+    //build a view for a node
+    var _react = function (config, data) {
+        //uses a porxy for super fast binding plus avoiding mem usage
+        if (_isFunction(config)) {
+            var config = _bind_call(config);
+        }
+        var compiled = build_model(config),
+            object = compiled.model,
+            config = compiled.config;
+        //compile initial state
+        compileData(object, config.componentData);
+        //compile DOM
+        compileView(object, object.modelName, config.view, config.template);
+        //cache nodes and correct actions
+        compileNodes(object);
+        //faceplate
+        compileFaceplate(object, config);
+        //bind methods to new model
+        generateMethods(object, config.componentModel || config);
+        //generate component specific methods
+        generateComponentMethods(object, config);
+        if (data) {
+            object.set(data);
+        }
+        return object;
+    };
+    //build the initial model
+    var build_model = function (config) {
+        //model name proxy
+        if (_isString(config)) {
+            var ogModelName = config,
+                config = _model(ogModelName);
+        } else {
+            var ogModelName = config.name || config._.name;
+        }
+        var modelName = ogModelName + (componentID++);
+        //save to models
+        _model[modelName] = {
+            OGModelName: ogModelName,
+            modelName: modelName,
+            eventName: modelName + '.',
+            data: {},
+            node: {},
+            nodes: {},
+            observers: {},
+            props: {},
+            share: config.data
+        };
+        if (!componentsMade[ogModelName]) {
+            componentsMade[ogModelName] = {};
+        }
+        componentsMade[ogModelName][modelName] = _model[modelName];
+        return {
+            model: _model[modelName],
+            config: config
+        };
+    };
+    //kills observer logic and launches an unmount function
+    var componentKill = function (object, funct, watcher) {
+        componentsMade[object.OGModelName][object.modelName] = null;
+        _unobserve(object.props, funct);
+        _unobserve(object.data, watcher);
+        if (object.observers) {
+            _each_object(object.observers, function (item) {
+                var type = item[0];
+                if (isPlainObject(type)) {
+                    _unobserve(item[0], item[1]);
+                } else if (_isArray(type)) {
+                    _array_unobserve(item[0], item[1]);
+                }
+            });
+        }
+        if (object.modelName) {
+            _model[object.modelName] = null;
+            componentID--;
+        }
+        var object = null,
+            funct = null,
+            watcher = null;
+        return null;
+    };
+    //kills observer logic and launches an unmount function
+    var modelKill = function (object, funct, watcher) {
+        componentsMade[object._.name] = null;
+        _unobserve(object.props, funct);
+        _unobserve(object.data, watcher);
+        if (object.observers) {
+            _each_object(object.observers, function (item) {
+                var type = item[0];
+                if (isPlainObject(type)) {
+                    _unobserve(item[0], item[1]);
+                } else if (_isArray(type)) {
+                    _array_unobserve(item[0], item[1]);
+                }
+            });
+        }
+        _model[object._.name] = null;
+        componentID--;
+        var object = null,
+            funct = null,
+            watcher = null;
+        return null;
+    };
+    //unmount function on component
+    var componentUnMount = function (object, unMount) {
+        if (unMount) {
+            unMount(object);
+        }
+        _removeNode(object.node);
+        return object;
+    };
+    //mount function on component
+    var componentMount = function (object, mount, set) {
+        if (set) {
+            componentSet(object, set);
+        }
+        if (mount) {
+            mount.call(object);
+        }
+        return object.node;
+    };
+    //remove node plus kill
+    var componentDestroy = function (object) {
+        object.unMount();
+        object.kill();
+    };
+    //set to data
+    var componentSet = function (object, key, value) {
+        if (value) {
+            object.data[key] = value;
+        } else if (isPlainObject(key)) {
+            _each_object(key, function (item, key) {
+                object.data[key] = item;
+            });
+        }
+        return object.data[key];
+    };
+    //build the component model
+    var _reactModel = function (name, object, lean) {
+        var model = _model(name, object, lean),
+            subscribeTo = model.subscribe;
+        if (!model.nodes) {
+            model.nodes = {};
+        }
+        compileView(model, name, model.modelView, model.modelTemplate);
+        model.render = function (data) {
+            return _react(model, data);
+        };
+        if (subscribeTo) {
+            var subscribeTo = (_isArray(subscribeTo)) ? subscribeTo : [subscribeTo];
+            _each_array(subscribeTo, function (item) {
+                _model[item].subscribe[name] = 1;
+            });
+        }
+        model.subscribe = function (item) {
+            model.subscribe[item] = 1;
+        };
+        model.unSubscribe = function (item) {
+            model.subscribe[item] = null;
+        };
+        var observerFN = function (changes) {
+            reactModelFN(changes, name, model);
+        };
+        var subObserverFN = function (subKey) {
+            return function (changes) {
+                modelSubChanges(componentsMade[name], changes, subKey, objectViewChanges);
+            };
+        };
+        var arrayObserverFN = function (subKey) {
+            return function (changes) {
+                modelSubChanges(componentsMade[name], changes, subKey, arrayChanges);
+            };
+        };
+        var watcher = function (changes) {
+            dataAdded(model, changes);
+        };
+        model.props = {};
+        if (model.data) {
+            compileData(model, model.data, subObserverFN, arrayObserverFN);
+        } else {
+            model.data = {};
+        }
+        model.kill = function () {
+            modelKill(model, observerFN, watcher);
+            model = null;
+            observerFN = null;
+            return null;
+        };
+        var mount = model.mount,
+            unMount = model.unMount;
+        model.unMount = function () {
+            return componentUnMount(model, unMount);
+        };
+        model.mount = function (set) {
+            return componentMount(model, mount, set);
+        };
+        if (model.componentModel) {
+            generateMethods(model, model);
+        } else if (model.model) {
+            generateMethods(model, model.model);
+        }
+        _observe(model.props, observerFN);
+        _observe(model.data, watcher);
+        return model;
+    };
+
+    $.reactModel = _reactModel;
+    var defineProp = function (object, item, key, observers, optionalFNobj, optionalFNarray) {
+        var isAr = _isArray(item),
+            object_data = object.data,
+            object_props = object.props,
+            isOb = isPlainObject(item);
+        object_props[key] = item;
+        //build the prop
+        _defineProperty(object_data, key, {
+            get: function () {
+                return object_props[key];
+            },
+            set: function (newValue) {
+                var oldValue = object_props[key],
+                    this_observer = observers[key];
+                if (isPlainObject(oldValue)) {
+                    _unobserve(this_observer[0], this_observer[1]);
+                } else if (_isArray(oldValue)) {
+                    _array_unobserve(this_observer[0], this_observer[1]);
+                }
+                var oldValue = null,
+                    this_observer = null;
+                object_props[key] = newValue;
+                if (_isArray(newValue)) {
+                    var funct = (optionalFNarray) ? optionalFNarray(key) : function (changes) {
+                        arrayChanges(object, changes, key);
+                        return false;
+                    };
+                    _array_observe(object_props[key], funct);
+                } else if (isPlainObject(newValue)) {
+                    var funct = (optionalFNobj) ? optionalFNobj(key) : function (changes) {
+                        objectViewChanges(object, changes, key);
+                        return false;
+                    };
+                    _observe(object_props[key], funct);
+                }
+                if (funct) {
+                    observers[key] = [object_props[key], funct];
+                }
+            },
+            enumerable: true,
+            configurable: true,
+            writeable: false
+        });
+        //start observing
+        if (isAr) {
+            var funct = (optionalFNarray) ? optionalFNarray(key) : function (changes) {
+                arrayChanges(object, changes, key);
+                return false;
+            };
+            _array_observe(object_props[key], funct);
+        } else if (isOb) {
+            var funct = (optionalFNobj) ? optionalFNobj(key) : function (changes) {
+                objectViewChanges(object, changes, key);
+                return false;
+            };
+            _observe(object_props[key], funct);
+        }
+        if (funct) {
+            observers[key] = ([object_props[key], funct]);
+        }
+    };
+    var compileData = function (object, data, optionalFNobj, optionalFNarray) {
+        if (_isFunction(data)) {
+            var data = data.call(object);
+        }
+        if (!data) {
+            return false;
+        }
+        //experimental array changes
+        var observers = {};
+        _each_object(data, function (item, key) {
+            defineProp(object, item, key, observers, optionalFNobj, optionalFNarray);
+        });
+        object.observers = observers;
+        return object;
+    };
+    var compileFaceplate = function (object, config) {
+        if (_isString(config.view)) {
+            var face = _faceplate[config.view];
+            if (face) {
+                face(object, object.node);
+            }
+        }
+    };
+
+    var generateMethods = function (object, config) {
+        if (_isFunction(config)) {
+            var config = config.call(object);
+        }
+        _each_object(config, function (item, key) {
+            if (!key.match(avoid_regex)) {
+                if (_isFunction(item)) {
+                    object[key] = _bind_call(item, object);
+                } else {
+                    object[key] = item;
+                }
+            }
+        });
+    },
+        generateComponentMethods = function (object, config) {
+            var funct = function (changes) {
+                viewChanges(object, changes);
+            },
+                watcher = function (changes) {
+                    dataAdded(object, changes);
+                };
+            _observe(object.props, funct);
+            _observe(object.data, watcher, ['add']);
+            if (config.componentModel) {
+                var mount = config.componentModel.componentMount,
+                    unMount = config.componentModel.componentUnMount;
+            } else {
+                var mount = config.componentMount,
+                    unMount = config.componentUnMount;
+            }
+            if (mount) {
+                var mount = _bind.call(mount, object);
+            }
+            if (unMount) {
+                var unMount = _bind.call(unMount, object);
+            }
+            object.kill = function () {
+                componentKill(object, funct, watcher);
+                object = null;
+                funct = null;
+                watcher = null;
+                return null;
+            };
+            object.unMount = function () {
+                return componentUnMount(object, unMount);
+            };
+            object.mount = function (set) {
+                return componentMount(object, mount, set);
+            };
+            object.destroy = function () {
+                componentDestroy(object);
+                object = null;
+                mount = null;
+                unMount = null;
+                funct = null;
+                watcher = null;
+            };
+            object.set = function (key, value) {
+                return componentSet(object, key, value);
+            };
+            object.notify = function (data) {
+                return viewChanges(object, data);
+            };
+            object.notifySub = function (data, name) {
+                return objectViewChanges(object, data, name);
+            };
+            object.notifyArray = function (data, name) {
+                return arrayChanges(object, data, name);
+            };
+            object.deliver = function () {
+                return _deliverChangeRecords(funct);
+            };
+        };
+
+    var compileNode = function (node, attr, modelName, eventName) {
+        node.setAttribute(attr, node.getAttribute(attr).replace(thisRegexReplace, eventName));
+        node.setAttribute('data-react', modelName);
+    },
+        registerNode = function (object, node) {
+            var name = node.getAttribute('data-node');
+            object.nodes[name] = node;
+        },
+        compileNodes = function (object, rooNode) {
+            var modelName = object.modelName,
+                rooNode = rooNode || object.node,
+                children = rooNode.childNodes,
+                eventName = object.eventName;
+            if (children) {
+                var registerNodes = rooNode.querySelectorAll('[data-node]');
+                if (registerNodes) {
+                    _each_array(_toArray(registerNodes), function (item) {
+                        registerNode(object, item);
+                    });
+                }
+                _each_array(_eventNames, function (item, i) {
+                    var item = 'data-' + item;
+                    var registerNodes = rooNode.querySelectorAll('[' + item + ']');
+                    if (registerNodes) {
+                        _each_array(_toArray(registerNodes), function (node) {
+                            compileNode(node, item, modelName, eventName);
+                        });
+                    }
+                });
+            }
+            if (_isMatch_dom(rooNode, '[data-node]')) {
+                registerNode(object, rooNode);
+            }
+            _each_array(_eventNames, function (item, i) {
+                var item = 'data-' + item;
+                if (_isMatch_dom(rooNode, '[' + item + ']')) {
+                    compileNode(rooNode, item, modelName, eventName);
+                }
+            });
+            var registerNodes = null;
+            return object;
+        };
+    var compileView = function (object, modelName, view_name, template) {
+        if (view_name) {
+            if (_isFunction(view_name)) {
+                var node = view_name.call(object, object);
+                if (_isString(node)) {
+                    var node = _toDOM(node, 0);
+                }
+            } else if (_isString(view_name)) {
+                var node = _template(view_name);
+                if (_isFunction(node)) {
+                    var node = _toDOM(node(modelName), 0);
+                }
+            }
+        } else if (template) {
+            if (_isString(template)) {
+                var node = _toDOM(template, 0);
+            } else if (_isFunction(template)) {
+                var node = template.call(object, object);
+                if (_isString(node)) {
+                    var node = _toDOM(node, 0);
+                }
+            } else {
+                if (_document.contains(template)) {
+                    var node = template;
+                } else {
+                    var node = template.cloneNode(true);
+                }
+            }
+        }
+        if (node) {
+            if (!(node instanceof _HTMLElement)) {
+                var wrapNode = _document.createElement('div');
+                wrapNode.appendChild(node);
+                var node = wrapNode;
+            }
+            node.setAttribute('data-react-root', modelName, '');
+            node.setAttribute('data-react-root-' + modelName, '');
+            object.node = node;
+        }
+        return false;
+    };
+    //look up the tree
+    var _findReact = function (node, name) {
+        if (!name) {
+            var name = 'data-react-root';
+        } else {
+            var name = 'data-react-' + name;
+        }
+        var root = _upTo(node, '[' + name + ']');
+        if (root) {
+            return _getReact(root);
+        }
+        return false;
+    };
+
+    $.findReact = _findReact;
+    //get the observer object that is attached to DOM node
+    var _getReact = function (node) {
+        var modelName = node.getAttribute('data-react-root') || node.getAttribute('data-react');
+        if (modelName) {
+            return _model[modelName];
+        }
+        return false;
+    };
+
+    $.getReact = _getReact;
+    var listReact = function (rootNode, list, name) {
+        var listAdd = function (index) {
+            var object = list[index];
+            if (!object) {
+                return false;
+            }
+            beforeNth(rootNode, list[index].mount(), index);
+        };
+        var listMod = function (object, index) {
+            object.node.replace(list[index].mount());
+            componentDestroy(object);
+        };
+        var listDestroy = function (array) {
+            _each_array(array, function (item, i) {
+                componentDestroy(item);
+            });
+        };
+        var listRefresh = function (change) {
+            listDestroy(change.oldValue);
+            list = change.object[name];
+            _each_array(list, function (item, index) {
+                listAdd(index);
+            });
+        };
+        var splice = function (change) {
+            if (change.removeRange) {
+                listDestroy(change.removed);
+            }
+            if (change.addRange) {
+                change.addRange.each(change.index, function (index) {
+                    listAdd(index);
+                });
+            }
+        };
+        var update = function (change) {
+            if (_isNaN(number_object(change.name))) {
+                listRefresh(change);
+            } else {
+                listMod(change.oldValue, change.name);
+            }
+        };
+        var add = function (change) {
+            listAdd(number_object(change.name));
+        };
+        var scope = {
+            splice: splice,
+            update: update,
+            add: add
+        };
+        var compiled = function (change) {
+            scope[change.type](change);
+        };
+        compiled.kill = function () {
+            rootNode = null;
+            list = null;
+            scope = null;
+            compiled = null;
+        };
+        return compiled;
+    };
+    $.reactNodeList = listReact;
+    //create a component component
+    var _reactNode = function (object, node) {
+        if (_isString(node)) {
+            var node = _toDOM(node, 0);
+        }
+        compileNodes(object, node);
+        return node;
+    };
+
+    $.reactNode = _reactNode
+    //component list
+    var componentsMade = {},
+        //keep track of components to avoid clashing
+        componentID = 0,
+        //batch updating in progress
+        asyncChanges = [],
+        //amount of changes
+        asyncChangesCount = 0,
+        //frame request animation
+        cancelFrame = false,
+        //regex for model event
+        thisRegexReplace = /(this)./g,
+        //safety words if methods are generated on the model
+        avoid_regex = /nodes|name|template|data|mount|unMount|componentModel|model|componentMount|kill|componentUnMount|render|componentData|_|component|props|observers|share|subscribe|unSubscribe/g;
+    var dataAdded = function (model, changes) {
+        var len = changes.length,
+            batch = {};
+        for (var i = 0; i < len; i++) {
+            var change = changes[i],
+                name = change.name;
+            if (change.type == 'add') {
+                defineProp(model, change.object[name], name, model.observers);
+            }
+        }
+        var model = null,
+            changes = null;
+        return false;
+    };
+    //enhanced array changes
+    var buildArrayChange = function (change) {
+        if (change.type === 'splice') {
+            var removed = change.removed.length;
+            var data = {
+                addRange: (change.addedCount) ? change.index + change.addedCount : 0,
+                removeRange: (removed) ? change.index + removed : 0,
+                removeLength: (removed) ? removed : 0,
+                index: change.index,
+                addedCount: change.addedCount,
+                object: change.object,
+                removed: change.removed,
+                type: change.type
+            };
+        } else if (change.type === 'update') {
+            var data = {
+                name: change.name,
+                object: change.object,
+                oldValue: change.oldValue,
+                type: change.type
+            };
+        } else if (change.type === 'add') {
+            var data = {
+                name: change.name,
+                object: change.object,
+                type: change.type
+            };
+        }
+        var change = null;
+        return data;
+    };
+
+    //changes that happen to level 0 of data
+    var viewChanges = function (model, changes) {
+        _each_array(changes, function (change) {
+            var method = model[change.name];
+            if (method) {
+                batchAdd(method, change);
+            }
+        });
+        frameCall();
+        return false;
+    };
+    //changes that happen to level 1 of data
+    var objectViewChanges = function (model, changes, name) {
+        var loose = model[name];
+        _each_array(changes, function (change) {
+            var method = loose[change.name];
+            if (method) {
+                batchAddCall(object, method, change);
+            }
+        });
+        frameCall();
+        return false;
+    };
+    //changes that happen to arrays level 0
+    var arrayChanges = function (model, changes, name) {
+        var loose = model[name];
+        _each_array(changes, function (change) {
+            if (loose) {
+                batchAdd(loose, buildArrayChange(change));
+            }
+        });
+        frameCall();
+        return false;
+    };
+
+    var makechanges = function () {
+        var items = asyncChanges,
+            len = asyncChangesCount;
+        for (var i = 0; i < len; i++) {
+            items[i]();
+        }
+        asyncChangesCount = 0;
+        asyncChanges = [];
+        cancelFrame = false;
+        return false;
+    };
+
+    var frameCall = function () {
+        if (cancelFrame === false) {
+            cancelFrame = _RAF(makechanges);
+        }
+    };
+    var modelSubChanges = function (componentsMade, changes, subKey, func) {
+        _each_object(componentsMade, function (item, key) {
+            func(item, changes, subKey);
+        });
+    },
+        reactModelFN = function (changes, name, model) {
+            if (model.componentModel) {
+                viewChanges(model, changes);
+            }
+            var copiesOfComponent = componentsMade[name];
+            if (copiesOfComponent) {
+                _each_object(copiesOfComponent, function (item, key) {
+                    item.notify(changes);
+                });
+            }
+            _each_object(model.subscribe, function (item, key) {
+                if (item) {
+                    var copiesOfComponent = componentsMade[key];
+                    if (copiesOfComponent) {
+                        _each_object(copiesOfComponent, function (subItem, key) {
+                            subItem.notify(changes);
+                        });
+                    }
+                }
+            });
+        };
     //sys info
     $.host = {
         // EX http https
@@ -5226,7 +5437,7 @@ NODE TYPE OBJECT
         //lib name
         name: 'ACID',
         //lib version
-        version: 5.7,
+        version: 5.8,
         //platform type
         platform: 'development',
         //website
@@ -5534,6 +5745,7 @@ NODE TYPE OBJECT
     })();
 
     var _event = $.acid.event;
+    var _eventNames = $.eventNames = [];
     (function () {
         function listen_on_all_events() {
             var event = {
@@ -5628,6 +5840,13 @@ NODE TYPE OBJECT
                     }
                 }
             };
+            _each_object(event, function (item) {
+                _each_object(item, function (subItem, key) {
+                    if (key != 'obj') {
+                        _eventNames.push(key);
+                    }
+                });
+            });
             _event(event);
         }
         _isDocumentReady(listen_on_all_events);

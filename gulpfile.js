@@ -47,6 +47,7 @@
 	'build/shared/vars/DOM/*.js',
 	'build/shared/modules/*.js',
 	'build/shared/modules/DOM/*.js',
+	'build/shared/modules/DOM/**/*.js',
 	//selector functions
 	'build/modules/dom/*.js',
 	//namespace
@@ -101,6 +102,9 @@
 	'build/modules/$/modules/native/*.js',
 	//modules that deal with DOM
 	'build/modules/$/modules/DOM/*.js',
+	'build/modules/$/modules/DOM/component/start.js',
+	'build/modules/$/modules/DOM/component/**/*.js',
+	'build/modules/$/modules/DOM/component/end.js',
 	//get system info
 	'build/end/info.js',
 	//acid engine related functions

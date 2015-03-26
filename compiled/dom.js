@@ -1,3 +1,4 @@
+var _eventNames = $.eventNames = [];
 (function () {
     function listen_on_all_events() {
         var event = {
@@ -92,6 +93,13 @@
                 }
             }
         };
+        _each_object(event, function (item) {
+            _each_object(item, function (subItem, key) {
+                if (key != 'obj') {
+                    _eventNames.push(key);
+                }
+            });
+        });
         _event(event);
     }
     _isDocumentReady(listen_on_all_events);

@@ -71,16 +71,18 @@ var _html=$.html=function (e,data) {
 };
 
 //string to DOM
-var _toDOM = $.toDOM = function (html,a) {
-    var i = _createElement.call(_document,'div');
-    i.innerHTML = html;
-    var f = $frag();
-    while (i.firstChild) {
-        f.appendChild(i.firstChild);
+var _toDOM = $.toDOM = function (html,childNumber) {
+	var empty=_empty_node_div;
+    empty.innerHTML = html;
+    var frag = $frag(),
+    	first=null;
+    while (first=empty.firstChild) {
+        frag.appendChild(first);
     }
-    var i = null;
-    if (a === 0) {
-        return f.childNodes[0];
+    var empty = null,
+    	first=null;
+    if (hasValue(childNumber)) {
+        return frag.childNodes[childNumber];
     }
-    return f;
+    return frag;
 };

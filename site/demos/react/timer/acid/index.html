@@ -10,7 +10,7 @@
 		for(var i=0; i< 3000; i++){
 			$('#wrapper').ap($.tag('div').attr('id',i));
 			var Timer=$.reactModel('Timer'+i, {
-				template: '<div>Seconds Elapsed: <span acid="timer"></span></div>',
+				template: '<div>Seconds Elapsed: <span data-node="timer"></span></div>',
 				componentMount: function () {
 					this.interval = setInterval(this.tick, 20);
 				},

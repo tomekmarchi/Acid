@@ -6,7 +6,11 @@ var _faceplateDOM = function (node, data, name) {
 		}
 
 		if(_isString(name)){//faster
-			var face =  _faceplate[node.getAttribute(name)];
+			if(_has(name,'data-')){
+				var face =  _faceplate[node.getAttribute(name)];
+			}else{
+				var face =  _faceplate[name];
+			}
 		}else {//fastest
 			var face = name;
 		}

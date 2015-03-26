@@ -128,13 +128,16 @@ var listOnly = {
 	afterNth:generate_loop_nth(afterNth),
 	beforeNth:generate_loop_nth(beforeNth),
 	remove:generate_loop_return(removeloop),
+	splice:function(start,end){
+		return _removeRange(this,start,end);
+	},
 	resetHTML:generate_loop_return(_resetHTML),
 	next:generate_loop_return(_next),
 	previous:generate_loop_return(_previous),
 	//selectors
 	id:generate_loop_single_return(_id),
-	cls:generate_loop_single_return(_cls),
-	tag:generate_loop_single_return(_tag),
+	cls:generate_loop_single_return(_clsDOM),
+	tag:generate_loop_single_return(_tagDOM),
 	qsa:generate_loop_single_return(_qsa),
 	qs:generate_loop_single_return(_qs),
 	//class functions
@@ -161,7 +164,7 @@ var listOnly = {
 	first:generate_loop_return(_first),
 	//props
 	val:generate_loop_single_return(_val),
-	sty:generate_loop_single_return(_sty),
+	sty:generate_loop_return_triple(_sty),
 	sel:generate_loop_single_return(_sel),
 	//offsets
 	ow:generate_loop_return(_ow),

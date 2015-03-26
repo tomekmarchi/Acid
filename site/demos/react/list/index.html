@@ -1,40 +1,55 @@
 <!DOCTYPE html>
-
 <html>
-<head>
-    <meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0">
-    <script src="/compiled/acid.js" id="acid-lib"></script>
-    <script>
-	//core model used for onready
-	$.model('core', function () {
-		$.ensureInvoke('/site/scripts/models/css/css.js');
-		var list=$.reactModel('list', {
-			template: $id('ACIDapp'),
-			componentData:{
-				list:[]
-			},
-			list: function (change) {
-				this.nodes.mount.ap($.tag('li').tc(change.object[change.index]));
+	<head>
+	    <meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0">
+	    <script src="/compiled/acid.js" id="acid-lib"></script>
+	    <script>
+		//core model used for onready
+		$.model('core', function () {
+			$.ensureInvoke('/site/scripts/models/css/css.js');
+
+			var listItem=$.reactModel('item',{
+				template:$.toDOM('<li><b data-node="title"></b> - <span data-node="text"></span></li>',0),
+				componetData:{
+					text:'',
+					title:''
+				},
+				text:function(){
+					this.nodes.text.tc(this.data.text);
+				},
+				title:function(){
+					this.nodes.title.tc(this.data.title);
+				}
+			});
+
+			var list=$.reactModel('list', {
+				template: $id('ACIDapp'),
+				componentData:{
+					list:[]
+				},
+				componentMount: function () {
+					this.list=$.reactNodeList(this.nodes.mount,this.data.list);
+				}
+			});
+
+			window.componentApp=list.render();
+			window.componentApp.mount();
+
+			for (var i = 0; i < 100; i++){
+				componentApp.data.list.push(listItem.render({title:'Title('+i+')',text:'Text('+i+')'}));
 			}
+
 		});
+	    </script>
+	    <title>List of data using O.o</title>
+	</head>
 
-		window.componentApp=list.render();
-		window.componentList=componentApp.data.list;
+	<body id="wrapper" class="pad_box">
 
-		for (var i = 0; i < 100; i++){
-			componentList.push('item'+i);
-		}
+		<!-- ACID -->
+		<div id="ACIDapp">
+			<ul data-node="mount" class="standardlist"></ul>
+		</div>
 
-	});
-    </script>
-    <title>List of data using O.o</title>
-</head>
-
-<body id="wrapper">
-
-<!-- ACID -->
-<div id="ACIDapp">
-  ACID Push data from console with this command componentList.push('ITEM'); <ul acid="mount" class="standardlist"></ul>
-</div>
-</body>
+	</body>
 </html>

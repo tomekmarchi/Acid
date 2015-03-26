@@ -1,6 +1,7 @@
-(function(){
-	function listen_on_all_events(){
-		var event={
+var _eventNames = $.eventNames = [];
+(function () {
+	function listen_on_all_events() {
+		var event = {
 			window: {
 				obj: _window,
 				scroll: {
@@ -8,15 +9,15 @@
 				},
 				resize: {
 					capture: true,
-					fn:function(){
-						if($debug){
+					fn: function () {
+						if ($debug) {
 							$.log('resize cache updated');
 						}
-						$.cache.wh={};
-						$.cache.bodyWidth=_body.offsetWidth;
-						$.cache.bodyHeight=_body.offsetHeight;
-						$.cache.windowh=_window.innerHeight;
-						$.cache.windoww=_window.innerWidth;
+						$.cache.wh = {};
+						$.cache.bodyWidth = _body.offsetWidth;
+						$.cache.bodyHeight = _body.offsetHeight;
+						$.cache.windowh = _window.innerHeight;
+						$.cache.windoww = _window.innerWidth;
 						return false;
 					}
 				},
@@ -60,10 +61,10 @@
 				click: {
 					capture: true
 				},
-				mouseover:{
+				mouseover: {
 					capture: true
 				},
-				mouseout:{
+				mouseout: {
 					capture: true
 				},
 				mousedown: {
@@ -92,7 +93,14 @@
 				}
 			}
 		};
+		_each_object(event, function (item) {
+			_each_object(item, function (subItem, key) {
+				if(key!='obj'){
+					_eventNames.push(key);
+				}
+			});
+		});
 		_event(event);
 	}
-    _isDocumentReady(listen_on_all_events);
+	_isDocumentReady(listen_on_all_events);
 })();

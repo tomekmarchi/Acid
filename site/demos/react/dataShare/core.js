@@ -19,7 +19,7 @@
 			title: function () {
 				this.nodes.title.tc(this.data.title || 'Title');
 			},
-			template: '<div><h3 acid="title">Title</h3> <p acid="text">TEXT</p><input placeholder="Title" acid="input[keyup:this.onChange]"></div>'
+			template: '<div><h3 data-node="title">Title</h3> <p data-node="text">TEXT</p><input placeholder="Title" data-node="input" data-keyup="this.onChange"></div>'
 		});
 
 		for(var i=0; i<4; i++){
@@ -31,7 +31,7 @@
 			onChange: function (obj) {
 				child.data.text = obj.value;
 			},
-			template: '<div><input placeholder="Shared Text" acid="input[keyup:this.onChange]"></div>'
+			template: '<div><input placeholder="Shared Text" data-keyup="this.onChange"></div>'
 		});
 
 		$('#wrapper').prepend(parent.render().node);

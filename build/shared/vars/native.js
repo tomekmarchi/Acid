@@ -17,8 +17,10 @@ var _array = Array,
 	_math = Math,
 	//boolean object
 	_boolean = Boolean,
+	//undefined cache
+	_undefined=undefined,
 	//weakmap
-	weak_map = WeakMap,
+	weak_map = _global.WeakMap,
 	new_weak_map = function(){
 		return new 	weak_map();
 	},
@@ -27,10 +29,10 @@ var _array = Array,
 	//number
 	number_object = Number,
 	//worker object
-	_worker = Worker,
+	_worker = _global.Worker,
 	//web socket
-	_socket = WebSocket,
-	_RAF=requestAnimationFrame,
+	_socket = _global.WebSocket,
+	_RAF=_global.requestAnimationFrame,
 	//storage
 	//local
 	_localstorage = localStorage,
