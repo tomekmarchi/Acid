@@ -2569,7 +2569,7 @@ rearg(1,2,3);
     $ext.xhr = {
         loaded: function (evt) {
             if ($debug) {
-                evt.log();
+                console.log(evt);
             }
             var xhr = evt.target;
             $eventremove(xhr, 'load', $ext.xhr.loaded);
@@ -2582,17 +2582,19 @@ rearg(1,2,3);
                         var data = json.parse(data);
                     }
                 }
-                var callback = xhr.call;
+                var callback = xhr.callback;
                 if (callback) {
                     _async(function () {
-                        callback(data)
+                        callback(data, evt)
                     });
                 }
             }
             if (status > 200) {
                 var callback = xhr.fail;
                 if (callback) {
-                    _async(callback);
+                    _async(function () {
+                        callback(evt)
+                    });
                 }
             }
             return false;
@@ -2605,7 +2607,7 @@ rearg(1,2,3);
             $eventremove(xhr, 'load', $ext.preload.loaded);
             var status = evt.target.status;
             if (status == 200) {
-                var callback = xhr.call,
+                var callback = xhr.callback,
                     data = xhr.responseText;
                 if (callback) {
                     _async(function () {
@@ -2634,47 +2636,59 @@ rearg(1,2,3);
         }
     };
 
+    function xhrPostParam(url, add) {
+        if (url.length > 0) {
+            var url = url + '&';
+        }
+        var url = url + add;
+        return url;
+    }
 
     //xhr
-    $.xhr = function (data) {
-        var xhr, url = data.url,
-            args = data.args || '',
-            type = data.type || 'GET',
-            content = data.content,
-            callback = data.call,
-            fail = data.fail,
-            abort = data.abort,
-            progress = data.progress,
-            xhr = new XMLHttpRequest(),
-            c = $ext.credits.url,
-            a = $ext.xhr.analytics;
-        if (isPlainObject(args)) {
-            var new_args = '';
-            args.
-            for (function (item, key) {
-                new_args = new_args.addparam(key + '=' + item);
+    $.xhr = function (config) {
+        var xhr = new XMLHttpRequest(),
+            url = config.url,
+            data = config.data || '',
+            type = config.type || 'GET',
+            contentType = config.contentType,
+            callback = config.callback,
+            success = config.success,
+            fail = config.fail,
+            abort = config.abort,
+            progress = config.progress,
+            credits = $ext.credits.url,
+            analytics = $ext.xhr.analytics,
+            newData = '';
+
+        if (!contentType) {
+            if (type == 'GET') {
+                var contentType = 'text/plain';
+            } else {
+                var contentType = "application/x-www-form-urlencoded";
+            }
+        }
+
+        if (isPlainObject(data)) {
+            _each_object(data, function (item, key) {
+                newData = xhrPostParam(newData, key + '=' + item);
+            });
+        } else if (_isArray(data)) {
+            _each_array(data, function (item, key) {
+                newData = xhrPostParam(newData, item);
             });
         }
-        if (_isArray(args)) {
-            var new_args = '';
-            args.
-            for (function (item, i) {
-                new_args = new_args.addparam(item);
-            });
+
+        if (credits) {
+            var newData = xhrPostParam(newData, credits());
         }
-        if (new_args) {
-            var args = new_args,
-                new_args = null;
-        }
-        if (c) {
-            var url = url.addparam(c());
-        }
-        if (a) {
-            a(url, data);
+
+        if (analytics) {
+            analytics(url, newData);
         }
         if (callback) {
-            xhr.call = callback;
+            xhr.callback = callback;
         }
+
         if (fail) {
             xhr.fail = fail;
             $eventadd(xhr, 'error', $ext.xhr.error);
@@ -2688,36 +2702,35 @@ rearg(1,2,3);
             $eventadd(xhr, 'abort', $ext.xhr.abort);
         }
         $eventadd(xhr, 'load', $ext.xhr.loaded);
-        xhr.open(type, url, true);
-        if (!content) {
-            if (type == 'GET') {
-                var ctype = 'text/plain';
+
+        if (type == 'GET') {
+            if (!_has(url, '?')) {
+                var url = url + '?' + newData;
             } else {
-                var ctype = "application/x-www-form-urlencoded";
+                var url = url + '&' + newData;
             }
+            var newData = '';
         }
-        xhr.setRequestHeader("Content-type", ctype);
-        var first = args[0];
-        if (first == '?') {
-            var args = args.substring(1);
-        }
-        xhr.send(args);
+
+        xhr.open(type, url, true);
+        xhr.setRequestHeader("Content-type", contentType);
+        xhr.send(newData);
         var xhr = null,
             url = null,
-            args = null,
+            data = null,
             type = null,
-            content = null,
+            contentType = null,
             callback = null,
-            c = null,
-            a = null;
+            credits = null,
+            analytics = null;
         return false;
     };
 
-    //preload URL
+    //quick GET URL
     $.fetch = function (url, callback) {
         var xhr, xhr = new XMLHttpRequest();
         if (callback) {
-            xhr.call = callback;
+            xhr.callback = callback;
         }
         $eventadd(xhr, 'load', $ext.preload.loaded);
         xhr.open("GET", url, true);
@@ -3170,13 +3183,13 @@ Math Related cached functions
     if (acid_lib) {
         //get model directory -> save prefix to prefix
         $.dir.js = acid_lib.getAttribute('data-core') || '';
-        //create core script and append to head
-        _isDocumentReady(function () {
-            _ensure('core', function (core) {
-                core();
-            });
-        });
     }
+    //create core script and append to head
+    _isDocumentReady(function () {
+        _ensure('core', function (core) {
+            core();
+        });
+    });
     //clean up
     var acid_lib = null;
 })(this);

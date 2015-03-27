@@ -35,6 +35,7 @@
 			message: 'DOCS UPDATED'
 		});
 	}
+
 	//file locations
 	var locations = [
 	//begin

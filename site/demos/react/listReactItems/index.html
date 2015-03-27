@@ -24,8 +24,10 @@
 
 			var list=$.reactModel('list', {
 				template: $id('ACIDapp'),
-				componentData:{
-					list:[]
+				componentData:function(){
+					return {
+						list:[]
+					};
 				},
 				componentMount: function () {
 					this.list=$.reactNodeList(this.nodes.mount,this.data.list);
@@ -46,7 +48,7 @@
 				}
 				(function(){
 					ran.raf();
-				}).timer(60);
+				}).timer(40);
 			};
 
 			(function(){

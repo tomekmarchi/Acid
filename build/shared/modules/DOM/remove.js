@@ -11,7 +11,8 @@ var $remove = (isremovenative) ? null : function (node) {
 };
 
 var _removeNode = ($remove)? $remove : function(node){
-	return node.remove();
+	node.remove();
+	return node;
 };
 
 var removeloop = function (node) {

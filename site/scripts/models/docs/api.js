@@ -507,7 +507,12 @@
 		toArray: {
 			descrip: 'Convert list to an array',
 			example: 'nodes.toarray()'
+		},
+		removeRange: {
+			descrip: 'Remove nodes from DOM with a start index and end index',
+			example: 'nodes.removeRange(startIndex,endIndex)'
 		}
+
 	};
 	$.model.api.array = {
 		each: {

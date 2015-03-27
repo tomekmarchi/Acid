@@ -20,7 +20,7 @@ var generateMethods = function (object, config) {
 				dataAdded(object, changes);
 			};
 		_observe(object.props, funct);
-		_observe(object.data, watcher, ['add']);
+		_observe(object.data, watcher);
 		if (config.componentModel) {
 			var mount = config.componentModel.componentMount,
 				unMount = config.componentModel.componentUnMount;

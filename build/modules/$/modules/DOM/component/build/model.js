@@ -57,10 +57,10 @@ var _reactModel = function (name, object, lean) {
 	model.mount = function (set) {
 		return componentMount(model, mount, set);
 	};
-	if (model.componentModel) {
-		generateMethods(model, model);
-	} else if (model.model) {
+	if (model.model) {
 		generateMethods(model, model.model);
+	}else if (model.componentModel) {
+		generateMethods(model, model);
 	}
 	_observe(model.props, observerFN);
 	_observe(model.data, watcher);

@@ -128,7 +128,7 @@ var listOnly = {
 	afterNth:generate_loop_nth(afterNth),
 	beforeNth:generate_loop_nth(beforeNth),
 	remove:generate_loop_return(removeloop),
-	splice:function(start,end){
+	removeRange:function(start,end){
 		return _removeRange(this,start,end);
 	},
 	resetHTML:generate_loop_return(_resetHTML),

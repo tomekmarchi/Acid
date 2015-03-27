@@ -587,7 +587,8 @@ This is for finding an object method via a string used througout events
     };
 
     var _removeNode = ($remove) ? $remove : function (node) {
-        return node.remove();
+        node.remove();
+        return node;
     };
 
     var removeloop = function (node) {
@@ -1505,7 +1506,7 @@ METHODS FOR CLASS MODS
             afterNth: generate_loop_nth(afterNth),
             beforeNth: generate_loop_nth(beforeNth),
             remove: generate_loop_return(removeloop),
-            splice: function (start, end) {
+            removeRange: function (start, end) {
                 return _removeRange(this, start, end);
             },
             resetHTML: generate_loop_return(_resetHTML),
@@ -3729,7 +3730,7 @@ rearg(1,2,3);
     $ext.xhr = {
         loaded: function (evt) {
             if ($debug) {
-                evt.log();
+                console.log(evt);
             }
             var xhr = evt.target;
             $eventremove(xhr, 'load', $ext.xhr.loaded);
@@ -3742,17 +3743,19 @@ rearg(1,2,3);
                         var data = json.parse(data);
                     }
                 }
-                var callback = xhr.call;
+                var callback = xhr.callback;
                 if (callback) {
                     _async(function () {
-                        callback(data)
+                        callback(data, evt)
                     });
                 }
             }
             if (status > 200) {
                 var callback = xhr.fail;
                 if (callback) {
-                    _async(callback);
+                    _async(function () {
+                        callback(evt)
+                    });
                 }
             }
             return false;
@@ -3765,7 +3768,7 @@ rearg(1,2,3);
             $eventremove(xhr, 'load', $ext.preload.loaded);
             var status = evt.target.status;
             if (status == 200) {
-                var callback = xhr.call,
+                var callback = xhr.callback,
                     data = xhr.responseText;
                 if (callback) {
                     _async(function () {
@@ -3794,47 +3797,59 @@ rearg(1,2,3);
         }
     };
 
+    function xhrPostParam(url, add) {
+        if (url.length > 0) {
+            var url = url + '&';
+        }
+        var url = url + add;
+        return url;
+    }
 
     //xhr
-    $.xhr = function (data) {
-        var xhr, url = data.url,
-            args = data.args || '',
-            type = data.type || 'GET',
-            content = data.content,
-            callback = data.call,
-            fail = data.fail,
-            abort = data.abort,
-            progress = data.progress,
-            xhr = new XMLHttpRequest(),
-            c = $ext.credits.url,
-            a = $ext.xhr.analytics;
-        if (isPlainObject(args)) {
-            var new_args = '';
-            args.
-            for (function (item, key) {
-                new_args = new_args.addparam(key + '=' + item);
+    $.xhr = function (config) {
+        var xhr = new XMLHttpRequest(),
+            url = config.url,
+            data = config.data || '',
+            type = config.type || 'GET',
+            contentType = config.contentType,
+            callback = config.callback,
+            success = config.success,
+            fail = config.fail,
+            abort = config.abort,
+            progress = config.progress,
+            credits = $ext.credits.url,
+            analytics = $ext.xhr.analytics,
+            newData = '';
+
+        if (!contentType) {
+            if (type == 'GET') {
+                var contentType = 'text/plain';
+            } else {
+                var contentType = "application/x-www-form-urlencoded";
+            }
+        }
+
+        if (isPlainObject(data)) {
+            _each_object(data, function (item, key) {
+                newData = xhrPostParam(newData, key + '=' + item);
+            });
+        } else if (_isArray(data)) {
+            _each_array(data, function (item, key) {
+                newData = xhrPostParam(newData, item);
             });
         }
-        if (_isArray(args)) {
-            var new_args = '';
-            args.
-            for (function (item, i) {
-                new_args = new_args.addparam(item);
-            });
+
+        if (credits) {
+            var newData = xhrPostParam(newData, credits());
         }
-        if (new_args) {
-            var args = new_args,
-                new_args = null;
-        }
-        if (c) {
-            var url = url.addparam(c());
-        }
-        if (a) {
-            a(url, data);
+
+        if (analytics) {
+            analytics(url, newData);
         }
         if (callback) {
-            xhr.call = callback;
+            xhr.callback = callback;
         }
+
         if (fail) {
             xhr.fail = fail;
             $eventadd(xhr, 'error', $ext.xhr.error);
@@ -3848,36 +3863,35 @@ rearg(1,2,3);
             $eventadd(xhr, 'abort', $ext.xhr.abort);
         }
         $eventadd(xhr, 'load', $ext.xhr.loaded);
-        xhr.open(type, url, true);
-        if (!content) {
-            if (type == 'GET') {
-                var ctype = 'text/plain';
+
+        if (type == 'GET') {
+            if (!_has(url, '?')) {
+                var url = url + '?' + newData;
             } else {
-                var ctype = "application/x-www-form-urlencoded";
+                var url = url + '&' + newData;
             }
+            var newData = '';
         }
-        xhr.setRequestHeader("Content-type", ctype);
-        var first = args[0];
-        if (first == '?') {
-            var args = args.substring(1);
-        }
-        xhr.send(args);
+
+        xhr.open(type, url, true);
+        xhr.setRequestHeader("Content-type", contentType);
+        xhr.send(newData);
         var xhr = null,
             url = null,
-            args = null,
+            data = null,
             type = null,
-            content = null,
+            contentType = null,
             callback = null,
-            c = null,
-            a = null;
+            credits = null,
+            analytics = null;
         return false;
     };
 
-    //preload URL
+    //quick GET URL
     $.fetch = function (url, callback) {
         var xhr, xhr = new XMLHttpRequest();
         if (callback) {
-            xhr.call = callback;
+            xhr.callback = callback;
         }
         $eventadd(xhr, 'load', $ext.preload.loaded);
         xhr.open("GET", url, true);
@@ -4929,10 +4943,10 @@ NODE TYPE OBJECT
         model.mount = function (set) {
             return componentMount(model, mount, set);
         };
-        if (model.componentModel) {
-            generateMethods(model, model);
-        } else if (model.model) {
+        if (model.model) {
             generateMethods(model, model.model);
+        } else if (model.componentModel) {
+            generateMethods(model, model);
         }
         _observe(model.props, observerFN);
         _observe(model.data, watcher);
@@ -5001,6 +5015,130 @@ NODE TYPE OBJECT
             observers[key] = ([object_props[key], funct]);
         }
     };
+    var dataAdded = function (model, changes) {
+        var len = changes.length,
+            batch = {};
+        for (var i = 0; i < len; i++) {
+            var change = changes[i],
+                name = change.name;
+            if (change.type == 'add') {
+                defineProp(model, change.object[name], name, model.observers);
+            }
+        }
+        var model = null,
+            changes = null;
+        return false;
+    };
+    //enhanced array changes
+    var buildArrayChange = function (change) {
+        if (change.type === 'splice') {
+            var removed = change.removed.length;
+            var data = {
+                addRange: (change.addedCount) ? change.index + change.addedCount : 0,
+                removeRange: (removed) ? change.index + removed : 0,
+                removeLength: (removed) ? removed : 0,
+                index: change.index,
+                addedCount: change.addedCount,
+                object: change.object,
+                removed: change.removed,
+                type: change.type
+            };
+        } else if (change.type === 'update') {
+            var data = {
+                name: change.name,
+                object: change.object,
+                oldValue: change.oldValue,
+                type: change.type
+            };
+        } else if (change.type === 'add') {
+            var data = {
+                name: change.name,
+                object: change.object,
+                type: change.type
+            };
+        }
+        var change = null;
+        return data;
+    };
+
+    //changes that happen to level 0 of data
+    var viewChanges = function (model, changes) {
+        _each_array(changes, function (change) {
+            var method = model[change.name];
+            if (method) {
+                batchAdd(method, change);
+            }
+        });
+        frameCall();
+        return false;
+    };
+    //changes that happen to level 1 of data
+    var objectViewChanges = function (model, changes, name) {
+        var loose = model[name];
+        _each_array(changes, function (change) {
+            var method = loose[change.name];
+            if (method) {
+                batchAddCall(object, method, change);
+            }
+        });
+        frameCall();
+        return false;
+    };
+    //changes that happen to arrays level 0
+    var arrayChanges = function (model, changes, name) {
+        var loose = model[name];
+        _each_array(changes, function (change) {
+            if (loose) {
+                batchAdd(loose, buildArrayChange(change));
+            }
+        });
+        frameCall();
+        return false;
+    };
+
+    var makechanges = function () {
+        var items = asyncChanges,
+            len = asyncChangesCount;
+        for (var i = 0; i < len; i++) {
+            items[i]();
+        }
+        asyncChangesCount = 0;
+        asyncChanges = [];
+        cancelFrame = false;
+        return false;
+    };
+
+    var frameCall = function () {
+        if (cancelFrame === false) {
+            cancelFrame = _RAF(makechanges);
+        }
+    };
+    var modelSubChanges = function (componentsMade, changes, subKey, func) {
+        _each_object(componentsMade, function (item, key) {
+            func(item, changes, subKey);
+        });
+    },
+        reactModelFN = function (changes, name, model) {
+            if (model.model || model.componentModel) {
+                viewChanges(model, changes);
+            }
+            var copiesOfComponent = componentsMade[name];
+            if (copiesOfComponent) {
+                _each_object(copiesOfComponent, function (item, key) {
+                    item.notify(changes);
+                });
+            }
+            _each_object(model.subscribe, function (item, key) {
+                if (item) {
+                    var copiesOfComponent = componentsMade[key];
+                    if (copiesOfComponent) {
+                        _each_object(copiesOfComponent, function (subItem, key) {
+                            subItem.notify(changes);
+                        });
+                    }
+                }
+            });
+        };
     var compileData = function (object, data, optionalFNobj, optionalFNarray) {
         if (_isFunction(data)) {
             var data = data.call(object);
@@ -5047,7 +5185,7 @@ NODE TYPE OBJECT
                     dataAdded(object, changes);
                 };
             _observe(object.props, funct);
-            _observe(object.data, watcher, ['add']);
+            _observe(object.data, watcher);
             if (config.componentModel) {
                 var mount = config.componentModel.componentMount,
                     unMount = config.componentModel.componentUnMount;
@@ -5292,130 +5430,6 @@ NODE TYPE OBJECT
         thisRegexReplace = /(this)./g,
         //safety words if methods are generated on the model
         avoid_regex = /nodes|name|template|data|mount|unMount|componentModel|model|componentMount|kill|componentUnMount|render|componentData|_|component|props|observers|share|subscribe|unSubscribe/g;
-    var dataAdded = function (model, changes) {
-        var len = changes.length,
-            batch = {};
-        for (var i = 0; i < len; i++) {
-            var change = changes[i],
-                name = change.name;
-            if (change.type == 'add') {
-                defineProp(model, change.object[name], name, model.observers);
-            }
-        }
-        var model = null,
-            changes = null;
-        return false;
-    };
-    //enhanced array changes
-    var buildArrayChange = function (change) {
-        if (change.type === 'splice') {
-            var removed = change.removed.length;
-            var data = {
-                addRange: (change.addedCount) ? change.index + change.addedCount : 0,
-                removeRange: (removed) ? change.index + removed : 0,
-                removeLength: (removed) ? removed : 0,
-                index: change.index,
-                addedCount: change.addedCount,
-                object: change.object,
-                removed: change.removed,
-                type: change.type
-            };
-        } else if (change.type === 'update') {
-            var data = {
-                name: change.name,
-                object: change.object,
-                oldValue: change.oldValue,
-                type: change.type
-            };
-        } else if (change.type === 'add') {
-            var data = {
-                name: change.name,
-                object: change.object,
-                type: change.type
-            };
-        }
-        var change = null;
-        return data;
-    };
-
-    //changes that happen to level 0 of data
-    var viewChanges = function (model, changes) {
-        _each_array(changes, function (change) {
-            var method = model[change.name];
-            if (method) {
-                batchAdd(method, change);
-            }
-        });
-        frameCall();
-        return false;
-    };
-    //changes that happen to level 1 of data
-    var objectViewChanges = function (model, changes, name) {
-        var loose = model[name];
-        _each_array(changes, function (change) {
-            var method = loose[change.name];
-            if (method) {
-                batchAddCall(object, method, change);
-            }
-        });
-        frameCall();
-        return false;
-    };
-    //changes that happen to arrays level 0
-    var arrayChanges = function (model, changes, name) {
-        var loose = model[name];
-        _each_array(changes, function (change) {
-            if (loose) {
-                batchAdd(loose, buildArrayChange(change));
-            }
-        });
-        frameCall();
-        return false;
-    };
-
-    var makechanges = function () {
-        var items = asyncChanges,
-            len = asyncChangesCount;
-        for (var i = 0; i < len; i++) {
-            items[i]();
-        }
-        asyncChangesCount = 0;
-        asyncChanges = [];
-        cancelFrame = false;
-        return false;
-    };
-
-    var frameCall = function () {
-        if (cancelFrame === false) {
-            cancelFrame = _RAF(makechanges);
-        }
-    };
-    var modelSubChanges = function (componentsMade, changes, subKey, func) {
-        _each_object(componentsMade, function (item, key) {
-            func(item, changes, subKey);
-        });
-    },
-        reactModelFN = function (changes, name, model) {
-            if (model.componentModel) {
-                viewChanges(model, changes);
-            }
-            var copiesOfComponent = componentsMade[name];
-            if (copiesOfComponent) {
-                _each_object(copiesOfComponent, function (item, key) {
-                    item.notify(changes);
-                });
-            }
-            _each_object(model.subscribe, function (item, key) {
-                if (item) {
-                    var copiesOfComponent = componentsMade[key];
-                    if (copiesOfComponent) {
-                        _each_object(copiesOfComponent, function (subItem, key) {
-                            subItem.notify(changes);
-                        });
-                    }
-                }
-            });
-        };
     //sys info
     $.host = {
         // EX http https
@@ -5857,13 +5871,13 @@ NODE TYPE OBJECT
     if (acid_lib) {
         //get model directory -> save prefix to prefix
         $.dir.js = acid_lib.getAttribute('data-core') || '';
-        //create core script and append to head
-        _isDocumentReady(function () {
-            _ensure('core', function (core) {
-                core();
-            });
-        });
     }
+    //create core script and append to head
+    _isDocumentReady(function () {
+        _ensure('core', function (core) {
+            core();
+        });
+    });
     //clean up
     var acid_lib = null;
 })(this);

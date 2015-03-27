@@ -4,7 +4,7 @@ var modelSubChanges = function (componentsMade, changes, subKey, func) {
 		});
 	},
 	reactModelFN = function (changes, name, model) {
-		if (model.componentModel) {
+		if (model.model || model.componentModel) {
 			viewChanges(model, changes);
 		}
 		var copiesOfComponent = componentsMade[name];
