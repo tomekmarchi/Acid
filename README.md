@@ -1,15 +1,8 @@
 ACID
 =======
-Acid is a modern front-end javascript framework with a focus on current APIs.  
-Most Acid methods are accessed directly from native objects, however all methods can be pre-fixed.  
+Acidjs is an ECMAScript framework for web applications with a focus on modern & future APIs. Most Acid methods are accessed directly from native objects, however all methods can be pre-fixed. Acid includes Observable & Reactive models of all shapes and sizes making development fast , easy and efficient. It takes full use of Object.observe and future javascript APIs.
 http://acidjs.com
 
-Inspired by  
+Based on Synvigil Architecture
 =======  
-Lo-Dash  
-Underscore  
-Backbone  
-JQUERY  
-Prototype  
-React  
-Angular  
+https://github.com/tomekmarchi/Synvigil
