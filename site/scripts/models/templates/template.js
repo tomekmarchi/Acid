@@ -12,11 +12,11 @@
 		var animations=['slideinft', 'slideinfb', 'slideinfl', 'slideinfr'];
 		//create view for headers
 		view('object_type_h3', '<h3 class="full left"></h3>', function (data, item) {
-			item.tc(data);
+			item.tc(data.text);
 		});
 		//Create a view for stack blocks
 		view('object_type_wrap', '<ul class="margin-top-10 f14 clearfix standard_list"></ul>', function (data, item) {
-			item.attr('id', data);
+			item.attr('id', data.id);
 		});
 		//api item template
 		view('item_method', '<li data-click="nav.go" class="griditem slow_2 left"><a data-mouseover="plugins/tip.unpack"></a><span></span></li>', function (data, item) {

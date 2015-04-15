@@ -25,20 +25,57 @@ h1,h2,h3,h4,h5,h6,h7{
 	line-height: 36px;
 }
 
+.navigation_bar.bottom{
+	top:auto;
+	bottom: 0px;
+}
+
 .navigation_bar{
-	background-image: -o-linear-gradient(bottom, #E22C57 0%, #D1234C 100%);
- 	background-image: -moz-linear-gradient(bottom, #E22C57 0%, #D1234C 100%);
- 	background-image: -webkit-linear-gradient(bottom, #E22C57 0%, #D1234C 100%);
-	background-image: -ms-linear-gradient(bottom, #E22C57 0%, #D1234C 100%);
+	background-image: -o-linear-gradient(to bottom, #8075FF 0%, #613DC1 100%);
+ 	background-image: -moz-linear-gradient(to bottom, #8075FF 0%, #613DC1 100%);
+ 	background-image: -webkit-linear-gradient(to bottom, #8075FF 0%, #613DC1 100%);
+	background-image: -ms-linear-gradient(to bottom, #8075FF 0%, #613DC1 100%);
 	background-image: linear-gradient(to bottom, #8075FF 0%, #613DC1 100%),url('imgs/noise.png');
-	box-shadow: 0 1px 13px 0 rgba(0,0,0,0.20),0 1px 0px 0 rgba(0,0,0,0.14),inset 0 -2px 0 rgba(0,0,0,0.20)
+	box-shadow: 0 -2px 10px 0 rgba(0,0,0,0.20),0 -1px 0px 0 rgba(0,0,0,0.4),inset 0 1px 0px 0 rgba(255,255,255,0.15),inset 0 -2px 0 rgba(0,0,0,0.20);
+}
+
+.navigation_bar .glow{
+	position: absolute;
+	width:30%;
+	height: 100%;
+	background-color: transparent;
+	z-indez:1;
+	left:0px;
+	background-image: radial-gradient(center center, circle cover, rgba(255,255,255,0.25), transparent);
+	background-image: -o-radial-gradient(center center, circle cover, rgba(255,255,255,0.25), transparent);
+	background-image: -ms-radial-gradient(center center, circle cover, rgba(255,255,255,0.25), transparent);
+	background-image: -moz-radial-gradient(center center, circle cover, rgba(255,255,255,0.25), transparent);
+	background-image: -webkit-radial-gradient(center center, circle cover, rgba(255,255,255,0.25),transparent);
+}
+
+.glow.middle{
+	left:0%;
+	width:100%;
+	background-image: radial-gradient(center center, circle cover, rgba(255,255,255,0.1), transparent);
+	background-image: -o-radial-gradient(center center, circle cover, rgba(255,255,255,0.1), transparent);
+	background-image: -ms-radial-gradient(center center, circle cover, rgba(255,255,255,0.1), transparent);
+	background-image: -moz-radial-gradient(center center, circle cover, rgba(255,255,255,0.1), transparent);
+	background-image: -webkit-radial-gradient(center center, circle cover, rgba(255,255,255,0.1),transparent);
+}
+
+.glow.right{
+	right: 0px;
+	left:auto;
 }
 
 .navigation_bar.text_navigation a.nav_item{
 	color: #fff;
-	text-shadow:rgba(0,0,0,0.3) 0px 1px 0px;
+	text-shadow:rgba(0,0,0,0.3) 0px 1px 0px,rgba(0,0,0,0.3) 0px 1px 5px;
 	font-size: 13px;
 	text-transform: uppercase;
+	position:relative;
+	z-indez:2;
+	display: block;
 }
 
 .desktop .navigation_bar.text_navigation a.nav_item:hover{

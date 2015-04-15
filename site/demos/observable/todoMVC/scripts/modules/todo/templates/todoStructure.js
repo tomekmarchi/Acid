@@ -30,6 +30,7 @@ $.template({
 				<p>Double-click to edit a todo</p>
 				<p>Created by <a href="https://twitter.com/tommarchi">Tomek Marchi</a></p>
 				<p>Using <a href="https://acidjs.com">Acidjs</a></p>
+				<p>Check out the code here on <a href="https://github.com/tomekmarchi/ACID/tree/master/site/demos/observable/todoMVC">Github</a></p>
 			</footer>
 		</div>`
 });

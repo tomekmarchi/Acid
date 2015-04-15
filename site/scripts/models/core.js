@@ -1,16 +1,12 @@
 (function() {
-
-    $.model.app={
-        showArch:function(){
-            $('.architecture').toggle('hide');
-        }
-    };
-
+    if(window.Worker){
+         $('.architecture')[0].cl('hide');
+    }
     var define = [];
     //push acid functions to define
     define.pushApply(['isNative', 'isFunction', 'template', 'cache', 'toDOM', 'model', 'frag', 'service', 'serviceCreate', 'view', 'ensure']);
     //push files needed to be loaded
-    define.pushApply(['docs/api.js', 'plugins/art.js', 'plugins/tip.js', 'templates/template.js']);
+    define.pushApply(['docs/api.js', 'plugins/art.js', 'plugins/tip.js', 'templates/template.js', 'app.js']);
     //create a module and save it as a model named core (this will be launched onReadyState automatically loaded by acid) 
     //this is a short cut for creating a module and setting it on a model like so $.model('core',module);
     //module returns a function that is compiled and ready to be invoked
@@ -77,9 +73,9 @@
                 var object = item.obj,
                     id = item.id,
                     name = item.name;
-                var blockNode=view('object_type_wrap', 'block_' + id);
+                var blockNode=view('object_type_wrap', {id:'block_' + id});
                 //template the header and container
-                frag.ap(view('object_type_h3', name.ucFirst())).ap(blockNode);
+                frag.ap(view('object_type_h3',{text:name.ucFirst()})).ap(blockNode);
                 //loop through item methods
                 $.each(object, function(value, key) {
                     blockNode.ap(view('item_method', {
@@ -94,8 +90,8 @@
 				BUILD STACKS FOR NATIVE OBJECTS
 			*/
             objects.each(function(item, key) {
-                var blockNode=view('object_type_wrap', 'block_' + key);
-                frag.ap(view('object_type_h3', key.ucFirst())).ap(blockNode);
+                var blockNode=view('object_type_wrap', {id:'block_' + key});
+                frag.ap(view('object_type_h3', {text:key.ucFirst()})).ap(blockNode);
                 $('#stacks').ap(frag).ap(template('line_break'));
                 var doc = api[key];
                 get_acid_props(item, objects_symbols[key]).each(function(method, i) {

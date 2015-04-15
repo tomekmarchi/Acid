@@ -13,10 +13,11 @@
         <meta name="description" content="ACIDjs is a modern Javascript framework with a focus on current & future APIs. ACIDjs is specifically designed to scale for applications as they grow." />
     </head>
     <body data-resize="events/resize">
-        <header data-mouseover="plugins/tip.unpack"  data-tooltip="Scroll Up" class="side_panel nohl fadein theme theme_bg text_navigation navigation_bar" data-click="events/scroll.up">
-            <a class="nav_item trans-all" target="_blank" href="/site/demos/" data-mouseover="plugins/tip.unpack"  data-tooltip="Example Apps">Demos</a>
-            <a class="nav_item trans-all" target="_blank" href="http://acidjs.com/blog/" data-mouseover="plugins/tip.unpack"  data-tooltip="Acid Blog">Blog</a>
-            <a class="nav_item trans-all" target="_blank" href="/site/demos/observable/todoMVC/" data-mouseover="plugins/tip.unpack"  data-tooltip="Todo MVC exmaple ES7">TodoMVC</a>
+        <header data-mouseover="plugins/tip.unpack"  data-tooltip="Scroll Up" class="side_panel nohl fadein theme theme_bg text_navigation navigation_bar bottom" data-click="events/scroll.up">
+            <div class="glow"></div><div class="glow middle"></div><div class="glow right"></div>
+            <a class="nav_item trans-all" target="_blank" data-click="app.iframe" data-href="/site/demos/" data-mouseover="plugins/tip.unpack"  data-tooltip="Example Apps">Demos</a>
+            <a class="nav_item trans-all" target="_blank" data-click="app.iframe" data-href="http://acidjs.com/blog/" data-mouseover="plugins/tip.unpack"  data-tooltip="Acid Blog">Blog</a>
+            <a class="nav_item trans-all" target="_blank" data-click="app.iframe" data-href="/site/demos/observable/todoMVC/" data-mouseover="plugins/tip.unpack"  data-tooltip="Todo MVC exmaple ES7">TodoMVC</a>
             <a class="nav_item right trans-all" data-mouseover="plugins/tip.unpack"  data-tooltip="Contact" href="mailto:tom@lnkit.com">
                 <i class="icon icon-mail-2"></i>
             </a>
@@ -25,7 +26,7 @@
             </a>
         </header>
         <div id="api_overlay" class="gpu_hide_top gpu absolute container_minus_navbar trans_all"></div>
-        <div class="fill absolute scroll container_minus_navbar" data-scroll="events/scroll.move" id="scroll_wrap">
+        <div class="fill absolute scroll container_minus_navbar top" data-scroll="events/scroll.move" id="scroll_wrap">
             <div class="full header small slideinft center-bg trans-all shadow-inset-2px">
                 <div class="absolute bottom full center white bold pad_box textshadow">
                     <h1 class="center margin-bottom-10">ACID</h1>
@@ -40,7 +41,7 @@
             <div class="border-sep twopix-line margin-top-10 left margin-bottom-10"></div>
             <h3 class="center pointer nohl" data-click="app.showArch">Architecture <i class="icon icon-code"></i></h3>
             <div class="border-sep twopix-line left margin-bottom-10"></div>
-            <div class="w-960 margin-auto pad_box hide architecture">
+            <div class="w-960 margin-auto pad_box architecture">
                 <h1 class="center slideinfb slow">Synvigil  Architecture</h1>
                 <p class="center slideinfl slow"><small>(Syn,SV)</small></p>
                 <p class="center slideinfr">Synvigil is an application architecture written in ECMAScript for web applications. Syn is designed to scale with applications as they grow. Syn is fully modularized, async &amp; built with 60fps environments in-mind.</p>

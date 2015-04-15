@@ -20,6 +20,10 @@ var _faceplate = (function () {
 	var faceplate = function (key, value, item) {
 			if (_isString(key)) {
 				if (item) {
+					_each_array(item.querySelectorAll('[data-node]'),function(node,index){
+						value[node.attr('data-node')]=node;
+					});
+					value.rootNode=node;
 					return _faceplate[key](value, item);
 				} else if (value) {
 					_faceplate[key] = value;
