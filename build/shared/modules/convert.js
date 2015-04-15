@@ -14,12 +14,10 @@ var $tostring = object_prototype.toString,
 			var item=list[i],
 				name=item.constructor.name;
 			if(name=="HTMLCollection" || name=="NodeList"){
-				temp.push.apply(temp,toArrayDeep(item));
+				pushApply(temp,toArrayDeep(item));
 			}else{
 				temp.push(item);
 			}
 		}
 		return temp;
 	};
-
-	//$.toArrayDeep($('a'))

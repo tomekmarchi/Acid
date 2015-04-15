@@ -1,9 +1,9 @@
 //save browser info plus add class to body
-var _agentInfo=$.acid.agentInfo = function () {
+var _agentInfo = function () {
 		//useragent string
     var str = _window.navigator.userAgent.toLowerCase(),
     	//check through user agent
-        list = ['windows', 'macintosh', 'linux', 'ipad', 'iphone', 'chrome', 'safari', 'firefox', 'msie', 'trident', 'mobile', 'android'],
+        list = ['windows', 'macintosh', 'linux', 'ipad', 'iphone', 'chrome', 'safari', 'firefox', 'msie', 'trident', 'mobile', 'android', 'edge/'],
         len = list.length,
         addcls = [];
 
@@ -39,5 +39,7 @@ var _agentInfo=$.acid.agentInfo = function () {
 
     return false;
 };
+
+$.acid.agentInfo = _agentInfo;
 
 _isDocumentReady(_agentInfo);

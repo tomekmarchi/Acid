@@ -1,76 +1,106 @@
 //create a function that takes an object that is apart of the main $ and applies/calls it to the functions arguments useful for caching functions
-var _module = $.module = (function () {
-	//module function
-	var compile_module = function (methods, fn, callback) {
-			var temp = [],
-				import_it = [],
-				methods = (_isArray(methods)) ? methods : [methods],
-				len = methods.length;
-			for (var i = 0; i < len; i++) {
-				var item = methods[i];
-				if (_isString(item)) {
-					if (_has(item, '.js') || _has(item, '.css')) {
-						import_it.push(item);
-					} else {
-						temp.push(_find(item, $));
-					}
-				} else {
-					temp.push(item);
-				}
-			}
-			var call = function () {
-					var args = temp.concat(_toArray(arguments)),
-						module_with_import = function () {
-							return fn.apply(fn, args);
-						};
-					module_with_import.args = function (i) {
-						if (i) {
-							args = args.concat(_toArray(arguments));
-						}
-						return args;
-					};
-					if (callback) {
-						return callback(module_with_import);
-					}
-					return module_with_import();
-				};
-			if (import_it.length > 0) {
-				return _import(import_it, {
-					call: call
-				});
-			}
-			var compiled = function () {
-					return fn.apply(fn, temp);
-				};
-			//return to callback if passed
-			if (callback) {
-				return call();
-			}
-			return compiled;
-		};
-	//export
 
-	var module=function(data, fn, callback){
+var orderModuleMethods = function(methods, len) {
+    var array = [];
+    for (var i = 0; i < len; i++) {
+        var item = methods[i];
+        if (_isString(item)) {
+            if (_has(item, '.js')) {
+                var splitIt = item.split('/');
+                var model = _find(splitIt[splitIt.length - 1].split('.js')[0], _model);
+                if (model) {
+                    array.push(model);
+                }
+            } else {
+                var acidMethod = _find(item, $);
+                if (acidMethod) {
+                    array.push(acidMethod);
+                }
+            }
+        } else if (isObject(item) || _isFunction(item)) {
+            array.push(item);
+        }
+    }
+    return array;
+};
 
-		if(!fn){
-			return _module[data];
-		}
+var _module = (function() {
+    //module function
+    var compile_module = function(methods, fn, callback, callbackOptional) {
+        var importItems = [];
+        var methods = (_isArray(methods)) ? methods : [methods];
+        var len = methods.length;
+        for (var i = 0; i < len; i++) {
+            var item = methods[i];
+            if (_isString(item)) {
+                if (_has(item, '.js') || _has(item, '.css')) {
+                    importItems.push(item);
+                }
+            }
+        }
+        var compiled = function() {
+            var orderedMethods = orderModuleMethods(methods, len);
+            if (callbackOptional) {
+                return callbackOptional.apply(function() {
+                    return fn.apply(fn, orderedMethods)
+                }, orderedMethods);
+            }
+            return fn.apply(fn, orderedMethods);
+        };
+        var call = function() {
+            if (callback) {
+                return callback(compiled);
+            }
+            return compiled();
+        };
+        if (importItems.length > 0) {
+            return _import(importItems, {
+                call: call
+            });
+        }
+        //return to callback if passed
+        if (callback) {
+            return call();
+        }
+        return compiled;
+    };
+    //export
 
-		var compiled=function(){
-			var returned=compile_module(data, fn, callback);
-			if(_isFunction(returned)){
-				return returned();
-			}
-			return returned;
-		};
-		compiled.save=function(name){
-			return _module[name]=compiled;
-		};
-		return compiled;
-	};
+    var module = function(data, fn, callback, modelName, lean) {
 
-	return module;
+        if (isPlainObject(data) && !fn) {
+            var fn = data.invoke;
+            var callback = data.callback;
+            var modelName = data.modelName;
+            var lean = hasValue(data.leanModel) ? data.leanModel : true;
+            var data = data.import;
+        }
+
+        if (!fn) {
+            return _model[data];
+        }
+
+        var compiled = function(callbackOptional) {
+            var returned = compile_module(data, fn, callback, callbackOptional);
+            if (_isFunction(returned)) {
+                return returned();
+            }
+            return returned;
+        };
+        compiled.save = function(name) {
+            return _model(name, compiled, lean);
+        };
+        if (modelName) {
+            return _model[modelName] = compiled;;
+        }
+        return compiled;
+    };
+
+    return module;
 })();
+
+$.module = _module;
+
 /*
 	Example
 	//module function

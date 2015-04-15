@@ -257,6 +257,10 @@
 		timerClear: {
 			descrip: 'Clear a settimeout function',
 			example: '$.timerclear(number)'
+		},
+		batch: {
+			descrip: 'Batch add functions for improved rendering perfomance via RAF',
+			example: '$.batch(function)'
 		}
 	};
 	//$ methods
@@ -349,13 +353,25 @@
 			descrip: 'Parse a URL into an object with seperated info',
 			example: '$.linkParse(\'http://lnkit.com/signup\')'
 		},
-		react: {
-			descrip: 'Compile a react like view then observe it',
-			example: '$.react(object_syntax)'
+		component: {
+			descrip: 'Compile a reactive component',
+			example: '$.component(object_syntax)'
 		},
-		reactModel: {
-			descrip: 'Create a reactive model',
-			example: '$.reactModel(object_syntax)'
+		factory: {
+			descrip: 'Create a reactive model that manages and renders multiple components as well as itself.',
+			example: '$.factory(name,object_syntax)'
+		},
+		plant: {
+			descrip: 'Create a reactive model that represents [plant,factory,component,base,model,import,define,module] that can be rendered',
+			example: '$.plant(name,object_syntax)'
+		},
+		base: {
+			descrip: 'Create a reactive data hub',
+			example: '$.base(name,object_syntax)'
+		},
+		router:{
+			descrip: 'Create a reactive hub that is responsible for notifying other models',
+			example: '$.router(name,object_syntax)'
 		},
 		view: {
 			descrip: 'Create a simple view combine a faceplate and a template used for live DOM fast templating',
@@ -384,7 +400,7 @@
 	};
 
 	$.module.module={
-		'save': {
+		save: {
 			descrip: 'Get/Save a compiled module.',
 			example: '$.module([\'model\',\'post.js\'],function(model,post){ console.log(model);},callback).save(\'moduleName\'); $.module(\'moduleName\');'
 		}

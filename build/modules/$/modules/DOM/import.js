@@ -1,9 +1,10 @@
 //Compiled import function
-(function () {
+var _import=(function () {
 	//store URL dir data to save bytes and dev time
 	$ext.import = {};
 	//keep track of what has been imported
-	$.imported = {};
+	var _imported={};
+	$.imported = _imported;
 
 	$.dir={
 		css:'',
@@ -151,9 +152,9 @@ NODE TYPE OBJECT
 				type = url.match(regex_ext)[0].replace('.', ''),
 				url = ((!dir) ? ((_has(url, '//')) ? url : ($.dir[type] || '') + url) : ($.dir[dir] || '') + url),
 				id = import_id(url);
-			if (!$.imported[id]) {
+			if (!_imported[id]) {
 				//mark as imported already
-				$.imported[id] = true;
+				_imported[id] = true;
 				//create node type
 				var node_data = node_types[type](url, id, data.remove),
 					node = node_data.node;
@@ -195,10 +196,11 @@ NODE TYPE OBJECT
 			call = data.call;
 		//create promise
 		_promise(array, name, function () {
-			for (var i = 0; i < array.length; i++) {
+			for (var i = 0; i < len; i++) {
 				var item = array[i];
 				if (_has(item, '.js')) {
-					var model = _find(item.split('/').last().split('.js')[0], _model);
+					var splitIt=item.split('/');
+					var model = _find(splitIt[splitIt.length-1].split('.js')[0], _model);
 					if (model) {
 						array_model.push(model);
 					}
@@ -233,11 +235,10 @@ NODE TYPE OBJECT
 				},1);
 			})(array[i], name);
 		}
-		var len = null,
-			name = null;
+		var name = null;
 		return false;
 	};
-	$.import = function(key,value){
+	var importFunction = function(key,value){
 		if(_isFunction(value)){
 			var value={
 				call:value
@@ -248,8 +249,7 @@ NODE TYPE OBJECT
 		}
 		return array_import(key,value);
 	};
-
+	return importFunction;
 })();
 
-//cache import function
-var _import=$.import;
+$.import = _import;

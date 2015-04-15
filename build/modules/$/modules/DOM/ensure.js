@@ -1,4 +1,4 @@
-var _ensure = $.ensure =(function () {
+var _ensure =(function () {
 
 	//ensure a model is loaded if not load it then launch fn again
 	var ensure = function (string, call) {
@@ -74,16 +74,19 @@ var _ensure = $.ensure =(function () {
 		return false;
 	};
 
-	return function(key,call){
+	var ensureFunction=function(key,call){
 		if(_isString(key)){
 			return ensure(key,call);
 		}
 		return array_ensure(key,call);
 	};
 
+	return ensureFunction;
 })();
 
-$.ensureInvoke=function(ensures){
+$.ensure = _ensure;
+
+$.ensureInvoke=function(ensures,callback){
 	var ensures=(_isArray(ensures))? ensures : [ensures];
 	_ensure(ensures,function(){
 		_each_array(ensures,function(item){
@@ -93,6 +96,9 @@ $.ensureInvoke=function(ensures){
 				model();
 			}
 		});
+		if(callback){
+			callback();
+		}
 		ensures=null;
 	});
 };

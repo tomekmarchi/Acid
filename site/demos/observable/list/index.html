@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0">
+	    <script src="/compiled/acid.js" id="acid-lib"></script>
+	    <script>
+		//core model used for onready
+		$.model('core', function () {
+			$.ensureInvoke('/site/scripts/models/css/css.js');
+
+			$.factory('reactList', {
+				template:`<div>
+					<ul data-node="mount" class="standardlist"></ul>
+				</div>`,
+				privateData:function(){
+					return {
+						list: []
+					};
+				},
+				privateHelper:{
+					reactList:{
+						node:'mount',
+						array:'list'
+					}
+				},
+				add:function(i){
+					this.privateData.list.push(this.componentRender({title:'Title('+i+')',text:'Text('+i+')'}));
+				},
+				component:{
+					template:`<li><b data-node="title"></b> - <span data-node="text"></span></li>`,
+					data:{
+						text:'',
+						title:''
+					},
+					text:function(){
+						this.nodes.text.textValue(this.data.text);
+					},
+					title:function(){
+						this.nodes.title.textValue(this.data.title);
+					}
+				}
+			});
+
+			var componentApp=$.factory('reactList').render();
+			$('#wrapper').ap(componentApp.mount());
+			for (var i = 0; i < 5; i++){
+				componentApp.add(i);
+			}
+
+		});
+	    </script>
+	    <title>Reactive List</title>
+	</head>
+
+	<body id="wrapper" class="pad_box"></body>
+</html>

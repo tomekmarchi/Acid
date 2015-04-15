@@ -1,5 +1,5 @@
 //export and cache faceplate function
-var _faceplate = $.faceplate = (function () {
+var _faceplate = (function () {
 	//add faceplates from object
 	var obj_faceplate = function (object) {
 			for (var i = 0, keys = _object_keys(object), len = keys.length; i < len; i++) {
@@ -41,3 +41,5 @@ var _faceplate = $.faceplate = (function () {
 		};
 	return faceplate;
 })();
+
+$.faceplate = _faceplate;

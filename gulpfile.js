@@ -47,7 +47,7 @@
 	'build/shared/vars/*.js',
 	'build/shared/vars/DOM/*.js',
 	'build/shared/modules/*.js',
-	'build/shared/modules/DOM/*.js',
+	'build/shared/modules/**/*.js',
 	'build/shared/modules/DOM/**/*.js',
 	//selector functions
 	'build/modules/dom/*.js',
@@ -104,7 +104,7 @@
 	//modules that deal with DOM
 	'build/modules/$/modules/DOM/*.js',
 	'build/modules/$/modules/DOM/component/start.js',
-	'build/modules/$/modules/DOM/component/**/*.js',
+	'build/modules/$/modules/DOM/component/syn/**/*.js',
 	'build/modules/$/modules/DOM/component/end.js',
 	//get system info
 	'build/end/info.js',
@@ -135,6 +135,7 @@
 	}
 	//compile the acid library into lucy (Acid without DOM)
 	function compile_lucy() {
+		return;
 		var lucy_locations=[];
 		var condition=function(file){
 			var file=file.path || file;

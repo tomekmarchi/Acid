@@ -33,10 +33,10 @@
 		},
 		//remove todo
 		archive:function(obj,e){
-			$('.checked').each(function(){
+			$('.checked').each(function(item){
 				self.stat.amount--;
 				self.stat.done--;
-				this.remove();
+				item.remove();
 			});
 		},
 		//check a todo item

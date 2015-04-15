@@ -19,7 +19,7 @@ $.acid = {
 	//lib name
 	name: 'ACID',
 	//lib version
-	version: 5.8,
+	version: 5.9,
 	//platform type
 	platform: 'development',
 	//website

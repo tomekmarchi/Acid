@@ -1,21 +1,37 @@
 //text
-var	_tc = function (node, n) {
-	if (hasValue(n)) {
-		if (_isFunction(n)) {
-			var n = n.apply(this, []);
+var	_tc = function (node, value) {
+	if (hasValue(value)) {
+		if (_isFunction(value)) {
+			var value = value.call(node);
 		}
-		node.textContent = n;
+		node.textContent = value;
 		return node;
 	}
 	return node.textContent;
 },
-_txt = function (node, n) {
-	if (hasValue(n)) {
-		if (_isFunction(n)) {
-			var n = n.apply(this, []);
+_txt = function (node, value) {
+	if (hasValue(value)) {
+		if (_isFunction(value)) {
+			var value = value.call(node);
 		}
-		node.innerText = n;
+		node.innerText = value;
 		return node;
 	}
 	return node.innerText;
 };
+
+var _textValue=function(node,value){
+	var child=node.firstChild;
+	if(child){
+		if (hasValue(value)) {
+			if (_isFunction(value)) {
+				var value = value.call(node);
+			}
+			child.nodeValue = value;
+			return node;
+		}
+		return child.nodeValue;
+	}else{
+		return _tc(node,value);
+	}
+}

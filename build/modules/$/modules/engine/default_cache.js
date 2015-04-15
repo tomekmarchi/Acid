@@ -1,6 +1,2 @@
-$.cache.wh={};
-$.cache.screenh=screen.height;
-$.cache.screenw=screen.width;
-$.cache.windowh=_window.innerHeight;
-$.cache.windoww=_window.innerWidth;
-
+_cache.screenHeight=screen.height;
+_cache.screenWidth=screen.width;

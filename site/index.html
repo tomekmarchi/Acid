@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0">
+        <link rel="shortcut icon" href="/site/favicon.png?v=2" type="image/x-icon">
+        <link href='http://fonts.googleapis.com/css?family=Alice' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,500italic,700,400italic' rel='stylesheet' type='text/css'>
+        <link type="text/css" href="/site/styles/blotr.css" rel="stylesheet">
+        <link type="text/css" href="/site/styles/theme.css" rel="stylesheet">
+        <link type="text/css" href="/site/styles/icon.css" rel="stylesheet">
+        <style>
+
+        .stamp {
+            margin:50px auto;
+            width: 180px;
+            height: 280px;
+            display: block;
+            background: white;
+            position: relative;
+            -webkit-filter: drop-shadow(1px 2px 10px rgba(0,0,0,0.2));
+            filter: drop-shadow(1px 2px 10px rgba(0,0,0,0.2));
+            /*The stamp cutout will be created using crisp radial gradients*/
+            background: radial-gradient(
+            transparent 0px,
+            transparent 4px,
+            white 4px,
+            white
+            );
+            /*reducing the gradient size*/
+            background-size: 20px 20px;
+            /*Offset to move the holes to the edge*/
+            background-position: -10px -10px;
+        }
+        .stamp:after {
+            content: '';
+            position: absolute;
+            /*We can shrink the pseudo element here to hide the shadow edges*/
+            left: 5px; top: 5px; right: 5px; bottom: 5px;
+            /*Shadow - doesn't look good because of the stamp cutout. We can still move this into another pseudo element behind the .stamp main element*/
+            
+            /*pushing it back*/
+            z-index: -1;
+        }
+        .stampface {
+            background-image: -webkit-gradient(
+                linear,
+                left top,
+                left bottom,
+                color-stop(0, #E22C57),
+                color-stop(1, #D1234C)
+            );
+            position: absolute;
+            background-image: -o-linear-gradient(bottom, #E22C57 0%, #D1234C 100%);
+            background-image: -moz-linear-gradient(bottom, #E22C57 0%, #D1234C 100%);
+            background-image: -webkit-linear-gradient(bottom, #E22C57 0%, #D1234C 100%);
+            background-image: -ms-linear-gradient(bottom, #E22C57 0%, #D1234C 100%);
+            background-image: linear-gradient(to bottom, #E22C57 0%, #D1234C 100%);
+            width: 170px;
+            height: 270px;
+            margin-top:5px;
+            margin-left:5px;
+            border-radius:5px;
+            box-shadow:inset 0 0px 0px 1px rgba(0,0,0,0.6),inset 0 0px 0px 2px rgba(255,255,255,0.4);
+        }
+        .stamp .letterstamp{
+            font-size:150px;
+            color:#FFFFFF;
+            text-shadow: 0 1px 0 #ccc,
+             0 2px 0 #c9c9c9,
+             0 3px 0 #bbb,
+             0 4px 0 #b9b9b9,
+             0 5px 0 #aaa,
+             0 6px 1px rgba(0,0,0,.1),
+             0 0 5px rgba(0,0,0,.1),
+             0 1px 3px rgba(0,0,0,.3),
+             0 3px 5px rgba(0,0,0,.2),
+             0 5px 10px rgba(0,0,0,.25),
+             0 10px 10px rgba(0,0,0,.2),
+             0 20px 20px rgba(0,0,0,.15);
+             position: absolute;
+             top:45%;
+             left:22%;
+         }
+        </style>
+        <title>ACIDjs</title>
+        <meta name="description" content="ACIDjs is a modern Javascript framework with a focus on current & future APIs. ACIDjs is specifically designed to scale for applications as they grow." />
+    </head>
+    <body data-resize="events/resize">
+    <!-- Lets create a CSS3 stamp -->
+    <div class="stamp"><div class="stampface"><div class="letterstamp">A</div></div></div>
+    </body>
+</html>

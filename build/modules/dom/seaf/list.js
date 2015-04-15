@@ -158,6 +158,7 @@ var listOnly = {
 	//text
 	tc:generate_loop_single_return(_tc),
 	txt:generate_loop_single_return(_txt),
+	textValue:generate_loop_single_return(_textValue),
 	//order
 	parNode:generate_loop_return(_parNode),
 	last:generate_loop_return(_last),

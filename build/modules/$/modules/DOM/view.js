@@ -1,5 +1,5 @@
 //combine a template and a faceplate
-var _view = $.view = function (name,html,funct) {
+var _view = function (name,html,funct) {
 		if(!funct){
 			var node=_template(name),
 				face=_faceplate[name];
@@ -13,3 +13,5 @@ var _view = $.view = function (name,html,funct) {
 		_template(name,html);
 		return true;
 	};
+
+$.view = _view;

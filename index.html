@@ -1,55 +1,312 @@
 <!DOCTYPE html>
-
 <html>
-<head>
-    <meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0">
-    <link rel="shortcut icon" href="/site/favicon.png?v=2" type="image/x-icon">
-    <link href='http://fonts.googleapis.com/css?family=Alice' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,500italic,700,400italic' rel='stylesheet' type='text/css'>
-    <link type="text/css" href="/site/styles/blotr.css" rel="stylesheet">
-    <link type="text/css" href="/site/styles/theme.css" rel="stylesheet">
-    <link type="text/css" href="/site/styles/icon.css" rel="stylesheet">
-    <script async src="/compiled/acid.js" id="acid-lib" data-core="site/scripts/models/" type="text/javascript"></script>
-
-    <title>ACIDjs</title>
-    <meta name="description" content="ACIDjs is a modern Javascript framework with a focus on current & future APIs. ACIDjs is specifically designed to scale for applications as they grow." />
-</head>
-
-<body data-resize="events/resize">
-    <header data-mouseover="plugins/tip.unpack"  data-tooltip="Scroll Up" class="side_panel nohl fadein theme theme_bg text_navigation navigation_bar" data-click="events/scroll.up">
-        <a class="nav_item" data-mouseover="plugins/tip.unpack" data-tooltip="Home"><i class="icon icon-home-3"></i></a>
-        <a class="nav_item" target="_blank" href="/site/demos/" data-mouseover="plugins/tip.unpack"  data-tooltip="Example Apps">Demos</a>
-		<a class="nav_item" target="_blank" href="http://acidjs.com/blog/" data-mouseover="plugins/tip.unpack"  data-tooltip="Acid Blog">Blog</a>
-        <a class="nav_item right" data-mouseover="plugins/tip.unpack"  data-tooltip="Contact" href="mailto:tom@lnkit.com">
-	    	<i class="icon icon-mail-2"></i>
-	    </a>
-	    <a class="nav_item right" data-mouseover="plugins/tip.unpack"  data-tooltip="Github" href="//github.com/tomekmarchi/ACID/" target="_blank">
-	    	<i class="icon icon-github"></i>
-	    </a>
-    </header>
-
-    <div id="api_overlay" class="gpu_hide_top gpu absolute container_minus_navbar trans_all"></div>
-
-    <div class="fill absolute scroll container_minus_navbar" data-scroll="events/scroll.move" id="scroll_wrap">
-        <div class="full header small slideinft center-bg trans-all shadow-inset-2px">
-            <div class="absolute bottom full center white bold pad_box textshadow">
-	            <h1 class="center margin-bottom-10">ACID</h1>
-                <div class="f16">A Javascript Framework From The Future. <i>Light, Fast, Easy, Scalable</i>. <br /><b class="babyblue">It's strange but it's cool man.</b></div>
+    <head>
+        <meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0">
+        <link rel="shortcut icon" href="/site/favicon.png?v=2" type="image/x-icon">
+        <link href='http://fonts.googleapis.com/css?family=Alice' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,500italic,700,400italic' rel='stylesheet' type='text/css'>
+        <link type="text/css" href="/site/styles/blotr.css" rel="stylesheet">
+        <link type="text/css" href="/site/styles/theme.css" rel="stylesheet">
+        <link type="text/css" href="/site/styles/icon.css" rel="stylesheet">
+        <script async src="/compiled/acid.js" id="acid-lib" data-core="site/scripts/models/" type="text/javascript"></script>
+        <title>ACIDjs</title>
+        <meta name="description" content="ACIDjs is a modern Javascript framework with a focus on current & future APIs. ACIDjs is specifically designed to scale for applications as they grow." />
+    </head>
+    <body data-resize="events/resize">
+        <header data-mouseover="plugins/tip.unpack"  data-tooltip="Scroll Up" class="side_panel nohl fadein theme theme_bg text_navigation navigation_bar" data-click="events/scroll.up">
+            <a class="nav_item trans-all" target="_blank" href="/site/demos/" data-mouseover="plugins/tip.unpack"  data-tooltip="Example Apps">Demos</a>
+            <a class="nav_item trans-all" target="_blank" href="http://acidjs.com/blog/" data-mouseover="plugins/tip.unpack"  data-tooltip="Acid Blog">Blog</a>
+            <a class="nav_item trans-all" target="_blank" href="/site/demos/observable/todoMVC/" data-mouseover="plugins/tip.unpack"  data-tooltip="Todo MVC exmaple ES7">TodoMVC</a>
+            <a class="nav_item right trans-all" data-mouseover="plugins/tip.unpack"  data-tooltip="Contact" href="mailto:tom@lnkit.com">
+                <i class="icon icon-mail-2"></i>
+            </a>
+            <a class="nav_item right trans-all" data-mouseover="plugins/tip.unpack"  data-tooltip="Github" href="//github.com/tomekmarchi/ACID/" target="_blank">
+                <i class="icon icon-github"></i>
+            </a>
+        </header>
+        <div id="api_overlay" class="gpu_hide_top gpu absolute container_minus_navbar trans_all"></div>
+        <div class="fill absolute scroll container_minus_navbar" data-scroll="events/scroll.move" id="scroll_wrap">
+            <div class="full header small slideinft center-bg trans-all shadow-inset-2px">
+                <div class="absolute bottom full center white bold pad_box textshadow">
+                    <h1 class="center margin-bottom-10">ACID</h1>
+                    <div class="f16">A Javascript Framework From The Future. <i>Light, Fast, Easy, Scalable</i>. <br /><b class="babyblue">A framework for creating futuristic applications.</b></div>
+                </div>
             </div>
-        </div>
-
-        <div class="pad_box">
-            <p class="center"><img src="/site/favicon.png?v=2" class="center" /><br /><span class="h4">A</span>cid is a modern javascript framework with a focus on current APIs.<br />
-	            Most Acid methods are accessed directly from native objects, <b>however <i>all</i> methods can be pre-fixed</b>.<br />
-
-	        <b class="center">Status:BETA v5.8 - Experimental.</b> <span class="underline">Documentation is currently under construction!</span>
-			</p>
-
+            <div class="pad_box">
+                <p class="center"><span class="h4">A</span>cid is a modern javascript framework with a focus on current & future APIs (ES7).<br />
+                Most Acid methods are accessed directly from native objects, <b>however <i>all</i> methods can be pre-fixed</b>.<br />
+                <b class="center">Status:BETA v5.9</b> <span class="underline">Documentation is currently under construction!</span>
+            </p>
             <div class="border-sep twopix-line margin-top-10 left margin-bottom-10"></div>
-			<h3 class="center">API <i class="icon icon-code"></i></h3>
-			<div class="border-sep twopix-line left margin-bottom-10"></div>
+            <h3 class="center pointer nohl" data-click="app.showArch">Architecture <i class="icon icon-code"></i></h3>
+            <div class="border-sep twopix-line left margin-bottom-10"></div>
+            <div class="w-960 margin-auto pad_box hide architecture">
+                <h1 class="center slideinfb slow">Synvigil  Architecture</h1>
+                <p class="center slideinfl slow"><small>(Syn,SV)</small></p>
+                <p class="center slideinfr">Synvigil is an application architecture written in ECMAScript for web applications. Syn is designed to scale with applications as they grow. Syn is fully modularized, async &amp; built with 60fps environments in-mind.</p>
+                <p><strong>Blunt Perks</strong></p>
+                <ul class="standard_list fadein">
+                    <li>Fast</li>
+                    <li>Easy</li>
+                    <li>Efficient</li>
+                    <li>Reactive</li>
+                    <li>Modularized</li>
+                    <li>Async</li>
+                    <li>Scalable</li>
+                    <li>Three-way Binding</li>
+                    <li>Two-way Binding</li>
+                    <li>One-way Binding</li>
+                    <li>No setters or getters - Vanilla object setting and getting</li>
+                    <li>Compilable</li>
+                    <li>Helpers included</li>
+                    <li>Plugins</li>
+                    <li>Model methods Auto-bind</li>
+                    <li>Extend Natives safely</li>
+                    <li>Everything can be pre-fixed</li>
+                    <li>Auto-load onReady and onLoad functions for app in async</li>
+                    <li>Auto-listen on all events using capture</li>
+                    <li>Semi-synthetic event system with easy event attachment via attributes</li>
+                    <li>On-Demand event loading - ensures the model is present before launching event related method on the fly.</li>
+                    <li>Re-use empty index for generated components
+                        <ul class="standard_list">
+                            <li>If a component is removed
+                                <ul class="standard_list">
+                                    <li>Null it's index
+                                        <ul class="standard_list">
+                                            <li>So that said index slot can be re-used on next component creation</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>Require nodes to be registered in components</li>
+                    <li>Load and compile resources on the fly</li>
+                </ul>
+                <br />
+                <div class="border-sep twopix-line left margin-bottom-10"></div>
+                <p><strong>Detailed Perks</strong></p>
+                <ul class="standard_list">
+                    <li>Built on Object.observe , MutationObserver &amp; Array.Observe
+                        <ul class="standard_list">
+                            <li>Enhanced &amp; more detailed change records</li>
+                        </ul>
+                    </li>
+                    <li>reactive observable data models</li>
+                    <li>No need for diffing algos </li>
+                    <li>No need for virtual DOM</li>
+                    <li>Hyper specific DOM templating </li>
+                    <li>Hyper specific DOM manipulation </li>
+                    <li>Does not re-render entire components</li>
+                    <li>Balanced separation of logic HTML/CSS/JS</li>
+                    <li>Batch Processing</li>
+                    <li>Async</li>
+                    <li>RequestAnimationFrame</li>
+                    <li>Built In Templating </li>
+                    <li>Helpers (Built in methods for quick model creation)
+                        <ul class="standard_list">
+                            <li>Automatically manage DOM node lists directly from their data model</li>
+                            <li>Use native array functions that batch process the DOM asynchronously</li>
+                        </ul>
+                    </li>
+                    <li>Built-in semi-synthetic event system
+                        <ul class="standard_list">
+                            <li>Uses capture</li>
+                            <li>Synthetic Bubbling</li>
+                            <li>Full scroll support of reactive elements</li>
+                            <li>Asynchronously load event models on user demands</li>
+                            <li>Supports organized filesystem event names</li>
+                            <li>Supports object chain calling from a string saving dev time </li>
+                        </ul>
+                    </li>
+                    <li>Enhanced Change Records
+                        <ul class="standard_list">
+                            <li>Easily debugged</li>
+                            <li>Easily track the data flow through all observable models</li>
+                            <li>invoked functions are recorded</li>
+                            <li>softOrigin locations are recorded</li>
+                            <li>origin locations are recorded</li>
+                            <li>As change records pass through models they are automatically updated</li>
+                        </ul>
+                    </li>
+                    <li>Subscribe &amp; Notify
+                        <ul class="standard_list">
+                            <li>Plants, Factories, Components &amp; Bases are all subscribe-able<br>
+                            </li>
+                            <li>Plants, Factories, Components, Bases &amp; routers can all notify each other </li>
+                        </ul>
+                    </li>
+                    <li>Builds while used
+                        <ul class="standard_list">
+                            <li>Parts of the application are built simply based on user demand, only what is needed is delivered elevating a ton of overhead.</li>
+                            <li>Smaller files &amp; fully modularized framework delivers what the user wants ASAP</li>
+                        </ul>
+                    </li>
+                    <li>Scalable
+                        <ul class="standard_list">
+                            <li>Models are loaded based on user demand</li>
+                            <li> Multi-thread support built in with web-workers</li>
+                            <li>Synthetic callback system for workers that supports string and anonymous functions</li>
+                        </ul>
+                    </li>
+                    <li>Access methods from native objects
+                        <ul class="standard_list">
+                            <li>
+                            <strong>ALL METHODS CAN BE PREFIXED FOR UBER SAFE NATIVE OBJECT EXTENDING</strong> </li>
+                            <li>Node,NodeList,HTMLCollection </li>
+                            <li>Array</li>
+                            <li>Function</li>
+                            <li>Object</li>
+                            <li>Number</li>
+                        </ul>
+                    </li>
+                    <li>Types of Data Structures
+                        <ul class="standard_list">
+                            <li>Model</li>
+                            <li>Base</li>
+                            <li>Router</li>
+                            <li>Factory</li>
+                            <li>Component</li>
+                            <li>Plant</li>
+                            <li>Module</li>
+                            <li>Define</li>
+                        </ul>
+                    </li>
+                    <li> Data Structures by complexity
+                        <ul class="standard_list">
+                            <li>Plant </li>
+                            <li>Factory </li>
+                            <li>Component</li>
+                            <li>Base</li>
+                            <li>Router</li>
+                            <li>Model</li>
+                            <li>Module</li>
+                            <li>Define<br>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>Types of Models<br>
+                        <ul class="standard_list">
+                            <li>
+                                <strong>Model</strong>
+                                <ul class="standard_list">
+                                    <li>Standard Model</li>
+                                    <li>N.O (Not Observed)</li>
+                                    <li>N.R (Not Reactive)</li>
+                                    <li>Plain object model</li>
+                                    <li>Lean option</li>
+                                    <li>Default without lean has ._ property (["name", "destroy", "save", "restore", "history", "historyClear", "historyRemove", "methods", "clear", "copy"])</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Plant</strong>
+                                <ul class="standard_list">
+                                    <li>Generates any type of data structure</li>
+                                    <li>Can be rendered repeatedly </li>
+                                    <li>Observable</li>
+                                    <li>Reactive</li>
+                                    <li>Private Data Store</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Factory</strong>
+                                <ul class="standard_list">
+                                    <li> Manage child components</li>
+                                    <li>Render child components</li>
+                                    <li>Public Data Shared across components all notified when changed</li>
+                                    <li>Subscribe-able (Public &amp; Private subscription types supported)</li>
+                                    <li>Has object Shares</li>
+                                    <li>Private Data not shared with child components when changed</li>
+                                    <li>Observable</li>
+                                    <li>Reactive</li>
+                                    <li>Can be rendered repeatedly</li>
+                                    <li>Supports Templating</li>
+                                    <li>Node cache -&gt; accessed via nodes object property</li>
+                                    <li>mountable</li>
+                                    <li>unmountable</li>
+                                    <li>killable</li>
+                                    <li>destroy method that cleans up rendered components as well</li>
+                                    <li>notifyComponents</li>
+                                    <li>Get all components</li>
+                                    <li>Unmount all components</li>
+                                    <li>Mount all components</li>
+                                    <li>Kill all components</li>
+                                    <li>Destroy All components</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Router</strong> (URL &amp; State data routing)
+                                <ul class="standard_list">
+                                    <li>They receive change records and then process the path in which to push data through.</li>
+                                    <li>Easily set options for automatic URL state and history control</li>
+                                    <li>Supports pushState</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Base</strong>
+                                <ul class="standard_list">
+                                    <li>For storing data only </li>
+                                    <li>Other R.O.Ms (reactive observable models) including bases can subscribe to change events</li>
+                                    <li>Can sync data from ROMs they are subscribed to</li>
+                                    <li>Public &amp; Private Data</li>
+                                    <li>Sub &amp; Notify methods</li>
+                                    <li>Extra notify methods to reach across many models </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Modules</strong>
+                        <ul class="standard_list">
+                            <li>Cache methods</li>
+                            <li>Import models/css/html and other resources on the fly</li>
+                            <li>Models are put into the function arguments</li>
+                            <li>Compiled for continual use</li>
+                            <li>callback supported</li>
+                            <li>pre-compilable</li>
+                            <li>savable</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Define</strong>
+                        <ul class="standard_list">
+                            <li>Basically a more straight forward module</li>
+                            <li>Designed for quick and dirty use</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Cache system</strong>
+                        <ul class="standard_list">
+                            <li>Fast object cache system to share data across the application</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p>System is fully configurable</p>
+                        <ul class="standard_list">
+                            <li>Credits for XHR requests (app wide authentication parameters for XHR)</li>
+                            <li>App wide analytic support from any internal or external 3rd party library
+                                <ul class="standard_list">
+                                    <li>Enabled for all events</li>
+                                    <li>Enabled for web workers</li>
+                                    <li>Enabled for XHR requests</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p>Types of ORM (observed reactive models)
+                        Plant,Factory,Component,Base,Router  </p>
+                        <p>Types of N.O.S (Not observed Structures) || N.R.S (Not Reactive Structure)
+                        Model,Module,Define  </p>
+                        <p>Types of structures that are B.T.B.C (built to be compiled)
+                        Module,Define  </p>
+                        <p>Types of models that only observe data then process route path and notify destination
+                        router</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="border-sep twopix-line left margin-bottom-10"></div>
+            <h3 class="center nohl">API <i class="icon icon-code"></i></h3>
+            <div class="border-sep twopix-line left margin-bottom-10"></div>
             <div id="stacks" class="max-full pad_box"></div>
-
         </div>
     </div>
 </body>

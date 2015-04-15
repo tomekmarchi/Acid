@@ -3,7 +3,7 @@ string_extend.addParam = function (n) {
 	var o = this,
 		len = o.length;
 	if (len > 0) {
-		var last = o.last();
+		var last = o[len-1];
 		if (o.indexOf('?') != -1) {
 			if (last != '?') {
 				return o + '&' + n;

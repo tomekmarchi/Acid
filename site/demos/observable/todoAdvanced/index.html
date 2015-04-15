@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0">
+    <link type="text/css" href="../../../styles/blotr.css" rel="stylesheet">
+    <link type="text/css" href="../../../styles/theme.css" rel="stylesheet">
+    <link type="text/css" href="../../../styles/icon.css" rel="stylesheet">
+    <script async="" src="../../../../compiled/acid.js" id="acid-lib" data-core=""></script>
+    <title>Reactive Todo Object.observe</title>
+</head>
+
+<body class="scroll">
+    <div class="margin-auto max-full pad_box">
+        <div id="wrapper" class="standard_list"></div>
+        <hr>
+
+        <div class="w-50 left pad_box">
+            <article class="pad_box rounded">
+                <h3>React Version</h3>
+                <pre>
+<code>
+var TodoList = React.createClass({
+    displayName: "TodoList",
+    render: function () {
+        var createItem = function (itemText) {
+                return React.createElement("li", null, itemText);
+            };
+        return React.createElement("ul", null, this.props.items.map(createItem));
+    }
+});
+var TodoApp = React.createClass({
+    displayName: "TodoApp",
+    getInitialState: function () {
+        return {
+            items: [],
+            text: ''
+        };
+    },
+    onChange: function (e) {
+        this.setState({
+            text: e.target.value
+        });
+    },
+    handleSubmit: function (e) {
+        e.preventDefault();
+        var nextItems = this.state.items.concat([this.state.text]);
+        var nextText = '';
+        this.setState({
+            items: nextItems,
+            text: nextText
+        });
+    },
+    render: function () {
+        return (
+        React.createElement("div", null,
+         React.createElement("h3", null, "TODO"),
+        React.createElement(TodoList, {
+            items: this.state.items
+        }), React.createElement("form", {
+            onSubmit: this.handleSubmit
+        }, React.createElement("input", {
+            onChange: this.onChange,
+            value: this.state.text
+        }), React.createElement("button", null, 'Add #' + (this.state.items.length + 1)))));
+    }
+});
+
+React.render(React.createElement(TodoApp, null), mountNode);
+</code>
+</pre>
+            </article>
+        </div>
+
+        <div class="w-50 left pad_box">
+            <article class="pad_box rounded">
+                <h3>Acid Version</h3>
+                <pre>
+<code>
+var TodoApp=$.factory(&#39;todo&#39;, {
+		template: `&lt;div&gt;&lt;h3&gt;TODO&lt;/h3&gt;
+			&lt;ul data-node=&quot;ul&quot;&gt;&lt;/ul&gt;
+			&lt;input data-node=&quot;input&quot; data-keyup=&quot;this.onChange&quot; type=&quot;text&quot; /&gt;
+			&lt;button data-click=&quot;this.handleSubmit&quot;&gt;Add #
+			&lt;span data-node=&quot;span&quot;&gt;&lt;/span&gt;
+			&lt;/button&gt;
+		&lt;/div&gt;`,
+		privateData:{
+			list: []
+		},
+		privateHelper:{
+			synNodeList:{
+				node:&#39;ul&#39;,
+				name:&#39;list&#39;,
+				every:function(){
+					this.nodes.span.tc(this.privateData.list.length+1);
+				}
+			}
+		},
+		handleSubmit: function (obj) {
+			this.privateData.list.push(this.componentRender({text:this.text}));
+			this.nodes.input.value = &#39;&#39;;
+			this.text=&#39;&#39;;
+		},
+		onChange: function (obj,e) {
+			this.text = obj.value;
+		},
+		componentTemplate:`&lt;li&gt;&lt;/li&gt;`,
+		componentData:{
+			text:&#39;&#39;,
+			title:&#39;&#39;
+		},
+		componentModel:{
+			text:function(){
+				this.node.tc(this.data.text);
+			}
+		}
+	});
+	TodoApp.render().node.apTo($(&#39;#wrapper&#39;));
+</code>
+</pre>
+            </article>
+        </div>
+    </div>
+</body>
+</html>

@@ -102,18 +102,21 @@ var nodeOnly = {
 	center: function (data) {
 		return _center(this, data);
 	},
-	html: function (n) {
-		return _html(this, n);
+	html: function (value) {
+		return _html(this, value);
 	},
-	ohtml: function (n) {
-		return _ohtml(this, n);
+	ohtml: function (value) {
+		return _ohtml(this, value);
 	},
 	//text
-	tc: function (n) {
-		return _tc(this, n);
+	tc: function (value) {
+		return _tc(this, value);
 	},
-	txt: function (n) {
-		return _txt(this, n);
+	txt: function (value) {
+		return _txt(this, value);
+	},
+	textValue: function (value) {
+		return _textValue(this, value);
 	},
 	//order
 	parNode: function () {

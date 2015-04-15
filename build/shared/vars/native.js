@@ -24,6 +24,7 @@ var _array = Array,
 	new_weak_map = function(){
 		return new 	weak_map();
 	},
+	_historyPushState=history.pushState,
 	//map
 	_map = Map,
 	//number
@@ -76,6 +77,37 @@ var	_array_push= array_prototype.push,
 
 */
 //object keys cached
+if (!_object.assign) {
+  _object.defineProperty(_object, 'assign', {
+    enumerable: false,
+    configurable: true,
+    writable: true,
+    value: function(target, firstSource) {
+      'use strict';
+      if (target === undefined || target === null) {
+        throw new TypeError('Cannot convert first argument to object');
+      }
+
+      var to = Object(target);
+      for (var i = 1; i < arguments.length; i++) {
+        var nextSource = arguments[i];
+        if (nextSource === undefined || nextSource === null) {
+          continue;
+        }
+
+        var keysArray = Object.keys(Object(nextSource));
+        for (var nextIndex = 0, len = keysArray.length; nextIndex < len; nextIndex++) {
+          var nextKey = keysArray[nextIndex];
+          var desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
+          if (desc !== undefined && desc.enumerable) {
+            to[nextKey] = nextSource[nextKey];
+          }
+        }
+      }
+      return to;
+    }
+  });
+}
 var	_object_keys = _object.keys,
 	_getNotifier=_object.getNotifier,
 	//object assign cached
@@ -93,3 +125,8 @@ var _bind=Function.bind,
 	_bind_call=function(object,data){
 		return _bind.call(object,data);
 	};
+/*
+	JSON
+	*/
+
+	var stringify=json.stringify;

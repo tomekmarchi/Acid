@@ -9,6 +9,7 @@
 			view(name,html,function);
 
 		*/
+		var animations=['slideinft', 'slideinfb', 'slideinfl', 'slideinfr'];
 		//create view for headers
 		view('object_type_h3', '<h3 class="full left"></h3>', function (data, item) {
 			item.tc(data);
@@ -18,7 +19,8 @@
 			item.attr('id', data);
 		});
 		//api item template
-		view('item_method', '<li data-click="nav.go" class="griditem slow_2"><a data-mouseover="plugins/tip.unpack"></a><span></span></li>', function (data, item) {
+		view('item_method', '<li data-click="nav.go" class="griditem slow_2 left"><a data-mouseover="plugins/tip.unpack"></a><span></span></li>', function (data, item) {
+			item.cl(animations.sample(0));
 			item.firstChild.tc(data.name).attr('data-tooltip', data.example || '');
 		});
 		//simple break line template

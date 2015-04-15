@@ -8,7 +8,7 @@ var _flatten_once = function (arr) {
 			if (!_isArray(b)) {
 				b = [b];
 			}
-			_array_push.apply(a, b);
+			pushApply(a, b);
 			return a;
 		});
 	},
