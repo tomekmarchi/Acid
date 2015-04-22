@@ -39,36 +39,67 @@ var compileNode = function(node, attr, item, modelName, eventName) {
         var dataObject = (_has(attrEventProp, 'privateData')) ? object.privateData : object.data,
             nodePropName = attrEventProp.replace('privateData.', '');
 
-        var functionName = nodePropName + key + eventName;
-        var attrValues = 'this.' + functionName + attrValues;
-
         if (!object.bind[nodePropName]) {
             object.bind[nodePropName] = {};
         }
-        object.bind[nodePropName][key] = function() {
-            node[property] = dataObject[nodePropName];
-        };
+
+        var isPropertyFunction=_isFunction(node[property]);
+
+        if(isPropertyFunction){
+            var propertyCall=node[property];
+            object.bind[nodePropName][key] = function() {
+                propertyCall.call(node,dataObject[nodePropName]);
+            };
+        }else{
+            object.bind[nodePropName][key] = function() {
+                node[property] = dataObject[nodePropName];
+            };
+        }
         if (!object.bindedNodes[key]) {
             object.bindedNodes[key] = {};
         }
-        object.bindedNodes[key][nodePropName] = functionName;
-        object[functionName] = function() {
-            dataObject[nodePropName] = node[property];
-        };
-        node.setAttribute(attr, attrValues.replace(thisRegexReplace, modelEventName));
+
+        if(eventName){
+            var functionName = nodePropName + key + eventName;
+            var attrValues = 'this.' + functionName + attrValues;
+            object.bindedNodes[key][nodePropName] = functionName;
+            object[functionName] = function() {
+                dataObject[nodePropName] = node[property];
+            };
+            node.setAttribute(attr, attrValues.replace(thisRegexReplace, modelEventName));
+        }
     },
     loopThroughBindings = function(object, attr, node, nodeName, modelName, modelEventName) {
         var attr = attr || node.getAttribute('data-bind');
         if (attr) {
-            var attrs = attr.match(/((.*?)(\[(.*?)\]))/g);
-            _each_array(attrs, function(subitem, subkey) {
-                var set = subitem.split('[');
-                var nodeProperty = set [0];
-                var attrProp = set [1].replace(']', '');
-                var attrEvent = attrProp.split(':');
-                var attrEventName = attrEvent[0];
-                var attrEventProp = attrEvent[1];
-                compileBinding(object, modelName, modelEventName, node, nodeName, nodeProperty, attrEventName, attrEventProp);
+            var attrs = attr.split(';');
+            _each_array(attrs, function(subitem, index) {
+                var regex=subitem.match(/((.*?)(\[(.*?)\]))/g);
+                if(regex){
+                    var set = regex[0].split('[');
+                    var attrEventProp = set [0];
+                    var attrProp = set [1].replace(']', '');
+                    var attrEvent = attrProp.split(':');
+                    var nodeProperty = attrEvent[0];
+                    var attrEventName = attrEvent[1] || false;
+                    compileBinding(object, modelName, modelEventName, node, nodeName, nodeProperty, attrEventName, attrEventProp);
+                }else{
+                    if(_has(subitem,'privateData.')){
+                        var privateMode=true;
+                        var subitem=subitem.replace('privateData.','');
+                        var testData=object.privateData[subitem];
+                    }else{
+                        var privateMode=false;
+                        var testData=object.data[subitem];
+                    }
+                    console.log(object.data);
+                    if(_isArray(testData)){
+                        listsyn({
+                            node:nodeName,
+                            array:subitem
+                        },object,privateMode);
+                    }
+                }
             });
             node.removeAttribute('data-bind');
         }

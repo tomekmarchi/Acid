@@ -1,19 +1,19 @@
-var _html = function (node, n) {
-	if (hasValue(n)) {
-		if (_isFunction(n)) {
-			var n = n.apply(this, []);
+var _innerHTML = function (node, value) {
+	if (hasValue(value)) {
+		if (_isFunction(value)) {
+			var value = value.call(this, node);
 		}
-		node.innerHTML = n;
+		node.innerHTML = value;
 		return node;
 	}
 	return node.innerHTML;
 },
-_ohtml = function (node, n) {
-	if (hasValue(n)) {
-		if (_isFunction(n)) {
-			var n = n.apply(this, []);
+_ohtml = function (node, value) {
+	if (hasValue(value)) {
+		if (_isFunction(value)) {
+			var value = value.call(this, node);
 		}
-		node.outerHTML = n;
+		node.outerHTML = value;
 		return node;
 	}
 	return node.outerHTML;

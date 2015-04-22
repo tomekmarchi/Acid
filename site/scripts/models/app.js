@@ -1,7 +1,7 @@
 
 $.view('iframe', '<div class="container_minus_navbar top absolute fill show_gpu gpu_hide_top trans-all" data-node="hudNode">\
         <header data-mouseover="plugins/tip.unpack"  data-tooltip="Scroll Up" class="side_panel nohl fadein theme theme_bg text_navigation navigation_bar" data-click="events/scroll.up">\
-            <div class="glow"></div><div class="glow middle"></div><div class="glow right"></div>\
+            <div class="glow"></div>\
             <a class="nav_item trans-all slideinfb" data-click="app.hudBack" data-mouseover="plugins/tip.unpack"  data-tooltip="Back">\
                 <i class="icon icon-left-open"></i>\
             </a>\

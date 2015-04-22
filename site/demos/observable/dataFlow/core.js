@@ -18,7 +18,7 @@
 
             //dataFlow router
             router('mainRouter', {
-                state: model('mainBase').data,
+                data: model('mainBase').data,
                 text: function(change) {
                     change.origin.unshift('mainBase');
                     this.notifyModel('dataFlow', change);
@@ -40,13 +40,13 @@
                 template: `<div>
                     <div class="w-25 left pad_box">
                     <b>Change title on mainBase</b>
-                    <input placeholder="Title" data-keyup="this.onChangetitle">
+                    <input placeholder="Title" data-node="textTitle" data-keyup="this.onChangetitle">
                     <b data-node="titleOrigin"></b>
                     <code><pre data-node="title" class="pad_box"></pre></code>
                     </div>
                     <div class="w-25 left pad_box">
                     <b>Change text on mainBase</b>
-                    <input placeholder="Text" data-keyup="this.onChange">
+                    <input placeholder="Text" data-node="textInput" data-keyup="this.onChange">
                     <b data-node="textOrigin"></b>
                     <code><pre data-node="text" class="pad_box"></pre></code>
                     </div>

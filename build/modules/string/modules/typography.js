@@ -1,7 +1,6 @@
 //uppercase first letter lower case the rest
 string_extend.ucFirst = function () {
-	var string = this;
-	return string.charAt(0).toUpperCase() + string.substr(1);
+	return _ucFirst(this);
 };
 
 //uppercase first letter for all

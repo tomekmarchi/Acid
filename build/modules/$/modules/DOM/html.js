@@ -87,3 +87,21 @@ var _toDOM = function (html, childNumber) {
 		return frag;
 	};
 $.toDOM = _toDOM;
+
+var _css = function(url){
+	var link=_tag('link');
+	link.setAttribute('type', 'text/css"');
+	link.setAttribute('href', url);
+	link.setAttribute('rel', 'stylesheet');
+	return link;
+};
+
+$.css = _css;
+
+var _script = function(url){
+	var link=_tag('script');
+	link.setAttribute('src', url);
+	return link;
+};
+
+$.script = _script;

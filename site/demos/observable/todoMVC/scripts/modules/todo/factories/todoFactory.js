@@ -8,15 +8,6 @@ $.factory('todoFactory', function(todoStructure, todoItem) {
 				text: ''
 			};
 		},
-		privateHelper: {
-			reactList: {
-				node: 'ul',
-				name: 'list',
-				every: function() {
-					this.itemsLeft();
-				}
-			}
-		},
 		mount: function() {
 			this.pushRouter = $.router('pushRouter');
 			this.filters = [this.nodes.filterindex, this.nodes.filteractive, this.nodes.filtercompleted];

@@ -25,9 +25,11 @@ var _template = function (string, data) {
 		}
 		var template = _template[string];
 
-		if(data){
+
+		if(isDom(data) || _isFunction(data) || _isString(data)){
 			return template;
 		}
+
 		if (isDom(template)) {
 			var template = template.cloneNode(true);
 			if (data) {
@@ -35,7 +37,7 @@ var _template = function (string, data) {
 			}
 		} else if (_isFunction(template)) {
 			if (data) {
-				var template = _toDOM(template(data),0);
+				var template = template(data);
 			}
 		}
 		return template;

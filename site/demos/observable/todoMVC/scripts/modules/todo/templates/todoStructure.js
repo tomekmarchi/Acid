@@ -4,11 +4,11 @@ $.template({
 	        	<div class="todoapp">
 				<header>
 					<h1>todos</h1>
-					<input class="new-todo" data-node="input" data-bind="value[keyup:privateData.text]" data-keyup="this.addTodo" placeholder="What needs to be done?">
+					<input class="new-todo" data-node="input" data-bind="privateData.text[value:keyup]" data-keyup="this.addTodo" placeholder="What needs to be done?">
 				</header>
 				<section class="main">
-					<input class="toggle-all" type="checkbox" data-node="checkAll" data-bind="checked[click:privateData.checkedAll]">
-					<ul data-node="ul" class="todo-list"></ul>
+					<input class="toggle-all" type="checkbox" data-node="checkAll" data-bind="privateData.checkedAll[checked:click]">
+					<ul data-node="ul" data-bind="privateData.list" class="todo-list"></ul>
 				</section>
 				<footer class="footer">
 					<span data-node="todoCount" class="todo-count"></span>

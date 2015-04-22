@@ -10,33 +10,21 @@
 
 			$.factory('reactList', {
 				template:`<div>
-					<ul data-node="mount" class="standardlist"></ul>
+					<ul data-node="mount" data-bind="privateData.list" class="standardlist"></ul>
 				</div>`,
 				privateData:function(){
 					return {
 						list: []
 					};
 				},
-				privateHelper:{
-					reactList:{
-						node:'mount',
-						array:'list'
-					}
-				},
 				add:function(i){
 					this.privateData.list.push(this.componentRender({title:'Title('+i+')',text:'Text('+i+')'}));
 				},
 				component:{
-					template:`<li><b data-node="title"></b> - <span data-node="text"></span></li>`,
+					template:`<li><b data-node="title" data-bind="title[textValue]"></b> - <span data-node="text" data-bind="text[textValue]"></span></li>`,
 					data:{
 						text:'',
 						title:''
-					},
-					text:function(){
-						this.nodes.text.textValue(this.data.text);
-					},
-					title:function(){
-						this.nodes.title.textValue(this.data.title);
 					}
 				}
 			});

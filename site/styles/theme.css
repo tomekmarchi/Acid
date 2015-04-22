@@ -3,7 +3,7 @@
 .header{
 	height: 100px;
 	background-image: url('imgs/inflicted.png');
-	box-shadow: inset 0px -1px 100px rgba(0,0,0,0.3),inset 0px -2px 0px rgba(0,0,0,0.3);
+	box-shadow: inset 0px 0px 30px 6px rgba(0,0,0,0.6),0px 1px 0px rgba(255,255,2555,0.9),inset 0px -2px 3px rgba(0,0,0,0.5);
 	background-color:#7F7EFF;
 	background-repeat:repeat;
 }
@@ -11,6 +11,7 @@
 body{
 	font-family: 'Roboto', sans-serif;
 	text-shadow: 0 1px 0 #fff;
+	color:#000;
 }
 
 .container_minus_navbar{
@@ -36,36 +37,39 @@ h1,h2,h3,h4,h5,h6,h7{
  	background-image: -webkit-linear-gradient(to bottom, #8075FF 0%, #613DC1 100%);
 	background-image: -ms-linear-gradient(to bottom, #8075FF 0%, #613DC1 100%);
 	background-image: linear-gradient(to bottom, #8075FF 0%, #613DC1 100%),url('imgs/noise.png');
+	box-shadow: 0 1px 13px 0 rgba(0,0,0,0.23),inset 0 -2px 0 rgba(0,0,0,0.60);
+}
+
+.navigation_bar.bottom{
 	box-shadow: 0 -2px 10px 0 rgba(0,0,0,0.20),0 -1px 0px 0 rgba(0,0,0,0.4),inset 0 1px 0px 0 rgba(255,255,255,0.15),inset 0 -2px 0 rgba(0,0,0,0.20);
 }
 
 .navigation_bar .glow{
 	position: absolute;
-	width:30%;
+	width:100%;
 	height: 100%;
 	background-color: transparent;
 	z-indez:1;
 	left:0px;
-	background-image: radial-gradient(center center, circle cover, rgba(255,255,255,0.25), transparent);
-	background-image: -o-radial-gradient(center center, circle cover, rgba(255,255,255,0.25), transparent);
-	background-image: -ms-radial-gradient(center center, circle cover, rgba(255,255,255,0.25), transparent);
-	background-image: -moz-radial-gradient(center center, circle cover, rgba(255,255,255,0.25), transparent);
-	background-image: -webkit-radial-gradient(center center, circle cover, rgba(255,255,255,0.25),transparent);
+	background-image: radial-gradient(center center, circle cover, rgba(255,255,255,0.10), transparent);
+	background-image: -o-radial-gradient(center center, circle cover, rgba(255,255,255,0.10), transparent);
+	background-image: -ms-radial-gradient(center center, circle cover, rgba(255,255,255,0.10), transparent);
+	background-image: -moz-radial-gradient(center center, circle cover, rgba(255,255,255,0.10), transparent);
+	background-image: -webkit-radial-gradient(center center, circle cover, rgba(255,255,255,0.10),transparent);
 }
 
-.glow.middle{
-	left:0%;
-	width:100%;
-	background-image: radial-gradient(center center, circle cover, rgba(255,255,255,0.1), transparent);
-	background-image: -o-radial-gradient(center center, circle cover, rgba(255,255,255,0.1), transparent);
-	background-image: -ms-radial-gradient(center center, circle cover, rgba(255,255,255,0.1), transparent);
-	background-image: -moz-radial-gradient(center center, circle cover, rgba(255,255,255,0.1), transparent);
-	background-image: -webkit-radial-gradient(center center, circle cover, rgba(255,255,255,0.1),transparent);
-}
-
-.glow.right{
-	right: 0px;
-	left:auto;
+.glow{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  z-indez: 1;
+  left: 0px;
+  background-image: radial-gradient(center center, circle cover, rgba(255,255,255,0.10), transparent);
+  background-image: -o-radial-gradient(center center, circle cover, rgba(255,255,255,0.10), transparent);
+  background-image: -ms-radial-gradient(center center, circle cover, rgba(255,255,255,0.10), transparent);
+  background-image: -moz-radial-gradient(center center, circle cover, rgba(255,255,255,0.10), transparent);
+  background-image: -webkit-radial-gradient(center center, circle cover, rgba(255,255,255,0.10),transparent);
 }
 
 .navigation_bar.text_navigation a.nav_item{
@@ -97,7 +101,7 @@ h1,h2,h3,h4,h5,h6,h7{
 }
 
 /* LINK COLOR */
-a{color:#101D42;}
+a{color:#613DC1;}
 
 .babyblue {
   color: #89D2DC;

@@ -1,0 +1,352 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"height",
+				"height"
+			],
+			[
+				"text",
+				"text-decoration"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"check",
+				"checkedAll"
+			],
+			[
+				"len",
+				"length"
+			],
+			[
+				"child",
+				"childNodes"
+			],
+			[
+				"pr",
+				"privateData"
+			],
+			[
+				"_is",
+				"_isString"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 375.0,
+		"last_filter": "Package Control: ",
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: upda",
+				"Package Control: Upgrade/Overwrite All Packages"
+			],
+			[
+				"",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 507.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)",
+			"1+1"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/acidjs/project/sublime/site/demos/observable/dataFlow/core.js",
+		"/acidjs/project/sublime/acidjs.sublime-project",
+		"/acidjs/build/modules/$/modules/DOM/component/syn/changes/model.js",
+		"/acidjs/site/demos/observable/dataFlow/core.js",
+		"/acidjs/site/scripts/models/core.js",
+		"/acidjs/site/styles/blotr.css",
+		"/acidjs/site/demos/core.js",
+		"/acidjs/site/demos/list.js",
+		"/acidjs/site/scripts/models/app.js",
+		"/acidjs/index.html",
+		"/acidjs/site/styles/theme.css",
+		"/acidjs/site/index.html",
+		"/acidjs/build/modules/$/modules/DOM/registerNodes.js",
+		"/acidjs/build/modules/$/modules/DOM/faceplate.js",
+		"/acidjs/build/modules/$/modules/DOM/view.js",
+		"/acidjs/site/scripts/models/templates/template.js",
+		"/acidjs/site/demos/observable/todoMVC/scripts/modules/todo/templates/todoStructure.js",
+		"/acidjs/site/demos/observable/todoMVC/scripts/modules/todo/templates/todoItemTemplate.js",
+		"/acidjs/site/demos/observable/todoMVC/scripts/modules/todo/factories/todoFactory.js",
+		"/acidjs/site/demos/observable/todoMVC/index.html",
+		"/acidjs/site/demos/observable/todo/todo.js",
+		"/acidjs/gulpfile.js",
+		"/acidjs/build/modules/$/modules/native/each.js",
+		"/acidjs/site/favicon.png",
+		"/acidjs/site/demos/observable/todoMVC/scripts/core.js",
+		"/acidjs/site/demos/observable/todoMVC/active/index.html",
+		"/acidjs/site/demos/observable/todoMVC/completed/index.html",
+		"/acidjs/build/modules/$/modules/DOM/component/syn/build/factory.js",
+		"/acidjs/build/modules/$/modules/DOM/component/syn/compile/node.js",
+		"/acidjs/build/modules/$/modules/DOM/component/syn/extras/list.js",
+		"/acidjs/build/modules/$/modules/DOM/component/syn/vars/methods.js",
+		"/acidjs/build/modules/$/modules/DOM/component/syn/vars/modelMethods.js",
+		"/acidjs/build/modules/$/modules/DOM/component/syn/build/componentModel.js",
+		"/acidjs/build/modules/$/modules/DOM/component/syn/build/component.js",
+		"/acidjs/site/demos/observable/sharedData/core.js",
+		"/acidjs/site/demos/observable/timer/share/index.html",
+		"/acidjs/site/demos/observable/timer/share/canvas/index.html",
+		"/acidjs/site/demos/observable/timer/share/canvas/random/index.html",
+		"/acidjs/site/demos/observable/dataShare/core.js",
+		"/acidjs/site/demos/observable/todoMVC/css/base.css",
+		"/acidjs/site/demos/observable/todoMVC/css/index.css",
+		"/acidjs/site/demos/observable/todoMVC/scripts/modules/todo/todoModule.js",
+		"/acidjs/site/demos/observable/todoMVC/scripts/modules/todo/css/todo.css",
+		"/acidjs/node_modules/gulp/node_modules/liftoff/node_modules/extend/README.md",
+		"/acidjs/node_modules/gulp/node_modules/vinyl-fs/node_modules/glob-stream/node_modules/glob/README.md",
+		"/acidjs/node_modules/gulp/node_modules/vinyl-fs/node_modules/through2/README.md",
+		"/acidjs/node_modules/gulp-autoprefixer/node_modules/through2/README.md",
+		"/acidjs/node_modules/gulp-beautify/node_modules/gulp-util/node_modules/through2/README.md",
+		"/acidjs/node_modules/gulp-concat/node_modules/gulp-util/node_modules/through2/README.md",
+		"/acidjs/node_modules/gulp-if/node_modules/through2/README.md",
+		"/acidjs/node_modules/gulp-livereload/node_modules/gulp-util/node_modules/through2/README.md",
+		"/acidjs/node_modules/gulp-notify/README.md",
+		"/acidjs/node_modules/gulp-notify/node_modules/gulp-util/node_modules/through2/README.md",
+		"/acidjs/node_modules/gulp-notify/node_modules/node.extend/Readme.md",
+		"/acidjs/node_modules/gulp-notify/node_modules/node.extend/node_modules/is/README.md",
+		"/acidjs/node_modules/gulp-notify/node_modules/through2/README.md",
+		"/acidjs/node_modules/gulp-uglify/node_modules/through2/README.md",
+		"/acidjs/node_modules/gulp/node_modules/gulp-util/node_modules/through2/README.md",
+		"/acidjs/node_modules/express/node_modules/etag/node_modules/crc/README.md",
+		"/acidjs/node_modules/del/node_modules/globby/node_modules/glob/README.md",
+		"/acidjs/build/modules/$/modules/DOM/module.js",
+		"/acidjs/site/demos/observable/todoMVC/scripts/modules/todo/models/todoItemModel.js",
+		"/acidjs/site/demos/observable/todoMVC/scripts/factories/todo/todoFactoryResources.js",
+		"/acidjs/site/demos/observable/todoMVC/scripts/factories/todo/models/todoFactoryModel.js",
+		"/acidjs/site/demos/observable/todoMVC/scripts/factories/todo/todoFactoryModel.js",
+		"/acidjs/site/demos/observable/todoMVC/scripts/templates/todoStructure.js",
+		"/acidjs/site/demos/observable/todoMVC/scripts/models/todoItemModel.js",
+		"/acidjs/site/demos/observable/todoMVC/scripts/factories/todoModule.js",
+		"/acidjs/site/demos/observable/todoMVC/scripts/templates/todoItemTemplate.js",
+		"/acidjs/site/demos/observable/todoMVC/scripts/templates/todoItem.js",
+		"/acidjs/build/shared/modules/array/each.js",
+		"/acidjs/build/modules/array/modules/each.js",
+		"/Users/captainjo/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/acidjs/build/modules/$/modules/DOM/component/syn/helpers/helpers.js",
+		"/acidjs/site/demos/observable/todoMVC/scripts/pushRouter.js",
+		"/acidjs/build/modules/$/modules/DOM/component/syn/build/router.js",
+		"/acidjs/build/modules/$/modules/DOM/component/syn/changes/loop.js",
+		"/acidjs/build/modules/$/modules/DOM/component/syn/build/props.js",
+		"/acidjs/build/modules/$/modules/DOM/component/syn/changes/buildArrayChange.js",
+		"/acidjs/build/modules/$/modules/DOM/component/syn/compile/componentMethods.js",
+		"/acidjs/build/modules/$/modules/DOM/component/syn/vars/vars.js",
+		"/Users/captainjo/Library/Application Support/Sublime Text 3/Packages/User/JavaScript.sublime-settings",
+		"/acidjs/build/modules/$/modules/DOM/component/syn/build/base.js",
+		"/acidjs/build/modules/$/modules/DOM/template.js",
+		"/acidjs/build/modules/$/modules/DOM/define.js",
+		"/acidjs/site/demos/observable/dataFlow/index.html",
+		"/acidjs/untitled.sublime-project",
+		"/Users/captainjo/Library/Application Support/Sublime Text 3/Packages/Javascript Beautify/JavascriptBeautify.sublime-settings",
+		"/Users/captainjo/Desktop/acidjs/gulpfile.js",
+		"/Users/captainjo/Desktop/acidjs/modules/array/promise/promise.js",
+		"/Users/captainjo/Desktop/acidjs/modules/array/import/import.js",
+		"/Users/captainjo/Desktop/acidjs/modules/array/faceplate/faceplate.js",
+		"/Users/captainjo/Desktop/acidjs/modules/array/cache/cache.js",
+		"/Users/captainjo/Desktop/acidjs/modules/array/async/async.js",
+		"/Users/captainjo/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/Users/captainjo/Desktop/acidjs/modules/export.js"
+	],
+	"find":
+	{
+		"height": 24.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"gpu",
+			"iframe",
+			"after",
+			".node",
+			"object_type_h3",
+			"container_minus_navbar",
+			".call",
+			".apply",
+			"body",
+			"checkBinding",
+			"loopThroughBindings",
+			"compileNode",
+			"componentList",
+			"componentID",
+			"task-list",
+			".factory",
+			"#info",
+			"checkall",
+			"edit",
+			"editting",
+			"updateState",
+			".factory",
+			"compileNode",
+			"componentMount",
+			"mount",
+			"isFunction",
+			"mount",
+			".notify",
+			"viewChanges",
+			"checkfor",
+			"urlRouterPushState",
+			"#todoapp",
+			"template",
+			"frame"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"",
+			"standard_list",
+			".info"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": false
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 24.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 108.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": “acidjs.sublime-project",
+	"replace":
+	{
+		"height": 44.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 210.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

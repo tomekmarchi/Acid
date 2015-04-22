@@ -347,487 +347,6 @@
             }
             return node;
         };
-    var _arrayLastItem = function (array, indexFrom) {
-        if (n) {
-            return array.splice(i.length - indexFrom, indexFrom);
-        }
-        return array[array.length - 1];
-    };
-    //loop through an array of items
-    var _each_array = function (array, fn) {
-        //an array of results will be returned
-        var results = [];
-        for (var i = 0, len = array.length; i < len; i++) {
-            results[i] = fn(array[i], i);
-        }
-        return results;
-    };
-    var eachArrayFromRight = function (array, fn) {
-        //an array of results will be returned
-        var results = [];
-        var len = array.length;
-        for (var i = len - 1; i >= 0; i--) {
-            results[i] = fn(array[i], i);
-        }
-        return results;
-    };
-
-    //loop through an object
-    var _each_object = function (object, fn) {
-        //an object with matching keys with results will be returned
-        var results = {};
-        for (var i = 0, keys = _object_keys(object), len = keys.length; i < len; i++) {
-            //object currect key
-            var key = keys[i];
-            //call function get result
-            results[key] = fn(object[key], key, object);
-        }
-        return results;
-    };
-    //loop through based on number
-    var _each_number = function (start, end, fn) {
-        if (!fn) {
-            var fn = end;
-            var end = start;
-            var start = 0;
-        }
-        var results = [];
-        for (; start < end; start++) {
-            //call function get result
-            results[start] = fn(start);
-        }
-        return results;
-    };
-    var afterNth = function (node, new_child, position) {
-        var child = node.children[position + 1];
-        if (!child) {
-            node.appendChild(new_child);
-        } else {
-            node.insertBefore(new_child, child);
-        }
-        return node;
-    };
-    var _append = function (node, child) {
-        node.appendChild(child);
-        return node;
-    };
-    //attr functions
-    var _hasAttr = function (node, n) {
-        return node.hasAttribute(n);
-    },
-        //set/get attribute
-        _attr = function (node, key, value) {
-            if (_isString(key)) {
-                if (hasValue(value)) {
-                    node.setAttribute(key, value);
-                } else {
-                    return node.getAttribute(key);
-                }
-            } else if (isPlainObject(key)) {
-                for (var i = 0, keys = _object_keys(key), len = keys.length; i < len; i++) {
-                    var keyed = keys[i];
-                    var item = key[keyed];
-                    node.setAttribute(keyed, item);
-                }
-            }
-            return node;
-        },
-        _removeAttr = function (node, n) {
-            node.removeAttribute(n);
-            return node;
-        };
-    var beforeNth = function (node, new_child, position) {
-        var child = node.children[position];
-        if (!child) {
-            node.appendChild(new_child);
-        } else {
-            node.insertBefore(new_child, child);
-        }
-        return node;
-    };
-    //center object
-    var _center = function (node, item) {
-        if (item) {
-            if (item === true) {
-                var item = node.parentNode;
-            }
-            var w = Number(item.offsetWidth),
-                h = Number(item.offsetHeight);
-        } else {
-            var w = Number(_cache.bodyWidth),
-                h = Number(_cache.bodyHeight);
-        }
-        var divW = node.offsetWidth,
-            divH = node.offsetHeight;
-        if (divH > h) {
-            node.style.position = '';
-            node.style.transform = node.style['-webkit-transform'] = '';
-        } else {
-            var left = parseInt((w - divW) / 2) + 'px',
-                top = parseInt((h - divH) / 2) + 'px';
-            node.style.position = 'absolute';
-            node.style.transform = node.style['-webkit-transform'] = 'translate3d(' + left + ',' + top + ',0)';
-        }
-        return node;
-    };
-    //change the tagname of a node and returns the a new node with the new tagname
-    var changeTag = function (node, tagename) {
-        var attrs = node.attributes,
-            object = {},
-            len = attrs.length;
-        for (var i = 0; i < len; i++) {
-            var item = attrs[i];
-            object[item.name] = item.value;
-        }
-        var attrs = null;
-        return _dom(tagename, {
-            attr: object
-        });
-    };
-/*
-METHODS FOR CLASS MODS
-*/
-    //classname
-    var _cn = function (node, n) {
-        if (hasValue(n)) {
-            node.className = n;
-            return node;
-        }
-        return node.className;
-    },
-        //classlist
-        _cl = function (node, args) {
-            var node_classList = node.classList;
-            if (args) {
-                if (!_isArray(args)) {
-                    if (!node_classList.contains(args)) {
-                        node_classList.add(args);
-                    }
-                } else {
-                    _each_array(args, function (item) {
-                        if (!node_classList.contains(item)) {
-                            node_classList.add(item);
-                        }
-                    });
-                }
-                return node;
-            }
-            return node_classList;
-        },
-        //classlist functions
-        _clHas = function (node, key) {
-            return node.classList.contains(key);
-        },
-        _clRemove = function (node, args) {
-            var node_classList = node.classList;
-            if (!_isArray(args)) {
-                if (node_classList.contains(args)) {
-                    node_classList.remove(args);
-                }
-            } else {
-                _each_array(args, function (item) {
-                    if (node_classList.contains(item)) {
-                        node_classList.remove(item);
-                    }
-                });
-            }
-            return node;
-        },
-        _clTog = function (node, args) {
-            var node_classList = node.classList;
-            if (!_isArray(args)) {
-                node_classList.toggle(args);
-            } else {
-                _each_array(args, function (item) {
-                    node_classList.toggle(item);
-                });
-            }
-            return node;
-        };
-
-    //clear
-    var _clear = function (node) {
-        while (node.firstChild) {
-            node.firstChild.remove();
-        }
-        return node;
-    };
-    var _clw = function (node) {
-        return node.clientWidth;
-    },
-        _clh = function (node) {
-            return node.clientHeight;
-        };
-    //copynode
-    var _clone = function (node, bool) {
-        return node.cloneNode(bool);
-    };
-    //btn + adding
-    var _ison = function (node, n) {
-        var cls = node.classList;
-        if (cls.contains('ison')) {
-            if (n) {
-                node.textContent = Number(node.textContent) - Number(n);
-            }
-            cls.remove('ison');
-        } else {
-            if (n) {
-                node.textContent = Number(node.textContent) + Number(n);
-            }
-            cls.add('ison');
-        }
-        return node;
-    },
-        _add = function (node, n) { //get number add 1 to it
-            node.textContent = Number(node.textContent) + Number(n || 1);
-            return node;
-        },
-        _sub = function (node, n) { //get number subtract 1
-            node.textContent = Number(node.textContent) - Number(n || 1);
-            return node;
-        },
-        //quick changes
-        _hide = function (node) { //hide class toggle
-            node.style.display = 'none';
-            return node;
-        },
-        _show = function (node) { //show class toggle
-            node.style.display = '';
-            return node;
-        },
-        _toggle = function (node, classname) {
-            if (classname) {
-                node.classList.toggle(classname);
-            } else {
-                var display = node.style.display;
-                if (display == 'none') {
-                    node.style.display = '';
-                } else {
-                    node.style.display = 'none';
-                }
-            }
-            return node;
-        };
-    var _html = function (node, n) {
-        if (hasValue(n)) {
-            if (_isFunction(n)) {
-                var n = n.apply(this, []);
-            }
-            node.innerHTML = n;
-            return node;
-        }
-        return node.innerHTML;
-    },
-        _ohtml = function (node, n) {
-            if (hasValue(n)) {
-                if (_isFunction(n)) {
-                    var n = n.apply(this, []);
-                }
-                node.outerHTML = n;
-                return node;
-            }
-            return node.outerHTML;
-        };
-    //insertAdjacentHTML
-    var _generate_insertAdjacentHTML = function (type) {
-        var returned = function (node, data) {
-            node.insertAdjacentHTML(type, data);
-            return node;
-        };
-        return returned;
-    },
-        _be = _generate_insertAdjacentHTML('beforeEnd'),
-        _ab = _generate_insertAdjacentHTML('afterbegin'),
-        _bb = _generate_insertAdjacentHTML('beforeBegin'),
-        _ae = _generate_insertAdjacentHTML('afterEnd');
-    var insertAfter = function (child, new_node) {
-        child.parentNode.insertBefore(new_node, child.nextSibling);
-        return new_node;
-    };
-    var insertBefore = function (child, new_node) {
-        child.parentNode.insertBefore(new_node, child);
-        return new_node;
-    };
-    var _next = function (node) {
-        return node.nextSibling;
-    };
-    //offsets
-    var _ow = function (node) {
-        return node.offsetWidth;
-    },
-        _oh = function (node) {
-            return node.offsetHeight;
-        },
-        _ot = function (node) {
-            return node.offsetTop;
-        },
-        _offset = function (node) {
-            var i = node.getBoundingClientRect();
-            var returned = {
-                top: i.top + _body.scrollTop,
-                left: i.left + _body.scrollLeft
-            };
-            return returned;
-        };
-    var _last = function (node) {
-        return node.lastChild;
-    },
-        _first = function (node) {
-            return node.firstChild;
-        };
-    var _parNode = function (node) {
-        return node.parentNode;
-    };
-    var _plugInto = function (node, string, object) {
-        var model = _find(string, _model);
-        if (model) {
-            return model(node, object);
-        } else {
-            _ensure(string, function () {
-                var model = _find(string, _model);
-                if (model) {
-                    model(node, object);
-                }
-                string = null;
-                object = null;
-                node = null;
-            });
-        }
-        return node;
-    };
-    var prepend = function (node, child) {
-        var first = node.firstChild;
-        if (first) {
-            node.insertBefore(child, first);
-        } else {
-            node.appendChild(child);
-        }
-        return node;
-    };
-    var _previous = function (node) {
-        return node.previousSibling;
-    };
-    //props
-    var _val = function (node, n) {
-        if (hasValue(n)) {
-            if (_isFunction(n)) {
-                var n = n.apply(this, []);
-            }
-            node.value = n;
-            return node;
-        }
-        return node.value;
-    },
-        _sty = function (node, attr, value) {
-            if (hasValue(value)) {
-                node.style[attr] = value;
-                return node;
-            }
-            return node.style;
-        },
-        _sel = function (node, n) {
-            if (n) {
-                node.selected = n;
-                return o;
-            }
-            return node.selected;
-        };
-    //replace a child node wrapper
-    var replaceChild = function (obj, born) {
-        obj.parentNode.replaceChild(born, obj);
-        return born;
-    };
-    //resets html good for clearing uploaded item
-    var _resetHTML = function (node) {
-        var obj = node.parentNode;
-        obj.innerHTML = obj.innerHTML;
-        return true;
-    };
-    //scroll this node
-    var scrollIt = function (node, x, y) {
-        if (hasValue(x)) {
-            node.scrollTop = x;
-        }
-        if (hasValue(y)) {
-            node.scrollLeft = y;
-        }
-        return node;
-    };
-    //scroll info
-    var scrollInfo = function (node) {
-        var returned = {
-            top: node.scrollTop,
-            left: node.scrollLeft
-        };
-        return returned;
-    };
-    //scroll
-    var scrollInto = function (node, node_to_scroll_into_view) {
-        node.scrollIntoView(node_to_scroll_into_view);
-        return node;
-    };
-    //select text in node
-    var selectIt = function (node) {
-        var range = document.createRange();
-        range.selectNodeContents(node);
-        var sel = _window.getSelection();
-        sel.removeAllRanges();
-        sel.addRange(range);
-        return node;
-    };
-    //selectors
-    var _id = function (node, n) {
-        return node.getElementById(n);
-    },
-        _clsDOM = function (node, n) {
-            return node.getElementsByClassName(n);
-        },
-        _tagDOM = function (node, n) {
-            return node.getElementsByTagName(n);
-        },
-        _qsa = function (node, n) {
-            return node.querySelectorAll(n);
-        },
-        _qs = function (node, n) {
-            return node.querySelector(n);
-        };
-    //text
-    var _tc = function (node, value) {
-        if (hasValue(value)) {
-            if (_isFunction(value)) {
-                var value = value.call(node);
-            }
-            node.textContent = value;
-            return node;
-        }
-        return node.textContent;
-    },
-        _txt = function (node, value) {
-            if (hasValue(value)) {
-                if (_isFunction(value)) {
-                    var value = value.call(node);
-                }
-                node.innerText = value;
-                return node;
-            }
-            return node.innerText;
-        };
-
-    var _textValue = function (node, value) {
-        var child = node.firstChild;
-        if (child) {
-            if (hasValue(value)) {
-                if (_isFunction(value)) {
-                    var value = value.call(node);
-                }
-                child.nodeValue = value;
-                return node;
-            }
-            return child.nodeValue;
-        } else {
-            return _tc(node, value);
-        }
-    }
 /*
 	This is for object checking is or isnot
 	*/
@@ -1078,7 +597,101 @@ This is for finding an object method via a string used througout events
                 funn = null;
             return false;
         };
+    var _arrayLastItem = function (array, indexFrom) {
+        if (n) {
+            return array.splice(i.length - indexFrom, indexFrom);
+        }
+        return array[array.length - 1];
+    };
+    //loop through an array of items
+    var _each_array = function (array, fn) {
+        //an array of results will be returned
+        for (var i = 0, results = [], len = array.length; i < len; i++) {
+            results[i] = fn(array[i], i);
+        }
+        return results;
+    };
 
+    //loop while the returned result is true
+    var _whileTrue = function (array, fn) {
+        //an array of results will be returned
+        for (var i = 0, results = [], len = array.length; i < len; i++) {
+            if (!(results[i] = fn(array[i], i))) {
+                break;
+            }
+        }
+        return results;
+    };
+
+    //loop while the returned result is false
+    var _whileFalse = function (array, fn) {
+        //an array of results will be returned
+        for (var i = 0, results = [], len = array.length; i < len; i++) {
+            if (results[i] = fn(array[i], i)) {
+                break;
+            }
+        }
+        return results;
+    };
+
+    //each while the check function is true
+    var _eachWhile = function (array, fn, check) {
+        //an array of results will be returned
+        for (var i = 0, results = [], len = array.length; i < len; i++) {
+            if (!check(results[i] = fn(array[i], i))) {
+                break;
+            }
+        }
+        return results;
+    };
+
+    //loop while the count is less than the length of the array
+    var _whileLength = function (array, fn) {
+        //an array of results will be returned
+        var results = [];
+        var i = 0;
+        while (i < arr.length) {
+            results[i] = fn(array[i], i);
+            i++;
+        }
+        return results;
+    };
+
+    //loop through array backwards aka from the right
+    var eachArrayFromRight = function (array, fn) {
+        //an array of results will be returned
+        for (var results = [], len = array.length, i = len - 1; i >= 0; i--) {
+            results[i] = fn(array[i], i);
+        }
+        return results;
+    };
+
+    //loop through an object
+    var _each_object = function (object, fn) {
+        //an object with matching keys with results will be returned
+        var results = {};
+        for (var i = 0, keys = _object_keys(object), len = keys.length; i < len; i++) {
+            //object currect key
+            var key = keys[i];
+            //call function get result
+            results[key] = fn(object[key], key, object);
+        }
+        return results;
+    };
+    //loop through based on number
+    var _each_number = function (start, end, fn) {
+        if (!fn) {
+            var fn = end;
+            var end = start;
+            var start = 0;
+        }
+        var results = [];
+        for (; start < end; start++) {
+            //call function get result
+            results[start] = fn(start);
+        }
+        return results;
+    };
     var $eventadd = function (obj, name, func, capture) {
         obj.addEventListener(name, func, capture || false);
         return obj;
@@ -1121,6 +734,442 @@ This is for finding an object method via a string used througout events
             }
             return copy;
         };
+
+    //uppercase first letter lower case the rest
+    var _ucFirst = function (string) {
+        return string.charAt(0).toUpperCase() + string.substr(1);
+    };
+
+    var afterNth = function (node, new_child, position) {
+        var child = node.children[position + 1];
+        if (!child) {
+            node.appendChild(new_child);
+        } else {
+            node.insertBefore(new_child, child);
+        }
+        return node;
+    };
+    var _append = function (node, child) {
+        node.appendChild(child);
+        return node;
+    };
+    //attr functions
+    var _hasAttr = function (node, n) {
+        return node.hasAttribute(n);
+    },
+        //set/get attribute
+        _attr = function (node, key, value) {
+            if (_isString(key)) {
+                if (hasValue(value)) {
+                    node.setAttribute(key, value);
+                } else {
+                    return node.getAttribute(key);
+                }
+            } else if (isPlainObject(key)) {
+                for (var i = 0, keys = _object_keys(key), len = keys.length; i < len; i++) {
+                    var keyed = keys[i];
+                    var item = key[keyed];
+                    node.setAttribute(keyed, item);
+                }
+            }
+            return node;
+        },
+        _removeAttr = function (node, n) {
+            node.removeAttribute(n);
+            return node;
+        };
+    var beforeNth = function (node, new_child, position) {
+        var child = node.children[position];
+        if (!child) {
+            node.appendChild(new_child);
+        } else {
+            node.insertBefore(new_child, child);
+        }
+        return node;
+    };
+    //center object
+    var _center = function (node, item) {
+        if (item) {
+            if (item === true) {
+                var item = node.parentNode;
+            }
+            var w = Number(item.offsetWidth),
+                h = Number(item.offsetHeight);
+        } else {
+            var w = Number(_cache.bodyWidth),
+                h = Number(_cache.bodyHeight);
+        }
+        var divW = node.offsetWidth,
+            divH = node.offsetHeight;
+        if (divH > h) {
+            node.style.position = '';
+            node.style.transform = node.style['-webkit-transform'] = '';
+        } else {
+            var left = parseInt((w - divW) / 2) + 'px',
+                top = parseInt((h - divH) / 2) + 'px';
+            node.style.position = 'absolute';
+            node.style.transform = node.style['-webkit-transform'] = 'translate3d(' + left + ',' + top + ',0)';
+        }
+        return node;
+    };
+    //change the tagname of a node and returns the a new node with the new tagname
+    var changeTag = function (node, tagename) {
+        var attrs = node.attributes,
+            object = {},
+            len = attrs.length;
+        for (var i = 0; i < len; i++) {
+            var item = attrs[i];
+            object[item.name] = item.value;
+        }
+        var attrs = null;
+        return _dom(tagename, {
+            attr: object
+        });
+    };
+/*
+METHODS FOR CLASS MODS
+*/
+    //classname
+    var _cn = function (node, n) {
+        if (hasValue(n)) {
+            node.className = n;
+            return node;
+        }
+        return node.className;
+    },
+        //classlist
+        _cl = function (node, args) {
+            var node_classList = node.classList;
+            if (args) {
+                if (!_isArray(args)) {
+                    if (!node_classList.contains(args)) {
+                        node_classList.add(args);
+                    }
+                } else {
+                    _each_array(args, function (item) {
+                        if (!node_classList.contains(item)) {
+                            node_classList.add(item);
+                        }
+                    });
+                }
+                return node;
+            }
+            return node_classList;
+        },
+        //classlist functions
+        _clHas = function (node, key) {
+            return node.classList.contains(key);
+        },
+        _clRemove = function (node, args) {
+            var node_classList = node.classList;
+            if (!_isArray(args)) {
+                if (node_classList.contains(args)) {
+                    node_classList.remove(args);
+                }
+            } else {
+                _each_array(args, function (item) {
+                    if (node_classList.contains(item)) {
+                        node_classList.remove(item);
+                    }
+                });
+            }
+            return node;
+        },
+        _clTog = function (node, args) {
+            var node_classList = node.classList;
+            if (!_isArray(args)) {
+                node_classList.toggle(args);
+            } else {
+                _each_array(args, function (item) {
+                    node_classList.toggle(item);
+                });
+            }
+            return node;
+        };
+
+    //clear
+    var _clear = function (node) {
+        while (node.firstChild) {
+            node.firstChild.remove();
+        }
+        return node;
+    };
+    var _clw = function (node) {
+        return node.clientWidth;
+    },
+        _clh = function (node) {
+            return node.clientHeight;
+        };
+    //copynode
+    var _clone = function (node, bool) {
+        return node.cloneNode(bool);
+    };
+    //btn + adding
+    var _ison = function (node, n) {
+        var cls = node.classList;
+        if (cls.contains('ison')) {
+            if (n) {
+                node.textContent = Number(node.textContent) - Number(n);
+            }
+            cls.remove('ison');
+        } else {
+            if (n) {
+                node.textContent = Number(node.textContent) + Number(n);
+            }
+            cls.add('ison');
+        }
+        return node;
+    },
+        _add = function (node, n) { //get number add 1 to it
+            node.textContent = Number(node.textContent) + Number(n || 1);
+            return node;
+        },
+        _sub = function (node, n) { //get number subtract 1
+            node.textContent = Number(node.textContent) - Number(n || 1);
+            return node;
+        },
+        //quick changes
+        _hide = function (node) { //hide class toggle
+            node.style.display = 'none';
+            return node;
+        },
+        _show = function (node) { //show class toggle
+            node.style.display = '';
+            return node;
+        },
+        _toggle = function (node, classname) {
+            if (classname) {
+                node.classList.toggle(classname);
+            } else {
+                var display = node.style.display;
+                if (display == 'none') {
+                    node.style.display = '';
+                } else {
+                    node.style.display = 'none';
+                }
+            }
+            return node;
+        };
+    var _innerHTML = function (node, value) {
+        if (hasValue(value)) {
+            if (_isFunction(value)) {
+                var value = value.call(this, node);
+            }
+            node.innerHTML = value;
+            return node;
+        }
+        return node.innerHTML;
+    },
+        _ohtml = function (node, value) {
+            if (hasValue(value)) {
+                if (_isFunction(value)) {
+                    var value = value.call(this, node);
+                }
+                node.outerHTML = value;
+                return node;
+            }
+            return node.outerHTML;
+        };
+    //insertAdjacentHTML
+    var _generate_insertAdjacentHTML = function (type) {
+        var returned = function (node, data) {
+            node.insertAdjacentHTML(type, data);
+            return node;
+        };
+        return returned;
+    },
+        _be = _generate_insertAdjacentHTML('beforeEnd'),
+        _ab = _generate_insertAdjacentHTML('afterbegin'),
+        _bb = _generate_insertAdjacentHTML('beforeBegin'),
+        _ae = _generate_insertAdjacentHTML('afterEnd');
+    var insertAfter = function (child, new_node) {
+        child.parentNode.insertBefore(new_node, child.nextSibling);
+        return new_node;
+    };
+    var insertBefore = function (child, new_node) {
+        child.parentNode.insertBefore(new_node, child);
+        return new_node;
+    };
+    var _next = function (node) {
+        return node.nextSibling;
+    };
+    //offsets
+    var _ow = function (node) {
+        return node.offsetWidth;
+    },
+        _oh = function (node) {
+            return node.offsetHeight;
+        },
+        _ot = function (node) {
+            return node.offsetTop;
+        },
+        _offset = function (node) {
+            var i = node.getBoundingClientRect();
+            var returned = {
+                top: i.top + _body.scrollTop,
+                left: i.left + _body.scrollLeft
+            };
+            return returned;
+        };
+    var _last = function (node) {
+        return node.lastChild;
+    },
+        _first = function (node) {
+            return node.firstChild;
+        };
+    var _parNode = function (node) {
+        return node.parentNode;
+    };
+    var _plugInto = function (node, string, object) {
+        var model = _find(string, _model);
+        if (model) {
+            return model(node, object);
+        } else {
+            _ensure(string, function () {
+                var model = _find(string, _model);
+                if (model) {
+                    model(node, object);
+                }
+                string = null;
+                object = null;
+                node = null;
+            });
+        }
+        return node;
+    };
+    var prepend = function (node, child) {
+        var first = node.firstChild;
+        if (first) {
+            node.insertBefore(child, first);
+        } else {
+            node.appendChild(child);
+        }
+        return node;
+    };
+    var _previous = function (node) {
+        return node.previousSibling;
+    };
+    //props
+    var _val = function (node, n) {
+        if (hasValue(n)) {
+            if (_isFunction(n)) {
+                var n = n.apply(this, []);
+            }
+            node.value = n;
+            return node;
+        }
+        return node.value;
+    },
+        _sty = function (node, attr, value) {
+            if (hasValue(value)) {
+                node.style[attr] = value;
+                return node;
+            }
+            return node.style;
+        },
+        _sel = function (node, n) {
+            if (n) {
+                node.selected = n;
+                return o;
+            }
+            return node.selected;
+        };
+    //replace a child node wrapper
+    var replaceChild = function (obj, born) {
+        obj.parentNode.replaceChild(born, obj);
+        return born;
+    };
+    //resets html good for clearing uploaded item
+    var _resetHTML = function (node) {
+        var obj = node.parentNode;
+        obj.innerHTML = obj.innerHTML;
+        return true;
+    };
+    //scroll this node
+    var scrollIt = function (node, x, y) {
+        if (hasValue(x)) {
+            node.scrollTop = x;
+        }
+        if (hasValue(y)) {
+            node.scrollLeft = y;
+        }
+        return node;
+    };
+    //scroll info
+    var scrollInfo = function (node) {
+        var returned = {
+            top: node.scrollTop,
+            left: node.scrollLeft
+        };
+        return returned;
+    };
+    //scroll
+    var scrollInto = function (node, node_to_scroll_into_view) {
+        node.scrollIntoView(node_to_scroll_into_view);
+        return node;
+    };
+    //select text in node
+    var selectIt = function (node) {
+        var range = document.createRange();
+        range.selectNodeContents(node);
+        var sel = _window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        return node;
+    };
+    //selectors
+    var _id = function (node, n) {
+        return node.getElementById(n);
+    },
+        _clsDOM = function (node, n) {
+            return node.getElementsByClassName(n);
+        },
+        _tagDOM = function (node, n) {
+            return node.getElementsByTagName(n);
+        },
+        _qsa = function (node, n) {
+            return node.querySelectorAll(n);
+        },
+        _qs = function (node, n) {
+            return node.querySelector(n);
+        };
+    //text
+    var _tc = function (node, value) {
+        if (hasValue(value)) {
+            if (_isFunction(value)) {
+                var value = value.call(node);
+            }
+            node.textContent = value;
+            return node;
+        }
+        return node.textContent;
+    },
+        _txt = function (node, value) {
+            if (hasValue(value)) {
+                if (_isFunction(value)) {
+                    var value = value.call(node);
+                }
+                node.innerText = value;
+                return node;
+            }
+            return node.innerText;
+        };
+
+    var _textValue = function (node, value) {
+        var child = node.firstChild;
+        if (child) {
+            if (hasValue(value)) {
+                if (_isFunction(value)) {
+                    var value = value.call(node);
+                }
+                child.nodeValue = value;
+                return node;
+            }
+            return child.nodeValue;
+        } else {
+            return _tc(node, value);
+        }
+    }
 
     //store internal data for selectors
     var temp_objs_from_selector = {},
@@ -1319,7 +1368,7 @@ This is for finding an object method via a string used througout events
                 return _center(this, data);
             },
             html: function (value) {
-                return _html(this, value);
+                return _innerHTML(this, value);
             },
             ohtml: function (value) {
                 return _ohtml(this, value);
@@ -1548,7 +1597,7 @@ This is for finding an object method via a string used througout events
             each: function (n) {
                 var list = this;
                 for (var i = 0, items = _toArray(list), len = items.length; i < len; i++) {
-                    n(items[i]);
+                    n(items[i], i);
                 }
                 return list;
             },
@@ -1605,7 +1654,7 @@ This is for finding an object method via a string used througout events
             copy: generate_loop_single_return(_clone),
             //center object
             center: generate_loop_single_return(_center),
-            html: generate_loop_single_return(_html),
+            html: generate_loop_single_return(_innerHTML),
             ohtml: generate_loop_single_return(_ohtml),
             //text
             tc: generate_loop_single_return(_tc),
@@ -1981,25 +2030,16 @@ This is for finding an object method via a string used througout events
         return _array_push.apply(this, array);
     };
     //Creates an array of elements split into groups the length of size. If collection can't be split evenly, the final chunk will be the remaining elements.
-    array_extend.chunk = function (max) {
-        var array = this,
-            temp = [],
-            count = 0,
-            item;
-        while (item = array.shift()) {
-            if (count === 0 || count === max) {
-                var sub = [];
-            }
-            sub.push(item);
-            count++;
-            if (count === max) {
-                temp.push(sub);
-                var count = 0;
-            } else if (count > array.length) {
-                temp.push(sub);
-            }
+    array_extend.chunk = function (chunk) {
+        var i = 0;
+        var count = 0;
+        var temparray = [];
+        var arr = this;
+        var len = arr.length;
+        for (; i < len; count++) {
+            temparray[count] = arr.slice(i, i += chunk);
         }
-        return temp;
+        return temparray;
     };
     //Clone an array via the slize method
     array_extend.clone = function () {
@@ -2155,12 +2195,32 @@ This is for finding an object method via a string used througout events
         var array = this;
         return array.slice(0, array.length - amount);
     };
-    //loop through array using for loop
+    //loop through array using for loop cached
     array_extend.each = function (fn) {
         return _each_array(this, fn);
     };
 
-    //loop through array using for loop
+    //each while the check function is true
+    array_extend.eachWhile = function (fn, check) {
+        return _eachWhile(this, fn, check);
+    };
+
+    //loop while the returned result is true
+    array_extend.whileTrue = function (fn) {
+        return _whileTrue(this, fn);
+    };
+
+    //loop while the returned result is false
+    array_extend.whileFalse = function (fn) {
+        return _whileFalse(this, fn);
+    };
+
+    //loop while the count is less than the length of the array
+    array_extend.whileLength = function (fn) {
+        return _whileLength(this, fn);
+    };
+
+    //loop through array backwards aka from the right
     array_extend.eachFromRight = function (fn) {
         return eachArrayFromRight(this, fn);
     };
@@ -2687,8 +2747,7 @@ STRING Prototype object
     };
     //uppercase first letter lower case the rest
     string_extend.ucFirst = function () {
-        var string = this;
-        return string.charAt(0).toUpperCase() + string.substr(1);
+        return _ucFirst(this);
     };
 
     //uppercase first letter for all
@@ -3111,16 +3170,19 @@ rearg(1,2,3);
     //debounce function
     function_extend.debounce = function (time) {
         var timeout = false,
-            d = this;
+            original = this;
 
         var fn = function () {
+            var boundTo = this;
             if (timeout) {
                 clearTimeout(timeout);
             }
-            var a = _toArray(arguments);
+            var args = _toArray(arguments);
             timeout = setTimeout(function () {
-                d.apply(d, a);
+                original.apply(boundTo, args);
                 timeout = false;
+                args = null;
+                boundTo = null;
             }, time);
         };
 
@@ -3128,7 +3190,7 @@ rearg(1,2,3);
             if (timeout) {
                 clearTimeout(timeout);
             }
-            d.apply(d, _toArray(arguments));
+            original.apply(this, _toArray(arguments));
         };
         fn.clear = function () {
             if (timeout) {
@@ -3176,6 +3238,11 @@ rearg(1,2,3);
     //timer wrapper
     function_extend.timer = function (time) {
         return setTimeout(this, time);
+    };
+
+    //timer wrapper
+    function_extend.interval = function (time) {
+        return setInterval(this, time);
     };
 
     //async function call
@@ -3937,6 +4004,26 @@ Math Related cached functions
     $.timerClear = function (number) {
         return clearTimeout(number);
     };
+
+    $.intervalClear = function (number) {
+        return clearInterval(number);
+    };
+
+    $.clearTimers = function () {
+        //clear all timers
+        var maxId = setTimeout(function () {}, 0);
+        for (var i = 0; i < maxId; i++) {
+            clearTimeout(i);
+        }
+    };
+
+    $.clearIntervals = function () {
+        //clear all timers
+        var maxId = setInterval(function () {}, 1000);
+        for (var i = 0; i <= maxId; i++) {
+            clearInterval(i);
+        }
+    };
     //to array
     $.toArray = _toArray;
 
@@ -4053,11 +4140,15 @@ Math Related cached functions
 
         if (isPlainObject(data)) {
             _each_object(data, function (item, key) {
-                newData = xhrPostParam(newData, key + '=' + item);
+                if (hasValue(item)) {
+                    newData = xhrPostParam(newData, key + '=' + item);
+                }
             });
         } else if (_isArray(data)) {
             _each_array(data, function (item, key) {
-                newData = xhrPostParam(newData, item);
+                if (hasValue(item)) {
+                    newData = xhrPostParam(newData, item);
+                }
             });
         }
 
@@ -4419,6 +4510,24 @@ Math Related cached functions
         return frag;
     };
     $.toDOM = _toDOM;
+
+    var _css = function (url) {
+        var link = _tag('link');
+        link.setAttribute('type', 'text/css"');
+        link.setAttribute('href', url);
+        link.setAttribute('rel', 'stylesheet');
+        return link;
+    };
+
+    $.css = _css;
+
+    var _script = function (url) {
+        var link = _tag('script');
+        link.setAttribute('src', url);
+        return link;
+    };
+
+    $.script = _script;
     //Compiled import function
     var _import = (function () {
         //store URL dir data to save bytes and dev time
@@ -4899,9 +5008,11 @@ NODE TYPE OBJECT
         }
         var template = _template[string];
 
-        if (data) {
+
+        if (isDom(data) || _isFunction(data) || _isString(data)) {
             return template;
         }
+
         if (isDom(template)) {
             var template = template.cloneNode(true);
             if (data) {
@@ -4909,7 +5020,7 @@ NODE TYPE OBJECT
             }
         } else if (_isFunction(template)) {
             if (data) {
-                var template = _toDOM(template(data), 0);
+                var template = template(data);
             }
         }
         return template;
@@ -4982,179 +5093,28 @@ NODE TYPE OBJECT
         if (!_observe) {
             return false;
         }
-        //enhanced array changes
-        var buildArrayChange = function (change) {
-            if (change.type === 'splice') {
-                var removed = change.removed.length;
-                var data = {
-                    isArray: 1,
-                    addRange: (change.addedCount) ? change.index + change.addedCount : 0,
-                    removeRange: (removed) ? change.index + removed : 0,
-                    removeLength: (removed) ? removed : 0,
-                    index: change.index,
-                    addedCount: change.addedCount,
-                    object: change.object,
-                    removed: change.removed,
-                    type: change.type
-                };
-            } else if (change.type === 'update') {
-                var data = {
-                    isArray: 1,
-                    name: change.name,
-                    object: change.object,
-                    oldValue: change.oldValue,
-                    type: change.type
-                };
-            } else if (change.type === 'add') {
-                var data = {
-                    isArray: 1,
-                    name: change.name,
-                    object: change.object,
-                    type: change.type
-                };
-            }
-            var change = null;
-            return data;
-        };
-
-        //changes that happen to level 0 of data
-        var viewChanges = function (model, changes, modelName, originName, modelData) {
-            var rawChanges = model.rawChanges;
-            if (rawChanges) {
-                if (change.invoked) {
-                    change.softOrigin.push(modelName);
-                    change.invoked.push(modelName + '.rawChanges');
-                }
-                return batchAdd(rawChanges, changes);
-            }
-
-            var hasSync = false;
-            var hasSyncPrivate = false;
-
-            if (originName) {
-                if (modelName != originName) {
-                    var hasSync = model.sync;
-                    var hasSyncPrivate = model.syncPrivate;
-                }
-            }
-            var allChanges = model.allChanges;
-            var acceptOnly = model.acceptOnly;
-            _each_array(changes, function (change) {
-                var changeName = change.name;
-                if (change.type == 'add' || change.type == 'update') {
-                    if (!originName) {
-                        checkForObserv(model, change, modelData, change.object[changeName], changeName, model.observers);
-                    }
-                }
-                if (hasSync) {
-                    return model.data[changeName] = change.object[changeName];
-                }
-                if (hasSyncPrivate) {
-                    return model.dataPrivate[changeName] = change.object[changeName];
-                }
-                if (allChanges) {
-                    if (change.invoked) {
-                        change.softOrigin.push(modelName);
-                        change.invoked.push(modelName + '.allChanges');
-                    }
-                    return batchAdd(allChanges, change);
-                }
-                var method = model.bind[changeName];
-                if (method) {
-                    _each_object(method, function (item) {
-                        batchAdd(item, change);
-                    });
-                }
-                var method = model[changeName];
-                if (method) {
-                    if (change.invoked) {
-                        change.softOrigin.push(modelName);
-                        change.invoked.push(modelName + '.' + changeName);
-                    }
-                    if (acceptOnly) {
-                        if (!acceptOnly[changeName]) {
-                            return;
-                        }
-                    }
-                    return batchAdd(method, change);
-                }
-            });
-            return frameCall();
-        };
-        //changes that happen to level 1 of data
-        var objectViewChanges = function (model, changes, name) {
-            var loose = model[name];
-            _each_array(changes, function (change) {
-                var method = loose[change.name];
-                if (method) {
-                    batchAddCall(object, method, change);
-                }
-            });
-            frameCall();
+        //add elements to the batch
+        var batchAdd = function (func, change) {
+            asyncChanges[asyncChangesCount] = function () {
+                func(change);
+                change = null;
+                func = null;
+                return false;
+            };
+            asyncChangesCount = asyncChangesCount + 1;
             return false;
-        };
-        //changes that happen to arrays level 0
-        var arrayChanges = function (model, changes, name) {
-            var loose = model[name];
-            _each_array(changes, function (change) {
-                if (loose) {
-                    batchAdd(loose, buildArrayChange(change));
-                }
-            });
-            frameCall();
-            return false;
-        };
-
-        var makechanges = function () {
-            var items = asyncChanges;
-            for (var i = 0; i < asyncChangesCount; i++) {
-                items[i]();
-            }
-            asyncChangesCount = 0;
-            asyncChanges = [];
-            cancelFrame = false;
-            return false;
-        };
-
-        var frameCall = function () {
-            if (cancelFrame === false) {
-                cancelFrame = _RAF(makechanges);
-            }
-        };
-        var modelSubChanges = function (componentsMade, changes, subKey, func, name) {
-            _each_object(componentsMade, function (item, key) {
-                func(item, changes, subKey);
-            });
         },
-            synModelFN = function (changes, name, model, origin, propName, modelData) {
-                var changes = enhanceChange(changes, name, origin, propName);
-                viewChanges(model, changes, name, origin, modelData);
-                var copiesOfComponent = componentsMade[name];
-                if (copiesOfComponent) {
-                    _each_object(copiesOfComponent, function (item, key) {
-                        if (item) {
-                            item.notify(changes, name);
-                        }
-                    });
-                }
-                _each_object(model.subscriber, function (item, key) {
-                    if (item === true) {
-                        var copiesOfComponent = componentsMade[key];
-                        if (copiesOfComponent) {
-                            _each_object(copiesOfComponent, function (subItem, subkey) {
-                                if (subItem) {
-                                    subItem.notify(changes, subkey);
-                                }
-                            });
-                        }
-                    } else if (item === 1) {
-                        synModelFN(changes, key, _model[key], origin || model.modelName, propName, modelData);
-                    } else if (item === 2) {
-                        if (_model[key]) {
-                            _model[key].privateNotify(changes, origin);
-                        }
-                    }
-                });
+            //add elements to the batch
+            batchAddCall = function (object, func, change) {
+                asyncChanges[asyncChangesCount] = function () {
+                    func.call(object, change);
+                    change = null;
+                    func = null;
+                    object = null;
+                    return false;
+                };
+                asyncChangesCount = asyncChangesCount + 1;
+                return false;
             };
 /*A Base is an observable data structure that can be subscribed to as well as subscribe to other Models and Bases.
 It's primary purpose is to hold and notify connected models and structures of it's changes. Think of it as a small live database. Bases are rendered on the spot. */
@@ -5213,6 +5173,14 @@ It's primary purpose is to hold and notify connected models and structures of it
 
             model.data = {};
 
+            //bind methods to new model
+            generateMethods(model, config.component);
+            //generate component specific methods
+            generateComponentMethods(model, config.component);
+
+            //compile initial state
+            prepareCompileData(model, model.data, copyData);
+
             if (config.component.view || config.component.template) {
                 //compile DOM
                 compileView(model, model.modelName, config.component.view, config.component.template);
@@ -5223,17 +5191,11 @@ It's primary purpose is to hold and notify connected models and structures of it
 
                 checkBinding(model, model.modelName, model.eventName);
             }
-            //bind methods to new model
-            generateMethods(model, config.component);
-            //generate component specific methods
-            generateComponentMethods(model, config.component);
+            addHelpers(model, config.component.helper);
 
-            //compile initial state
-            prepareCompileData(model, model.data, copyData);
             if (data) {
                 model.set(data);
             }
-            addHelpers(model, config.component.helper);
             return model;
         };
 
@@ -5796,6 +5758,188 @@ It's primary purpose is to hold and notify connected models and structures of it
             return model;
         };
         $.router = _router;
+        //enhanced array changes
+        var buildArrayChange = function (change) {
+            if (change.type === 'splice') {
+                var removed = change.removed.length;
+                var data = {
+                    isArray: 1,
+                    addRange: (change.addedCount) ? change.index + change.addedCount : 0,
+                    removeRange: (removed) ? change.index + removed : 0,
+                    removeLength: (removed) ? removed : 0,
+                    index: change.index,
+                    addedCount: change.addedCount,
+                    object: change.object,
+                    removed: change.removed,
+                    type: change.type
+                };
+            } else if (change.type === 'update') {
+                var data = {
+                    isArray: 1,
+                    name: change.name,
+                    object: change.object,
+                    oldValue: change.oldValue,
+                    type: change.type
+                };
+            } else if (change.type === 'add') {
+                var data = {
+                    isArray: 1,
+                    name: change.name,
+                    object: change.object,
+                    type: change.type
+                };
+            }
+            var change = null;
+            return data;
+        };
+
+        //changes that happen to level 0 of data
+        var viewChanges = function (model, changes, modelName, originName, modelData) {
+            var rawChanges = model.rawChanges;
+            if (rawChanges) {
+                if (change.invoked) {
+                    change.softOrigin.push(modelName);
+                    change.invoked.push(modelName + '.rawChanges');
+                }
+                return batchAdd(rawChanges, changes);
+            }
+
+            var hasSync = false;
+            var hasSyncPrivate = false;
+
+            if (originName) {
+                if (modelName != originName) {
+                    var hasSync = model.sync;
+                    var hasSyncPrivate = model.syncPrivate;
+                }
+            }
+            var allChanges = model.allChanges;
+            var acceptOnly = model.acceptOnly;
+            _each_array(changes, function (change) {
+                var changeName = change.name;
+                if (change.type == 'add' || change.type == 'update') {
+                    if (!originName) {
+                        checkForObserv(model, change, modelData, change.object[changeName], changeName, model.observers);
+                    }
+                }
+                if (hasSync) {
+                    return model.data[changeName] = change.object[changeName];
+                }
+                if (hasSyncPrivate) {
+                    return model.dataPrivate[changeName] = change.object[changeName];
+                }
+                if (allChanges) {
+                    if (change.invoked) {
+                        change.softOrigin.push(modelName);
+                        change.invoked.push(modelName + '.allChanges');
+                    }
+                    return batchAdd(allChanges, change);
+                }
+                var method = model.bind[changeName];
+                if (method) {
+                    _each_object(method, function (item) {
+                        batchAdd(item, change);
+                    });
+                }
+                var method = model[changeName];
+                if (method) {
+                    if (change.invoked) {
+                        change.softOrigin.push(modelName);
+                        change.invoked.push(modelName + '.' + changeName);
+                    }
+                    if (acceptOnly) {
+                        if (!acceptOnly[changeName]) {
+                            return;
+                        }
+                    }
+                    return batchAdd(method, change);
+                }
+            });
+            return frameCall();
+        };
+        //changes that happen to level 1 of data
+        var objectViewChanges = function (model, changes, name) {
+            var loose = model[name];
+            _each_array(changes, function (change) {
+                var method = loose[change.name];
+                if (method) {
+                    batchAddCall(object, method, change);
+                }
+            });
+            frameCall();
+            return false;
+        };
+        //changes that happen to arrays level 0
+        var arrayChanges = function (model, changes, name) {
+            var loose = model[name];
+            _each_array(changes, function (change) {
+                if (loose) {
+                    batchAdd(loose, buildArrayChange(change));
+                }
+            });
+            frameCall();
+            return false;
+        };
+
+        var makechanges = function () {
+            var items = asyncChanges;
+            for (var i = 0; i < asyncChangesCount; i++) {
+                items[i]();
+            }
+            asyncChangesCount = 0;
+            asyncChanges = [];
+            cancelFrame = false;
+            return false;
+        };
+
+        var frameCall = function () {
+            if (cancelFrame === false) {
+                cancelFrame = _RAF(makechanges);
+            }
+        };
+        var modelSubChanges = function (componentsMade, changes, subKey, func, name) {
+            _each_object(componentsMade, function (item, key) {
+                func(item, changes, subKey);
+            });
+        },
+            synModelFN = function (changes, name, model, origin, propName, modelData) {
+                var changes = enhanceChange(changes, name, origin, propName);
+                viewChanges(model, changes, name, origin, modelData);
+                var copiesOfComponent = componentsMade[name];
+                if (copiesOfComponent) {
+                    _each_object(copiesOfComponent, function (item, key) {
+                        if (item) {
+                            _async(function () {
+                                item.notify(changes, name);
+                            });
+                        }
+                    });
+                }
+                _each_object(model.subscriber, function (item, key) {
+                    if (item === true) {
+                        var copiesOfComponent = componentsMade[key];
+                        if (copiesOfComponent) {
+                            _each_object(copiesOfComponent, function (subItem, subkey) {
+                                if (subItem) {
+                                    _async(function () {
+                                        subItem.notify(changes, subkey);
+                                    });
+                                }
+                            });
+                        }
+                    } else if (item === 1) {
+                        _async(function () {
+                            synModelFN(changes, key, _model[key], origin || model.modelName, propName, modelData);
+                        });
+                    } else if (item === 2) {
+                        if (_model[key]) {
+                            _async(function () {
+                                _model[key].privateNotify(changes, origin);
+                            });
+                        }
+                    }
+                });
+            };
         var generateMethods = function (object, config) {
             if (_isFunction(config)) {
                 var config = config.call(object);
@@ -5918,36 +6062,67 @@ It's primary purpose is to hold and notify connected models and structures of it
                 var dataObject = (_has(attrEventProp, 'privateData')) ? object.privateData : object.data,
                     nodePropName = attrEventProp.replace('privateData.', '');
 
-                var functionName = nodePropName + key + eventName;
-                var attrValues = 'this.' + functionName + attrValues;
-
                 if (!object.bind[nodePropName]) {
                     object.bind[nodePropName] = {};
                 }
-                object.bind[nodePropName][key] = function () {
-                    node[property] = dataObject[nodePropName];
-                };
+
+                var isPropertyFunction = _isFunction(node[property]);
+
+                if (isPropertyFunction) {
+                    var propertyCall = node[property];
+                    object.bind[nodePropName][key] = function () {
+                        propertyCall.call(node, dataObject[nodePropName]);
+                    };
+                } else {
+                    object.bind[nodePropName][key] = function () {
+                        node[property] = dataObject[nodePropName];
+                    };
+                }
                 if (!object.bindedNodes[key]) {
                     object.bindedNodes[key] = {};
                 }
-                object.bindedNodes[key][nodePropName] = functionName;
-                object[functionName] = function () {
-                    dataObject[nodePropName] = node[property];
-                };
-                node.setAttribute(attr, attrValues.replace(thisRegexReplace, modelEventName));
+
+                if (eventName) {
+                    var functionName = nodePropName + key + eventName;
+                    var attrValues = 'this.' + functionName + attrValues;
+                    object.bindedNodes[key][nodePropName] = functionName;
+                    object[functionName] = function () {
+                        dataObject[nodePropName] = node[property];
+                    };
+                    node.setAttribute(attr, attrValues.replace(thisRegexReplace, modelEventName));
+                }
             },
             loopThroughBindings = function (object, attr, node, nodeName, modelName, modelEventName) {
                 var attr = attr || node.getAttribute('data-bind');
                 if (attr) {
-                    var attrs = attr.match(/((.*?)(\[(.*?)\]))/g);
-                    _each_array(attrs, function (subitem, subkey) {
-                        var set = subitem.split('[');
-                        var nodeProperty = set[0];
-                        var attrProp = set[1].replace(']', '');
-                        var attrEvent = attrProp.split(':');
-                        var attrEventName = attrEvent[0];
-                        var attrEventProp = attrEvent[1];
-                        compileBinding(object, modelName, modelEventName, node, nodeName, nodeProperty, attrEventName, attrEventProp);
+                    var attrs = attr.split(';');
+                    _each_array(attrs, function (subitem, index) {
+                        var regex = subitem.match(/((.*?)(\[(.*?)\]))/g);
+                        if (regex) {
+                            var set = regex[0].split('[');
+                            var attrEventProp = set[0];
+                            var attrProp = set[1].replace(']', '');
+                            var attrEvent = attrProp.split(':');
+                            var nodeProperty = attrEvent[0];
+                            var attrEventName = attrEvent[1] || false;
+                            compileBinding(object, modelName, modelEventName, node, nodeName, nodeProperty, attrEventName, attrEventProp);
+                        } else {
+                            if (_has(subitem, 'privateData.')) {
+                                var privateMode = true;
+                                var subitem = subitem.replace('privateData.', '');
+                                var testData = object.privateData[subitem];
+                            } else {
+                                var privateMode = false;
+                                var testData = object.data[subitem];
+                            }
+                            console.log(object.data);
+                            if (_isArray(testData)) {
+                                listsyn({
+                                    node: nodeName,
+                                    array: subitem
+                                }, object, privateMode);
+                            }
+                        }
                     });
                     node.removeAttribute('data-bind');
                 }
@@ -6032,29 +6207,303 @@ It's primary purpose is to hold and notify connected models and structures of it
             }
             return false;
         };
-        //add elements to the batch
-        var batchAdd = function (func, change) {
-            asyncChanges[asyncChangesCount] = function () {
-                func(change);
-                change = null;
-                func = null;
-                return false;
-            };
-            asyncChangesCount = asyncChangesCount + 1;
+        //look up the tree
+        var _findsyn = function (node, name) {
+            if (!name) {
+                var name = 'data-syn-root';
+            } else {
+                var name = 'data-syn-' + name;
+            }
+            var root = _upTo(node, '[' + name + ']');
+            if (root) {
+                return _getsyn(root);
+            }
             return false;
-        },
-            //add elements to the batch
-            batchAddCall = function (object, func, change) {
-                asyncChanges[asyncChangesCount] = function () {
-                    func.call(object, change);
-                    change = null;
-                    func = null;
-                    object = null;
-                    return false;
-                };
-                asyncChangesCount = asyncChangesCount + 1;
-                return false;
+        };
+
+        $.findsyn = _findsyn;
+        //get the observer object that is attached to DOM node
+        var _getsyn = function (node) {
+            var modelName = node.getAttribute('data-syn-root') || node.getAttribute('data-syn');
+            if (modelName) {
+                return _model[modelName];
+            }
+            return false;
+        };
+
+        $.getsyn = _getsyn;
+        var manualChangeEventsAssign = function (manualChangeEvents, model, varName, changeName, every) {
+            var everyOnModel = model[varName + _ucFirst(changeName || '')];
+            if (every || everyOnModel) {
+                if (_isString(every)) {
+                    var everyOnModel = model[every];
+                } else if (every) {
+                    var everyOnModel = every.bind(model);
+                }
+                manualChangeEvents[changeName] = everyOnModel;
+            }
+        };
+
+        var listsyn = function (config, model, privateMode) {
+
+            if (isPlainObject(model)) {
+                var list = config.array,
+                    varName = config.name,
+                    onSaveTo = config.saveTo,
+                    getJSON = config.getJSON,
+                    rootNode = config.node;
+            }
+            var currentFilter = false;
+
+            if (_isString(rootNode)) {
+                var rootNode = model.nodes[rootNode];
+            }
+
+            if (!list) {
+                if (varName) {
+                    if (privateMode) {
+                        var list = model.privateData[varName];
+                    } else {
+                        var list = model.data[varName];
+                    }
+                }
+            } else if (_isString(list)) {
+                var varName = list;
+                if (privateMode) {
+                    var list = model.privateData[varName];
+                } else {
+                    var list = model.data[varName];
+                }
+            }
+
+            var manualChangeEvents = {};
+            var changeEventNames = ['onEvery', 'onMount', 'onChange', 'onAdd', 'onUpdate', 'onSplice', 'onRefresh', 'onDestroy'];
+
+            _each_array(changeEventNames, function (item, index) {
+                manualChangeEventsAssign(manualChangeEvents, model, varName, item, config[item]);
+            });
+
+            var onRefresh = manualChangeEvents.onRefresh;
+            var onDestroy = manualChangeEvents.onDestroy;
+            var onAdd = manualChangeEvents.onAdd;
+            var onSplice = manualChangeEvents.onSplice;
+            var onEvery = manualChangeEvents.onEvery;
+            var onUpdate = manualChangeEvents.onUpdate;
+            var onMount = manualChangeEvents.onMount;
+            var onChange = manualChangeEvents.onChange;
+
+            var listReindex = function () {
+                _each_array(list, function (item, i) {
+                    item.index = i;
+                });
             };
+
+            var listAdd = function (index) {
+                var object = list[index];
+                if (!object) {
+                    return false;
+                }
+                list[index].index = index;
+                if (currentFilter) {
+                    if (!currentFilter(list[index])) {
+                        return;
+                    }
+                }
+                beforeNth(rootNode, list[index].mount(), index);
+            };
+            var listMod = function (object, index) {
+                list[index].index = index;
+                object.node.replace(list[index].mount());
+                componentDestroy(object);
+            };
+            var listDestroy = function (array, change) {
+                if (array) {
+                    _each_array(array, function (item, i) {
+                        componentDestroy(item);
+                    });
+                }
+                if (onDestroy) {
+                    onDestroy(change);
+                }
+            };
+            var listRefresh = function (change) {
+                listDestroy(change.oldValue);
+                list = change.object[varName];
+                _each_array(list, function (item, index) {
+                    listAdd(index);
+                });
+                if (onRefresh) {
+                    onRefresh(change);
+                }
+            };
+            var splice = function (change) {
+                if (change.removeRange) {
+                    listDestroy(change.removed, change);
+                    var removed = true;
+                }
+                if (change.addRange) {
+                    change.addRange.each(change.index, function (index) {
+                        listAdd(index);
+                    });
+                }
+                if (removed) {
+                    listReindex();
+                }
+                if (onSplice) {
+                    onSplice(change);
+                }
+            };
+            var update = function (change) {
+                if (_isNaN(number_object(change.name))) {
+                    listRefresh(change);
+                } else {
+                    listMod(change.oldValue, change.name);
+                }
+                if (onUpdate) {
+                    onUpdate(change);
+                }
+            };
+            var add = function (change) {
+                if (change.isArray) {
+                    listAdd(number_object(change.name));
+                } else {
+                    listRefresh(change);
+                }
+                if (onAdd) {
+                    onAdd(change);
+                }
+            };
+            var scope = {
+                splice: splice,
+                update: update,
+                add: add
+            };
+            var compiled = function (change) {
+                scope[change.type](change);
+                if (onEvery) {
+                    onEvery(change);
+                }
+                if (onChange) {
+                    onChange(change);
+                }
+            };
+            compiled.kill = function () {
+                rootNode = null;
+                list = null;
+                scope = null;
+                varName = null;
+                every = null;
+                add = null;
+                update = null;
+                splice = null;
+                listRefresh = null;
+                listDestroy = null;
+                listMod = null;
+                listAdd = null;
+                mount = null;
+                change = null;
+                compiled = null;
+                model[varName] = null;
+            };
+            compiled.removeIndex = function (startObject) {
+                if (isPlainObject(startObject)) {
+                    var itemIndex = startObject.index;
+                    if (itemIndex) {
+                        list.splice(itemIndex, 1);
+                    }
+                } else if (_isArray(startObject)) {
+                    _each_array(startObject, function (item, i) {
+                        compiled.removeIndex(item);
+                    });
+                }
+                listReindex();
+            };
+            compiled.node = rootNode;
+            compiled.remove = function (funct) {
+                eachArrayFromRight(list, function (item, index) {
+                    if (funct(item)) {
+                        list.splice(index, 1);
+                    }
+                });
+                listReindex();
+            };
+            compiled.removeFilter = function () {
+                currentFilter = false;
+                _each_array(list, function (item, index) {
+                    _append(rootNode, item.mount());
+                });
+            };
+            var setFilter = compiled.setFilter = function (filterVar) {
+                if (_isString(filterVar)) {
+                    var negativeIsTrue = false;
+                    if (_has(filterVar, '!')) {
+                        var filterVar = filterVar.substring(1);
+                        var negativeIsTrue = true;
+                    }
+                    if (negativeIsTrue) {
+                        var filter = function (item, index) {
+                            if (!item.data[filterVar]) {
+                                return true;
+                            }
+                            return false;
+                        };
+                    } else {
+                        var filter = function (item, index) {
+                            if (item.data[filterVar]) {
+                                return true;
+                            }
+                            return false;
+                        };
+                    }
+                } else if (_isFunction(filterVar)) {
+                    var filter = filterVar;
+                }
+                _each_array(list, function (item, index) {
+                    if (filter(item, index)) {
+                        _append(rootNode, item.mount());
+                    } else {
+                        if (item.mounted) {
+                            item.unMount();
+                        }
+                    }
+                });
+                currentFilter = filter;
+            };
+            compiled.refreshFilter = function () {
+                if (currentFilter) {
+                    setFilter(currentFilter);
+                }
+            };
+            if (onMount) {
+                onMount();
+            }
+            if (onEvery) {
+                onEvery();
+            }
+            return model[varName] = compiled;
+        };
+        $.reactList = listsyn;
+        //create a component component
+        var _synNode = function (object, node) {
+            if (_isString(node)) {
+                var node = _toDOM(node, 0);
+            }
+            compileNodes(object, node);
+            return node;
+        };
+
+        $.synNode = _synNode
+        var addHelpers = function (object, componentHelpers, privateMode) {
+            if (!componentHelpers) {
+                return false;
+            }
+            if (_isFunction(componentHelpers)) {
+                var componentHelpers = componentHelpers.call(object);
+            }
+            _each_object(componentHelpers, function (item, key) {
+                $[key](item, object, true, privateMode);
+            });
+        };
 
         function loopMutations(mutations, target, model, name) {
             mutations.each(function (mutation) {
@@ -6446,311 +6895,6 @@ It's primary purpose is to hold and notify connected models and structures of it
             cancelFrame = false,
             //regex for model event
             thisRegexReplace = /(this)./g;
-        //look up the tree
-        var _findsyn = function (node, name) {
-            if (!name) {
-                var name = 'data-syn-root';
-            } else {
-                var name = 'data-syn-' + name;
-            }
-            var root = _upTo(node, '[' + name + ']');
-            if (root) {
-                return _getsyn(root);
-            }
-            return false;
-        };
-
-        $.findsyn = _findsyn;
-        //get the observer object that is attached to DOM node
-        var _getsyn = function (node) {
-            var modelName = node.getAttribute('data-syn-root') || node.getAttribute('data-syn');
-            if (modelName) {
-                return _model[modelName];
-            }
-            return false;
-        };
-
-        $.getsyn = _getsyn;
-        var listsyn = function (config, model, helperMode, privateMode) {
-
-            if (isPlainObject(model)) {
-                var list = config.array,
-                    varName = config.name,
-                    every = config.every,
-                    onChange = config.change,
-                    onAdd = config.add,
-                    onUpdate = config.update,
-                    onSplice = config.splice,
-                    onRefresh = config.refresh,
-                    onSaveTo = config.saveTo,
-                    getJSON = config.getJSON,
-                    onDestroy = config.destroy,
-                    mount = config.mount,
-                    rootNode = config.node;
-            }
-            var currentFilter = false;
-
-            if (_isString(rootNode)) {
-                var rootNode = model.nodes[rootNode];
-            }
-
-            if (every) {
-                if (_isString(every)) {
-                    var mount = model[every];
-                }
-                var every = every.bind(model);
-            }
-
-            if (mount) {
-                if (_isString(mount)) {
-                    var mount = model[mount];
-                }
-                var mount = mount.bind(model);
-            }
-
-            if (onChange) {
-                if (_isString(onChange)) {
-                    var onChange = model[onChange];
-                }
-                var onChange = onChange.bind(model);
-            }
-
-            if (onAdd) {
-                if (_isString(onChange)) {
-                    var onChange = model[onChange];
-                }
-                var onChange = onChange.bind(model);
-            }
-
-            if (!list) {
-                if (varName) {
-                    if (privateMode) {
-                        var list = model.privateData[varName];
-                    } else {
-                        var list = model.data[varName];
-                    }
-                }
-            } else if (_isString(list)) {
-                var varName = list;
-                if (privateMode) {
-                    var list = model.privateData[varName];
-                } else {
-                    var list = model.data[varName];
-                }
-            }
-
-            var listReindex = function () {
-                _each_array(list, function (item, i) {
-                    item.index = i;
-                });
-            };
-
-            var listAdd = function (index) {
-                var object = list[index];
-                if (!object) {
-                    return false;
-                }
-                list[index].index = index;
-                if (currentFilter) {
-                    if (!currentFilter(list[index])) {
-                        return;
-                    }
-                }
-                beforeNth(rootNode, list[index].mount(), index);
-            };
-            var listMod = function (object, index) {
-                list[index].index = index;
-                object.node.replace(list[index].mount());
-                componentDestroy(object);
-            };
-            var listDestroy = function (array) {
-                if (array) {
-                    _each_array(array, function (item, i) {
-                        componentDestroy(item);
-                    });
-                }
-                if (onDestroy) {
-                    onDestroy();
-                }
-            };
-            var listRefresh = function (change) {
-                listDestroy(change.oldValue);
-                list = change.object[varName];
-                _each_array(list, function (item, index) {
-                    listAdd(index);
-                });
-                if (onRefresh) {
-                    onRefresh(change);
-                }
-            };
-            var splice = function (change) {
-                if (change.removeRange) {
-                    listDestroy(change.removed);
-                    var removed = true;
-                }
-                if (change.addRange) {
-                    change.addRange.each(change.index, function (index) {
-                        listAdd(index);
-                    });
-                }
-                if (removed) {
-                    listReindex();
-                }
-                if (onSplice) {
-                    onSplice(change);
-                }
-            };
-            var update = function (change) {
-                if (_isNaN(number_object(change.name))) {
-                    listRefresh(change);
-                } else {
-                    listMod(change.oldValue, change.name);
-                }
-                if (onUpdate) {
-                    onUpdate(change);
-                }
-            };
-            var add = function (change) {
-                if (change.isArray) {
-                    listAdd(number_object(change.name));
-                } else {
-                    listRefresh(change);
-                }
-                if (onAdd) {
-                    onAdd(change);
-                }
-            };
-            var scope = {
-                splice: splice,
-                update: update,
-                add: add
-            };
-            var compiled = function (change) {
-                scope[change.type](change);
-                if (every) {
-                    every(change);
-                }
-                if (onChange) {
-                    onChange(change);
-                }
-            };
-            compiled.kill = function () {
-                rootNode = null;
-                list = null;
-                scope = null;
-                varName = null;
-                every = null;
-                add = null;
-                update = null;
-                splice = null;
-                listRefresh = null;
-                listDestroy = null;
-                listMod = null;
-                listAdd = null;
-                mount = null;
-                change = null;
-                compiled = null;
-                model[varName] = null;
-            };
-            compiled.removeIndex = function (startObject) {
-                if (isPlainObject(startObject)) {
-                    var itemIndex = startObject.index;
-                    if (itemIndex) {
-                        list.splice(itemIndex, 1);
-                    }
-                } else if (_isArray(startObject)) {
-                    _each_array(startObject, function (item, i) {
-                        compiled.removeIndex(item);
-                    });
-                }
-                listReindex();
-            };
-            compiled.node = rootNode;
-            compiled.remove = function (funct) {
-                eachArrayFromRight(list, function (item, index) {
-                    if (funct(item)) {
-                        list.splice(index, 1);
-                    }
-                });
-                listReindex();
-            };
-            compiled.removeFilter = function () {
-                currentFilter = false;
-                _each_array(list, function (item, index) {
-                    _append(rootNode, item.mount());
-                });
-            };
-            var setFilter = compiled.setFilter = function (filterVar) {
-                if (_isString(filterVar)) {
-                    var negativeIsTrue = false;
-                    if (_has(filterVar, '!')) {
-                        var filterVar = filterVar.substring(1);
-                        var negativeIsTrue = true;
-                    }
-                    if (negativeIsTrue) {
-                        var filter = function (item, index) {
-                            if (!item.data[filterVar]) {
-                                return true;
-                            }
-                            return false;
-                        };
-                    } else {
-                        var filter = function (item, index) {
-                            if (item.data[filterVar]) {
-                                return true;
-                            }
-                            return false;
-                        };
-                    }
-                } else if (_isFunction(filterVar)) {
-                    var filter = filterVar;
-                }
-                _each_array(list, function (item, index) {
-                    if (filter(item, index)) {
-                        _append(rootNode, item.mount());
-                    } else {
-                        if (item.mounted) {
-                            item.unMount();
-                        }
-                    }
-                });
-                currentFilter = filter;
-            };
-            compiled.refreshFilter = function () {
-                if (currentFilter) {
-                    setFilter(currentFilter);
-                }
-            };
-            if (mount) {
-                mount();
-            }
-            if (every) {
-                every();
-            }
-            return model[varName] = compiled;
-        };
-        $.reactList = listsyn;
-        //create a component component
-        var _synNode = function (object, node) {
-            if (_isString(node)) {
-                var node = _toDOM(node, 0);
-            }
-            compileNodes(object, node);
-            return node;
-        };
-
-        $.synNode = _synNode
-        var addHelpers = function (object, componentHelpers, privateMode) {
-            if (!componentHelpers) {
-                return false;
-            }
-            if (_isFunction(componentHelpers)) {
-                var componentHelpers = componentHelpers.call(object);
-            }
-            _each_object(componentHelpers, function (item, key) {
-                $[key](item, object, true, privateMode);
-            });
-        };
     })();
     //sys info
     $.host = {
@@ -7142,6 +7286,10 @@ It's primary purpose is to hold and notify connected models and structures of it
     if (acid_lib) {
         //get model directory -> save prefix to prefix
         $.dir.js = acid_lib.getAttribute('data-core') || '';
+        if (acid_lib.onload) {
+            acid_lib.onload();
+            acid_lib.onload = null;
+        }
     }
     //create core script and append to head
     _isDocumentReady(function () {

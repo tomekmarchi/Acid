@@ -103,7 +103,7 @@ var nodeOnly = {
 		return _center(this, data);
 	},
 	html: function (value) {
-		return _html(this, value);
+		return _innerHTML(this, value);
 	},
 	ohtml: function (value) {
 		return _ohtml(this, value);

@@ -1,52 +1,28 @@
-var listsyn = function(config, model, helperMode, privateMode) {
+var manualChangeEventsAssign=function(manualChangeEvents,model,varName,changeName,every){
+	var everyOnModel = model[varName+_ucFirst(changeName || '')];
+	if (every || everyOnModel) {
+		if (_isString(every)) {
+			var everyOnModel = model[every];
+		}else if(every){
+			var everyOnModel = every.bind(model);
+		}
+		manualChangeEvents[changeName] = everyOnModel;
+	}
+};
+
+var listsyn = function(config, model, privateMode) {
 	
 	if (isPlainObject(model)) {
 		var list = config.array,
 			varName = config.name,
-			every = config.every,
-			onChange = config.change,
-			onAdd = config.add,
-			onUpdate = config.update,
-			onSplice = config.splice,
-			onRefresh = config.refresh,
 			onSaveTo = config.saveTo,
 			getJSON = config.getJSON,
-			onDestroy = config.destroy,
-			mount = config.mount,
 			rootNode = config.node;
 	}
 	var currentFilter=false;
 
 	if (_isString(rootNode)) {
 		var rootNode = model.nodes[rootNode];
-	}
-
-	if (every) {
-		if (_isString(every)) {
-			var mount = model[every];
-		}
-		var every = every.bind(model);
-	}
-
-	if (mount) {
-		if (_isString(mount)) {
-			var mount = model[mount];
-		}
-		var mount = mount.bind(model);
-	}
-
-	if (onChange) {
-		if (_isString(onChange)) {
-			var onChange = model[onChange];
-		}
-		var onChange = onChange.bind(model);
-	}
-
-	if (onAdd) {
-		if (_isString(onChange)) {
-			var onChange = model[onChange];
-		}
-		var onChange = onChange.bind(model);
 	}
 
 	if (!list) {
@@ -65,6 +41,22 @@ var listsyn = function(config, model, helperMode, privateMode) {
 			var list = model.data[varName];
 		}
 	}
+
+	var manualChangeEvents={};
+	var changeEventNames=['onEvery','onMount','onChange','onAdd','onUpdate','onSplice','onRefresh','onDestroy'];
+
+	_each_array(changeEventNames,function(item,index){
+		manualChangeEventsAssign(manualChangeEvents,model,varName,item,config[item]);
+	});
+
+	var onRefresh=manualChangeEvents.onRefresh;
+	var onDestroy=manualChangeEvents.onDestroy;
+	var onAdd=manualChangeEvents.onAdd;
+	var onSplice=manualChangeEvents.onSplice;
+	var onEvery=manualChangeEvents.onEvery;
+	var onUpdate=manualChangeEvents.onUpdate;
+	var onMount=manualChangeEvents.onMount;
+	var onChange=manualChangeEvents.onChange;
 
 	var listReindex = function() {
 		_each_array(list, function(item, i) {
@@ -90,14 +82,14 @@ var listsyn = function(config, model, helperMode, privateMode) {
 		object.node.replace(list[index].mount());
 		componentDestroy(object);
 	};
-	var listDestroy = function(array) {
+	var listDestroy = function(array,change) {
 		if (array) {
 			_each_array(array, function(item, i) {
 				componentDestroy(item);
 			});
 		}
 		if (onDestroy) {
-			onDestroy();
+			onDestroy(change);
 		}
 	};
 	var listRefresh = function(change) {
@@ -112,7 +104,7 @@ var listsyn = function(config, model, helperMode, privateMode) {
 	};
 	var splice = function(change) {
 		if (change.removeRange) {
-			listDestroy(change.removed);
+			listDestroy(change.removed,change);
 			var removed = true;
 		}
 		if (change.addRange) {
@@ -154,8 +146,8 @@ var listsyn = function(config, model, helperMode, privateMode) {
 	};
 	var compiled = function(change) {
 		scope[change.type](change);
-		if (every) {
-			every(change);
+		if (onEvery) {
+			onEvery(change);
 		}
 		if (onChange) {
 			onChange(change);
@@ -248,11 +240,11 @@ var listsyn = function(config, model, helperMode, privateMode) {
 			setFilter(currentFilter);
 		}
 	};
-	if (mount) {
-		mount();
+	if (onMount) {
+		onMount();
 	}
-	if (every) {
-		every();
+	if (onEvery) {
+		onEvery();
 	}
 	return model[varName] = compiled;
 };

@@ -97,11 +97,15 @@ $.xhr=function (config) {
 
 	if (isPlainObject(data)) {
 		_each_object(data,function (item, key) {
-			newData = xhrPostParam(newData,key + '=' + item);
+			if(hasValue(item)){
+				newData = xhrPostParam(newData,key + '=' + item);
+			}
 		});
 	}else if (_isArray(data)) {
 		_each_array(data,function (item, key) {
-			newData = xhrPostParam(newData,item);
+			if(hasValue(item)){
+				newData = xhrPostParam(newData,item);
+			}
 		});
 	}
 

@@ -10,7 +10,9 @@ var modelSubChanges = function (componentsMade, changes, subKey, func, name) {
 		if (copiesOfComponent) {
 			_each_object(copiesOfComponent, function (item, key) {
 				if(item){
-					item.notify(changes, name);
+					_async(function(){
+						item.notify(changes, name);
+					});
 				}
 			});
 		}
@@ -20,15 +22,21 @@ var modelSubChanges = function (componentsMade, changes, subKey, func, name) {
 				if (copiesOfComponent) {
 					_each_object(copiesOfComponent, function (subItem, subkey) {
 						if(subItem){
-							subItem.notify(changes, subkey);
+							_async(function(){
+								subItem.notify(changes, subkey);
+							});
 						}
 					});
 				}
 			} else if (item === 1) {
-				synModelFN(changes, key, _model[key], origin || model.modelName, propName, modelData);
+				_async(function(){
+					synModelFN(changes, key, _model[key], origin || model.modelName, propName, modelData);
+				});
 			} else if (item === 2) {
 				if(_model[key]){
-					_model[key].privateNotify(changes, origin);
+					_async(function(){
+						_model[key].privateNotify(changes, origin);
+					});
 				}
 			}
 		});

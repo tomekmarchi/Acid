@@ -74,41 +74,31 @@ React.render(React.createElement(TodoApp, null), mountNode);
                 <h3>Acid Version</h3>
                 <pre>
 <code class="hljs javascript">
-var TodoApp=$.factory(&#39;todo&#39;, {
-	template: `&lt;div&gt;&lt;h3&gt;TODO&lt;/h3&gt;
-		&lt;ul data-node=&quot;ul&quot;&gt;&lt;/ul&gt;
-		&lt;input data-node=&quot;input&quot; data-bind=&quot;value[keyup:privateData.text]&quot; type=&quot;text&quot; /&gt;
-		&lt;button data-click=&quot;this.handleSubmit&quot;&gt;Add #&lt;span data-node=&quot;span&quot;&gt;&lt;/span&gt;&lt;/button&gt;
-	&lt;/div&gt;`,
-	privateData:function(){
-		return {
-			list: [],
-			text:&#39;&#39;
-		};
-	},
-	privateHelper:{
-		reactList:{
-			node:&#39;ul&#39;,
-			array:&#39;list&#39;,
-			every:function(){
-				this.nodes.span.tc(this.privateData.list.length+1);
-			}
-		}
-	},
-	handleSubmit: function (obj) {
-		this.privateData.list.push(this.componentRender({text:this.privateData.text}));
-		this.privateData.text=&#39;&#39;;
-	},
-	component:{
-		template:`&lt;li&gt;&lt;/li&gt;`,
-		data:{
-			text:&#39;&#39;,
-			title:&#39;&#39;
-		},
-		text:function(){
-			this.node.tc(this.data.text);
-		}
-	}
+var TodoApp=$.factory(&#039;todo&#039;, {
+    template: `&lt;div&gt;&lt;h3&gt;TODO&lt;/h3&gt;
+        &lt;ul data-node=&quot;ul&quot; data-bind=&quot;privateData.list&quot;&gt;&lt;/ul&gt;
+        &lt;input data-node=&quot;input&quot; data-bind=&quot;privateData.text[value:keyup]&quot; type=&quot;text&quot; /&gt;
+        &lt;button data-click=&quot;this.handleSubmit&quot; data-node=&quot;handleSubmit&quot;&gt;
+            Add #
+            &lt;span data-node=&quot;span&quot;&gt;&lt;/span&gt;
+        &lt;/button&gt;
+    &lt;/div&gt;`,
+    privateData:function(){
+        return {
+            list: [],
+            text:&#039;&#039;
+        };
+    },
+    listOnEvery:function(){
+        this.nodes.span.tc(this.privateData.list.length+1);
+    },
+    handleSubmit: function (obj) {
+        this.privateData.list.push(this.componentRender({text:this.privateData.text}));
+        this.privateData.text=&#039;&#039;;
+    },
+    component:{
+        template:`&lt;li data-node=&quot;todoItem&quot; data-bind=&quot;text[textContent]&quot;&gt;&lt;/li&gt;`
+    }
 });
 TodoApp.render().mount().apTo($(&#39;#wrapper&#39;));
 </code>

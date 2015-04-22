@@ -1,17 +1,61 @@
 //loop through an array of items
 var _each_array = function (array, fn) {
 	//an array of results will be returned
-	var results = [];
-	for (var i = 0, len = array.length; i < len; i++) {
+	for (var i = 0, results = [], len = array.length; i < len; i++) {
 		results[i] = fn(array[i], i);
 	}
 	return results;
 };
-var eachArrayFromRight = function (array, fn) {
+
+//loop while the returned result is true
+var _whileTrue = function (array, fn) {
+	//an array of results will be returned
+	for (var i = 0, results = [], len = array.length; i < len; i++) {
+		if(!(results[i] = fn(array[i], i))){
+			break;
+		}
+	}
+	return results;
+};
+
+//loop while the returned result is false
+var _whileFalse = function (array, fn) {
+	//an array of results will be returned
+	for (var i = 0, results = [], len = array.length; i < len; i++) {
+		if(results[i] = fn(array[i], i)){
+			break;
+		}
+	}
+	return results;
+};
+
+//each while the check function is true
+var _eachWhile = function (array, fn , check) {
+	//an array of results will be returned
+	for (var i = 0, results = [], len = array.length; i < len; i++) {
+		if(!check(results[i] = fn(array[i], i))){
+			break;
+		}
+	}
+	return results;
+};
+
+//loop while the count is less than the length of the array
+var _whileLength = function (array, fn) {
 	//an array of results will be returned
 	var results = [];
-	var len=array.length;
-	for (var i = len - 1; i >= 0; i--) {
+	var i = 0;
+	while (i < arr.length) {
+		results[i] = fn(array[i], i);
+		i++;
+	}
+	return results;
+};
+
+//loop through array backwards aka from the right
+var eachArrayFromRight = function (array, fn) {
+	//an array of results will be returned
+	for (var results = [], len=array.length, i = len - 1; i >= 0; i--) {
 		results[i] = fn(array[i], i);
 	}
 	return results;

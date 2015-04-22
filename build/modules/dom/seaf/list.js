@@ -98,7 +98,7 @@ var listOnly = {
 	each: function (n) {
 		var list = this;
 		for (var i = 0, items = _toArray(list), len = items.length; i < len; i++) {
-			n(items[i]);
+			n(items[i],i);
 		}
 		return list;
 	},
@@ -153,7 +153,7 @@ var listOnly = {
 	copy:generate_loop_single_return(_clone),
 	//center object
 	center:generate_loop_single_return(_center),
-	html:generate_loop_single_return(_html),
+	html:generate_loop_single_return(_innerHTML),
 	ohtml:generate_loop_single_return(_ohtml),
 	//text
 	tc:generate_loop_single_return(_tc),

@@ -1,16 +1,19 @@
 //debounce function
 function_extend.debounce = function (time) {
     var timeout = false,
-        d = this;
+        original = this;
 
     var fn = function () {
+        var boundTo = this;
         if (timeout) {
             clearTimeout(timeout);
         }
-        var a = _toArray(arguments);
+        var args = _toArray(arguments);
         timeout = setTimeout(function () {
-            d.apply(d, a);
+            original.apply(boundTo, args);
             timeout = false;
+            args = null;
+            boundTo = null;
         }, time);
     };
 
@@ -18,7 +21,7 @@ function_extend.debounce = function (time) {
         if (timeout) {
             clearTimeout(timeout);
         }
-        d.apply(d, _toArray(arguments));
+        original.apply(this, _toArray(arguments));
     };
     fn.clear = function () {
         if (timeout) {
@@ -66,6 +69,11 @@ function_extend.throttle = function (time) {
 //timer wrapper
 function_extend.timer= function (time) {
 	return setTimeout(this, time);
+};
+
+//timer wrapper
+function_extend.interval= function (time) {
+    return setInterval(this, time);
 };
 
 //async function call

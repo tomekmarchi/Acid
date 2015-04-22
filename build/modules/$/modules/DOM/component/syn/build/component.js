@@ -9,6 +9,14 @@ var _componentRender = function (config, data) {
 
 		model.data = {};
 
+		//bind methods to new model
+		generateMethods(model, config.component);
+		//generate component specific methods
+		generateComponentMethods(model, config.component);
+
+		//compile initial state
+		prepareCompileData(model, model.data, copyData);
+
 		if(config.component.view || config.component.template){
 			//compile DOM
 			compileView(model, model.modelName, config.component.view, config.component.template);
@@ -19,17 +27,11 @@ var _componentRender = function (config, data) {
 
 			checkBinding(model,model.modelName,model.eventName);
 		}
-		//bind methods to new model
-		generateMethods(model, config.component);
-		//generate component specific methods
-		generateComponentMethods(model, config.component);
-
-		//compile initial state
-		prepareCompileData(model, model.data, copyData);
+		addHelpers(model,config.component.helper);
+		
 		if (data) {
 			model.set(data);
 		}
-		addHelpers(model,config.component.helper);
 		return model;
 	};
 
