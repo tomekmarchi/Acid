@@ -1124,7 +1124,7 @@ blockquote:before {
 }
 
 .w-30{
-	width:25%;
+	width:30%;
 }
 
 .w-40{
@@ -1293,11 +1293,11 @@ box-shadow: inset 0 1px 0px 0px rgba(0,0,0,0.8),inset 0 -1px 0px 0px rgba(0,0,0,
 }
 
 
-.desktop  .scroll.scroll-rounded-right::-webkit-scrollbar-thumb{
+.scroll.scroll-rounded-right::-webkit-scrollbar-thumb{
 	border-radius:0 3px 3px 0;
 }
 
-.desktop  .scroll.scroll-rounded-top-right::-webkit-scrollbar-thumb{
+.scroll.scroll-rounded-top-right::-webkit-scrollbar-thumb{
 	border-radius:0 3px 0px 0;
 }
 
@@ -1307,26 +1307,26 @@ box-shadow: inset 0 1px 0px 0px rgba(0,0,0,0.8),inset 0 -1px 0px 0px rgba(0,0,0,
 	overflow-y:auto;
 }
 
-.desktop .scroll::-webkit-scrollbar {
+.scroll::-webkit-scrollbar {
 	cursor:pointer;
 	width:6px;
 }
 
-.desktop .scroll.thin::-webkit-scrollbar {
+.scroll.thin::-webkit-scrollbar {
 	cursor:pointer;
 	width:3px;
 }
 
-.desktop .scroll::-webkit-scrollbar-thumb {
+.scroll::-webkit-scrollbar-thumb {
 	background:rgba(0,0,0,0.7);
 	border-radius:3px;
 }
 
-.desktop .scroll::-webkit-scrollbar-track {
+.scroll::-webkit-scrollbar-track {
 	background:rgba(255,255,255,0.15);
 }
 
-.desktop .scroll.light::-webkit-scrollbar-thumb {
+.scroll.light::-webkit-scrollbar-thumb {
 	background:rgba(0,0,0,0.2);
 	border-radius:3px;
 }

@@ -19,11 +19,13 @@
 			this.nodes.span.tc(this.privateData.list.length+1);
 		},
 		handleSubmit: function (obj) {
-			this.privateData.list.push(this.componentRender({text:this.privateData.text}));
+			this.privateData.list.push(this.component.listItem.render({text:this.privateData.text}));
 			this.privateData.text='';
 		},
 		component:{
-			template:`<li data-node="todoItem" data-bind="text[textContent]"></li>`
+			listItem:{
+				template:`<li data-node="todoItem" data-bind="text[textContent]"></li>`
+			}
 		}
 	});
 

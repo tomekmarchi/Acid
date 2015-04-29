@@ -240,12 +240,13 @@ var listsyn = function(config, model, privateMode) {
 			setFilter(currentFilter);
 		}
 	};
+	model[varName] = compiled;
 	if (onMount) {
 		onMount();
 	}
 	if (onEvery) {
 		onEvery();
 	}
-	return model[varName] = compiled;
+	return compiled;
 };
 $.reactList = listsyn;

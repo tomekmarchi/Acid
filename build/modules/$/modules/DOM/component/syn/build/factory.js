@@ -27,7 +27,7 @@ var _renderFactory = function (modelName,ogModel, object,data, lean) {
 		model.bind= {};
 		model.bindedNodes={};
 		model.eventName=modelName+'.';
-		model.factory=true;
+		model.isModelfactory=true;
 
 		//Methods for child components
 		model.components = function(){
@@ -40,28 +40,30 @@ var _renderFactory = function (modelName,ogModel, object,data, lean) {
 			});
 		};
 		model.componentsNode = function(){
-			return modelComponentsNode(model);
+			return factoryComponentsNode(model);
 		};
 		model.componentsNodes = function(){
-			return modelComponentsNodes(model);
+			return factoryComponentsNodes(model);
 		};
 		model.destroyComponents = function () {
-			modelDestroyChildren(model);
-			return null;
+			return factoryDestroyChildren(model);
 		};
 		model.killComponents = function () {
-			modelKillChildren(model);
-			return null;
+			return factoryKillChildren(model);
 		};
 		model.mountComponents = function () {
-			return modelMountChildren(model);
+			return factoryMountComponents(model);
 		};
 		model.unMountComponents = function () {
-			return 	modelUnMountChildren(model);
+			return 	factoryUnMountComponents(model);
 		};
-		model.componentRender = function (data) {
-			return _componentRender(model, data);
-		};
+
+		//add and generate component models
+		var components={};
+		_each_object(model.component,function(value,key){
+			components[key]=_component(modelName+'Component'+_ucFirst(key), value ,true, model);
+		});
+		model.component=components;
 
 		renderDefaultSynModel(model,modelName,model.subscribeTo,1);
 
@@ -72,10 +74,11 @@ var _renderFactory = function (modelName,ogModel, object,data, lean) {
 			compileNodes(model);
 			//faceplate
 			compileFaceplate(model, model.template || model.view);
-
+			//data binding
 			checkBinding(model,modelName,model.eventName);
 		}
 
+		//add helpers
 		addHelpers(model,model.helper);
 		addHelpers(model,model.privateHelper,true);
 

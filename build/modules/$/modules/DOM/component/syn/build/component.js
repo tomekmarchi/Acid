@@ -8,6 +8,8 @@ var _componentRender = function (config, data) {
 		var copyData = config.component.data || {};
 
 		model.data = {};
+		model.rootFactory = config.rootFactory;
+
 
 		//bind methods to new model
 		generateMethods(model, config.component);
@@ -24,18 +26,48 @@ var _componentRender = function (config, data) {
 			compileNodes(model);
 			//faceplate
 			compileFaceplate(model, config.component.view || config.component.faceplate);
-
+			//check bing
 			checkBinding(model,model.modelName,model.eventName);
 		}
+		//add helpers
 		addHelpers(model,config.component.helper);
 		
+		//set data 
 		if (data) {
 			model.set(data);
 		}
+		model.component=true;
 		return model;
 	};
 
-var _component = function (modelName, config , lean) {
+var _slate = function(modelName, config , lean , factory){
+		if(!config){
+			return _model[modelName];
+		}else if(_isFunction(config)){
+			return _model[modelName]=function(){
+				return _slate(modelName,config.apply(null,_toArray(arguments)));
+			};
+		}
+
+		var model =  _model[modelName] = {};
+		model.component = config;
+		var config = model.component;
+
+		if(factory){
+			model.rootFactory=factory;
+		}
+		model.share={};
+		model.modelName=modelName;
+		model.component=config;
+		model.isModelSlate=true;
+
+		_componentRender(model);
+		return model;
+};
+
+$.slate=_slate;
+
+var _component = function (modelName, config , lean , factory) {
 		if(!config){
 			return _model[modelName];
 		}else if(_isFunction(config)){
@@ -47,6 +79,9 @@ var _component = function (modelName, config , lean) {
 		model.component = config;
 		var config = model.component;
 
+		if(factory){
+			model.rootFactory=factory;
+		}
 		model.componentConfig=true;
 		model.share={};
 		model.rendered={};
@@ -72,16 +107,11 @@ var _component = function (modelName, config , lean) {
 		model.componentsNode = function(){
 			return modelComponentsNode(model);
 		};
-		model.componentsNodes = function(){
-			return modelComponentsNodes(model);
-		};
 		var destroyComponents = model.destroyComponents = function () {
-			modelDestroyChildren(model);
-			return null;
+			return modelDestroyChildren(model);
 		};
 		model.killComponents = function () {
-			modelKillChildren(model);
-			return null;
+			return modelKillChildren(model);
 		};
 		model.mountComponents = function () {
 			return modelMountChildren(model);

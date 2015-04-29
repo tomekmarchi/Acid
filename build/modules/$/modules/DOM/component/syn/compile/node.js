@@ -43,14 +43,19 @@ var compileNode = function(node, attr, item, modelName, eventName) {
             object.bind[nodePropName] = {};
         }
 
-        var isPropertyFunction=_isFunction(node[property]);
+        var propertyCall = node[property];
+        var isPropertyFunction = _isFunction(propertyCall);
 
-        if(isPropertyFunction){
-            var propertyCall=node[property];
+        if (isPropertyFunction) {
             object.bind[nodePropName][key] = function() {
-                propertyCall.call(node,dataObject[nodePropName]);
+                propertyCall.call(node, dataObject[nodePropName]);
             };
-        }else{
+        } else if(_has(property,'dataset.')) {
+            var property=property.split('.')[1];
+            object.bind[nodePropName][key] = function() {
+                node.dataset[property] = dataObject[nodePropName];
+            };
+        }else {
             object.bind[nodePropName][key] = function() {
                 node[property] = dataObject[nodePropName];
             };
@@ -59,13 +64,24 @@ var compileNode = function(node, attr, item, modelName, eventName) {
             object.bindedNodes[key] = {};
         }
 
-        if(eventName){
+        if (eventName) {
             var functionName = nodePropName + key + eventName;
             var attrValues = 'this.' + functionName + attrValues;
             object.bindedNodes[key][nodePropName] = functionName;
-            object[functionName] = function() {
-                dataObject[nodePropName] = node[property];
-            };
+            if (isPropertyFunction){
+                object[functionName] = function() {
+                    dataObject[nodePropName] = propertyCall.call(node);
+                };
+            }else if(_has(property,'dataset.')) {
+                var property=property.split('.')[1];
+                object.bind[nodePropName][key] = function() {
+                    dataObject[nodePropName] = node.dataset[property];
+                };
+            }   else{
+                object[functionName] = function() {
+                    dataObject[nodePropName] = node[property];
+                };
+            }
             node.setAttribute(attr, attrValues.replace(thisRegexReplace, modelEventName));
         }
     },
@@ -74,8 +90,8 @@ var compileNode = function(node, attr, item, modelName, eventName) {
         if (attr) {
             var attrs = attr.split(';');
             _each_array(attrs, function(subitem, index) {
-                var regex=subitem.match(/((.*?)(\[(.*?)\]))/g);
-                if(regex){
+                var regex = subitem.match(/((.*?)(\[(.*?)\]))/g);
+                if (regex) {
                     var set = regex[0].split('[');
                     var attrEventProp = set [0];
                     var attrProp = set [1].replace(']', '');
@@ -83,21 +99,20 @@ var compileNode = function(node, attr, item, modelName, eventName) {
                     var nodeProperty = attrEvent[0];
                     var attrEventName = attrEvent[1] || false;
                     compileBinding(object, modelName, modelEventName, node, nodeName, nodeProperty, attrEventName, attrEventProp);
-                }else{
-                    if(_has(subitem,'privateData.')){
-                        var privateMode=true;
-                        var subitem=subitem.replace('privateData.','');
-                        var testData=object.privateData[subitem];
-                    }else{
-                        var privateMode=false;
-                        var testData=object.data[subitem];
+                } else {
+                    if (_has(subitem, 'privateData.')) {
+                        var privateMode = true;
+                        var subitem = subitem.replace('privateData.', '');
+                        var testData = object.privateData[subitem];
+                    } else {
+                        var privateMode = false;
+                        var testData = object.data[subitem];
                     }
-                    console.log(object.data);
-                    if(_isArray(testData)){
+                    if (_isArray(testData)) {
                         listsyn({
-                            node:nodeName,
-                            array:subitem
-                        },object,privateMode);
+                            node: nodeName,
+                            array: subitem
+                        }, object, privateMode);
                     }
                 }
             });
@@ -127,10 +142,10 @@ var compileNode = function(node, attr, item, modelName, eventName) {
             }
             _each_object(registerNodes, function(node, key) {
                 var datSetList = node.dataset;
-                if(datSetList){
-	                _each_object(datSetList, function(item, subKey) {
-	                    compileNode(node, 'data-' + subKey, item, modelName, eventName);
-	                });
+                if (datSetList) {
+                    _each_object(datSetList, function(item, subKey) {
+                        compileNode(node, 'data-' + subKey, item, modelName, eventName);
+                    });
                 }
             });
         }

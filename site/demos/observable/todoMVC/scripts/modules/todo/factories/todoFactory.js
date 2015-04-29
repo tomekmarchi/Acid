@@ -27,7 +27,7 @@ $.factory('todoFactory', function(todoStructure, todoItem) {
 				item.clRemove('selected');
 			});
 		},
-		itemsLeft: function() {
+		listOnEvery: function() {
 			var count = 0,
 				len = 0;
 			this.privateData.list.each(function(item) {
@@ -37,6 +37,7 @@ $.factory('todoFactory', function(todoStructure, todoItem) {
 				len++;
 			});
 			this.nodes.todoCount.textValue((len - count) + ' Items Left');
+            this.list.refreshFilter();
 		},
 		appState: function(change) {
 			var page = this.pushRouter.data.appState.page;
@@ -47,7 +48,7 @@ $.factory('todoFactory', function(todoStructure, todoItem) {
 		},
 		addTodo: function(node, event) {
 			if (event.isEnter()) {
-				this.privateData.list.push(this.componentRender({
+				this.privateData.list.push(this.component.listItem.render({
 					title: this.privateData.text,
 					completed:this.privateData.checkedAll
 				}));
@@ -76,6 +77,8 @@ $.factory('todoFactory', function(todoStructure, todoItem) {
 			}
 			this.privateData.list.each(funct);
 		},
-		component: todoItem
+		component:{
+			listItem:todoItem
+		}
 	};
 });

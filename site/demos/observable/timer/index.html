@@ -46,9 +46,9 @@ React.render(React.createElement(Timer, null), mountNode);
 
 <div class="w-50 left pad_box">
 <article class="pad_box rounded">
-    <h3>Acid Version</h3><a target="_blank" href="core.js">See the code</a>
-<pre><code>var Timer = $.component(&#39;Timer&#39;, {
-	template: `&lt;div&gt;Seconds Elapsed: &lt;span data-node=&quot;timer&quot;&gt;&lt;/span&gt;&lt;/div&gt;`,
+    <h3>Acid Version <a target="_blank" href="core.js">See the code</a></h3>
+<pre><code>var Timer = $.component(&#039;Timer&#039;, {
+	template: `&lt;div&gt;Seconds Elapsed: &lt;span data-node=&quot;timer&quot; data-bind=&quot;secondsElapsed[textValue]&quot;&gt;&lt;/span&gt;&lt;/div&gt;`,
 	data:function(){
 		return {
 			secondsElapsed: 0
@@ -62,9 +62,6 @@ React.render(React.createElement(Timer, null), mountNode);
 	},
 	tick: function () {
 		this.data.secondsElapsed = this.data.secondsElapsed + 1;
-	},
-	secondsElapsed: function (object, change) {
-		this.nodes.timer.textValue(this.data.secondsElapsed);
 	}
 });
 $(&#39;#wrapper&#39;).ap(Timer.render().mount());

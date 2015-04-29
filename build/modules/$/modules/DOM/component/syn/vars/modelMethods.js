@@ -1,5 +1,5 @@
 var modelAddMethod=function(model,name,method){
-	model[name]=method.bind(model);
+	model[name]= _bind_call(method,model);
 	return model;
 };
 var modelRemoveNode=function(model,name){
@@ -12,8 +12,63 @@ var modelDestroyChildren = function (object) {
 				item.destroy();
 			});
 		}
-		return null;
+		return object;
 	};
+var factoryDestroyChildren = function (model) {
+		var copiesOfComponent = model.component;
+		if (copiesOfComponent) {
+			_each_object(copiesOfComponent, function (item, key) {
+				item.destroyComponents();
+			});
+		}
+		return model;
+	};
+var factoryKillChildren = function (model) {
+		var copiesOfComponent = model.component;
+		if (copiesOfComponent) {
+			_each_object(copiesOfComponent, function (item, key) {
+				item.killComponents();
+			});
+		}
+		return model;
+	};
+var factoryMountComponents = function (model) {
+		var copiesOfComponent = model.component;
+		if (copiesOfComponent) {
+			var nodes = _each_object(copiesOfComponent, function (item, key) {
+				return modelMountChildren(item);
+			});
+		}
+		return nodes;
+	};
+var factoryUnMountComponents = function (model) {
+		var copiesOfComponent = model.component;
+		if (copiesOfComponent) {
+			var nodes = _each_object(copiesOfComponent, function (item, key) {
+				return modelUnMountChildren(item);
+			});
+		}
+		return nodes;
+	};
+var factoryComponentsNodes = function (model) {
+		var copiesOfComponent = model.component;
+		if (copiesOfComponent) {
+			var nodes = _each_object(copiesOfComponent, function (item, key) {
+				return modelComponentsNodes(item);
+			});
+		}
+		return nodes;
+	};
+var factoryComponentsNode = function (model) {
+		var copiesOfComponent = model.component;
+		if (copiesOfComponent) {
+			var nodes = _each_object(copiesOfComponent, function (item, key) {
+				return modelComponentsNode(item);
+			});
+		}
+		return nodes;
+	};
+
 var modelComponentsNode = function (object) {
 		var copiesOfComponent = componentsMade[object.modelName],
 			nodes = {};

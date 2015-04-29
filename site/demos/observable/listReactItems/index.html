@@ -18,13 +18,11 @@
 					};
 				},
 				add:function(i){
-					this.privateData.list.push(this.componentRender({title:'Title('+i+')',text:'Text('+i+')'}));
+					this.privateData.list.push(this.component.item.render({title:'Title('+i+')',text:'Text('+i+')'}));
 				},
 				component:{
-					template:`<li><b data-node="title" data-bind="title[textValue]"></b> - <span data-node="text" data-bind="text[textValue]"></span></li>`,
-					data:{
-						text:'',
-						title:''
+					item:{
+						template:`<li><b data-node="title" data-bind="title[textValue]"></b> - <span data-node="text" data-bind="text[textValue]"></span></li>`,
 					}
 				}
 			});

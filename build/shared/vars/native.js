@@ -85,7 +85,7 @@ if (!_object.assign) {
     value: function(target, firstSource) {
       'use strict';
       if (target === undefined || target === null) {
-        throw new TypeError('Cannot convert first argument to object');
+       return target;
       }
 
       var to = Object(target);
@@ -109,6 +109,7 @@ if (!_object.assign) {
   });
 }
 var	_object_keys = _object.keys,
+	_objectIs = _object.is,
 	_getNotifier=_object.getNotifier,
 	//object assign cached
 	_object_assign = _object.assign,

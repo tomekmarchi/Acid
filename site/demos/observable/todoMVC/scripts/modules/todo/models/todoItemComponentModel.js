@@ -8,7 +8,7 @@ $.model.todoItemComponentModel=function(todoItem) {
             };
         },
         remove: function() {
-            this.root.removeItem(this.index);
+            this.rootFactory.removeItem(this.index);
         },
         edit: function(node, event) {
             this.data.editMode = $.toggle(this.data.editMode, false, true);
@@ -30,8 +30,7 @@ $.model.todoItemComponentModel=function(todoItem) {
             } else {
                 this.node.cl('completed');
             }
-            this.root.itemsLeft();
-            this.root.list.refreshFilter();
+            this.rootFactory.listOnEvery();
         }
     };
 };

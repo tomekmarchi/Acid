@@ -11,10 +11,4 @@ Default
 
 
 Need to
-
-Review onReady for DOM and simplify it
-
 Compile for lucy.js
-
-Extras
-(indexby,groupby) need to be expanded upon
