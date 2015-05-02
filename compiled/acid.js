@@ -2625,6 +2625,10 @@ right will just allow you to reverse the order of the args
         }
         return temp;
     };
+    //checks if the array is empty
+    array_extend.isEmpty = function () {
+        return this.length === 0;
+    };
     //get largest number from array
     array_extend.largest = function () {
         return _math.max.apply(_math, this);
@@ -5568,6 +5572,7 @@ It's primary purpose is to hold and notify connected models and structures of it
             var model = _model[modelName] = {};
             model.component = config;
             var config = model.component;
+            var onRender = config.render;
 
             if (factory) {
                 model.rootFactory = factory;
@@ -5592,7 +5597,11 @@ It's primary purpose is to hold and notify connected models and structures of it
                 });
             };
             model.render = function (data) {
-                return _componentRender(model, data);
+                var component = _componentRender(model, data);
+                if (onRender) {
+                    onRender.call(component);
+                }
+                return component;
             };
             model.componentsNode = function () {
                 return modelComponentsNode(model);
@@ -6560,9 +6569,9 @@ It's primary purpose is to hold and notify connected models and structures of it
                         }
                     });
                 }
-                if (_isMatch_dom(rootNode, '[data-node]')) {
-                    registerNode(object, rootNode);
-                }
+                rootNode.setAttribute('data-node', 'root');
+                registerNode(object, rootNode);
+
                 var datSetList = rootNode.dataset;
                 _each_object(datSetList, function (item, key) {
                     compileNode(rootNode, 'data-' + key, item, modelName, eventName);

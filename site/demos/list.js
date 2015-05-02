@@ -25,14 +25,6 @@
 		descrip:'A simple observable text app that shares data across rendered components from the same factory',
 		url:'/site/demos/observable/dataShare/'
 	},{
-		name:'Factory share with other Factories',
-		descrip:'A simple observable text app with a factory that shares data across rendered components from different factories. Subscribed factories also have a custom share name for the 		factory.',
-		url:'/site/demos/observable/sharedData/'
-	},{
-		name:'Factory Share with a Base',
-		descrip:'A simple observable text app with a factory that shares data across rendered components from a single Base',
-		url:'/site/demos/observable/sharedData/'
-	},{
 		name:'Data Flow',
 		descrip:'Demo of data flow changes across Bases & Factories',
 		url:'/site/demos/observable/dataFlow/'

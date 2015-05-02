@@ -36,7 +36,9 @@
 			var ran=function(){
 				for (var i = 0; i < 100; i++){
 					var rando=(3).randomInt();
-					componentApp.privateData.list[i]=componentApp.componentRender({title:'Title('+rando+')',text:'Text('+rando+')'});
+					var item=componentApp.privateData.list[i];
+					item.data.title='Title('+rando+')';
+					item.data.text='Text('+rando+')';
 				}
 				(function(){
 					ran.raf();

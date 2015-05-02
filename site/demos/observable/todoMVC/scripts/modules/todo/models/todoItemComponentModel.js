@@ -1,4 +1,4 @@
-$.model.todoItemComponentModel=function(todoItem) {
+$.model.todoItemComponentModel = function(todoItem) {
     return {
         template: todoItem,
         data: function() {

@@ -14,6 +14,24 @@ var modelDestroyChildren = function (object) {
 		}
 		return object;
 	};
+var factoryComponents = function (model,change) {
+		var copiesOfComponent = model.component;
+		if (copiesOfComponent) {
+			var nodes = _each_object(copiesOfComponent, function (item, key) {
+				return componentsMade[item.modelName];
+			});
+		}
+		return nodes;
+	};
+var factoryNotifyComponents = function (model,change) {
+		var copiesOfComponent = model.component;
+		if (copiesOfComponent) {
+			_each_object(copiesOfComponent, function (item, key) {
+				item.notify(change);
+			});
+		}
+		return model;
+	};
 var factoryDestroyChildren = function (model) {
 		var copiesOfComponent = model.component;
 		if (copiesOfComponent) {

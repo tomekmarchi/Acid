@@ -27,17 +27,16 @@ var _renderFactory = function (modelName,ogModel, object,data, lean) {
 		model.bind= {};
 		model.bindedNodes={};
 		model.eventName=modelName+'.';
+		model.modelName=modelName;
 		model.isModelfactory=true;
 
 		//Methods for child components
 		model.components = function(){
-			return componentsMade[modelName];
+			return factoryComponents(model);
 		};
 		//Methods for child components
-		model.nofityComponents = function(change){
-			_each_object(componentsMade[modelName],function(item){
-				item.notify(change);
-			});
+		model.notifyComponents = function(change){
+			return factoryNotifyComponents(model,change);
 		};
 		model.componentsNode = function(){
 			return factoryComponentsNode(model);
@@ -114,6 +113,11 @@ var _factory = function (modelName, object, lean) {
 			destroyFactories();
 			_model[modelName]=null;
 			return null;
+		};
+		model.notify = function (change) {
+			_each_array(renderedFactories,function(item){
+				item.notify(change);
+			});
 		};
 		model.render=function(data){
 			return _renderFactory(modelName,model,cloneObject,data,lean);

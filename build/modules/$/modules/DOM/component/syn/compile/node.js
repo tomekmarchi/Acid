@@ -149,9 +149,9 @@ var compileNode = function(node, attr, item, modelName, eventName) {
                 }
             });
         }
-        if (_isMatch_dom(rootNode, '[data-node]')) {
-            registerNode(object, rootNode);
-        }
+        rootNode.setAttribute('data-node','root');
+        registerNode(object, rootNode);
+        
         var datSetList = rootNode.dataset;
         _each_object(datSetList, function(item, key) {
             compileNode(rootNode, 'data-' + key, item, modelName, eventName);

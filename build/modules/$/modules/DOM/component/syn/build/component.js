@@ -78,6 +78,7 @@ var _component = function (modelName, config , lean , factory) {
 		var model =  _model[modelName] = {};
 		model.component = config;
 		var config = model.component;
+		var onRender=config.render;
 
 		if(factory){
 			model.rootFactory=factory;
@@ -102,7 +103,11 @@ var _component = function (modelName, config , lean , factory) {
 			});
 		};
 		model.render=function(data){
-			return _componentRender(model,data);
+			var component = _componentRender(model,data);
+			if(onRender){
+				onRender.call(component);
+			}
+			return component;
 		};
 		model.componentsNode = function(){
 			return modelComponentsNode(model);

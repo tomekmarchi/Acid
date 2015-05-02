@@ -16,6 +16,7 @@ var modelSubChanges = function (componentsMade, changes, subKey, func, name) {
 				}
 			});
 		}
+
 		_each_object(model.subscriber, function (item, key) {
 			if (item === true) {
 				var copiesOfComponent = componentsMade[key];

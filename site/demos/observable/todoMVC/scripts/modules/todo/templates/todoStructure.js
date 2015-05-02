@@ -1,6 +1,6 @@
 $.template({
-        name: 'todoStructure',
-        data: `<div>
+    name: 'todoStructure',
+    data: `<div>
 	        	<div class="todoapp">
 				<header>
 					<h1>todos</h1>
