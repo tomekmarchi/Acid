@@ -29,3 +29,5 @@ $.isNaN =  _isNaN;
 $.isInt = _isInt;
 $.isNull =  isNull;
 $.isEmpty =  isEmpty;
+$.isHTMLCollection =  _isHTMLCollection;
+$.isNodeList =  _isNodeList;

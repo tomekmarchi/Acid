@@ -138,6 +138,14 @@
 		_isFunction = function (obj) {
 			return (hasValue(obj)) ? obj instanceof _function : false;
 		},
+		//checks to see if object is a HTMLCollection returns true or false
+		_isHTMLCollection = function (obj) {
+			return (hasValue(obj)) ? obj.constructor.name == "HTMLCollection" : false;
+		},
+		//checks to see if object is a NodeList returns true or false
+		_isNodeList = function (obj) {
+			return (hasValue(obj)) ? obj.constructor.name == "NodeList" : false;
+		},
 		//searching a string for a string returns true or false
 		_has = function (string, search) {
 			return string.indexOf(search) != -1;

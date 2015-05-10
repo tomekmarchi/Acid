@@ -14,26 +14,25 @@
    * [1, 2, 3].intersect([101, 2, 50, 1], [2, 1]);
    * // -> [1, 2]
    */
-array_extend.intersection = function() {
+array_extend.intersect = function() {
     var result = [];
-    var array = this;
     var numArgs = arguments.length;
 
     if (!numArgs) {
-        return result;
+      return result;
     }
 
-    next: for (var i = 0; i < array.length; i++) {
-        var item = array[i];
+    next: for (var i = 0; i < this.length; i++) {
+      var item = this[i];
 
-        if (result.indexOf(item) < 0) {
-            for (var j = 0; j < numArgs; j++) {
-                if (arguments[j].indexOf(item) < 0) {
-                    continue next;
-                }
-            }
-            result.push(item);
+      if (result.indexOf(item) < 0) {
+        for (var j = 0; j < numArgs; j++) {
+          if (arguments[j].indexOf(item) < 0) {
+            continue next;
+          }
         }
+        result.push(item);
+      }
     }
 
     return result;

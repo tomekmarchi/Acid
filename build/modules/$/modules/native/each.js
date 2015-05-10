@@ -5,6 +5,8 @@ var _each = function(object,funct,fn){
 		var returned=_each_object(object,funct);
 	}else if(isNumber(object)){
 		var returned=_each_number(object, funct, fn);
+	}else if(_isNodeList(object) || _isHTMLCollection(object)){
+		var returned=_each_array(_toArray(object),funct);
 	}
 	return returned;
 };

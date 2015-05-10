@@ -12,7 +12,7 @@ Number
 var _each_array = function(array, fn) {
     //an array of results will be returned
     for (var i = 0, results = [], len = array.length; i < len; i++) {
-        results[i] = fn(array[i], i);
+        results[i] = fn(array[i], i , len , array);
     }
     return results;
 };
@@ -79,7 +79,7 @@ var eachDo = function(array, callback, safeIteration) {
 var _whileTrue = function(array, fn) {
     //an array of results will be returned
     for (var i = 0, results = [], len = array.length; i < len; i++) {
-        if (!(results[i] = fn(array[i], i))) {
+        if (!(results[i] = fn(array[i], i, len))) {
             break;
         }
     }
@@ -90,7 +90,7 @@ var _whileTrue = function(array, fn) {
 var _whileFalse = function(array, fn) {
     //an array of results will be returned
     for (var i = 0, results = [], len = array.length; i < len; i++) {
-        if (results[i] = fn(array[i], i)) {
+        if (results[i] = fn(array[i], i, len)) {
             break;
         }
     }
@@ -101,7 +101,7 @@ var _whileFalse = function(array, fn) {
 var _eachWhile = function(array, fn, check) {
     //an array of results will be returned
     for (var i = 0, results = [], len = array.length; i < len; i++) {
-        if (!check(results[i] = fn(array[i], i))) {
+        if (!check(results[i] = fn(array[i], i, len))) {
             break;
         }
     }
@@ -124,7 +124,7 @@ var _whileLength = function(array, fn) {
 var eachArrayFromRight = function(array, fn) {
     //an array of results will be returned
     for (var results = [], len = array.length, i = len - 1; i >= 0; i--) {
-        results[i] = fn(array[i], i);
+        results[i] = fn(array[i], i,len);
     }
     return results;
 };
@@ -137,7 +137,7 @@ var _each_object = function(object, fn) {
         //object currect key
         var key = keys[i];
         //call function get result
-        results[key] = fn(object[key], key, object);
+        results[key] = fn(object[key], key, len);
     }
     return results;
 };

@@ -9,10 +9,6 @@ function chunkSlice(array, start, end) {
   return result;
 }
 
-function naturalCompareCaseInsensitive(a, b) {
-  return String.naturalCompare(a.toLowerCase(), b.toLowerCase());
-}
-
 function numericalCompare(a, b) {
   return a - b;
 }

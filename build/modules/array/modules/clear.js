@@ -9,8 +9,8 @@
    * console.log(array);
    * // -> []
    */
-array_extend.clear = function () {
-  	var array=this;
-	array.length = 0;
-  	return array;
-};
+  array_extend.clear = function() {
+      var array = this;
+      array.length = 0;
+      return array;
+  };

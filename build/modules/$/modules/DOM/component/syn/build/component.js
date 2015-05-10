@@ -62,6 +62,10 @@ var _slate = function(modelName, config , lean , factory){
 		model.isModelSlate=true;
 
 		_componentRender(model);
+
+		if(config.render){
+			model.render();
+		}
 		return model;
 };
 
@@ -82,6 +86,9 @@ var _component = function (modelName, config , lean , factory) {
 
 		if(factory){
 			model.rootFactory=factory;
+			if(!config.subscribeTo){
+				config.subscribeTo=[factory.modelName];
+			}
 		}
 		model.componentConfig=true;
 		model.share={};
@@ -96,10 +103,10 @@ var _component = function (modelName, config , lean , factory) {
 			return componentsMade[modelName];
 		};
 		//Methods for child components
-		model.notify = function(change){
-			change.origin.push(modelName);
+		model.notify = function(changes){
+			console.log(changes);
 			_each_object(componentsMade[modelName],function(item){
-				item.notify(change);
+				item.notify(changes);
 			});
 		};
 		model.render=function(data){

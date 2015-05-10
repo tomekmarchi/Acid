@@ -492,6 +492,14 @@
         _isFunction = function (obj) {
             return (hasValue(obj)) ? obj instanceof _function : false;
         },
+        //checks to see if object is a HTMLCollection returns true or false
+        _isHTMLCollection = function (obj) {
+            return (hasValue(obj)) ? obj.constructor.name == "HTMLCollection" : false;
+        },
+        //checks to see if object is a NodeList returns true or false
+        _isNodeList = function (obj) {
+            return (hasValue(obj)) ? obj.constructor.name == "NodeList" : false;
+        },
         //searching a string for a string returns true or false
         _has = function (string, search) {
             return string.indexOf(search) != -1;
@@ -622,7 +630,7 @@ Number
     var _each_array = function (array, fn) {
         //an array of results will be returned
         for (var i = 0, results = [], len = array.length; i < len; i++) {
-            results[i] = fn(array[i], i);
+            results[i] = fn(array[i], i, len, array);
         }
         return results;
     };
@@ -687,7 +695,7 @@ Number
     var _whileTrue = function (array, fn) {
         //an array of results will be returned
         for (var i = 0, results = [], len = array.length; i < len; i++) {
-            if (!(results[i] = fn(array[i], i))) {
+            if (!(results[i] = fn(array[i], i, len))) {
                 break;
             }
         }
@@ -698,7 +706,7 @@ Number
     var _whileFalse = function (array, fn) {
         //an array of results will be returned
         for (var i = 0, results = [], len = array.length; i < len; i++) {
-            if (results[i] = fn(array[i], i)) {
+            if (results[i] = fn(array[i], i, len)) {
                 break;
             }
         }
@@ -709,7 +717,7 @@ Number
     var _eachWhile = function (array, fn, check) {
         //an array of results will be returned
         for (var i = 0, results = [], len = array.length; i < len; i++) {
-            if (!check(results[i] = fn(array[i], i))) {
+            if (!check(results[i] = fn(array[i], i, len))) {
                 break;
             }
         }
@@ -732,7 +740,7 @@ Number
     var eachArrayFromRight = function (array, fn) {
         //an array of results will be returned
         for (var results = [], len = array.length, i = len - 1; i >= 0; i--) {
-            results[i] = fn(array[i], i);
+            results[i] = fn(array[i], i, len);
         }
         return results;
     };
@@ -745,7 +753,7 @@ Number
             //object currect key
             var key = keys[i];
             //call function get result
-            results[key] = fn(object[key], key, object);
+            results[key] = fn(object[key], key, len);
         }
         return results;
     };
@@ -773,10 +781,6 @@ Number
         }
 
         return result;
-    }
-
-    function naturalCompareCaseInsensitive(a, b) {
-        return String.naturalCompare(a.toLowerCase(), b.toLowerCase());
     }
 
     function numericalCompare(a, b) {
@@ -2181,17 +2185,86 @@ METHODS FOR CLASS MODS
     array_extend.pushApply = function (array) {
         return _array_push.apply(this, array);
     };
+    /**
+     * Finds the index of a value in a sorted array using a binary search algorithm.
+     *
+     * If no `compareFunction` is supplied, the `>` and `<` relational operators are used to compare values,
+     * which provides optimal performance for arrays of numbers and simple strings.
+     *
+     * @function Array#bsearch
+     * @param {*} value - The value to search for.
+     * @param {Function} [compareFunction] - The same type of comparing function you would pass to
+     *     [`.sort()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort).
+     * @returns {number} The index of the value if it is in the array, or `-1` if it cannot be found.
+     *     If the search value can be found at multiple indexes in the array, it is unknown which of
+     *     those indexes will be returned.
+     *
+     * @example
+     * ['a', 'b', 'c', 'd'].bsearch('c');
+     * // -> 2
+     *
+     * [1, 1, 2, 2].bsearch(2);
+     * // -> 2 or 3
+     *
+     * [1, 2, 3, 4].bsearch(10);
+     * // -> -1
+     *
+     * [1, 2, 3, 4].bsearch(1, function(a, b) {
+     *   return a - b;
+     * });
+     * // -> 0
+     *
+     * ['img1', 'img2', 'img10', 'img13'].bsearch('img2', String.naturalCompare);
+     * // -> 1
+     * // `String.naturalCompare` is provided by the string-natural-compare npm module:
+     * // https://www.npmjs.com/package/string-natural-compare
+     */
+    array_extend.bsearch = function (value, compareFunction) {
+        var low = 0;
+        var high = this.length;
+        var mid;
+
+        if (compareFunction) {
+            while (low < high) {
+                mid = (low + high) >>> 1;
+                var direction = compareFunction(this[mid], value);
+                if (!direction) {
+                    return mid;
+                }
+                if (direction < 0) {
+                    low = mid + 1;
+                } else {
+                    high = mid;
+                }
+            }
+        } else {
+            while (low < high) {
+                mid = (low + high) >>> 1;
+                if (this[mid] === value) {
+                    return mid;
+                }
+                if (this[mid] < value) {
+                    low = mid + 1;
+                } else {
+                    high = mid;
+                }
+            }
+        }
+
+        return -1;
+    };
     //Creates an array of elements split into groups the length of size. If collection can't be split evenly, the final chunk will be the remaining elements.
     array_extend.chunk = function (chunk) {
-        var i = 0;
-        var count = 0;
-        var temparray = [];
-        var arr = this;
-        var len = arr.length;
-        for (; i < len; count++) {
-            temparray[count] = arr.slice(i, i += chunk);
+        size = size || 1;
+
+        var numChunks = Math.ceil(this.length / size);
+        var result = new Array(numChunks);
+
+        for (var i = 0, index = 0; i < numChunks; i++) {
+            result[i] = chunkSlice(this, index, (index += size));
         }
-        return temparray;
+
+        return result;
     };
     /**
      * Removes all elements from the array.
@@ -2590,17 +2663,16 @@ right will just allow you to reverse the order of the args
      * [1, 2, 3].intersect([101, 2, 50, 1], [2, 1]);
      * // -> [1, 2]
      */
-    array_extend.intersection = function () {
+    array_extend.intersect = function () {
         var result = [];
-        var array = this;
         var numArgs = arguments.length;
 
         if (!numArgs) {
             return result;
         }
 
-        next: for (var i = 0; i < array.length; i++) {
-            var item = array[i];
+        next: for (var i = 0; i < this.length; i++) {
+            var item = this[i];
 
             if (result.indexOf(item) < 0) {
                 for (var j = 0; j < numArgs; j++) {
@@ -4061,6 +4133,8 @@ rearg(1,2,3);
             var returned = _each_object(object, funct);
         } else if (isNumber(object)) {
             var returned = _each_number(object, funct, fn);
+        } else if (_isNodeList(object) || _isHTMLCollection(object)) {
+            var returned = _each_array(_toArray(object), funct);
         }
         return returned;
     };
@@ -4110,6 +4184,8 @@ rearg(1,2,3);
     $.isInt = _isInt;
     $.isNull = isNull;
     $.isEmpty = isEmpty;
+    $.isHTMLCollection = _isHTMLCollection;
+    $.isNodeList = _isNodeList;
     //convert from json string to json object cache it to use across lib
     var $json = $.json = json.parse;
     $.weakMap = function (items) {
@@ -5556,6 +5632,10 @@ It's primary purpose is to hold and notify connected models and structures of it
             model.isModelSlate = true;
 
             _componentRender(model);
+
+            if (config.render) {
+                model.render();
+            }
             return model;
         };
 
@@ -5576,6 +5656,9 @@ It's primary purpose is to hold and notify connected models and structures of it
 
             if (factory) {
                 model.rootFactory = factory;
+                if (!config.subscribeTo) {
+                    config.subscribeTo = [factory.modelName];
+                }
             }
             model.componentConfig = true;
             model.share = {};
@@ -5590,10 +5673,10 @@ It's primary purpose is to hold and notify connected models and structures of it
                 return componentsMade[modelName];
             };
             //Methods for child components
-            model.notify = function (change) {
-                change.origin.push(modelName);
+            model.notify = function (changes) {
+                console.log(changes);
                 _each_object(componentsMade[modelName], function (item) {
-                    item.notify(change);
+                    item.notify(changes);
                 });
             };
             model.render = function (data) {
@@ -5792,17 +5875,16 @@ It's primary purpose is to hold and notify connected models and structures of it
             model.bind = {};
             model.bindedNodes = {};
             model.eventName = modelName + '.';
+            model.modelName = modelName;
             model.isModelfactory = true;
 
             //Methods for child components
             model.components = function () {
-                return componentsMade[modelName];
+                return factoryComponents(model);
             };
             //Methods for child components
-            model.nofityComponents = function (change) {
-                _each_object(componentsMade[modelName], function (item) {
-                    item.notify(change);
-                });
+            model.notifyComponents = function (change) {
+                return factoryNotifyComponents(model, change);
             };
             model.componentsNode = function () {
                 return factoryComponentsNode(model);
@@ -5879,6 +5961,11 @@ It's primary purpose is to hold and notify connected models and structures of it
                 destroyFactories();
                 _model[modelName] = null;
                 return null;
+            };
+            model.notify = function (change) {
+                _each_array(renderedFactories, function (item) {
+                    item.notify(change);
+                });
             };
             model.render = function (data) {
                 return _renderFactory(modelName, model, cloneObject, data, lean);
@@ -6312,6 +6399,7 @@ It's primary purpose is to hold and notify connected models and structures of it
                         }
                     });
                 }
+
                 _each_object(model.subscriber, function (item, key) {
                     if (item === true) {
                         var copiesOfComponent = componentsMade[key];
@@ -7005,6 +7093,24 @@ It's primary purpose is to hold and notify connected models and structures of it
                 });
             }
             return object;
+        };
+        var factoryComponents = function (model, change) {
+            var copiesOfComponent = model.component;
+            if (copiesOfComponent) {
+                var nodes = _each_object(copiesOfComponent, function (item, key) {
+                    return componentsMade[item.modelName];
+                });
+            }
+            return nodes;
+        };
+        var factoryNotifyComponents = function (model, change) {
+            var copiesOfComponent = model.component;
+            if (copiesOfComponent) {
+                _each_object(copiesOfComponent, function (item, key) {
+                    item.notify(change);
+                });
+            }
+            return model;
         };
         var factoryDestroyChildren = function (model) {
             var copiesOfComponent = model.component;
