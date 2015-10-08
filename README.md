@@ -5,11 +5,11 @@ Acidjs is an ECMAScript framework for web applications with a focus on modern & 
 
 DOM
 -----------------------
-DOM methods are extended via the prototype property with incident avoidence.
+DOM methods are extended via the prototype property with incident avoidence. This method was chosen due to chainig being the easiest method for interacting with the DOM.
 
 Strings,Objects & Arrays
 -----------------------
-All other methods for Strings,Objects and Arrays are avalible from the root object typically $ and ACID as a fallback. The reason for this is because Acid is built around a module like system allowing for modules to quickly import external files,models,methods attached to the root object. Thus methods can be imported as a function and as a result can produce high performance results while mainting clean and constructive code. 
+All other methods for Strings,Objects and Arrays are avalible from the root object typically $ and ACID as a fallback. The reason for this is because Acid is built around a module like system allowing for modules to quickly import external files,models,modules,definitions and methods attached to $. Thus methods can be imported as a function and as a result can produce high performance results while mainting clean and constructive code. Extending as a prototype to these objects produced slower object usage. For example by extending various methods to the array prototype operations on arrays became slower across the board. Thus I opted for this inclusion method.
 
 Models, Modules, Define
 -----------------------
