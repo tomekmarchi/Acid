@@ -1,7 +1,15 @@
 ACID 
 =======
-Acidjs is an ECMAScript framework for web applications with a focus on modern & future APIs. Most Acid methods are accessed directly from native objects, however all methods can be pre-fixed. Acid includes Observable & Reactive models of all shapes and sizes making development fast , easy and efficient. It makes full use of Object.observe and future javascript APIs.
-http://acidjs.com
+Acidjs is an ECMAScript framework for web applications with a focus on modern & future APIs. http://acidjs.com
+
+
+DOM
+-----------------------
+DOM methods are extended via the prototype property with incident avoidence.
+
+Strings,Objects & Arrays
+-----------------------
+All other methods for Strings,Objects and Arrays are avalible from the root object typically $ and ACID as a fallback. The reason for this is because Acid is built around a module like system allowing for modules to quickly import external files,models,methods attached to the root object. Thus methods can be imported as a function and as a result can produce high performance results while mainting clean and constructive code. 
 
 Models, Modules, Define
 -----------------------
