@@ -19,6 +19,8 @@ var _center = function (node, item) {
 		var left = parseInt((w - divW) / 2) + 'px',
 			top = parseInt((h - divH) / 2) + 'px';
 		node.style.position='absolute';
+		node.style.top='0px';
+		node.style.left='0px';
 		node.style.transform=node.style['-webkit-transform']='translate3d('+left + ',' + top + ',0)';
 	}
 	return node;

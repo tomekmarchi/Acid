@@ -1,1 +1,0 @@
-var bool_extend = {};

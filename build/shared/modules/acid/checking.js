@@ -109,9 +109,9 @@
 		//is int
 		_isInt=(number_object.isInteger)? number_object.isInteger :  function(num){
 			if(num % 1 === 0){
-		      return true;
-		    }
-		    return false;
+			  return true;
+			}
+			return false;
 		},
 		//is equal to null
 		isNull = function (obj) {
@@ -148,7 +148,19 @@
 		},
 		//searching a string for a string returns true or false
 		_has = function (string, search) {
-			return string.indexOf(search) != -1;
+			var value,
+				loopValue;
+			if(!_isString(search)){
+				_each(search,function(item,key){
+					loopValue=string.indexOf(item) != -1;
+					if(loopValue){
+						value=loopValue;
+					}
+				});
+			}else{
+				value=string.indexOf(search) != -1;
+			}
+			return value;
 		},
 		//does object have length
 		islength = function (obj) {
@@ -163,4 +175,14 @@
 				return !_object.keys(obj).length;
 			}
 			return false;
+		},
+		isJavascript = function(string) {
+			return _has(string, '.js');
+		},
+		isCSS = function(string) {
+			return _has(string, '.css');
+		},
+		getModelName = function(string) {
+			var splitIt = string.split('/');
+			return _find(splitIt[splitIt.length - 1].split('.js')[0], _model);
 		};

@@ -1,29 +1,24 @@
 //raw URL encode
-string_extend.rawURLDecode = function () {
-	return decodeURIComponent((this + '').replace(rawURLDecode_regex, function () {
+var _rawURLDecode = function (string) {
+	return decodeURIComponent((string + '').replace(rawURLDecode_regex, function () {
 		return '%25';
 	}));
 };
+$.rawURLDecode = _rawURLDecode;
 //html entities
-string_extend.htmlEntities = function () {
-	return this.replace(and_regex, '&amp;').replace(less_than_regex, '&lt;').replace(more_than_regex, '&gt;').replace(double_quote_regex, '&quot;').replace(slash_regex, '&quot;');
+var _htmlEntities = function (string) {
+	return string.replace(and_regex, '&amp;').replace(less_than_regex, '&lt;').replace(more_than_regex, '&gt;').replace(double_quote_regex, '&quot;').replace(slash_regex, '&quot;');
 };
+$.htmlEntities = _htmlEntities;
 //decode then htmlentities
-string_extend.sanitize = function () {
-	return string_extend.htmlent.call(string_extend.rawurldecode.call(this));
+$.sanitize = function (string) {
+	return _htmlEntities(_rawURLDecode(string));
 };
 //decode URI Component
-string_extend.duc = function () {
+$.duc = function () {
 	return decodeURIComponent(this);
 };
 //encode URI Component
-string_extend.euc = function () {
+$.euc = function () {
 	return encodeURIComponent(this);
-};
-
-//encode URI Component
-string_extend.unescapeHTML = function () {
-	var empty=_empty_node_div;
-	empty.innerHTML=this;
-	return empty.textContent;
 };

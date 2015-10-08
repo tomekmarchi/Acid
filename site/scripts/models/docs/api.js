@@ -250,6 +250,10 @@
 			descrip: 'Cancel Animation Frame',
 			example: '$.caf(number_of_raf)'
 		},
+		raf: {
+			descrip: 'Request Animation Frame',
+			example: '$.caf(number_of_raf)'
+		},
 		async: {
 			descrip: 'Launch functions in async accepts an array',
 			example: '$.async([fn1,fn2])'
@@ -337,10 +341,6 @@
 			descrip: 'Create a template',
 			example: '$.template(\'template_name\',node/string/function)'
 		},
-		worker: {
-			descrip: 'Create a worker',
-			example: '$.worker(URL_OF_WORKER,object_syntax,force_worker_avoid_queue)'
-		},
 		xhr: {
 			descrip: 'XHR request',
 			example: '$.worker(object_syntax)'
@@ -352,26 +352,6 @@
 		linkParse: {
 			descrip: 'Parse a URL into an object with seperated info',
 			example: '$.linkParse(\'http://lnkit.com/signup\')'
-		},
-		component: {
-			descrip: 'Compile a reactive component',
-			example: '$.component(object_syntax)'
-		},
-		factory: {
-			descrip: 'Create a reactive model that manages and renders multiple components as well as itself.',
-			example: '$.factory(name,object_syntax)'
-		},
-		plant: {
-			descrip: 'Create a reactive model that represents [plant,factory,component,base,model,import,define,module] that can be rendered',
-			example: '$.plant(name,object_syntax)'
-		},
-		base: {
-			descrip: 'Create a reactive data hub',
-			example: '$.base(name,object_syntax)'
-		},
-		router:{
-			descrip: 'Create a reactive hub that is responsible for notifying other models',
-			example: '$.router(name,object_syntax)'
 		},
 		view: {
 			descrip: 'Create a simple view combine a faceplate and a template used for live DOM fast templating',
@@ -420,7 +400,7 @@
 			descrip: 'Extend an objects prototype',
 			example: 'obj.extend(object)'
 		},
-		each: {
+		eachObject: {
 			descrip: 'Loop through an object',
 			example: 'obj.each(function(item,key){})'
 		},
@@ -531,7 +511,7 @@
 
 	};
 	$.model.api.array = {
-		each: {
+		eachArray: {
 			descrip: 'Loop through an array',
 			example: 'array.each(function(item,i){})'
 		},
@@ -833,32 +813,11 @@
 			example: 'function.once()'
 		}
 	};
-	//window
-	$.model.api.window = {
-		selection: {
-			descrip: 'Get current text selection returns an object worth of data',
-			example: 'window.selection()'
-		}
-	};
 	//event
 	$.model.api.event = {
 		isEnter: {
 			descrip: 'Checks if enter was pressed with the event returns true/false',
 			example: 'event.isEnter()'
-		}
-	};
-	//websocket
-	$.model.api.websocket = {
-		kill: {
-			descrip: 'Kill a websocket',
-			example: 'socket.kill()'
-		}
-	};
-	//worker
-	$.model.api.worker = {
-		post: {
-			descrip: 'ACID worker postmsg includes anon function callbacks',
-			example: 'worker.post()'
 		}
 	};
 	//array to display for HTML pages
@@ -898,20 +857,8 @@
 		name: 'DOM Collection & List',
 		id:'collections'
 	}, {
-		obj: api.worker,
-		name: 'WebWorker',
-		id:'WebWorker'
-	}, {
-		obj: api.websocket,
-		name: 'WebSocket',
-		id:'WebSocket'
-	}, {
 		obj: api.event,
 		name: 'Events',
 		id:'Events'
-	}, {
-		obj: api.window,
-		name: 'Window',
-		id:'Window'
 	}];
 })();

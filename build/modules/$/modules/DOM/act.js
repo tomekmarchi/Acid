@@ -3,3 +3,5 @@ var	_act = function (node, type) {
 	$['on' + type](node);
 	return node;
 };
+
+$.act=_act;

@@ -1,10 +1,10 @@
 //clone an object ES6 + ES5
-object_extend.clone = (function(){
+$.cloneObject = (function(){
 
 	function cloned_function() { }
 	function clone_it(obj) {
-	    cloned_function.prototype = obj;
-	    return new cloned_function();
+		cloned_function.prototype = obj;
+		return new cloned_function();
 	}
 	var clone=function(){
 		return clone_it(this);
@@ -15,6 +15,6 @@ object_extend.clone = (function(){
 })();
 
 //copy an object ES6 + ES5
-object_extend.copy = function(){
-	return $merge(this,{});
+$.copyObject = function(item){
+	return $merge(item,{});
 };

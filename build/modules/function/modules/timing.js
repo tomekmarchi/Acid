@@ -1,7 +1,6 @@
 //debounce function
-function_extend.debounce = function (time) {
-    var timeout = false,
-        original = this;
+$.debounce = function (original,time) {
+    var timeout = false;
 
     var fn = function () {
         var boundTo = this;
@@ -34,9 +33,8 @@ function_extend.debounce = function (time) {
 };
 
 //throttle function
-function_extend.throttle = function (time) {
-    var timeout = false,
-        func = this;
+$.throttle = function (func,time) {
+    var timeout = false;
 
     var fn = function () {
         if (timeout) {
@@ -67,19 +65,19 @@ function_extend.throttle = function (time) {
 };
 
 //timer wrapper
-function_extend.timer= function (time) {
-	return setTimeout(this, time);
+$.timer= function (fn,time) {
+	return setTimeout(fn, time);
 };
 
 //timer wrapper
-function_extend.interval= function (time) {
-    return setInterval(this, time);
+$.interval= function (fn,time) {
+    return setInterval(fn, time);
 };
 
 //async function call
-function_extend.async=(haspromise)?
+$.asyncFN=(haspromise)?
 	function (fnc) {
-		_promise_async.then(this);
+		_promise_async.then(fnc);
 		return false;
 	}:function (fnc) {
 		setTimeout(fnc, 0);

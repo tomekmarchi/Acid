@@ -6,7 +6,7 @@ var $remove = (isremovenative) ? null : function (node) {
 	if (par) {
 		par.removeChild(node);
 	}
-	var par = null;
+	par = null;
 	return node;
 };
 
@@ -29,5 +29,7 @@ var _removeRange = function (node,start,end){
 	for(; start < end; start++){
 		temp.push(_removeNode(nodes[start]));
 	}
+	start=null;
+	end=null;
 	return temp;
 };

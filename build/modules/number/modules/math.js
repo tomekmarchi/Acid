@@ -39,186 +39,116 @@
 
 
 	//add this and value
-	number_extend.add = function (value) {
-		return this + value;
+	$.add = function (number,value) {
+		return number + value;
 	};
 	//minus this and value
-	number_extend.minus = function (value) {
-		return this - value;
+	$.minus = function (number,value) {
+		return number - value;
 	};
 	//divide this and value
-	number_extend.divide = function (value) {
-		return this / value;
+	$.divide = function (number,value) {
+		return number / value;
 	};
 	//multiple this and value
-	number_extend.multiple = function (value) {
-		return this * value;
+	$.multiple = function (number,value) {
+		return number * value;
 	};
 	//The modulo function is the integer remainder of dividing this by value
-	number_extend.remainder = function (value) {
-		return this % value;
+	$.remainder = function (number,value) {
+		return number % value;
 	};
 	//add 1
-	number_extend.increment = function () {
-		return this + 1;
+	$.increment = function (number) {
+		return number + 1;
 	};
 	//minus 1
-	number_extend.decrement = function () {
-		return this - 1;
+	$.deduct = function (number) {
+		return number - 1;
 	};
-	//Returns the absolute value of a number_extend.
-	number_extend.abs = function () {
-		return abs(this);
-	};
-	//Returns the arccosine of a number_extend.
-	number_extend.acos = function () {
-		return acos(this);
-	};
-	//Returns the hyperbolic arccosine of a number_extend.
-	number_extend.acosh = function () {
-		return acosh(this);
-	};
-	//Returns the arcsine of a number_extend.
-	number_extend.asin = function () {
-		return asin(this);
-	};
-	//Returns the hyperbolic arcsine of a number_extend.
-	number_extend.asinh = function () {
-		return asinh(this);
-	};
-	//Returns the arctangent of a number_extend.
-	number_extend.atan = function () {
-		return atan(this);
-	};
-	//Returns the hyperbolic arctangent of a number_extend.
-	number_extend.atanh = function () {
-		return atanh(this);
-	};
+	//Returns the absolute value of a $.
+	$.abs = abs;
+	//Returns the arccosine of a $.
+	$.acos = acos;
+	//Returns the hyperbolic arccosine of a $.
+	$.acosh = acosh;
+	//Returns the arcsine of a $.
+	$.asin = asin;
+	//Returns the hyperbolic arcsine of a $.
+	$.asinh = asinh;
+	//Returns the arctangent of a $.
+	$.atan = atan;
+	//Returns the hyperbolic arctangent of a $.
+	$.atanh = atanh;
 	//Returns the arctangent of the quotient of its arguments.
-	number_extend.atan2 = function (y) {
-		return atan2(this, y);
-	};
-	//Returns the cube root of a number_extend.
-	number_extend.cbrt = function () {
-		return cbrt(this);
-	};
-	//Returns the smallest integer greater than or equal to a number_extend.
-	number_extend.ceil = function () {
-		return ceil(this);
-	};
+	$.atan2 = atan2;
+	//Returns the cube root of a $.
+	$.cbrt = cbrt;
+	//Returns the smallest integer greater than or equal to a $.
+	$.ceil = ceil;
 	//Returns the number of leading zeroes of a 32-bit integer.
-	number_extend.clz32 = function () {
-		return clz32(this);
-	};
-	//Returns the cosine of a number_extend.
-	number_extend.cos = function () {
-		return cos(this);
-	};
-	//Returns the hyperbolic cosine of a number_extend.
-	number_extend.cosh = function () {
-		return cosh(this);
-	};
+	$.clz32 = clz32;
+	//Returns the cosine of a $.
+	$.cos = cos;
+	//Returns the hyperbolic cosine of a $.
+	$.cosh = cosh;
 	//Returns Ex, where x is the argument, and E is Euler's constant (2.718…), the base of the natural logarithm.
-	number_extend.exp = function () {
-		return exp(this);
-	};
+	$.exp = exp;
 	//Returns subtracting 1 from exp(x).
-	number_extend.expm1 = function () {
-		return expm1(this);
-	};
-	//Returns the largest integer less than or equal to a number_extend.
-	number_extend.floor = function () {
-		return floor(this);
-	};
-	//Returns the nearest single precision float representation of a number_extend.
-	number_extend.fround = function () {
-		return fround(this);
-	};
+	$.expm1 = expm1;
+	//Returns the largest integer less than or equal to a $.
+	$.floor = floor;
+	//Returns the nearest single precision float representation of a $.
+	$.fround = fround;
 	//Returns the square root of the sum of squares of its arguments.
-	number_extend.hypot = function (x, y) {
-		return hypot(this, x, y);
-	};
+	$.hypot = hypot;
 	//Returns the result of a 32-bit integer multiplication.
-	number_extend.imul = function () {
-		return imul(this);
-	};
-	//Returns the natural logarithm (loge, also ln) of a number_extend.
-	number_extend.log = function () {
-		return log(this);
-	};
-	//Returns the natural logarithm of 1 + x (loge, also ln) of a number_extend.
-	number_extend.log1p = function () {
-		return log1p(this);
-	};
-	//Returns the base 10 logarithm of a number_extend.
-	number_extend.log10 = function () {
-		return log10(this);
-	};
-	//Returns the base 2 logarithm of a number_extend.
-	number_extend.log2 = function () {
-		return log2(this);
-	};
+	$.imul = imul;
+	//Returns the natural logarithm (loge, also ln) of a $.
+	$.log = log;
+	//Returns the natural logarithm of 1 + x (loge, also ln) of a $.
+	$.log1p = log1p;
+	//Returns the base 10 logarithm of a $.
+	$.log10 = log10;
+	//Returns the base 2 logarithm of a $.
+	$.log2 = log2;
 	//Returns the largest of zero or more numbers.
-	number_extend.max = function () {
-		return max(this, y);
-	};
+	$.max = max;
 	//Returns the smallest of zero or more numbers.
-	number_extend.min = function () {
-		return min(this, y);
-	};
+	$.min = min;
 	//Returns base to the exponent power, that is, baseexponent.
-	number_extend.pow = function () {
-		return pow(this, y);
-	};
+	$.pow = pow;
 	//Returns a random number between min (inclusive) and max (exclusive)
-	number_extend.randomArbitrary = function (min) {
+	$.randomArbitrary = function (number,min) {
 		if(!min){
 			var min=0;
 		}
-		return random() * (this - min) + min;
+		return random() * (number - min) + min;
 	};
 	// Returns a random integer between min (included) and max (excluded)
 	// Using Math.round() will give you a non-uniform distribution!
-	number_extend.randomInt = function (min) {
+	$.randomInt = function (number,min) {
 		if(!min){
 			var min=0;
 		}
-		return floor(random() * (this - min)) + min;
+		return floor(random() * (number - min)) + min;
 	};
 	//random wrapper
-	number_extend.random = function (min) {
-		return random();
-	};
+	$.random = random;
 	//Returns the value of a number rounded to the nearest integer.
-	number_extend.round = function () {
-		return round(this);
-	};
+	$.round = round;
 	//Returns the sign of the x, indicating whether x is positive, negative or zero.
-	number_extend.sign = function () {
-		return sign(this);
-	};
-	//Returns the sine of a number_extend.
-	number_extend.sin = function () {
-		return sin(this);
-	};
-	//Returns the hyperbolic sine of a number_extend.
-	number_extend.sinh = function () {
-		return sinh(this);
-	};
-	//Returns the positive square root of a number_extend.
-	number_extend.sqrt = function () {
-		return sqrt(this);
-	};
-	//Returns the tangent of a number_extend.
-	number_extend.tan = function () {
-		return tan(this);
-	};
-	//Returns the hyperbolic tangent of a number_extend.
-	number_extend.tanh = function () {
-		return tanh(this);
-	};
+	$.sign = sign;
+	//Returns the sine of a $.
+	$.sin = sin;
+	//Returns the hyperbolic sine of a $.
+	$.sinh = sinh;
+	//Returns the positive square root of a $.
+	$.sqrt = sqrt;
+	//Returns the tangent of a $.
+	$.tan = tan;
+	//Returns the hyperbolic tangent of a $.
+	$.tanh = tanh;
 	//Returns the integral part of the number x, removing any fractional digits.
-	number_extend.trunc = function () {
-		return trunc(this);
-	};
+	$.trunc = trunc;
 })();

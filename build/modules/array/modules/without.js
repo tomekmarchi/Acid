@@ -1,14 +1,16 @@
 //Returns a copy of the array with all instances of the values removed.
-array_extend.without = function (args) {
-	var result = [];
+$.without = function (array,args) {
+	var result = [],
+      i,
+      j;
 
-    next: for (var i = 0; i < this.length; i++) {
-      for (var j = 0; j < arguments.length; j++) {
-        if (this[i] === arguments[j]) {
+    next: for (i = 0; i < array.length; i++) {
+      for (j = 0; j < arguments.length; j++) {
+        if (array[i] === arguments[j]) {
           continue next;
         }
       }
-      result.push(this[i]);
+      result.push(array[i]);
     }
 
     return result;

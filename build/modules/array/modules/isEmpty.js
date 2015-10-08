@@ -1,4 +1,4 @@
 //checks if the array is empty
-array_extend.isEmpty = function () {
-	return this.length === 0;
+$.isArrayEmpty = function (item) {
+	return item.length === 0;
 };

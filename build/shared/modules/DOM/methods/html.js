@@ -1,7 +1,7 @@
 var _innerHTML = function (node, value) {
 	if (hasValue(value)) {
 		if (_isFunction(value)) {
-			var value = value.call(this, node);
+			var value = value(node);
 		}
 		node.innerHTML = value;
 		return node;
@@ -11,7 +11,7 @@ var _innerHTML = function (node, value) {
 _ohtml = function (node, value) {
 	if (hasValue(value)) {
 		if (_isFunction(value)) {
-			var value = value.call(this, node);
+			var value = value(node);
 		}
 		node.outerHTML = value;
 		return node;

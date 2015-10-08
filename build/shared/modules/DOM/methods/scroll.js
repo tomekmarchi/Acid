@@ -17,7 +17,7 @@ var scrollInfo = function (node) {
 	return returned;
 };
 //scroll
-var scrollInto = function (node, node_to_scroll_into_view) {
-	node.scrollIntoView(node_to_scroll_into_view);
+var scrollInto = function (node, nodeToScrollIntoView) {
+	node.scrollIntoView(nodeToScrollIntoView);
 	return node;
 };

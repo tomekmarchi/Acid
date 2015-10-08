@@ -1,7 +1,6 @@
 //short hand for request animation frame
-function_extend.curry = function () {
-	var funts = this,
-		count = 0,
+$.curry = function (funts) {
+	var count = 0,
 		args = [],
 		len = funts.length,
 		curry = function () {
@@ -39,10 +38,8 @@ function_extend.curry = function () {
 
 */
 
-//short hand for request animation frame
-function_extend.curryRight = function () {
-	var funts = this,
-		count = 0,
+$.curryRight = function (funts) {
+	var count = 0,
 		args = [],
 		len = funts.length,
 		curry = function () {

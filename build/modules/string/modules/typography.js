@@ -1,11 +1,9 @@
 //uppercase first letter lower case the rest
-string_extend.ucFirst = function () {
-	return _ucFirst(this);
-};
+$.ucFirst = _ucFirst;
 
 //uppercase first letter for all
-string_extend.ucFirstAll = function () {
-	var array = this.split(' '),
+$.ucFirstAll = function (string) {
+	var array = string.split(' '),
 		len = array.length;
 	for (var i = 0; i < len; i++) {
 		var item=array[i];
@@ -15,14 +13,13 @@ string_extend.ucFirstAll = function () {
 };
 
 //uppercase first letter lower case the rest
-string_extend.ucFirstOnly = function () {
-	var string = this;
+$.ucFirstOnly = function (string) {
 	return string.charAt(0).toUpperCase() + string.substr(1).toLowerCase();
 };
 
 //uppercase first letter lower case the rest all
-string_extend.ucFirstOnlyAll = function () {
-	var array = this.split(' '),
+$.ucFirstOnlyAll = function (string) {
+	var array = string.split(' '),
 		len = array.length;
 	for (var i = 0; i < len; i++) {
 		var item=array[i];
@@ -32,34 +29,34 @@ string_extend.ucFirstOnlyAll = function () {
 };
 
 //Returns the camel cased string
-string_extend.camel = function () {
-	var string=string_extend.ucfirstall.call(this.replace(regex_underscore,' ').replace(regex_dash,' '));
+$.camel = function (stringOriginal) {
+	var string=$.ucfirstall.call(stringOriginal.replace(regex_underscore,' ').replace(regex_dash,' '));
 	return (string.charAt(0).toLowerCase() + string.substr(1)).replace(regex_space_global, '');
 };
 
 //Returns the kebab cased string
-string_extend.kebab = function () {
-	return this.toLowerCase().replace(regex_underscore,' ').replace(regex_space_global, '-');
+$.kebab = function (stringOriginal) {
+	return stringOriginal.toLowerCase().replace(regex_underscore,' ').replace(regex_space_global, '-');
 };
 
 //Returns the snake cased string
-string_extend.snake = function () {
-	return this.toLowerCase().replace(regex_dash,' ').replace(regex_space_global, '_');
+$.snake = function (stringOriginal) {
+	return stringOriginal.toLowerCase().replace(regex_dash,' ').replace(regex_space_global, '_');
 };
 
 //returns the trunced version of the string
-string_extend.truncate = function (amount) {
-	var string=this,
+$.truncate = function (stringOriginal,amount) {
+	var string=stringOriginal,
 		length=string.length;
 	if(length>amount){
-		return this.slice(0,amount);
+		return string.slice(0,amount);
 	}
 	return string;
 };
 
 //returns the trunced version of the string starting from the right
-string_extend.truncateRight = function (amount) {
-	var string=this,
+$.truncateLeft = function (stringOriginal,amount) {
+	var string=stringOriginal,
 		length=string.length;
 	if(length>amount){
 		return string.substr(amount,length);
@@ -67,15 +64,41 @@ string_extend.truncateRight = function (amount) {
 	return string;
 };
 
+//returns the trunced version of the string
+$.truncateWord = function (stringOriginal,amount) {
+	var string=stringOriginal,
+		length=string.length;
+	if(length>amount){
+		var stringLength=0;
+		var newString='';
+		var words=string.split(' ');
+		var wordsLength=words.length;
+		var item;
+		var possibleNew;
+		for(var i=0; i < wordsLength; i++ ){
+			item=words[i]+' ';
+			possibleNew=item.length+stringLength;
+			if(possibleNew<amount){
+				stringLength=possibleNew;
+				newString=newString+item;
+			}else{
+				break;
+			}
+		}
+		return newString.trim();
+	}
+	return string;
+};
+
 //repeat
-string_extend.repeat = (string_prototype.repeat)? false : function (amount) {
+$.repeat = function (stringOriginal,amount) {
 	if(!amount){
 		return '';
 	}
 	if(amount==1){
-		return this;
+		return stringOriginal;
 	}
-	var string=this,
+	var string=stringOriginal,
 		temp=string;
 	for(var i=1; i < amount; i++){
 		if(i>0){

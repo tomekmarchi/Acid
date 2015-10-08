@@ -1,46 +1,55 @@
-//set/get/compile template
-var _template = function (string, data) {
-		if(isPlainObject(string) && !data){
-			var data=string.data;
-			var modelName=string.modelName || string.name;
-			var modelLean=hasValue(string.modelLean)? string.modelLean : true;
-			var string=string.name;
+/*
+	This is basic templating
+		Cloning nodes
+		Returning a node from a function stored
+		Faceplating data over it via direct DOM manipulation
+	It's main purpose is to simple store nodes then return a copy
+	or a compiled version.
+*/
+var _template = (data) => {
+	var render,
+		isRenderDom,
+		isRenderFunction,
+		isRenderString,
+		name = data,
+		faceplate,
+		modelName,
+		templateItem;
+	if (!_isString(data)) {
+		render = data.render;
+		isRenderDom = isDom(render);
+		isRenderFunction = _isFunction(render);
+		isRenderString = _isString(render);
+		faceplate = data.faceplate,
+		name = data.name;
+		modelName = data.modelName;
+
+		if (isRenderString) {
+			isRenderDom = true;
+			render = _toDOM(render);
 		}
-		//store template
-		if (_isString(data)) {
-			var node = _template[string] = _toDOM(data,0);
-			var node = null;
-		} else if (isDom(data) || _isFunction(data)) {
-			_template[string] = data;
-		}
-		if(modelName){
-			var templateModel=function(){
-				return _template(string);
+
+		if (isRenderDom) {
+			templateItem = (optionalData) => {
+				var returned=_clone(render,true);
+				if(faceplate){
+					faceplate(returned,optionalData);
+				}
+				return returned;
 			};
-			templateModel.data=function(){
-				return _model[modelName];
+		}else{
+			templateItem = (optionalData) => {
+				var returned=_toDOM(render(optionalData));
+				if(faceplate){
+					faceplate(returned,optionalData);
+				}
+				return returned;
 			};
-			templateModel.templateName=string;
-			return _model(modelName,templateModel,modelLean);
-		}
-		var template = _template[string];
-
-
-		if(isDom(data) || _isFunction(data) || _isString(data)){
-			return template;
 		}
 
-		if (isDom(template)) {
-			var template = template.cloneNode(true);
-			if (data) {
-				_faceplateDOM(template, data, string);
-			}
-		} else if (_isFunction(template)) {
-			if (data) {
-				var template = template(data);
-			}
-		}
-		return template;
-	};
+		_template[name] = templateItem;
+	}
+	return _template[name];
+};
 
 $.template = _template;

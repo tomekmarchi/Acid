@@ -1,6 +1,6 @@
 //shuffle an array and return a new array
-array_extend.shuffle = function () {
-	var temp = this,
+$.shuffle = function (arrayOG) {
+	var temp = _toArray(arrayOG),
 		array = [],
 		i = 0,
 		len = temp.length;

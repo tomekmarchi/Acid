@@ -1,255 +1,238 @@
-//Compiled import function
-var _import=(function () {
-	//store URL dir data to save bytes and dev time
-	$ext.import = {};
-	//keep track of what has been imported
-	var _imported={};
-	$.imported = _imported;
+/*
+	This imports any type of file.
+	It works just like require in the browser.
 
-	$.dir={
-		css:'',
-		html:'',
-		js:'',
-	};
-	/*
-	IMPORT SHARED FUNCTIONS
-
-	*/
-	var import_listen = function (data) {
-			//if URL loads
-			$eventadd(data.node, 'load', data.call);
-			//if URL fails
-			$eventadd(data.node, 'error', data.error);
-			return false;
-		},
-		import_id = function (id) {
-			return (id.replace(regex_fowardslash, '_').replace(regex_dash, '_').replace(regex_dot, '_') + '_import');
-		},
-		import_events = function (node, url, id, call, error, remove) {
-			var callback = function (event) {
-					if (call) {
-						if (_isString(call)) {
-							_async(function () {
-								var fn = _find(call, _model);
-								if (_isFunction(fn)) {
-									fn();
-								}
-								call = null;
-								fn=null;
-							});
-						} else if (_isFunction(call)) {
-							var splitIt=url.split('/'),
-								model = _find(splitIt[splitIt.length-1].split('.js')[0], _model);
-							_async(function(){
-								call.call(call,model);
-								model=null;
-								call=null;
-							});
-						}
+	The main concern here is to
+		remove event listeners
+		null to ensure absolutely no leaks
+		condense the code
+*/
+var _define,
+	_import = (() => {
+		var directoryNames = (name) => {
+				return directoryNames[name] || '';
+			},
+			_imported = {},
+			import_listen = (returned) => {
+				$eventadd(returned.node, 'load', returned.call, true);
+				$eventadd(returned.node, 'error', returned.call, true);
+			},
+			import_id = (id) => {
+				return (id.replace(regex_fowardslash, '_').replace(regex_dash, '_').replace(regex_dot, '_') + '_import');
+			},
+			importMainCallback = (node, url, id, call, remove, returned) => {
+				if (call) {
+					if (_isString(call)) {
+						call = _find(call, _model);
 					}
-					if (remove) {
-						var par = node.parentNode;
-						if (par) {
-							par.removeChild(node);
+					_async(call);
+				}
+				if (remove) {
+					node.remove();
+				}
+				//clean up
+				$eventremove(node, 'load', returned.call);
+				$eventremove(node, 'error', returned.call);
+				node = null;
+				remove = null;
+				returned = null;
+				call = null;
+				id = null;
+			},
+			import_events = (node, url, id, data, remove) => {
+				var returned = {
+					node: node,
+					call: function(event, funct, removeType) {
+						_imported[id] = 1;
+						event.stopPropagation();
+						var type = event.type,
+							removeType;
+						if (type === 'load') {
+							removeType = remove;
+						} else {
+							removeType = true;
 						}
+						importMainCallback(node, url, id, data.call, removeType, returned);
+						returned = null;
+						node = null;
+						url = null;
+						id = null;
+						data = null;
+						remove = null;
+						event = null;
 					}
-					//clean up
-					$eventremove(node, 'load', callback);
-					$eventremove(node, 'error', callback_error);
-					node = null;
-					callback_error = null;
-					callback = null;
-					error = null;
-				},
-				callback_error = function (event) {
-					if (error) {
-						if (_isString(error)) {
-							(function () {
-								var fn = _find(error, _model);
-								if (_isFunction(fn)) {
-									fn();
-								}
-								error = null;
-							}).async();
-						} else if (_isFunction(error)) {
-							error.async();
-							error = null;
-						}
-					}
-					//clean up
-					$eventremove(node, 'load', callback_error);
-					$eventremove(node, 'error', callback_error);
-					node.parentNode.removeChild(node);
-					node = null;
-					callback_error = null;
-					callback = null;
-					call = null;
 				};
-			var returned={
-				node: node,
-				call: callback,
-				error: callback_error
-			};
-			return returned;
-		};
-/*
+				return returned;
+			},
+			/*
+				CSS IMPORT FUNCTIONS
+			*/
+			//STYLE NODE
+			style_node = _attr(_attr(_tag('link'), 'rel', 'stylesheet'), 'type', 'text/css'),
+			//create style node
+			import_style = (url, id) => {
+				return _attr(_clone(style_node), 'href', url);
+			},
+			/*
+				SCRIPT IMPORT FUNCTIONS
+			*/
+			script_node = _attr(_tag('script'), 'async', ''),
+			//create style node
+			import_script = (url, id) => {
+				return _attr(_clone(script_node), 'src', url);
+			},
+			/*
+				NODE TYPE OBJECT
+			*/
+			node_types = {
+				js: import_script,
+				css: import_style
+			},
+			/*
 
-CSS IMPORT FUNCTIONS
+				EXTEND import to string
 
-*/
-	//STYLE NODE
-	var style_node = _document.createElement('link');
-	style_node.setAttribute('rel', 'stylesheet');
-	style_node.setAttribute('type', 'text/css');
-	//create style node
-	var import_style = function (url, id) {
-			var node = style_node.cloneNode(false);
-			node.setAttribute('href', url);
-			node.setAttribute('id', id);
-			var returned={
-				node: node,
-				remove: false
-			};
-			return returned;
-		};
-/*
-
-SCRIPT IMPORT FUNCTIONS
-
-*/
-	var script_node = _document.createElement('script');
-	script_node.setAttribute('async', '');
-	//create style node
-	var import_script = function (url, id, remove) {
-			var node = script_node.cloneNode(false);
-			node.setAttribute('src', url);
-			node.setAttribute('id', id);
-			var returned={
-				node: node,
-				remove: remove || true
-			};
-			return returned;
-		};
-/*
-
-NODE TYPE OBJECT
-
-
-*/
-	var node_types = {
-		js: import_script,
-		css: import_style
-	};
-/*
-
-	EXTEND import to string
-
-*/
-	//import a single item
-	var import_it = function (url, data, ismultiple) {
-			var data = data || {},
-				dir = data.dir,
-				type = url.match(regex_ext)[0].replace('.', ''),
-				url = ((!dir) ? ((_has(url, '//')) ? url : ($.dir[type] || '') + url) : ($.dir[dir] || '') + url),
-				id = import_id(url);
-			if (!_imported[id]) {
-				//mark as imported already
-				_imported[id] = true;
-				//create node type
-				var node_data = node_types[type](url, id, data.remove),
-					node = node_data.node;
-				//events
-				import_listen(import_events(node, url, id, data.call, data.error, node_data.remove));
-				//append
-				var parent = ((head_node) ? head_node : $(data.selector)).appendChild(node),
-					parent = null;
-			} else {
-				//if already there attach events
-				var node = $id(id);
-				if (node && _has(url, '.js')) {
-					import_listen(import_events(node, url, id, data.call, data.error, ((data.remove) ? data.remove : ((type == 'js') ? true : false))));
-				}else{
-					if(!ismultiple){
-						if (_has(url, '.js')) {
-							var splitIt=url.split('/'),
-								model = _find(splitIt[splitIt.length-1].split('.js')[0], _model);
+			*/
+			//import a single item
+			import_it = (url, data, ismultiple) => {
+				var isJS = isJavascript(url),
+					id = import_id(url),
+					type = url.match(regex_ext)[0].replace('.', ''),
+					remove,
+					node,
+					parent,
+					model;
+				if (!_has(url, '//')) {
+					url = directoryNames(type) + url;
+				}
+				if (!data.remove) {
+					if (isJS) {
+						remove = true;
+					}
+				}
+				if (!_imported[id]) {
+					//mark as imported already
+					_imported[id] = true;
+					//create node type
+					node = node_types[type](url, id);
+					//events
+					import_listen(import_events(node, url, id, data, remove));
+					//append
+					head_node.appendChild(node);
+				} else {
+					//if already there attach events
+					node = $qs('[href="' + url + '"]');
+					if (node && _imported[id] !== 1) {
+						import_listen(import_events(node, url, id, data, remove));
+					} else {
+						_async(data.call);
+					}
+				}
+			},
+			orderArgumentObjects = (array) => {
+				var item,
+					acidMethod,
+					model;
+				return _each_array(array, (item, index) => {
+					if (_isString(item)) {
+						if (isJavascript(item)) {
+							model = getModelName(item);
 							if (model) {
-								return (function(){
-									data.call(model);
-									model=null;
-								}).async();
+								item = model;
+							}
+						} else if (isCSS(item)) {
+							item = $qs('[href="' + item + '"]');
+						} else if (_isString(item)) {
+							acidMethod = _find(item, $);
+							if (acidMethod) {
+								item = acidMethod;
 							}
 						}
 					}
-					return data.call.async();
+					return item;
+				});
+			},
+			define = function(dataModel) {
+				var name = dataModel.name,
+					returned = () => {
+						return dataModel.invoke.apply(returned, orderArgumentObjects(dataModel.import));
+					};
+				if (name) {
+					_model[name] = returned;
 				}
-
-			}
-			return false;
-		};
-	//import an array of items
-	var array_import = function (array,data) {
-		var len = array.length,
-			array_model = [],
-			name = array.join('').replace(regex_fowardslash, '_').replace(regex_dash, '_').replace(regex_dot, '_') + '_promise',
-			error = data.error,
-			call = data.call;
-		//create promise
-		_promise(array, name, function () {
-			for (var i = 0; i < len; i++) {
-				var item = array[i];
-				if (_has(item, '.js')) {
-					var splitIt=item.split('/');
-					var model = _find(splitIt[splitIt.length-1].split('.js')[0], _model);
-					if (model) {
-						array_model.push(model);
-					}
-				}
-			}
-			_async(function () {
-				call.apply(call, array_model);
-				call = null;
-				array_model = null;
-			});
-			return false;
-		});
-		//make imports
-		for (var i = 0; i < len; i++) {
-			(function (item, n) {
-				_import(item,{
-					error: function () {
-						if(error){
-							error(item, n);
+				return returned();
+			},
+			arrayImportLoop = (item, name, error) => {
+				import_it(item, {
+					call: () => {
+						if (error) {
+							error(item, name);
 						}
-						_promised(item, n);
+						_promised(item, name);
 						item = null;
-						n = null;
-						return false;
-					},
-					call: function () {
-						_promised(item, n);
-						item = null;
-						n = null;
-						return false;
+						name = null;
+						error = null;
 					}
-				},1);
-			})(array[i], name);
-		}
-		var name = null;
-		return false;
-	};
-	var importFunction = function(key,value){
-		if(_isFunction(value)){
-			var value={
-				call:value
+				});
+			},
+			array_import = (array, data) => {
+				var name = import_id(array.join('')),
+					error = data.error,
+					call = data.call,
+					callback = () => {
+						call.apply(call, orderArgumentObjects(array));
+						call = null;
+						array = null;
+					},
+					stringArray = _each_array(array, (item, index) => {
+						if (_isString(item)) {
+							if (isJavascript(item) || isCSS(item)) {
+								return item;
+							}
+						}
+					});
+				if (stringArray.length > 0) {
+					_promise(stringArray, name, () => {
+						callback();
+					});
+					//make imports
+					_each_array(stringArray, (item, index) => {
+						arrayImportLoop(item, name, error);
+					});
+				} else {
+					_async(() => {
+						callback();
+					});
+				}
+				name = null;
+				data = null;
+				error = null;
+			},
+			importFunction = (key, value) => {
+				if (_isFunction(value)) {
+					value = {
+						call: value
+					};
+				}
+				if (_isString(key)) {
+					key = [key];
+				}
+				return array_import(key, value);
+			},
+			//Save CSS and JS files directories
+			directoryNames = (name) => {
+				return directoryNames[name] || '';
 			};
-		}
-		if(_isString(key)){
-			return import_it(key,value);
-		}
-		return array_import(key,value);
-	};
-	return importFunction;
-})();
+		//keep track of what has been imported
+		$.imported = _imported;
+		directoryNames.css = '';
+		directoryNames.js = '';
+		$.dir = directoryNames;
+
+		//export Define function
+		_define = define;
+		$.define = define;
+		return importFunction;
+	})();
 
 $.import = _import;

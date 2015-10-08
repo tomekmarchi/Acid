@@ -1,7 +1,6 @@
 //Creates an array excluding all values of the provided arrays using SameValueZero for equality comparisons.
-array_extend.difference = function (compare) {
-	var array = this,
-		difference = [],
+$.difference = function (array,compare) {
+	var difference = [],
 		len = array.length;
 	for (var i = 0; i < len; i++) {
 		var item = array[i],
@@ -14,15 +13,16 @@ array_extend.difference = function (compare) {
 };
 
 //Creates an array excluding all values of the arrays using SameValueZero for equality comparisons.
-array_extend.differenceAll = function () {
-	var array = this,
-		len = array.length,
+$.differenceAll = function (array) {
+	var len = array.length,
+		subitem,
+		item,
 		difference = [];
 	for (var i = 0; i < len; i++) {
-		var item = array[i],
+			item = array[i],
 			sub_len = item.length;
 		for (var a = 0; a < sub_len; a++) {
-			var subitem=item[a],
+				subitem=item[a],
 				indexof=difference.indexOf(subitem);
 			if (indexof == -1) {
 				difference.push(subitem);

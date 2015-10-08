@@ -10,6 +10,6 @@
    * console.log(b, b === a);
    * // -> [1, 2, 3] false
    */
-array_extend.clone = function () {
-	return this.slice(0);
+$.clone = function (item) {
+	return item.slice(0);
 };

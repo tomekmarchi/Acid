@@ -1,10 +1,10 @@
 //Sorts a list into groups and returns a count for the number of objects in each group.
-array_extend.countBy = function (funct) {
-	var array = this,
-		object = {},
+$.countBy = function (array,funct) {
+	var object = {},
+		item,
 		len = array.length;
 	for (var i = 0; i < len; i++) {
-		var item = array[i],
+			item = array[i],
 			results = funct(item);
 		if (!object[results]) {
 			object[results] = 0;

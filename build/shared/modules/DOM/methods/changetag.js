@@ -2,12 +2,14 @@
 var changeTag = function (node, tagename) {
 	var attrs = node.attributes,
 		object = {},
+		item,
 		len = attrs.length;
 	for (var i = 0; i < len; i++) {
-		var item = attrs[i];
+		item = attrs[i];
 		object[item.name] = item.value;
 	}
-	var attrs = null;
+
+	attrs = null;
 	return _dom(tagename, {
 		attr: object
 	});

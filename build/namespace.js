@@ -6,3 +6,5 @@ if (avoid) {
 } else {
 	_global.$ = $;
 }
+
+_global.ACID = $;

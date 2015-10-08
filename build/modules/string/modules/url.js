@@ -1,6 +1,6 @@
 //add paramaters to a URL
-string_extend.addParam = function (n) {
-	var o = this,
+$.addParam = function (url,n) {
+	var o = url,
 		len = o.length;
 	if (len > 0) {
 		var last = o[len-1];

@@ -1,5 +1,4 @@
-function_extend.chain=function(obj){//chain functions together
-	var funct=this;
+$.chain=function(funct,obj){//chain functions together
 
 	//add to chain
 	if(funct.methods){

@@ -17,15 +17,13 @@ var _agentinfo = $.agent = {};
 //acid platform information
 $.acid = {
 	//lib name
-	name: 'ACID',
+	name: 'ACIDjs',
 	//lib version
-	version: 5.9,
+	version: 1,
 	//platform type
-	platform: 'development',
+	platform: 'stable',
 	//website
-	site: 'http://acidjs.com',
-	//demo
-	demo: 'https://lnkit.com'
+	site: 'http://acidjs.com'
 };
 //log out the ACID version
-console.log('ACIDjs v' + $.acid.version);
+acidConsole(`ACIDjs v${$.acid.version} ${$.acid.platform}`,'notify');

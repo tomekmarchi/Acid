@@ -8,8 +8,5 @@ function saveDimensions(){
 
 _isDocumentReady(function(){
 	_body=document.body;
-	saveDimensions();
+	raf(saveDimensions);
 });
-
-$eventadd(window,'load',saveDimensions);
-

@@ -1,14 +1,13 @@
 //is number zero
-number_extend.isZero = function () {
-	return this === 0;
+$.isZero = function (item) {
+	return item === 0;
 };
 //is strict equal to
-number_extend.isEqual = function (num) {
-	return this === num;
+$.isNumberEqual = function (item,num) {
+	return item === num;
 };
 //is In range of two numbers
-number_extend.isInRange = function (start,end) {
-	var num=this;
+$.isNumberInRange = function (num,start,end) {
 	if (end === _undefined) {
      var end = start;
      var start = 0;

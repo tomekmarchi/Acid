@@ -32,15 +32,15 @@
    * // `String.naturalCompare` is provided by the string-natural-compare npm module:
    * // https://www.npmjs.com/package/string-natural-compare
    */
-  array_extend.bsearch= function(value, compareFunction) {
+  $.bsearch= function(item,value, compareFunction) {
     var low = 0;
-    var high = this.length;
+    var high = item.length;
     var mid;
 
     if (compareFunction) {
       while (low < high) {
         mid = (low + high) >>> 1;
-        var direction = compareFunction(this[mid], value);
+        var direction = compareFunction(item[mid], value);
         if (!direction) {
           return mid;
         }
@@ -53,10 +53,10 @@
     } else {
       while (low < high) {
         mid = (low + high) >>> 1;
-        if (this[mid] === value) {
+        if (item[mid] === value) {
           return mid;
         }
-        if (this[mid] < value) {
+        if (item[mid] < value) {
           low = mid + 1;
         } else {
           high = mid;

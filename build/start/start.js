@@ -1,6 +1,4 @@
 (function (_global) {
 	"use strict";
 	//avoid
-	var avoid=false,
-		//global object
-		$={};
+	var avoid=false,$={};

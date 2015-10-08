@@ -1,5 +1,5 @@
 //sum of values in an array
-array_extend.sumOf = function () {
+$.sumOf = function () {
 	var array = this,
 		sumof = 0,
 		len = array.length;

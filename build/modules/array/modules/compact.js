@@ -9,6 +9,4 @@
    * [0, 1, false, 2, '', 3].compact();
    * // -> [1, 2, 3]
    */
-array_extend.compact = function () {
-	return compact(this);
-};
+$.compact = compact;

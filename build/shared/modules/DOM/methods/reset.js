@@ -2,5 +2,5 @@
 var _resetHTML = function (node) {
 	var obj = node.parentNode;
 	obj.innerHTML = obj.innerHTML;
-	return true;
+	return obj;
 };

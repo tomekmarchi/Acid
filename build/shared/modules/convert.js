@@ -9,10 +9,12 @@ var $tostring = object_prototype.toString,
 	domListToArray = function(collection){
 		var list=_toArray(collection),
 			temp=[],
+			item,
+			name,
 			length=list.length;
 		for(var i=0; i<length; i++){
-			var item=list[i],
-				name=item.constructor.name;
+			item=list[i];
+			name=item.constructor.name;
 			if(name=="HTMLCollection" || name=="NodeList"){
 				pushApply(temp,toArrayDeep(item));
 			}else{

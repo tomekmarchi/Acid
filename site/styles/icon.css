@@ -1,32 +1,4 @@
 /* BLOTR ICON MODS */
-.scale.icon,
-.scale .icon,
-.desktop .on-hover-scale:hover .icon {
-	-webkit-transform:scale(1.2);
-	transform:scale(1.2);
-	display:block;
-}
-
-/* ISON color change */
-.ison.like .icon {
-	color:#3498db;
-}
-
-.ison.reshbtn .icon {
-	color:#2c4762;
-}
-
-.ison.dislike .icon {
-	color:#16A085;
-}
-
-.ison.favbtn .icon {
-	color:#d95e40;
-}
-
-.ison.flagbtn .icon {
-	color:red;
-}
 
 .inout,
 .ison .icon {
@@ -41,40 +13,6 @@
 	animation-timing-function:ease;
 }
 
-/* notifications */
-.icon.notification_style {
-	height: 25px;
-	width: 25px;
-	background-color:#000;
-	border-radius:50%;
-	bottom:-8px;
-	box-shadow:inset 0 0 0 2px rgba(0,0,0,0.5);
-	font-size: 12px;
-	font-weight:400;
-	left:-8px;
-	padding: 4px 5px;
-	position:absolute;
-	text-shadow:none;
-	color:#fff;
-	text-align: center;
-}
-
-.icon.notification_style.icon-comment {
-	background-color:#6668EE;
-}
-
-.icon.notification_style.icon-group {
-	background-color:#FC284F;
-}
-
-.icon.notification_style.icon-heart {
-	background-color:#d95e40;
-}
-
-.icon.notification_style.icon-thumbs-up {
-	background-color:#1abc9c;
-}
-
 /* animations */
 .icon-spin,
 .desktop .icon-hover-spin:hover{
@@ -85,20 +23,6 @@
 }
 
 /* KEYFRAMES */
-@-webkit-keyframes inout {
-	0% {
-		-webkit-transform:scale(1);
-	}
-
-	100% {
-		-webkit-transform:scale(1);
-	}
-
-	50% {
-		-webkit-transform:scale(1.5);
-	}
-}
-
 @keyframes inout {
 	0% {
 		transform:scale(1);
@@ -116,18 +40,21 @@
 
 @font-face {
   font-family: 'lnkit';
-  src: url('../styles/font/lnkit.eot');
-  src: url('../styles/font/lnkit.eot') format('embedded-opentype'),
-       url('../styles/font/lnkit.woff') format('woff'),
-       url('../styles/font/lnkit.ttf') format('truetype'),
-       url('../styles/font/lnkit.svg') format('svg');
+  src: url('/site/styles/font/lnkit.eot');
+  src: url('/site/styles/font/lnkit.eot') format('embedded-opentype'),
+	   url('/site/styles/font/lnkit.woff') format('woff'),
+	   url('/site/styles/font/lnkit.ttf') format('truetype'),
+	   url('/site/styles/font/lnkit.svg') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 .icon:before {
 	line-height: 1;
+	font-smoothing:antialiased;
 	-webkit-font-smoothing:antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-moz-font-smoothing: grayscale;
 	-webkit-user-select:none;
 	-moz-user-select:none;
 	user-select:none;
@@ -135,8 +62,7 @@
 	font-style:normal;
 	font-weight:400;
 	user-select:text;
-	-webkit-transition:-webkit-transform .3s ease-in;
-	transition:transform .3s ease ease-in;
+	transition:transform .3s ease;
 }
 
 .icon-2x-hover:hover
@@ -187,23 +113,18 @@
 
 .icon-rotate-90 {
 	display: block;
-	-webkit-transform: rotate(90deg);
 	transform: rotate(90deg);
 }
 .icon-rotate-180 {
-  -webkit-transform: rotate(180deg);
   transform: rotate(180deg);
 }
 .icon-rotate-270 {
-  -webkit-transform: rotate(270deg);
   transform: rotate(270deg);
 }
 .icon-flip-horizontal {
-  -webkit-transform: scale(-1, 1);
   transform: scale(-1, 1);
 }
 .icon-flip-vertical {
-  -webkit-transform: scale(1, -1);
   transform: scale(1, -1);
 }
 :root .icon-rotate-90,
@@ -212,26 +133,6 @@
 :root .icon-flip-horizontal,
 :root .icon-flip-vertical {
   filter: none;
-}
-
-@-moz-keyframes spin {
-	0% {
-		-moz-transform:rotate(0deg);
-	}
-
-	100% {
-		-moz-transform:rotate(359deg);
-	}
-}
-
-@-webkit-keyframes spin {
-	0% {
-		-webkit-transform:rotate(0deg);
-	}
-
-	100% {
-		-webkit-transform:rotate(359deg);
-	}
 }
 
 @keyframes spin {

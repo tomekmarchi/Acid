@@ -1,6 +1,5 @@
 //wrap 2 functions 'this' is launched after the argument function(s)
-function_extend.wrap=function(object,bind){
-	var funct=this;
+$.wrap=function(funct,object,bind){
 	if(_isFunction(object)){
 		return function(){
 			var args=_toArray(arguments);
@@ -9,15 +8,14 @@ function_extend.wrap=function(object,bind){
 	}else if(isPlainObject(object)){
 		for (var i = 0,keys=_object_keys(object), len = keys.length; i < len; i++) {
 			var key=keys[i];
-			object[key]=function_extend.wrap.apply(funct,[object[key],bind]);
+			object[key]=$.wrap.apply(funct,[object[key],bind]);
 		}
 	}
 	return object;
 };
 
 //wrap 2 functions 'this' is launched before the argument function(s)
-function_extend.wrapBefore=function(object,bind){
-	var funct=this;
+$.wrapBefore=function(funct,object,bind){
 	if(_isFunction(object)){
 		return function(){
 			var args=_toArray(arguments);

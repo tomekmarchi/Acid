@@ -11,6 +11,6 @@
    * console.log(files);
    * // -> [3, 2, 1, 0]
    */
-  array_extend.rNumSort = function() {
-      return this.sort(numericalCompareReverse);
+  $.rNumSort = function(array) {
+      return array.sort(numericalCompareReverse);
   };

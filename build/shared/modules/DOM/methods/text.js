@@ -2,7 +2,7 @@
 var	_tc = function (node, value) {
 	if (hasValue(value)) {
 		if (_isFunction(value)) {
-			var value = value.call(node);
+			value = value(node);
 		}
 		node.textContent = value;
 		return node;
@@ -12,7 +12,7 @@ var	_tc = function (node, value) {
 _txt = function (node, value) {
 	if (hasValue(value)) {
 		if (_isFunction(value)) {
-			var value = value.call(node);
+			value = value(node);
 		}
 		node.innerText = value;
 		return node;
@@ -25,7 +25,7 @@ var _textValue=function(node,value){
 	if(child){
 		if (hasValue(value)) {
 			if (_isFunction(value)) {
-				var value = value.call(node);
+				value = value(node);
 			}
 			child.nodeValue = value;
 			return node;

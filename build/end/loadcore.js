@@ -1,5 +1,3 @@
-//prefixes
-$.dir={};
 //load acid lib info
 if (acid_lib) {
 	//get model directory -> save prefix to prefix
@@ -12,8 +10,17 @@ if (acid_lib) {
 //create core script and append to head
 _isDocumentReady(function(){
 	_ensure('core',function(core){
-		core();
+		if(core){
+			_async(core);
+		}
 	});
 });
 //clean up
 var acid_lib = null;
+
+//DOM
+//single node only operations
+extend(_domMethods.nodeOnly, node_prototype);
+//lists without looping
+extend(_domMethods.listOnly, nodelist_prototype);
+extend(_domMethods.listOnly, htmlcollection_prototype);

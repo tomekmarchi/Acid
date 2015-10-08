@@ -1,10 +1,13 @@
 var	_plugInto = function (node, string, object) {
-	var model = _find(string, _model);
+	model = _find(string, _model);
 	if (model) {
-		return model(node, object);
+		model=model(node, object);
+		node=null;
+		object=null;
+		return model;
 	} else {
 		_ensure(string, function () {
-			var model = _find(string, _model);
+			model = _find(string, _model);
 			if (model) {
 				model(node, object);
 			}

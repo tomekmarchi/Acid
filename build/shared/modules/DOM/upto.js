@@ -5,17 +5,16 @@ var _upTpParentLevel = function (node, i) {
 			node = node.parentNode;
 		if (i) {
 			while (i--) {
-				var node = node.parentNode;
+				node = node.parentNode;
 			}
 		}
-		var i = null;
+		i = null;
 		return node;
 	},
 	_upTo = function (node, name) {
 		if (isNumber(name) || !name) {
 			return upTpParentLevel(node, name);
 		}
-		var node;
 		while (node=node.parentNode) {
 			if (!node) {
 				return false;

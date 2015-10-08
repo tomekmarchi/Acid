@@ -19,15 +19,16 @@
  * array.remove(2, 5);
  * // -> [4]
  */
-array_extend.remove = function() {
+$.remove = function(array,args) {
     var remStartIndex = 0;
     var numToRemove = 0;
 
-    for (var i = 0; i < this.length; i++) {
-        var removeCurrentIndex = false;
+    for (var i = 0; i < array.length; i++) {
+        var removeCurrentIndex = false,
+            j;
 
-        for (var j = 0; j < arguments.length; j++) {
-            if (this[i] === arguments[j]) {
+        for (j = 0; j < args.length; j++) {
+            if (array[i] === args[j]) {
                 removeCurrentIndex = true;
                 break;
             }
@@ -39,15 +40,15 @@ array_extend.remove = function() {
             }
             ++numToRemove;
         } else if (numToRemove) {
-            this.splice(remStartIndex, numToRemove);
+            array.splice(remStartIndex, numToRemove);
             i -= numToRemove;
             numToRemove = 0;
         }
     }
 
     if (numToRemove) {
-        this.splice(remStartIndex, numToRemove);
+        array.splice(remStartIndex, numToRemove);
     }
 
-    return this;
+    return array;
 };

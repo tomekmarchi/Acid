@@ -1,4 +1,4 @@
 //get largest number from array
-array_extend.largest = function () {
-	return _math.max.apply(_math, this);
+$.largest = function (item) {
+	return _math.max.apply(_math, item);
 };

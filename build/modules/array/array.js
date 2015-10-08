@@ -18,7 +18,7 @@ var _flatten_once = function(arr) {
                 return _flatten_once(array);
             }
             for (var i = 0; i < level; i++) {
-                var array = array.reduce(function(previousValue, currentValue, index, array) {
+                    array = array.reduce(function(previousValue, currentValue, index, array) {
                     return previousValue.concat((_isArray(currentValue)) ? currentValue : [currentValue]);
                 }, []); //initial starting value is an amepty array []
             }

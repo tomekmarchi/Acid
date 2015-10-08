@@ -1,4 +1,6 @@
 //extend object prototype
-$.extend = object_extend.extend = function(firstSource){
-	return $merge(this.prototype,firstSource);
+var _extend = function(item,firstSource){
+	return $merge(item.prototype,firstSource);
 };
+
+$.extend = _extend

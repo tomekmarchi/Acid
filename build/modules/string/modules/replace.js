@@ -1,5 +1,5 @@
 //replace a phrase (word) with a string from an array of strings
-string_extend.replacePhrase = function (w, a) {
+$.replacePhrase = function (w, a) {
 	if (_isArray(w)) {
 		var w = w.join('|');
 	} else if (isPlainObject(w)) {
@@ -18,7 +18,7 @@ string_extend.replacePhrase = function (w, a) {
 	}
 };
 //replace a string with a string from an array of strings
-string_extend.replaceList = function (a, r) {
+$.replaceList = function (a, r) {
 	var s = this,
 		len = a.length;
 	for (var i = 0; i < len; i++) {

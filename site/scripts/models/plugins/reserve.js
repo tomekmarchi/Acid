@@ -1,9 +1,10 @@
-(function () {
+(function ($) {
 	"use strict";
-	var frag = $.frag,
-		column_node=$.tag('div').cn('left column max-full'),
-		math_random = Math.random,
-		add_items = function (self, posts, type, columns) {
+	var frag = document.createDocumentFragment,
+		column_node=document.createElement('div'),
+		math_random = Math.random;
+		column_node.setAttribute('class','left column max-full');
+		var add_items = function (self, posts, type, columns) {
 			if (self.column_number == 1) {
 				self.amount = self.amount + 1;
 				columns[0].appendChild(posts);
@@ -46,14 +47,19 @@
 				data = [],
 				empty = [],
 				items_len = [],
+				newNode,
 				items = [];
 			for (var i = 0; i < column_number; i++) {
-				html.appendChild(column_node.clone().cl('column_' + i).attr('style', 'width:' + cls + '%'));
+				newNode = column_node.clone();
+				newNode.classList.add('column_' + i);
+				newNode.setAttribute('style', 'width:' + cls + '%');
+				html.appendChild(newNode);
 				out[i] = [];
 				data[i] = [];
 				empty[i] = [];
 				items_len[i] = 0;
 			}
+			newNode=null;
 			return {
 				out: out,
 				empty: empty,
@@ -64,7 +70,7 @@
 			}
 		},
 		estimate = function (data) {
-			var width = data.container.clw(),
+			var width = data.container.clientWidth,
 				item_width = data.item_width_min,
 				optimal_max = data.optimal_max,
 				optimal_min = data.optimal_min;
@@ -99,9 +105,11 @@
 			};
 		},
 		get_live_lists = function (columns, column_number, cls) {
-			var items = [];
+			var items = [],
+				item;
 			for (var i = 0; i < column_number; i++) {
-				items[i] = columns[i].cls(cls);
+				var item=items[i] = columns[i];
+				item.classList.add(cls);
 			}
 			return items;
 		},
@@ -171,8 +179,7 @@
 				self.out.pop();
 			}
 			self.column_number = column_number;
-			var columns = container.cls(self.setup.column);
-			columns.attr('style', 'width:' + estimate_obj.cls + '%');
+			container.setAttribute('style', 'width:' + estimate_obj.cls + '%');
 			self.html = columns_obj.html;
 			self.data = columns_obj.data;
 			estimate_obj.merge(self);
@@ -211,8 +218,8 @@
 				remove[i].remove();
 			}
 			self.column_number = column_number;
-			var columns = container.cls(self.setup.column);
-			columns.attr('style', 'width:' + estimate_obj.cls + '%');
+			container.classList.add(self.setup.column);
+			container.setAttribute('style', 'width:' + estimate_obj.cls + '%');
 			self.html = columns_obj.html;
 			self.data = columns_obj.data;
 			estimate_obj.merge(self);
@@ -234,7 +241,7 @@
 			estimate_obj = estimate(data),
 			columns_obj = generate_columns(estimate_obj);
 		container.appendChild(columns_obj.html);
-		var columns = container.cls(data.column);
+		container.classList.add(data.column);
 		columns_obj.items = get_live_lists(columns, estimate_obj.column_number, data.cls);
 		if (veil_model) {
 			var getviewborders = veil_model.getviewborders,
@@ -243,7 +250,7 @@
 				};
 		}
 		var new_updatefunction=update_reserve.debounce(200);
-		return {
+		return ({
 			busy: false,
 			setup: data,
 			animations: data.animation,
@@ -268,6 +275,6 @@
 					add_items(self, posts, type, columns);
 				}).async();
 			}
-		}.merge(columns_obj);
+		}).merge(columns_obj);
 	};
-})();
+})(ACID);

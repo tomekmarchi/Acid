@@ -1,4 +1,4 @@
 //for loop
-object_extend.each = function (fn) {
-	return _each_object(this,fn);
+$.eachObject = function (item,fn) {
+	return _each_object(item,fn);
 };

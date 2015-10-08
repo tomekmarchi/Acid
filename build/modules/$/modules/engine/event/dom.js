@@ -1,51 +1,22 @@
 var _eventNames = $.eventNames = [];
-(function () {
-	function getEvents(object,dublicateCheck){
-		var ev = '',
-		    out = {};
-		for (ev in window) {
-		    if (/^on/.test(ev)) {
-			    var item=ev.replace('on','');
-			    if(!dublicateCheck[item]){
-					out[ev.replace('on','')] = {
-						capture: true,
-					};
-			    }
-		    }
-		}
-		return out;
+(function() {
+	function getEvents(object, dublicateCheck) {
+		return ["readystatechange", "mouseenter", "mouseleave", "wheel", "copy", "cut", "paste", "beforescriptexecute", "afterscriptexecute", "abort", "canplay", "canplaythrough", "change", "click", "ctextmenu", "dblclick", "drag", "dragend", "dragenter", "dragleave", "dragover", "dragstart", "drop", "duratichange", "emptied", "ended", "input", "invalid", "keydown", "keypress", "keyup", "loadeddata", "loadedmetadata", "loadstart", "mousedown", "mousemove", "mouseout", "mouseover", "mouseup", "pause", "play", "playing", "progress", "ratechange", "reset", "seeked", "seeking", "select", "show", "stalled", "submit", "suspend", "timeupdate", "volumechange", "waiting", "fullscreenchange", "fullscreenerror", "pointerlockchange", "pointerlockerror", "blur", "error", "focus", "load", "scroll"];
 	}
 
 	function listenOnAllEvents() {
+		var event = {},
+			documentEvents = getEvents();
+		_each_array(documentEvents,function(item,key){
+			event[item]={};
+		});
 
-		var event = {};
-		var dublicateCheck= {};
-
-		var windowEvents=getEvents(_window,dublicateCheck);
-		windowEvents.obj=_window;
-		windowEvents.resize.fn=function () {
-			if ($debug) {
-				$.log('resize cache updated');
+		event.resize = {
+			fn: function() {
+				saveDimensions();
 			}
-			saveDimensions();
-			return false;
 		};
 
-		event.window=windowEvents;
-
-		var documentEvents=getEvents(document,dublicateCheck);
-		documentEvents.obj=document;
-
-		event.document=documentEvents;
-
-
-		_each_object(event, function (item) {
-			_each_object(item, function (subItem, key) {
-				if(key!='obj'){
-					_eventNames.push(key);
-				}
-			});
-		});
 		_event(event);
 	}
 	_isDocumentReady(listenOnAllEvents);
