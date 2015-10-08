@@ -1,45 +1,48 @@
-var _service = (function () {
-	var service_function = function (name, i, data) {
-		if (i) {
-			return _service[name].run(i, data);
-		}
-		return _service[name];
-	};
-	return service_function;
-})();
+/*
+		A service is an object that holds a set of processes that
+		can be added over time.
+		Then this service can run said processes.
+*/
 
-$.service = _service;
-
-var _serviceCreate = (function () {
-	var checkservice = function (root, obj, items) {
-		if (_isFunction(obj)) {
-			return obj.apply(root, items);
-		} else {
-			var r = [];
-			for (var i = 0,keys=_object_keys(obj), len = keys.length; i < len; i++) {
-				var key=keys[i];
-				var item = obj[key];
-				r.push(checkservice(root, item, items));
-			}
-			return r;
-		}
-	};
-	var createService = function (name) {
-		var service = {
-			run: function (i, data) {
-				var self = this;
-				if (i) {
-					return checkservice(self, self.process[i], data);
+var acidService = (name) => {
+		return acidService[name];
+	},
+	acidCreateService = (name, optionalObjects) => {
+		var service = acidService[name] = {},
+			serviceProcess = service.process = optionalObjects || {},
+			serviceRun = service.run = (optionalNameOfProcess) => {
+				if (optionalNameOfProcess) {
+					serviceProcess[optionalNameOfProcess]();
+				} else {
+					_each_object(serviceProcess, (item) => {
+						item();
+					});
 				}
-				return checkservice(self, self.process);
 			},
-			process: {}
-		};
-		service.run = service.run.bind(service);
-		_service[name] = service;
-		return _service[name];
+			serviceAdd = service.add = (object) => {
+				_each_object(object, (item, key) => {
+					serviceProcess[key] = item.bind(service);
+				});
+			},
+			serviceEnd = service.end = () => {
+				service = null;
+				serviceProcess = null;
+				serviceRun = null;
+				serviceEnd = null;
+				serviceAdd = null;
+				service[name] = null;
+			};
+		_each_object(service, (item, key) => {
+			if (_isFunction(item)) {
+				service[key] = item.bind(service);
+			}
+		});
+		_each_object(serviceProcess, (item, key) => {
+			if (_isFunction(item)) {
+				serviceProcess[key] = item.bind(service);
+			}
+		});
 	};
-	return createService;
-})();
 
-$.serviceCreate = _serviceCreate;
+$.createService = acidCreateService;
+$.service = acidService;

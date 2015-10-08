@@ -1,8 +1,8 @@
-var _bacthAdd = (function () {
-	var batchCancelFrame = false;
-	var batchCount = 0;
-	var batchChanges = [];
-	var _batchLoop = function () {
+var _bacthAdd = (() => {
+	var batchCancelFrame = false,
+		batchCount = 0,
+		batchChanges = [],
+		_batchLoop = () => {
 			var items = batchChanges;
 			for (var i = 0; i < batchCount; i++) {
 				items[i]();
@@ -10,19 +10,16 @@ var _bacthAdd = (function () {
 			batchCount = 0;
 			batchChanges = [];
 			batchCancelFrame = false;
-			return false;
-		};
-	var _batchCheck = function () {
+		},
+		_batchCheck = () => {
 			if (!batchCancelFrame) {
-				batchCancelFrame = _RAF(_batchLoop);
+				batchCancelFrame = raf(_batchLoop);
 			}
-			return false;
-		};
-	var batchAdd = function (func) {
+		},
+		batchAdd = (func) => {
 			batchChanges[batchCount] = func;
 			batchCount = batchCount + 1;
 			_batchCheck();
-			return false;
 		};
 	return batchAdd;
 })();

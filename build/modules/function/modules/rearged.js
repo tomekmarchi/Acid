@@ -1,28 +1,17 @@
 //Creates a function that invokes func with arguments arranged according to the specified indexes where the argument value at the first index is provided as the first argument, the argument value at the second index is provided as the second argument, and so on.
-$.reArg=function(funct,argsOG){
-	var list=_toArray(argsOG),
-		list_len=list.length;
-
-	var rearged=function(){
-		var args=[],
-			order=_toArray(argsOG),
-			len=order.length;
-
-		for(var i=0; i< list_len; i++){
-			args.push(order[list[i]]);
-		}
-
-		return funct.apply(rearged,args);
+$.reArg=(funct,list) => {
+	return function(){
+		return funct.apply(funct,_each_array(_toArray(arguments),function(item,index){
+			args.push(order[list[index]]);
+		}));
 	};
-
-	return rearged;
 };
 
 /*
 
 var rearg=(function(a, b, c) {
   return [a, b, c];
-}).rearg(1,2,0);
+},[1,2,0]);
 
 rearg(1,2,3);
 -> [2, 3, 1]

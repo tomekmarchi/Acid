@@ -6,8 +6,8 @@ $.map=function(items){
 	return new _map(items);
 };
 
-var weakEvents;
-var weakData;
+var weakEvents,
+	weakData;
 
 if(weak_map){
 	$.weakEvent=weakEvents=new weak_map();

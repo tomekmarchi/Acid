@@ -1,43 +1,21 @@
-var _cache =(function(){
-	//add an array of cache items. Keys are "this" array and values are corresponding arguments
-	var array_cache=function (cache_names,a) {
-		var len = cache_names.length,
-			temp=[];
-		if (a) {
-			for (var i = 0; i < len; i++) {
-				temp[i]=_cache(cache_names[i],a[i]);
+var _cache = (function() {
+	var cache_function = (key, value) => {
+			if (!key) {
+				return _cache;
+			}else if (hasValue(value)) {
+				return _cache[key] = value;
 			}
-		}else{
-			for (var i = 0; i < len; i++) {
-				temp[i]=_cache(cache_names[i]);
-			}
-		}
-		return temp;
-	};
-
-	//cache
-	var cache_function=function (key,value) {
-		if(!key){
-			return _object_keys(_cache);
-		}
-		if(_isArray(key)){
-			return array_cache(key,value);
-		}
-		if (hasValue(value)) {
-			return _cache[key] = value;
-		}
-		return _cache[key];
-	};
-	//toggle a cache item with two values
-	$.cacheToggle=function (key, a, b) {
-		var v = _cache[key];
-		if (v == a) {
-			return _cache[key] = b;
-		}
-		return _cache[key] = a;
-	};
-
+			return _cache[key];
+		};
 	return cache_function;
 })();
 
- $.cache = _cache;
+$.cache = _cache;
+
+//toggle a cache item with two values
+$.cacheToggle = (key, a, b) => {
+	if (_cache[key] === a) {
+		return _cache[key] = b;
+	}
+	return _cache[key] = a;
+};

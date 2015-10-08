@@ -1,17 +1,14 @@
 //short hand for request animation frame
-$.curry = function (funts) {
+$.curry = function(funts) {
 	var count = 0,
 		args = [],
-		len = funts.length,
-		curry = function () {
-			var sub_args = _toArray(arguments),
-				sub_len = arguments.length;
-			for (var i = 0; i < sub_len; i++) {
-				args.push(sub_args[i]);
+		argsLength = funts.length,
+		curry = function() {
+			args = _each_array(_toArray(arguments), (item) => {
 				count++;
-			}
-			if (len == count) {
-				var value=funts.apply(curry, args);
+			});
+			if (argsLength == count) {
+				var value = funts.apply(funts, args);
 				count = 0;
 				args = [];
 				return value;
@@ -38,19 +35,17 @@ $.curry = function (funts) {
 
 */
 
-$.curryRight = function (funts) {
+$.curryRight = function(funts) {
 	var count = 0,
 		args = [],
-		len = funts.length,
-		curry = function () {
-			var sub_args = _toArray(arguments),
-				sub_len = arguments.length;
-			for (var i = 0; i < sub_len; i++) {
-				args.unshift(sub_args[i]);
+		argsLength = funts.length,
+		curry = function() {
+			_each_array(_toArray(arguments), (item) => {
+				args.unshift(item);
 				count++;
-			}
-			if (len == count) {
-				var value=funts.apply(curry, args);
+			});
+			if (argsLength == count) {
+				var value = funts.apply(curry, args);
 				count = 0;
 				args = [];
 				return value;
@@ -61,10 +56,6 @@ $.curryRight = function (funts) {
 };
 
 /*
-
-	var curried=function(a,b,c){
-		return [a,b,c];
-	}.curryright();
 
 	curried(1)(2)(3);
 	// → [1, 2, 3]

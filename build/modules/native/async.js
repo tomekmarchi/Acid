@@ -1,13 +1,13 @@
 //async launch an array of functions
-$.async = function (fns) {
-	if(_isArray(fns)){
-		var len = fns.length;
-		for (var i = 0; i < len; i++) {
-			_async(fns[i]);
-		}
-		var len = null;
-	} else if(_isFunction(fns)){
+var asyncLaunch= (item) => {
+	_async(item);
+};
+$.async = function(fns) {
+	if (_isFunction(fns)) {
 		_async(fns);
+	} else if (_isArray(fns)) {
+		_each_array(fns, asyncLaunch);
+	} else {
+		_each_object(fns,asyncLaunch);
 	}
-	return false;
 };

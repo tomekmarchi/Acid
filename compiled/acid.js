@@ -2848,12 +2848,7 @@
 	$.stringify = function(item) {
 		return stringify(item);
 	};
-	//initl functions prototype object
-	var function_extend = {};
-	//short hand for request animation frame
-	function_extend.raf = function() {
-		return requestAnimationFrame(this);
-	};
+
 	//Creates a function that accepts up to n arguments ignoring any additional arguments. The 2nd argument will be binded if none the initial new function will be.
 	$.ary = function(funct, amount, bind) {
 		var ary = function ary() {
@@ -2861,6 +2856,7 @@
 		};
 		return ary;
 	};
+
 	$.chain = function(funct, obj) {
 		//chain functions together
 
@@ -2935,16 +2931,13 @@
 	$.curry = function(funts) {
 		var count = 0,
 			args = [],
-			len = funts.length,
+			argsLength = funts.length,
 			curry = function curry() {
-				var sub_args = _toArray(arguments),
-					sub_len = arguments.length;
-				for (var i = 0; i < sub_len; i++) {
-					args.push(sub_args[i]);
+				args = _each_array(_toArray(arguments), function(item) {
 					count++;
-				}
-				if (len == count) {
-					var value = funts.apply(curry, args);
+				});
+				if (argsLength == count) {
+					var value = funts.apply(funts, args);
 					count = 0;
 					args = [];
 					return value;
@@ -2974,15 +2967,13 @@
 	$.curryRight = function(funts) {
 		var count = 0,
 			args = [],
-			len = funts.length,
+			argsLength = funts.length,
 			curry = function curry() {
-				var sub_args = _toArray(arguments),
-					sub_len = arguments.length;
-				for (var i = 0; i < sub_len; i++) {
-					args.unshift(sub_args[i]);
+				_each_array(_toArray(arguments), function(item) {
+					args.unshift(item);
 					count++;
-				}
-				if (len == count) {
+				});
+				if (argsLength == count) {
 					var value = funts.apply(curry, args);
 					count = 0;
 					args = [];
@@ -2995,10 +2986,6 @@
 
 	/*
  
- 	var curried=function(a,b,c){
- 		return [a,b,c];
- 	}.curryright();
- 
  	curried(1)(2)(3);
  	// → [1, 2, 3]
  
@@ -3009,19 +2996,20 @@
  	// → [1, 2, 3]
  
  */
+
 	//Creates a function that negates the result of the predicate func. The func predicate is invoked with the this binding and arguments of the created function.
 	$.negate = function(func) {
 		return function() {
-			var negate = func.apply(func, _toArray(arguments));
-			if (negate) {
+			if (func.apply(func, _toArray(arguments))) {
 				return false;
 			}
 			return true;
 		};
 	};
+
 	//Creates a function that is restricted to execute func once. Repeat calls to the function will return the value of the first call. The func is executed with the this binding of the created function.
 	$.once = function(fn) {
-		var value = 0,
+		var value,
 			amount = false;
 		return function() {
 			if (!amount) {
@@ -3060,55 +3048,44 @@
 			return value;
 		};
 	};
+
 	//Creates a function that invokes func with arguments arranged according to the specified indexes where the argument value at the first index is provided as the first argument, the argument value at the second index is provided as the second argument, and so on.
-	$.reArg = function(funct, argsOG) {
-		var list = _toArray(argsOG),
-			list_len = list.length;
-
-		var rearged = function rearged() {
-			var args = [],
-				order = _toArray(argsOG),
-				len = order.length;
-
-			for (var i = 0; i < list_len; i++) {
-				args.push(order[list[i]]);
-			}
-
-			return funct.apply(rearged, args);
+	$.reArg = function(funct, list) {
+		return function() {
+			return funct.apply(funct, _each_array(_toArray(arguments), function(item, index) {
+				args.push(order[list[index]]);
+			}));
 		};
-
-		return rearged;
 	};
 
 	/*
  
  var rearg=(function(a, b, c) {
    return [a, b, c];
- }).rearg(1,2,0);
+ },[1,2,0]);
  
  rearg(1,2,3);
  -> [2, 3, 1]
  
  
  */
+
 	//debounce function
 	$.debounce = function(original, time) {
-		var timeout = false;
-
-		var fn = function fn() {
-			var boundTo = this;
-			if (timeout) {
-				clearTimeout(timeout);
-			}
-			var args = _toArray(arguments);
-			timeout = setTimeout(function() {
-				original.apply(boundTo, args);
-				timeout = false;
-				args = null;
-				boundTo = null;
-			}, time);
-		};
-
+		var timeout = false,
+			fn = function fn() {
+				if (timeout !== false) {
+					clearTimeout(timeout);
+				}
+				var args = _toArray(arguments),
+					boundTo = this;
+				timeout = setTimeout(function() {
+					original.apply(boundTo, args);
+					timeout = false;
+					args = null;
+					boundTo = null;
+				}, time);
+			};
 		fn.run = function() {
 			if (timeout) {
 				clearTimeout(timeout);
@@ -3119,7 +3096,6 @@
 			if (timeout) {
 				clearTimeout(timeout);
 				timeout = false;
-				return false;
 			}
 		};
 		return fn;
@@ -3127,30 +3103,25 @@
 
 	//throttle function
 	$.throttle = function(func, time) {
-		var timeout = false;
-
-		var fn = function fn() {
-			if (timeout) {
-				return false;
-			}
-			var a = _toArray(arguments);
-			timeout = setTimeout(function() {
-				func.apply(fn, a);
-				timeout = false;
-			}, time);
-		};
+		var timeout = false,
+			fn = function fn() {
+				if (timeout !== false) {
+					return false;
+				}
+				var args = _toArray(arguments);
+				timeout = setTimeout(function() {
+					func.apply(fn, args);
+					args = null;
+					timeout = false;
+				}, time);
+			};
 		fn.clear = function() {
-			if (timeout) {
-				clearTimeout(timeout);
-				timeout = false;
-				return false;
-			}
+			clearTimeout(timeout);
+			timeout = false;
 		};
 		fn.run = function() {
-			if (timeout) {
-				clearTimeout(timeout);
-				timeout = false;
-			}
+			clearTimeout(timeout);
+			timeout = false;
 			func.apply(fn, _toArray(arguments));
 		};
 
@@ -3170,11 +3141,10 @@
 	//async function call
 	$.asyncFN = haspromise ? function(fnc) {
 		_promise_async.then(fnc);
-		return false;
 	} : function(fnc) {
 		setTimeout(fnc, 0);
-		return false;
 	};
+
 	//wrap 2 functions 'this' is launched after the argument function(s)
 	$.wrap = function(funct, object, bind) {
 		if (_isFunction(object)) {
@@ -3208,7 +3178,6 @@
 	};
 	//initilize number for Number prototype
 	var number_extend = {};
-
 	//is number zero
 	$.isZero = function(item) {
 		return item === 0;
@@ -3220,11 +3189,12 @@
 	//is In range of two numbers
 	$.isNumberInRange = function(num, start, end) {
 		if (end === _undefined) {
-			var end = start;
-			var start = 0;
+			var end = start,
+				start = 0;
 		}
 		return num > start && num < end;
 	};
+
 	//Math.js math utilities
 	(function() {
 		//cache math functions
@@ -3412,91 +3382,68 @@
 	};
 
 	//async launch an array of functions
-	$.async = function(fns) {
-		if (_isArray(fns)) {
-			var len = fns.length;
-			for (var i = 0; i < len; i++) {
-				_async(fns[i]);
-			}
-			var len = null;
-		} else if (_isFunction(fns)) {
-			_async(fns);
-		}
-		return false;
+	var asyncLaunch = function asyncLaunch(item) {
+		_async(item);
 	};
+	$.async = function(fns) {
+		if (_isFunction(fns)) {
+			_async(fns);
+		} else if (_isArray(fns)) {
+			_each_array(fns, asyncLaunch);
+		} else {
+			_each_object(fns, asyncLaunch);
+		}
+	};
+
 	var _bacthAdd = (function() {
-		var batchCancelFrame = false;
-		var batchCount = 0;
-		var batchChanges = [];
-		var _batchLoop = function _batchLoop() {
-			var items = batchChanges;
-			for (var i = 0; i < batchCount; i++) {
-				items[i]();
-			}
-			batchCount = 0;
-			batchChanges = [];
-			batchCancelFrame = false;
-			return false;
-		};
-		var _batchCheck = function _batchCheck() {
-			if (!batchCancelFrame) {
-				batchCancelFrame = _RAF(_batchLoop);
-			}
-			return false;
-		};
-		var batchAdd = function batchAdd(func) {
-			batchChanges[batchCount] = func;
-			batchCount = batchCount + 1;
-			_batchCheck();
-			return false;
-		};
+		var batchCancelFrame = false,
+			batchCount = 0,
+			batchChanges = [],
+			_batchLoop = function _batchLoop() {
+				var items = batchChanges;
+				for (var i = 0; i < batchCount; i++) {
+					items[i]();
+				}
+				batchCount = 0;
+				batchChanges = [];
+				batchCancelFrame = false;
+			},
+			_batchCheck = function _batchCheck() {
+				if (!batchCancelFrame) {
+					batchCancelFrame = raf(_batchLoop);
+				}
+			},
+			batchAdd = function batchAdd(func) {
+				batchChanges[batchCount] = func;
+				batchCount = batchCount + 1;
+				_batchCheck();
+			};
 		return batchAdd;
 	})();
 	$.batch = _bacthAdd;
 
 	var _cache = (function() {
-		//add an array of cache items. Keys are "this" array and values are corresponding arguments
-		var array_cache = function array_cache(cache_names, a) {
-			var len = cache_names.length,
-				temp = [];
-			if (a) {
-				for (var i = 0; i < len; i++) {
-					temp[i] = _cache(cache_names[i], a[i]);
-				}
-			} else {
-				for (var i = 0; i < len; i++) {
-					temp[i] = _cache(cache_names[i]);
-				}
-			}
-			return temp;
-		};
-
-		//cache
 		var cache_function = function cache_function(key, value) {
 			if (!key) {
-				return _object_keys(_cache);
-			}
-			if (_isArray(key)) {
-				return array_cache(key, value);
-			}
-			if (hasValue(value)) {
+				return _cache;
+			} else if (hasValue(value)) {
 				return _cache[key] = value;
 			}
 			return _cache[key];
 		};
-		//toggle a cache item with two values
-		$.cacheToggle = function(key, a, b) {
-			var v = _cache[key];
-			if (v == a) {
-				return _cache[key] = b;
-			}
-			return _cache[key] = a;
-		};
-
 		return cache_function;
 	})();
 
 	$.cache = _cache;
+
+	//toggle a cache item with two values
+	$.cacheToggle = function(key, a, b) {
+		if (_cache[key] === a) {
+			return _cache[key] = b;
+		}
+		return _cache[key] = a;
+	};
+
 	//console.log
 	var _log = console.log,
 		_consoleObject = console,
@@ -3541,27 +3488,13 @@
 
 	//add event
 	$.eventAdd = function(obj, name, funct, bool) {
-		if (!funct) {
-			var checkSpot = weakEvents.get(obj);
-			if (checkSpot) {
-				_each_object(name, function(value, key) {
-					checkSpot[key] = value;
-				});
-			} else {
-				weakEvents.set(obj, name);
-				checkSpot = weakEvents.get(obj);
-			}
-			return checkSpot;
-		}
 		return $eventadd(obj, name, funct, bool);
 	};
 	//remove event
 	$.eventRemove = function(obj, name, funct, bool) {
-		if (!funct) {
-			return weakEvents['delete'](obj);
-		}
 		return $eventremove(obj, name, funct, bool);
 	};
+
 	$.exec = function(a, b, c) {
 		return _document.execCommand(a, b, c);
 	};
@@ -3605,7 +3538,7 @@
 	$.isHTMLCollection = _isHTMLCollection;
 	$.isNodeList = _isNodeList;
 
-	function isJson(str) {
+	function jsonWithCatch(str) {
 		try {
 			return json.parse(str);
 		} catch (e) {
@@ -3614,7 +3547,8 @@
 	}
 
 	//convert from json string to json object cache it to use across lib
-	var $json = $.json = isJson;
+	$.json = jsonWithCatch;
+
 	$.weakMap = function(items) {
 		return new weak_map(items);
 	};
@@ -3623,14 +3557,14 @@
 		return new _map(items);
 	};
 
-	var weakEvents;
-	var weakData;
+	var weakEvents, weakData;
 
 	if (weak_map) {
 		$.weakEvent = weakEvents = new weak_map();
 
 		$.weakData = weakData = new weak_map();
 	}
+
 	/*
  
  Math Related cached functions
@@ -3655,27 +3589,24 @@
 	$.sqrt2 = _math.SQRT2;
 	var _model = (function() {
 		//get model -> (bool) option for a lean model meaning no methods will be attached
-		var model_function = function model_function(model_name, object, bool) {
-			if (_has(model_name, '.')) {
-				return _find(model_name, _model);
-			} else {
-				if (hasValue(object)) {
-					_model[model_name] = object;
-					var model = _model[model_name];
-					if (_isFunction(model)) {
-						_model[model_name] = model.bind(_model[model_name]);
-					} else if (isPlainObject(model)) {
-						_each_object(model, function(item, key) {
-							if (_isFunction(item)) {
-								_model[model_name][key] = item.bind(model);
-							}
-						});
-					}
-					model.modelName = model_name;
-					return model;
+		var model_function = function model_function(modelName, object, bool) {
+			if (hasValue(object)) {
+				var model = _model[modelName] = object;
+				if (_isFunction(model)) {
+					model = model.bind(model);
+				} else if (isPlainObject(model)) {
+					_each_object(model, function(item, key) {
+						if (_isFunction(item)) {
+							model[key] = item.bind(model);
+						}
+					});
 				}
+				model.modelName = modelName;
+				return model;
+			} else if (_has(modelName, '.')) {
+				return _find(modelName, _model);
 			}
-			return _model[model_name];
+			return _model[modelName];
 		};
 		return model_function;
 	})();
@@ -3686,51 +3617,55 @@
 	$.keys = _object_keys;
 	$.getPropDescrip = _object_getOwnPropertyDescriptor;
 	$.assign = _object_assign;
-	var _service = (function() {
-		var service_function = function service_function(name, i, data) {
-			if (i) {
-				return _service[name].run(i, data);
-			}
-			return _service[name];
-		};
-		return service_function;
-	})();
+	/*
+ 		A service is an object that holds a set of processes that
+ 		can be added over time.
+ 		Then this service can run said processes.
+ */
 
-	$.service = _service;
-
-	var _serviceCreate = (function() {
-		var checkservice = function checkservice(root, obj, items) {
-			if (_isFunction(obj)) {
-				return obj.apply(root, items);
-			} else {
-				var r = [];
-				for (var i = 0, keys = _object_keys(obj), len = keys.length; i < len; i++) {
-					var key = keys[i];
-					var item = obj[key];
-					r.push(checkservice(root, item, items));
-				}
-				return r;
-			}
-		};
-		var createService = function createService(name) {
-			var service = {
-				run: function run(i, data) {
-					var self = this;
-					if (i) {
-						return checkservice(self, self.process[i], data);
+	var acidService = function acidService(name) {
+			return acidService[name];
+		},
+		acidCreateService = function acidCreateService(name, optionalObjects) {
+			var service = acidService[name] = {},
+				serviceProcess = service.process = optionalObjects || {},
+				serviceRun = service.run = function(optionalNameOfProcess) {
+					if (optionalNameOfProcess) {
+						serviceProcess[optionalNameOfProcess]();
+					} else {
+						_each_object(serviceProcess, function(item) {
+							item();
+						});
 					}
-					return checkservice(self, self.process);
 				},
-				process: {}
-			};
-			service.run = service.run.bind(service);
-			_service[name] = service;
-			return _service[name];
+				serviceAdd = service.add = function(object) {
+					_each_object(object, function(item, key) {
+						serviceProcess[key] = item.bind(service);
+					});
+				},
+				serviceEnd = service.end = function() {
+					service = null;
+					serviceProcess = null;
+					serviceRun = null;
+					serviceEnd = null;
+					serviceAdd = null;
+					service[name] = null;
+				};
+			_each_object(service, function(item, key) {
+				if (_isFunction(item)) {
+					service[key] = item.bind(service);
+				}
+			});
+			_each_object(serviceProcess, function(item, key) {
+				if (_isFunction(item)) {
+					serviceProcess[key] = item.bind(service);
+				}
+			});
 		};
-		return createService;
-	})();
 
-	$.serviceCreate = _serviceCreate;
+	$.createService = acidCreateService;
+	$.service = acidService;
+
 	//localstorage
 	$.local = _localstorage;
 	//localstorage clear
