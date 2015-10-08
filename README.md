@@ -16,6 +16,10 @@ Model, Define & Module
 
 Acid is built around a model system. Models can be loaded automatically from acid attached events or programmatically. Models can be definitions which are compiled models for immediately available objects. Models can also be modules which are asynchronously compiled models with built-in import capabilities. Modules can have various files,models and JS objects that are loaded on the fly and compiled into the final model. This allows for a highly scalable dynamic built on-demand web app. Think of a bridge being formed in front of you while walking across. 
 
+Import & Ensure
+-----------------------
+
+
 Event System
 ------------
 
