@@ -1,4 +1,4 @@
-ACID 
+Acid 
 =======
 Acidjs is an ECMAScript framework for web applications with a focus on modern & future APIs. http://acidjs.com
 
