@@ -10,22 +10,27 @@
  * @example
  * var array = [1, 2, 3, 3, 4, 3, 5];
  *
- * array.remove(1);
+ * remove(array,1);
  * // -> [2, 3, 3, 4, 3, 5]
  *
- * array.remove(3);
+ * remove(array,3);
  * // -> [2, 4, 5]
  *
- * array.remove(2, 5);
+ * remove(array,[2, 5]);
  * // -> [4]
  */
 $.remove = function(array,args) {
-    var remStartIndex = 0;
-    var numToRemove = 0;
+    var remStartIndex = 0,
+		removeCurrentIndex,
+		j,
+    	numToRemove = 0;
+
+	if(!_isArray(args)){
+		args=[args];
+	}
 
     for (var i = 0; i < array.length; i++) {
-        var removeCurrentIndex = false,
-            j;
+        removeCurrentIndex = false;
 
         for (j = 0; j < args.length; j++) {
             if (array[i] === args[j]) {

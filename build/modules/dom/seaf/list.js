@@ -79,13 +79,13 @@ var generateLoopSingleArgReturnSelfCloneNodeSecondArg = function(funct) {
 	listOnly = {
 		each: function(funct) {
 			var list = this,
-				len = list.length;
-			for (var i = 0; i < len; i++) {
-				funct(items[i], i);
+				length = list.length;
+			for (var i = 0; i < length; i++) {
+				funct(list[i], i);
 			}
 			return list;
 		},
-		eachLive: function(n) {
+		eachRaw: function(n) {
 			var items = this;
 			for (var i = 0; i < items.length; i++) {
 				n(items[i], i);

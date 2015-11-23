@@ -23,9 +23,12 @@
 					<p><b>Returns</b></br>${descrip.returns}</p>`;
 				}
 			});
-			$.raf(()=>{
+			$.raf(function(){
 				qs('.contentWrap').html(methods);
 			});
 		});
+		this.click=function(){
+			alert(12);
+		};
 	}
 });

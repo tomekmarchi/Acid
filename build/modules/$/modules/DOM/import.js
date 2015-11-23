@@ -129,39 +129,35 @@ var _define,
 					}
 				}
 			},
-			orderArgumentObjects = (array) => {
-				var item,
-					acidMethod,
-					model;
-				return _each_array(array, (item, index) => {
-					if (_isString(item)) {
-						if (isJavascript(item)) {
-							model = getModelName(item);
-							if (model) {
-								item = model;
-							}
-						} else if (isCSS(item)) {
-							item = $qs('[href="' + item + '"]');
-						} else if (_isString(item)) {
-							acidMethod = _find(item, $);
-							if (acidMethod) {
-								item = acidMethod;
-							}
-						}
+			orderArgumentObjects = (item) => {
+				if (_isString(item)) {
+					if (isJavascript(item)) {
+						item = getModelName(item);
+					} else if (isCSS(item)) {
+						item = $qs('[href="' + item + '"]');
+					} else {
+						item = _find(item, $);
 					}
-					return item;
-				});
-			},
-			define = function(dataModel) {
-				var name = dataModel.name,
-					returned = () => {
-						return dataModel.invoke.apply(returned, orderArgumentObjects(dataModel.import));
-					};
-				if (name) {
-					_model[name] = returned;
 				}
-				return returned();
+				return item;
 			},
+			define = (data) => {
+		        var funct = data.invoke,
+		            modelName = data.name,
+		            args = data.import,
+		            wrapFunct = function() {
+		                var freshArgs=_each_array(args,orderArgumentObjects);
+		                if (arguments.length > 0) {
+							pushApply(freshArgs, arguments);
+		                }
+		                return funct.apply(wrapFunct, freshArgs);
+		            }.bind(wrapFunct);
+		        if (modelName) {
+		            _model[modelName] = wrapFunct;
+		        }
+
+		        return wrapFunct;
+		    },
 			arrayImportLoop = (item, name, error) => {
 				import_it(item, {
 					call: () => {
@@ -180,7 +176,7 @@ var _define,
 					error = data.error,
 					call = data.call,
 					callback = () => {
-						call.apply(call, orderArgumentObjects(array));
+						call.apply(call, _each_array(array,orderArgumentObjects));
 						call = null;
 						array = null;
 					},

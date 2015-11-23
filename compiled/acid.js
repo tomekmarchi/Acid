@@ -84,15 +84,12 @@
 		//console.log wrapper
 		_console = function _console(obj) {
 			console.log(obj);
-		};
+		},
 
-	/*
- 
- 	Prototypes
- 
- */
-	//cache in string for compression
-	var $prototype = 'prototype',
+		/*
+  	Prototypes
+  */
+		$prototype = 'prototype',
 
 		//prototypes
 		object_prototype = _object[$prototype],
@@ -107,79 +104,38 @@
 		websocket_prototype = WebSocket[$prototype],
 
 		//webworker
-		worker_prototype = Worker[$prototype];
+		worker_prototype = Worker[$prototype],
 
-	/*
+		/*
  	Array.prototype Functions cached
  */
+		//array push
+		_array_push = array_prototype.push,
 
-	//array push
-	var _array_push = array_prototype.push,
-		_array_unobserve = _array.unobserve,
-		_array_observe = _array.observe;
-
-	/*
- 
- 	Object. Functions cached
- 
- */
-	//object keys cached
-	if (!_object.assign) {
-		_object.defineProperty(_object, 'assign', {
-			enumerable: false,
-			configurable: true,
-			writable: true,
-			value: function value(target, firstSource) {
-				'use strict';
-				if (target === undefined || target === null) {
-					return target;
-				}
-
-				var to = Object(target);
-				for (var i = 1; i < arguments.length; i++) {
-					var nextSource = arguments[i];
-					if (nextSource === undefined || nextSource === null) {
-						continue;
-					}
-
-					var keysArray = Object.keys(Object(nextSource));
-					for (var nextIndex = 0, len = keysArray.length; nextIndex < len; nextIndex++) {
-						var nextKey = keysArray[nextIndex];
-						var desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
-						if (desc !== undefined && desc.enumerable) {
-							to[nextKey] = nextSource[nextKey];
-						}
-					}
-				}
-				return to;
-			}
-		});
-	}
-	var _object_keys = _object.keys,
+		//object keys cached
+		_object_keys = _object.keys,
 		_objectIs = _object.is,
-		_getNotifier = _object.getNotifier,
 
 		//object assign cached
 		_object_assign = _object.assign,
 
 		//getOwnPropertyDescriptor
 		_object_getOwnPropertyDescriptor = _object.getOwnPropertyDescriptor,
-		_observe = _object.observe,
-		_deliverChangeRecords = _object.deliverChangeRecords,
 		_defineProperty = _object.defineProperty,
-		_unobserve = _object.unobserve;
-	/*
+
+		/*
  	Function methods cache
  */
-	var _bind = Function.bind,
+		_bind = Function.bind,
 		_bind_call = function _bind_call(object, data) {
 			return _bind.call(object, data);
-		};
-	/*
- 	JSON
- 	*/
+		},
 
-	var stringify = json.stringify;
+		/*
+ 	JSON
+ */
+		stringify = json.stringify;
+
 	var $class_test = /^.[\w_-]+$/,
 		$tag_test = /^[A-Za-z]+$/,
 		regex_space = /\s/,
@@ -189,7 +145,12 @@
 		regex_fowardslash = /\//g,
 		$replace_template_string = /\{(.*?)\}/g,
 		regex_ext = /\.[0-9a-z]+$/i,
-		regex_underscore = /_/g;
+		regex_underscore = /_/g,
+		isJSRegex = /\.js/,
+		isCSSRegex = /\.css/,
+		isJSONRegex = /\.json/,
+		hasDotRegex = /\./;
+
 	var $protocol = location.protocol,
 
 		//websocket protocol type
@@ -240,11 +201,8 @@
 	var $tostring = object_prototype.toString,
 
 		//make collection into an array
-		_toArray = _array.from ? _array.from : function(nodes) {
-			var arr = [];
-			for (var i = -1, l = nodes.length; ++i !== l; arr[i] = nodes[i]);
-			return arr;
-		},
+		arrayFrom = _array.from,
+		_toArray,
 		domListToArray = function domListToArray(collection) {
 			var list = _toArray(collection),
 				temp = [],
@@ -254,7 +212,7 @@
 			for (var i = 0; i < length; i++) {
 				item = list[i];
 				name = item.constructor.name;
-				if (name == "HTMLCollection" || name == "NodeList") {
+				if (name === "HTMLCollection" || name === "NodeList") {
 					pushApply(temp, toArrayDeep(item));
 				} else {
 					temp.push(item);
@@ -262,6 +220,17 @@
 			}
 			return temp;
 		};
+	if (arrayFrom) {
+		_toArray = function(item) {
+			return arrayFrom.call(_array, item);
+		};
+	} else {
+		_toArray = function(items) {
+			var arr = [];
+			for (var i = -1, l = items.length; ++i !== l; arr[i] = items[i]);
+			return arr;
+		};
+	}
 
 	//checks to see if object is a dom node returns true or false
 	var isDom = function isDom(obj) {
@@ -580,12 +549,26 @@
 			}
 			return false;
 		},
-		isJavascript = function isJavascript(string) {
-			return _has(string, '.js');
+		isFileCSS = function isFileCSS(item) {
+			return isCSSRegex.test(item);
 		},
-		isCSS = function isCSS(string) {
-			return _has(string, '.css');
+		isFileJSON = function isFileJSON(item) {
+			return isJSONRegex.test(item);
 		},
+		isFileJS = function isFileJS(item) {
+			return isJSRegex.test(item) && !isFileJSON(item);
+		},
+		hasDot = function hasDot(item) {
+			return hasDotRegex.test(item);
+		},
+		getModelRootName = function getModelRootName(string) {
+			return string.split('.')[0];
+		},
+		getModelProperty = function getModelProperty(string) {
+			return _arrayLastItem(string.split('/'))[0];
+		},
+		isJavascript = isFileJS,
+		isCSS = isFileCSS,
 		getModelName = function getModelName(string) {
 			var splitIt = string.split('/');
 			return _find(splitIt[splitIt.length - 1].split('.js')[0], _model);
@@ -1632,13 +1615,13 @@
 			listOnly = {
 				each: function each(funct) {
 					var list = this,
-						len = list.length;
-					for (var i = 0; i < len; i++) {
-						funct(items[i], i);
+						length = list.length;
+					for (var i = 0; i < length; i++) {
+						funct(list[i], i);
 					}
 					return list;
 				},
-				eachLive: function eachLive(n) {
+				eachRaw: function eachRaw(n) {
 					var items = this;
 					for (var i = 0; i < items.length; i++) {
 						n(items[i], i);
@@ -1727,9 +1710,12 @@
 		};
 	//initialize array object for array prototype
 	var array_extend = {};
-	$.pushApply = function(item, array) {
+	var pushApply = function pushApply(item, array) {
 		return _array_push.apply(item, array);
 	};
+
+	$.pushApply = pushApply;
+
 	/**
 	 * Finds the index of a value in a sorted array using a binary search algorithm.
 	 *
@@ -2318,22 +2304,27 @@
 	 * @example
 	 * var array = [1, 2, 3, 3, 4, 3, 5];
 	 *
-	 * array.remove(1);
+	 * remove(array,1);
 	 * // -> [2, 3, 3, 4, 3, 5]
 	 *
-	 * array.remove(3);
+	 * remove(array,3);
 	 * // -> [2, 4, 5]
 	 *
-	 * array.remove(2, 5);
+	 * remove(array,[2, 5]);
 	 * // -> [4]
 	 */
 	$.remove = function(array, args) {
-		var remStartIndex = 0;
-		var numToRemove = 0;
+		var remStartIndex = 0,
+			removeCurrentIndex,
+			j,
+			numToRemove = 0;
+
+		if (!_isArray(args)) {
+			args = [args];
+		}
 
 		for (var i = 0; i < array.length; i++) {
-			var removeCurrentIndex = false,
-				j;
+			removeCurrentIndex = false;
 
 			for (j = 0; j < args.length; j++) {
 				if (array[i] === args[j]) {
@@ -2360,6 +2351,7 @@
 
 		return array;
 	};
+
 	//Returns everything but the last entry of the array. Especially useful on the arguments object. Pass n to exclude the last n elements from the result.
 	$.rest = function(array, n) {
 		var array = this;
@@ -3537,6 +3529,12 @@
 	$.isEmpty = isEmpty;
 	$.isHTMLCollection = _isHTMLCollection;
 	$.isNodeList = _isNodeList;
+	$.isFileCSS = isFileCSS;
+	$.isFileJSON = isFileJSON;
+	$.isFileJS = isFileJS;
+	$.hasDot = hasDot;
+	$.getModelProperty = getModelProperty;
+	$.getModelRootName = getModelRootName;
 
 	function jsonWithCatch(str) {
 		try {
@@ -3716,75 +3714,41 @@
 	};
 	//xhr functions
 	$.xhr = {};
+	$ext.xhr = {};
 
-	$ext.xhr = {
-		loaded: function loaded(evt) {
-			if ($debug) {
-				console.log(evt);
-			}
-			var xhr = evt.target;
-			$eventremove(xhr, 'load', $ext.xhr.loaded);
-			var status = evt.target.status;
-			if (status == 200) {
-				var type = xhr.getResponseHeader('content-type'),
-					data = xhr.responseText;
-				if (type == 'application/json') {
-					if (data) {
-						var data = json.parse(data);
-					}
-				}
-				var callback = xhr.callback;
-				if (callback) {
-					_async(function() {
-						callback(data, evt);
-					});
-				}
-			}
-			if (status > 200) {
-				var callback = xhr.fail;
-				if (callback) {
-					_async(function() {
-						callback(evt);
-					});
-				}
-			}
-			return false;
+	var xhrLoaded = function xhrLoaded(evt) {
+		if ($debug) {
+			console.log(evt);
 		}
-	};
-
-	$ext.preload = {
-		loaded: function loaded(evt) {
-			var xhr = evt.target;
-			$eventremove(xhr, 'load', $ext.preload.loaded);
-			var status = evt.target.status;
-			if (status == 200) {
-				var callback = xhr.callback,
-					data = xhr.responseText;
-				if (callback) {
-					_async(function() {
-						callback(data);
-					});
-				}
+		var xhr = evt.target,
+			status = evt.target.status,
+			type = xhr.getResponseHeader('content-type'),
+			data = xhr.responseText,
+			callback;
+		if (status === 200) {
+			if (type === 'application/json') {
+				data = jsonWithCatch(data);
 			}
-			var xhr = null,
-				evt = null,
-				callback = null;
-			return false;
-		},
-		error: function error(evt) {
-			var xhr = evt.target;
-			$eventremove(xhr, 'error', $ext.preload.error);
-			var status = evt.target.status;
-			var fail = xhr.fail;
-			if (fail) {
+			callback = xhr.callback;
+			if (callback) {
 				_async(function() {
-					fail(status);
+					callback(data, evt);
+					data = null;
+					evt = null;
 				});
 			}
-			var xhr = null,
-				evt = null;
-			return false;
+		} else if (status > 200) {
+			callback = xhr.fail;
+			if (callback) {
+				_async(function() {
+					callback(evt);
+					evt = null;
+				});
+			}
 		}
+		$eventremove(xhr, 'load', xhrLoaded);
+		xhr = null;
+		status = null;
 	};
 
 	function xhrPostParam(url, add) {
@@ -3848,17 +3812,16 @@
 
 		if (fail) {
 			xhr.fail = fail;
-			$eventadd(xhr, 'error', $ext.xhr.error);
+			$eventadd(xhr, 'error', fail);
 		}
 		if (progress) {
-			xhr.progress = progress;
-			$eventadd(xhr, 'progress', $ext.xhr.progress);
+			$eventadd(xhr, 'progress', progress);
 		}
 		if (abort) {
-			xhr.abort = abort;
-			$eventadd(xhr, 'abort', $ext.xhr.abort);
+			$eventadd(xhr, 'abort', abort);
 		}
-		$eventadd(xhr, 'load', $ext.xhr.loaded);
+
+		$eventadd(xhr, 'load', xhrLoaded);
 
 		if (type == 'GET') {
 			if (newData) {
@@ -3890,21 +3853,6 @@
 		return false;
 	};
 
-	//quick GET URL
-	$.fetch = function(url, callback) {
-		var xhr,
-			xhr = new XMLHttpRequest();
-		if (callback) {
-			xhr.callback = callback;
-		}
-		$eventadd(xhr, 'load', $ext.preload.loaded);
-		xhr.open("GET", url, true);
-		xhr.setRequestHeader('Content-Type', 'text/plain');
-		xhr.send();
-		var xhr = null,
-			url = null;
-		return false;
-	};
 	//make action on object via acid event
 	var _act = function _act(node, type) {
 		$['on' + type](node);
@@ -4230,36 +4178,34 @@
 						}
 					}
 				},
-				orderArgumentObjects = function orderArgumentObjects(array) {
-					var item, acidMethod, model;
-					return _each_array(array, function(item, index) {
-						if (_isString(item)) {
-							if (isJavascript(item)) {
-								model = getModelName(item);
-								if (model) {
-									item = model;
-								}
-							} else if (isCSS(item)) {
-								item = $qs('[href="' + item + '"]');
-							} else if (_isString(item)) {
-								acidMethod = _find(item, $);
-								if (acidMethod) {
-									item = acidMethod;
-								}
-							}
+				orderArgumentObjects = function orderArgumentObjects(item) {
+					if (_isString(item)) {
+						if (isJavascript(item)) {
+							item = getModelName(item);
+						} else if (isCSS(item)) {
+							item = $qs('[href="' + item + '"]');
+						} else {
+							item = _find(item, $);
 						}
-						return item;
-					});
-				},
-				define = function define(dataModel) {
-					var name = dataModel.name,
-						returned = function returned() {
-							return dataModel.invoke.apply(returned, orderArgumentObjects(dataModel['import']));
-						};
-					if (name) {
-						_model[name] = returned;
 					}
-					return returned();
+					return item;
+				},
+				define = function define(data) {
+					var funct = data.invoke,
+						modelName = data.name,
+						args = data['import'],
+						wrapFunct = (function() {
+							var freshArgs = _each_array(args, orderArgumentObjects);
+							if (arguments.length > 0) {
+								pushApply(freshArgs, arguments);
+							}
+							return funct.apply(wrapFunct, freshArgs);
+						}).bind(wrapFunct);
+					if (modelName) {
+						_model[modelName] = wrapFunct;
+					}
+
+					return wrapFunct;
 				},
 				arrayImportLoop = function arrayImportLoop(item, name, error) {
 					import_it(item, {
@@ -4279,7 +4225,7 @@
 						error = data.error,
 						call = data.call,
 						callback = function callback() {
-							call.apply(call, orderArgumentObjects(array));
+							call.apply(call, _each_array(array, orderArgumentObjects));
 							call = null;
 							array = null;
 						},
@@ -4375,7 +4321,6 @@
 			isRenderString,
 			name = data,
 			faceplate,
-			modelName,
 			templateItem;
 		if (!_isString(data)) {
 			render = data.render;
@@ -4383,7 +4328,6 @@
 			isRenderFunction = _isFunction(render);
 			isRenderString = _isString(render);
 			faceplate = data.faceplate, name = data.name;
-			modelName = data.modelName;
 
 			if (isRenderString) {
 				isRenderDom = true;
@@ -4575,18 +4519,19 @@
 
 	var _eventGenerate,
 		_event = (function() {
-			var ensureItem = function ensureItem(action, analytics, obj, e, type) {
+			var ensureItem = function ensureItem(action, analytics, obj, e, type, extra) {
 					if (action) {
 						var fn = _find(action, _model);
 						if (fn) {
 							if ($debug) {
 								console.log(action);
 							}
-							fn(obj, e);
+							fn(obj, e, extra);
 							fn = null;
 							action = null;
 							obj = null;
 							e = null;
+							extra = null;
 						}
 						if (analytics) {
 							_async(function() {
@@ -4622,23 +4567,30 @@
 							}
 						}
 					}
+					var extra, hasExtra;
 					if (action) {
 						e.stopPropagation();
 						multi = action.split(',');
 						_each_array(multi, function(action) {
+							hasExtra = action.match(/\((.*?)\)/);
+							if (hasExtra) {
+								action = action.replace(hasExtra[0], '');
+								extra = hasExtra[1];
+							}
 							ismodel = _find(action, _model);
 							if (ismodel) {
-								ismodel(obj, e);
+								ismodel(obj, e, extra);
 							} else {
 								_ensure(action.split('.')[0], function() {
-									ensureItem(action, analytics, obj, e, type);
-									obj = null;
+									ensureItem(action, analytics, obj, e, type, extra);
 									e = null;
 									type = null;
 									analytics = null;
 									action = null;
 								});
 							}
+							extra = '';
+							hasExtra = false;
 						});
 					}
 				},
@@ -4689,7 +4641,10 @@
 					});
 				},
 				eventMethod = function eventMethod(event) {
-					getEventsOnObject(event, window, {
+					getEventsOnObject(event.window, window, {
+						analytics: event.analytics
+					});
+					getEventsOnObject(event.body, document.body, {
 						analytics: event.analytics
 					});
 				};
@@ -4701,18 +4656,27 @@
 
 	var _eventNames = $.eventNames = [];
 	(function() {
-		function getEvents(object, dublicateCheck) {
-			return ["readystatechange", "mouseenter", "mouseleave", "wheel", "copy", "cut", "paste", "beforescriptexecute", "afterscriptexecute", "abort", "canplay", "canplaythrough", "change", "click", "ctextmenu", "dblclick", "drag", "dragend", "dragenter", "dragleave", "dragover", "dragstart", "drop", "duratichange", "emptied", "ended", "input", "invalid", "keydown", "keypress", "keyup", "loadeddata", "loadedmetadata", "loadstart", "mousedown", "mousemove", "mouseout", "mouseover", "mouseup", "pause", "play", "playing", "progress", "ratechange", "reset", "seeked", "seeking", "select", "show", "stalled", "submit", "suspend", "timeupdate", "volumechange", "waiting", "fullscreenchange", "fullscreenerror", "pointerlockchange", "pointerlockerror", "blur", "error", "focus", "load", "scroll"];
+		function getEventsWindow(object) {
+			return ["readystatechange", "wheel", "copy", "cut", "paste", "beforescriptexecute", "afterscriptexecute", "abort", "canplay", "canplaythrough", "change", "ctextmenu", "duratichange", "emptied", "ended", "input", "invalid", "loadeddata", "loadedmetadata", "loadstart", "pause", "play", "playing", "progress", "ratechange", "reset", "seeked", "seeking", "select", "show", "stalled", "submit", "suspend", "timeupdate", "volumechange", "waiting", "fullscreenchange", "fullscreenerror", "pointerlockchange", "pointerlockerror", "blur", "error", "focus", "load", "scroll"];
+		}
+
+		function getEventsBody(object) {
+			return ["mouseenter", "mouseleave", "click", "dblclick", "drag", "dragend", "dragenter", "dragleave", "dragover", "dragstart", "drop", "keydown", "keypress", "keyup", "mousedown", "mousemove", "mouseout", "mouseover", "mouseup", "blur", "focus"];
 		}
 
 		function listenOnAllEvents() {
-			var event = {},
-				documentEvents = getEvents();
-			_each_array(documentEvents, function(item, key) {
-				event[item] = {};
+			var event = {
+				window: {},
+				body: {}
+			};
+			_each_array(getEventsWindow(), function(item, key) {
+				event.window[item] = {};
+			});
+			_each_array(getEventsBody(), function(item, key) {
+				event.body[item] = {};
 			});
 
-			event.resize = {
+			event.window.resize = {
 				fn: function fn() {
 					saveDimensions();
 				}

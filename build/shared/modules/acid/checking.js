@@ -176,12 +176,26 @@
 			}
 			return false;
 		},
-		isJavascript = function(string) {
-			return _has(string, '.js');
+		isFileCSS= function(item) {
+			return isCSSRegex.test(item);
 		},
-		isCSS = function(string) {
-			return _has(string, '.css');
+		isFileJSON=function(item) {
+			return isJSONRegex.test(item);
 		},
+		isFileJS=function(item) {
+			return isJSRegex.test(item) && !isFileJSON(item);
+		},
+		hasDot = function(item) {
+			return hasDotRegex.test(item);
+		},
+		getModelRootName = function(string) {
+			return string.split('.')[0];
+		},
+		getModelProperty=function(string) {
+		    return _arrayLastItem(string.split('/'))[0];
+		},
+		isJavascript = isFileJS,
+		isCSS = isFileCSS,
 		getModelName = function(string) {
 			var splitIt = string.split('/');
 			return _find(splitIt[splitIt.length - 1].split('.js')[0], _model);

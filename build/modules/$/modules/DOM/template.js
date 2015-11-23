@@ -13,7 +13,6 @@ var _template = (data) => {
 		isRenderString,
 		name = data,
 		faceplate,
-		modelName,
 		templateItem;
 	if (!_isString(data)) {
 		render = data.render;
@@ -22,7 +21,6 @@ var _template = (data) => {
 		isRenderString = _isString(render);
 		faceplate = data.faceplate,
 		name = data.name;
-		modelName = data.modelName;
 
 		if (isRenderString) {
 			isRenderDom = true;

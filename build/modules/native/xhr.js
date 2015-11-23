@@ -1,78 +1,52 @@
 //xhr functions
 $.xhr = {};
+$ext.xhr = {};
 
-$ext.xhr={
-	loaded:function (evt) {
-		if($debug){
-			console.log(evt);
-		}
-		var xhr = evt.target;
-		$eventremove(xhr,'load', $ext.xhr.loaded);
-		var status = evt.target.status;
-		if (status == 200) {
-			var type = xhr.getResponseHeader('content-type'),
-				data = xhr.responseText;
-			if (type == 'application/json') {
-				if (data) {
-					var data = json.parse(data);
-				}
-			}
-			var callback = xhr.callback;
-			if (callback) {
-				_async(function(){callback(data,evt)});
-			}
-		}
-		if (status > 200) {
-			var callback = xhr.fail;
-			if (callback) {
-				_async(function(){callback(evt)});
-			}
-		}
-		return false;
+var xhrLoaded = (evt) => {
+	if ($debug) {
+		console.log(evt);
 	}
+	var xhr = evt.target,
+		status = evt.target.status,
+		type = xhr.getResponseHeader('content-type'),
+		data = xhr.responseText,
+		callback;
+	if (status === 200) {
+		if (type === 'application/json') {
+			data = jsonWithCatch(data);
+		}
+		callback = xhr.callback;
+		if (callback) {
+			_async(function() {
+				callback(data, evt);
+				data=null;
+				evt=null;
+			});
+		}
+	} else if (status > 200) {
+		callback = xhr.fail;
+		if (callback) {
+			_async(function() {
+				callback(evt);
+				evt=null;
+			});
+		}
+	}
+	$eventremove(xhr, 'load', xhrLoaded);
+	xhr=null;
+	status=null;
 };
 
-$ext.preload={
-	loaded:function (evt) {
-		var xhr = evt.target;
-		$eventremove(xhr,'load', $ext.preload.loaded);
-		var status = evt.target.status;
-		if (status == 200) {
-			var callback = xhr.callback,
-				data = xhr.responseText;
-			if (callback) {
-				_async(function(){callback(data)});
-			}
-		}
-		var xhr = null,
-			evt = null,
-			callback = null;
-		return false;
-	},
-	error:function (evt) {
-		var xhr = evt.target;
-		$eventremove(xhr,'error', $ext.preload.error);
-		var status = evt.target.status;
-		var fail = xhr.fail;
-		if (fail) {
-			_async(function(){fail(status)});
-		}
-		var xhr = null,
-			evt = null;
-		return false;
+function xhrPostParam(url, add) {
+	if (url.length > 0) {
+		var url = url + '&';
 	}
-};
-
-function xhrPostParam(url,add){
-	if(url.length>0){
-		var url=url+'&';
-	}
-	var url=url+add;
+	var url = url + add;
 	return url;
 }
 
 //xhr
-$.xhr=function (config) {
+$.xhr = function(config) {
 	var xhr = new XMLHttpRequest(),
 		url = config.url,
 		data = config.data || false,
@@ -89,26 +63,26 @@ $.xhr=function (config) {
 		newData = '';
 
 	if (!contentType) {
-		if(jsonData){
-			contentType='application/json; charset=utf-8';
-		}else if (type == 'GET') {
+		if (jsonData) {
+			contentType = 'application/json; charset=utf-8';
+		} else if (type == 'GET') {
 			contentType = 'text/plain';
 		} else {
 			contentType = "application/x-www-form-urlencoded";
 		}
 	}
 
-	if(data){
+	if (data) {
 		if (isPlainObject(data)) {
-			_each_object(data,function (item, key) {
-				if(hasValue(item)){
-					newData = xhrPostParam(newData,key + '=' + item);
+			_each_object(data, function(item, key) {
+				if (hasValue(item)) {
+					newData = xhrPostParam(newData, key + '=' + item);
 				}
 			});
-		}else if (_isArray(data)) {
-			_each_array(data,function (item, key) {
-				if(hasValue(item)){
-					newData = xhrPostParam(newData,item);
+		} else if (_isArray(data)) {
+			_each_array(data, function(item, key) {
+				if (hasValue(item)) {
+					newData = xhrPostParam(newData, item);
 				}
 			});
 		}
@@ -123,67 +97,51 @@ $.xhr=function (config) {
 	}
 
 	if (fail) {
-		xhr.fail = fail;
-		$eventadd(xhr,'error', $ext.xhr.error);
+		xhr.fail= fail;
+		$eventadd(xhr, 'error', fail);
 	}
 	if (progress) {
-		xhr.progress = progress;
-		$eventadd(xhr,'progress', $ext.xhr.progress);
+		$eventadd(xhr, 'progress', progress);
 	}
 	if (abort) {
-		xhr.abort = abort;
-		$eventadd(xhr,'abort', $ext.xhr.abort);
+		$eventadd(xhr, 'abort', abort);
 	}
-	$eventadd(xhr,'load', $ext.xhr.loaded);
 
-	if(type=='GET'){
-		if(newData){
-			if(!_has(url,'?')){
-				url=url+'?'+newData;
-			}else{
-				url=url+'&'+newData;
+	$eventadd(xhr, 'load', xhrLoaded);
+
+	if (type == 'GET') {
+		if (newData) {
+			if (!_has(url, '?')) {
+				url = url + '?' + newData;
+			} else {
+				url = url + '&' + newData;
 			}
-			newData='';
+			newData = '';
 		}
 	}
 
 	if (credits) {
-		if(!_has(url,'?')){
-			url=url+'?'+credits();
-		}else{
-			url=url+'&'+credits();
+		if (!_has(url, '?')) {
+			url = url + '?' + credits();
+		} else {
+			url = url + '&' + credits();
 		}
 	}
 
-	if(jsonData){
-		newData=jsonData;
+	if (jsonData) {
+		newData = jsonData;
 	}
 
 	xhr.open(type, url, true);
 	xhr.setRequestHeader("Content-type", contentType);
 	xhr.send(newData);
 	xhr = null,
-	url = null,
-	data = null,
-	type = null,
-	contentType = null,
-	callback = null,
-	credits = null,
-	analytics = null;
-	return false;
-};
-
-//quick GET URL
-$.fetch=function (url,callback) {
-	var xhr, xhr = new XMLHttpRequest();
-	if (callback) {
-		xhr.callback = callback;
-	}
-	$eventadd(xhr,'load', $ext.preload.loaded);
-	xhr.open("GET", url, true);
-	xhr.setRequestHeader('Content-Type', 'text/plain');
-	xhr.send();
-	var xhr = null,
-		url = null;
+		url = null,
+		data = null,
+		type = null,
+		contentType = null,
+		callback = null,
+		credits = null,
+		analytics = null;
 	return false;
 };
