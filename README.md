@@ -1,6 +1,6 @@
 Acid 
 =======
-Acidjs is an ECMAScript framework for web applications with a focus on modern & future APIs. http://acidjs.com
+Acidjs is an ECMAScript framework with a focus on building highly scalable web streaming applications. It's goal is to provide the essentials for building dynamic real-time streaming single-page applications.
 
 
 DOM
