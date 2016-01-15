@@ -16,6 +16,10 @@
 	"use strict";
 
 	//debug option
+
+	var _arguments2 = arguments,
+		_this3 = this;
+
 	var $debug = false,
 
 		//extend options
@@ -683,7 +687,25 @@
 			return node;
 		};
 	//store internal data for selectors
-	var tempObjsFromSelector = {},
+	var cacheHashCharacter = '#',
+		cacheDotCharacter = '.',
+
+		//main selector class has optimizations
+		$ = function $(select) {
+			var firtLetter = select[0];
+			if (firtLetter === cacheHashCharacter) {
+				if (!regex_space.test(select)) {
+					return $id(select.slice(1));
+				}
+			} else if (firtLetter === cacheDotCharacter) {
+				if ($class_test.test(select)) {
+					return $cls(select.slice(1));
+				}
+			} else if ($tag_test.test(select)) {
+				return $tag(select);
+			}
+			return $qsa(select);
+		},
 		$id = function $id(selectorString) {
 			//get id
 			return _document.getElementById(selectorString);
@@ -704,72 +726,16 @@
 			//get qs
 			return _document.querySelector(selectorString);
 		},
-		cacheHashCharacter = '#',
-		cacheDotCharacter = '.',
+		nodeMethodsValues = [_toggle, _show, _hide, _sub, _add, _act, _ae, _bb, _ab, _be, _removeAttr, _clTog, _clRemove, _hasAttr, _cl, _clHas, _upTo, _clone, _center, _innerHTML, _ohtml, _tc, _txt, _textValue, _val, _sel, _cn, _isMatch_dom, changeTag, replaceChild, prepend, _append, insertAfter, insertBefore, scrollInto, _id, _clsDOM, _tagDOM, _qsa, _qs, scrollInfo, _resetHTML, _next, _previous, _parNode, _last, _first, _ow, _oh, _ot, _offset, _clw, _clh, _clear, $remove],
+		nodeMethodsKeys = ['toggle', 'show', 'hide', 'sub', 'add', 'act', 'ae', 'bb', 'ab', 'be', 'removeAttr', 'clTog', 'clRemove', 'hasAttr', 'cl', 'clHas', 'upTo', 'clone', 'center', 'html', 'ohtml', 'tc', 'txt', 'textValue', 'val', 'sel', 'cn', 'isMatch', 'changeTag', 'replace', 'prepend', 'ap', 'after', 'before', 'scrollInto', 'id', 'cls', 'tag', 'qsa', 'qs', 'scrollInfo', 'resetHTML', 'next', 'previous', 'parNode', 'last', 'first', 'ow', 'oh', 'ot', 'offset', 'clw', 'clh', 'clear', 'remove'],
+		generateNodeMethod = function generateNodeMethod(funct) {
+			return function() {
+				var args = _toArray(arguments);
+				args.unshift(this);
+				return funct.apply(this, args);
+			};
+		};
 
-		//main selector class has optimizations
-		$ = function $(select) {
-			var obj = tempObjsFromSelector[select],
-				safe,
-				firtLetter = select[0],
-				fun;
-			if (obj) {
-				return obj();
-			}
-			if (firtLetter === cacheHashCharacter) {
-				if (!regex_space.test(select)) {
-					safe = select.slice(1);
-					obj = $id(safe);
-					fun = function() {
-						return $id(safe);
-					};
-				}
-			} else if (firtLetter === cacheDotCharacter) {
-				if ($class_test.test(select)) {
-					obj = $cls(select.slice(1));
-					fun = function() {
-						return obj;
-					};
-				}
-			} else if ($tag_test.test(select)) {
-				obj = $tag(select);
-				fun = function() {
-					return obj;
-				};
-			}
-			if (!fun) {
-				obj = $qsa(select);
-				fun = function() {
-					return $qsa(select);
-				};
-			}
-			tempObjsFromSelector[select] = fun;
-			return obj;
-		},
-
-		//raw selection no optimizations
-		$$ = function $$(select) {
-			var firtLetter = select[0];
-			if (firtLetter === cacheHashCharacter) {
-				if (!regex_space.test(select)) {
-					return $id(select.slice(1));
-				}
-			} else if (firtLetter === cacheDotCharacter) {
-				if ($class_test.test(select)) {
-					return $cls(select.slice(1));
-				}
-			} else if ($tag_test.test(select)) {
-				return $tag(select);
-			}
-			return $qsa(select);
-		},
-		nodeOnlyMethodsSingleArgReturn = [_toggle, _show, _hide, _sub, _add, _act, _ae, _bb, _ab, _be, _removeAttr, _clTog, _clRemove, _hasAttr, _cl, _clHas, _upTo, _clone, _center, _innerHTML, _ohtml, _tc, _txt, _textValue, _val, _sel, _cn, _isMatch_dom, changeTag, replaceChild, prepend, _append, insertAfter, insertBefore, scrollInto, _id, _clsDOM, _tagDOM, _qsa, _qs],
-		nodeOnlyMethodNamesSingleArgReturn = ['toggle', 'show', 'hide', 'sub', 'add', 'act', 'ae', 'bb', 'ab', 'be', 'removeAttr', 'clTog', 'clRemove', 'hasAttr', 'cl', 'clHas', 'upTo', 'clone', 'center', 'html', 'ohtml', 'tc', 'txt', 'textValue', 'val', 'sel', 'cn', 'isMatch', 'changeTag', 'replace', 'prepend', 'ap', 'after', 'before', 'scrollInto', 'id', 'cls', 'tag', 'qsa', 'qs'],
-		nodeOnlyMethodsReturn = [scrollInfo, _resetHTML, _next, _previous, _parNode, _last, _first, _ow, _oh, _ot, _offset, _clw, _clh, _clear, $remove],
-		nodeOnlyMethodNamesReturn = ['scrollInfo', 'resetHTML', 'next', 'previous', 'parNode', 'last', 'first', 'ow', 'oh', 'ot', 'offset', 'clw', 'clh', 'clear', 'remove'];
-
-	//return temp obj
-	$.temp = tempObjsFromSelector;
 	//selectors
 	//id
 	$.id = $id;
@@ -781,8 +747,8 @@
 	$.qsa = $qsa;
 	//query selector
 	$.qs = $qs;
-	//selector without optimizations
-	$.select = $$;
+	//Global Select
+	$.select = $;
 
 	function zipUpTo(object, functs, names, wrap) {
 		_each_array(functs, function(item, index) {
@@ -791,40 +757,6 @@
 			}
 		});
 	}
-
-	//avoid
-	var acidLibAvoid = _global.acidAvoid ? _global.acidAvoid : "$";
-	_global[acidLibAvoid] = $;
-	_global.ACID = $;
-
-	var $eventadd = function $eventadd(obj, name, func, capture) {
-			obj.addEventListener(name, func, capture || false);
-			return obj;
-		},
-
-		//remove event
-		$eventremove = function $eventremove(obj, name, func, capture) {
-			obj.removeEventListener(name, func, capture || false);
-			return obj;
-		};
-
-	//add event
-	$.eventAdd = function(obj, name, funct, bool) {
-		return $eventadd(obj, name, funct, bool);
-	};
-	//remove event
-	$.eventRemove = function(obj, name, funct, bool) {
-		return $eventremove(obj, name, funct, bool);
-	};
-
-	$.isEnter = function(event) {
-		//checks if this an enter key
-		var i = event.keyCode;
-		if (i == 13) {
-			return true;
-		}
-		return false;
-	};
 
 	//sys info
 	$.host = {
@@ -848,6 +780,26 @@
 		version: 1
 	};
 
+	var $eventadd = $.eventAdd = function(obj, name, func, capture) {
+			obj.addEventListener(name, func, capture || false);
+			return obj;
+		},
+
+		//remove event
+		$eventremove = $.eventRemove = function(obj, name, func, capture) {
+			obj.removeEventListener(name, func, capture || false);
+			return obj;
+		};
+
+	$.isEnter = function(event) {
+		//checks if this an enter key
+		var i = event.keyCode;
+		if (i == 13) {
+			return true;
+		}
+		return false;
+	};
+
 	/*
  STRING Prototype object
  */
@@ -858,6 +810,9 @@
 		more_than_regex = />/g,
 		double_quote_regex = /"/g,
 		slash_regex = /\//g;
+
+	$.string = String;
+
 	//get characters in a range in a string
 	var _rangeString = function _rangeString(text, start, end, insert) {
 			var insert = insert || '',
@@ -1160,8 +1115,8 @@
 
 			return result;
 		};
-	//initialize array object for array prototype
-	var array_extend = {};
+	$.array = Array;
+
 	var pushApply = function pushApply(item, array) {
 		return _array_push.apply(item, array);
 	};
@@ -1715,20 +1670,24 @@
 	};
 
 	var _arrayLastItem = function _arrayLastItem(array, indexFrom) {
-		var result;
-		if (!indexFrom) {
-			indexFrom = 1;
-		}
-		if (array) {
-			result = array.splice(array.length - indexFrom, indexFrom);
-		} else {
-			result = array[array.length - 1];
-		}
-		return result;
-	};
+			var result;
+			if (!indexFrom) {
+				indexFrom = 1;
+			}
+			if (array) {
+				result = array.splice(array.length - indexFrom, indexFrom);
+			} else {
+				result = collectionLastItem(array);
+			}
+			return result;
+		},
+		collectionLastItem = function collectionLastItem(array) {
+			return array[array.length - 1];
+		};
 
 	//Returns the last element of an array. Passing n will return the last n elements of the array.
 	$.last = _arrayLastItem;
+	$.lastRaw = collectionLastItem;
 
 	//start from begining of array using argument as index
 	$.left = function(item, a) {
@@ -2109,6 +2068,8 @@
 		});
 	};
 
+	$.object = Object;
+
 	$.assign = _object_assign;
 
 	/*
@@ -2362,11 +2323,6 @@
 	$.hasValue = hasValue;
 	$.has = _has;
 
-	//copy an object ES6 + ES5
-	$.copyObject = function(item) {
-		return _object_assign({}, item);
-	};
-
 	//loop through an object
 	var _each_object = function _each_object(object, fn) {
 		//an object with matching keys with results will be returned
@@ -2384,11 +2340,6 @@
 
 	//checks if objects are the same ES6
 	$.isEqualObject = _objectIs;
-	//extend object prototype
-	var _extend = $.extend = function(item, firstSource) {
-		return _object_assign(item.prototype, firstSource);
-	};
-
 	//copy an object ES6 + ES5
 	$.stringify = function(item) {
 		return stringify(item);
@@ -2561,7 +2512,7 @@
 	//Creates a function that negates the result of the predicate func. The func predicate is invoked with the this binding and arguments of the created function.
 	$.negate = function(func) {
 		return function() {
-			if (func.apply(func, _toArray(arguments))) {
+			if (func.apply(func, _toArray(_arguments2))) {
 				return false;
 			}
 			return true;
@@ -2803,6 +2754,8 @@
 		randomMethod = _math.random,
 		roundMethod = _math.round;
 
+	$.math = _math;
+
 	//add this and value
 	$.add = function(number, value) {
 		return number + value;
@@ -2893,6 +2846,11 @@
 		return raf(i);
 	};
 
+	var appState = $.appState = {
+		screenHeight: screen.height,
+		screenWidth: screen.width
+	};
+
 	var _bacthAdd = (function() {
 		var batchCancelFrame = false,
 			batchCount = 0,
@@ -2938,8 +2896,6 @@
 		}
 		return _cache[key] = a;
 	};
-	_cache.screenHeight = screen.height;
-	_cache.screenWidth = screen.width;
 
 	var userConfig = $.acid.config = function(config) {
 			if (config) {
@@ -3187,8 +3143,6 @@
 		return _sessionStorage.clear();
 	};
 
-	//sys temp mem
-	$.mem = {};
 	$.toggle = function(value, a, b) {
 		if (value === a) {
 			return b;
@@ -3336,19 +3290,6 @@
 		return false;
 	};
 
-	//node only
-	function generateMethodSingleArgReturn(funct) {
-		return function(arg) {
-			return funct(this, arg);
-		};
-	}
-
-	function generateMethodReturn(funct) {
-		return function(arg) {
-			return funct(this);
-		};
-	}
-
 	var nodeOnly = {
 		scrollIt: function scrollIt(x, y) {
 			return _scrollIt(this, x, y);
@@ -3376,69 +3317,54 @@
 			return _plugInto(this, string, object);
 		}
 	};
-	zipUpTo(nodeOnly, nodeOnlyMethodsSingleArgReturn, nodeOnlyMethodNamesSingleArgReturn, generateMethodSingleArgReturn);
-	zipUpTo(nodeOnly, nodeOnlyMethodsReturn, nodeOnlyMethodNamesReturn, generateMethodReturn);
+	zipUpTo(nodeOnly, nodeMethodsValues, nodeMethodsKeys, generateNodeMethod);
 
 	var generateLoopSingleArgReturnSelfCloneNodeSecondArg = function generateLoopSingleArgReturnSelfCloneNodeSecondArg(funct) {
-			var generated = function generated(node) {
-				var self = this;
-				_each_array(self, function(item) {
+			var _this = this;
+
+			return function(node) {
+				_each_array(_this, function(item) {
 					funct(item, node.cloneNode(true));
 				});
-				return self;
+				return _this;
 			};
-			return generated;
 		},
 		generateLoopSingleArgReturnSelfCloneNodeFirstArg = function generateLoopSingleArgReturnSelfCloneNodeFirstArg(funct) {
-			var generated = function generated(node) {
-				var self = this;
-				_each_array(self, function(item) {
+			var _this2 = this;
+
+			return function(node) {
+				_each_array(_this2, function(item) {
 					funct(item.cloneNode(true), node);
 				});
-				return self;
+				return _this2;
 			};
-			return generated;
-		},
-		generateLoopSingleArgReturnSelfNodeAsSecondArg = function generateLoopSingleArgReturnSelfNodeAsSecondArg(funct) {
-			var generated = function generated(node) {
-				var self = this;
-				_each_array(self, function(item) {
-					funct(node, item);
-				});
-				return self;
-			};
-			return generated;
 		},
 		generateLoopSingleArgReturnSelf = function generateLoopSingleArgReturnSelf(funct) {
-			var generated = function generated(node) {
-				var self = this;
-				_each_array(self, function(item) {
+			return function(node) {
+				_each_array(_this3, function(item) {
 					funct(node, item);
 				});
-				return self;
+				return _this3;
 			};
-			return generated;
 		},
 		generateLoopSingleArgReturnData = function generateLoopSingleArgReturnData(funct) {
-			var generated = function generated(arg) {
-				return _each_array(this, function(item) {
+			return function(arg) {
+				return _each_array(_this3, function(item) {
 					return funct(item, arg);
 				});
 			};
-			return generated;
 		},
 		generateLoopReturnData = function generateLoopReturnData(funct) {
-			var generated = function generated(node) {
-				return _each_array(this, function(item) {
+			return function(node) {
+				return _each_array(_this3, function(item) {
 					return funct(item);
 				});
 			};
-			return generated;
 		},
 
 		//not as fast but works for extra methods
 		generateLoopReturnDataMultipleArgs = function generateLoopReturnDataMultipleArgs(funct) {
-			var generated = function generated() {
+			return function() {
 				var newArgs,
 					args = _toArray(arguments);
 				return _each_array(this, function(item) {
@@ -3447,15 +3373,15 @@
 					return funct.apply(null, args);
 				});
 			};
-			return generated;
 		},
 		generateLoopForNthMethods = function generateLoopForNthMethods(funct) {
-			var generated = function generated(new_child, position) {
-				return _each_array(this, function(item) {
+			var _this4 = this;
+
+			return function(new_child, position) {
+				return _each_array(_this4, function(item) {
 					return funct(item, new_child.cloneNode(true), position);
 				});
 			};
-			return generated;
 		},
 
 		//live list operations meaning nodes can be removed from DOM and the loop is internal
@@ -3485,8 +3411,7 @@
 				return this;
 			},
 			lastIn: function lastIn() {
-				var node_list = this;
-				return node_list[node_list.length - 1];
+				return collectionLastItem(this);
 			},
 			firstIn: function firstIn() {
 				return this[0];
@@ -3497,9 +3422,9 @@
 			replace: generateLoopSingleArgReturnSelfCloneNodeSecondArg(replaceChild),
 			scrollIt: generateLoopReturnDataMultipleArgs(_scrollIt),
 			prepend: generateLoopSingleArgReturnSelfCloneNodeSecondArg(prepend),
-			prependTo: generateLoopSingleArgReturnSelfNodeAsSecondArg(prepend),
+			prependTo: generateLoopSingleArgReturnSelf(prepend),
 			ap: generateLoopSingleArgReturnSelfCloneNodeSecondArg(_append),
-			apTo: generateLoopSingleArgReturnSelfNodeAsSecondArg(_append),
+			apTo: generateLoopSingleArgReturnSelf(_append),
 			after: generateLoopSingleArgReturnSelfCloneNodeSecondArg(insertAfter), //$('a').after($('.after'))
 			before: generateLoopSingleArgReturnSelfCloneNodeSecondArg(insertBefore), //$('a').before($('.before'))
 			afterNth: generateLoopForNthMethods(_afterNth),
@@ -3508,8 +3433,7 @@
 			attr: generateLoopReturnDataMultipleArgs(_attr),
 			plugInto: generateLoopReturnDataMultipleArgs(_plugInto)
 		};
-	zipUpTo(listOnly, nodeOnlyMethodsSingleArgReturn, nodeOnlyMethodNamesSingleArgReturn, generateLoopSingleArgReturnData);
-	zipUpTo(listOnly, nodeOnlyMethodsReturn, nodeOnlyMethodNamesReturn, generateLoopReturnData);
+	zipUpTo(listOnly, nodeMethodsValues, nodeMethodsKeys, generateNodeMethod);
 
 	//make action on object via acid event
 	var _act = function _act(node, type) {
@@ -4009,10 +3933,10 @@
 	});
 
 	function saveDimensions() {
-		_cache.windowHeight = _window.innerHeight;
-		_cache.windowWidth = _window.innerWidth;
-		_cache.bodyWidth = _body.offsetWidth;
-		_cache.bodyHeight = _body.offsetHeight;
+		appState.windowHeight = _window.innerHeight;
+		appState.windowWidth = _window.innerWidth;
+		appState.bodyWidth = _body.offsetWidth;
+		appState.bodyHeight = _body.offsetHeight;
 	};
 
 	_isDocumentReady(function() {
@@ -4228,6 +4152,10 @@
 			});
 		};
 	_isDocumentReady(listenOnAllEvents);
+
+	//avoid
+	_global.$ = $;
+	_global.ACID = $;
 
 	if (acidLib) {
 		//get model directory -> save prefix to prefix

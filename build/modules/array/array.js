@@ -40,5 +40,4 @@ var _flatten_once = function(arr) {
 
         return result;
     };
-//initialize array object for array prototype
-var array_extend = {};
+$.array=Array;

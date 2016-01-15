@@ -11,6 +11,3 @@ $.session = _sessionStorage;
 $.clearSession = function () {
 	return _sessionStorage.clear();
 };
-
-//sys temp mem
-$.mem = {};

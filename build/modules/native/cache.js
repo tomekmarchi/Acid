@@ -16,5 +16,3 @@ $.cacheToggle = (key, a, b) => {
     }
     return _cache[key] = a;
 };
-_cache.screenHeight = screen.height;
-_cache.screenWidth = screen.width;

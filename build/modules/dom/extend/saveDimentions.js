@@ -1,8 +1,8 @@
 function saveDimensions(){
-	_cache.windowHeight=_window.innerHeight;
-	_cache.windowWidth=_window.innerWidth;
-	_cache.bodyWidth=_body.offsetWidth;
-	_cache.bodyHeight=_body.offsetHeight;
+	appState.windowHeight=_window.innerHeight;
+	appState.windowWidth=_window.innerWidth;
+	appState.bodyWidth=_body.offsetWidth;
+	appState.bodyHeight=_body.offsetHeight;
 };
 
 _isDocumentReady(function(){

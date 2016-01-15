@@ -1,62 +1,44 @@
 var generateLoopSingleArgReturnSelfCloneNodeSecondArg = function(funct) {
-		var generated = function(node) {
-			var self = this;
-			_each_array(self, function(item) {
+		return (node) => {
+			_each_array(this, function(item) {
 				funct(item, node.cloneNode(true));
 			});
-			return self;
+			return this;
 		};
-		return generated;
 	},
 	generateLoopSingleArgReturnSelfCloneNodeFirstArg = function(funct) {
-		var generated = function(node) {
-			var self = this;
-			_each_array(self, function(item) {
+		return (node) => {
+			_each_array(this, function(item) {
 				funct(item.cloneNode(true), node);
 			});
-			return self;
+			return this;
 		};
-		return generated;
 	},
-	generateLoopSingleArgReturnSelfNodeAsSecondArg = function(funct) {
-		var generated = function(node) {
-			var self = this;
-			_each_array(self, function(item) {
+	generateLoopSingleArgReturnSelf = (funct) => {
+		return (node) => {
+			_each_array(this, function(item) {
 				funct(node, item);
 			});
-			return self;
+			return this;
 		};
-		return generated;
 	},
-	generateLoopSingleArgReturnSelf = function(funct) {
-		var generated = function(node) {
-			var self = this;
-			_each_array(self, function(item) {
-				funct(node, item);
-			});
-			return self;
-		};
-		return generated;
-	},
-	generateLoopSingleArgReturnData = function(funct) {
-		var generated = function(arg) {
+	generateLoopSingleArgReturnData = (funct) => {
+		return (arg) => {
 			return _each_array(this, function(item) {
 				return funct(item, arg);
 			});
 		};
-		return generated;
 	},
-	generateLoopReturnData = function(funct) {
-		var generated = function(node) {
+	generateLoopReturnData = (funct) => {
+		return (node) => {
 			return _each_array(this, function(item) {
 				return funct(item);
 			});
 		};
-		return generated;
 	},
 	//not as fast but works for extra methods
 	generateLoopReturnDataMultipleArgs = function(funct) {
-		var generated = function() {
+		return function(){
 			var newArgs,
 				args = _toArray(arguments);
 			return _each_array(this, function(item) {
@@ -65,15 +47,13 @@ var generateLoopSingleArgReturnSelfCloneNodeSecondArg = function(funct) {
 				return funct.apply(null, args);
 			});
 		};
-		return generated;
 	},
 	generateLoopForNthMethods = function(funct) {
-		var generated = function(new_child, position) {
-			return _each_array(this, function(item) {
+		return (new_child, position) => {
+			return _each_array(this, (item) => {
 				return funct(item, new_child.cloneNode(true), position);
 			});
 		};
-		return generated;
 	},
 	//live list operations meaning nodes can be removed from DOM and the loop is internal
 	listOnly = {
@@ -102,8 +82,7 @@ var generateLoopSingleArgReturnSelfCloneNodeSecondArg = function(funct) {
 			return this;
 		},
 		lastIn: function() {
-			var node_list = this;
-			return node_list[node_list.length - 1];
+			return collectionLastItem(this);
 		},
 		firstIn: function() {
 			return this[0];
@@ -114,9 +93,9 @@ var generateLoopSingleArgReturnSelfCloneNodeSecondArg = function(funct) {
 		replace: generateLoopSingleArgReturnSelfCloneNodeSecondArg(replaceChild),
 		scrollIt: generateLoopReturnDataMultipleArgs(scrollIt),
 		prepend: generateLoopSingleArgReturnSelfCloneNodeSecondArg(prepend),
-		prependTo: generateLoopSingleArgReturnSelfNodeAsSecondArg(prepend),
+		prependTo: generateLoopSingleArgReturnSelf(prepend),
 		ap: generateLoopSingleArgReturnSelfCloneNodeSecondArg(_append),
-		apTo: generateLoopSingleArgReturnSelfNodeAsSecondArg(_append),
+		apTo: generateLoopSingleArgReturnSelf(_append),
 		after: generateLoopSingleArgReturnSelfCloneNodeSecondArg(insertAfter), //$('a').after($('.after'))
 		before: generateLoopSingleArgReturnSelfCloneNodeSecondArg(insertBefore), //$('a').before($('.before'))
 		afterNth: generateLoopForNthMethods(afterNth),
@@ -125,5 +104,4 @@ var generateLoopSingleArgReturnSelfCloneNodeSecondArg = function(funct) {
 		attr: generateLoopReturnDataMultipleArgs(_attr),
 		plugInto: generateLoopReturnDataMultipleArgs(_plugInto)
 	};
-	zipUpTo(listOnly, nodeOnlyMethodsSingleArgReturn, nodeOnlyMethodNamesSingleArgReturn, generateLoopSingleArgReturnData);
-	zipUpTo(listOnly, nodeOnlyMethodsReturn, nodeOnlyMethodNamesReturn, generateLoopReturnData);
+	zipUpTo(listOnly, nodeMethodsValues, nodeMethodsKeys, generateNodeMethod);

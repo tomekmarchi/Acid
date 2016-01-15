@@ -42,13 +42,11 @@
 
             'build/modules/shared/*.js',
 
-            'build/modules/dom/closure/methods/*.js',
-            'build/modules/dom/selectors.js',
-            'build/modules/namespace.js',
-
-            'build/modules/events/*.js',
+			'build/modules/dom/closure/methods/*.js',
+			'build/modules/dom/selectors.js',
 
             'build/end/info.js',
+			'build/modules/events/*.js',
 
             'build/modules/string/*.js',
             'build/modules/string/modules/*.js',
@@ -74,6 +72,8 @@
 
             'build/modules/dom/event/availableEvents.js',
             'build/modules/dom/event/event.js',
+
+			'build/modules/namespace.js',
 
             'build/end/loadcore.js',
 

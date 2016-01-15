@@ -8,3 +8,5 @@ var rawURLDecode_regex=/%(?![\da-f]{2})/gi,
 	more_than_regex=/>/g,
 	double_quote_regex=/"/g,
 	slash_regex=/\//g;
+
+$.string=String;

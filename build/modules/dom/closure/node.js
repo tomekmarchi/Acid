@@ -1,16 +1,3 @@
-//node only
-function generateMethodSingleArgReturn(funct) {
-	return function(arg) {
-		return funct(this, arg);
-	}
-}
-
-function generateMethodReturn(funct) {
-	return function(arg) {
-		return funct(this);
-	}
-}
-
 var nodeOnly = {
 		scrollIt: function(x, y) {
 			return scrollIt(this, x, y);
@@ -38,5 +25,4 @@ var nodeOnly = {
 			return _plugInto(this, string, object);
 		}
 	};
-	zipUpTo(nodeOnly, nodeOnlyMethodsSingleArgReturn, nodeOnlyMethodNamesSingleArgReturn, generateMethodSingleArgReturn);
-	zipUpTo(nodeOnly, nodeOnlyMethodsReturn, nodeOnlyMethodNamesReturn, generateMethodReturn);
+	zipUpTo(nodeOnly, nodeMethodsValues, nodeMethodsKeys, generateNodeMethod);

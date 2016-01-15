@@ -3,6 +3,7 @@ var floorMethod = _math.floor,
     randomMethod = _math.random,
     roundMethod = _math.round;
 
+$.math=_math;
 
 //add this and value
 $.add = function(number, value) {
