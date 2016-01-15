@@ -1,6 +1,6 @@
 Acid 
 =======
-Acidjs is an ECMAScript framework with a focus on building highly scalable web construct on-demand applications. It's goal is to provide the essentials for building dynamic real-time streaming single-page applications.
+Acidjs is an ECMA script library that focuses on scalable real-time self-constructing SPAs(single-page applications). Acid proposes a highly modular enviorment where recourses are split up and pulled on the fly. Acid is also the core library of Menrvah, which is an enhancement of the Acid library.
 
 
 DOM
