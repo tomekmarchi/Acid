@@ -10,20 +10,12 @@ $.host = {
 //device info related to actual hardware
 $.hardware = {
 	//core amount on system
-	cores: $cores
+	cores: systemCores
 };
 //useragent info plus mobile
 var _agentinfo = $.agent = {};
 //acid platform information
 $.acid = {
-	//lib name
 	name: 'ACIDjs',
-	//lib version
-	version: 1,
-	//platform type
-	platform: 'stable',
-	//website
-	site: 'http://acidjs.com'
+	version: 1
 };
-//log out the ACID version
-acidConsole(`ACIDjs v${$.acid.version} ${$.acid.platform}`,'notify');

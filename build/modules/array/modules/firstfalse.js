@@ -8,5 +8,4 @@ $.firstFalse = function (array,funct) {
 			return item;
 		}
 	}
-	return false;
 };

@@ -1,3 +1,3 @@
-$.exec=function (a, b , c) {
-	return _document.execCommand(a, b , c);
+$.exec=function () {
+	return _document.execCommand.apply(_document,_toArray(arguments));
 };

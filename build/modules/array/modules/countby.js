@@ -1,23 +1,21 @@
 //Sorts a list into groups and returns a count for the number of objects in each group.
-$.countBy = function (array,funct) {
-	var object = {},
-		item,
-		len = array.length;
-	for (var i = 0; i < len; i++) {
-			item = array[i],
-			results = funct(item);
-		if (!object[results]) {
-			object[results] = 0;
-		}
-		object[results] = object[results] + 1;
-	}
-	return object;
+$.countBy = function(array, funct) {
+    var object = {},
+		result;
+    _each_object(array, (item) => {
+        result = funct(item);
+        if (!object[result]) {
+            object[result] = 0;
+        }
+        object[result]++;
+    });
+    return object;
 };
 
 /*
 
-[4.3, 6.1, 6.4].countBy(function(n) {
-  return n.floor();
+$.countBy([4.3, 6.1, 6.4],function(numb) {
+  return Math.floor(numb);
 });
 
 //{ '4': 1, '6': 2 }

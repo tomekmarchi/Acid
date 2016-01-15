@@ -1,8 +1,6 @@
 //Creates an array that is the symmetric difference of the provided arrays. See Wikipedia for more details.
 $.xor = function(arrayOG) {
-	var numArgs = arguments.length,
-		i,
-		result;
+	var numArgs = arguments.length,result;
 
 	if (!numArgs) {
 		return _uniq(arrayOG);
@@ -10,9 +8,9 @@ $.xor = function(arrayOG) {
 
 	result = xorBase(arrayOG, arguments[0]);
 
-	for (i = 1; i < numArgs; i++) {
-		result = xorBase(result, arguments[i]);
-	}
+	_each_array(arguments,(item) =>{
+		esult = xorBase(result, item);
+	});
 
 	return result;
 };

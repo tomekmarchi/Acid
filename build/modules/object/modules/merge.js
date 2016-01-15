@@ -1,2 +1,0 @@
-//merge object
-$.mergeObject = $merge;

@@ -1,3 +1,15 @@
+/*
+	This is for async promises & timer functions
+*/
+//haspromises
+var promiseAsync = Promise.resolve(),
+    //async function call
+    _async = function(fnc) {
+        return promiseAsync.then(fnc);
+    },
+    //timeing
+    _timer = setTimeout;
+
 //debounce function
 $.debounce = function(original, time) {
 	var timeout = false,
@@ -56,20 +68,42 @@ $.throttle = function(func, time) {
 	return fn;
 };
 
-//timer wrapper
-$.timer = function(fn, time) {
-	return setTimeout(fn, time);
+$.timerClear = function (number) {
+	return clearTimeout(number);
+};
+
+$.intervalClear = function (number) {
+	return clearInterval(number);
+};
+
+$.clearTimers = function(){
+	//clear all timers
+	var maxId = setTimeout(function() {}, 0);
+	for (var i = 0; i < maxId; i++) {
+	    clearTimeout(i);
+	}
+};
+
+$.clearIntervals = function(){
+	//clear all timers
+	var maxId = setInterval(function() {}, 1000);
+	for (var i = 0; i <= maxId; i++) {
+	    clearInterval(i);
+	}
 };
 
 //timer wrapper
-$.interval = function(fn, time) {
-	return setInterval(fn, time);
-};
+$.timer = _timer;
 
-//async function call
-$.asyncFN = (haspromise) ?
-	function(fnc) {
-		_promise_async.then(fnc);
-	} : function(fnc) {
-		setTimeout(fnc, 0);
-	};
+//timer wrapper
+$.interval = setInterval;
+
+$.async = function(fns) {
+	if (_isFunction(fns)) {
+		_async(fns);
+	} else if (_isArray(fns)) {
+		_each_array(fns, asyncLaunch);
+	} else {
+		_each_object(fns,asyncLaunch);
+	}
+};

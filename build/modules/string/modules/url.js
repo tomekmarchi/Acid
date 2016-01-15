@@ -1,5 +1,5 @@
 //add paramaters to a URL
-$.addParam = function (url,n) {
+var _addParam = function (url,n) {
 	var o = url,
 		len = o.length;
 	if (len > 0) {
@@ -18,3 +18,5 @@ $.addParam = function (url,n) {
 		return '?' + n
 	}
 };
+
+$.addParam = _addParam;

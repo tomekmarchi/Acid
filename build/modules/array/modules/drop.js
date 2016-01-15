@@ -1,17 +1,3 @@
-//Creates a an array with elements taken from the beginning. Elements are taken until predicate returns falsey. The predicate is bound to thisArg and invoked with three arguments; (value, index, array).
-$.dropWhile = function (array,funct) {
-	var temp = [],
-		len = array.length;
-	for (var i = 0; i < len; i++) {
-		var item = array[i],
-			condition = funct(item, i, array);
-		if (!condition) {
-			temp.push(item);
-		}
-	}
-	return temp;
-};
-
 //Creates a an array with elements taken from the end. Elements are taken until predicate returns falsey. The predicate is bound to thisArg and invoked with three arguments; (value, index, array).
 $.dropRightWhile = function (array,funct) {
 	var temp = [],
@@ -26,7 +12,6 @@ $.dropRightWhile = function (array,funct) {
 	}
 	return temp;
 };
-
 
 //Removes elements from array corresponding to the given indexes and returns an array of the removed elements. Indexes may be specified as an array of indexes or as individual arguments.
 $.drop = function (array,amount) {
