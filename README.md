@@ -2,7 +2,6 @@ What is Acid?
 =======
 Acidjs is an ECMA script library that focuses on scalable real-time self-constructing SPAs(single-page applications). Acid proposes a highly modular enviorment where recourses are split up and pulled on the fly. Acid is also the core library of Menrvah, which is an enhancement of the Acid library.
 
-
 DOM
 -----------------------
 DOM methods are extended via the prototype property with incident avoidence. This method was chosen due to chainig being the easiest method for interacting with the DOM.
