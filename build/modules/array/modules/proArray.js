@@ -1,69 +1,33 @@
-function chunkSlice(array, start, end) {
-	var length = Math.min(end, array.length) - start,
-		result = new Array(length),
-		i = 0;
+var chunkSlice = (array, start, end) => {
+        return eachArray(newArray(mathNative.min(end, getLength(array)) - start), () => {
+            return array[start + i];
+        });
+    },
+    numericalCompare = (a, b) => {
+        return a - b;
+    },
+    numericalCompareReverse = (a, b) => {
+        return b - a;
+    },
+    xorBase = (a, b) => {
+        return eachArray(concatArray(a,b), (item) => {
+            if (!has(b, item) && indexOfCall(result, item) < 0) {
+                return item;
+            }
+        });
+    },
+    uniqueArray = (array, isSorted) => {
+        if (isSorted) {
+            return eachArray(array, (item, index) => {
+                if (item !== array[index - 1]) {
+                    return item;
+                }
+            });
+        }
 
-	for (; i < length; i++) {
-		result[i] = array[start + i];
-	}
-
-	return result;
-}
-
-function numericalCompare(a, b) {
-	return a - b;
-}
-
-function numericalCompareReverse(a, b) {
-	return b - a;
-}
-
-function xorBase(a, b) {
-	var result = [],
-		item,
-		i = 0;
-
-	for (; i < a.length; i++) {
-		item = a[i];
-		if (b.indexOf(item) < 0 && result.indexOf(item) < 0) {
-			result.push(item);
-		}
-	}
-
-	for (i = 0; i < b.length; i++) {
-		item = b[i];
-		if (a.indexOf(item) < 0 && result.indexOf(item) < 0) {
-			result.push(item);
-		}
-	}
-
-	return result;
-}
-
-function _uniq(array, isSorted) {
-	var result = [],
-		length = array.length,
-		i = 1;
-
-	if (!length) {
-		return result;
-	}
-
-	result[0] = array[0];
-
-	if (isSorted) {
-		for (; i < length; i++) {
-			if (array[i] !== array[i - 1]) {
-				result.push(array[i]);
-			}
-		}
-	} else {
-		for (; i < length; i++) {
-			if (result.indexOf(array[i]) < 0) {
-				result.push(array[i]);
-			}
-		}
-	}
-
-	return result;
-}
+        return eachArray(array, (item, index, length, original, newArray) => {
+            if (!has(newArray, item)) {
+                return item;
+            }
+        });
+    };

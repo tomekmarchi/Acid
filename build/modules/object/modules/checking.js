@@ -1,241 +1,175 @@
 	/*
-			This is for object checking is or isnot
-			*/
+				This is for object checking is or isnot
+				*/
 	//checking
-	var obj_strng_gen = function(name) {
-	        return '[object ' + name + ']';
+	var objectStringGenerate = function(name) {
+	        return `[object ${name}]`;
 	    },
-	    regexptype = obj_strng_gen('RegExp'),
-
-	    argsTag = obj_strng_gen('Arguments'),
-
-	    arrayTag = obj_strng_gen('Array'),
-
-	    boolTag = obj_strng_gen('Boolean'),
-
-	    dateTag = obj_strng_gen('Date'),
-
-	    errorTag = obj_strng_gen('Error'),
-
-	    funcTag = obj_strng_gen('Function'),
-
-	    mapTag = obj_strng_gen('Map'),
-
-	    numberTag = obj_strng_gen('Number'),
-
-	    objectTag = obj_strng_gen('Object'),
-
-	    setTag = obj_strng_gen('Set'),
-
-	    stringTag = obj_strng_gen('String'),
-
-	    weakMapTag = obj_strng_gen('WeakMap'),
-
-	    arrayBufferTag = obj_strng_gen('ArrayBuffer'),
-
-	    float32Tag = obj_strng_gen('Float32Array'),
-
-	    float64Tag = obj_strng_gen('Float64Array'),
-
-	    int8Tag = obj_strng_gen('Int8Array'),
-
-	    int16Tag = obj_strng_gen('Int16Array'),
-
-	    int32Tag = obj_strng_gen('Int32Array'),
-
-	    unit8Tag = obj_strng_gen('unit8Array'),
-
-	    unit8ClampedTag = obj_strng_gen('unit8ClampedArray'),
-
-	    unit16Tag = obj_strng_gen('unit16Array'),
-
-	    unit32Tag = obj_strng_gen('unit32Array'),
-
-	    is_same_obj_gen = function(type) {
-	        return function(obj) {
-	            return $tostring.call(obj) === type;
+	    regexptype = objectStringGenerate('RegExp'),
+	    argsTag = objectStringGenerate('Arguments'),
+	    arrayTag = objectStringGenerate('Array'),
+	    boolTag = objectStringGenerate('Boolean'),
+	    dateTag = objectStringGenerate('Date'),
+	    errorTag = objectStringGenerate('Error'),
+	    funcTag = objectStringGenerate('Function'),
+	    mapTag = objectStringGenerate('Map'),
+	    numberTag = objectStringGenerate('Number'),
+	    objectTag = objectStringGenerate('Object'),
+	    setTag = objectStringGenerate('Set'),
+	    stringTag = objectStringGenerate('String'),
+	    weakMapTag = objectStringGenerate('WeakMap'),
+	    arrayBufferTag = objectStringGenerate('ArrayBuffer'),
+	    float32Tag = objectStringGenerate('Float32Array'),
+	    float64Tag = objectStringGenerate('Float64Array'),
+	    int8Tag = objectStringGenerate('Int8Array'),
+	    int16Tag = objectStringGenerate('Int16Array'),
+	    int32Tag = objectStringGenerate('Int32Array'),
+	    unit8Tag = objectStringGenerate('unit8Array'),
+	    unit8ClampedTag = objectStringGenerate('unit8ClampedArray'),
+	    unit16Tag = objectStringGenerate('unit16Array'),
+	    unit32Tag = objectStringGenerate('unit32Array'),
+	    isSameObjectGenerator = (type) => {
+	        return (obj) => {
+	            return toStringCall(obj) === type;
 	        }
 	    },
-	    //is regexp
-	    isRegex = is_same_obj_gen(regexptype),
-	    //is args
-	    isArgs = is_same_obj_gen(argsTag),
-	    //is bool
-	    isBool = is_same_obj_gen(boolTag),
-	    //is date
-	    isDate = is_same_obj_gen(dateTag),
-	    //is error
-	    isError = is_same_obj_gen(errorTag),
-	    //is map
-	    isMap = is_same_obj_gen(mapTag),
-	    //is object
-	    isObject = is_same_obj_gen(objectTag),
-	    //is isSet
-	    isSet = is_same_obj_gen(setTag),
-	    //is isWeakMap
-	    isWeakMap = is_same_obj_gen(weakMapTag),
-	    //is isFloat32
-	    isFloat32 = is_same_obj_gen(float32Tag),
-	    //is isFloat64
-	    isFloat64 = is_same_obj_gen(float64Tag),
-	    //is isInt8
-	    isInt8 = is_same_obj_gen(int8Tag),
-	    //is isInt16
-	    isInt16 = is_same_obj_gen(int16Tag),
-	    //is isInt32
-	    isInt32 = is_same_obj_gen(int32Tag),
-	    //is unit8
-	    isUnit8 = is_same_obj_gen(unit8Tag),
-	    //is unit8clamped
-	    isUnit8clamped = is_same_obj_gen(unit8ClampedTag),
-	    //is unit16
-	    isUnit16 = is_same_obj_gen(unit16Tag),
-	    //is unit3
-	    isUnit32 = is_same_obj_gen(unit32Tag),
-	    //is native function
+	    isRegex = isSameObjectGenerator(regexptype),
+	    isArgs = isSameObjectGenerator(argsTag),
+	    isBool = isSameObjectGenerator(boolTag),
+	    isDate = isSameObjectGenerator(dateTag),
+	    isError = isSameObjectGenerator(errorTag),
+	    isMap = isSameObjectGenerator(mapTag),
+	    isObject = isSameObjectGenerator(objectTag),
+	    isSet = isSameObjectGenerator(setTag),
+	    isWeakMap = isSameObjectGenerator(weakMapTag),
+	    isFloat32 = isSameObjectGenerator(float32Tag),
+	    isFloat64 = isSameObjectGenerator(float64Tag),
+	    isInt8 = isSameObjectGenerator(int8Tag),
+	    isInt16 = isSameObjectGenerator(int16Tag),
+	    isInt32 = isSameObjectGenerator(int32Tag),
+	    isUnit8 = isSameObjectGenerator(unit8Tag),
+	    isUnit8clamped = isSameObjectGenerator(unit8ClampedTag),
+	    isUnit16 = isSameObjectGenerator(unit16Tag),
+	    isUnit32 = isSameObjectGenerator(unit32Tag),
 	    isNative = function(obj) {
-	        return (hasValue(obj)) ? obj.toString().toLowerCase().indexOf('native') != -1 : false;
+	        return hasValue(obj) ? has(toLowerCaseCall(toStringCall(obj)),'native') : false;
 	    },
-	    //hasval fn returns true or false
 	    hasValue = function(n) {
 	        return n !== undefined && n !== null;
 	    },
-	    //is undefined
 	    isUndefined = function(obj) {
 	        return obj === undefined;
 	    },
-	    //is NaN
-	    _isNaN = (isNaN) ? isNaN : number_object.isNaN,
-	    //is int
-	    _isInt = (number_object.isInteger) ? number_object.isInteger : function(num) {
+	    isInt = (numberNative.isInteger) ? numberNative.isInteger : function(num) {
 	        if (num % 1 === 0) {
 	            return true;
 	        }
 	        return false;
 	    },
-	    //is equal to null
 	    isNull = function(obj) {
 	        return obj === null;
 	    },
-	    isFinite = isFinite,
-	    //check if object is array returns true or false
-	    _isArray = function(object) {
-	        return object instanceof _array
+	    isArray = function(object) {
+	        return object instanceof arrayNative
 	    },
-	    //checks to see if is string returns true or false
-	    _isString = function(obj) {
-	        return (hasValue(obj)) ? obj.constructor === _string : false;
+	    isString = function(obj) {
+	        return (hasValue(obj)) ? obj.constructor === stringNative : false;
 	    },
-	    //checks to see if is number returns true or false
 	    isNumber = function(obj) {
-	        return (hasValue(obj)) ? obj.constructor == number_object : false;
+	        return (hasValue(obj)) ? obj.constructor == numberNative : false;
 	    },
-	    //is plain object returns true or false
 	    isPlainObject = function(obj) {
-	        return (hasValue(obj)) ? obj.constructor.toString().trim().slice(9, 16) === 'Object(' : false;
+	        return (hasValue(obj)) ? stringSliceCall(toStringCall(obj.constructor).trim(),9, 16) === 'Object(' : false;
 	    },
-	    //checks to see if object is a function returns true or false
-	    _isFunction = function(obj) {
-	        return (hasValue(obj)) ? obj instanceof _function : false;
+	    isFunction = function(obj) {
+	        return (hasValue(obj)) ? obj instanceof functionNative : false;
 	    },
-	    //checks to see if object is a HTMLCollection returns true or false
-	    _isHTMLCollection = function(obj) {
-	        return (hasValue(obj)) ? obj.constructor.name == "HTMLCollection" : false;
-	    },
-	    //checks to see if object is a NodeList returns true or false
-	    _isNodeList = function(obj) {
-	        return (hasValue(obj)) ? obj.constructor.name == "NodeList" : false;
-	    },
-	    //searching a string for a string returns true or false
-	    _has = function(string, search) {
+	    has = function(string, search) {
 	        var value,
 	            loopValue;
-	        if (!_isString(search)) {
-	            _each(search, function(item, key) {
-	                loopValue = string.indexOf(item) != -1;
+	        if (!isString(search)) {
+	            each(search, function(item, key) {
+	                loopValue = indexOfCall(string,item) != -1;
 	                if (loopValue) {
 	                    value = loopValue;
 	                }
 	            });
 	        } else {
-	            value = string.indexOf(search) != -1;
+	            value = indexOfCall(string,search) != -1;
 	        }
 	        return value;
 	    },
-	    //does object have length
 	    islength = function(obj) {
-	        return !obj.length;
+	        return !getLength(obj);
 	    },
 	    isEmpty = function(obj) {
 	        if (hasValue(obj)) {
-	            var len = islength(obj);
-	            if (islength(obj)) {
-	                return !len;
+	            if (isPlainObject(obj)) {
+	                return !islength(objectKeys(obj));
+	            } else {
+	                return !islength(obj);
 	            }
-	            return !_object.keys(obj).length;
 	        }
-	        return false;
+	        return true;
 	    },
 	    isFileCSS = function(item) {
-	        return isCSSRegex.test(item);
+	        return (hasValue(item)) ? isCSSRegex.test(item) : false;
 	    },
 	    isFileJSON = function(item) {
-	        return isJSONRegex.test(item);
+	        return (hasValue(item)) ? isJSONRegex.test(item) : false;
 	    },
 	    isFileJS = function(item) {
-	        return isJSRegex.test(item) && !isFileJSON(item);
+	        return (hasValue(item)) ? isJSRegex.test(item) && !isFileJSON(item) : false;
 	    },
 	    hasDot = function(item) {
-	        return hasDotRegex.test(item);
+	        return (hasValue(item)) ? hasDotRegex.test(item) : false;
 	    },
 	    getModelRootName = function(string) {
-	        return string.split('.')[0];
+	        return splitCall(string, dotString)[0];
 	    },
 	    getModelProperty = function(string) {
-	        return _arrayLastItem(string.split('/'))[0];
+	        return arrayLastItem(splitCall(string, slashString))[0];
 	    },
 	    getModelName = function(string) {
-	        var splitIt = string.split('/');
-	        return _find(splitIt[splitIt.length - 1].split('.js')[0], _model);
+	        var splitIt = splitCall(string, slashString);
+	        return find(splitCall(splitIt[getLength(splitIt) - 1], '.js')[0], modelMethod);
 	    };
 
-//export all checking functions
-$.isArray = _isArray;
-$.isString = _isString;
-$.isNumber = isNumber;
-$.isObject = isObject;
-$.isPlainObject = isPlainObject;
-$.isFunction = _isFunction;
-$.isRegex = isRegex;
-$.isArgs = isArgs;
-$.isBool = isBool;
-$.isDate = isDate;
-$.isError = isError;
-$.isMap = isMap;
-$.isSet = isSet;
-$.isWeakMap = isWeakMap;
-$.isFloat32 = isFloat32;
-$.isFloat64 = isFloat64;
-$.isInt8 = isInt8;
-$.isInt16 = isInt16;
-$.isInt32 = isInt32;
-$.isUnit8 = isUnit8;
-$.isUnit8clamped = isUnit8clamped;
-$.isUnit16 = isUnit16;
-$.isUnit32 = isUnit32;
-$.isNative = isNative;
-$.isUndefined = isUndefined;
-$.isNaN = _isNaN;
-$.isInt = _isInt;
-$.isNull = isNull;
-$.isEmpty = isEmpty;
-$.isHTMLCollection = _isHTMLCollection;
-$.isNodeList = _isNodeList;
-$.isFileCSS = isFileCSS;
-$.isFileJSON = isFileJSON;
-$.isFileJS = isFileJS;
-$.hasDot = hasDot;
-$.getModelProperty = getModelProperty;
-$.getModelRootName = getModelRootName;
-$.hasValue = hasValue;
-$.has = _has;
+	//export all checking functions
+	$.isArray = isArray;
+	$.isString = isString;
+	$.isNumber = isNumber;
+	$.isObject = isObject;
+	$.isPlainObject = isPlainObject;
+	$.isFunction = isFunction;
+	$.isRegex = isRegex;
+	$.isArgs = isArgs;
+	$.isBool = isBool;
+	$.isDate = isDate;
+	$.isError = isError;
+	$.isMap = isMap;
+	$.isSet = isSet;
+	$.isWeakMap = isWeakMap;
+	$.isFloat32 = isFloat32;
+	$.isFloat64 = isFloat64;
+	$.isInt8 = isInt8;
+	$.isInt16 = isInt16;
+	$.isInt32 = isInt32;
+	$.isUnit8 = isUnit8;
+	$.isUnit8clamped = isUnit8clamped;
+	$.isUnit16 = isUnit16;
+	$.isUnit32 = isUnit32;
+	$.isNative = isNative;
+	$.isUndefined = isUndefined;
+	$.isNaN = isNaN;
+	$.isInt = isInt;
+	$.isNull = isNull;
+	$.isEmpty = isEmpty;
+	$.isFileCSS = isFileCSS;
+	$.isFileJSON = isFileJSON;
+	$.isFileJS = isFileJS;
+	$.hasDot = hasDot;
+	$.getModelProperty = getModelProperty;
+	$.getModelRootName = getModelRootName;
+	$.hasValue = hasValue;
+	$.has = has;

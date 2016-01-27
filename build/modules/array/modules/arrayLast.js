@@ -1,12 +1,12 @@
-var _arrayLastItem=function (array,indexFrom) {
+var arrayLastItem=function (array,indexFrom) {
 	var result;
 	if(!indexFrom){
 		indexFrom=1;
 	}
 	if (array) {
-		result = array.splice(array.length - indexFrom, indexFrom);
+		result = spliceArray(array,getLength(array) - indexFrom, indexFrom);
 	}else{
-		result = array[array.length - 1];
+		result = array[getLength(array) - 1];
 	}
 	return result;
 };

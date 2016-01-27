@@ -1,13 +1,11 @@
-//localstorage
-$.local = _localstorage;
-//localstorage clear
-$.clearLocal = function () {
-	return _localstorage.clear();
-};
+var localstorage = $.local = localStorage,
+    sessionstorage = $.session = sessionStorage;
 
-//session storage
-$.session = _sessionStorage;
+//localstorage clear
+$.clearLocal =  () => {
+	return localstorage.clear();
+};
 //session storage clear
-$.clearSession = function () {
-	return _sessionStorage.clear();
+$.clearSession =  () => {
+	return sessionstorage.clear();
 };

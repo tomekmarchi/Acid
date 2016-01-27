@@ -19,41 +19,22 @@
  * remove(array,[2, 5]);
  * // -> [4]
  */
-$.remove = function(array,args) {
-    var remStartIndex = 0,
-		removeCurrentIndex,
-		j,
-    	numToRemove = 0;
-
-	if(!_isArray(args)){
-		args=[args];
-	}
-
-    for (var i = 0; i < array.length; i++) {
-        removeCurrentIndex = false;
-
-        for (j = 0; j < args.length; j++) {
-            if (array[i] === args[j]) {
-                removeCurrentIndex = true;
-                break;
-            }
+$.remove = function(array, args) {
+    if (isFunction(args)) {
+		eachRaw(array, (item, index) => {
+			if (args(item)) {
+				spliceArray(array, index, 1);
+			}
+		});
+    } else {
+        if (!isArray(args)) {
+            args = [args];
         }
-
-        if (removeCurrentIndex) {
-            if (!numToRemove) {
-                remStartIndex = i;
+        eachRaw(array, (item, index) => {
+            if (has(args, item)) {
+                spliceArray(array, index, 1);
             }
-            ++numToRemove;
-        } else if (numToRemove) {
-            array.splice(remStartIndex, numToRemove);
-            i -= numToRemove;
-            numToRemove = 0;
-        }
+        });
     }
-
-    if (numToRemove) {
-        array.splice(remStartIndex, numToRemove);
-    }
-
     return array;
 };

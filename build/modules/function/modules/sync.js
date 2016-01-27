@@ -1,6 +1,6 @@
 //Launch functions in sync
-$.sync = function(functions) {
-	return _each_array(functions,(functionObject) =>{
+$.inSync = function(functions) {
+	return eachArray(functions,(functionObject) =>{
 		return functionObject();
 	});
 };

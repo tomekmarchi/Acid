@@ -1,4 +1,4 @@
 //checks if the array is empty
 $.isArrayEmpty = function (array) {
-	return array.length === 0;
+	return getLength(array) === 0;
 };

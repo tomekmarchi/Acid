@@ -2,7 +2,7 @@
 $.countBy = function(array, funct) {
     var object = {},
 		result;
-    _each_object(array, (item) => {
+    eachObject(array, (item) => {
         result = funct(item);
         if (!object[result]) {
             object[result] = 0;

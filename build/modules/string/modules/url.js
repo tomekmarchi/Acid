@@ -1,22 +1,17 @@
 //add paramaters to a URL
-var _addParam = function (url,n) {
-	var o = url,
-		len = o.length;
-	if (len > 0) {
-		var last = o[len-1];
-		if (o.indexOf('?') != -1) {
-			if (last != '?') {
-				return o + '&' + n;
-			} else if (last == '?') {
-				return o + n;
+var addParam =  (url,newItem) => {
+	if (hasLength(url)) {
+		if (has(url,questionMarkString)) {
+			if (lastItem(url) === questionMarkString) {
+				url = url + newItem;
+			}else{
+				url = url + andString + newItem;
 			}
-			return o + '&' + n;
-		} else {
-			return o + '?' + n
 		}
-	} else {
-		return '?' + n
+	}else{
+		url = questionMarkString + newItem;
 	}
+	return url;
 };
 
-$.addParam = _addParam;
+$.addParam = addParam;

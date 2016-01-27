@@ -25,11 +25,11 @@
           return true;
       }
 
-      if (!array || array.length !== item.length) {
+      if (!array || getLength(array) !== getLength(item)) {
           return false;
       }
 
-      for (var i = 0; i < array.length; i++) {
+      for (var i = 0; i < getLength(array); i++) {
           if (array[i] !== item[i]) {
               return false;
           }

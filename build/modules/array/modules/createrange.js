@@ -9,7 +9,7 @@ $.createRange = function (array,start_arg, stop_arg, increment) {
 					i_check = i + increment;
 			}
 		}
-		array.push(i);
+		pushArray(array,i);
 		if (increment) {
 			if (i_check == stop) {
 				break;
@@ -31,7 +31,7 @@ $.createRangeTo = function (array,start_arg, stop_arg, increment) {
 					i_check = i + increment;
 			}
 		}
-		array.push(i);
+		pushArray(array,i);
 		if (increment) {
 			if (i_check == stop) {
 				break;

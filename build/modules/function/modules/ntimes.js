@@ -5,7 +5,7 @@ $.once = (fn) => {
 	return function() {
 		if (!amount) {
 			amount = true;
-			value = fn.apply(this, _toArray(arguments));
+			value = apply(fn,this, toArray(arguments));
 			fn = null; //null func to free up mem
 		}
 		return value;
@@ -19,7 +19,7 @@ $.after = function(fn, amount) {
 	return function() {
 		if (amount < called_amount) {
 			amount = 1;
-			value = fn.apply(this, _toArray(arguments));
+			value = apply(fn,this, toArray(arguments));
 			fn = null; //null func to free up mem
 		}
 		return value;
@@ -33,7 +33,7 @@ $.before = (fn, amount) => {
 	return function() {
 		if (amount > called_amount) {
 			amount = 1;
-			value = fn.apply(this, _toArray(arguments));
+			value = apply(fn,this, toArray(arguments));
 			fn = null; //null func to free up mem
 		}
 		return value;

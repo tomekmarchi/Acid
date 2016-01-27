@@ -1,11 +1,11 @@
 //sys info
 $.host = {
 	// EX http https
-	protocol: $protocol,
+	protocol: protocol,
 	// ws or wss
-	protocol_socket: $protocol_socket,
+	protocolSocket: protocolSocket,
 	//hostname
-	name: $hostname
+	name: hostname
 };
 //device info related to actual hardware
 $.hardware = {
@@ -13,7 +13,7 @@ $.hardware = {
 	cores: systemCores
 };
 //useragent info plus mobile
-var _agentinfo = $.agent = {};
+var agentInfo = $.agent = {};
 //acid platform information
 $.acid = {
 	name: 'ACIDjs',

@@ -1,1 +1,1 @@
-$.object=Object;
+$.object=objectNative;

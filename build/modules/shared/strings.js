@@ -1,0 +1,9 @@
+var dotString='.',
+	emptyString='',
+	slashString= '/',
+	dashString= '-',
+	underscoreString= '_',
+	questionMarkString = '?',
+	andString = '&',
+	poundString = '#',
+	spaceCharacter = ' ';

@@ -40,9 +40,11 @@
             'build/start/credits.js',
             'build/start/start.js',
 
+			'build/modules/namespace.js',
             'build/modules/shared/*.js',
+			'build/modules/helpers/*.js',
 
-			'build/modules/dom/closure/methods/*.js',
+			'build/modules/dom/methods/*.js',
 			'build/modules/dom/selectors.js',
 
             'build/end/info.js',
@@ -57,7 +59,7 @@
             'build/modules/object/*.js',
             'build/modules/object/modules/*.js',
 
-            'build/modules/function/*.js',
+        	'build/modules/function/*.js',
             'build/modules/function/modules/*.js',
 
             'build/modules/number/*.js',
@@ -65,15 +67,13 @@
 
             'build/modules/native/*.js',
 
-            'build/modules/dom/closure/node.js',
-            'build/modules/dom/closure/list.js',
+            'build/modules/dom/node.js',
+            'build/modules/dom/list.js',
             'build/modules/dom/extend/*.js',
             'build/modules/dom/extend.js',
 
             'build/modules/dom/event/availableEvents.js',
             'build/modules/dom/event/event.js',
-
-			'build/modules/namespace.js',
 
             'build/end/loadcore.js',
 
@@ -89,28 +89,33 @@
                 .pipe(concat('acid.js'))
                 .pipe(babel({
                     blacklist: ["strict"],
-                    compact: false
+                    compact: true
                 })).pipe(notify(() => {
                     return 'Acid Babeled';
                 }))
+				.pipe(beautify({
+					indent_size: 1,
+					indent_with_tabs: true
+				}))
                 //make it fabulous
-                .pipe(beautify({
-                    indent_size: 4,
-                    indent_char: '	',
-                    indent_with_tabs: true
-                })).pipe(gulp.dest('compiled')).pipe(notify(function() {
+                .pipe(gulp.dest('compiled')).pipe(notify(function() {
                     return 'Acid Beautified Saved';
                 })).pipe(concat('acid_min.js')).pipe(uglify({
-                    compress: true,
-                    fromString: true,
-                    sequences: true,
-                    join_vars: true,
-                    keep_fnames: false,
-                    pure_getters: true,
-                    conditionals: true,
-                    booleans: true,
-                    drop_debugger: true,
-                    if_return: true
+				    sequences: true,
+				    properties: true,
+				    dead_code: true,
+				    drop_debugger: true,
+				    comparisons: true,
+				    conditionals: true,
+				    evaluate: true,
+				    booleans: true,
+				    loops: true,
+				    unused: true,
+				    hoist_funs: true,
+				    if_return: true,
+				    join_vars: true,
+				    cascade: true,
+					screw_ie8 : true
                 })).pipe(notify(() => {
                     return 'Acid Uglified';
                 })).pipe(gulp.dest('compiled')).pipe(notify(() => {

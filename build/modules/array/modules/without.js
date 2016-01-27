@@ -4,13 +4,13 @@ $.without = function (array,args) {
       i,
       j;
 
-    next: for (i = 0; i < array.length; i++) {
-      for (j = 0; j < arguments.length; j++) {
+    next: for (i = 0; i < getLength(array); i++) {
+      for (j = 0; j < getLength(arguments); j++) {
         if (array[i] === arguments[j]) {
           continue next;
         }
       }
-      result.push(array[i]);
+      pushArray(result,array[i]);
     }
 
     return result;

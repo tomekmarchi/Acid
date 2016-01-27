@@ -2,12 +2,12 @@
 $.groupBy = function (array,funct) {
 	var object = {},
 		results;
-	_each_array(array,(item,index)=>{
+	eachArray(array,(item,index)=>{
 		results = funct(item);
 		if (!object[results]) {
 			object[results] = [];
 		}
-		object[results].push(item);
+		pushArray(object[results],item);
 	});
 	return object;
 };

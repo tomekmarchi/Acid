@@ -1,7 +1,7 @@
    $.module({
 	name:'core',
-	import:[$,'each','has','docs/api.js','qs'],
-	invoke:function($,each,has,api,qs){
+	import:[$,'each','has','docs/api.js','querySelector'],
+	invoke:function($,each,has,api,querySelector){
 		var dictionary={};
 		var methods='';
 		each(api,function(item,key){
@@ -11,7 +11,7 @@
 				});
 			}
 		});
-		$.import('/site/styles/resize.css',function(resize){
+		$.require('/site/styles/resize.css',function(resize){
 			this.read=1;
 			console.log(resize);
 			each($,function(item,key){
@@ -24,7 +24,7 @@
 				}
 			});
 			$.raf(function(){
-				qs('.contentWrap').html(methods);
+				querySelector('.contentWrap').html(methods);
 			});
 		});
 		this.click=function(){

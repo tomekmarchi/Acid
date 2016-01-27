@@ -1,3 +1,3 @@
 $.exec=function () {
-	return _document.execCommand.apply(_document,_toArray(arguments));
+	return apply(documentNode.execCommand,documentNode,toArray(arguments));
 };

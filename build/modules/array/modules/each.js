@@ -9,14 +9,13 @@ Number
 */
 
 //loop through an array of items
-var _each_array = function(array, fn) {
-        //an array of results will be returned
+var eachArray = function(array, fn) {
         var returned,
             a = 0,
-            length = array.length,
+            length = getLength(array),
             results = [];
         for (var i = 0; i < length; i++) {
-            returned = fn(array[i], i, length, array);
+            returned = fn(array[i], i, length, array, results);
             if (hasValue(returned)) {
                 results[a] = returned;
                 a++;
@@ -25,26 +24,34 @@ var _each_array = function(array, fn) {
         return results;
     },
     eachRaw = function(array, fn) {
-        //an array of results will be returned
-        for (var i = 0, length = array.length; i < length; i++) {
-            fn(array[i], i, length, array);
+        var returned,
+            a = 0,
+            length = getLength(array),
+            results = [];
+        for (var i = 0; i < getLength(array); i++) {
+            returned = fn(array[i], i, length, array, results);
+            if (hasValue(returned)) {
+                results[a] = returned;
+                a++;
+            }
         }
+        return results;
     },
     eachDo = function(array, callback, safeIteration) {
         var i = 0;
 
         if (safeIteration)
-            while (i < array.length && (!(i in this) || callback(array[i], i, array) !== false)) ++i;
+            while (i < getLength(array) && (!(i in this) || callback(array[i], i, array) !== false)) ++i;
         else
-            while (i < array.length && callback(array[i], i++, array) !== false);
+            while (i < getLength(array) && callback(array[i], i++, array) !== false);
 
         return array;
     },
     //loop while the returned result is false
-    _whileFalse = function(array, fn) {
+    whileFalse = function(array, fn) {
         //an array of results will be returned
         var result;
-        for (var i = 0, results = [], len = array.length; i < len; i++) {
+        for (var i = 0, results = [], len = getLength(array); i < len; i++) {
             result = fn(array[i], i, len);
             if (result) {
                 break;
@@ -54,11 +61,11 @@ var _each_array = function(array, fn) {
         return results;
     },
     //each while the check function is true
-    _eachWhile = function(array, fn, check) {
+    eachWhile = function(array, fn, check) {
         //an array of results will be returned
         var result;
-        for (var i = 0, results = [], len = array.length; i < len; i++) {
-            result = fn(array[i], i, len);
+        for (var i = 0, results = [], len = getLength(array); i < len; i++) {
+            result = fn(array[i], i, len, array, results);
             if (!result) {
                 break;
             }
@@ -67,12 +74,14 @@ var _each_array = function(array, fn) {
         return results;
     },
     //loop while the count is less than the length of the array
-    _whileLength = function(array, fn) {
+    whileLength = function(array, fn) {
         //an array of results will be returned
-        var results = [];
-        var i = 0;
-        while (i < arr.length) {
-            results[i] = fn(array[i], i);
+        var results = [],
+            len = getLength(array),
+            i = 0;
+        while (i < len) {
+            results[i] = fn(array[i], i, len, array, results);
+            len = getLength(array);
             i++;
         }
         return results;
@@ -80,13 +89,25 @@ var _each_array = function(array, fn) {
     //loop through array backwards aka from the right
     eachArrayFromRight = function(array, fn) {
         //an array of results will be returned
-        for (var results = [], len = array.length, i = len - 1; i >= 0; i--) {
-            results[i] = fn(array[i], i, len);
+        for (var results = [], len = getLength(array), i = len - 1; i >= 0; i--) {
+            results[i] = fn(array[i], i, len, array, results);
+        }
+        return results;
+    },
+    //loop through array backwards aka from the right
+    eachArrayFromRightWhile = function(array, fn) {
+        //an array of results will be returned
+        for (var results = [], len = getLength(array), i = len - 1; i >= 0; i--) {
+            result = fn(array[i], i, len, array, results);
+            if (!result) {
+                break;
+            }
+            results[i] = result;
         }
         return results;
     },
     //loop through based on number
-    _each_number = function(start, end, fn) {
+    eachNumber = function(start, end, fn) {
         if (!fn) {
             var fn = end,
                 end = start,
@@ -95,28 +116,16 @@ var _each_array = function(array, fn) {
         var results = [];
         for (; start < end; start++) {
             //call function get result
-            results[start] = fn(start);
+            results[start] = fn(start,end);
         }
         return results;
     };
 
-//loop through array using for loop cached
-$.eachArray = _each_array;
-
-//loop through array using for loop cached but without returning data
+$.eachArray = eachArray;
 $.eachRaw = eachRaw;
-
-//loop through array backwards aka from the right
 $.eachRight = eachArrayFromRight;
-
-//loop through array using for loop cached
-$.eachDo = _each_array;
-
-//each while the check function is true
-$.eachWhile = _eachWhile;
-
-//loop while the returned result is false
-$.eachWhileFalse = _whileFalse;
-
-//loop while the count is less than the length of the array
-$.eachWhileLength = _whileLength;
+$.eachDo = eachDo;
+$.eachWhile = eachWhile;
+$.eachWhileFalse = whileFalse;
+$.eachRightWhile = eachArrayFromRightWhile;
+$.whileLength = whileLength;

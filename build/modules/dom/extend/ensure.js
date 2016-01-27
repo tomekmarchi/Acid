@@ -1,8 +1,8 @@
-var _ensure = function(models, call) {
-	var models = (_isString(models)) ? [models] : models,
-		importData = _each_array(models, function(item) {
-			return item + ".js";
+var ensure = function(models, call) {
+	var models = (isString(models)) ? [models] : models,
+		importData = eachArray(models, (item) => {
+			return `${item}.js`;
 		});
-	_import(importData, call);
+	importMethod(importData, call);
 };
-$.ensure = _ensure;
+$.ensure = ensure;

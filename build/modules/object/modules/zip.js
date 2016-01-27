@@ -1,6 +1,6 @@
 $.zipObject = function (keys,values) {
 	var object={};
-	_each_array(keys,(item,index)=>{
+	eachArray(keys,(item,index)=>{
 		object[item]=values[index];
 	});
 	return object;
@@ -8,9 +8,9 @@ $.zipObject = function (keys,values) {
 $.unZipObject = function (object) {
 	var keys=[],
 		values=[];
-	_each_object(object,(item,key)=>{
-		keys.push(key);
-		values.push(item);
+	eachObject(object,(item,key)=>{
+		pushArray(keys,key);
+		pushArray(values,item);
 	});
 	return [keys,values];
 };

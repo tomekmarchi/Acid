@@ -4,23 +4,23 @@
 		Then this service can run said processes.
 */
 
-var acidService = (name) => {
+var acidService = $.service = (name) => {
 		return acidService[name];
 	},
-	acidCreateService = (name, optionalObjects) => {
+	acidCreateService = $.createService = (name, optionalObjects) => {
 		var service = acidService[name] = {},
 			serviceProcess = service.process = optionalObjects || {},
 			serviceRun = service.run = (optionalNameOfProcess) => {
 				if (optionalNameOfProcess) {
 					serviceProcess[optionalNameOfProcess]();
 				} else {
-					_each_object(serviceProcess, (item) => {
+					eachObject(serviceProcess, (item) => {
 						item();
 					});
 				}
 			},
 			serviceAdd = service.add = (object) => {
-				_each_object(object, (item, key) => {
+				eachObject(object, (item, key) => {
 					serviceProcess[key] = item.bind(service);
 				});
 			},
@@ -32,17 +32,14 @@ var acidService = (name) => {
 				serviceAdd = null;
 				service[name] = null;
 			};
-		_each_object(service, (item, key) => {
-			if (_isFunction(item)) {
+		eachObject(service, (item, key) => {
+			if (isFunction(item)) {
 				service[key] = item.bind(service);
 			}
 		});
-		_each_object(serviceProcess, (item, key) => {
-			if (_isFunction(item)) {
+		eachObject(serviceProcess, (item, key) => {
+			if (isFunction(item)) {
 				serviceProcess[key] = item.bind(service);
 			}
 		});
 	};
-
-$.createService = acidCreateService;
-$.service = acidService;

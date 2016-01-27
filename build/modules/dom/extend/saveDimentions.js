@@ -1,15 +1,15 @@
-function saveDimensions(){
-	appState.windowHeight=_window.innerHeight;
-	appState.windowWidth=_window.innerWidth;
-	appState.bodyWidth=_body.offsetWidth;
-	appState.bodyHeight=_body.offsetHeight;
+var saveDimensions = () => {
+    appState.windowHeight = global.innerHeight;
+    appState.windowWidth = global.innerWidth;
+    appState.bodyWidth = bodyNode.offsetWidth;
+    appState.bodyHeight = bodyNode.offsetHeight;
 };
 
-_isDocumentReady(function(){
-	_body=document.body;
-	raf(saveDimensions);
+isDocumentReady(() => {
+    bodyNode = documentNode.body;
+    raf(saveDimensions);
 });
 
-$.updateDimensions=saveDimensions;
+$.updateDimensions = saveDimensions;
 
-window.addEventListener('load', saveDimensions, true);
+eventAdd(window, 'load', saveDimensions, true);

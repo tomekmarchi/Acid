@@ -1,15 +1,15 @@
 //Creates an array that is the symmetric difference of the provided arrays. See Wikipedia for more details.
 $.xor = function(arrayOG) {
-	var numArgs = arguments.length,result;
+	var numArgs = getLength(arguments),result;
 
 	if (!numArgs) {
-		return _uniq(arrayOG);
+		return uniqueArray(arrayOG);
 	}
 
 	result = xorBase(arrayOG, arguments[0]);
 
-	_each_array(arguments,(item) =>{
-		esult = xorBase(result, item);
+	eachArray(arguments,(item) =>{
+		result = xorBase(result, item);
 	});
 
 	return result;

@@ -1,21 +1,18 @@
-//short hand for request animation frame
 $.curry = function(funts) {
-	var count = 0,
-		args = [],
-		argsLength = funts.length,
-		curry = function() {
-			args = _each_array(_toArray(arguments), (item) => {
-				count++;
-			});
-			if (argsLength == count) {
-				var value = funts.apply(funts, args);
-				count = 0;
-				args = [];
-				return value;
-			}
-			return curry;
+    var argsLength = getLength(funts),
+        args = [],
+        curry = function() {
+            eachArray(arguments, (item) => {
+                pushArray(args, item);
+            });
+            return curry;
+        };
+		curry.result = () =>{
+			var results = apply(funts, curry, args);
+			args = [];
+			return results;
 		};
-	return curry;
+    return curry;
 };
 
 /*
@@ -36,23 +33,20 @@ $.curry = function(funts) {
 */
 
 $.curryRight = function(funts) {
-	var count = 0,
-		args = [],
-		argsLength = funts.length,
-		curry = function() {
-			_each_array(_toArray(arguments), (item) => {
-				args.unshift(item);
-				count++;
-			});
-			if (argsLength == count) {
-				var value = funts.apply(curry, args);
-				count = 0;
-				args = [];
-				return value;
-			}
-			return curry;
+    var argsLength = getLength(funts),
+        args = [],
+        curry = function() {
+            eachArray(arguments, (item) => {
+                unShiftArray(args,item);
+            });
+            return curry;
+        };
+		curry.result = () =>{
+			var results = apply(funts, curry, args);
+			args = [];
+			return results;
 		};
-	return curry;
+    return curry;
 };
 
 /*

@@ -1,31 +1,30 @@
 //save browser info plus add class to body
-var _agentInfo = $.acid.agentInfo = function () {
+var agentInfo = $.acid.agentInfo = function () {
 
-    var str = _agentInfo.string = _window.navigator.userAgent.toLowerCase(),
-		cl=document.body.classList,
-        list = ['windows', 'macintosh', 'linux', 'ipad', 'iphone', 'chrome', 'safari', 'firefox', 'msie', 'trident', 'mobile', 'android', 'edge/'],
-        addcls = [],
-		agent = _agentinfo;
+    var str = agentInfo.string = toLowerCaseCall(global.navigator.userAgent),
+		cl=nodeClassList(documentNode.body),
+        list = ['windows', 'macintosh', 'linux', 'ipad', 'iphone', 'chrome', 'safari', 'firefox', 'msie', 'trident', 'mobile', 'android', 'edge/', 'webkit' , 'blink'],
+        addcls,
+		agent = agentInfo;
 
-	_each_array(list,(item) =>{
-		_agentInfo[item] = _has(str, item);
+	eachArray(list,(item,key) =>{
+		agentInfo[item] = has(str, item);
 	});
 
-    _each_object(_agentInfo,function(item,key){
+    addcls = eachObject(agentInfo,function(item,key){
         if (key === 'string') {
            return;
         } else if (key === 'mobile') {
             if (!item) {
-                addcls.push('desktop');
-                return;
+                return 'desktop';
             }
         }
         if (item) {
-            addcls.push(key);
+            return key;
         }
     });
 
-	_each_array(addcls,function(item){
+	eachArray(addcls,function(item){
 		 cl.add(item);
 	});
 };
@@ -34,7 +33,7 @@ var _agentInfo = $.acid.agentInfo = function () {
 //Get useragent info
 $.isAgent=function(name){
 	if(!name){
-		return _agentinfo;
+		return agentInfo;
 	}
-	return _agentinfo[name];
+	return agentInfo[name];
 };

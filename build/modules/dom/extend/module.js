@@ -1,16 +1,16 @@
 //create a function that takes an object that is apart of the main $ and applies/calls it to the functions arguments useful for caching functions
-var _module = $.module = function(data) {
+var moduleMethod = $.module = function(data) {
 	var fn = data.invoke,
 		callback = data.callback,
 		modelName = data.name,
 		importData = data.import,
 		compiled = function(callbackOptional) {
-			_import(importData, {
-				call: fn.bind(compiled)
+			importMethod(importData, {
+				call: bindTo(fn,compiled)
 			});
 		};
 	if (modelName) {
-		_model[modelName]=compiled;
+		modelMethod[modelName]=compiled;
 	}
 	return compiled;
 };

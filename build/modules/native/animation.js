@@ -1,8 +1,2 @@
-var raf=requestAnimationFrame,
-	caf=cancelAnimationFrame;
-$.caf = (i) => { //cancel animation frame
-	return caf(i);
-};
-$.raf = (i) => { //cancel animation frame
-	return raf(i);
-};
+var raf = $.raf = requestAnimationFrame.bind(selfWindow),
+    caf = $.caf = cancelAnimationFrame.bind(selfWindow);

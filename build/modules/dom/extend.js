@@ -1,6 +1,7 @@
 //single node only operations
-var extendDom = function (obj, ext) {
-		_each_object(obj,(item,key)=>{
+var acidLibPrefix = (acidLib) ? nodeAttribute(acidLib,'data-prefix') || emptyString : emptyString,
+	extendDom = function (obj, ext) {
+		eachObject(obj,(item,key)=>{
 			if (item) {
 				Object.defineProperty(ext, acidLibPrefix + key, {
 				  enumerable: false,
@@ -11,7 +12,7 @@ var extendDom = function (obj, ext) {
 			}
 		});
 	};
-extendDom(nodeOnly, node_prototype);
+extendDom(nodeOnly, nodePrototype);
 //lists without looping
-extendDom(listOnly, nodelist_prototype);
-extendDom(listOnly, htmlcollection_prototype);
+extendDom(listOnly, nodeListPrototype);
+extendDom(listOnly, htmlCollectionPrototype);

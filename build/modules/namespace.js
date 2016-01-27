@@ -1,3 +1,7 @@
+var selector,
+    $ = (string) => {
+        return selector(string);
+    };
 //avoid
-_global.$ = $;
-_global.ACID = $;
+global.$ = $;
+global.ACID = $;

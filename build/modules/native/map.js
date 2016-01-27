@@ -1,7 +1,7 @@
 $.weakMap=function(items){
-	return new weak_map(items);
+	return new weakMap(items);
 };
 
 $.map=function(items){
-	return new _map(items);
+	return new mapNative(items);
 };

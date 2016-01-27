@@ -1,4 +1,4 @@
 //create fragment
-var $frag = $.frag = function() {
-    return _frag.call(_document);
+var createFragment = $.createFragment = function() {
+    return call(documentFragment,documentNode);
 };

@@ -1,6 +1,4 @@
-//debug option
-var $debug = false,
-	//extend options
-	$ext = {
+var debugMode = false, //debug option
+	extendAcidConfig = {
 		credits: {}
 	};

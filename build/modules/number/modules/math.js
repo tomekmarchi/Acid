@@ -1,9 +1,11 @@
 //cache math functions
-var floorMethod = _math.floor,
-    randomMethod = _math.random,
-    roundMethod = _math.round;
+var floorMethod = mathNative.floor,
+    randomMethod = mathNative.random,
+    mathNativeMax = mathNative.max,
+    ceilMethod = mathNative.ceil,
+    roundMethod = mathNative.round;
 
-$.math=_math;
+$.math = mathNative;
 
 //add this and value
 $.add = function(number, value) {

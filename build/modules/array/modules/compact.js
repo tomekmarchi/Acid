@@ -6,7 +6,7 @@
    * @returns {Array} The new array containing only the truthy values from the original array.
    *
    * @example
-   * [0, 1, false, 2, '', 3].compact();
+   * [0, 1, false, 2, emptyString, 3].compact();
    * // -> [1, 2, 3]
    */
 $.compact = compact;

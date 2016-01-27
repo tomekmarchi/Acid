@@ -1,26 +1,45 @@
-var _window = _global,
-    _htmlcollection = HTMLCollection,
-    _HTMLElement = HTMLElement,
-    _nodelist = NodeList,
-    _node = Node,
-    _Element = Element,
-    _document = document,
-    _frag = _document.createDocumentFragment,
-    _createElement = _document.createElement,
-    //get library script
-    //dom objects
-    acidLib = _document.getElementById('acidjs'),
-    //get prefix data for super safe prototypes
-    acidLibPrefix = (acidLib) ? acidLib.getAttribute('data-prefix') || '' : '',
-    _body,
-    //cache document head
-    head_node = _document.head,
-    //cache div for DOM functions
-    _empty_node_div = _createElement.call(_document, 'div'),
-    node_prototype = _node[$prototype],
-    //nodelist prototype
-    nodelist_prototype = _nodelist[$prototype],
-    //Element.prototype
-    _Element_prototype = _Element[$prototype],
-    //htmlcollection prototype
-    htmlcollection_prototype = _htmlcollection[$prototype];
+var bodyNode,
+	selfWindow = window,
+	documentNode = document,
+	headNode = documentNode.head,
+
+	htmlCollectionNative = HTMLCollection,
+    htmlElementNative = HTMLElement,
+    nodelistNative = NodeList,
+    nodeNative = Node,
+    elementNative = Element,
+
+	nodePrototype = nodeNative[prototypeString],
+	nodeListPrototype = nodelistNative[prototypeString],
+	elementPrototype = elementNative[prototypeString],
+	htmlCollectionPrototype = htmlCollectionNative[prototypeString],
+
+    documentFragment = documentNode.createDocumentFragment,
+    createElement = documentNode.createElement,
+
+	generateNodeMethod = (funct) => {
+		return function() {
+			var args = toArray(arguments);
+			unShiftArray(args,this);
+			return apply(funct, args);
+		};
+	},
+	zipUpTo = (object, functs, names, wrap) => {
+		eachArray(functs, (item, index) => {
+			if (!object[names[index]]) {
+				object[names[index]] = wrap(item);
+			}
+		});
+	},
+	domPropertyMethod = (propertyName) =>{
+		return (node,value,other) =>{
+			if (hasValue(value)) {
+				if (isFunction(value)) {
+					value = value(node);
+				}
+				node[propertyName] = value;
+				return node;
+			}
+			return node[propertyName];
+		};
+	};

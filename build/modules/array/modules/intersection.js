@@ -16,24 +16,24 @@
    */
 $.intersect = function(array,args) {
 	var result = [],
-		numArgs = args.length;
+		numArgs = getLength(args);
 
 	if (!numArgs) {
 	  return result;
 	}
 
-	next: for (var i = 0; i < array.length; i++) {
+	next: for (var i = 0; i < getLength(array); i++) {
 	  var item = array[i],
 		  j;
 
 
-	  if (result.indexOf(item) < 0) {
+	  if (!has(result,item)) {
 		for (j = 0; j < numArgs; j++) {
-		  if (args[j].indexOf(item) < 0) {
+		  if (!has(args[j],item)) {
 			continue next;
 		  }
 		}
-		result.push(item);
+		pushArray(result,item);
 	  }
 	}
 
