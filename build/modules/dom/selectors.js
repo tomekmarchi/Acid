@@ -1,8 +1,8 @@
 	var idSelector = $.getById = bindTo(documentNode.getElementById, documentNode),
 		clsSelector = $.getByClass = bindTo(documentNode.getElementsByClassName, documentNode),
 		tagSelector = $.getByTag = bindTo(documentNode.getElementsByTagName, documentNode),
-		qsaSelector = $.querySelector = bindTo(documentNode.querySelectorAll, documentNode),
-		qsSelector = $.querySelectorAll = bindTo(documentNode.querySelector, documentNode),
+		qsSelector = $.querySelector = bindTo(documentNode.querySelector, documentNode),
+		qsaSelector = $.querySelectorAll = bindTo(documentNode.querySelectorAll, documentNode),
 		selector = $.selector = (select) => {
 			var firtLetter = select[0];
 			if (firtLetter === poundString) {

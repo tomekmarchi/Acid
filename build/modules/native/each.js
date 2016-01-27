@@ -16,7 +16,9 @@ var each = function(object, funct, fn) {
 			returned = eachProperty;
 		}else if (object.forEach) {
             returned = forEach;
-        }
+        }else{
+			returned = eachObject;
+		}
     }
     return returned(object, funct, fn);
 };

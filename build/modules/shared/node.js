@@ -14,7 +14,6 @@ var bodyNode,
 	elementPrototype = elementNative[prototypeString],
 	htmlCollectionPrototype = htmlCollectionNative[prototypeString],
 
-    documentFragment = documentNode.createDocumentFragment,
     createElement = documentNode.createElement,
 
 	generateNodeMethod = (funct) => {

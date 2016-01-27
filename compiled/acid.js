@@ -82,7 +82,6 @@
 		nodeListPrototype = nodelistNative[prototypeString],
 		elementPrototype = elementNative[prototypeString],
 		htmlCollectionPrototype = htmlCollectionNative[prototypeString],
-		documentFragment = documentNode.createDocumentFragment,
 		createElement = documentNode.createElement,
 		generateNodeMethod = function generateNodeMethod(funct) {
 			return function() {
@@ -648,8 +647,8 @@ METHODS FOR CLASS MODS
 	var idSelector = $.getById = bindTo(documentNode.getElementById, documentNode),
 		clsSelector = $.getByClass = bindTo(documentNode.getElementsByClassName, documentNode),
 		tagSelector = $.getByTag = bindTo(documentNode.getElementsByTagName, documentNode),
-		qsaSelector = $.querySelector = bindTo(documentNode.querySelectorAll, documentNode),
-		qsSelector = $.querySelectorAll = bindTo(documentNode.querySelector, documentNode),
+		qsSelector = $.querySelector = bindTo(documentNode.querySelector, documentNode),
+		qsaSelector = $.querySelectorAll = bindTo(documentNode.querySelectorAll, documentNode),
 		selector = $.selector = function(select) {
 			var firtLetter = select[0];
 			if (firtLetter === poundString) {
@@ -2207,6 +2206,8 @@ rearg(1,2,3);
 				returned = eachProperty;
 			} else if (object.forEach) {
 				returned = forEach;
+			} else {
+				returned = eachObject;
 			}
 		}
 		return returned(object, funct, fn);
@@ -2496,6 +2497,7 @@ This is for finding an object method via a string used througout events
 		}
 	};
 	zipUpTo(nodeOnly, nodeMethodsValues, nodeMethodsKeys, generateNodeMethod);
+	zipUpTo(nodeOnly, nodeOnlyMethodsReturn, nodeOnlyMethodNamesReturn, generateNodeMethod);
 	var generateLoopSingleArgReturnSelfCloneNodeSecondArg = function generateLoopSingleArgReturnSelfCloneNodeSecondArg(funct) {
 			return function(node) {
 				eachArray(this, function(item) {
@@ -2634,7 +2636,7 @@ This is for finding an object method via a string used througout events
 	};
 	$.ensure = ensure; //create fragment
 	var createFragment = $.createFragment = function() {
-		return call(documentFragment, documentNode);
+		return documentNode.createDocumentFragment();
 	}; //create node
 	var domHeadNode, createTag = function createTag(name) {
 			return documentNode.createElement(name);

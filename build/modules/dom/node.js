@@ -26,3 +26,4 @@ var nodeOnly = {
 		}
 	};
 	zipUpTo(nodeOnly, nodeMethodsValues, nodeMethodsKeys, generateNodeMethod);
+	zipUpTo(nodeOnly, nodeOnlyMethodsReturn, nodeOnlyMethodNamesReturn, generateNodeMethod);
