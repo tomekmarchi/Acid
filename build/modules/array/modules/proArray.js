@@ -16,6 +16,9 @@ var chunkSlice = (array, start, end) => {
             }
         });
     },
+	onlyUnique = (value, index, self) => {
+        return self.indexOf(value) === index;
+    },
     uniqueArray = (array, isSorted) => {
         if (isSorted) {
             return eachArray(array, (item, index) => {
@@ -24,10 +27,5 @@ var chunkSlice = (array, start, end) => {
                 }
             });
         }
-
-        return eachArray(array, (item, index, length, original, newArray) => {
-            if (!has(newArray, item)) {
-                return item;
-            }
-        });
+        return array.filter(onlyUnique);
     };

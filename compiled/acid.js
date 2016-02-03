@@ -251,6 +251,10 @@
 	var nodeAction = function nodeAction(node, type) {
 		$['on' + type](node);
 		return node;
+	}; //make action on object via acid event
+	var nodeTrigger = function nodeTrigger(node, type) {
+		node[type]();
+		return node;
 	};
 	var _afterNth = function _afterNth(node, newChild, position) {
 		var child = node.children[position + 1];
@@ -665,8 +669,8 @@ METHODS FOR CLASS MODS
 			return qsaSelector(select);
 		},
 		acidLib = idSelector('acidjs'),
-		nodeMethodsValues = [toggleNode, showNode, hideNode, subNode, addNode, nodeAction, afterEndNode, beforeBeginNode, afterBeginNode, beforeEndNode, nodeRemoveAttribute, nodeClassListToggle, nodeClassListRemove, nodeHasAttribute, nodeClassList, nodeClassListHas, nodeUpTo, cloneNode, centerNode, innerHTML, ohtml, nodeTextContent, nodeText, textValue, nodeValue, nodeSelect, nodeClassname, matchesSelector, replaceChild, prepend, append, insertAfter, insertBefore, scrollInto, idNode, clsNode, tagNode, qsaNode, qsNode],
-		nodeMethodsKeys = ['toggle', 'show', 'hide', 'sub', 'add', 'act', 'ae', 'bb', 'ab', 'be', 'removeAttr', 'clTog', 'clRemove', 'hasAttr', 'cl', 'clHas', 'upTo', 'clone', 'center', 'html', 'ohtml', 'tc', 'txt', 'textValue', 'val', 'sel', 'cn', 'isMatch', 'replace', 'prepend', 'ap', 'after', 'before', 'scrollInto', 'id', 'cls', 'tag', 'qsa', 'qs'],
+		nodeMethodsValues = [toggleNode, showNode, hideNode, subNode, addNode, nodeAction, nodeTrigger, afterEndNode, beforeBeginNode, afterBeginNode, beforeEndNode, nodeRemoveAttribute, nodeClassListToggle, nodeClassListRemove, nodeHasAttribute, nodeClassList, nodeClassListHas, nodeUpTo, cloneNode, centerNode, innerHTML, ohtml, nodeTextContent, nodeText, textValue, nodeValue, nodeSelect, nodeClassname, matchesSelector, replaceChild, prepend, append, insertAfter, insertBefore, scrollInto, idNode, clsNode, tagNode, qsaNode, qsNode],
+		nodeMethodsKeys = ['toggle', 'show', 'hide', 'sub', 'add', 'act', 'trigger', 'ae', 'bb', 'ab', 'be', 'removeAttr', 'clTog', 'clRemove', 'hasAttr', 'cl', 'clHas', 'upTo', 'clone', 'center', 'html', 'ohtml', 'tc', 'txt', 'textValue', 'val', 'sel', 'cn', 'isMatch', 'replace', 'prepend', 'ap', 'after', 'before', 'scrollInto', 'id', 'cls', 'tag', 'qsa', 'qs'],
 		nodeOnlyMethodsReturn = [scrollInfo, resetHTML, nextNode, previousNode, parNode, lastNode, firstNode, owNode, ohNode, otNode, offsetNode, clwNode, clhNode, clearNode, removeNodeMethod],
 		nodeOnlyMethodNamesReturn = ['scrollInfo', 'resetHTML', 'next', 'previous', 'parNode', 'last', 'first', 'ow', 'oh', 'ot', 'offset', 'clw', 'clh', 'clear', 'remove']; //sys info
 	$.host = { // EX http https
@@ -1355,6 +1359,9 @@ Number
 				}
 			});
 		},
+		onlyUnique = function onlyUnique(value, index, self) {
+			return self.indexOf(value) === index;
+		},
 		uniqueArray = function uniqueArray(array, isSorted) {
 			if (isSorted) {
 				return eachArray(array, function(item, index) {
@@ -1363,11 +1370,7 @@ Number
 					}
 				});
 			}
-			return eachArray(array, function(item, index, length, original, newArray) {
-				if (!has(newArray, item)) {
-					return item;
-				}
-			});
+			return array.filter(onlyUnique);
 		};
 	/**
 	 * Sorts an array in place using a reverse numerical comparison algorithm
