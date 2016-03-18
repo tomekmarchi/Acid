@@ -1,6 +1,6 @@
 What is Acid?
 =======
-Acidjs is an ECMA script utility library that focuses on scalable real-time self-constructing SPAs(single-page applications). Acid proposes a highly modular environment where resources are split up and pulled on the fly. Acid is also the core library of Menrvah, which is an enhancement of the Acid library.
+Acidjs is an ECMA script utility library that focuses on scalable real-time self-constructing SPAs(single-page applications). Acid proposes a highly modular environment where resources are split up and pulled on the fly.
 
 DOM
 -----------------------
@@ -35,7 +35,7 @@ JS
     		});
     	}
     })();
-    //returns an sync module not used for importing scripts
+    //returns n sync module not used for importing scripts
     $.define({
     	name:'moduleName',
     	import:['each','eachObject'],
@@ -51,7 +51,7 @@ Import & Ensure
 -----------------------
 JS Example Import
 
-    $.import('post.js',function(post){
+    $.require('post.js',function(post){
 		//post model is loaded
 	});
 	
