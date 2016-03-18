@@ -35,7 +35,7 @@ JS
     		});
     	}
     })();
-    //returns n sync module not used for importing scripts
+    //returns a sync module not used for importing scripts
     $.define({
     	name:'moduleName',
     	import:['each','eachObject'],
