@@ -8,7 +8,7 @@ $.isNumberEqual = function (item,num) {
 };
 //is In range of two numbers
 $.isNumberInRange = function (num,start,end) {
-	if (end === undefinedNative) {
+	if (isUndefined(end)) {
 	 var end = start,
 		 start = 0;
 	}

@@ -41,7 +41,7 @@ $.randomArbitrary = function(number, min) {
     return randomMethod() * (number - min) + min;
 };
 // Returns a random integer between min (included) and max (excluded)
-$.randomInt = function(number, min) {
+var randomInt = $.randomInt = function(number, min) {
     min = min || 0;
     return floorMethod(randomMethod() * (number - min)) + min;
 };

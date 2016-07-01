@@ -3,7 +3,7 @@ var arrayChunk = function(array, size) {
     size = size || 1;
     var numChunks = ceilmethod(getLength(array) / size),
 		index = 0;
-	return eachArray(newArray(numChunks),(item,i) =>{
+	return filterArray(newArray(numChunks),(item,i) =>{
 		return chunkSlice(array, index, (index += size));
 	});
 };

@@ -8,21 +8,25 @@ var promiseAsync = Promise.resolve(),
     //timeing
     clearTimer = $.timerClear = clearTimeout,
     intervalClear = clearInterval,
-    timerMethod = $.timer = setTimeout,
-    intervalMethod = $.interval = setInterval;
+    timerMethod = $.timer = function(fn,time){
+		return setTimeout(fn,time);
+	},
+    intervalMethod = $.interval = function(fn,time){
+		return setInterval(fn,time);
+	};
 
 
 //debounce function
 $.debounce = (original, time) => {
-    var timeout = false,
+    var timeout = False,
         fn = function() {
-            if (timeout !== false) {
+            if (timeout !== False) {
                 clearTimer(timeout);
             }
             var args = toArray(arguments);
             timeout = timerMethod(function() {
                 apply(original, fn, args);
-                timeout = false;
+                timeout = False;
             }, time);
         };
     fn.run = function() {
@@ -34,7 +38,7 @@ $.debounce = (original, time) => {
     fn.clear = function() {
         if (timeout) {
             clearTimeout(timeout);
-            timeout = false;
+            timeout = False;
         }
     };
 	fn.og=original;
@@ -43,24 +47,24 @@ $.debounce = (original, time) => {
 
 //throttle function
 $.throttle = function(func, time) {
-    var timeout = false,
+    var timeout = False,
         fn = function() {
-            if (timeout !== false) {
-                return false;
+            if (timeout !== False) {
+                return False;
             }
             var args = toArray(arguments);
             timeout = timerMethod(function() {
                 apply(func, fn, args);
-                timeout = false;
+                timeout = False;
             }, time);
         };
     fn.clear = () => {
         clearTimer(timeout);
-        timeout = false;
+        timeout = False;
     };
     fn.run = function() {
         clearTimer(timeout);
-        timeout = false;
+        timeout = False;
         apply(func, fn, toArray(arguments));
     };
 	fn.og=original;
@@ -69,13 +73,13 @@ $.throttle = function(func, time) {
 
 $.clearTimers = () => {
     //clear all timers
-    eachNumber(0, timerMethod(() => {}, 1000), (index) => {
+    mapNumber(0, timerMethod(() => {}, 1000), (index) => {
         clearTimer(index);
     });
 };
 
 $.clearIntervals = () => {
-    eachNumber(0, intervalMethod(() => {}, 1000), (index) => {
+    mapNumber(0, intervalMethod(() => {}, 1000), (index) => {
         clearInterval(index);
     });
 };
@@ -87,6 +91,6 @@ $.inAsync = function(fns) {
     } else if (isArray(fns)) {
         eachArray(fns, asyncMethod);
     } else {
-        eachObject(fns, asyncMethod);
+        eachArray(fns, asyncMethod);
     }
 };

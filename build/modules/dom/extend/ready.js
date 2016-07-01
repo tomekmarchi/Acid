@@ -4,12 +4,12 @@ var isDocumentReady = $.isDocumentReady = (func) =>{
         if (func) {
             func();
         }
-        return true;
+        return True;
     }
     if (func) {
         eventAdd(document, "DOMContentLoaded", func);
     }
-    return false;
+    return False;
 };
 
 isDocumentReady(() =>{

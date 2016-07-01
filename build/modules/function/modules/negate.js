@@ -2,8 +2,8 @@
 $.negate = (func) => {
     return function() {
         if (apply(func, func, toArray(arguments))) {
-            return false;
+            return False;
         }
-        return true;
+        return True;
     };
 };

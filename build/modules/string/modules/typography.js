@@ -9,7 +9,7 @@ var ucFirstChar = (string) => {
         return ucFirstChar(string) + addRest(string);
     },
     ucFirstAll = $.ucFirstAll = function(string) {
-        return joinArray(eachArray(splitCall(string, spaceCharacter), (item) => {
+        return joinArray(mapArray(splitCall(string, spaceCharacter), (item) => {
             return ucFirst(item);
         }),' ');
     },
@@ -19,7 +19,7 @@ var ucFirstChar = (string) => {
     },
     //uppercase first letter lower case the rest all
     ucFirstOnlyAll = $.ucFirstOnlyAll = function(string) {
-        return joinArray(eachArray(splitCall(string, spaceCharacter), (item) => {
+        return joinArray(mapArray(splitCall(string, spaceCharacter), (item) => {
             return ucFirstOnly(item);
         }), ' ');
     },

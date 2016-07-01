@@ -31,9 +31,6 @@
                     files: [fileName]
                 }
             });
-            notify({
-                message: 'DOCS UPDATED'
-            });
         },
         //file locations in order
         locations = [
@@ -71,9 +68,6 @@
             'build/modules/dom/list.js',
             'build/modules/dom/extend/*.js',
             'build/modules/dom/extend.js',
-
-            'build/modules/dom/event/availableEvents.js',
-            'build/modules/dom/event/event.js',
 
             'build/end/loadcore.js',
 

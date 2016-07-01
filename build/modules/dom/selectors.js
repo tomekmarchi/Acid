@@ -18,14 +18,4 @@
 			}
 			return qsaSelector(select);
 		},
-		acidLib = idSelector('acidjs'),
-	    nodeMethodsValues = [toggleNode, showNode, hideNode, subNode, addNode, nodeAction,nodeTrigger, afterEndNode, beforeBeginNode, afterBeginNode, beforeEndNode,
-	        nodeRemoveAttribute, nodeClassListToggle, nodeClassListRemove, nodeHasAttribute, nodeClassList, nodeClassListHas, nodeUpTo, cloneNode, centerNode, innerHTML, ohtml, nodeTextContent, nodeText, textValue, nodeValue, nodeSelect,
-	        nodeClassname, matchesSelector, replaceChild, prepend, append, insertAfter, insertBefore, scrollInto, idNode, clsNode, tagNode, qsaNode, qsNode
-	    ],
-	    nodeMethodsKeys = ['toggle', 'show', 'hide', 'sub', 'add', 'act','trigger', 'ae', 'bb', 'ab',
-	        'be', 'removeAttr', 'clTog', 'clRemove', 'hasAttr', 'cl', 'clHas', 'upTo', 'clone', 'center', 'html', 'ohtml', 'tc',
-	        'txt', 'textValue', 'val', 'sel', 'cn', 'isMatch', 'replace', 'prepend', 'ap', 'after', 'before', 'scrollInto', 'id', 'cls', 'tag', 'qsa', 'qs'
-	    ],
-	    nodeOnlyMethodsReturn = [scrollInfo, resetHTML, nextNode, previousNode, parNode, lastNode, firstNode, owNode, ohNode, otNode, offsetNode, clwNode, clhNode, clearNode, removeNodeMethod],
-	    nodeOnlyMethodNamesReturn = ['scrollInfo', 'resetHTML', 'next', 'previous', 'parNode', 'last', 'first', 'ow', 'oh', 'ot', 'offset', 'clw', 'clh', 'clear', 'remove'];
+		acidLib = idSelector('acidjs');

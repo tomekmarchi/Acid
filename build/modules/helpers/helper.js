@@ -4,93 +4,52 @@ var getLength = $.getLength = (item) => {
     indexOfCall = (string, index) => {
         return string.indexOf(index);
     },
-    lastItem = $.lastItem = (array) => {
-        return array[getLength(array) - 1];
-    },
     /*
     	String related
     */
-    substringCall = (string, start, end) => {
-        return string.substring(start, end);
+    generatePrototype = (funct) => {
+        return functionPrototype.call.bind(funct);
     },
-    substrCall = (string, start, end) => {
-        return string.substr(start, end);
-    },
-    stringSliceCall = (string, start, end) => {
-        return string.slice(start, end);
-    },
-    toLowerCaseCall = (string) => {
-        return string.toLowerCase();
-    },
-    toUpperCaseCall = (string) => {
-        return string.toUpperCase();
-    },
-    splitCall = (string, splitAt) => {
-        return string.split(splitAt);
-    },
-    stringRepeatCall = (string, num) => {
-        return string.repeat(num);
-    },
-    charAtCall = (string, num) => {
-        return string.charAt(num);
-    },
-    stringMatchCall = (string, regexObject) => {
-        return string.match(regexObject);
-    },
-    stringReplaceCall = (string, toReplace, replaceWith) => {
-        return string.replace(toReplace, replaceWith);
-    },
+    substringCall = generatePrototype(stringPrototype.substring),
+    substrCall = generatePrototype(stringPrototype.substr),
+    stringSliceCall = generatePrototype(stringPrototype.slice),
+    toLowerCaseCall = generatePrototype(stringPrototype.toLowerCase),
+    toUpperCaseCall = generatePrototype(stringPrototype.toUpperCase),
+    splitCall = generatePrototype(stringPrototype.split),
+    stringRepeatCall = generatePrototype(stringPrototype.repeat),
+    charAtCall = generatePrototype(stringPrototype.charAt),
+    stringMatchCall = generatePrototype(stringPrototype.match),
+    stringReplaceCall = generatePrototype(stringPrototype.replace),
     /*
     	Regex Helpers
     */
-    testRegex = (regexObject, string) => {
-        return regexObject.test(string);
-    },
+    testRegex = generatePrototype(regExpPrototype.test),
     /*
     	Array Helpers
     */
-    newArray = $.newArray = (num) => {
-        return new arrayNative(num);
-    },
-    concatArray = (array, otherArray) => {
-        return array.concat(otherArray);
-    },
+    concatArray = generatePrototype(arrayPrototype.concat),
     pushApply = $.pushApply = (array, arrayToPush) => {
         return apply(arrayPushMethod, array, arrayToPush);
     },
-    pushArray =  (array, objectToPush) => {
-        return array[getLength(array)]=objectToPush;
-    },
-    spliceArray =  (array, start, end) => {
-        return array.splice(start, end);
-    },
-	unShiftArray =  (array, item) => {
-        return array.unshift(item);
-    },
-	shiftArray = (array, item) => {
-        return array.shift(item);
-    },
-    joinArray =  (array, joinWith) => {
-        return array.join(joinWith);
-    },
-	arrayReduce =  (array,funct) =>{
-		return array.reduce(funct);
-	},
-	arrayReduceRight = (array,funct) =>{
-		return array.reduceRight(funct);
-	},
+    pushArray = generatePrototype(arrayPrototype.push),
+    arraySliceCall = generatePrototype(arrayPrototype.slice),
+    spliceArray = generatePrototype(arrayPrototype.splice),
+    unShiftArray = generatePrototype(arrayPrototype.unshift),
+    shiftArray = generatePrototype(arrayPrototype.shift),
+    popArray = generatePrototype(arrayPrototype.pop),
+    joinArray = generatePrototype(arrayPrototype.join),
+    arrayReduce = generatePrototype(arrayPrototype.reduce),
+    arrayReduceRight = generatePrototype(arrayPrototype.reduceRight),
     /*
     	Object Helpers
     */
-    toStringCall = (object) =>{
-		return object.toString();
-	},
+    toStringCall = (item) => {
+        return item.toString();
+    },
     /*
     	Function calls
     */
-    bindTo = $.bindTo = (method, bindThis) => {
-        return method.bind(bindThis);
-    },
+    bindTo = $.bindTo = generatePrototype(functionPrototype.bind),
     call = $.callFn = (method, bindTo, arg) => {
         if (!arg) {
             arg = bindTo;
@@ -104,4 +63,20 @@ var getLength = $.getLength = (item) => {
             bindTo = method;
         }
         return method.apply(bindTo, args);
+    },
+    count = 0,
+    uuidFree = [],
+    uuidClosed = {},
+    uuid = $.uuid = function(max) {
+        var result = uuidFree.shift();
+        if (!hasValue(result)) {
+            result = count;
+            uuidClosed[result] = True;
+            count++;
+        }
+        return result;
+    },
+    uuidRemove = uuid.remove = (id) => {
+        uuidClosed[id] = null;
+        uuidFree.push(id);
     };

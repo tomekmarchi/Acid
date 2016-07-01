@@ -1,4 +1,4 @@
-var saveDimensions = () => {
+var saveDimensions = $.updateDimensions = () => {
     appState.windowHeight = global.innerHeight;
     appState.windowWidth = global.innerWidth;
     appState.bodyWidth = bodyNode.offsetWidth;
@@ -10,6 +10,4 @@ isDocumentReady(() => {
     raf(saveDimensions);
 });
 
-$.updateDimensions = saveDimensions;
-
-eventAdd(window, 'load', saveDimensions, true);
+eventAdd(window, 'load', saveDimensions, True);

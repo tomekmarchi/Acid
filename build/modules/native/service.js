@@ -14,13 +14,13 @@ var acidService = $.service = (name) => {
 				if (optionalNameOfProcess) {
 					serviceProcess[optionalNameOfProcess]();
 				} else {
-					eachObject(serviceProcess, (item) => {
+					mapObject(serviceProcess, (item) => {
 						item();
 					});
 				}
 			},
 			serviceAdd = service.add = (object) => {
-				eachObject(object, (item, key) => {
+				mapObject(object, (item, key) => {
 					serviceProcess[key] = item.bind(service);
 				});
 			},
@@ -32,12 +32,12 @@ var acidService = $.service = (name) => {
 				serviceAdd = null;
 				service[name] = null;
 			};
-		eachObject(service, (item, key) => {
+		mapObject(service, (item, key) => {
 			if (isFunction(item)) {
 				service[key] = item.bind(service);
 			}
 		});
-		eachObject(serviceProcess, (item, key) => {
+		mapObject(serviceProcess, (item, key) => {
 			if (isFunction(item)) {
 				serviceProcess[key] = item.bind(service);
 			}

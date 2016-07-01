@@ -18,7 +18,6 @@
     "uglify": "^0.1.5"
   },
   "dependencies": {
-    "express": "^4.13.3",
-    "uglify-js": "git+https://github.com/mishoo/UglifyJS2.git#af22b9c657494748e3d643a7b3a9fa74467a2c52"
+    "express": "^4.13.3"
   }
 }

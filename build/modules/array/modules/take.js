@@ -1,6 +1,6 @@
 //Creates a slice of array with n elements taken from the beginning.
 $.take = function (array,amount) {
-	return stringSliceCall(array,0,amount);
+	return arraySliceCall(array,0,amount);
 };
 
 //Creates a slice of array with n elements taken from the end.

@@ -6,7 +6,7 @@ var wrapCall = $.wrap = (funct, object, bind) => {
                 return [apply(object, bind, args), apply(funct, bind, args)];
             };
         } else if (isPlainObject(object)) {
-            eachObject(object, (item, key) => {
+            mapObject(object, (item, key) => {
                 object[key] = apply(wrapCall, funct, funct, [item, bind]);
             });
         }
@@ -20,7 +20,7 @@ var wrapCall = $.wrap = (funct, object, bind) => {
                 return [apply(funct, bind, args), apply(object, bind, args)];
             };
         } else if (isPlainObject(object)) {
-            eachObject(object, (item, key) => {
+            mapObject(object, (item, key) => {
                 object[key] = call(wrapBefore, bind, funct, item, bind);
             });
         }

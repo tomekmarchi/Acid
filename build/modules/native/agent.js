@@ -1,34 +1,24 @@
 //save browser info plus add class to body
-var agentInfo = $.acid.agentInfo = function () {
+var agentInfo = $.agent = function () {
 
     var str = agentInfo.string = toLowerCaseCall(global.navigator.userAgent),
-		cl=nodeClassList(documentNode.body),
         list = ['windows', 'macintosh', 'linux', 'ipad', 'iphone', 'chrome', 'safari', 'firefox', 'msie', 'trident', 'mobile', 'android', 'edge/', 'webkit' , 'blink'],
-        addcls,
 		agent = agentInfo;
 
 	eachArray(list,(item,key) =>{
 		agentInfo[item] = has(str, item);
 	});
 
-    addcls = eachObject(agentInfo,function(item,key){
+    eachObject(agentInfo,function(item,key){
         if (key === 'string') {
            return;
-        } else if (key === 'mobile') {
-            if (!item) {
-                return 'desktop';
-            }
         }
         if (item) {
-            return key;
+			nodeClassList(documentNode.body,key);
+            return True;
         }
     });
-
-	eachArray(addcls,function(item){
-		 cl.add(item);
-	});
 };
-
 
 //Get useragent info
 $.isAgent=function(name){

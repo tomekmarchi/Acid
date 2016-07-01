@@ -1,10 +1,10 @@
 //Creates a function that is restricted to execute func once. Repeat calls to the function will return the value of the first call. The func is executed with the this binding of the created function.
 $.once = (fn) => {
 	var value,
-		amount = false;
+		amount = False;
 	return function() {
 		if (!amount) {
-			amount = true;
+			amount = True;
 			value = apply(fn,this, toArray(arguments));
 			fn = null; //null func to free up mem
 		}

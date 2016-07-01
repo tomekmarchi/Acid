@@ -1,6 +1,6 @@
 //shared functions
 //Flattens a nested array. Pass level to flatten up to a depth;
-var _flatten_once = (arr) => {
+var flattenOnce = (arr) => {
         return arrayReduce(arr,(a, b) => {
             if (!isArray(a)) {
                 a = [a];
@@ -15,7 +15,7 @@ var _flatten_once = (arr) => {
     flatten = $.flatten = (array, level) => {
         if (level) {
             if (level === 1) {
-                return _flatten_once(array);
+                return flattenOnce(array);
             }
             for (var i = 0; i < level; i++) {
                 array = arrayReduce(array,(previousValue, currentValue, index, array) =>{
@@ -28,10 +28,18 @@ var _flatten_once = (arr) => {
             return concatCall(previousValue,(isArray(currentValue)) ? flatten(currentValue) : currentValue);
         }, []); //initial starting value is an amepty array []
     },
-    //cache for function that removes falsey values from array
+    //cache for function that removes Falsey values from array
     compact = (array) => {
-        return eachArray(array,(item)=>{
-            return item || undefined;
+		if(isArray(array)){
+			return filterArray(array,(item)=>{
+				return item || undefined;
+			});
+		}
+		var object={};
+		eachObject(array,(item,key)=>{
+			if(item){
+				object[key]=item;
+			}
 		});
+		return object;
     };
-$.array=arrayNative;

@@ -1,22 +1,23 @@
 /*
 
-This is for finding an object method via a string used througout events
+	Navigate down an object's chain via a string.
 
 */
-//find method
 var find = $.get = (name, obj) => {
-        var obj = (obj) ? obj : $,
-            name = splitCall(name, slashString),
-            name = name[getLength(name) - 1];
-        if (hasDot(name)) {
-            eachWhile(splitCall(name, dotString), (item, index) => {
-                    obj = obj[item];
-                    if (hasValue(obj)) {
-                        return true;
-                    }
-                });
+    var obj = obj || $,
+        name = arrayLastItem(splitCall(name, slashString));
+    if (hasDot(name)) {
+        eachWhile(splitCall(name, dotString), (item, index) => {
+            obj = obj[item];
+            if (hasValue(obj)) {
+                return True;
             } else {
-                obj = obj[name];
+                obj = undefined;
+				return False;
             }
-            return obj || false;
-        };
+        });
+    } else {
+        obj = obj[name];
+    }
+    return obj;
+};

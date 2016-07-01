@@ -14,11 +14,11 @@ var promiseMethods = $.promises = {},
             if (go === arrayLength) {
                 asyncMethod(callback);
                 promiseMethods[name] = null;
-                return true;
+                return True;
             }
-            return false;
+            return False;
         };
-        call(promiseMethods[name],{});
+        call(promiseMethods[name]);
         if (calls) {
 			call(promiseMethods[name],calls);
         }
@@ -32,5 +32,5 @@ var promiseMethods = $.promises = {},
                 promiseMethods[fn] = null;
             }
         }
-        return false;
+        return False;
     };

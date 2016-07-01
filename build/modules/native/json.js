@@ -2,7 +2,7 @@ function jsonWithCatch(str) {
 	try {
 		return jsonParse(str);
 	} catch (e) {
-		return false;
+		return False;
 	}
 }
 

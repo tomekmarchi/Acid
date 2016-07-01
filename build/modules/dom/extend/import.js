@@ -32,12 +32,12 @@ var directoryNames = (name) => {
                 imported[id] = 1;
                 event.stopPropagation();
                 if (event.type != 'load') {
-                    remove = true;
+                    remove = True;
                 }
                 importMainCallback(node, data.call, remove);
                 node = null;
             },
-            append: true
+            append: True
         };
     },
     /*
@@ -51,29 +51,23 @@ var directoryNames = (name) => {
     importIt = (url, data, ismultiple) => {
         var isJS = isFileJS(url),
             id = importId(url),
-            type = stringReplaceCall(stringMatchCall(url,regexExt)[0],dotString, emptyString),
-            remove,
+            type = stringReplaceCall(stringMatchCall(url, regexExt)[0], dotString, emptyString),
+            remove = (!data.remove && isJS)? True : undefined,
             node,
             parent,
             model;
-        if (!has(url, '//')) {
-            url = directoryNames(type) + url;
-        }
-        if (!data.remove) {
-            if (isJS) {
-                remove = true;
-            }
-        }
+            url = (!has(url, '//')) ? directoryNames(type) + url : url;
+
         if (!imported[id]) {
             //mark as imported already
-            imported[id] = true;
+            imported[id] = True;
             //create node type
             node = nodeTypes[type](url, importEvents(id, data, remove));
             //append
             append(headNode, node);
         } else {
             //if already there attach events
-            node = qsSelector('[href="' + url + '"]');
+            node = qsSelector(`[href="${url}"]`);
             if (node && imported[id] !== 1) {
                 nodeAttachLoadingEvents(node, importEvents(id, data, remove));
             } else {
@@ -82,6 +76,7 @@ var directoryNames = (name) => {
         }
     },
     orderArgumentObjects = (item) => {
+		var original=item;
         if (isString(item)) {
             if (isFileJS(item)) {
                 item = getModelName(item);
@@ -89,20 +84,26 @@ var directoryNames = (name) => {
                 item = qsSelector('[href="' + item + '"]');
             } else {
                 item = find(item, $);
+				if(!hasValue(item)){
+					item = find(original, modelMethod);
+				}
             }
         }
-        return item;
+        return item || False;
     },
     defineMethod = $.define = (data) => {
         var modelName = data.name,
             wrapFunct = bindTo(function() {
-                var freshArgs = eachArray(data.import, orderArgumentObjects);
+                var freshArgs = mapArray(data.import, orderArgumentObjects);
                 if (getLength(arguments) > 0) {
                     pushApply(freshArgs, arguments);
                 }
-                return apply(data.invoke,wrapFunct, freshArgs);
-            },wrapFunct);
+                return apply(data.invoke, wrapFunct, freshArgs);
+            }, wrapFunct);
 
+        objectAssign(wrapFunct, data.invoke);
+		wrapFunct._=objectAssign({}, data);
+		wrapFunct._.invoke=null;
         if (modelName) {
             modelMethod[modelName] = wrapFunct;
         }
@@ -120,23 +121,24 @@ var directoryNames = (name) => {
         });
     },
     arrayImport = (array, data) => {
-        var name = importId(joinArray(array,emptyString)),
+        var name =  uuid(),
             error = data.error,
             call = data.call,
             callback = () => {
-                apply(call,call, eachArray(array, orderArgumentObjects));
+                apply(call, call, mapArray(array, orderArgumentObjects));
             },
-            stringArray = eachArray(array, (item, index) => {
-				if (isFileJS(item) || isFileCSS(item)) {
-					return item;
-				}
+            stringArray = filterArray(array, (item, index) => {
+                if (isFileJS(item) || isFileCSS(item)) {
+                    return item;
+                }
             });
         if (getLength(stringArray) > 0) {
+			uuidRemove(name);
             promiseMethod(stringArray, name, () => {
                 callback();
             });
             //make imports
-            eachArray(stringArray, (item, index) => {
+            eachArray(stringArray, (item) => {
                 arrayImportLoop(item, name, error);
             });
         } else {

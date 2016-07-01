@@ -1,7 +1,7 @@
-//Returns the first element of an array. Passing n will return the first n elements of the array.
-$.first = function (array,n) {
-	if (n) {
-		return spliceArray(array,0, n);
+//Returns the first element of an array. Passing num will return the first n elements of the array.
+var firstItem = $.first = function (array,num) {
+	if (num) {
+		return sliceArray(array,0, num);
 	}
-	return array[getLength(array) - 1];
+	return array[0];
 };

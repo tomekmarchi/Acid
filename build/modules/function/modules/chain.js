@@ -2,7 +2,7 @@ $.chain=function(funct,obj){//chain functions together
 
 	//add to chain
 	if(funct.methods){
-		eachObject(obj,(item,key)=>{
+		mapObject(obj,(item,key)=>{
 			funct.methods[key]=(function(item,key){
 				return function(){
 					funct.results[key]=apply(item,item,toArray(arguments));
@@ -36,7 +36,7 @@ $.chain=function(funct,obj){//chain functions together
 		}
 		var array=[],
 			chain_results=chain.results;
-		eachObject(chain_results,(item,key)=>{
+		mapObject(chain_results,(item,key)=>{
 			pushArray(array,item);
 		});
 		return array;
@@ -47,7 +47,7 @@ $.chain=function(funct,obj){//chain functions together
 	chain.methods={};//chain methods
 
 	//add chained functions
-	eachObject(obj,(item,key)=>{
+	mapObject(obj,(item,key)=>{
 		chain.methods[key]=(function(item,key){
 			return function(){
 				chain.results[key]=apply(item,item,toArray(arguments));

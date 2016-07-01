@@ -24,7 +24,7 @@ var bodyNode,
 		};
 	},
 	zipUpTo = (object, functs, names, wrap) => {
-		eachArray(functs, (item, index) => {
+		mapArray(functs, (item, index) => {
 			if (!object[names[index]]) {
 				object[names[index]] = wrap(item);
 			}

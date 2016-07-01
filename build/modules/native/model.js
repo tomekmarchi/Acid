@@ -2,15 +2,13 @@ var modelMethod = $.model = (modelName, object, bool) => {
     if (hasValue(object)) {
         var model = modelMethod[modelName] = object;
         if (isFunction(model)) {
-            model = model.bind(model);
+			bindTo(model,model);
         } else if (isPlainObject(model)) {
-            eachObject(model, (item, key) => {
-                if (isFunction(item)) {
-                    model[key] = item.bind(model);
-                }
-            });
+			bindAll(model,model,true);
         }
-        model.modelName = modelName;
+		model._={
+			name:modelName
+		};
         return model;
     } else if (hasDot(modelName)) {
         return find(modelName, modelMethod);

@@ -1,6 +1,6 @@
 //Launch functions in sync
 $.inSync = function(functions) {
-	return eachArray(functions,(functionObject) =>{
+	return mapArray(functions,(functionObject) =>{
 		return functionObject();
 	});
 };

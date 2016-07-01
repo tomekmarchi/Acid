@@ -2,7 +2,7 @@
 var addParam =  (url,newItem) => {
 	if (hasLength(url)) {
 		if (has(url,questionMarkString)) {
-			if (lastItem(url) === questionMarkString) {
+			if (arrayLastItem(url) === questionMarkString) {
 				url = url + newItem;
 			}else{
 				url = url + andString + newItem;

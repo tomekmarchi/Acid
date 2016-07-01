@@ -20,21 +20,12 @@
  * // -> [4]
  */
 $.remove = function(array, args) {
-    if (isFunction(args)) {
-		eachRaw(array, (item, index) => {
-			if (args(item)) {
-				spliceArray(array, index, 1);
-			}
-		});
-    } else {
-        if (!isArray(args)) {
-            args = [args];
-        }
-        eachRaw(array, (item, index) => {
-            if (has(args, item)) {
-                spliceArray(array, index, 1);
-            }
-        });
-    }
+	var isFN=isFunction(args),
+		args=(isArray(args))? args : [args];
+	mapRaw(array, (item, index) => {
+		if ((isFN)? args(item) : has(args, item)) {
+			spliceArray(array, index, 1);
+		}
+	});
     return array;
 };

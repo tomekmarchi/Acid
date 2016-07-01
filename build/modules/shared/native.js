@@ -14,6 +14,8 @@ var arrayNative = Array,
     weakMap = global.WeakMap,
 	mapNative = global.Map,
     numberNative = Number,
+	regExp = RegExp,
+	parseIntNative = parseInt,
 	consoleNative=console,
     consoleNative = consoleNative.log.bind(consoleNative),
     /*
@@ -26,11 +28,11 @@ var arrayNative = Array,
     arrayPrototype = arrayNative[prototypeString],
     stringPrototype = stringNative[prototypeString],
 	functionPrototype = functionNative[prototypeString],
-
+	regExpPrototype = regExp[prototypeString],
     /*
     	Array.prototype Functions cached
     */
-	toArray = $.toArray = arrayNative.from,
+	toArray = $.toArray = arrayNative.from.bind(arrayNative),
     arrayPushMethod = arrayPrototype.push,
     objectKeys = objectNative.keys,
     objectIs = objectNative.is,
@@ -41,6 +43,8 @@ var arrayNative = Array,
     /*
     	JSON
     */
+	False=false,
+	True=true,
     stringify = json.stringify,
 	jsonParse = json.parse,
     /*

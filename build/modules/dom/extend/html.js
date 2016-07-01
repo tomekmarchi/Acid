@@ -1,69 +1,72 @@
 //create node
 var domHeadNode,
-    createTag = (name) => {
+    nodeHasAttribute = function(node, n) {
+        return node.hasAttribute(n);
+    },
+    //set/get attribute
+    nodeAttribute = $.nodeAttribute = function(node, keys, value) {
+        var results;
+        if (isString(keys)) {
+            if (hasValue(value)) {
+                node.setAttribute(keys, value);
+            } else {
+                return node.getAttribute(keys);
+            }
+        } else if (isPlainObject(keys)) {
+            results = mapObject(keys, (item, key) => {
+                return nodeAttribute(node, key, item);
+            });
+            if (value) {
+                return results;
+            }
+        }
+        return node;
+    },
+    nodeRemoveAttribute = function(node, n) {
+        node.removeAttribute(n);
+        return node;
+    },
+    createTag = $.createTag = (name) => {
         return documentNode.createElement(name);
     },
-    emptyNodeDiv = call(createElement, documentNode, 'div'),
-    //string to DOM
-    toDom = (html, childNumber) => {
-        var frag = innerHTML(createFragment(), html),
-            children = frag.childNodes,
-            first;
-
-        while (first = emptyNodeDiv.firstChild) {
-            append(frag, first);
-        }
-        if (getLength(children) === 1) {
-            childNumber = 0;
-        }
-        if (hasValue(childNumber)) {
-            frag = children[childNumber];
-        }
-        return frag;
-    },
     nodeAttachLoadingEvents = (node, data) => {
-        var launchEvent = (fnct,node,event) =>{
-				if(isString(fnct)){
-					fnct=find(fnc,$);
-				}
-				if(fnct){
-					fnct(node,event);
-				}
-			},
-			onload = (event) => {
-				launchEvent(data.load,node,event);
-				end();
+        var launchEvent = (fnct, node, event) => {
+                if (isString(fnct)) {
+                    fnct = find(fnc, $);
+                }
+                if (fnct) {
+                    fnct(node, event);
+                }
+            },
+            onload = (event) => {
+                launchEvent(data.load, node, event);
+                end();
             },
             onerror = (event) => {
-				launchEvent(data.error,node,event);
-				end();
+                launchEvent(data.error, node, event);
+                end();
             },
-			end = () => {
-				eventRemove(eventRemove(node, 'error', onerror, true), 'load', onload, true);
+            end = () => {
+                eventRemove(eventRemove(node, 'error', onerror, True), 'load', onload, True);
             };
 
-        eventAdd(eventAdd(node, 'error', onerror, true), 'load', onload, true);
+        eventAdd(eventAdd(node, 'error', onerror, True), 'load', onload, True);
 
         if (data.append) {
             append(domHeadNode, node);
         }
         return node;
     },
-    createCss = (url, data) => {
-        return nodeAttachLoadingEvents(nodeAttribute(createTag('link'), {
-			'type':'text/css',
-			'rel':'stylesheet',
-			'href':url
-		}), data);
+    createCss = $.createCss = (url, data, options) => {
+        return nodeAttachLoadingEvents(nodeAttribute(createTag('link'), objectAssign({
+            'type': 'text/css',
+            'rel': 'stylesheet',
+            'href': url
+        },options)), data);
     },
-    createScript = (url, data) => {
-        return nodeAttachLoadingEvents(nodeAttribute(createTag('script'), {
-			'async':emptyString,
-			'src':url
-		}), data);
+    createScript = $.createScript = (url, data, options) => {
+        return nodeAttachLoadingEvents(nodeAttribute(createTag('script'), objectAssign({
+            'async': emptyString,
+            'src': url
+        },options)), data);
     };
-
-$.createScript = createScript;
-$.createCss = createCss;
-$.createTag = createTag;
-$.toDOM = toDom;

@@ -18,10 +18,6 @@
 	}; //avoid
 	global.$ = $;
 	global.ACID = $;
-	var debugMode = false, //debug option
-		extendAcidConfig = {
-			credits: {}
-		};
 	/*
 
 	Native objects
@@ -38,6 +34,8 @@
 		weakMap = global.WeakMap,
 		mapNative = global.Map,
 		numberNative = Number,
+		regExp = RegExp,
+		parseIntNative = parseInt,
 		consoleNative = console,
 		consoleNative = consoleNative.log.bind(consoleNative),
 		/*
@@ -50,10 +48,11 @@
 		arrayPrototype = arrayNative[prototypeString],
 		stringPrototype = stringNative[prototypeString],
 		functionPrototype = functionNative[prototypeString],
+		regExpPrototype = regExp[prototypeString],
 		/*
 		   	Array.prototype Functions cached
 		   */
-		_toArray = $.toArray = arrayNative.from,
+		toArray = $.toArray = arrayNative.from.bind(arrayNative),
 		arrayPushMethod = arrayPrototype.push,
 		objectKeys = objectNative.keys,
 		objectIs = objectNative.is,
@@ -64,6 +63,8 @@
 		/*
 		   	JSON
 		   */
+		False = false,
+		True = true,
 		stringify = json.stringify,
 		jsonParse = json.parse,
 		/*
@@ -85,13 +86,13 @@
 		createElement = documentNode.createElement,
 		generateNodeMethod = function generateNodeMethod(funct) {
 			return function() {
-				var args = _toArray(arguments);
+				var args = toArray(arguments);
 				unShiftArray(args, this);
 				return apply(funct, args);
 			};
 		},
 		zipUpTo = function zipUpTo(object, functs, names, wrap) {
-			eachArray(functs, function(item, index) {
+			mapArray(functs, function(item, index) {
 				if (!object[names[index]]) {
 					object[names[index]] = wrap(item);
 				}
@@ -119,15 +120,16 @@
 		replaceTemplateString = /\{(.*?)\}/g,
 		regexExt = /\.[0-9a-z]+$/i,
 		regexUnderscore = /_/g,
-		isJSRegex = /\.js/,
-		isCSSRegex = /\.css/,
-		isJSONRegex = /\.json/,
+		isJSRegex = /\.js$/,
+		isCSSRegex = /\.css$/,
+		isJSONRegex = /\.json$/,
 		hasDotRegex = /\./,
 		rawURLDecodeRegex = /%(?![\da-f]{2})/gi,
 		andRegex = /&/g,
 		lessThanRegex = /</g,
 		moreThanRegex = />/g,
 		doubleQuoteRegex = /"/g,
+		decimalCheck = /\.|\+/,
 		slashRegex = /\//g;
 	var dotString = '.',
 		emptyString = '',
@@ -147,93 +149,52 @@
 		indexOfCall = function indexOfCall(string, index) {
 			return string.indexOf(index);
 		},
-		lastItem = $.lastItem = function(array) {
-			return array[getLength(array) - 1];
-		},
 		/*
 		   	String related
 		   */
-		substringCall = function substringCall(string, start, end) {
-			return string.substring(start, end);
+		generatePrototype = function generatePrototype(funct) {
+			return functionPrototype.call.bind(funct);
 		},
-		substrCall = function substrCall(string, start, end) {
-			return string.substr(start, end);
-		},
-		stringSliceCall = function stringSliceCall(string, start, end) {
-			return string.slice(start, end);
-		},
-		toLowerCaseCall = function toLowerCaseCall(string) {
-			return string.toLowerCase();
-		},
-		toUpperCaseCall = function toUpperCaseCall(string) {
-			return string.toUpperCase();
-		},
-		splitCall = function splitCall(string, splitAt) {
-			return string.split(splitAt);
-		},
-		stringRepeatCall = function stringRepeatCall(string, num) {
-			return string.repeat(num);
-		},
-		charAtCall = function charAtCall(string, num) {
-			return string.charAt(num);
-		},
-		stringMatchCall = function stringMatchCall(string, regexObject) {
-			return string.match(regexObject);
-		},
-		stringReplaceCall = function stringReplaceCall(string, toReplace, replaceWith) {
-			return string.replace(toReplace, replaceWith);
-		},
+		substringCall = generatePrototype(stringPrototype.substring),
+		substrCall = generatePrototype(stringPrototype.substr),
+		stringSliceCall = generatePrototype(stringPrototype.slice),
+		toLowerCaseCall = generatePrototype(stringPrototype.toLowerCase),
+		toUpperCaseCall = generatePrototype(stringPrototype.toUpperCase),
+		splitCall = generatePrototype(stringPrototype.split),
+		stringRepeatCall = generatePrototype(stringPrototype.repeat),
+		charAtCall = generatePrototype(stringPrototype.charAt),
+		stringMatchCall = generatePrototype(stringPrototype.match),
+		stringReplaceCall = generatePrototype(stringPrototype.replace),
 		/*
 		   	Regex Helpers
 		   */
-		testRegex = function testRegex(regexObject, string) {
-			return regexObject.test(string);
-		},
+		testRegex = generatePrototype(regExpPrototype.test),
 		/*
 		   	Array Helpers
 		   */
-		newArray = $.newArray = function(num) {
-			return new arrayNative(num);
-		},
-		concatArray = function concatArray(array, otherArray) {
-			return array.concat(otherArray);
-		},
+		concatArray = generatePrototype(arrayPrototype.concat),
 		pushApply = $.pushApply = function(array, arrayToPush) {
 			return apply(arrayPushMethod, array, arrayToPush);
 		},
-		pushArray = function pushArray(array, objectToPush) {
-			return array[getLength(array)] = objectToPush;
-		},
-		spliceArray = function spliceArray(array, start, end) {
-			return array.splice(start, end);
-		},
-		unShiftArray = function unShiftArray(array, item) {
-			return array.unshift(item);
-		},
-		shiftArray = function shiftArray(array, item) {
-			return array.shift(item);
-		},
-		joinArray = function joinArray(array, joinWith) {
-			return array.join(joinWith);
-		},
-		arrayReduce = function arrayReduce(array, funct) {
-			return array.reduce(funct);
-		},
-		arrayReduceRight = function arrayReduceRight(array, funct) {
-			return array.reduceRight(funct);
-		},
+		pushArray = generatePrototype(arrayPrototype.push),
+		arraySliceCall = generatePrototype(arrayPrototype.slice),
+		spliceArray = generatePrototype(arrayPrototype.splice),
+		unShiftArray = generatePrototype(arrayPrototype.unshift),
+		shiftArray = generatePrototype(arrayPrototype.shift),
+		popArray = generatePrototype(arrayPrototype.pop),
+		joinArray = generatePrototype(arrayPrototype.join),
+		arrayReduce = generatePrototype(arrayPrototype.reduce),
+		arrayReduceRight = generatePrototype(arrayPrototype.reduceRight),
 		/*
 		   	Object Helpers
 		   */
-		toStringCall = function toStringCall(object) {
-			return object.toString();
+		toStringCall = function toStringCall(item) {
+			return item.toString();
 		},
 		/*
 		   	Function calls
 		   */
-		bindTo = $.bindTo = function(method, bindThis) {
-			return method.bind(bindThis);
-		},
+		bindTo = $.bindTo = generatePrototype(functionPrototype.bind),
 		call = $.callFn = function(method, bindTo, arg) {
 			if (!arg) {
 				arg = bindTo;
@@ -247,406 +208,22 @@
 				bindTo = method;
 			}
 			return method.apply(bindTo, args);
-		}; //make action on object via acid event
-	var nodeAction = function nodeAction(node, type) {
-		$['on' + type](node);
-		return node;
-	}; //make action on object via acid event
-	var nodeTrigger = function nodeTrigger(node, type) {
-		node[type]();
-		return node;
-	};
-	var _afterNth = function _afterNth(node, newChild, position) {
-		var child = node.children[position + 1];
-		if (!child) {
-			append(node, newChild);
-		} else {
-			node.insertBefore(newChild, child);
-		}
-		return node;
-	};
-	var append = function append(node, child) {
-		node.appendChild(child);
-		return node;
-	}; //attr functions
-	var nodeHasAttribute = function nodeHasAttribute(node, n) {
-			return node.hasAttribute(n);
-		}, //set/get attribute
-		nodeAttribute = function nodeAttribute(node, keys, value) {
-			var results;
-			if (isString(keys)) {
-				if (hasValue(value)) {
-					node.setAttribute(keys, value);
-				} else {
-					return node.getAttribute(keys);
-				}
-			} else if (isPlainObject(keys)) {
-				results = eachObject(keys, function(item, key) {
-					return nodeAttribute(node, key, item);
-				});
-				if (value) {
-					return results;
-				}
+		},
+		count = 0,
+		uuidFree = [],
+		uuidClosed = {},
+		uuid = $.uuid = function(max) {
+			var result = uuidFree.shift();
+			if (!hasValue(result)) {
+				result = count;
+				uuidClosed[result] = True;
+				count++;
 			}
-			return node;
+			return result;
 		},
-		nodeRemoveAttribute = function nodeRemoveAttribute(node, n) {
-			node.removeAttribute(n);
-			return node;
-		};
-	var _beforeNth = function _beforeNth(node, newChild, position) {
-		var child = node.children[position];
-		if (!child) {
-			append(node, newChild);
-		} else {
-			node.insertBefore(newChild, child);
-		}
-		return node;
-	}; //center object
-	var centerNode = function centerNode(node, item) {
-		var divW = owNode(node),
-			divH = ohNode(node),
-			w, h, left, top;
-		if (item) {
-			if (item === true) {
-				item = node.parentNode;
-			}
-			w = owNode(item);
-			h = ohNode(item);
-		} else {
-			w = Number(appState.bodyWidth);
-			h = Number(appState.bodyHeight);
-		}
-		if (divH >= h) {
-			nodeStyle(node, {
-				'position': emptyString,
-				'transform': emptyString
-			});
-		} else {
-			left = parseInt((w - divW) / 2) + 'px';
-			top = parseInt((h - divH) / 2) + 'px';
-			nodeStyle(node, {
-				'position': 'absolute',
-				'top': '0px',
-				'left': '0px',
-				'transform': 'translate3d(' + left + ',' + top + ',0)'
-			});
-		}
-		return node;
-	};
-	/*
-METHODS FOR CLASS MODS
-*/ //classname
-	var nodeClassname = function nodeClassname(node, n) {
-			if (hasValue(n)) {
-				node.className = n;
-				return node;
-			}
-			return getClassname(node);
-		},
-		getClassList = function getClassList(node) {
-			return node.classList;
-		},
-		getClassname = function getClassname(node) {
-			return node.className;
-		}, //classlist
-		nodeClassList = function nodeClassList(node, args) {
-			var nodeClassList = getClassList(node);
-			if (args) {
-				if (!isArray(args)) {
-					if (!nodeClassListHas(node, args)) {
-						nodeClassList.add(args);
-					}
-				} else {
-					eachArray(args, function(item) {
-						if (!nodeClassListHas(node, item)) {
-							nodeClassList.add(item);
-						}
-					});
-				}
-				return node;
-			}
-			return nodeClassList;
-		}, //classlist functions
-		nodeClassListHas = function nodeClassListHas(node, key) {
-			return getClassList(node).contains(key);
-		},
-		nodeClassListRemove = function nodeClassListRemove(node, args) {
-			var nodeClassList = getClassList(node);
-			if (!isArray(args)) {
-				if (nodeClassListHas(node, args)) {
-					nodeClassList.remove(args);
-				}
-			} else {
-				eachArray(args, function(item) {
-					if (nodeClassListHas(node, item)) {
-						nodeClassList.remove(item);
-					}
-				});
-			}
-			return node;
-		},
-		nodeClassListToggle = function nodeClassListToggle(node, args) {
-			var nodeClassList = getClassList(node);;
-			if (!isArray(args)) {
-				nodeClassList.toggle(args);
-			} else {
-				eachArray(args, function(item) {
-					nodeClassList.toggle(item);
-				});
-			}
-			return node;
-		}; //clear
-	var clearNode = function clearNode(node) {
-		while (node.firstChild) {
-			node.firstChild.remove();
-		}
-		return node;
-	};
-	var clwNode = function clwNode(node) {
-			return node.clientWidth;
-		},
-		clhNode = function clhNode(node) {
-			return node.clientHeight;
-		}; //copynode
-	var cloneNode = function cloneNode(node, bool) {
-		return node.cloneNode(bool);
-	}; //btn + adding
-	var addNode = function addNode(node, n) { //get number add 1 to it
-			nodeTextContent(node, Number(nodeTextContent(node) || 0) + Number(n || 1));
-			return node;
-		},
-		subNode = function subNode(node, n) { //get number subtract 1
-			nodeTextContent(node, Number(nodeTextContent(node) || 0) - Number(n || 1));
-			return node;
-		}, //quick changes
-		hideNode = function hideNode(node) { //hide class toggle
-			nodeStyle(node, 'display', 'none');
-			return node;
-		},
-		showNode = function showNode(node) { //show class toggle
-			nodeStyle(node, 'display', emptyString);
-			return node;
-		},
-		toggleNode = function toggleNode(node, classname) {
-			if (classname) {
-				nodeClassListToggle(node, classname);
-			} else {
-				if (nodeStyle(node, 'display') === 'none') {
-					showNode(node);
-				} else {
-					hideNode(node);
-				}
-			}
-			return node;
-		};
-	var innerHTML = domPropertyMethod('innerHTML'),
-		ohtml = domPropertyMethod('outerHTML'); //insertAdjacentHTML
-	var generateInsertAdjacentHTML = function generateInsertAdjacentHTML(type) {
-			var returned = function returned(node, data) {
-				node.insertAdjacentHTML(type, data);
-				return node;
-			};
-			return returned;
-		},
-		beforeEndNode = generateInsertAdjacentHTML('beforeEnd'),
-		afterBeginNode = generateInsertAdjacentHTML('afterbegin'),
-		beforeBeginNode = generateInsertAdjacentHTML('beforeBegin'),
-		afterEndNode = generateInsertAdjacentHTML('afterEnd');
-	var insertAfter = function insertAfter(child, new_node) {
-		child.parentNode.insertBefore(new_node, child.nextSibling);
-		return new_node;
-	};
-	var insertBefore = function insertBefore(child, new_node) {
-		child.parentNode.insertBefore(new_node, child);
-		return new_node;
-	}; //IE 11+ support
-	if (elementPrototype.msMatchesSelector) {
-		var matchesSelector = function matchesSelector(node, matchString) {
-			return node.msMatchesSelector(matchString);
-		};
-	} else {
-		var matchesSelector = function matchesSelector(node, matchString) {
-			return node.matches(matchString);
-		};
-	}
-	var nextNode = function nextNode(node) {
-		return node.nextSibling;
-	}; //offsets
-	var owNode = function owNode(node) {
-			return node.offsetWidth;
-		},
-		ohNode = function ohNode(node) {
-			return node.offsetHeight;
-		},
-		otNode = function otNode(node) {
-			return node.offsetTop;
-		},
-		offsetNode = function offsetNode(node) {
-			var boundingClientRect = node.getBoundingClientRect();
-			return {
-				top: boundingClientRect.top + bodyNode.scrollTop,
-				left: boundingClientRect.left + bodyNode.scrollLeft
-			};
-		};
-	var lastNode = function lastNode(node) {
-			return node.lastChild;
-		},
-		firstNode = function firstNode(node) {
-			return node.firstChild;
-		};
-	var parNode = function parNode(node) {
-		return node.parentNode;
-	};
-	var _plugInto = function _plugInto(node, string, object) {
-		model = find(string, modelMethod);
-		if (model) {
-			return model(node, object);
-		} else {
-			ensure(string, function() {
-				model = find(string, modelMethod);
-				if (model) {
-					model(node, object);
-				}
-				node = null;
-			});
-		}
-		return node;
-	};
-	var prepend = function prepend(node, child) {
-		var first = node.firstChild;
-		if (first) {
-			node.insertBefore(child, first);
-		} else {
-			append(node, child);
-		}
-		return node;
-	};
-	var previousNode = function previousNode(node) {
-		return node.previousSibling;
-	}; //props
-	var nodeValue = domPropertyMethod('value'),
-		nodeSelect = domPropertyMethod('selected'),
-		nodeStyle = function nodeStyle(node, attr, value) {
-			if (hasValue(value)) {
-				node.style[attr] = value;
-				return node;
-			} else if (attr) {
-				if (isPlainObject(attr)) {
-					eachObject(attr, function(item, key) {
-						nodeStyle(node, key, item);
-					});
-				} else {
-					return node.style[attr];
-				}
-			} else {
-				return node.style;
-			}
-			return node;
-		}; //checks for native remove function
-	var isremovenative = elementPrototype.remove ? true : false, //removes a node also checks if native is there
-		removeNode = isremovenative ? null : function(node) {
-			var par = node.parentNode;
-			if (par) {
-				par.removeChild(node);
-			}
-			par = null;
-			return node;
-		},
-		removeNodeMethod = removeNode ? removeNode : function(node) {
-			node.remove();
-			return node;
-		},
-		removeNodesInRange = function removeNodesInRange(node, start, end) {
-			if (!end) {
-				var end = start,
-					start = 0;
-			}
-			var nodes = _toArray(node),
-				temp = [];
-			for (; start < end; start++) {
-				pushArray(temp, _removeNode(nodes[start]));
-			}
-			return temp;
-		}; //replace a child node wrapper
-	var replaceChild = function replaceChild(obj, born) {
-		obj.parentNode.replaceChild(born, obj);
-		return born;
-	}; //resets html good for clearing uploaded item
-	var resetHTML = function resetHTML(node) {
-		var obj = node.parentNode;
-		obj.innerHTML = obj.innerHTML;
-		return obj;
-	}; //scroll this node
-	var _scrollIt = function _scrollIt(node, x, y) {
-			if (hasValue(x)) {
-				node.scrollTop = x;
-			}
-			if (hasValue(y)) {
-				node.scrollLeft = y;
-			}
-			return node;
-		}, //scroll info
-		scrollInfo = function scrollInfo(node) {
-			return {
-				top: node.scrollTop,
-				left: node.scrollLeft
-			};
-		}, //scroll
-		scrollInto = function scrollInto(node, nodeToScrollIntoView) {
-			node.scrollIntoView(nodeToScrollIntoView);
-			return node;
-		}; //selectors
-	var idNode = function idNode(node, select) {
-			return node.getElementById(select);
-		},
-		clsNode = function clsNode(node, select) {
-			return node.getElementsByClassName(select);
-		},
-		tagNode = function tagNode(node, select) {
-			return node.getElementsByTagName(select);
-		},
-		qsaNode = function qsaNode(node, select) {
-			return node.querySelectorAll(select);
-		},
-		qsNode = function qsNode(node, select) {
-			return node.querySelector(select);
-		}; //text
-	var nodeTextContent = domPropertyMethod('textContent'),
-		nodeText = domPropertyMethod('innerText'),
-		nodeValue = domPropertyMethod('nodeValue'),
-		textValue = function textValue(node, value, other) {
-			var child = firstNode(node, value, other);
-			if (child) {
-				return nodeValue(child, value, other);
-			}
-			return nodeTextContent(node, value, other);
-		}; //transverse up based on a match or number
-	var nodeUpToParentLevel = function nodeUpToParentLevel(node, i) {
-			var i = i - 1,
-				node = parNode(node);
-			if (i) {
-				while (i--) {
-					node = parNode(node);
-				}
-			}
-			i = null;
-			return node;
-		},
-		nodeUpTo = function nodeUpTo(node, name) {
-			if (isNumber(name)) {
-				return upToParentLevel(node, name);
-			}
-			while (node = node.parentNode) {
-				if (!node) {
-					return false;
-				} else if (!isDom(node)) {
-					return false;
-				} else if (matchesSelector(node, name)) {
-					break;
-				}
-			}
-			return node;
+		uuidRemove = uuid.remove = function(id) {
+			uuidClosed[id] = null;
+			uuidFree.push(id);
 		};
 	var idSelector = $.getById = bindTo(documentNode.getElementById, documentNode),
 		clsSelector = $.getByClass = bindTo(documentNode.getElementsByClassName, documentNode),
@@ -668,62 +245,45 @@ METHODS FOR CLASS MODS
 			}
 			return qsaSelector(select);
 		},
-		acidLib = idSelector('acidjs'),
-		nodeMethodsValues = [toggleNode, showNode, hideNode, subNode, addNode, nodeAction, nodeTrigger, afterEndNode, beforeBeginNode, afterBeginNode, beforeEndNode, nodeRemoveAttribute, nodeClassListToggle, nodeClassListRemove, nodeHasAttribute, nodeClassList, nodeClassListHas, nodeUpTo, cloneNode, centerNode, innerHTML, ohtml, nodeTextContent, nodeText, textValue, nodeValue, nodeSelect, nodeClassname, matchesSelector, replaceChild, prepend, append, insertAfter, insertBefore, scrollInto, idNode, clsNode, tagNode, qsaNode, qsNode],
-		nodeMethodsKeys = ['toggle', 'show', 'hide', 'sub', 'add', 'act', 'trigger', 'ae', 'bb', 'ab', 'be', 'removeAttr', 'clTog', 'clRemove', 'hasAttr', 'cl', 'clHas', 'upTo', 'clone', 'center', 'html', 'ohtml', 'tc', 'txt', 'textValue', 'val', 'sel', 'cn', 'isMatch', 'replace', 'prepend', 'ap', 'after', 'before', 'scrollInto', 'id', 'cls', 'tag', 'qsa', 'qs'],
-		nodeOnlyMethodsReturn = [scrollInfo, resetHTML, nextNode, previousNode, parNode, lastNode, firstNode, owNode, ohNode, otNode, offsetNode, clwNode, clhNode, clearNode, removeNodeMethod],
-		nodeOnlyMethodNamesReturn = ['scrollInfo', 'resetHTML', 'next', 'previous', 'parNode', 'last', 'first', 'ow', 'oh', 'ot', 'offset', 'clw', 'clh', 'clear', 'remove']; //sys info
-	$.host = { // EX http https
-		protocol: protocol, // ws or wss
-		protocolSocket: protocolSocket, //hostname
-		name: hostname
-	}; //device info related to actual hardware
-	$.hardware = { //core amount on system
-		cores: systemCores
-	}; //useragent info plus mobile
-	var agentInfo = $.agent = {}; //acid platform information
-	$.acid = {
-		name: 'ACIDjs',
-		version: 1
+		acidLib = idSelector('acidjs'); //acid platform information
+	$.info = {
+		version: 1,
+		host: { // EX http https
+			protocol: protocol, // ws or wss
+			protocolSocket: protocolSocket, //hostname
+			name: hostname
+		},
+		hardware: {
+			cores: systemCores
+		}
 	};
 	var eventAdd = $.eventAdd = function(obj, name, func, capture) {
-			obj.addEventListener(name, func, capture || false);
+			obj.addEventListener(name, func, capture);
 			return obj;
 		}, //remove event
 		eventRemove = $.eventRemove = function(obj, name, func, capture) {
-			obj.removeEventListener(name, func, capture || false);
+			obj.removeEventListener(name, func, capture);
 			return obj;
 		};
 	$.isEnter = function(event) { //checks if this an enter key
 		var i = event.keyCode;
 		if (i == 13) {
-			return true;
+			return True;
 		}
-		return false;
+		return False;
 	};
 	/*
 STRING Prototype object
 */
 	$.string = stringNative; //get characters in a range in a string
-	var rangeString = $.rangeString = function(text, start, end, insert) {
+	var insertInRange = $.insertInRange = function(text, start, end, insert) {
 			return stringSliceCall(text, 0, start) + insert + stringSliceCall(text, end, getLength(text));
 		}, //start index from right of string
 		rightString = $.rightString = function(text, a) {
 			return text[getLength(text) - 1 - a];
-		}, //start index from right of string pollyfill
-		endsWithString = $.endsWithString = function(subjectString, searchString, position) {
-			if (position === undefined || position > getLength(subjectString)) {
-				position = getLength(subjectString);
-			}
-			position -= getLength(searchString);
-			var lastIndex = indexOfCall(subjectString, searchString, position);
-			return lastIndex !== -1 && lastIndex === position;
 		},
 		chunkString = $.chunkString = function(string, size) {
 			return stringMatchCall(string, new RegExp('(.|[\r\n]){1,' + size + '}', 'g'));
-		},
-		firstString = $.firstString = function(string) {
-			return string[0];
 		}; //replace all items in an array with a string
 	var replaceWithList = $.replaceWithList = function(string, array, toReplace) {
 		return stringReplaceCall(string, new RegExp('\\b' + joinArray(array, '|') + '\\b', 'gi'), toReplace);
@@ -761,7 +321,7 @@ STRING Prototype object
 			return ucFirstChar(string) + addRest(string);
 		},
 		ucFirstAll = $.ucFirstAll = function(string) {
-			return joinArray(eachArray(splitCall(string, spaceCharacter), function(item) {
+			return joinArray(mapArray(splitCall(string, spaceCharacter), function(item) {
 				return ucFirst(item);
 			}), ' ');
 		}, //uppercase first letter lower case the rest
@@ -769,7 +329,7 @@ STRING Prototype object
 			return ucFirstChar(item) + toLowerCaseCall(addRest(item));
 		}, //uppercase first letter lower case the rest all
 		ucFirstOnlyAll = $.ucFirstOnlyAll = function(string) {
-			return joinArray(eachArray(splitCall(string, spaceCharacter), function(item) {
+			return joinArray(mapArray(splitCall(string, spaceCharacter), function(item) {
 				return ucFirstOnly(item);
 			}), ' ');
 		}, //Returns the camel cased string
@@ -809,7 +369,7 @@ STRING Prototype object
 	var addParam = function addParam(url, newItem) {
 		if (hasLength(url)) {
 			if (has(url, questionMarkString)) {
-				if (lastItem(url) === questionMarkString) {
+				if (arrayLastItem(url) === questionMarkString) {
 					url = url + newItem;
 				} else {
 					url = url + andString + newItem;
@@ -822,7 +382,7 @@ STRING Prototype object
 	};
 	$.addParam = addParam; //shared functions
 	//Flattens a nested array. Pass level to flatten up to a depth;
-	var _flatten_once = function _flatten_once(arr) {
+	var flattenOnce = function flattenOnce(arr) {
 			return arrayReduce(arr, function(a, b) {
 				if (!isArray(a)) {
 					a = [a];
@@ -837,7 +397,7 @@ STRING Prototype object
 		flatten = $.flatten = function(array, level) {
 			if (level) {
 				if (level === 1) {
-					return _flatten_once(array);
+					return flattenOnce(array);
 				}
 				for (var i = 0; i < level; i++) {
 					array = arrayReduce(array, function(previousValue, currentValue, index, array) {
@@ -849,25 +409,21 @@ STRING Prototype object
 			return arrayReduce(array, function(previousValue, currentValue, index, array) {
 				return concatCall(previousValue, isArray(currentValue) ? flatten(currentValue) : currentValue);
 			}, []); //initial starting value is an amepty array []
-		}, //cache for function that removes falsey values from array
+		}, //cache for function that removes Falsey values from array
 		compact = function compact(array) {
-			return eachArray(array, function(item) {
-				return item || undefined;
+			if (isArray(array)) {
+				return filterArray(array, function(item) {
+					return item || undefined;
+				});
+			}
+			var object = {};
+			eachObject(array, function(item, key) {
+				if (item) {
+					object[key] = item;
+				}
 			});
+			return object;
 		};
-	$.array = arrayNative;
-	var arrayLastItem = function arrayLastItem(array, indexFrom) {
-		var result;
-		if (!indexFrom) {
-			indexFrom = 1;
-		}
-		if (array) {
-			result = spliceArray(array, getLength(array) - indexFrom, indexFrom);
-		} else {
-			result = array[getLength(array) - 1];
-		}
-		return result;
-	};
 	/**
 	 * Finds the index of a value in a sorted array using a binary search algorithm.
 	 *
@@ -938,7 +494,7 @@ STRING Prototype object
 		size = size || 1;
 		var numChunks = ceilmethod(getLength(array) / size),
 			index = 0;
-		return eachArray(newArray(numChunks), function(item, i) {
+		return filterArray(newArray(numChunks), function(item, i) {
 			return chunkSlice(array, index, index += size);
 		});
 	};
@@ -954,7 +510,7 @@ STRING Prototype object
 	 * console.log(array);
 	 * // -> []
 	 */
-	$.clear = function(array) {
+	var clearArray = $.clear = function(array) {
 		array.length = 0;
 		return array;
 	};
@@ -968,27 +524,25 @@ STRING Prototype object
 	 * var a = [1, 2, 3];
 	 * var b = a.clone();
 	 * console.log(b, b === a);
-	 * // -> [1, 2, 3] false
+	 * // -> [1, 2, 3] False
 	 */
-	$.cloneArray = function(item) {
-		return stringSliceCall(item, 0);
-	};
+	var cloneArray = $.cloneArray = arraySliceCall;
 	/**
-	 * Returns a new array with all falsey values removed. Falsey values
-	 * are `false`, `0`, `""`, `null`, `undefined`, and `NaN`.
+	 * Returns a new array with all Falsey values removed. Falsey values
+	 * are `False`, `0`, `""`, `null`, `undefined`, and `NaN`.
 	 *
 	 * @function Array#compact
 	 * @returns {Array} The new array containing only the truthy values from the original array.
 	 *
 	 * @example
-	 * [0, 1, false, 2, emptyString, 3].compact();
+	 * $.compact([0, 1, False, 2, emptyString, 3]);
 	 * // -> [1, 2, 3]
 	 */
 	$.compact = compact; //Sorts a list into groups and returns a count for the number of objects in each group.
 	$.countBy = function(array, funct) {
 		var object = {},
 			result;
-		eachObject(array, function(item) {
+		mapObject(array, function(item) {
 			result = funct(item);
 			if (!object[result]) {
 				object[result] = 0;
@@ -1009,7 +563,7 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 */ //create an array from a range
 	$.createRange = function(array, start_arg, stop_arg, increment) {
 		var stop = stop_arg ? stop_arg : start_arg,
-			start = stop_arg ? start_arg : 0;
+			i_check, start = stop_arg ? start_arg : 0;
 		for (var i = start; i < stop; i++) {
 			if (increment) {
 				if (i > 0) {
@@ -1028,7 +582,7 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 	}; //create an array from a range
 	$.createRangeTo = function(array, start_arg, stop_arg, increment) {
 		var stop = stop_arg ? stop_arg : start_arg,
-			i, start = stop_arg ? start_arg : 0;
+			i, i_check, start = stop_arg ? start_arg : 0;
 		for (var i = start; i <= stop; i++) {
 			if (increment) {
 				if (i > 0) {
@@ -1045,7 +599,7 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 		return array;
 	}; //Creates an array excluding all values of the provided arrays using SameValueZero for equality comparisons.
 	var arrayDifference = $.difference = function(array, compare) {
-		return eachArray(array, function(item) {
+		return filterArray(array, function(item) {
 			if (!has(item, compare)) {
 				return item;
 			}
@@ -1058,169 +612,154 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 		return spliceArray(array, 0, getLength(array) - amount);
 	};
 	/*
-Each Methods
-Array
-	each,eachDo,eachRaw,eachwhileFalse,eachWhile,whileLength,eachRight
-Object
-	Each
-Number
-	Each
+	Each Methods
+	Array
+		each,eachSafe,eachRaw,eachwhileFalse,eachWhile,whileLength,eachRight
+	Object
+		Each
+	Number
+		Each
 */ //loop through an array of items
-	var eachArray = function eachArray(array, fn) {
-			var returned, a = 0,
-				length = getLength(array),
-				results = [];
-			for (var i = 0; i < length; i++) {
-				returned = fn(array[i], i, length, array, results);
-				if (hasValue(returned)) {
-					results[a] = returned;
-					a++;
+	var safeModeCall = function safeModeCall(safeMode) {
+			if (safeMode) {
+				if (safeMode.halt) {
+					return False;
+				} else if (safeMode.skip) {
+					safeMode.skip = false;
+					return True;
 				}
+			}
+		},
+		mapArray = $.mapArray = function(array, fn, safeMode) {
+			var results = [],
+				returned;
+			eachArray(array, function(item, index, array, length, safe) {
+				returned = fn(item, index, array, length, results, safe);
+				hasValue(returned) ? results[index] = returned : False;
+			}, safeMode);
+			return results;
+		},
+		filterArray = $.filterArray = function(array, fn, safeMode) {
+			var results = [],
+				returned;
+			eachArray(array, function(item, index, array, length, safe) {
+				returned = fn(item, index, array, length, results, safe);
+				hasValue(returned) ? pushArray(results, returned) : False;
+			}, safeMode);
+			return results;
+		},
+		mapRaw = $.mapRaw = function(array, fn) {
+			for (var returned, length = getLength(array), results = [], i = 0; i < length; i++) {
+				returned = fn(array[i], i, array, length, results);
+				hasValue(returned) ? results[i] = returned : False;
+				length = getLength(array);
 			}
 			return results;
 		},
-		_eachRaw = function _eachRaw(array, fn) {
-			var returned, a = 0,
-				length = getLength(array),
-				results = [];
-			for (var i = 0; i < getLength(array); i++) {
-				returned = fn(array[i], i, length, array, results);
-				if (hasValue(returned)) {
-					results[a] = returned;
-					a++;
-				}
-			}
-			return results;
-		},
-		_eachDo = function _eachDo(array, callback, safeIteration) {
-			var i = 0;
-			if (safeIteration)
-				while (i < getLength(array) && (!(i in this) || callback(array[i], i, array) !== false)) ++i;
-			else
-				while (i < getLength(array) && callback(array[i], i++, array) !== false);
-			return array;
-		}, //loop while the returned result is false
-		whileFalse = function whileFalse(array, fn) { //an array of results will be returned
-			var result;
-			for (var i = 0, results = [], len = getLength(array); i < len; i++) {
-				result = fn(array[i], i, len);
-				if (result) {
-					break;
-				}
-				results[i] = result;
-			}
-			return results;
-		}, //each while the check function is true
-		eachWhile = function eachWhile(array, fn, check) { //an array of results will be returned
-			var result;
-			for (var i = 0, results = [], len = getLength(array); i < len; i++) {
-				result = fn(array[i], i, len, array, results);
-				if (!result) {
-					break;
-				}
-				results[i] = result;
-			}
-			return results;
-		}, //loop while the count is less than the length of the array
-		whileLength = function whileLength(array, fn) { //an array of results will be returned
+		whileGenerator = function whileGenerator(mainFunc, optBool) {
+			return function(array, fn) {
+				return mainFunc(array, function(item, index, array, length, results, safeMode) {
+					if (!safeMode) {
+						safeMode = results;
+					}
+					var result = apply(fn, fn, arguments);
+					if (result === optBool) {
+						safeMode.halt = True;
+					} else {
+						return result;
+					}
+				}, True);
+			};
+		}, //loop while the returned result is False
+		whileFalse = $.mapWhileFalse = whileGenerator(mapArray, True), //each while the check function is True
+		mapWhile = $.mapWhile = whileGenerator(mapArray, False), //loop while the count is less than the length of the array
+		whileLength = $.mapWhileLength = function(array, fn) { //an array of results will be returned
 			var results = [],
 				len = getLength(array),
 				i = 0;
 			while (i < len) {
-				results[i] = fn(array[i], i, len, array, results);
+				results[i] = fn(array[i], i, array, len, results);
 				len = getLength(array);
 				i++;
 			}
 			return results;
 		}, //loop through array backwards aka from the right
-		eachArrayFromRight = function eachArrayFromRight(array, fn) { //an array of results will be returned
-			for (var results = [], len = getLength(array), i = len - 1; i >= 0; i--) {
-				results[i] = fn(array[i], i, len, array, results);
-			}
-			return results;
-		}, //loop through array backwards aka from the right
-		eachArrayFromRightWhile = function eachArrayFromRightWhile(array, fn) { //an array of results will be returned
-			for (var results = [], len = getLength(array), i = len - 1; i >= 0; i--) {
-				result = fn(array[i], i, len, array, results);
-				if (!result) {
+		mapArrayFromRight = $.mapRight = function(array, fn, safeMode) {
+			safeMode = safeMode ? {} : safeMode;
+			for (var safeModeResult, returned, results = [], len = getLength(array), i = len - 1; i >= 0; i--) {
+				safeModeResult = safeModeCall(safeMode);
+				if (safeModeResult) {
+					continue;
+				} else if (safeModeResult === False) {
 					break;
 				}
-				results[i] = result;
+				returned = fn(array[i], i, array, len, results, safeMode);
+				hasValue(returned) ? pushArray(results, returned) : False;
 			}
 			return results;
-		}, //loop through based on number
-		eachNumber = function eachNumber(start, end, fn) {
+		}, //loop through array backwards aka from the right while true
+		mapArrayFromRightWhile = $.mapRightWhile = whileGenerator(mapArrayFromRight, False), //loop through based on number
+		mapNumber = $.mapNumber = function(start, end, fn) {
 			if (!fn) {
 				var fn = end,
 					end = start,
 					start = 0;
 			}
-			var results = [];
-			for (; start < end; start++) { //call function get result
-				results[start] = fn(start, end);
+			for (var results = [], returned; start < end; start++) { //call function get result
+				returned = fn(start, end, results);
+				hasValue(returned) ? pushArray(results, returned) : False;
 			}
 			return results;
-		};
-	$.eachArray = eachArray;
-	$.eachRaw = _eachRaw;
-	$.eachRight = eachArrayFromRight;
-	$.eachDo = _eachDo;
-	$.eachWhile = eachWhile;
-	$.eachWhileFalse = whileFalse;
-	$.eachRightWhile = eachArrayFromRightWhile;
-	$.whileLength = whileLength;
-	/**
-	 * Determines if the arrays are equal by doing a shallow comparison of their elements using strict equality.
-	 *
-	 * __Note:__ The order of elements in the arrays __does__ matter. The elements must be found in the same order
-	 * for the arrays to be considered equal.
-	 *
-	 * @function Array#equals
-	 * @param {Array} array - An array to compare for equality.
-	 * @returns {boolean} `true` if the arrays are equal, `false` otherwise.
-	 *
-	 * @example
-	 * var array = [1, 2, 3];
-	 *
-	 * array.equals(array);
-	 * // -> true
-	 *
-	 * array.equals([1, 2, 3]);
-	 * // -> true
-	 *
-	 * array.equals([3, 2, 1]);
-	 * // -> false
-	 */
-	$.isEqualArray = function(item, array) {
-		if (array === item) {
-			return true;
-		}
-		if (!array || getLength(array) !== getLength(item)) {
-			return false;
-		}
-		for (var i = 0; i < getLength(array); i++) {
-			if (array[i] !== item[i]) {
-				return false;
+		},
+		eachArray = $.eachArray = function(array, fn, safeMode) {
+			safeMode = safeMode ? {} : safeMode;
+			for (var safeModeResult, length = getLength(array), i = 0; i < length; i++) {
+				safeModeResult = safeModeCall(safeMode);
+				if (safeModeResult) {
+					continue;
+				} else if (safeModeResult === False) {
+					break;
+				}
+				fn(array[i], i, array, length, safeMode);
 			}
+		}, //loop while the returned result is False
+		eachWhileFalse = $.eachWhileFalse = whileGenerator(eachArray, True), //each while the check function is True
+		eachWhile = $.eachWhile = whileGenerator(eachArray, False);
+	/*
+	   Determines if the arrays are equal by doing a shallow comparison of their elements using strict equality.
+	*/
+	$.isEqualArray = function(item, array) {
+		var result = True;
+		if (!array || !item || getLength(array) !== getLength(item)) {
+			result = False;
+		} else if (array === item) {
+			result = True;
+		} else {
+			eachArray(array, function(item, index, length, safe) {
+				if (array[i] !== item[i]) {
+					safe.halt = true;
+					result = False;
+				}
+			}, true);
 		}
-		return true;
-	}; //Returns the first element of an array. Passing n will return the first n elements of the array.
-	$.first = function(array, n) {
-		if (n) {
-			return spliceArray(array, 0, n);
+		return result;
+	}; //Returns the first element of an array. Passing num will return the first n elements of the array.
+	var firstItem = $.first = function(array, num) {
+		if (num) {
+			return sliceArray(array, 0, num);
 		}
-		return array[getLength(array) - 1];
+		return array[0];
 	}; //Returns the composition of a list of functions, where each function consumes the return value of the function that follows. In math terms, composing the functions f(), g(), and h() produces f(g(h())).
 	$.flow = function(array, args) {
 		return function() {
-			return eachArray(array, function(item) {
+			return mapArray(array, function(item) {
 				return apply(array[i], null, isArray(args) ? args : [args]);
 			});
 		};
 	}; //flowright is like flow except that it creates a function that invokes the provided functions from right to left.
 	$.flowRight = function(array, args) {
 		return function() {
-			return eachArrayFromRight(array, function(item) {
+			return mapArrayFromRight(array, function(item) {
 				return apply(array[i], null, isArray(args) ? args : [args]);
 			});
 		};
@@ -1244,13 +783,16 @@ Number
 		});
 		return object;
 	}; //Returns everything but the last entry of the array.
-	$.initial = function(array, startFrom) {
-		return eachArray(array, function(item, index, length) {
-			if (!(index + 1) !== length) {
-				return item;
-			}
-		});
-	}; //Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more of the arrays.
+	var arrayInitial = $.initial = function(array) {
+			array = cloneArray(array);
+			popArray(array);
+			return array;
+		}, //Returns everything but the first entry of the array.
+		arrayRest = $.rest = function(array) {
+			array = cloneArray(array);
+			shiftArray(array);
+			return array;
+		}; //Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more of the arrays.
 	/**
 	 * Returns an new array that is the [set intersection](http://en.wikipedia.org/wiki/Intersection_(set_theory))
 	 * of the array and the input array(s).
@@ -1287,22 +829,16 @@ Number
 		return result;
 	}; //Calls the method named by methodName on each value in the list. Any extra arguments passed to invoke will be forwarded on to the method invocation.
 	$.invoke = function(array, method, args) {
-		return eachArray(array, function(item) {
+		return mapArray(array, function(item) {
 			return apply(item[method], item, args);
 		});
-	}; //checks if the array is empty
-	$.isArrayEmpty = function(array) {
-		return getLength(array) === 0;
 	}; //get largest number from array
 	$.largest = function(array) {
 		return apply(mathNativeMax, mathNative, array);
 	}; //Returns the last element of an array. Passing n will return the last n elements of the array.
 	var arrayLastItem = $.last = function(array, indexFrom) {
-		indexFrom = indexFrom || 1;
-		return spliceArray(array, getLength(array) - indexFrom, indexFrom);
-	}; //start from begining of array using argument as index
-	$.left = function(item, a) {
-		return item[a];
+		var length = getLength(array);
+		return indexFrom ? sliceArray(array, length - indexFrom, length) : array[length - 1];
 	};
 	/**
 	 * Sorts an array in place using a numerical comparison algorithm
@@ -1328,21 +864,29 @@ Number
 		return object;
 	}; //Split array into two arrays: one whose elements all satisfy predicate and one whose elements all do not satisfy predicate.
 	$.partition = function(array, funct) {
-		return [array, eachArray(array, function(item, index) {
+		return [array, filterArray(array, function(item, index) {
 			if (funct(item)) {
 				return item;
 			} else {
 				spliceArray(array, index, 1);
 			}
 		})];
-	}; //extracting a list of property values to an array
-	$.pluck = function(array, pluck_item) {
-		return eachArray(array, function(item, index) {
-			return item[pluck_item];
+	}; //Pluck an attribute from each object in an array.
+	var pluck = $.pluck = function(array, pluckThis) {
+		return mapArray(array, function(item, index) {
+			if (isArray(pluckThis)) {
+				var object = {};
+				eachArray(pluckThis, function(pluckItem) {
+					object[pluckItem] = item[pluckItem];
+				});
+				return object;
+			} else {
+				return item[pluckThis];
+			}
 		});
 	};
 	var chunkSlice = function chunkSlice(array, start, end) {
-			return eachArray(newArray(mathNative.min(end, getLength(array)) - start), function() {
+			return mapArray(newArray(mathNative.min(end, getLength(array)) - start), function() {
 				return array[start + i];
 			});
 		},
@@ -1353,7 +897,7 @@ Number
 			return b - a;
 		},
 		xorBase = function xorBase(a, b) {
-			return eachArray(concatArray(a, b), function(item) {
+			return mapArray(concatArray(a, b), function(item) {
 				if (!has(b, item) && indexOfCall(result, item) < 0) {
 					return item;
 				}
@@ -1362,9 +906,9 @@ Number
 		onlyUnique = function onlyUnique(value, index, self) {
 			return self.indexOf(value) === index;
 		},
-		uniqueArray = function uniqueArray(array, isSorted) {
+		uniqueArray = $.uniq = function(array, isSorted) {
 			if (isSorted) {
-				return eachArray(array, function(item, index) {
+				return mapArray(array, function(item, index) {
 					if (item !== array[index - 1]) {
 						return item;
 					}
@@ -1410,29 +954,13 @@ Number
 	 * // -> [4]
 	 */
 	$.remove = function(array, args) {
-		if (isFunction(args)) {
-			_eachRaw(array, function(item, index) {
-				if (args(item)) {
-					spliceArray(array, index, 1);
-				}
-			});
-		} else {
-			if (!isArray(args)) {
-				args = [args];
+		var isFN = isFunction(args),
+			args = isArray(args) ? args : [args];
+		mapRaw(array, function(item, index) {
+			if (isFN ? args(item) : has(args, item)) {
+				spliceArray(array, index, 1);
 			}
-			_eachRaw(array, function(item, index) {
-				if (has(args, item)) {
-					spliceArray(array, index, 1);
-				}
-			});
-		}
-		return array;
-	}; //Returns everything but the last entry of the array. Especially useful on the arguments object. Pass n to exclude the last n elements from the result.
-	$.rest = function(array, n) {
-		if (n) {
-			return first(array, n);
-		}
-		shiftArray(array);
+		});
 		return array;
 	}; //start from end array using a as index
 	$.right = function(array, a) {
@@ -1440,15 +968,15 @@ Number
 	}; //Produce a random sample from the list. Pass a number to return n random elements from the list. Otherwise a single random item will be returned.
 	$.sample = function(array, setAmount) {
 		if (setAmount) {
-			var temp = _toArray(array);
-			return whileEach(temp, function(item, index, length) {
+			var temp = toArray(array);
+			return whilemap(temp, function(item, index, length) {
 				return spliceArray(temp, roundMethod(randomMethod() * (length - 1)), 1)[0];
 			});
 		}
 		return array[roundMethod(randomMethod() * getLength(array))];
 	}; //shuffle an array and return a new array
 	$.shuffle = function(array) {
-		var temp = _toArray(array);
+		var temp = toArray(array);
 		return whileLength(temp, function() {
 			return spliceArray(temp, randomMethod(randomMethod() * (getLength(temp) - 1)), 1)[0];
 		});
@@ -1476,7 +1004,7 @@ Number
 		return sumof;
 	}; //Creates a slice of array with n elements taken from the beginning.
 	$.take = function(array, amount) {
-		return stringSliceCall(array, 0, amount);
+		return arraySliceCall(array, 0, amount);
 	}; //Creates a slice of array with n elements taken from the end.
 	$.takeRight = function(array, amount) {
 		return spliceArray(array, getLength(array) - amount, amount);
@@ -1491,20 +1019,15 @@ Number
 			});
 		});
 		return result;
-	}; //Produces a duplicate-free version of the array, using === to test object equality.
-	$.uniq = uniqueArray; //Returns a copy of the array with all instances of the values removed.
+	}; //Returns a copy of the array with all instances of the values removed.
 	$.without = function(array, args) {
-		var result = [],
-			i, j;
-		next: for (i = 0; i < getLength(array); i++) {
-			for (j = 0; j < getLength(arguments); j++) {
-				if (array[i] === arguments[j]) {
-					continue next;
-				}
+		var isFN = isFunction(args),
+			args = isArray(args) ? args : [args];
+		return mapArray(array, function(item, index) {
+			if (isFN ? args(item) : has(args, item)) {
+				return item;
 			}
-			pushArray(result, array[i]);
-		}
-		return result;
+		});
 	}; //Creates an array that is the symmetric difference of the provided arrays. See Wikipedia for more details.
 	$.xor = function(arrayOG) {
 		var numArgs = getLength(arguments),
@@ -1519,199 +1042,114 @@ Number
 		return result;
 	}; //Merges together the values of each of the arrays with the values at the corresponding position.
 	$.zip = function() {
-		return eachArray(arguments[0], function(arraySet) {
-			return eachArray(arguments, function(arraySet) {
+		return mapArray(arguments[0], function(arraySet) {
+			return mapArray(arguments, function(arraySet) {
 				return shiftArray(arraySet);
 			});
 		});
-	}; //unzip the array of zipped arrays [["fred",30,true],["barney",40,false]]
+	}; //unzip the array of zipped arrays [["fred",30,True],["barney",40,False]]
 	$.unZip = function(array) {
-		return eachArray(array[0], function(item) {
-			return eachArray(array, function(arraySet) {
+		return mapArray(array[0], function(item) {
+			return mapArray(array, function(arraySet) {
 				return shiftArray(arraySet);
 			});
 		});
 	};
-	$.object = objectNative;
 	/*
-				This is for object checking is or isnot
-				*/ //checking
+			This is for object checking is or isnot
+			*/ //checking
 	var objectStringGenerate = function objectStringGenerate(name) {
 			return '[object ' + name + ']';
 		},
-		regexptype = objectStringGenerate('RegExp'),
-		argsTag = objectStringGenerate('Arguments'),
-		arrayTag = objectStringGenerate('Array'),
-		boolTag = objectStringGenerate('Boolean'),
-		dateTag = objectStringGenerate('Date'),
-		errorTag = objectStringGenerate('Error'),
-		funcTag = objectStringGenerate('Function'),
-		mapTag = objectStringGenerate('Map'),
-		numberTag = objectStringGenerate('Number'),
-		objectTag = objectStringGenerate('Object'),
-		setTag = objectStringGenerate('Set'),
-		stringTag = objectStringGenerate('String'),
-		weakMapTag = objectStringGenerate('WeakMap'),
-		arrayBufferTag = objectStringGenerate('ArrayBuffer'),
-		float32Tag = objectStringGenerate('Float32Array'),
-		float64Tag = objectStringGenerate('Float64Array'),
-		int8Tag = objectStringGenerate('Int8Array'),
-		int16Tag = objectStringGenerate('Int16Array'),
-		int32Tag = objectStringGenerate('Int32Array'),
-		unit8Tag = objectStringGenerate('unit8Array'),
-		unit8ClampedTag = objectStringGenerate('unit8ClampedArray'),
-		unit16Tag = objectStringGenerate('unit16Array'),
-		unit32Tag = objectStringGenerate('unit32Array'),
 		isSameObjectGenerator = function isSameObjectGenerator(type) {
 			return function(obj) {
 				return toStringCall(obj) === type;
 			};
 		},
-		isRegex = isSameObjectGenerator(regexptype),
-		isArgs = isSameObjectGenerator(argsTag),
-		isBool = isSameObjectGenerator(boolTag),
-		isDate = isSameObjectGenerator(dateTag),
-		isError = isSameObjectGenerator(errorTag),
-		isMap = isSameObjectGenerator(mapTag),
-		isObject = isSameObjectGenerator(objectTag),
-		isSet = isSameObjectGenerator(setTag),
-		isWeakMap = isSameObjectGenerator(weakMapTag),
-		isFloat32 = isSameObjectGenerator(float32Tag),
-		isFloat64 = isSameObjectGenerator(float64Tag),
-		isInt8 = isSameObjectGenerator(int8Tag),
-		isInt16 = isSameObjectGenerator(int16Tag),
-		isInt32 = isSameObjectGenerator(int32Tag),
-		isUnit8 = isSameObjectGenerator(unit8Tag),
-		isUnit8clamped = isSameObjectGenerator(unit8ClampedTag),
-		isUnit16 = isSameObjectGenerator(unit16Tag),
-		isUnit32 = isSameObjectGenerator(unit32Tag),
-		isNative = function isNative(obj) {
-			return hasValue(obj) ? has(toLowerCaseCall(toStringCall(obj)), 'native') : false;
+		isDecimal = $.isDecimal = function() {
+			return stringMatchCall(toStringCall(string), decimalCheck);
 		},
-		hasValue = function hasValue(n) {
-			return n !== undefined && n !== null;
+		isNative = $.isNative = function(obj) {
+			return hasValue(obj) ? has(toLowerCaseCall(toStringCall(obj)), 'native') : False;
 		},
-		isUndefined = function isUndefined(obj) {
+		hasValue = $.hasValue = function(item) {
+			return !isUndefined(item) && !isNull(item);
+		},
+		isUndefined = $.isUndefined = function(obj) {
 			return obj === undefined;
 		},
-		isInt = numberNative.isInteger ? numberNative.isInteger : function(num) {
-			if (num % 1 === 0) {
-				return true;
-			}
-			return false;
-		},
-		isNull = function isNull(obj) {
+		isNull = $.isNull = function(obj) {
 			return obj === null;
 		},
-		isArray = function isArray(object) {
-			return object instanceof arrayNative;
+		isArray = $.isArray = arrayNative.isArray,
+		isConstructor = $.isConstructor = function(constructor) {
+			return function(obj) {
+				return hasValue(obj) ? obj.constructor === constructor : False;
+			};
 		},
-		isString = function isString(obj) {
-			return hasValue(obj) ? obj.constructor === stringNative : false;
+		isString = $.isString = isConstructor(stringNative),
+		isNumber = $.isNumber = isConstructor(numberNative),
+		isPlainObject = $.isPlainObject = function(obj) {
+			return hasValue(obj) ? stringSliceCall(toStringCall(obj.constructor).trim(), 9, 16) === 'Object(' : False;
 		},
-		isNumber = function isNumber(obj) {
-			return hasValue(obj) ? obj.constructor == numberNative : false;
+		isFunction = $.isFunction = function(obj) {
+			return hasValue(obj) ? obj instanceof functionNative : False;
 		},
-		isPlainObject = function isPlainObject(obj) {
-			return hasValue(obj) ? stringSliceCall(toStringCall(obj.constructor).trim(), 9, 16) === 'Object(' : false;
+		has = $.has = function(string, search) {
+			return isArray(search) ? apply(string.includes, string, search) : string.includes(search);
 		},
-		isFunction = function isFunction(obj) {
-			return hasValue(obj) ? obj instanceof functionNative : false;
-		},
-		has = function has(string, search) {
-			var value, loopValue;
-			if (!isString(search)) {
-				each(search, function(item, key) {
-					loopValue = indexOfCall(string, item) != -1;
-					if (loopValue) {
-						value = loopValue;
-					}
-				});
-			} else {
-				value = indexOfCall(string, search) != -1;
-			}
-			return value;
-		},
-		islength = function islength(obj) {
+		isLength = $.isLength = function(obj) {
 			return !getLength(obj);
 		},
-		isEmpty = function isEmpty(obj) {
+		isEmpty = $.isEmpty = function(obj) {
 			if (hasValue(obj)) {
-				if (isPlainObject(obj)) {
-					return !islength(objectKeys(obj));
-				} else {
-					return !islength(obj);
-				}
+				return isPlainObject(obj) ? !objectSize(obj) : !isLength(obj);
 			}
-			return true;
+			return True;
 		},
-		isFileCSS = function isFileCSS(item) {
-			return hasValue(item) ? isCSSRegex.test(item) : false;
+		regexGenerator = function regexGenerator(regexType) {
+			return function(item) {
+				return hasValue(item) ? regexType.test(item) : False;
+			};
 		},
-		isFileJSON = function isFileJSON(item) {
-			return hasValue(item) ? isJSONRegex.test(item) : false;
-		},
-		isFileJS = function isFileJS(item) {
-			return hasValue(item) ? isJSRegex.test(item) && !isFileJSON(item) : false;
-		},
-		hasDot = function hasDot(item) {
-			return hasValue(item) ? hasDotRegex.test(item) : false;
-		},
-		getModelRootName = function getModelRootName(string) {
+		isFileCSS = $.isFileCSS = regexGenerator(isCSSRegex),
+		isFileJSON = $.isFileJSON = regexGenerator(isJSONRegex),
+		isFileJS = $.isFileJS = regexGenerator(isJSRegex),
+		hasDot = $.hasDot = regexGenerator(hasDotRegex),
+		getModelRootName = $.getModelRootName = function(string) {
 			return splitCall(string, dotString)[0];
 		},
-		getModelProperty = function getModelProperty(string) {
-			return arrayLastItem(splitCall(string, slashString))[0];
+		getModelProperty = $.getModelProperty = function(string) {
+			return arrayLastItem(splitCall(string, slashString));
 		},
-		getModelName = function getModelName(string) {
-			var splitIt = splitCall(string, slashString);
-			return find(splitCall(splitIt[getLength(splitIt) - 1], '.js')[0], modelMethod);
-		}; //export all checking functions
-	$.isArray = isArray;
-	$.isString = isString;
-	$.isNumber = isNumber;
-	$.isObject = isObject;
-	$.isPlainObject = isPlainObject;
-	$.isFunction = isFunction;
-	$.isRegex = isRegex;
-	$.isArgs = isArgs;
-	$.isBool = isBool;
-	$.isDate = isDate;
-	$.isError = isError;
-	$.isMap = isMap;
-	$.isSet = isSet;
-	$.isWeakMap = isWeakMap;
-	$.isFloat32 = isFloat32;
-	$.isFloat64 = isFloat64;
-	$.isInt8 = isInt8;
-	$.isInt16 = isInt16;
-	$.isInt32 = isInt32;
-	$.isUnit8 = isUnit8;
-	$.isUnit8clamped = isUnit8clamped;
-	$.isUnit16 = isUnit16;
-	$.isUnit32 = isUnit32;
-	$.isNative = isNative;
-	$.isUndefined = isUndefined;
-	$.isNaN = isNaN;
-	$.isInt = isInt;
-	$.isNull = isNull;
-	$.isEmpty = isEmpty;
-	$.isFileCSS = isFileCSS;
-	$.isFileJSON = isFileJSON;
-	$.isFileJS = isFileJS;
-	$.hasDot = hasDot;
-	$.getModelProperty = getModelProperty;
-	$.getModelRootName = getModelRootName;
-	$.hasValue = hasValue;
-	$.has = has; //loop through an object
-	var eachObject = $.eachObject = function(object, fn) { //an object with matching keys with results will be returned
-			var results = {},
-				key;
-			for (var i = 0, keys = objectKeys(object), len = getLength(keys); i < len; i++) { //object currect key
-				key = keys[i]; //call function get result
-				results[key] = fn(object[key], key, len, object, results);
-			}
+		getModelName = $.getModelName = function(string) {
+			return find(arrayLastItem(splitCall(string, slashString)).replace(/\.js$/, ''), modelMethod);
+		};
+	$.compactKeys = function(object) {
+		return objectKeys(compact(object));
+	}; //loop through an object
+	var mapObject = $.mapObject = function(object, fn) {
+			var results = {};
+			eachObject(object, function(item, key) {
+				results[key] = apply(fn, arguments);
+			});
 			return results;
+		},
+		filterObject = $.filterObject = function(object, fn) {
+			var results = {},
+				result;
+			eachObject(object, function(item, key) {
+				result = apply(fn, arguments);
+				if (hasValue(result)) {
+					results[key] = result;
+				}
+			});
+			return results;
+		},
+		eachObject = $.eachObject = function(object, fn) {
+			eachArray(objectKeys(object), function(key, index, array, len) {
+				fn(object[key], key, object, len);
+			});
 		},
 		forEach = $.forEach = function(array, funct) {
 			var results = [],
@@ -1724,16 +1162,59 @@ Number
 			});
 			return results;
 		},
-		eachProperty = $.eachProperty = function(array, funct) {
+		mapProperty = $.mapProperty = function(array, funct) {
 			var object = {};
 			eachArray(getOwnPropertyNames(array), function(item, key, length) {
-				object[item] = funct(array[item], item, length, array, object);
+				object[item] = funct(array[item], item, array, length, object);
 			});
 			return object;
-		}; //copy an object ES6 + ES5
+		},
+		forIn = $.forIn = function(object, fn) {
+			var results = {};
+			for (var key in object) {
+				newObject[property] = fn(object[key], key, object, results);
+			}
+			return results;
+		};
+	/*
+	Returns a copy of the object where the keys have become the values and the values the keys. For this to work, all of your object's values should be unique and string serializable.
+*/
+	var invert = $.invert = function(thisObject, object) {
+		object = object || {};
+		eachObject(originalObject, function(item, key) {
+			object[item] = key;
+		});
+		return object;
+	};
+	/*
+	Return a copy of the object, filtered to omit the blacklisted keys (or array of keys). Alternatively accepts a predicate indicating which keys to omit.
+*/
+	var omit = $.omit = function(originalObject, array) {
+		return mapObject(originalObject, function(item, key) {
+			if (!has(array, key)) {
+				return item;
+			}
+		});
+	};
+	/*
+	Pluck specific properties, listed in an array, from an object and a new object is returned with those specfic properties.
+*/
+	var pick = $.pick = function(originalObject, array, newObject) {
+		newObject = newObject || {};
+		mapArray(array, function(item) {
+			newObject[item] = originalObject[item];
+		});
+		return newObject;
+	};
+	/*
+	Return the number of values in the list.
+*/
+	var objectSize = $.size = function(object) {
+		return getLength(objectKeys(object));
+	}; //copy an object ES6 + ES5
 	$.stringify = stringify;
-	$.zipObject = function(keys, values) {
-		var object = {};
+	$.zipObject = function(keys, values, object) {
+		object = object || {};
 		eachArray(keys, function(item, index) {
 			object[item] = values[index];
 		});
@@ -1749,18 +1230,36 @@ Number
 		return [keys, values];
 	}; //Creates a function that accepts up to n arguments ignoring any additional arguments. The 2nd argument will be binded if none the initial new function will be.
 	$.ary = function(funct, amount, bind) {
-		var ary = function ary() {
-			return apply(funct, bind || ary, _toArray(arguments).splice(0, amount));
+		return function() {
+			return apply(funct, bind || funct, toArray(arguments).splice(0, amount));
 		};
-		return ary;
+	};
+	/*
+	Replace mode will overwrite the original plainObject or Array
+*/
+	var bindAll = $.bindAll = function(bindThese, withThis, replaceMode) {
+		if (replaceMode) {
+			eachArray(bindThese, function(item, key) {
+				if (isFunction(item)) {
+					item[key] = bindTo(item, withThis);
+				}
+			});
+		} else {
+			return map(bindThese, function(item) {
+				if (isFunction(item)) {
+					item = bindTo(item, withThis);
+				}
+				return item;
+			});
+		}
 	};
 	$.chain = function(funct, obj) { //chain functions together
 		//add to chain
 		if (funct.methods) {
-			eachObject(obj, function(item, key) {
+			mapObject(obj, function(item, key) {
 				funct.methods[key] = (function(item, key) {
 					return function() {
-						funct.results[key] = apply(item, item, _toArray(arguments));
+						funct.results[key] = apply(item, item, toArray(arguments));
 						return funct.methods;
 					};
 				})(item, key);
@@ -1768,7 +1267,7 @@ Number
 			return funct;
 		} //create chain
 		var chain = function chain() {
-			chain.results.first = apply(funct, chain, _toArray(arguments));
+			chain.results.first = apply(funct, chain, toArray(arguments));
 			return chain.methods;
 		}; //remove chain item
 		chain.removeChain = function(obj) {
@@ -1785,21 +1284,21 @@ Number
 			}
 			var array = [],
 				chain_results = chain.results;
-			eachObject(chain_results, function(item, key) {
+			mapObject(chain_results, function(item, key) {
 				pushArray(array, item);
 			});
 			return array;
 		}; //original function
 		chain.original = function() {
-			return apply(funct, chain, _toArray(arguments));
+			return apply(funct, chain, toArray(arguments));
 		};
 		chain.results = {}; //chain results
 		chain.methods = {}; //chain methods
 		//add chained functions
-		eachObject(obj, function(item, key) {
+		mapObject(obj, function(item, key) {
 			chain.methods[key] = (function(item, key) {
 				return function() {
-					chain.results[key] = apply(item, item, _toArray(arguments));
+					chain.results[key] = apply(item, item, toArray(arguments));
 					return chain.methods;
 				};
 			})(item, key);
@@ -1868,18 +1367,18 @@ Number
 */ //Creates a function that negates the result of the predicate func. The func predicate is invoked with the this binding and arguments of the created function.
 	$.negate = function(func) {
 		return function() {
-			if (apply(func, func, _toArray(arguments))) {
-				return false;
+			if (apply(func, func, toArray(arguments))) {
+				return False;
 			}
-			return true;
+			return True;
 		};
 	}; //Creates a function that is restricted to execute func once. Repeat calls to the function will return the value of the first call. The func is executed with the this binding of the created function.
 	$.once = function(fn) {
-		var value, amount = false;
+		var value, amount = False;
 		return function() {
 			if (!amount) {
-				amount = true;
-				value = apply(fn, this, _toArray(arguments));
+				amount = True;
+				value = apply(fn, this, toArray(arguments));
 				fn = null; //null func to free up mem
 			}
 			return value;
@@ -1891,7 +1390,7 @@ Number
 		return function() {
 			if (amount < called_amount) {
 				amount = 1;
-				value = apply(fn, this, _toArray(arguments));
+				value = apply(fn, this, toArray(arguments));
 				fn = null; //null func to free up mem
 			}
 			return value;
@@ -1903,7 +1402,7 @@ Number
 		return function() {
 			if (amount > called_amount) {
 				amount = 1;
-				value = apply(fn, this, _toArray(arguments));
+				value = apply(fn, this, toArray(arguments));
 				fn = null; //null func to free up mem
 			}
 			return value;
@@ -1911,7 +1410,7 @@ Number
 	}; //Creates a function that invokes func with arguments arranged according to the specified indexes where the argument value at the first index is provided as the first argument, the argument value at the second index is provided as the second argument, and so on.
 	$.reArg = function(funct, list) {
 		return function() {
-			return apply(funct, eachArray(_toArray(arguments), function(item, index) {
+			return apply(funct, eachArray(toArray(arguments), function(item, index) {
 				pushArray(args, order[list[index]]);
 			}));
 		};
@@ -1928,7 +1427,7 @@ rearg(1,2,3);
 
 */ //Launch functions in sync
 	$.inSync = function(functions) {
-		return eachArray(functions, function(functionObject) {
+		return mapArray(functions, function(functionObject) {
 			return functionObject();
 		});
 	};
@@ -1939,66 +1438,70 @@ rearg(1,2,3);
 		asyncMethod = promiseAsync.then.bind(promiseAsync), //timeing
 		clearTimer = $.timerClear = clearTimeout,
 		intervalClear = clearInterval,
-		timerMethod = $.timer = setTimeout,
-		intervalMethod = $.interval = setInterval; //debounce function
+		timerMethod = $.timer = function(fn, time) {
+			return setTimeout(fn, time);
+		},
+		intervalMethod = $.interval = function(fn, time) {
+			return setInterval(fn, time);
+		}; //debounce function
 	$.debounce = function(original, time) {
-		var timeout = false,
+		var timeout = False,
 			fn = function fn() {
-				if (timeout !== false) {
+				if (timeout !== False) {
 					clearTimer(timeout);
 				}
-				var args = _toArray(arguments);
+				var args = toArray(arguments);
 				timeout = timerMethod(function() {
 					apply(original, fn, args);
-					timeout = false;
+					timeout = False;
 				}, time);
 			};
 		fn.run = function() {
 			if (timeout) {
 				clearTimeout(timeout);
 			}
-			apply(original, fn, _toArray(arguments));
+			apply(original, fn, toArray(arguments));
 		};
 		fn.clear = function() {
 			if (timeout) {
 				clearTimeout(timeout);
-				timeout = false;
+				timeout = False;
 			}
 		};
 		fn.og = original;
 		return fn;
 	}; //throttle function
 	$.throttle = function(func, time) {
-		var timeout = false,
+		var timeout = False,
 			fn = function fn() {
-				if (timeout !== false) {
-					return false;
+				if (timeout !== False) {
+					return False;
 				}
-				var args = _toArray(arguments);
+				var args = toArray(arguments);
 				timeout = timerMethod(function() {
 					apply(func, fn, args);
-					timeout = false;
+					timeout = False;
 				}, time);
 			};
 		fn.clear = function() {
 			clearTimer(timeout);
-			timeout = false;
+			timeout = False;
 		};
 		fn.run = function() {
 			clearTimer(timeout);
-			timeout = false;
-			apply(func, fn, _toArray(arguments));
+			timeout = False;
+			apply(func, fn, toArray(arguments));
 		};
 		fn.og = original;
 		return fn;
 	};
 	$.clearTimers = function() { //clear all timers
-		eachNumber(0, timerMethod(function() {}, 1000), function(index) {
+		mapNumber(0, timerMethod(function() {}, 1000), function(index) {
 			clearTimer(index);
 		});
 	};
 	$.clearIntervals = function() {
-		eachNumber(0, intervalMethod(function() {}, 1000), function(index) {
+		mapNumber(0, intervalMethod(function() {}, 1000), function(index) {
 			clearInterval(index);
 		});
 	};
@@ -2008,17 +1511,17 @@ rearg(1,2,3);
 		} else if (isArray(fns)) {
 			eachArray(fns, asyncMethod);
 		} else {
-			eachObject(fns, asyncMethod);
+			eachArray(fns, asyncMethod);
 		}
 	}; //wrap 2 functions 'this' is launched after the argument function(s)
 	var wrapCall = $.wrap = function(funct, object, bind) {
 			if (isFunction(object)) {
 				return function() {
-					var args = _toArray(arguments);
+					var args = toArray(arguments);
 					return [apply(object, bind, args), apply(funct, bind, args)];
 				};
 			} else if (isPlainObject(object)) {
-				eachObject(object, function(item, key) {
+				mapObject(object, function(item, key) {
 					object[key] = apply(wrapCall, funct, funct, [item, bind]);
 				});
 			}
@@ -2027,11 +1530,11 @@ rearg(1,2,3);
 		wrapBefore = $.wrapBefore = function(funct, object, bind) {
 			if (isFunction(object)) {
 				return function() {
-					var args = _toArray(arguments);
+					var args = toArray(arguments);
 					return [apply(funct, bind, args), apply(object, bind, args)];
 				};
 			} else if (isPlainObject(object)) {
-				eachObject(object, function(item, key) {
+				mapObject(object, function(item, key) {
 					object[key] = call(wrapBefore, bind, funct, item, bind);
 				});
 			}
@@ -2044,7 +1547,7 @@ rearg(1,2,3);
 		return item === num;
 	}; //is In range of two numbers
 	$.isNumberInRange = function(num, start, end) {
-		if (end === undefinedNative) {
+		if (isUndefined(end)) {
 			var end = start,
 				start = 0;
 		}
@@ -2081,32 +1584,25 @@ rearg(1,2,3);
 		min = min || 0;
 		return randomMethod() * (number - min) + min;
 	}; // Returns a random integer between min (included) and max (excluded)
-	$.randomInt = function(number, min) {
+	var randomInt = $.randomInt = function(number, min) {
 		min = min || 0;
 		return floorMethod(randomMethod() * (number - min)) + min;
 	}; //save browser info plus add class to body
-	var agentInfo = $.acid.agentInfo = function() {
+	var agentInfo = $.agent = function() {
 		var str = agentInfo.string = toLowerCaseCall(global.navigator.userAgent),
-			cl = nodeClassList(documentNode.body),
 			list = ['windows', 'macintosh', 'linux', 'ipad', 'iphone', 'chrome', 'safari', 'firefox', 'msie', 'trident', 'mobile', 'android', 'edge/', 'webkit', 'blink'],
-			addcls, agent = agentInfo;
+			agent = agentInfo;
 		eachArray(list, function(item, key) {
 			agentInfo[item] = has(str, item);
 		});
-		addcls = eachObject(agentInfo, function(item, key) {
+		eachObject(agentInfo, function(item, key) {
 			if (key === 'string') {
 				return;
-			} else if (key === 'mobile') {
-				if (!item) {
-					return 'desktop';
-				}
 			}
 			if (item) {
-				return key;
+				nodeClassList(documentNode.body, key);
+				return True;
 			}
-		});
-		eachArray(addcls, function(item) {
-			cl.add(item);
 		});
 	}; //Get useragent info
 	$.isAgent = function(name) {
@@ -2121,26 +1617,27 @@ rearg(1,2,3);
 		screenHeight: screen.height,
 		screenWidth: screen.width
 	};
-	var batchCancelFrame = false,
-		batchCount = 0,
+	var batchCancelFrame = False,
 		batchChanges = [],
 		batchLoop = function batchLoop() {
 			eachArray(batchChanges, function(item) {
 				item();
 			});
-			batchCount = 0;
-			batchChanges = [];
-			batchCancelFrame = false;
+			clearArray(batchChanges);
+			batchCancelFrame = False;
 		},
 		batchCheck = function batchCheck() {
 			if (!batchCancelFrame) {
 				batchCancelFrame = raf(batchLoop);
 			}
 		},
-		batchAdd = $.batch = function(func) {
-			batchChanges[batchCount] = func;
-			batchCount = batchCount + 1;
-			batchCheck();
+		batchAdd = $.batch = function(item) {
+			if (isArray(item)) {
+				eachArray(item, batchAdd);
+			} else {
+				batchChanges.push(item);
+				batchCheck();
+			}
 		};
 	var cacheMethod = function cacheMethod(key, value) {
 		if (!key) {
@@ -2156,22 +1653,7 @@ rearg(1,2,3);
 			return cacheMethod[key] = b;
 		}
 		return cacheMethod[key] = a;
-	};
-	var userConfig = $.acid.config = function(config) {
-			if (config) {
-				acidConfig(config);
-			}
-			isDocumentReady(acidConfig);
-		},
-		acidConfig = function acidConfig(config) { //save config
-			$.cache.config = config; //extend config settings to acid
-			eachObject(config, function(item, key) {
-				if (!extendAcidConfig[key]) {
-					extendAcidConfig[key] = {};
-				}
-				extendAcidConfig[key] = objectAssign(extendAcidConfig[key], item);
-			});
-		}; //console.log
+	}; //console.log
 	var acidConsole = function acidConsole(data, theme) {
 			apply(consoleNative, ['%c' + data, LTs[theme] + 'font-size:13px;padding:2px 5px;border-radius:3px;']);
 		},
@@ -2187,65 +1669,85 @@ rearg(1,2,3);
 			logThemes[name] = generateLogTheme(color, bg);
 		};
 	$.console = acidConsole;
-	$.addConsoleTheme = addTheme; //turn acid logs on/off
-	$.debug = function(state) {
-		return debugMode = state;
-	};
-	var each = function each(object, funct, fn) {
-		var returned;
-		if (!hasValue(object)) {
-			returned = function() {};
-		} else if (isArray(object)) {
-			returned = eachArray;
-		} else if (isPlainObject(object) || isFunction(object)) {
-			returned = eachObject;
-		} else if (isNodeList(object) || isHTMLCollection(object)) {
-			object = _toArray(object);
-			returned = eachArray;
-		} else if (isNumber(object)) {
-			returned = eachNumber;
-		} else {
-			if (fn) {
-				returned = eachProperty;
-			} else if (object.forEach) {
-				returned = forEach;
+	$.addConsoleTheme = addTheme;
+	var map = $.map = function(object, funct, safeMode, rawProp) {
+			var returned;
+			if (!hasValue(object)) {
+				return False;
+			} else if (isArray(object)) {
+				returned = mapArray;
+			} else if (isPlainObject(object) || isFunction(object)) {
+				returned = mapObject;
+			} else if (isNodeList(object) || isHTMLCollection(object)) {
+				object = toArray(object);
+				returned = mapArray;
 			} else {
-				returned = eachObject;
+				if (rawProp) {
+					returned = mapProperty;
+				} else if (object.forEach) {
+					returned = forEach;
+				} else {
+					returned = mapObject;
+				}
 			}
-		}
-		return returned(object, funct, fn);
-	};
-	$.each = each;
+			return returned(object, funct, safeMode);
+		},
+		each = $.each = function(object, funct, safeMode, rawProp) {
+			var returned;
+			if (!hasValue(object)) {
+				returned = function() {};
+			} else if (isArray(object)) {
+				returned = eachArray;
+			} else if (isPlainObject(object) || isFunction(object)) {
+				returned = eachObject;
+			} else if (isNodeList(object) || isHTMLCollection(object)) {
+				object = toArray(object);
+				returned = eachArray;
+			} else if (isNumber(object)) {
+				returned = eachNumber;
+			} else {
+				if (rawProp) {
+					returned = mapProperty;
+				} else if (object.forEach) {
+					returned = forEach;
+				} else {
+					returned = eachObject;
+				}
+			}
+			return returned(object, funct, safeMode);
+		};
 	$.exec = function() {
-		return apply(documentNode.execCommand, documentNode, _toArray(arguments));
+		return apply(documentNode.execCommand, documentNode, toArray(arguments));
 	};
 	/*
 
-This is for finding an object method via a string used througout events
+	Navigate down an object's chain via a string.
 
-*/ //find method
+*/
 	var find = $.get = function(name, obj) {
-		var obj = obj ? obj : $,
-			name = splitCall(name, slashString),
-			name = name[getLength(name) - 1];
+		var obj = obj || $,
+			name = arrayLastItem(splitCall(name, slashString));
 		if (hasDot(name)) {
 			eachWhile(splitCall(name, dotString), function(item, index) {
 				obj = obj[item];
 				if (hasValue(obj)) {
-					return true;
+					return True;
+				} else {
+					obj = undefined;
+					return False;
 				}
 			});
 		} else {
 			obj = obj[name];
 		}
-		return obj || false;
+		return obj;
 	};
 
 	function inlineJson(str) {
 		try {
 			return new Function('"use strict";return' + str + ';')();
 		} catch (e) {
-			return false;
+			return False;
 		}
 	} //for inline JS object notion.
 	$.iJson = inlineJson;
@@ -2254,29 +1756,27 @@ This is for finding an object method via a string used througout events
 		try {
 			return jsonParse(str);
 		} catch (e) {
-			return false;
+			return False;
 		}
 	} //convert from json string to json object cache it to use across lib
 	$.jsonParse = jsonWithCatch;
 	$.weakMap = function(items) {
 		return new weakMap(items);
 	};
-	$.map = function(items) {
+	$.newMap = function(items) {
 		return new mapNative(items);
 	};
 	var modelMethod = $.model = function(modelName, object, bool) {
 		if (hasValue(object)) {
 			var model = modelMethod[modelName] = object;
 			if (isFunction(model)) {
-				model = model.bind(model);
+				bindTo(model, model);
 			} else if (isPlainObject(model)) {
-				eachObject(model, function(item, key) {
-					if (isFunction(item)) {
-						model[key] = item.bind(model);
-					}
-				});
+				bindAll(model, model, true);
 			}
-			model.modelName = modelName;
+			model._ = {
+				name: modelName
+			};
 			return model;
 		} else if (hasDot(modelName)) {
 			return find(modelName, modelMethod);
@@ -2299,11 +1799,11 @@ This is for finding an object method via a string used througout events
 				if (go === arrayLength) {
 					asyncMethod(callback);
 					promiseMethods[name] = null;
-					return true;
+					return True;
 				}
-				return false;
+				return False;
 			};
-			call(promiseMethods[name], {});
+			call(promiseMethods[name]);
 			if (calls) {
 				call(promiseMethods[name], calls);
 			}
@@ -2316,7 +1816,7 @@ This is for finding an object method via a string used througout events
 					promiseMethods[fn] = null;
 				}
 			}
-			return false;
+			return False;
 		};
 	/*
 		A service is an object that holds a set of processes that
@@ -2333,13 +1833,13 @@ This is for finding an object method via a string used througout events
 					if (optionalNameOfProcess) {
 						serviceProcess[optionalNameOfProcess]();
 					} else {
-						eachObject(serviceProcess, function(item) {
+						mapObject(serviceProcess, function(item) {
 							item();
 						});
 					}
 				},
 				serviceAdd = service.add = function(object) {
-					eachObject(object, function(item, key) {
+					mapObject(object, function(item, key) {
 						serviceProcess[key] = item.bind(service);
 					});
 				},
@@ -2351,12 +1851,12 @@ This is for finding an object method via a string used througout events
 					serviceAdd = null;
 					service[name] = null;
 				};
-			eachObject(service, function(item, key) {
+			mapObject(service, function(item, key) {
 				if (isFunction(item)) {
 					service[key] = item.bind(service);
 				}
 			});
-			eachObject(serviceProcess, function(item, key) {
+			mapObject(serviceProcess, function(item, key) {
 				if (isFunction(item)) {
 					serviceProcess[key] = item.bind(service);
 				}
@@ -2376,44 +1876,29 @@ This is for finding an object method via a string used througout events
 		}
 		return a;
 	}; //xhr functions
-	$.xhr = {};
-	extendAcidConfig.xhr = {};
 	var xhrLoaded = function xhrLoaded(evt) {
-			if (debugMode) {
-				consoleNative(evt);
-			}
 			var xhr = evt.target,
-				status = xhr.status,
-				type = xhr.getResponseHeader('content-type'),
 				data = xhr.responseText,
-				callback;
-			if (status === 200) {
-				if (type === 'application/json') {
-					data = jsonWithCatch(data);
-				}
-				callback = xhr.callback;
-			} else if (status > 200) {
-				callback = xhr.fail;
+				callback = xhr.success;
+			if (xhr.getResponseHeader('content-type') === 'application/json') {
+				data = jsonWithCatch(data);
 			}
 			if (callback) {
-				callback(evt);
+				callback(evt, data, xhr);
 			}
 			eventRemove(xhr, 'load', xhrLoaded);
 		},
 		xhr = $.xhr = function(config) {
 			var xhr = new XMLHttpRequest(),
 				url = config.url,
-				data = config.data || false,
-				jsonData = config.json || false,
+				data = config.data || False,
+				jsonData = config.json || False,
 				type = config.type || 'GET',
 				contentType = config.contentType,
-				callback = config.callback,
 				success = config.success,
 				fail = config.fail,
 				abort = config.abort,
 				progress = config.progress,
-				credits = extendAcidConfig.credits.url,
-				analytics = extendAcidConfig.xhr.analytics,
 				newData = emptyString;
 			if (!contentType) {
 				if (jsonData) {
@@ -2439,14 +1924,7 @@ This is for finding an object method via a string used througout events
 					});
 				}
 			}
-			if (analytics) {
-				analytics(url, newData);
-			}
-			if (callback) {
-				xhr.callback = callback;
-			}
 			if (fail) {
-				xhr.fail = fail;
 				eventAdd(xhr, 'error', fail);
 			}
 			if (progress) {
@@ -2455,6 +1933,9 @@ This is for finding an object method via a string used througout events
 			if (abort) {
 				eventAdd(xhr, 'abort', abort);
 			}
+			if (success) {
+				xhr.success = success;
+			}
 			eventAdd(xhr, 'load', xhrLoaded);
 			if (type === 'GET') {
 				if (newData) {
@@ -2462,203 +1943,106 @@ This is for finding an object method via a string used througout events
 					newData = emptyString;
 				}
 			}
-			if (credits) {
-				url = addParam(url, credits());
-			}
 			if (jsonData) {
 				newData = jsonData;
 			}
-			xhr.open(type, url, true);
+			xhr.open(type, url, True);
 			xhr.setRequestHeader("Content-type", contentType);
 			xhr.send(newData);
 			return xhr;
 		};
-	var nodeOnly = {
-		scrollIt: function scrollIt(x, y) {
-			return _scrollIt(this, x, y);
-		},
-		prependTo: function prependTo(parent) {
-			return prepend(parent, this);
-		},
-		apTo: function apTo(parent) {
-			return append(parent, this);
-		},
-		afterNth: function afterNth(newChild, position) {
-			return _afterNth(this, newChild, position);
-		},
-		beforeNth: function beforeNth(newChild, position) {
-			return _beforeNth(this, newChild, position);
-		},
-		sty: function sty(attr, value) {
-			return nodeStyle(this, attr, value);
-		}, //set/get attribute
-		attr: function attr(key, value) {
-			return nodeAttribute(this, key, value);
-		},
-		plugInto: function plugInto(string, object) {
-			return _plugInto(this, string, object);
-		}
-	};
-	zipUpTo(nodeOnly, nodeMethodsValues, nodeMethodsKeys, generateNodeMethod);
-	zipUpTo(nodeOnly, nodeOnlyMethodsReturn, nodeOnlyMethodNamesReturn, generateNodeMethod);
-	var generateLoopSingleArgReturnSelfCloneNodeSecondArg = function generateLoopSingleArgReturnSelfCloneNodeSecondArg(funct) {
-			return function(node) {
-				eachArray(this, function(item) {
-					funct(item, node.cloneNode(true));
-				});
-				return this;
-			};
-		},
-		generateLoopSingleArgReturnSelfCloneNodeFirstArg = function generateLoopSingleArgReturnSelfCloneNodeFirstArg(funct) {
-			return function(node) {
-				eachArray(this, function(item) {
-					funct(item.cloneNode(true), node);
-				});
-				return this;
-			};
-		},
-		generateLoopSingleArgReturnSelf = function generateLoopSingleArgReturnSelf(funct) {
-			return function(node) {
-				eachArray(this, function(item) {
-					funct(node, item);
-				});
-				return this;
-			};
-		},
-		generateLoopSingleArgReturnData = function generateLoopSingleArgReturnData(funct) {
-			return function(arg) {
-				return eachArray(this, function(item) {
-					return funct(item, arg);
-				});
-			};
-		},
-		generateLoopReturnData = function generateLoopReturnData(funct) {
-			return function(node) {
-				return eachArray(this, function(item) {
-					return funct(item);
-				});
-			};
-		}, //not as fast but works for extra methods
-		generateLoopReturnDataMultipleArgs = function generateLoopReturnDataMultipleArgs(funct) {
-			return function() {
-				var newArgs, args = _toArray(arguments);
-				return eachArray(this, function(item) {
-					newArgs = stringSliceCall(args, 0);
-					unShiftArray(newArgs, item);
-					return apply(funct, null, args);
-				});
-			};
-		},
-		generateLoopForNthMethods = function generateLoopForNthMethods(funct) {
-			return function(newChild, position) {
-				return eachArray(this, function(item) {
-					return funct(item, newChild.cloneNode(true), position);
-				});
-			};
-		}, //live list operations meaning nodes can be removed from DOM and the loop is internal
-		listOnly = {
-			each: function each(funct) {
-				eachArray(this, funct);
-				return this;
-			},
-			eachRaw: function eachRaw(funct) {
-				_eachRaw(this, funct);
-				return this;
-			},
-			eachDo: function eachDo(funct) {
-				_eachDo(this, funct);
-				return this;
-			},
-			eachWhileTrue: function eachWhileTrue(funct) {
-				eachWhile(this, funct);
-				return this;
-			},
-			eachWhileFalse: function eachWhileFalse(funct) {
-				whileFalse(this, funct);
-				return this;
-			},
-			eachFromRight: function eachFromRight(funct) {
-				eachArrayFromRight(this, funct);
-				return this;
-			},
-			lastIn: function lastIn() {
-				return lastItem(this);
-			},
-			firstIn: function firstIn() {
-				return this[0];
-			},
-			toArray: function toArray() {
-				return _toArray(this);
-			},
-			replace: generateLoopSingleArgReturnSelfCloneNodeSecondArg(replaceChild),
-			scrollIt: generateLoopReturnDataMultipleArgs(_scrollIt),
-			prepend: generateLoopSingleArgReturnSelfCloneNodeSecondArg(prepend),
-			prependTo: generateLoopSingleArgReturnSelf(prepend),
-			ap: generateLoopSingleArgReturnSelfCloneNodeSecondArg(append),
-			apTo: generateLoopSingleArgReturnSelf(append),
-			after: generateLoopSingleArgReturnSelfCloneNodeSecondArg(insertAfter), //$('a').after($('.after'))
-			before: generateLoopSingleArgReturnSelfCloneNodeSecondArg(insertBefore), //$('a').before($('.before'))
-			afterNth: generateLoopForNthMethods(_afterNth),
-			beforeNth: generateLoopForNthMethods(_beforeNth),
-			removeRange: generateLoopReturnDataMultipleArgs(removeNodesInRange),
-			attr: generateLoopReturnDataMultipleArgs(nodeAttribute),
-			plugInto: generateLoopReturnDataMultipleArgs(_plugInto)
-		};
-	zipUpTo(listOnly, nodeMethodsValues, nodeMethodsKeys, generateLoopSingleArgReturnData);
-	zipUpTo(listOnly, nodeOnlyMethodsReturn, nodeOnlyMethodNamesReturn, generateLoopReturnData); //checks to see if object is a dom node returns true or false
+	var append = function append(node, child) {
+		node.appendChild(child);
+		return node;
+	}; //checks to see if object is a dom node returns True or False
 	var isDom = function isDom(obj) {
 			if (!hasValue(obj)) {
-				return false;
+				return False;
 			}
 			var nodetype = obj.nodeType;
 			return typeof nodetype == "number" && nodetype != 9;
-		}, //checks to see if object is a HTMLCollection returns true or false
+		}, //checks to see if object is a HTMLCollection returns True or False
 		isHTMLCollection = function isHTMLCollection(obj) {
-			return hasValue(obj) ? obj.constructor.name == "HTMLCollection" : false;
-		}, //checks to see if object is a NodeList returns true or false
+			return hasValue(obj) ? obj.constructor.name == "HTMLCollection" : False;
+		}, //checks to see if object is a NodeList returns True or False
 		isNodeList = function isNodeList(obj) {
-			return hasValue(obj) ? obj.constructor.name == "NodeList" : false;
+			return hasValue(obj) ? obj.constructor.name == "NodeList" : False;
 		};
 	$.isDom = isDom;
 	$.isHTMLCollection = isHTMLCollection;
 	$.isNodeList = isNodeList;
+	/*
+METHODS FOR CLASS MODS
+*/ //classname
+	var getClassList = function getClassList(node) {
+			return node.classList;
+		},
+		nodeClassList = function nodeClassList(node, args, mode) {
+			var nodeClassList = getClassList(node),
+				mode = nodeClassList.add || mode;
+			if (args) {
+				if (!isArray(args)) {
+					mode.call(nodeClassList, args);
+				} else {
+					eachArray(args, function(item) {
+						nodeClassList(node, item);
+					});
+				}
+				return node;
+			}
+			return nodeClassList;
+		}, //classlist functions
+		nodeClassListHas = function nodeClassListHas(node, key) {
+			return getClassList(node).contains(key);
+		},
+		nodeClassListRemove = function nodeClassListRemove(node, args) {
+			nodeClassList(node, getClassList(node).remove);
+			return node;
+		};
 	var domListToArray = $.domListToArray = function(collection) {
-		return eachArray(collection, function(item) {
+		return mapArray(collection, function(item) {
 			if (isHTMLCollection(item) || isNodeList(item)) {
 				item = domListToArray(item);
 			}
 			return item;
 		});
 	};
-	var ensure = function ensure(models, call) {
-		var models = isString(models) ? [models] : models,
-			importData = eachArray(models, function(item) {
-				return item + '.js';
-			});
-		importMethod(importData, call);
+	var ensure = function ensure(models, funct) {
+		importMethod(mapArray(isString(models) ? [models] : models, function(item) {
+			return item + '.js';
+		}), funct);
 	};
 	$.ensure = ensure; //create fragment
 	var createFragment = $.createFragment = function() {
 		return documentNode.createDocumentFragment();
 	}; //create node
-	var domHeadNode, createTag = function createTag(name) {
-			return documentNode.createElement(name);
+	var domHeadNode, nodeHasAttribute = function nodeHasAttribute(node, n) {
+			return node.hasAttribute(n);
+		}, //set/get attribute
+		nodeAttribute = $.nodeAttribute = function(node, keys, value) {
+			var results;
+			if (isString(keys)) {
+				if (hasValue(value)) {
+					node.setAttribute(keys, value);
+				} else {
+					return node.getAttribute(keys);
+				}
+			} else if (isPlainObject(keys)) {
+				results = mapObject(keys, function(item, key) {
+					return nodeAttribute(node, key, item);
+				});
+				if (value) {
+					return results;
+				}
+			}
+			return node;
 		},
-		emptyNodeDiv = call(createElement, documentNode, 'div'), //string to DOM
-		toDom = function toDom(html, childNumber) {
-			var frag = innerHTML(createFragment(), html),
-				children = frag.childNodes,
-				first;
-			while (first = emptyNodeDiv.firstChild) {
-				append(frag, first);
-			}
-			if (getLength(children) === 1) {
-				childNumber = 0;
-			}
-			if (hasValue(childNumber)) {
-				frag = children[childNumber];
-			}
-			return frag;
+		nodeRemoveAttribute = function nodeRemoveAttribute(node, n) {
+			node.removeAttribute(n);
+			return node;
+		},
+		createTag = $.createTag = function(name) {
+			return documentNode.createElement(name);
 		},
 		nodeAttachLoadingEvents = function nodeAttachLoadingEvents(node, data) {
 			var launchEvent = function launchEvent(fnct, node, event) {
@@ -2678,31 +2062,27 @@ This is for finding an object method via a string used througout events
 					end();
 				},
 				end = function end() {
-					eventRemove(eventRemove(node, 'error', onerror, true), 'load', onload, true);
+					eventRemove(eventRemove(node, 'error', onerror, True), 'load', onload, True);
 				};
-			eventAdd(eventAdd(node, 'error', onerror, true), 'load', onload, true);
+			eventAdd(eventAdd(node, 'error', onerror, True), 'load', onload, True);
 			if (data.append) {
 				append(domHeadNode, node);
 			}
 			return node;
 		},
-		createCss = function createCss(url, data) {
-			return nodeAttachLoadingEvents(nodeAttribute(createTag('link'), {
+		createCss = $.createCss = function(url, data, options) {
+			return nodeAttachLoadingEvents(nodeAttribute(createTag('link'), objectAssign({
 				'type': 'text/css',
 				'rel': 'stylesheet',
 				'href': url
-			}), data);
+			}, options)), data);
 		},
-		createScript = function createScript(url, data) {
-			return nodeAttachLoadingEvents(nodeAttribute(createTag('script'), {
+		createScript = $.createScript = function(url, data, options) {
+			return nodeAttachLoadingEvents(nodeAttribute(createTag('script'), objectAssign({
 				'async': emptyString,
 				'src': url
-			}), data);
+			}, options)), data);
 		};
-	$.createScript = createScript;
-	$.createCss = createCss;
-	$.createTag = createTag;
-	$.toDOM = toDom;
 	/*
 	This imports any type of file.
 	It works just like require in the browser.
@@ -2737,12 +2117,12 @@ This is for finding an object method via a string used througout events
 					imported[id] = 1;
 					event.stopPropagation();
 					if (event.type != 'load') {
-						remove = true;
+						remove = True;
 					}
 					importMainCallback(node, data.call, remove);
 					node = null;
 				},
-				append: true
+				append: True
 			};
 		},
 		/*
@@ -2756,17 +2136,11 @@ This is for finding an object method via a string used througout events
 			var isJS = isFileJS(url),
 				id = importId(url),
 				type = stringReplaceCall(stringMatchCall(url, regexExt)[0], dotString, emptyString),
-				remove, node, parent, model;
-			if (!has(url, '//')) {
-				url = directoryNames(type) + url;
-			}
-			if (!data.remove) {
-				if (isJS) {
-					remove = true;
-				}
-			}
+				remove = !data.remove && isJS ? True : undefined,
+				node, parent, model;
+			url = !has(url, '//') ? directoryNames(type) + url : url;
 			if (!imported[id]) { //mark as imported already
-				imported[id] = true; //create node type
+				imported[id] = True; //create node type
 				node = nodeTypes[type](url, importEvents(id, data, remove)); //append
 				append(headNode, node);
 			} else { //if already there attach events
@@ -2779,6 +2153,7 @@ This is for finding an object method via a string used througout events
 			}
 		},
 		orderArgumentObjects = function orderArgumentObjects(item) {
+			var original = item;
 			if (isString(item)) {
 				if (isFileJS(item)) {
 					item = getModelName(item);
@@ -2786,19 +2161,25 @@ This is for finding an object method via a string used througout events
 					item = qsSelector('[href="' + item + '"]');
 				} else {
 					item = find(item, $);
+					if (!hasValue(item)) {
+						item = find(original, modelMethod);
+					}
 				}
 			}
-			return item;
+			return item || False;
 		},
 		defineMethod = $.define = function(data) {
 			var modelName = data.name,
 				wrapFunct = bindTo(function() {
-					var freshArgs = eachArray(data['import'], orderArgumentObjects);
+					var freshArgs = mapArray(data['import'], orderArgumentObjects);
 					if (getLength(arguments) > 0) {
 						pushApply(freshArgs, arguments);
 					}
 					return apply(data.invoke, wrapFunct, freshArgs);
 				}, wrapFunct);
+			objectAssign(wrapFunct, data.invoke);
+			wrapFunct._ = objectAssign({}, data);
+			wrapFunct._.invoke = null;
 			if (modelName) {
 				modelMethod[modelName] = wrapFunct;
 			}
@@ -2815,22 +2196,23 @@ This is for finding an object method via a string used througout events
 			});
 		},
 		arrayImport = function arrayImport(array, data) {
-			var name = importId(joinArray(array, emptyString)),
+			var name = uuid(),
 				error = data.error,
 				call = data.call,
 				callback = function callback() {
-					apply(call, call, eachArray(array, orderArgumentObjects));
+					apply(call, call, mapArray(array, orderArgumentObjects));
 				},
-				stringArray = eachArray(array, function(item, index) {
+				stringArray = filterArray(array, function(item, index) {
 					if (isFileJS(item) || isFileCSS(item)) {
 						return item;
 					}
 				});
 			if (getLength(stringArray) > 0) {
+				uuidRemove(name);
 				promiseMethod(stringArray, name, function() {
 					callback();
 				}); //make imports
-				eachArray(stringArray, function(item, index) {
+				eachArray(stringArray, function(item) {
 					arrayImportLoop(item, name, error);
 				});
 			} else {
@@ -2862,14 +2244,16 @@ This is for finding an object method via a string used througout events
 	$.dir = directoryNames; //create a function that takes an object that is apart of the main $ and applies/calls it to the functions arguments useful for caching functions
 	var moduleMethod = $.module = function(data) {
 		var fn = data.invoke,
-			callback = data.callback,
 			modelName = data.name,
 			importData = data['import'],
-			compiled = function compiled(callbackOptional) {
+			compiled = data.invoke = function() {
 				importMethod(importData, {
 					call: bindTo(fn, compiled)
 				});
 			};
+		objectAssign(compiled, fn);
+		compiled._ = objectAssign({}, data);
+		compiled._.invoke = null;
 		if (modelName) {
 			modelMethod[modelName] = compiled;
 		}
@@ -2881,17 +2265,17 @@ This is for finding an object method via a string used througout events
 			if (func) {
 				func();
 			}
-			return true;
+			return True;
 		}
 		if (func) {
 			eventAdd(document, "DOMContentLoaded", func);
 		}
-		return false;
+		return False;
 	};
 	isDocumentReady(function() {
 		domHeadNode = qsSelector('head');
 	});
-	var saveDimensions = function saveDimensions() {
+	var saveDimensions = $.updateDimensions = function() {
 		appState.windowHeight = global.innerHeight;
 		appState.windowWidth = global.innerWidth;
 		appState.bodyWidth = bodyNode.offsetWidth;
@@ -2901,8 +2285,7 @@ This is for finding an object method via a string used througout events
 		bodyNode = documentNode.body;
 		raf(saveDimensions);
 	});
-	$.updateDimensions = saveDimensions;
-	eventAdd(window, 'load', saveDimensions, true); //a tag DOM element used to parse URL
+	eventAdd(window, 'load', saveDimensions, True); //a tag DOM element used to parse URL
 	var aNode = createTag('a'); //parse a URL
 	$.linkParse = function(data) {
 		aNode.href = data;
@@ -2910,219 +2293,49 @@ This is for finding an object method via a string used througout events
 			pathName = aNode.pathname,
 			len = getLength(root),
 			root = root[len - 2] + dotString + root[len - 1];
-		return {
-			url: aNode.href,
-			protocol: aNode.protocol,
-			hostname: aNode.hostname,
-			port: aNode.port,
+		return pick(aNode, ['href', 'protocol', 'hostname', 'port', 'search', 'hash', 'host'], {
 			path: pathName[0] !== slashString ? slashString + pathName : pathName,
 			pathroot: pathName[0] !== slashString ? splitCall(pathName, slashString)[0] : splitCall(pathName, slashString)[1],
-			ssl: data.protocol === 'http:' ? false : true,
-			search: aNode.search,
-			hash: aNode.hash,
-			domain: root,
-			host: aNode.host
-		};
-	}; //single node only operations
-	var acidLibPrefix = acidLib ? nodeAttribute(acidLib, 'data-prefix') || emptyString : emptyString,
-		extendDom = function extendDom(obj, ext) {
-			eachObject(obj, function(item, key) {
-				if (item) {
-					Object.defineProperty(ext, acidLibPrefix + key, {
-						enumerable: false,
-						configurable: true,
-						writable: true,
-						value: item
-					});
-				}
-			});
-		};
-	extendDom(nodeOnly, nodePrototype); //lists without looping
-	extendDom(listOnly, nodeListPrototype);
-	extendDom(listOnly, htmlCollectionPrototype);
-	var _eventNames = $.eventNames = [],
-		eventsArrayForWindow = ["wheel", "copy", "cut", "paste", "beforescriptexecute", "afterscriptexecute", "abort", "change", "ctextmenu", "input", "progress", "ratechange", "reset", "select", "submit", "blur", "error", "focus", "load", "scroll"],
-		eventsArrayForBody = ["mouseenter", "mouseleave", "click", "dblclick", "drag", "dragend", "dragenter", "dragleave", "dragover", "dragstart", "drop", "keydown", "keypress", "keyup", "mousedown", "mousemove", "mouseout", "mouseover", "mouseup", "blur", "focus"];
-	var ensureItem = function ensureItem(action, analytics, obj, e, type, extra) {
-			if (action) {
-				var fn = find(action, modelMethod);
-				if (fn) {
-					if (debugMode) {
-						consoleNative(action);
-					}
-					fn(obj, e, extra);
-					fn = null;
-					action = null;
-					obj = null;
-					e = null;
-					extra = null;
-				}
-				if (analytics) {
-					asyncMethod(function() {
-						analytics(type, action);
-					});
-				}
-			}
-		},
-		domNodeEvent = function domNodeEvent(obj, e, analytics, fn, type, attr) {
-			var action, extra, hasExtra, ismodel, multi, length;
-			if (debugMode) {
-				consoleNative(e);
-			}
-			if (!action) {
-				if (obj.getAttribute) {
-					action = obj.getAttribute(attr);
-				}
-			}
-			if (!action) {
-				if (obj !== bodyNode) {
-					while (obj = obj.parentNode) {
-						if (!obj) {
-							return;
-						} else if (obj.nodeType != 1) {
-							return;
-						}
-						if (!action) {
-							action = obj.getAttribute(attr);
-						}
-						if (action) {
-							break;
-						}
-					}
-				}
-			}
-			if (action) {
-				e.stopPropagation();
-				multi = splitCall(action, ',');
-				eachArray(multi, function(action) {
-					hasExtra = stringMatchCall(action, /\((.*?)\)/);
-					if (hasExtra) {
-						action = stringReplace(action, hasExtra[0], emptyString);
-						extra = hasExtra[1];
-					}
-					ismodel = find(action, modelMethod);
-					if (ismodel) {
-						ismodel(obj, e, extra);
-					} else {
-						ensure(splitCall(action, dotString)[0], function() {
-							ensureItem(action, analytics, obj, e, type, extra);
-							e = null;
-							type = null;
-							analytics = null;
-							action = null;
-						});
-					}
-					extra = emptyString;
-					hasExtra = false;
-				});
-			}
-		},
-		syntheticEvent = function syntheticEvent(e, analytics, fn, type, attr) {
-			var isdom = isDom(e),
-				obj, nonenode = false;
-			if (fn) {
-				fn();
-			}
-			if (isdom) {
-				obj = e;
-			} else {
-				obj = e.target;
-				if (!isDom(obj)) {
-					nonenode = true;
-				}
-			}
-			if (obj) {
-				if (!nonenode) {
-					domNodeEvent(obj, e, analytics, fn, type, attr);
-				}
-			}
-		}, //create events from config
-		getEventsOnObject = function getEventsOnObject(object, node, data) {
-			var new_name;
-			eachObject(object, function(item, key) {
-				new_name = 'on' + key;
-				data.type = key;
-				data.fn = item.fn;
-				$[new_name] = _eventGenerate(data);
-				eventAdd(node, key, $[new_name], true);
-			});
-		},
-		eventMethod = $.acid.event = function(event) {
-			getEventsOnObject(event.window, window, {
-				analytics: event.analytics
-			});
-			getEventsOnObject(event.body, document.body, {
-				analytics: event.analytics
-			});
-		}, //generate the onevent function
-		_eventGenerate = $.acid.event.generate = function(data) {
-			var type = data.type,
-				fn = data.fn,
-				analytics = data.analytics,
-				data = null,
-				attr = 'data-' + type,
-				syntheticEventWrap = function syntheticEventWrap(e) {
-					syntheticEvent(e, analytics, fn, type, attr);
-				};
-			return syntheticEventWrap;
-		},
-		listenOnAllEvents = function listenOnAllEvents() {
-			var windowObject = {},
-				bodyObject = {};
-			eachArray(eventsArrayForWindow, function(item, key) {
-				windowObject[item] = {};
-			});
-			eachArray(eventsArrayForBody, function(item, key) {
-				bodyObject[item] = {};
-			});
-			windowObject.resize = {
-				fn: function fn() {
-					saveDimensions();
-				}
-			};
-			eventMethod({
-				window: windowObject,
-				body: bodyObject
-			});
-		};
-	isDocumentReady(listenOnAllEvents);
+			ssl: data.protocol === 'http:' ? False : True,
+			domain: root
+		});
+	};
 	if (acidLib) { //get model directory -> save prefix to prefix
 		var coreModel = nodeAttribute(acidLib, 'data-model');
 		$.dir.js = coreModel;
-		if (acidLib.onload) {
-			acidLib.onload();
-			acidLib.onload = null;
-		} else if (coreModel) { //create core script and append to head
+		if (!acidLib.onload && coreModel) { //create core script and append to head
 			isDocumentReady(function() {
 				ensure('core', function(core) {
 					if (core) {
-						asyncMethod(core);
+						core();
 					}
 				});
 			});
 		}
 	} //clean up
 	acidLib = null; //log out the ACID version
-	acidConsole('Acidjs v' + $.acid.version, 'notify');
 	isDocumentReady(agentInfo);
+	/*
+	Object checking methods
+*/
+	eachArray(['RegExp', 'Arguments', 'Boolean', 'Date', 'Error', 'Map', 'Object', 'Set', 'WeakMap', 'ArrayBuffer', 'Float32Array', 'Float64Array', 'Int8Array', 'Int16Array', 'Int32Array', 'Uint8Array', 'Uint8ClampedArray', 'Uint16Array', 'Uint32Array'], function(item) {
+		$['is' + stringReplaceCall(item, 'Array', '')] = isSameObjectGenerator(objectStringGenerate(item));
+	});
+	/*
+	Extend native objects used for compression of future app files and modules
+*/
 	eachArray([
 		[arrayNative, arrayPrototype, 'array'],
 		[objectNative, objectPrototype, 'object'],
 		[stringNative, stringPrototype, 'string']
 	], function(proto) {
-		var name = proto[2],
-			extendToGlobal = function extendToGlobal(key, name, funct) {
-				$['' + name + ucFirst(key)] = funct;
-			};
+		var name = proto[2];
 		$[name] = proto[0];
-		eachProperty(proto[1], function(item, key) {
+		mapProperty(proto[1], function(item, key) {
 			if (isFunction(item)) {
-				extendToGlobal(key, name, function(that) {
-					var args = _toArray(arguments);
-					shiftArray(args);
-					return apply(item, that, args);
-				});
+				$['' + name + ucFirst(key)] = generatePrototype(item);
 			}
 		});
 	});
+	eventAdd(window, 'resize', saveDimensions, True);
 })(this);
