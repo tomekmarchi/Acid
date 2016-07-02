@@ -8,7 +8,7 @@ All methods for Strings,Objects and Arrays are avalible from the root object typ
 
 Model, Define & Module
 -----------------------
-Acid is built around a everything is a model system. Models can be "define" which are compiled models for immediately available objects. Models can also be "modules" which are asynchronously compiled models with built-in import capabilities. Modules can have various files,models and JS objects that are loaded on the fly and compiled into the final model.
+In Acid everything is a model (Simple plain objects). Models can be "define" which are compiled models for immediately available objects. Models can also be "modules" which are asynchronously compiled models with built-in import capabilities. Modules can have various files,models and JS objects that are loaded on the fly and compiled into the final model.
 
 JS
 
