@@ -21,8 +21,7 @@ JS
     	}
     });
     //returns an async module
-    $.module({
-    	name:'moduleName',
+    $.module('moduleName',{
     	import:['each','eachObject','testModel.js'],
     	import:(each,eachObject,testModel) => {
     		each([1,2,3],(item,index)=>{
@@ -31,8 +30,7 @@ JS
     	}
     })();
     //returns a sync module not used for importing scripts
-    $.define({
-    	name:'moduleName',
+    $.define('moduleName',{
     	import:['each','eachObject'],
     	import:(each,eachObject) => {
     		each([],(item,index)=>{
