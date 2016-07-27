@@ -26,9 +26,7 @@ var domHeadNode,
         node.removeAttribute(n);
         return node;
     },
-    createTag = $.createTag = (name) => {
-        return documentNode.createElement(name);
-    },
+    createTag = $.createTag = bindTo(documentNode.createElement,documentNode),
     nodeAttachLoadingEvents = (node, data) => {
         var launchEvent = (fnct, node, event) => {
                 if (isString(fnct)) {

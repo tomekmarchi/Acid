@@ -1,19 +1,12 @@
 /*
 	Replace mode will overwrite the original plainObject or Array
 */
-var bindAll = $.bindAll = (bindThese,withThis,replaceMode) =>{
-	if(replaceMode){
-		eachArray(bindThese,(item,key) =>{
-			if(isFunction(item)){
-				item[key]=bindTo(item,withThis);
-			}
-		});
-	}else{
-		return map(bindThese,(item) =>{
-			if(isFunction(item)){
-				item = bindTo(item,withThis);
-			}
-			return item;
-		});
-	}
+var bindAll = $.bindAll = (bindThese, withThis, replaceMode) => {
+	return replaceMode ? (each(bindThese, (item, key) => {
+		if (isFunction(item)) {
+			bindThese[key] = bindTo(item, withThis);
+		}
+	}), bindThese) : map(bindThese, (item) => {
+		return isFunction(item) ? bindTo(item, withThis) : item;
+	});
 };

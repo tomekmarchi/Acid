@@ -2,8 +2,8 @@
 var ucFirstChar = (string) => {
         return toUpperCaseCall(charAtCall(string, 0));
     },
-    addRest = (string) => {
-        return substrCall(string, 1);
+    addRest = $.restString = (string,num) => {
+        return substrCall(string, num || 1);
     },
     ucFirst = $.ucFirst = function(string) {
         return ucFirstChar(string) + addRest(string);

@@ -1,3 +1,3 @@
 //export native functions
-$.keys=objectKeys;
-$.getPropDescrip=getOwnPropertyDescriptor;
+$.keys = objectKeys;
+$.getPropDescrip = getOwnPropertyDescriptor;

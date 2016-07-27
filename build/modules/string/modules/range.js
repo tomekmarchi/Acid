@@ -7,5 +7,5 @@ var insertInRange = $.insertInRange = (text, start, end, insert) => {
         return text[getLength(text) - 1 - a];
     },
     chunkString = $.chunkString = (string, size) => {
-        return stringMatchCall(string,new RegExp('(.|[\r\n]){1,' + size + '}', 'g'));
+        return stringMatchCall(string,new regExp('(.|[\r\n]){1,' + size + '}', 'g'));
     };

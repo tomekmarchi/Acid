@@ -4,20 +4,10 @@
 
 */
 var find = $.get = (name, obj) => {
-    var obj = obj || $,
-        name = arrayLastItem(splitCall(name, slashString));
-    if (hasDot(name)) {
-        eachWhile(splitCall(name, dotString), (item, index) => {
-            obj = obj[item];
-            if (hasValue(obj)) {
-                return True;
-            } else {
-                obj = undefined;
-				return False;
-            }
-        });
-    } else {
-        obj = obj[name];
-    }
+    obj = obj || $;
+	eachWhile(splitCall(arrayLastItem(splitCall(name, slashString)), dotString), (item, index) => {
+		obj = obj[item];
+		return hasValue(obj)? True : False;
+	});
     return obj;
 };

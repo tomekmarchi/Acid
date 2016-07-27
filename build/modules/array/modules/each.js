@@ -45,7 +45,7 @@ var safeModeCall = (safeMode) => {
         return results;
     },
     whileGenerator = (mainFunc, optBool) => {
-        return function(array, fn) {
+        return function(array, fn, includeLastResult) {
             return mainFunc(array, function(item, index, array, length, results, safeMode) {
 				if(!safeMode){
 					safeMode=results;
@@ -53,6 +53,9 @@ var safeModeCall = (safeMode) => {
                 var result = apply(fn, fn, arguments);
                 if (result === optBool) {
                     safeMode.halt = True;
+					if(includeLastResult){
+	                    return result;
+	                }
                 } else {
                     return result;
                 }

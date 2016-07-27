@@ -22,7 +22,7 @@
 $.remove = function(array, args) {
 	var isFN=isFunction(args),
 		args=(isArray(args))? args : [args];
-	mapRaw(array, (item, index) => {
+	eachArray(array, (item, index) => {
 		if ((isFN)? args(item) : has(args, item)) {
 			spliceArray(array, index, 1);
 		}

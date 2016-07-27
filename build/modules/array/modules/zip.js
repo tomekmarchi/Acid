@@ -1,7 +1,8 @@
 //Merges together the values of each of the arrays with the values at the corresponding position.
 $.zip = function () {
-	return mapArray(arguments[0],function(arraySet){
-		return mapArray(arguments,(arraySet)=>{
+	var args=arguments;
+	return mapArray(args[0],function(arraySet){
+		return mapArray(args,(arraySet)=>{
 			return shiftArray(arraySet);
 		});
 	});

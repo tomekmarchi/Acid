@@ -1,45 +1,25 @@
 //shared functions
 //Flattens a nested array. Pass level to flatten up to a depth;
-var flattenOnce = (arr) => {
-        return arrayReduce(arr,(a, b) => {
-            if (!isArray(a)) {
-                a = [a];
-            }
-            if (!isArray(b)) {
-                b = [b];
-            }
-            pushApply(a, b);
-            return a;
-        });
-    },
-    flatten = $.flatten = (array, level) => {
-        if (level) {
-            if (level === 1) {
-                return flattenOnce(array);
-            }
-            for (var i = 0; i < level; i++) {
-                array = arrayReduce(array,(previousValue, currentValue, index, array) =>{
-                    return concatCall(previousValue,(isArray(currentValue)) ? currentValue : [currentValue]);
-                }, []); //initial starting value is an amepty array []
-            }
-            return array;
-        }
-        return arrayReduce(array,(previousValue, currentValue, index, array) =>{
-            return concatCall(previousValue,(isArray(currentValue)) ? flatten(currentValue) : currentValue);
-        }, []); //initial starting value is an amepty array []
-    },
-    //cache for function that removes Falsey values from array
-    compact = (array) => {
-		if(isArray(array)){
-			return filterArray(array,(item)=>{
-				return item || undefined;
-			});
+var flatten = $.flatten = (array, level) => {
+		for (var i = 0; i < (level || 1); i++) {
+			array = arrayReduce(array, (previousValue, currentValue, index, array) => {
+				return concatArray(previousValue, (level) ?
+					(isArray(currentValue)) ? currentValue : [currentValue] :
+					(isArray(currentValue)) ? flatten(currentValue) : currentValue);
+			}, []);
 		}
-		var object={};
-		eachObject(array,(item,key)=>{
-			if(item){
-				object[key]=item;
-			}
+		return array;
+	},
+	//cache for function that removes Falsey values from array or object
+	compact = $.compact = (array) => {
+		return filter(array, (item) => {
+			return item;
+		});
+	},
+	arraySortToObject = (func, array, object) => {
+		var object = object || {};
+		eachArray(array, (item, key) => {
+			func(item, key, object);
 		});
 		return object;
-    };
+	};

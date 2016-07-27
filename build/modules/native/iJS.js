@@ -1,10 +1,8 @@
-function inlineJson(str) {
+//for inline JS object notion.
+var inlineJson = $.iJson = (str) => {
 	try {
-		return new Function(`"use strict";return${str};`)();
+		return new functionNative(`"use strict";return${str};`)();
 	} catch (e) {
 		return False;
 	}
-}
-
-//for inline JS object notion.
-$.iJson = inlineJson;
+};

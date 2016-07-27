@@ -3,7 +3,7 @@
  */
   $.isEqualArray = function(item,array) {
 	  var result=True;
-	  if (!array || !item || getLength(array) !== getLength(item)) {
+	  if (getLength(array) !== getLength(item)) {
           result=False;
       }else if (array === item) {
           result=True;
@@ -15,6 +15,5 @@
 				}
 		  },true);
 	  }
-
       return result;
   };

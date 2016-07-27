@@ -1,6 +1,3 @@
 $.toggle=function (value, a, b) {
-	if (value === a) {
-		return b;
-	}
-	return a;
+	return (value === a)? b : a;
 };

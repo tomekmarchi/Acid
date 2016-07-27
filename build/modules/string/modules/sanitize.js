@@ -13,7 +13,7 @@ var rawURLDecode = $.rawURLDecode = (string) =>{
         return stringReplaceCall(string,slashRegex, '&quot;');
     },
     sanitize = $.sanitize = (string) =>{
-        return createHtmlEntities(_rawURLDecode(string));
+        return createHtmlEntities(rawURLDecode(string));
     },
     //decode URI Component
     duc = $.duc = decodeURIComponent,

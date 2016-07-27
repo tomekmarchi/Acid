@@ -42,7 +42,6 @@
 			'build/modules/helpers/*.js',
 
 			'build/modules/dom/methods/*.js',
-			'build/modules/dom/selectors.js',
 
             'build/end/info.js',
 			'build/modules/events/*.js',
@@ -64,10 +63,8 @@
 
             'build/modules/native/*.js',
 
-            'build/modules/dom/node.js',
-            'build/modules/dom/list.js',
-            'build/modules/dom/extend/*.js',
-            'build/modules/dom/extend.js',
+			'build/modules/domDependent/selector/*.js',
+            'build/modules/domDependent/*.js',
 
             'build/end/loadcore.js',
 

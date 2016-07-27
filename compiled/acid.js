@@ -1,23 +1,21 @@
 /**
  * @name ACIDjs
- * @version 1.0 Stable
+ * @version 2.0 Stable
  * @authors
-	 Thomas Marchi
-		 @github https://github.com/tomekmarchi/
-	 Nathan Woltman
-		 @github https://github.com/woollybogger
- * @copyright 2015 Thomas Marchi,Nathan Woltman
+	Thomas Marchi
+		@github https://github.com/tomekmarchi/
+		@site https://tommarchi.com/
+ * @copyright 2015 Thomas Marchi
  * @site http://acidjs.com
  * @github https://github.com/tomekmarchi/ACID
  * @email tomekmarchi@gmail.com
  */
 (function(global) {
 	"use strict";
-	var selector, $ = function $(string) {
-		return selector(string);
+	var $ = function $(string, object) {
+		return find(string, object || modelMethod);
 	}; //avoid
-	global.$ = $;
-	global.ACID = $;
+	global.$ = global.ACID = $;
 	/*
 
 	Native objects
@@ -56,7 +54,7 @@
 		arrayPushMethod = arrayPrototype.push,
 		objectKeys = objectNative.keys,
 		objectIs = objectNative.is,
-		objectAssign = objectNative.assign,
+		objectAssign = $.assign = objectNative.assign,
 		getOwnPropertyDescriptor = objectNative.getOwnPropertyDescriptor,
 		defineProperty = objectNative.defineProperty,
 		getOwnPropertyNames = objectNative.getOwnPropertyNames,
@@ -72,44 +70,7 @@
 		   */
 		systemCores = navigator.hardwareConcurrency;
 	var bodyNode, selfWindow = window,
-		documentNode = document,
-		headNode = documentNode.head,
-		htmlCollectionNative = HTMLCollection,
-		htmlElementNative = HTMLElement,
-		nodelistNative = NodeList,
-		nodeNative = Node,
-		elementNative = Element,
-		nodePrototype = nodeNative[prototypeString],
-		nodeListPrototype = nodelistNative[prototypeString],
-		elementPrototype = elementNative[prototypeString],
-		htmlCollectionPrototype = htmlCollectionNative[prototypeString],
-		createElement = documentNode.createElement,
-		generateNodeMethod = function generateNodeMethod(funct) {
-			return function() {
-				var args = toArray(arguments);
-				unShiftArray(args, this);
-				return apply(funct, args);
-			};
-		},
-		zipUpTo = function zipUpTo(object, functs, names, wrap) {
-			mapArray(functs, function(item, index) {
-				if (!object[names[index]]) {
-					object[names[index]] = wrap(item);
-				}
-			});
-		},
-		domPropertyMethod = function domPropertyMethod(propertyName) {
-			return function(node, value, other) {
-				if (hasValue(value)) {
-					if (isFunction(value)) {
-						value = value(node);
-					}
-					node[propertyName] = value;
-					return node;
-				}
-				return node[propertyName];
-			};
-		};
+		documentNode = document;
 	var classTest = /^.[\w_-]+$/,
 		tagTest = /^[A-Za-z]+$/,
 		regexSpace = /\s/,
@@ -150,8 +111,8 @@
 			return string.indexOf(index);
 		},
 		/*
-		   	String related
-		   */
+		String related
+	*/
 		generatePrototype = function generatePrototype(funct) {
 			return functionPrototype.call.bind(funct);
 		},
@@ -166,12 +127,12 @@
 		stringMatchCall = generatePrototype(stringPrototype.match),
 		stringReplaceCall = generatePrototype(stringPrototype.replace),
 		/*
-		   	Regex Helpers
-		   */
+		Regex Helpers
+	*/
 		testRegex = generatePrototype(regExpPrototype.test),
 		/*
-		   	Array Helpers
-		   */
+		Array Helpers
+	*/
 		concatArray = generatePrototype(arrayPrototype.concat),
 		pushApply = $.pushApply = function(array, arrayToPush) {
 			return apply(arrayPushMethod, array, arrayToPush);
@@ -186,14 +147,14 @@
 		arrayReduce = generatePrototype(arrayPrototype.reduce),
 		arrayReduceRight = generatePrototype(arrayPrototype.reduceRight),
 		/*
-		   	Object Helpers
-		   */
+		Object Helpers
+	*/
 		toStringCall = function toStringCall(item) {
 			return item.toString();
 		},
 		/*
-		   	Function calls
-		   */
+		Function calls
+	*/
 		bindTo = $.bindTo = generatePrototype(functionPrototype.bind),
 		call = $.callFn = function(method, bindTo, arg) {
 			if (!arg) {
@@ -224,30 +185,9 @@
 		uuidRemove = uuid.remove = function(id) {
 			uuidClosed[id] = null;
 			uuidFree.push(id);
-		};
-	var idSelector = $.getById = bindTo(documentNode.getElementById, documentNode),
-		clsSelector = $.getByClass = bindTo(documentNode.getElementsByClassName, documentNode),
-		tagSelector = $.getByTag = bindTo(documentNode.getElementsByTagName, documentNode),
-		qsSelector = $.querySelector = bindTo(documentNode.querySelector, documentNode),
-		qsaSelector = $.querySelectorAll = bindTo(documentNode.querySelectorAll, documentNode),
-		selector = $.selector = function(select) {
-			var firtLetter = select[0];
-			if (firtLetter === poundString) {
-				if (!regexSpace.test(select)) {
-					return idSelector(stringSliceCall(select, 1));
-				}
-			} else if (firtLetter === dotString) {
-				if (testRegex(classTest, select)) {
-					return clsSelector(stringSliceCall(select, 1));
-				}
-			} else if (testRegex(tagTest, select)) {
-				return tagSelector(select);
-			}
-			return qsaSelector(select);
-		},
-		acidLib = idSelector('acidjs'); //acid platform information
+		}; //acid platform information
 	$.info = {
-		version: 1,
+		version: 2,
 		host: { // EX http https
 			protocol: protocol, // ws or wss
 			protocolSocket: protocolSocket, //hostname
@@ -271,11 +211,7 @@
 			return True;
 		}
 		return False;
-	};
-	/*
-STRING Prototype object
-*/
-	$.string = stringNative; //get characters in a range in a string
+	}; //get characters in a range in a string
 	var insertInRange = $.insertInRange = function(text, start, end, insert) {
 			return stringSliceCall(text, 0, start) + insert + stringSliceCall(text, end, getLength(text));
 		}, //start index from right of string
@@ -283,10 +219,10 @@ STRING Prototype object
 			return text[getLength(text) - 1 - a];
 		},
 		chunkString = $.chunkString = function(string, size) {
-			return stringMatchCall(string, new RegExp('(.|[\r\n]){1,' + size + '}', 'g'));
+			return stringMatchCall(string, new regExp('(.|[\r\n]){1,' + size + '}', 'g'));
 		}; //replace all items in an array with a string
 	var replaceWithList = $.replaceWithList = function(string, array, toReplace) {
-		return stringReplaceCall(string, new RegExp('\\b' + joinArray(array, '|') + '\\b', 'gi'), toReplace);
+		return stringReplaceCall(string, new regExp('\\b' + joinArray(array, '|') + '\\b', 'gi'), toReplace);
 	}; //raw URL encode
 	var rawURLDecode = $.rawURLDecode = function(string) {
 			return decodeURIComponent(stringReplaceCall(string, rawURLDecodeRegex, function() {
@@ -301,7 +237,7 @@ STRING Prototype object
 			return stringReplaceCall(string, slashRegex, '&quot;');
 		},
 		sanitize = $.sanitize = function(string) {
-			return createHtmlEntities(_rawURLDecode(string));
+			return createHtmlEntities(rawURLDecode(string));
 		}, //decode URI Component
 		duc = $.duc = decodeURIComponent, //encode URI Component
 		euc = $.euc = encodeURIComponent; //tokenize split by groups of characters that are not whitespace
@@ -314,8 +250,8 @@ STRING Prototype object
 	var ucFirstChar = function ucFirstChar(string) {
 			return toUpperCaseCall(charAtCall(string, 0));
 		},
-		addRest = function addRest(string) {
-			return substrCall(string, 1);
+		addRest = $.restString = function(string, num) {
+			return substrCall(string, num || 1);
 		},
 		ucFirst = $.ucFirst = function(string) {
 			return ucFirstChar(string) + addRest(string);
@@ -366,130 +302,39 @@ STRING Prototype object
 			}
 			return string;
 		}; //add paramaters to a URL
-	var addParam = function addParam(url, newItem) {
-		if (hasLength(url)) {
-			if (has(url, questionMarkString)) {
-				if (arrayLastItem(url) === questionMarkString) {
-					url = url + newItem;
-				} else {
-					url = url + andString + newItem;
-				}
+	var addParam = $.addParam = function(url, newItem) {
+		if (hasLength(url) && has(url, questionMarkString)) {
+			if (arrayLastItem(url) === questionMarkString) {
+				url = url + newItem;
+			} else {
+				url = url + andString + newItem;
 			}
 		} else {
 			url = questionMarkString + newItem;
 		}
 		return url;
-	};
-	$.addParam = addParam; //shared functions
+	}; //shared functions
 	//Flattens a nested array. Pass level to flatten up to a depth;
-	var flattenOnce = function flattenOnce(arr) {
-			return arrayReduce(arr, function(a, b) {
-				if (!isArray(a)) {
-					a = [a];
-				}
-				if (!isArray(b)) {
-					b = [b];
-				}
-				pushApply(a, b);
-				return a;
+	var flatten = $.flatten = function(array, level) {
+			for (var i = 0; i < (level || 1); i++) {
+				array = arrayReduce(array, function(previousValue, currentValue, index, array) {
+					return concatArray(previousValue, level ? isArray(currentValue) ? currentValue : [currentValue] : isArray(currentValue) ? flatten(currentValue) : currentValue);
+				}, []);
+			}
+			return array;
+		}, //cache for function that removes Falsey values from array or object
+		compact = $.compact = function(array) {
+			return filter(array, function(item) {
+				return item;
 			});
 		},
-		flatten = $.flatten = function(array, level) {
-			if (level) {
-				if (level === 1) {
-					return flattenOnce(array);
-				}
-				for (var i = 0; i < level; i++) {
-					array = arrayReduce(array, function(previousValue, currentValue, index, array) {
-						return concatCall(previousValue, isArray(currentValue) ? currentValue : [currentValue]);
-					}, []); //initial starting value is an amepty array []
-				}
-				return array;
-			}
-			return arrayReduce(array, function(previousValue, currentValue, index, array) {
-				return concatCall(previousValue, isArray(currentValue) ? flatten(currentValue) : currentValue);
-			}, []); //initial starting value is an amepty array []
-		}, //cache for function that removes Falsey values from array
-		compact = function compact(array) {
-			if (isArray(array)) {
-				return filterArray(array, function(item) {
-					return item || undefined;
-				});
-			}
-			var object = {};
-			eachObject(array, function(item, key) {
-				if (item) {
-					object[key] = item;
-				}
+		arraySortToObject = function arraySortToObject(func, array, object) {
+			var object = object || {};
+			eachArray(array, function(item, key) {
+				func(item, key, object);
 			});
 			return object;
-		};
-	/**
-	 * Finds the index of a value in a sorted array using a binary search algorithm.
-	 *
-	 * If no `compareFunction` is supplied, the `>` and `<` relational operators are used to compare values,
-	 * which provides optimal performance for arrays of numbers and simple strings.
-	 *
-	 * @function Array#bsearch
-	 * @param {*} value - The value to search for.
-	 * @param {Function} [compareFunction] - The same type of comparing function you would pass to
-	 *     [`.sort()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort).
-	 * @returns {number} The index of the value if it is in the array, or `-1` if it cannot be found.
-	 *     If the search value can be found at multiple indexes in the array, it is unknown which of
-	 *     those indexes will be returned.
-	 *
-	 * @example
-	 * ['a', 'b', 'c', 'd'].bsearch('c');
-	 * // -> 2
-	 *
-	 * [1, 1, 2, 2].bsearch(2);
-	 * // -> 2 or 3
-	 *
-	 * [1, 2, 3, 4].bsearch(10);
-	 * // -> -1
-	 *
-	 * [1, 2, 3, 4].bsearch(1, function(a, b) {
-	 *   return a - b;
-	 * });
-	 * // -> 0
-	 *
-	 * ['img1', 'img2', 'img10', 'img13'].bsearch('img2', String.naturalCompare);
-	 * // -> 1
-	 * // `String.naturalCompare` is provided by the string-natural-compare npm module:
-	 * // https://www.npmjs.com/package/string-natural-compare
-	 */
-	$.bsearch = function(item, value, compareFunction) {
-		var low = 0,
-			high = getLength(item),
-			mid;
-		if (compareFunction) {
-			while (low < high) {
-				mid = low + high >>> 1;
-				var direction = compareFunction(item[mid], value);
-				if (!direction) {
-					return mid;
-				}
-				if (direction < 0) {
-					low = mid + 1;
-				} else {
-					high = mid;
-				}
-			}
-		} else {
-			while (low < high) {
-				mid = low + high >>> 1;
-				if (item[mid] === value) {
-					return mid;
-				}
-				if (item[mid] < value) {
-					low = mid + 1;
-				} else {
-					high = mid;
-				}
-			}
-		}
-		return -1;
-	}; //Creates an array of elements split into groups the length of size. If collection can't be split evenly, the final chunk will be the remaining elements.
+		}; //Creates an array of elements split into groups the length of size. If collection can't be split evenly, the final chunk will be the remaining elements.
 	var arrayChunk = function arrayChunk(array, size) {
 		size = size || 1;
 		var numChunks = ceilmethod(getLength(array) / size),
@@ -526,19 +371,7 @@ STRING Prototype object
 	 * console.log(b, b === a);
 	 * // -> [1, 2, 3] False
 	 */
-	var cloneArray = $.cloneArray = arraySliceCall;
-	/**
-	 * Returns a new array with all Falsey values removed. Falsey values
-	 * are `False`, `0`, `""`, `null`, `undefined`, and `NaN`.
-	 *
-	 * @function Array#compact
-	 * @returns {Array} The new array containing only the truthy values from the original array.
-	 *
-	 * @example
-	 * $.compact([0, 1, False, 2, emptyString, 3]);
-	 * // -> [1, 2, 3]
-	 */
-	$.compact = compact; //Sorts a list into groups and returns a count for the number of objects in each group.
+	var cloneArray = $.cloneArray = arraySliceCall; //Sorts a list into groups and returns a count for the number of objects in each group.
 	$.countBy = function(array, funct) {
 		var object = {},
 			result;
@@ -561,42 +394,17 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 
 
 */ //create an array from a range
-	$.createRange = function(array, start_arg, stop_arg, increment) {
-		var stop = stop_arg ? stop_arg : start_arg,
-			i_check, start = stop_arg ? start_arg : 0;
-		for (var i = start; i < stop; i++) {
-			if (increment) {
-				if (i > 0) {
-					var i = i - 1 + 5,
-						i_check = i + increment;
-				}
-			}
-			pushArray(array, i);
-			if (increment) {
-				if (i_check == stop) {
-					break;
-				}
-			}
+	var createRange = $.createRange = function(start, stop, increment) {
+		var array = [];
+		increment = increment || 1;
+		while (start < stop) {
+			pushArray(array, start);
+			start = start + increment;
 		}
 		return array;
 	}; //create an array from a range
-	$.createRangeTo = function(array, start_arg, stop_arg, increment) {
-		var stop = stop_arg ? stop_arg : start_arg,
-			i, i_check, start = stop_arg ? start_arg : 0;
-		for (var i = start; i <= stop; i++) {
-			if (increment) {
-				if (i > 0) {
-					i = i - 1 + 5, i_check = i + increment;
-				}
-			}
-			pushArray(array, i);
-			if (increment) {
-				if (i_check == stop) {
-					break;
-				}
-			}
-		}
-		return array;
+	$.createRangeTo = function(start, stop, increment) {
+		return createRange(start, stop + (increment || 1), increment);
 	}; //Creates an array excluding all values of the provided arrays using SameValueZero for equality comparisons.
 	var arrayDifference = $.difference = function(array, compare) {
 		return filterArray(array, function(item) {
@@ -605,11 +413,11 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 			}
 		});
 	}; //Removes elements from array corresponding to the given indexes and returns an array of the removed elements. Indexes may be specified as an array of indexes or as individual arguments.
-	$.drop = function(array, amount) {
-		return spliceArray(array, amount, getLength(array));
+	var drop = $.drop = function(array, amount, length) {
+		return spliceArray(array, amount, length || getLength(array));
 	}; //Removes elements from array corresponding to the given indexes (from right) and returns an array of the removed elements. Indexes may be specified as an array of indexes or as individual arguments.
 	$.dropRight = function(array, amount) {
-		return spliceArray(array, 0, getLength(array) - amount);
+		return drop(array, 0, getLength(array) - amount);
 	};
 	/*
 	Each Methods
@@ -657,7 +465,7 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 			return results;
 		},
 		whileGenerator = function whileGenerator(mainFunc, optBool) {
-			return function(array, fn) {
+			return function(array, fn, includeLastResult) {
 				return mainFunc(array, function(item, index, array, length, results, safeMode) {
 					if (!safeMode) {
 						safeMode = results;
@@ -665,6 +473,9 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 					var result = apply(fn, fn, arguments);
 					if (result === optBool) {
 						safeMode.halt = True;
+						if (includeLastResult) {
+							return result;
+						}
 					} else {
 						return result;
 					}
@@ -730,7 +541,7 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 	*/
 	$.isEqualArray = function(item, array) {
 		var result = True;
-		if (!array || !item || getLength(array) !== getLength(item)) {
+		if (getLength(array) !== getLength(item)) {
 			result = False;
 		} else if (array === item) {
 			result = True;
@@ -745,10 +556,7 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 		return result;
 	}; //Returns the first element of an array. Passing num will return the first n elements of the array.
 	var firstItem = $.first = function(array, num) {
-		if (num) {
-			return sliceArray(array, 0, num);
-		}
-		return array[0];
+		return num ? sliceArray(array, 0, num) : array[0];
 	}; //Returns the composition of a list of functions, where each function consumes the return value of the function that follows. In math terms, composing the functions f(), g(), and h() produces f(g(h())).
 	$.flow = function(array, args) {
 		return function() {
@@ -765,34 +573,28 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 		};
 	}; //Splits a collection into sets, grouped by the result of running each value through iteratee.
 	$.groupBy = function(array, funct) {
-		var object = {},
-			results;
-		eachArray(array, function(item, index) {
-			results = funct(item);
+		return arraySortToObject = (function(item, index, object) {
+			var results = funct(item);
 			if (!object[results]) {
 				object[results] = [];
 			}
 			pushArray(object[results], item);
-		});
-		return object;
+		}, array);
 	}; //Given a list, and an iteratee function that returns a key for each element in the list (or a property name), returns an object with an index of each item. Just like groupBy, but for when you know your keys are unique.
 	$.indexBy = function(array, key) {
-		var object = {};
-		eachArray(array, function(item, index) {
+		return arraySortToObject = (function(item, key, object) {
 			object[item[key]] = item;
-		});
-		return object;
-	}; //Returns everything but the last entry of the array.
-	var arrayInitial = $.initial = function(array) {
-			array = cloneArray(array);
-			popArray(array);
-			return array;
-		}, //Returns everything but the first entry of the array.
-		arrayRest = $.rest = function(array) {
-			array = cloneArray(array);
-			shiftArray(array);
-			return array;
-		}; //Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more of the arrays.
+		}, array);
+	};
+	var generateArrayRange = function generateArrayRange(method) {
+			return function(array) {
+				array = cloneArray(array);
+				method(array);
+				return array;
+			};
+		}, //Returns everything but the last entry of the array.
+		arrayInitial = $.initial = generateArrayRange(popArray), //Returns everything but the first entry of the array.
+		arrayRest = $.rest = generateArrayRange(shiftArray); //Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more of the arrays.
 	/**
 	 * Returns an new array that is the [set intersection](http://en.wikipedia.org/wiki/Intersection_(set_theory))
 	 * of the array and the input array(s).
@@ -808,25 +610,19 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 	 * [1, 2, 3].intersect([101, 2, 50, 1], [2, 1]);
 	 * // -> [1, 2]
 	 */
-	$.intersect = function(array, args) {
-		var result = [],
-			numArgs = getLength(args);
-		if (!numArgs) {
-			return result;
-		}
-		next: for (var i = 0; i < getLength(array); i++) {
-			var item = array[i],
-				j;
-			if (!has(result, item)) {
-				for (j = 0; j < numArgs; j++) {
-					if (!has(args[j], item)) {
-						continue next;
-					}
+	$.intersect = function() {
+		var yes, args = arguments;
+		return filterArray(args[0], function(item) {
+			yes = true;
+			eachArray(args, function(otherItem) {
+				if (!has(otherItem, item)) {
+					yes = false;
 				}
-				pushArray(result, item);
+			});
+			if (yes) {
+				return item;
 			}
-		}
-		return result;
+		});
 	}; //Calls the method named by methodName on each value in the list. Any extra arguments passed to invoke will be forwarded on to the method invocation.
 	$.invoke = function(array, method, args) {
 		return mapArray(array, function(item) {
@@ -855,67 +651,25 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 	 */
 	$.numSort = function(array) {
 		return array.sort(numericalCompare);
-	}; //Converts arrays into objects. Keys as this and values as first argument
-	$.object = function(array, value) {
-		var object = {};
-		eachArray(array, function(item, index) {
-			object[item] = value[index];
-		});
-		return object;
+	}; //Converts arrays into objects.
+	$.object = function(values, keys) {
+		return arraySortToObject(function(item, index, object) {
+			object[keys[index]] = item;
+		}, values);
 	}; //Split array into two arrays: one whose elements all satisfy predicate and one whose elements all do not satisfy predicate.
 	$.partition = function(array, funct) {
-		return [array, filterArray(array, function(item, index) {
-			if (funct(item)) {
-				return item;
-			} else {
-				spliceArray(array, index, 1);
-			}
-		})];
+		var temp = [];
+		return [filterArray(array, function(item, index) {
+			return funct(item) ? item : pushArray(temp, item) && undefinedNative;
+		}), temp];
 	}; //Pluck an attribute from each object in an array.
 	var pluck = $.pluck = function(array, pluckThis) {
 		return mapArray(array, function(item, index) {
-			if (isArray(pluckThis)) {
-				var object = {};
-				eachArray(pluckThis, function(pluckItem) {
-					object[pluckItem] = item[pluckItem];
-				});
-				return object;
-			} else {
-				return item[pluckThis];
-			}
+			return isArray(pluckThis) ? arraySortToObject(function(pluckItem, pluckKey, object) {
+				object[pluckItem] = item[pluckItem];
+			}, pluckThis) : item[pluckThis];
 		});
 	};
-	var chunkSlice = function chunkSlice(array, start, end) {
-			return mapArray(newArray(mathNative.min(end, getLength(array)) - start), function() {
-				return array[start + i];
-			});
-		},
-		numericalCompare = function numericalCompare(a, b) {
-			return a - b;
-		},
-		numericalCompareReverse = function numericalCompareReverse(a, b) {
-			return b - a;
-		},
-		xorBase = function xorBase(a, b) {
-			return mapArray(concatArray(a, b), function(item) {
-				if (!has(b, item) && indexOfCall(result, item) < 0) {
-					return item;
-				}
-			});
-		},
-		onlyUnique = function onlyUnique(value, index, self) {
-			return self.indexOf(value) === index;
-		},
-		uniqueArray = $.uniq = function(array, isSorted) {
-			if (isSorted) {
-				return mapArray(array, function(item, index) {
-					if (item !== array[index - 1]) {
-						return item;
-					}
-				});
-			}
-			return array.filter(onlyUnique);
-		};
 	/**
 	 * Sorts an array in place using a reverse numerical comparison algorithm
 	 * (sorts numbers from highest to lowest) and returns the array.
@@ -956,7 +710,7 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 	$.remove = function(array, args) {
 		var isFN = isFunction(args),
 			args = isArray(args) ? args : [args];
-		mapRaw(array, function(item, index) {
+		eachArray(array, function(item, index) {
 			if (isFN ? args(item) : has(args, item)) {
 				spliceArray(array, index, 1);
 			}
@@ -969,7 +723,7 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 	$.sample = function(array, setAmount) {
 		if (setAmount) {
 			var temp = toArray(array);
-			return whilemap(temp, function(item, index, length) {
+			return mapWhile(temp, function(item, index, length) {
 				return spliceArray(temp, roundMethod(randomMethod() * (length - 1)), 1)[0];
 			});
 		}
@@ -1009,17 +763,45 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 	$.takeRight = function(array, amount) {
 		return spliceArray(array, getLength(array) - amount, amount);
 	}; //Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more of the arrays.
-	$.union = function(arrayOG) {
-		var result = uniqueArray(arrayOG);
+	$.union = function() {
+		var result = [];
 		eachArray(arguments, function(array) {
 			eachArray(array, function(item) {
-				if (indexOfCall(result, item) < 0) {
+				if (has(result, item)) {
 					pushArray(result, item);
 				}
 			});
 		});
 		return result;
-	}; //Returns a copy of the array with all instances of the values removed.
+	};
+	var chunkSlice = function chunkSlice(array, start, end) {
+			return mapArray(newArray(mathNative.min(end, getLength(array)) - start), function() {
+				return array[start + i];
+			});
+		},
+		numericalCompare = function numericalCompare(a, b) {
+			return a - b;
+		},
+		numericalCompareReverse = function numericalCompareReverse(a, b) {
+			return b - a;
+		},
+		xorBase = function xorBase(a, b) {
+			return mapArray(concatArray(a, b), function(item) {
+				if (!has(b, item) && indexOfCall(result, item) < 0) {
+					return item;
+				}
+			});
+		},
+		onlyUnique = function onlyUnique(value, index, self) {
+			return self.indexOf(value) === index;
+		},
+		uniqueArray = $.uniq = function(array, isSorted) {
+			return isSorted ? mapArray(array, function(item, index) {
+				if (item !== array[index - 1]) {
+					return item;
+				}
+			}) : array.filter(onlyUnique);
+		}; //Returns a copy of the array with all instances of the values removed.
 	$.without = function(array, args) {
 		var isFN = isFunction(args),
 			args = isArray(args) ? args : [args];
@@ -1042,8 +824,9 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 		return result;
 	}; //Merges together the values of each of the arrays with the values at the corresponding position.
 	$.zip = function() {
-		return mapArray(arguments[0], function(arraySet) {
-			return mapArray(arguments, function(arraySet) {
+		var args = arguments;
+		return mapArray(args[0], function(arraySet) {
+			return mapArray(args, function(arraySet) {
 				return shiftArray(arraySet);
 			});
 		});
@@ -1055,6 +838,12 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 			});
 		});
 	};
+	var assignDeep = $.assignDeep = function(object, otherObject, mergeArrays) {
+		eachObject(otherObject, function(item, key) {
+			isPlainObject(item) && isPlainObject(object[key]) ? assignDeep(object[key], item, mergeArrays) : mergeArrays && isArray(item) && isArray(object[key]) ? pushApply(object[key], item) : object[key] = item;
+		});
+		return object;
+	};
 	/*
 			This is for object checking is or isnot
 			*/ //checking
@@ -1063,14 +852,11 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 		},
 		isSameObjectGenerator = function isSameObjectGenerator(type) {
 			return function(obj) {
-				return toStringCall(obj) === type;
+				return hasValue(obj) ? toString.call(obj) === type : False;
 			};
 		},
 		isDecimal = $.isDecimal = function() {
 			return stringMatchCall(toStringCall(string), decimalCheck);
-		},
-		isNative = $.isNative = function(obj) {
-			return hasValue(obj) ? has(toLowerCaseCall(toStringCall(obj)), 'native') : False;
 		},
 		hasValue = $.hasValue = function(item) {
 			return !isUndefined(item) && !isNull(item);
@@ -1080,6 +866,18 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 		},
 		isNull = $.isNull = function(obj) {
 			return obj === null;
+		},
+		isAll = $.isAll = function() {
+			var args = toArray(arguments),
+				result = true,
+				method = shiftArray(args);
+			eachArray(args, function(item, index, array, length, safe) {
+				result = method(item);
+				if (!result) {
+					safe.halt = True;
+				}
+			}, True);
+			return result;
 		},
 		isArray = $.isArray = arrayNative.isArray,
 		isConstructor = $.isConstructor = function(constructor) {
@@ -1102,10 +900,7 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 			return !getLength(obj);
 		},
 		isEmpty = $.isEmpty = function(obj) {
-			if (hasValue(obj)) {
-				return isPlainObject(obj) ? !objectSize(obj) : !isLength(obj);
-			}
-			return True;
+			return hasValue(obj) ? isPlainObject(obj) ? !objectSize(obj) : !isLength(obj) : False;
 		},
 		regexGenerator = function regexGenerator(regexType) {
 			return function(item) {
@@ -1151,15 +946,8 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 				fn(object[key], key, object, len);
 			});
 		},
-		forEach = $.forEach = function(array, funct) {
-			var results = [],
-				result;
-			array.forEach(function(item, key, array) {
-				result = funct(item, key, array);
-				if (hasValue(result)) {
-					pushArray(results, result);
-				}
-			});
+		forEach = $.forEach = function(array, funct, optional) {
+			array.forEach(funct, optional);
 			return results;
 		},
 		mapProperty = $.mapProperty = function(array, funct) {
@@ -1172,7 +960,7 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 		forIn = $.forIn = function(object, fn) {
 			var results = {};
 			for (var key in object) {
-				newObject[property] = fn(object[key], key, object, results);
+				results[key] = fn(object[key], key, object, results);
 			}
 			return results;
 		};
@@ -1197,14 +985,12 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 		});
 	};
 	/*
-	Pluck specific properties, listed in an array, from an object and a new object is returned with those specfic properties.
+	pick specific properties, listed in an array, from an object and a new object is returned with those specfic properties.
 */
-	var pick = $.pick = function(originalObject, array, newObject) {
-		newObject = newObject || {};
-		mapArray(array, function(item) {
-			newObject[item] = originalObject[item];
-		});
-		return newObject;
+	var pick = $.pick = function(array, originalObject, newObject) {
+		return arraySortToObject(function(item, key, object) {
+			object[item] = originalObject[item];
+		}, array, newObject);
 	};
 	/*
 	Return the number of values in the list.
@@ -1214,11 +1000,9 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 	}; //copy an object ES6 + ES5
 	$.stringify = stringify;
 	$.zipObject = function(keys, values, object) {
-		object = object || {};
-		eachArray(keys, function(item, index) {
+		return arraySortToObject(function(item, index, object) {
 			object[item] = values[index];
-		});
-		return object;
+		}, keys, object);
 	};
 	$.unZipObject = function(object) {
 		var keys = [],
@@ -1238,71 +1022,40 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 	Replace mode will overwrite the original plainObject or Array
 */
 	var bindAll = $.bindAll = function(bindThese, withThis, replaceMode) {
-		if (replaceMode) {
-			eachArray(bindThese, function(item, key) {
-				if (isFunction(item)) {
-					item[key] = bindTo(item, withThis);
-				}
-			});
-		} else {
-			return map(bindThese, function(item) {
-				if (isFunction(item)) {
-					item = bindTo(item, withThis);
-				}
-				return item;
-			});
-		}
-	};
-	$.chain = function(funct, obj) { //chain functions together
-		//add to chain
-		if (funct.methods) {
-			mapObject(obj, function(item, key) {
-				funct.methods[key] = (function(item, key) {
-					return function() {
-						funct.results[key] = apply(item, item, toArray(arguments));
-						return funct.methods;
-					};
-				})(item, key);
-			});
-			return funct;
-		} //create chain
-		var chain = function chain() {
-			chain.results.first = apply(funct, chain, toArray(arguments));
-			return chain.methods;
-		}; //remove chain item
-		chain.removeChain = function(obj) {
-			chain.results[obj] = null;
-			return chain;
-		}; //remove all chains
-		chain.removeAllChains = function() {
-			chain.methods = {};
-			return chain;
-		}; //return chain values
-		chain.values = function(obj) {
-			if (!obj) {
-				return chain.results;
+		return replaceMode ? (each(bindThese, function(item, key) {
+			if (isFunction(item)) {
+				bindThese[key] = bindTo(item, withThis);
 			}
-			var array = [],
-				chain_results = chain.results;
-			mapObject(chain_results, function(item, key) {
-				pushArray(array, item);
-			});
-			return array;
-		}; //original function
-		chain.original = function() {
-			return apply(funct, chain, toArray(arguments));
+		}), bindThese) : map(bindThese, function(item) {
+			return isFunction(item) ? bindTo(item, withThis) : item;
+		});
+	};
+	var addChain = function addChain(chain, addToChain) {
+		each(addToChain, function(item, key) {
+			chain.methods[key] = function() {
+				var args = toArray(arguments);
+				unShiftArray(args, chain.value);
+				apply(item, args);
+				return chain.methods;
+			};
+		});
+		return chain;
+	};
+	$.chain = function(methods) {
+		var chain = function chain(value) {
+			chain.value = value;
+			return chain.methods;
 		};
-		chain.results = {}; //chain results
-		chain.methods = {}; //chain methods
-		//add chained functions
-		mapObject(obj, function(item, key) {
-			chain.methods[key] = (function(item, key) {
-				return function() {
-					chain.results[key] = apply(item, item, toArray(arguments));
-					return chain.methods;
-				};
-			})(item, key);
-		}); //return new chained function
+		chain.methods = {};
+		chain.add = function(addToChain) {
+			return addChain(chain, addToChain);
+		};
+		chain.done = function() {
+			var value = chain.value;
+			chain.value = null;
+			return value;
+		};
+		chain.add(methods);
 		return chain;
 	};
 	$.curry = function(funts) {
@@ -1367,50 +1120,41 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 */ //Creates a function that negates the result of the predicate func. The func predicate is invoked with the this binding and arguments of the created function.
 	$.negate = function(func) {
 		return function() {
-			if (apply(func, func, toArray(arguments))) {
-				return False;
-			}
-			return True;
+			return apply(func, func, toArray(arguments)) ? False : True;
 		};
 	}; //Creates a function that is restricted to execute func once. Repeat calls to the function will return the value of the first call. The func is executed with the this binding of the created function.
 	$.once = function(fn) {
-		var value, amount = False;
-		return function() {
-			if (!amount) {
-				amount = True;
-				value = apply(fn, this, toArray(arguments));
-				fn = null; //null func to free up mem
+		var value;
+		return function named() {
+			if (!value) {
+				value = apply(fn, named, arguments);
 			}
 			return value;
 		};
 	}; //Creates a function that executes func, with the this binding and arguments of the created function, only after being called n times.
-	$.after = function(fn, amount) {
-		var called_amount = 0,
-			value = 0;
-		return function() {
-			if (amount < called_amount) {
-				amount = 1;
-				value = apply(fn, this, toArray(arguments));
-				fn = null; //null func to free up mem
+	var afterFn = $.after = function(amount, fn) {
+		return function named() {
+			if (--amount < 0) {
+				return apply(fn, named, arguments);
 			}
-			return value;
 		};
 	}; //Creates a function that executes func, with the this binding and arguments of the created function, only before being called n times.
-	$.before = function(fn, amount) {
-		var called_amount = 0,
-			value = 0;
-		return function() {
-			if (amount > called_amount) {
-				amount = 1;
-				value = apply(fn, this, toArray(arguments));
-				fn = null; //null func to free up mem
+	var beforeFn = $.before = function(amount, fn) {
+		return function named() {
+			if (--amount > 0) {
+				return apply(fn, named, arguments);
 			}
-			return value;
 		};
+	}; //Creates a function that executes func, with the this binding and arguments of the created function, only after or equal to being called n times.
+	$.onAfter = function(amount, fn) {
+		return afterFn(amount - 1, fn);
+	}; //Creates a function that executes func, with the this binding and arguments of the created function, only before or equal to being called n times.
+	$.onBefore = function(amount, fn) {
+		return beforeFn(amount + 1, fn);
 	}; //Creates a function that invokes func with arguments arranged according to the specified indexes where the argument value at the first index is provided as the first argument, the argument value at the second index is provided as the second argument, and so on.
 	$.reArg = function(funct, list) {
 		return function() {
-			return apply(funct, eachArray(toArray(arguments), function(item, index) {
+			return apply(funct, eachArray(arguments, function(item, index) {
 				pushArray(args, order[list[index]]);
 			}));
 		};
@@ -1436,8 +1180,7 @@ rearg(1,2,3);
 */ //haspromises
 	var promiseAsync = Promise.resolve(), //async function call
 		asyncMethod = promiseAsync.then.bind(promiseAsync), //timeing
-		clearTimer = $.timerClear = clearTimeout,
-		intervalClear = clearInterval,
+		clearTimer = clearTimeout,
 		timerMethod = $.timer = function(fn, time) {
 			return setTimeout(fn, time);
 		},
@@ -1445,74 +1188,62 @@ rearg(1,2,3);
 			return setInterval(fn, time);
 		}; //debounce function
 	$.debounce = function(original, time) {
-		var timeout = False,
-			fn = function fn() {
-				if (timeout !== False) {
-					clearTimer(timeout);
-				}
-				var args = toArray(arguments);
-				timeout = timerMethod(function() {
-					apply(original, fn, args);
-					timeout = False;
-				}, time);
-			};
-		fn.run = function() {
-			if (timeout) {
-				clearTimeout(timeout);
+		var timeout = False;
+
+		function fn() {
+			if (timeout !== False) {
+				clearTimer(timeout);
 			}
-			apply(original, fn, toArray(arguments));
-		};
+			var args = toArray(arguments);
+			timeout = timerMethod(function() {
+				apply(original, fn, args);
+				timeout = False;
+			}, time);
+		}
 		fn.clear = function() {
 			if (timeout) {
 				clearTimeout(timeout);
 				timeout = False;
 			}
 		};
-		fn.og = original;
 		return fn;
 	}; //throttle function
 	$.throttle = function(func, time) {
 		var timeout = False,
-			fn = function fn() {
-				if (timeout !== False) {
-					return False;
-				}
-				var args = toArray(arguments);
-				timeout = timerMethod(function() {
+			shouldThrottle;
+
+		function fn() {
+			if (timeout) {
+				shouldThrottle = True;
+				return;
+			}
+			var args = toArray(arguments);
+			apply(func, fn, args);
+			timeout = timerMethod(function() {
+				if (shouldThrottle) {
 					apply(func, fn, args);
-					timeout = False;
-				}, time);
-			};
+				}
+				timeout = False;
+			}, time);
+		}
 		fn.clear = function() {
 			clearTimer(timeout);
 			timeout = False;
 		};
-		fn.run = function() {
-			clearTimer(timeout);
-			timeout = False;
-			apply(func, fn, toArray(arguments));
-		};
-		fn.og = original;
 		return fn;
 	};
-	$.clearTimers = function() { //clear all timers
-		mapNumber(0, timerMethod(function() {}, 1000), function(index) {
-			clearTimer(index);
-		});
-	};
-	$.clearIntervals = function() {
-		mapNumber(0, intervalMethod(function() {}, 1000), function(index) {
-			clearInterval(index);
-		});
-	};
+
+	function generateClear(method, clearMethod) {
+		return function() {
+			mapNumber(0, method(function() {}, 1000), function(index) {
+				clearMethod(index);
+			});
+		};
+	}
+	$.clearTimers = generateClear(timerMethod, clearTimer);
+	$.clearIntervals = generateClear(intervalMethod, clearInterval);
 	$.inAsync = function(fns) {
-		if (isFunction(fns)) {
-			asyncMethod(fns);
-		} else if (isArray(fns)) {
-			eachArray(fns, asyncMethod);
-		} else {
-			eachArray(fns, asyncMethod);
-		}
+		eachArray(isFunction(fns) ? [fns] : fns, asyncMethod);
 	}; //wrap 2 functions 'this' is launched after the argument function(s)
 	var wrapCall = $.wrap = function(funct, object, bind) {
 			if (isFunction(object)) {
@@ -1587,35 +1318,227 @@ rearg(1,2,3);
 	var randomInt = $.randomInt = function(number, min) {
 		min = min || 0;
 		return floorMethod(randomMethod() * (number - min)) + min;
-	}; //save browser info plus add class to body
-	var agentInfo = $.agent = function() {
-		var str = agentInfo.string = toLowerCaseCall(global.navigator.userAgent),
-			list = ['windows', 'macintosh', 'linux', 'ipad', 'iphone', 'chrome', 'safari', 'firefox', 'msie', 'trident', 'mobile', 'android', 'edge/', 'webkit', 'blink'],
-			agent = agentInfo;
-		eachArray(list, function(item, key) {
-			agentInfo[item] = has(str, item);
-		});
-		eachObject(agentInfo, function(item, key) {
-			if (key === 'string') {
-				return;
-			}
-			if (item) {
-				nodeClassList(documentNode.body, key);
-				return True;
-			}
-		});
-	}; //Get useragent info
-	$.isAgent = function(name) {
-		if (!name) {
-			return agentInfo;
-		}
-		return agentInfo[name];
 	};
-	var raf = $.raf = requestAnimationFrame.bind(selfWindow),
-		caf = $.caf = cancelAnimationFrame.bind(selfWindow);
 	var appState = $.appState = {
 		screenHeight: screen.height,
 		screenWidth: screen.width
+	};
+	var cacheMethod = $.cache = function(key, value) {
+		return !key ? cacheMethod : hasValue(value) ? cacheMethod[key] = value : cacheMethod[key];
+	}; //toggle a cache item with two values
+	$.cacheToggle = function(key, a, b) {
+		cacheMethod[key] === a ? cacheMethod[key] = b : cacheMethod[key] = a;
+	}; //console.log
+	var acidConsole = $.console = function(data, theme) {
+			data = isString(data) ? data : stringify(data);
+			apply(consoleNative, ['%c' + data, LTs[theme] + 'font-size:13px;padding:2px 5px;border-radius:3px;']);
+		},
+		generateLogTheme = function generateLogTheme(color, bg) {
+			return 'color:' + color + ';background:' + bg + ';';
+		},
+		LTs = {
+			notify: generateLogTheme('#01c690', '#0e2a36'),
+			warning: generateLogTheme('#ebb227', '#262626'),
+			important: generateLogTheme('#ffe4ea', '#dc3153')
+		},
+		addTheme = $.addConsoleTheme = function(name, color, bg) {
+			logThemes[name] = generateLogTheme(color, bg);
+		};
+	var contract = $.contract = function(callback) {
+		return new Promise(callback);
+	};
+	var generateCheckLoops = function generateCheckLoops(first, second) {
+			return function(object, funct, optional, rawProp) {
+				var returned;
+				if (!hasValue(object)) {
+					return False;
+				} else if (isArray(object)) {
+					returned = first;
+				} else if (isPlainObject(object) || isFunction(object)) {
+					returned = second;
+				} else if (isNodeList(object) || isHTMLCollection(object)) {
+					object = toArray(object);
+					returned = first;
+				} else {
+					if (rawProp) {
+						returned = mapProperty;
+					} else if (object.forEach) {
+						returned = forEach;
+					} else {
+						returned = second;
+					}
+				}
+				return returned(object, funct, optional);
+			};
+		},
+		map = $.map = generateCheckLoops(mapArray, mapObject),
+		each = $.each = generateCheckLoops(eachArray, eachObject),
+		filter = $.filter = function(object, funct, safeMode) {
+			var returned;
+			if (!hasValue(object)) {
+				return False;
+			} else if (isArray(object)) {
+				returned = filterArray;
+			} else if (isPlainObject(object) || isFunction(object)) {
+				returned = filterObject;
+			}
+			return returned(object, funct, safeMode);
+		};
+	/*
+
+	Navigate down an object's chain via a string.
+
+*/
+	var find = $.get = function(name, obj) {
+		obj = obj || $;
+		eachWhile(splitCall(arrayLastItem(splitCall(name, slashString)), dotString), function(item, index) {
+			obj = obj[item];
+			return hasValue(obj) ? True : False;
+		});
+		return obj;
+	}; //for inline JS object notion.
+	var inlineJson = $.iJson = function(str) {
+		try {
+			return new functionNative('"use strict";return' + str + ';')();
+		} catch (e) {
+			return False;
+		}
+	}; //convert from json string to json object cache it to use across lib
+	var jsonWithCatch = $.jsonParse = function(str) {
+		try {
+			return jsonParse(str);
+		} catch (e) {
+			return False;
+		}
+	};
+	var modelMethod = $.model = function(modelName, object) {
+		if (hasValue(object)) {
+			modelMethod[modelName] = assignDeep(isFunction(object) ? bindTo(object, object) : bindAll(object, object, true), {
+				_: {
+					name: modelName
+				}
+			});
+		}
+		return find(modelName, modelMethod);
+	}; //export native functions
+	$.keys = objectKeys;
+	$.getPropDescrip = getOwnPropertyDescriptor; //make a promise
+	var promiseMethods = $.promises = {},
+		promiseMethod = $.promise = function(arry, name, callback, calls) {
+			var arrayLength = getLength(arry);
+			var fn = promiseMethods[name] = function() {
+				var go = 0;
+				eachArray(arry, function(item) {
+					if (fn[item] === 1) {
+						go = go + 1;
+					}
+				}); //if amount of promises made were same as needed then launch callback
+				if (go === arrayLength) {
+					asyncMethod(callback);
+					promiseMethods[name] = null;
+					return True;
+				}
+				return False;
+			};
+		}, //promised
+		promisedMethod = $.promised = function(self, fn) {
+			promiseMethods[fn][self] = 1;
+			promiseMethods[fn]();
+		};
+	$.toggle = function(value, a, b) {
+		return value === a ? b : a;
+	}; //xhr functions
+	var xhrLoaded = function xhrLoaded(evt) {
+			var xhr = evt.target,
+				data = xhr.responseText;
+			evt.data = xhr.getResponseHeader('content-type') === 'application/json' ? jsonWithCatch(data) : data;
+		},
+		appType = 'application/',
+		xhr = $.xhr = function(config) {
+			var xhr = new XMLHttpRequest(),
+				url = config.url,
+				data = config.data,
+				jsonData = config.json,
+				type = config.type || 'GET',
+				contentType = config.contentType,
+				progress = config.progress,
+				newData = emptyString;
+			if (!contentType) {
+				if (jsonData) {
+					contentType = appType + 'json; charset=utf-8';
+				} else if (type == 'GET') {
+					contentType = 'text/plain';
+				} else {
+					contentType = appType + 'x-www-form-urlencoded';
+				}
+			}
+			if (data) {
+				each(data, function(item, key) {
+					newData = hasValue(item) ? addParam(newData, isString(key) ? key + '=' + item : item) : newData;
+				});
+			}
+			if (type === 'GET') {
+				if (newData) {
+					url = addParam(url, newData);
+					newData = emptyString;
+				}
+			}
+			if (jsonData) {
+				newData = jsonData;
+			}
+			xhr.open(type, url, True);
+			xhr.setRequestHeader("Content-type", contentType);
+			return contract(function(accept, reject) {
+				eventAdd(xhr, 'error', reject);
+				eventAdd(xhr, 'abort', reject);
+				if (progress) {
+					eventAdd(xhr, 'progress', progress);
+				}
+				eventAdd(xhr, 'load', function(event) {
+					xhrLoaded(event);
+					accept(event);
+				});
+				xhr.send(newData);
+			});
+		};
+	var clsSelector = $.getClass = bindTo(documentNode.getElementsByClassName, documentNode);
+	var idSelector = $.getId = bindTo(documentNode.getElementById, documentNode);
+	var qsSelector = $.querySelector = bindTo(documentNode.querySelector, documentNode);
+	var qsaSelector = $.querySelectorAll = bindTo(documentNode.querySelectorAll, documentNode);
+	var selector = $.selector = function(select) {
+		var firtLetter = select[0];
+		switch (firtLetter) {
+			case poundString:
+				if (!testRegex(regexSpace, select)) {
+					return idSelector(stringSliceCall(select, 1));
+				}
+				break;
+			case dotString:
+				if (testRegex(classTest, select)) {
+					return clsSelector(stringSliceCall(select, 1));
+				}
+				break;
+			default:
+				if (testRegex(tagTest, select)) {
+					return tagSelector(select);
+				}
+		}
+		return qsaSelector(select);
+	}; //Get useragent info
+	var isAgent = $.isAgent = function(name) {
+		return !name ? agentInfo : agentInfo[name];
+	};
+	var agentInfo = function agentInfo() {
+		agentInfo.string = toLowerCaseCall(navigator.userAgent);
+		eachArray(splitCall(stringReplaceCall(stringReplaceCall(agentInfo.string, /_/g, '.'), /[#_\,\;\(\)]/g, ''), / |\//), function(item) {
+			isAgent[item] = True;
+		});
+	};
+	var raf = $.raf = requestAnimationFrame.bind(selfWindow),
+		caf = $.caf = cancelAnimationFrame.bind(selfWindow);
+	var append = function append(node, child) {
+		node.appendChild(child);
+		return node;
 	};
 	var batchCancelFrame = False,
 		batchChanges = [],
@@ -1635,342 +1558,17 @@ rearg(1,2,3);
 			if (isArray(item)) {
 				eachArray(item, batchAdd);
 			} else {
-				batchChanges.push(item);
+				pushArray(batchChanges, item);
 				batchCheck();
 			}
-		};
-	var cacheMethod = function cacheMethod(key, value) {
-		if (!key) {
-			return cacheMethod;
-		} else if (hasValue(value)) {
-			return cacheMethod[key] = value;
-		}
-		return cacheMethod[key];
-	};
-	$.cache = cacheMethod; //toggle a cache item with two values
-	$.cacheToggle = function(key, a, b) {
-		if (cacheMethod[key] === a) {
-			return cacheMethod[key] = b;
-		}
-		return cacheMethod[key] = a;
-	}; //console.log
-	var acidConsole = function acidConsole(data, theme) {
-			apply(consoleNative, ['%c' + data, LTs[theme] + 'font-size:13px;padding:2px 5px;border-radius:3px;']);
-		},
-		generateLogTheme = function generateLogTheme(color, bg) {
-			return 'color:' + color + ';background:' + bg + ';';
-		},
-		LTs = {
-			notify: generateLogTheme('#01c690', '#0e2a36'),
-			warning: generateLogTheme('#ebb227', '#262626'),
-			important: generateLogTheme('#ffe4ea', '#dc3153')
-		},
-		addTheme = function addTheme(name, color, bg) {
-			logThemes[name] = generateLogTheme(color, bg);
-		};
-	$.console = acidConsole;
-	$.addConsoleTheme = addTheme;
-	var map = $.map = function(object, funct, safeMode, rawProp) {
-			var returned;
-			if (!hasValue(object)) {
-				return False;
-			} else if (isArray(object)) {
-				returned = mapArray;
-			} else if (isPlainObject(object) || isFunction(object)) {
-				returned = mapObject;
-			} else if (isNodeList(object) || isHTMLCollection(object)) {
-				object = toArray(object);
-				returned = mapArray;
-			} else {
-				if (rawProp) {
-					returned = mapProperty;
-				} else if (object.forEach) {
-					returned = forEach;
-				} else {
-					returned = mapObject;
-				}
-			}
-			return returned(object, funct, safeMode);
-		},
-		each = $.each = function(object, funct, safeMode, rawProp) {
-			var returned;
-			if (!hasValue(object)) {
-				returned = function() {};
-			} else if (isArray(object)) {
-				returned = eachArray;
-			} else if (isPlainObject(object) || isFunction(object)) {
-				returned = eachObject;
-			} else if (isNodeList(object) || isHTMLCollection(object)) {
-				object = toArray(object);
-				returned = eachArray;
-			} else if (isNumber(object)) {
-				returned = eachNumber;
-			} else {
-				if (rawProp) {
-					returned = mapProperty;
-				} else if (object.forEach) {
-					returned = forEach;
-				} else {
-					returned = eachObject;
-				}
-			}
-			return returned(object, funct, safeMode);
-		};
-	$.exec = function() {
-		return apply(documentNode.execCommand, documentNode, toArray(arguments));
-	};
-	/*
-
-	Navigate down an object's chain via a string.
-
-*/
-	var find = $.get = function(name, obj) {
-		var obj = obj || $,
-			name = arrayLastItem(splitCall(name, slashString));
-		if (hasDot(name)) {
-			eachWhile(splitCall(name, dotString), function(item, index) {
-				obj = obj[item];
-				if (hasValue(obj)) {
-					return True;
-				} else {
-					obj = undefined;
-					return False;
-				}
-			});
-		} else {
-			obj = obj[name];
-		}
-		return obj;
-	};
-
-	function inlineJson(str) {
-		try {
-			return new Function('"use strict";return' + str + ';')();
-		} catch (e) {
+		}; //checks to see if object is a dom node returns True or False
+	var isDom = $.isDom = function(obj) {
+		if (!obj) {
 			return False;
 		}
-	} //for inline JS object notion.
-	$.iJson = inlineJson;
-
-	function jsonWithCatch(str) {
-		try {
-			return jsonParse(str);
-		} catch (e) {
-			return False;
-		}
-	} //convert from json string to json object cache it to use across lib
-	$.jsonParse = jsonWithCatch;
-	$.weakMap = function(items) {
-		return new weakMap(items);
+		var nodetype = obj.nodeType;
+		return nodetype && nodetype != 9;
 	};
-	$.newMap = function(items) {
-		return new mapNative(items);
-	};
-	var modelMethod = $.model = function(modelName, object, bool) {
-		if (hasValue(object)) {
-			var model = modelMethod[modelName] = object;
-			if (isFunction(model)) {
-				bindTo(model, model);
-			} else if (isPlainObject(model)) {
-				bindAll(model, model, true);
-			}
-			model._ = {
-				name: modelName
-			};
-			return model;
-		} else if (hasDot(modelName)) {
-			return find(modelName, modelMethod);
-		}
-		return modelMethod[modelName];
-	}; //export native functions
-	$.keys = objectKeys;
-	$.getPropDescrip = getOwnPropertyDescriptor; //make a promise
-	var promiseMethods = $.promises = {},
-		promiseMethod = $.promise = function(arry, name, callback, calls) {
-			var arrayLength = getLength(arry);
-			promiseMethods[name] = function() {
-				var fn = promiseMethods[name],
-					go = 0;
-				eachArray(arry, function(item) {
-					if (fn[item] === 1) {
-						go = go + 1;
-					}
-				}); //if amount of promises made were same as needed then launch callback
-				if (go === arrayLength) {
-					asyncMethod(callback);
-					promiseMethods[name] = null;
-					return True;
-				}
-				return False;
-			};
-			call(promiseMethods[name]);
-			if (calls) {
-				call(promiseMethods[name], calls);
-			}
-		}, //promised
-		promisedMethod = $.promised = function(self, fn) {
-			var val = promiseMethods[fn];
-			promiseMethods[fn][self] = 1;
-			if (val) {
-				if (val()) {
-					promiseMethods[fn] = null;
-				}
-			}
-			return False;
-		};
-	/*
-		A service is an object that holds a set of processes that
-		can be added over time.
-		Then this service can run said processes.
-*/
-	var acidService = $.service = function(name) {
-			return acidService[name];
-		},
-		acidCreateService = $.createService = function(name, optionalObjects) {
-			var service = acidService[name] = {},
-				serviceProcess = service.process = optionalObjects || {},
-				serviceRun = service.run = function(optionalNameOfProcess) {
-					if (optionalNameOfProcess) {
-						serviceProcess[optionalNameOfProcess]();
-					} else {
-						mapObject(serviceProcess, function(item) {
-							item();
-						});
-					}
-				},
-				serviceAdd = service.add = function(object) {
-					mapObject(object, function(item, key) {
-						serviceProcess[key] = item.bind(service);
-					});
-				},
-				serviceEnd = service.end = function() {
-					service = null;
-					serviceProcess = null;
-					serviceRun = null;
-					serviceEnd = null;
-					serviceAdd = null;
-					service[name] = null;
-				};
-			mapObject(service, function(item, key) {
-				if (isFunction(item)) {
-					service[key] = item.bind(service);
-				}
-			});
-			mapObject(serviceProcess, function(item, key) {
-				if (isFunction(item)) {
-					serviceProcess[key] = item.bind(service);
-				}
-			});
-		};
-	var localstorage = $.local = localStorage,
-		sessionstorage = $.session = sessionStorage; //localstorage clear
-	$.clearLocal = function() {
-		return localstorage.clear();
-	}; //session storage clear
-	$.clearSession = function() {
-		return sessionstorage.clear();
-	};
-	$.toggle = function(value, a, b) {
-		if (value === a) {
-			return b;
-		}
-		return a;
-	}; //xhr functions
-	var xhrLoaded = function xhrLoaded(evt) {
-			var xhr = evt.target,
-				data = xhr.responseText,
-				callback = xhr.success;
-			if (xhr.getResponseHeader('content-type') === 'application/json') {
-				data = jsonWithCatch(data);
-			}
-			if (callback) {
-				callback(evt, data, xhr);
-			}
-			eventRemove(xhr, 'load', xhrLoaded);
-		},
-		xhr = $.xhr = function(config) {
-			var xhr = new XMLHttpRequest(),
-				url = config.url,
-				data = config.data || False,
-				jsonData = config.json || False,
-				type = config.type || 'GET',
-				contentType = config.contentType,
-				success = config.success,
-				fail = config.fail,
-				abort = config.abort,
-				progress = config.progress,
-				newData = emptyString;
-			if (!contentType) {
-				if (jsonData) {
-					contentType = 'application/json; charset=utf-8';
-				} else if (type == 'GET') {
-					contentType = 'text/plain';
-				} else {
-					contentType = "application/x-www-form-urlencoded";
-				}
-			}
-			if (data) {
-				if (isPlainObject(data)) {
-					eachObject(data, function(item, key) {
-						if (hasValue(item)) {
-							newData = addParam(newData, key + '=' + item);
-						}
-					});
-				} else if (isArray(data)) {
-					eachArray(data, function(item, key) {
-						if (hasValue(item)) {
-							newData = addParam(newData, item);
-						}
-					});
-				}
-			}
-			if (fail) {
-				eventAdd(xhr, 'error', fail);
-			}
-			if (progress) {
-				eventAdd(xhr, 'progress', progress);
-			}
-			if (abort) {
-				eventAdd(xhr, 'abort', abort);
-			}
-			if (success) {
-				xhr.success = success;
-			}
-			eventAdd(xhr, 'load', xhrLoaded);
-			if (type === 'GET') {
-				if (newData) {
-					url = addParam(url, newData);
-					newData = emptyString;
-				}
-			}
-			if (jsonData) {
-				newData = jsonData;
-			}
-			xhr.open(type, url, True);
-			xhr.setRequestHeader("Content-type", contentType);
-			xhr.send(newData);
-			return xhr;
-		};
-	var append = function append(node, child) {
-		node.appendChild(child);
-		return node;
-	}; //checks to see if object is a dom node returns True or False
-	var isDom = function isDom(obj) {
-			if (!hasValue(obj)) {
-				return False;
-			}
-			var nodetype = obj.nodeType;
-			return typeof nodetype == "number" && nodetype != 9;
-		}, //checks to see if object is a HTMLCollection returns True or False
-		isHTMLCollection = function isHTMLCollection(obj) {
-			return hasValue(obj) ? obj.constructor.name == "HTMLCollection" : False;
-		}, //checks to see if object is a NodeList returns True or False
-		isNodeList = function isNodeList(obj) {
-			return hasValue(obj) ? obj.constructor.name == "NodeList" : False;
-		};
-	$.isDom = isDom;
-	$.isHTMLCollection = isHTMLCollection;
-	$.isNodeList = isNodeList;
 	/*
 METHODS FOR CLASS MODS
 */ //classname
@@ -2001,10 +1599,7 @@ METHODS FOR CLASS MODS
 		};
 	var domListToArray = $.domListToArray = function(collection) {
 		return mapArray(collection, function(item) {
-			if (isHTMLCollection(item) || isNodeList(item)) {
-				item = domListToArray(item);
-			}
-			return item;
+			return isHTMLCollection(item) || isNodeList(item) ? domListToArray(item) : item;
 		});
 	};
 	var ensure = function ensure(models, funct) {
@@ -2012,10 +1607,9 @@ METHODS FOR CLASS MODS
 			return item + '.js';
 		}), funct);
 	};
-	$.ensure = ensure; //create fragment
-	var createFragment = $.createFragment = function() {
-		return documentNode.createDocumentFragment();
-	}; //create node
+	$.ensure = ensure;
+	$.exec = bindTo(documentNode.execCommand, documentNode); //create fragment
+	var createFragment = $.createFragment = bindTo(documentNode.createDocumentFragment, documentNode); //create node
 	var domHeadNode, nodeHasAttribute = function nodeHasAttribute(node, n) {
 			return node.hasAttribute(n);
 		}, //set/get attribute
@@ -2041,9 +1635,7 @@ METHODS FOR CLASS MODS
 			node.removeAttribute(n);
 			return node;
 		},
-		createTag = $.createTag = function(name) {
-			return documentNode.createElement(name);
-		},
+		createTag = $.createTag = bindTo(documentNode.createElement, documentNode),
 		nodeAttachLoadingEvents = function nodeAttachLoadingEvents(node, data) {
 			var launchEvent = function launchEvent(fnct, node, event) {
 					if (isString(fnct)) {
@@ -2084,13 +1676,7 @@ METHODS FOR CLASS MODS
 			}, options)), data);
 		};
 	/*
-	This imports any type of file.
-	It works just like require in the browser.
-
-	The main concern here is to
-		remove event listeners
-		null to ensure absolutely no leaks
-		condense the code
+	This imports any type of file & just like require in the browser.
 */
 	var directoryNames = function directoryNames(name) {
 			return directoryNames[name] || emptyString;
@@ -2100,9 +1686,6 @@ METHODS FOR CLASS MODS
 			return replaceWithList(id, [dotString, slashString, dashString], underscoreString) + 'importMethod';
 		},
 		importMainCallback = function importMainCallback(node, call, remove) {
-			if (isString(call)) {
-				call = find(call, modelMethod);
-			}
 			if (call) {
 				asyncMethod(call);
 			}
@@ -2126,8 +1709,8 @@ METHODS FOR CLASS MODS
 			};
 		},
 		/*
-		   	NODE TYPE OBJECT
-		   */
+		NODE TYPE OBJECT
+	*/
 		nodeTypes = {
 			js: createScript,
 			css: createCss
@@ -2136,13 +1719,13 @@ METHODS FOR CLASS MODS
 			var isJS = isFileJS(url),
 				id = importId(url),
 				type = stringReplaceCall(stringMatchCall(url, regexExt)[0], dotString, emptyString),
-				remove = !data.remove && isJS ? True : undefined,
+				remove = !data.remove && isJS ? True : undefinedNative,
 				node, parent, model;
 			url = !has(url, '//') ? directoryNames(type) + url : url;
 			if (!imported[id]) { //mark as imported already
 				imported[id] = True; //create node type
 				node = nodeTypes[type](url, importEvents(id, data, remove)); //append
-				append(headNode, node);
+				append(domHeadNode, node);
 			} else { //if already there attach events
 				node = qsSelector('[href="' + url + '"]');
 				if (node && imported[id] !== 1) {
@@ -2168,22 +1751,38 @@ METHODS FOR CLASS MODS
 			}
 			return item || False;
 		},
-		defineMethod = $.define = function(data) {
-			var modelName = data.name,
-				wrapFunct = bindTo(function() {
-					var freshArgs = mapArray(data['import'], orderArgumentObjects);
-					if (getLength(arguments) > 0) {
-						pushApply(freshArgs, arguments);
-					}
-					return apply(data.invoke, wrapFunct, freshArgs);
-				}, wrapFunct);
+		setUpModel = function setUpModel(wrapFunct, data) {
 			objectAssign(wrapFunct, data.invoke);
+			var modelName = data.name;
 			wrapFunct._ = objectAssign({}, data);
 			wrapFunct._.invoke = null;
 			if (modelName) {
 				modelMethod[modelName] = wrapFunct;
 			}
 			return wrapFunct;
+		},
+		setupModelData = function setupModelData(data, otherData) {
+			if (otherData) {
+				if (isFunction(otherData)) {
+					otherData = objectAssign({
+						invoke: otherData
+					}, otherData);
+				}
+				otherData.name = data;
+				return otherData;
+			}
+			return data;
+		},
+		defineMethod = $.define = function(data, otherData) {
+			data = setupModelData(data, otherData);
+			var wrapFunct = function wrapFunct() {
+				var freshArgs = mapArray(data['import'], orderArgumentObjects);
+				if (getLength(arguments)) {
+					pushApply(freshArgs, arguments);
+				}
+				return apply(data.invoke, wrapFunct, freshArgs);
+			};
+			return setUpModel(wrapFunct, data);
 		},
 		arrayImportLoop = function arrayImportLoop(item, name, error) {
 			importIt(item, {
@@ -2225,7 +1824,6 @@ METHODS FOR CLASS MODS
 			error = null;
 		},
 		importMethod = $.require = function(key, value) {
-			value = value || function() {};
 			if (isFunction(value)) {
 				value = {
 					call: value
@@ -2234,7 +1832,7 @@ METHODS FOR CLASS MODS
 			if (isString(key)) {
 				key = [key];
 			}
-			return arrayImport(key, value);
+			return arrayImport(key, value || function() {});
 		}, //Save CSS and JS files directories
 		directoryNames = function directoryNames(name) {
 			return directoryNames[name] || emptyString;
@@ -2242,30 +1840,18 @@ METHODS FOR CLASS MODS
 	directoryNames.css = emptyString;
 	directoryNames.js = emptyString;
 	$.dir = directoryNames; //create a function that takes an object that is apart of the main $ and applies/calls it to the functions arguments useful for caching functions
-	var moduleMethod = $.module = function(data) {
-		var fn = data.invoke,
-			modelName = data.name,
-			importData = data['import'],
-			compiled = data.invoke = function() {
-				importMethod(importData, {
-					call: bindTo(fn, compiled)
-				});
-			};
-		objectAssign(compiled, fn);
-		compiled._ = objectAssign({}, data);
-		compiled._.invoke = null;
-		if (modelName) {
-			modelMethod[modelName] = compiled;
-		}
-		return compiled;
+	var moduleMethod = $.module = function(data, otherData) {
+		data = setupModelData(data, otherData);
+		return setUpModel(function compiled() {
+			importMethod(data['import'], {
+				call: bindTo(data.invoke, compiled)
+			});
+		}, data);
 	};
 	var isDocumentReady = $.isDocumentReady = function(func) {
 		var state = document.readyState;
 		if (state === 'interactive' || state === 'completed' || state === 'complete') {
-			if (func) {
-				func();
-			}
-			return True;
+			return func ? func() : True;
 		}
 		if (func) {
 			eventAdd(document, "DOMContentLoaded", func);
@@ -2276,16 +1862,18 @@ METHODS FOR CLASS MODS
 		domHeadNode = qsSelector('head');
 	});
 	var saveDimensions = $.updateDimensions = function() {
-		appState.windowHeight = global.innerHeight;
-		appState.windowWidth = global.innerWidth;
-		appState.bodyWidth = bodyNode.offsetWidth;
-		appState.bodyHeight = bodyNode.offsetHeight;
+		objectAssign(appState, {
+			windowHeight: global.innerHeight,
+			windowWidth: global.innerWidth,
+			bodyWidth: bodyNode.offsetWidth,
+			bodyHeight: bodyNode.offsetHeight
+		});
 	};
 	isDocumentReady(function() {
 		bodyNode = documentNode.body;
 		raf(saveDimensions);
 	});
-	eventAdd(window, 'load', saveDimensions, True); //a tag DOM element used to parse URL
+	eventAdd(eventAdd(window, 'resize', saveDimensions, True), 'load', saveDimensions, True); //a tag DOM element used to parse URL
 	var aNode = createTag('a'); //parse a URL
 	$.linkParse = function(data) {
 		aNode.href = data;
@@ -2300,6 +1888,7 @@ METHODS FOR CLASS MODS
 			domain: root
 		});
 	};
+	var acidLib = idSelector('acidjs');
 	if (acidLib) { //get model directory -> save prefix to prefix
 		var coreModel = nodeAttribute(acidLib, 'data-model');
 		$.dir.js = coreModel;
@@ -2313,29 +1902,13 @@ METHODS FOR CLASS MODS
 			});
 		}
 	} //clean up
-	acidLib = null; //log out the ACID version
-	isDocumentReady(agentInfo);
+	acidLib = null;
 	/*
 	Object checking methods
 */
-	eachArray(['RegExp', 'Arguments', 'Boolean', 'Date', 'Error', 'Map', 'Object', 'Set', 'WeakMap', 'ArrayBuffer', 'Float32Array', 'Float64Array', 'Int8Array', 'Int16Array', 'Int32Array', 'Uint8Array', 'Uint8ClampedArray', 'Uint16Array', 'Uint32Array'], function(item) {
-		$['is' + stringReplaceCall(item, 'Array', '')] = isSameObjectGenerator(objectStringGenerate(item));
+	eachArray(['RegExp', 'Arguments', 'Boolean', 'Date', 'Error', 'Map', 'Object', 'Set', 'WeakMap', 'ArrayBuffer', 'Float32Array', 'Float64Array', 'Int8Array', 'Int16Array', 'Int32Array', 'Uint8Array', 'Uint8ClampedArray', 'Uint16Array', 'Uint32Array', 'HTMLCollection', 'NodeList'], function(item) {
+		$['is' + item] = isSameObjectGenerator(objectStringGenerate(item));
 	});
-	/*
-	Extend native objects used for compression of future app files and modules
-*/
-	eachArray([
-		[arrayNative, arrayPrototype, 'array'],
-		[objectNative, objectPrototype, 'object'],
-		[stringNative, stringPrototype, 'string']
-	], function(proto) {
-		var name = proto[2];
-		$[name] = proto[0];
-		mapProperty(proto[1], function(item, key) {
-			if (isFunction(item)) {
-				$['' + name + ucFirst(key)] = generatePrototype(item);
-			}
-		});
-	});
-	eventAdd(window, 'resize', saveDimensions, True);
+	var isHTMLCollection = $.isHTMLCollection,
+		isNodeList = $.isNodeList;
 })(this);

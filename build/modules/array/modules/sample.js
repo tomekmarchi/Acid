@@ -2,7 +2,7 @@
 $.sample = function (array,setAmount) {
 	if (setAmount) {
 		var temp=toArray(array);
-		return whilemap(temp,(item,index,length)=>{
+		return mapWhile(temp,(item,index,length)=>{
 			return spliceArray(temp,roundMethod(randomMethod() * (length-1)), 1)[0];
 		});
 	}

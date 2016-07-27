@@ -1,9 +1,7 @@
 $.zipObject = function(keys, values, object) {
-    object = object || {};
-    eachArray(keys, (item, index) => {
+    return arraySortToObject((item, index,object) => {
         object[item] = values[index];
-    });
-    return object;
+    }, keys, object);
 };
 $.unZipObject = function(object) {
     var keys = [],

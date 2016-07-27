@@ -16,7 +16,7 @@ var batchCancelFrame = False,
 		if(isArray(item)){
 			eachArray(item,batchAdd);
 		}else{
-			batchChanges.push(item);
+			pushArray(batchChanges,item);
 			batchCheck();
 		}
 	};

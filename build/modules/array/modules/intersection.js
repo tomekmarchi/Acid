@@ -14,28 +14,17 @@
    * [1, 2, 3].intersect([101, 2, 50, 1], [2, 1]);
    * // -> [1, 2]
    */
-$.intersect = function(array,args) {
-	var result = [],
-		numArgs = getLength(args);
-
-	if (!numArgs) {
-	  return result;
-	}
-
-	next: for (var i = 0; i < getLength(array); i++) {
-	  var item = array[i],
-		  j;
-
-
-	  if (!has(result,item)) {
-		for (j = 0; j < numArgs; j++) {
-		  if (!has(args[j],item)) {
-			continue next;
-		  }
+$.intersect = function() {
+	var yes,args=arguments;
+	return filterArray(args[0],(item)=>{
+		yes = true;
+		eachArray(args,(otherItem)=>{
+			if(!has(otherItem,item)){
+				yes = false;
+			}
+		});
+		if(yes){
+			return item;
 		}
-		pushArray(result,item);
-	  }
-	}
-
-	return result;
+	});
 };

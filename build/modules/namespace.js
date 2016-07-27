@@ -1,7 +1,5 @@
-var selector,
-    $ = (string) => {
-        return selector(string);
-    };
+var $ = (string,object) => {
+	return find(string, object || modelMethod);
+};
 //avoid
-global.$ = $;
-global.ACID = $;
+global.$ = global.ACID = $;

@@ -1,12 +1,11 @@
-//Returns everything but the last entry of the array.
-var arrayInitial = $.initial = function(array) {
-        array = cloneArray(array);
-        popArray(array);
-        return array;
-    },
-    //Returns everything but the first entry of the array.
-    arrayRest = $.rest = function(array) {
-        array = cloneArray(array);
-        shiftArray(array);
-        return array;
-    };
+var generateArrayRange = (method) => {
+		return (array) =>{
+			array = cloneArray(array);
+			method(array);
+			return array;
+		};
+	},
+	//Returns everything but the last entry of the array.
+	arrayInitial = $.initial = generateArrayRange(popArray),
+	//Returns everything but the first entry of the array.
+	arrayRest = $.rest = generateArrayRange(shiftArray);

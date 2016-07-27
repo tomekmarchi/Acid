@@ -1,3 +1,4 @@
+var acidLib = idSelector('acidjs');
 if (acidLib) {
     //get model directory -> save prefix to prefix
 	var coreModel=nodeAttribute(acidLib,'data-model');
