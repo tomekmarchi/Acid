@@ -1,8 +1,12 @@
-//sum of values in an array
-$.sumOf = function (array) {
-	var sumof = 0;
-	eachArray(array,(item)=>{
-		sumof = sumof + item;
+/**
+ * Adds all values in an array
+ * @param      {Array}   Array of numbers or numbers as string.
+ * @param      {Number}   Starting number
+ * @return     {Number} returns the sum of the array
+ */
+var sumOf = $.sumOf = function (array,result = 0) {
+	each(array,(item,key)=>{
+		result = (item)? result + (isString(item)? numberNative(item) : item) : result;
 	});
-	return sumof;
+	return result;
 };

@@ -4,6 +4,17 @@ var getLength = $.getLength = (item) => {
 	indexOfCall = (string, index) => {
 		return string.indexOf(index);
 	},
+	ensureArray = (object) => {
+		return (isArray(object))? object : [object];
+	},
+	ifInvoke = $.ifInvoke = function(){
+		var args=toArray(arguments),
+			method=shiftArray(args);
+		return isFunction(method)? apply(method,args) : undefinedNative;
+	},
+	ifNotEqual = $.ifNotEqual = function(root,property,equalThis){
+		return property? ((root[property] = root[property] || equalThis),root[property]): root
+	},
 	/*
 		String related
 	*/
@@ -28,18 +39,14 @@ var getLength = $.getLength = (item) => {
 		Array Helpers
 	*/
 	concatArray = generatePrototype(arrayPrototype.concat),
-	pushApply = $.pushApply = (array, arrayToPush) => {
-		return apply(arrayPushMethod, array, arrayToPush);
-	},
 	pushArray = generatePrototype(arrayPrototype.push),
+	pushApply = $.pushApply = (array, arrayToPush) => {
+		return apply(pushArray, array, arrayToPush);
+	},
 	arraySliceCall = generatePrototype(arrayPrototype.slice),
 	spliceArray = generatePrototype(arrayPrototype.splice),
-	unShiftArray = generatePrototype(arrayPrototype.unshift),
-	shiftArray = generatePrototype(arrayPrototype.shift),
-	popArray = generatePrototype(arrayPrototype.pop),
+	shiftArray = $.rest = generatePrototype(arrayPrototype.shift),
 	joinArray = generatePrototype(arrayPrototype.join),
-	arrayReduce = generatePrototype(arrayPrototype.reduce),
-	arrayReduceRight = generatePrototype(arrayPrototype.reduceRight),
 	/*
 		Object Helpers
 	*/
@@ -68,7 +75,7 @@ var getLength = $.getLength = (item) => {
 	uuidFree = [],
 	uuidClosed = {},
 	uuid = $.uuid = function (max) {
-		var result = uuidFree.shift();
+		var result = shiftArray(uuidFree);
 		if (!hasValue(result)) {
 			result = count;
 			uuidClosed[result] = True;
@@ -78,5 +85,5 @@ var getLength = $.getLength = (item) => {
 	},
 	uuidRemove = uuid.remove = (id) => {
 		uuidClosed[id] = null;
-		uuidFree.push(id);
+		pushArray(uuidFree,id);
 	};

@@ -21,10 +21,10 @@
  */
 $.remove = function(array, args) {
 	var isFN=isFunction(args),
-		args=(isArray(args))? args : [args];
+		args=ensureArray(args);
 	eachArray(array, (item, index) => {
 		if ((isFN)? args(item) : has(args, item)) {
-			spliceArray(array, index, 1);
+			spliceArray(array,index, 1);
 		}
 	});
     return array;

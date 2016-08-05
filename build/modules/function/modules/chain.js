@@ -14,15 +14,17 @@ $.chain = function (methods) {
 		chain.value = value;
 		return chain.methods;
 	};
-	chain.methods = {};
-	chain.add = (addToChain) => {
-		return addChain(chain, addToChain);
-	};
-	chain.done = () => {
-		var value = chain.value;
-		chain.value = null;
-		return value;
-	};
+	objectAssign(chain,{
+		methods:{},
+		add : (addToChain) => {
+			return addChain(chain, addToChain);
+		},
+		done : () => {
+			var value = chain.value;
+			chain.value = null;
+			return value;
+		}
+	});
 	chain.add(methods);
 	return chain;
 };

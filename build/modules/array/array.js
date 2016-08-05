@@ -2,10 +2,9 @@
 //Flattens a nested array. Pass level to flatten up to a depth;
 var flatten = $.flatten = (array, level) => {
 		for (var i = 0; i < (level || 1); i++) {
-			array = arrayReduce(array, (previousValue, currentValue, index, array) => {
+			array = array.reduce((previousValue, currentValue, index, array) => {
 				return concatArray(previousValue, (level) ?
-					(isArray(currentValue)) ? currentValue : [currentValue] :
-					(isArray(currentValue)) ? flatten(currentValue) : currentValue);
+					ensureArray(currentValue) : (isArray(currentValue)) ? flatten(currentValue) : currentValue);
 			}, []);
 		}
 		return array;

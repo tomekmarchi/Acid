@@ -6,36 +6,28 @@ var xhrLoaded = (evt) => {
 	},
 	appType = 'application/',
 	xhr = $.xhr = (config) => {
+		let {
+			url,
+			data,
+			contentType,
+			progress
+		} = config;
 		let xhr = new XMLHttpRequest(),
-			url = config.url,
-			data = config.data,
 			jsonData = config.json,
 			type = config.type || 'GET',
-			contentType = config.contentType,
-			progress = config.progress,
 			newData = emptyString;
 
-		if (!contentType) {
-			if (jsonData) {
-				contentType = appType + 'json; charset=utf-8';
-			} else if (type == 'GET') {
-				contentType = 'text/plain';
-			} else {
-				contentType = appType + 'x-www-form-urlencoded';
-			}
-		}
+		contentType = !contentType? (jsonData)? `${appType}json; charset=utf-8` : (type == 'GET')? 'text/plain' : `${appType}x-www-form-urlencoded` : contentType;
 
 		if (data) {
 			each(data, (item, key) => {
-				newData = hasValue(item)? addParam(newData, isString(key) ? key + '=' + item : item) : newData;
+				newData = hasValue(item) ? addParam(newData, isString(key) ? key + '=' + item : item) : newData;
 			});
 		}
 
-		if (type === 'GET') {
-			if (newData) {
-				url = addParam(url, newData);
-				newData = emptyString;
-			}
+		if (type === 'GET' && newData) {
+			url = addParam(url, newData);
+			newData = emptyString;
 		}
 
 		if (jsonData) {
@@ -45,7 +37,7 @@ var xhrLoaded = (evt) => {
 		xhr.open(type, url, True);
 		xhr.setRequestHeader("Content-type", contentType);
 
-		return contract(function (accept, reject) {
+		return promise(function (accept, reject) {
 			eventAdd(xhr, 'error', reject);
 			eventAdd(xhr, 'abort', reject);
 			if (progress) {

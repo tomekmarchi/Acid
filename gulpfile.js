@@ -78,12 +78,6 @@
             gulp.src(locations)
                 //compile source
                 .pipe(concat('acid.js'))
-                .pipe(babel({
-                    blacklist: ["strict"],
-                    compact: true
-                })).pipe(notify(() => {
-                    return 'Acid Babeled';
-                }))
 				.pipe(beautify({
 					indent_size: 1,
 					indent_with_tabs: true
@@ -91,7 +85,13 @@
                 //make it fabulous
                 .pipe(gulp.dest('compiled')).pipe(notify(function() {
                     return 'Acid Beautified Saved';
-                })).pipe(concat('acid_min.js')).pipe(uglify({
+                })).pipe(concat('acid_min.js'))
+				.pipe(babel({
+					blacklist: ["strict"],
+					compact: true
+				})).pipe(notify(() => {
+					return 'Acid Babeled';
+				})).pipe(uglify({
 				    sequences: true,
 				    properties: true,
 				    dead_code: true,

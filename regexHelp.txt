@@ -1,0 +1,5 @@
+([\w\[\]]+)\.replace\((.*)\)
+stringReplace($1,$2)
+
+([\w\.\[\]]+)\.apply\((.*?)\)
+stringReplace($1,$2)

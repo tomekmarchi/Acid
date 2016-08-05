@@ -4,50 +4,55 @@
 
 */
 var arrayNative = Array,
-    objectNative = Object,
-    functionNative = Function,
-    stringNative = String,
-    json = JSON,
-    mathNative = Math,
-    booleanNative = Boolean,
-    undefinedNative = undefined,
-    weakMap = global.WeakMap,
+	objectNative = Object,
+	functionNative = Function,
+	stringNative = String,
+	json = JSON,
+	mathNative = Math,
+	booleanNative = Boolean,
+	undefinedNative = undefined,
+	weakMap = global.WeakMap,
 	mapNative = global.Map,
-    numberNative = Number,
+	numberNative = Number,
 	regExp = RegExp,
 	parseIntNative = parseInt,
-	consoleNative=console,
-    consoleNative = consoleNative.log.bind(consoleNative),
-    /*
+	consoleNative = console,
+	consoleNative = consoleNative.log.bind(consoleNative),
+	/*
 
-    	Prototypes
+		Prototypes
 
-    */
-    prototypeString = 'prototype',
-    objectPrototype = objectNative[prototypeString],
-    arrayPrototype = arrayNative[prototypeString],
-    stringPrototype = stringNative[prototypeString],
+	*/
+	prototypeString = 'prototype',
+	objectPrototype = objectNative[prototypeString],
+	arrayPrototype = arrayNative[prototypeString],
+	stringPrototype = stringNative[prototypeString],
 	functionPrototype = functionNative[prototypeString],
 	regExpPrototype = regExp[prototypeString],
-    /*
-    	Array.prototype Functions cached
-    */
+	/*
+		Array.prototype Functions
+	*/
 	toArray = $.toArray = arrayNative.from.bind(arrayNative),
-    arrayPushMethod = arrayPrototype.push,
-    objectKeys = objectNative.keys,
-    objectIs = objectNative.is,
-    objectAssign = $.assign = objectNative.assign,
-    getOwnPropertyDescriptor = objectNative.getOwnPropertyDescriptor,
-    defineProperty = objectNative.defineProperty,
-	getOwnPropertyNames = objectNative.getOwnPropertyNames,
-    /*
-    	JSON
+	/*
+    	Object Functions
     */
-	False=false,
-	True=true,
-    stringify = json.stringify,
+	objectKeys = $.keys = objectNative.keys,
+	objectIs = $.is = objectNative.is,
+	objectAssign = $.assign = objectNative.assign,
+	getOwnPropertyDescriptor = $.getPropDescrip = objectNative.getOwnPropertyDescriptor,
+	defineProperty = $.defineProperty = objectNative.defineProperty,
+	getOwnPropertyNames = $.getOwnPropertyNames = objectNative.getOwnPropertyNames,
+	/*
+		Boolean
+	*/
+	False = false,
+	True = true,
+	/*
+		JSON
+	*/
+	stringify = json.stringify,
 	jsonParse = json.parse,
-    /*
-    	System Hardware Info
-    */
-    systemCores = navigator.hardwareConcurrency;
+	/*
+		System Hardware Info
+	*/
+	systemCores = navigator.hardwareConcurrency;

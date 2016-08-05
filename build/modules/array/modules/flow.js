@@ -2,7 +2,7 @@
 $.flow = function (array,args) {
 	return () => {
 		return mapArray(array,(item)=>{
-			return apply(array[i],null,(isArray(args)? args : [args]));
+			return apply(array[i],null, ensureArray(args));
 		});
 	};
 };
@@ -11,7 +11,7 @@ $.flow = function (array,args) {
 $.flowRight = function (array,args) {
 	return  () => {
 		return mapArrayFromRight(array,(item)=>{
-			return apply(array[i],null,(isArray(args)? args : [args]));
+			return apply(array[i],null,ensureArray(args));
 		});
 	};
 };

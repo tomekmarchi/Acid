@@ -1,32 +1,21 @@
 /*
 	This imports any type of file & just like require in the browser.
 */
-var directoryNames = (name) => {
+var directoryNames = $.importDirectory = (name) => {
 		return directoryNames[name] || emptyString;
 	},
 	imported = $.imported = {},
-	importId = (id) => {
-		return replaceWithList(id, [dotString, slashString, dashString], underscoreString) + 'importMethod';
-	},
 	importMainCallback = (node, call, remove) => {
-		if (call) {
-			asyncMethod(call);
-		}
+		ifInvoke(call);
 		if (remove) {
 			node.remove();
 		}
-		node = null;
 	},
-	importEvents = (id, data, remove) => {
+	importEvents = (url, data, remove) => {
 		return {
 			load: function (node, event) {
-				imported[id] = 1;
-				event.stopPropagation();
-				if (event.type != 'load') {
-					remove = True;
-				}
+				imported[url] = 1;
 				importMainCallback(node, data.call, remove);
-				node = null;
 			},
 			append: True
 		};
@@ -40,56 +29,25 @@ var directoryNames = (name) => {
 	},
 	//importMethod a single item
 	importIt = (url, data, ismultiple) => {
-		var isJS = isFileJS(url),
-			id = importId(url),
-			type = stringReplaceCall(stringMatchCall(url, regexExt)[0], dotString, emptyString),
-			remove = (!data.remove && isJS) ? True : undefinedNative,
-			node,
-			parent,
-			model;
+		var type = arrayLastItem(splitCall(url,dotString)),
+			remove = (isFileJS(url)) ? True : isFileCSS(url) ? False : data.remove,
+			node;
 		url = (!has(url, '//')) ? directoryNames(type) + url : url;
-
-		if (!imported[id]) {
-			//mark as imported already
-			imported[id] = True;
-			//create node type
-			node = nodeTypes[type](url, importEvents(id, data, remove));
-			//append
-			append(domHeadNode, node);
-		} else {
-			//if already there attach events
-			node = qsSelector(`[href="${url}"]`);
-			if (node && imported[id] !== 1) {
-				nodeAttachLoadingEvents(node, importEvents(id, data, remove));
-			} else {
-				asyncMethod(data.call);
-			}
-		}
+		((!imported[url]) ?
+			(imported[url] = True, node = nodeTypes[type](url, importEvents(url, data, remove)), append(domHeadNode, node)) :
+			(node = qsSelector(`[href="${url}"]`),
+				(node && imported[url] !== 1) ?
+				nodeAttachLoadingEvents(node, importEvents(url, data, remove)) : data.call()));
 	},
 	orderArgumentObjects = (item) => {
 		var original = item;
-		if (isString(item)) {
-			if (isFileJS(item)) {
-				item = getModelName(item);
-			} else if (isFileCSS(item)) {
-				item = qsSelector('[href="' + item + '"]');
-			} else {
-				item = find(item, $);
-				if (!hasValue(item)) {
-					item = find(original, modelMethod);
-				}
-			}
-		}
-		return item || False;
+		return isString(item) ? (isFileJS(item) ? getModelName(item) : (isFileCSS(item) ? qsSelector('[href="' + item + '"]') : item = find(item, $), hasValue(item) ? item : find(original, modelMethod))) : item;
 	},
 	setUpModel = (wrapFunct, data) => {
 		objectAssign(wrapFunct, data.invoke);
-		var modelName = data.name;
 		wrapFunct._ = objectAssign({}, data);
 		wrapFunct._.invoke = null;
-		if (modelName) {
-			modelMethod[modelName] = wrapFunct;
-		}
+		ifNotEqual(modelMethod, data.name, wrapFunct);
 		return wrapFunct;
 	},
 	setupModelData = (data, otherData) => {
@@ -100,80 +58,45 @@ var directoryNames = (name) => {
 				}, otherData);
 			}
 			otherData.name = data;
-			return otherData;
+			data = otherData;
 		}
+		ifNotEqual(data, 'import', []);
+		ifNotEqual(data, 'invoke', () => {});
 		return data;
-	},
-	defineMethod = $.define = (data, otherData) => {
-		data = setupModelData(data, otherData);
-		var wrapFunct = function () {
-			var freshArgs = mapArray(data.import, orderArgumentObjects);
-			if (getLength(arguments)) {
-				pushApply(freshArgs, arguments);
-			}
-			return apply(data.invoke, wrapFunct, freshArgs);
-		};
-		return setUpModel(wrapFunct, data);
 	},
 	arrayImportLoop = (item, name, error) => {
 		importIt(item, {
 			call: () => {
-				if (error) {
-					error(item, name);
-				}
-				promisedMethod(item, name);
+				ifInvoke(error, item, name);
+				contract(item, name);
 			}
 		});
 	},
 	arrayImport = (array, data) => {
+		var {
+			error,
+			call
+		} = data;
 		var name = uuid(),
-			error = data.error,
-			call = data.call,
-			callback = () => {
-				apply(call, call, mapArray(array, orderArgumentObjects));
+			callback = function () {
+				if (call) {
+					apply(call, call, mapArray(array, orderArgumentObjects));
+				}
 			},
 			stringArray = filterArray(array, (item, index) => {
-				if (isFileJS(item) || isFileCSS(item)) {
-					return item;
-				}
+				return (isFileJS(item) || isFileCSS(item)) ? item : undefinedNative;
 			});
-		if (getLength(stringArray) > 0) {
-			uuidRemove(name);
-			promiseMethod(stringArray, name, () => {
-				callback();
-			});
+			(getLength(stringArray))?(
+			uuidRemove(name),
+			contract(stringArray, name, callback),
 			//make imports
 			eachArray(stringArray, (item) => {
 				arrayImportLoop(item, name, error);
-			});
-		} else {
-			asyncMethod(() => {
-				callback();
-			});
-		}
-		name = null;
-		data = null;
-		error = null;
+			})):asyncMethod(callback);
+
 	},
 	importMethod = $.require = (key, value) => {
-		if (isFunction(value)) {
-			value = {
-				call: value
-			};
-		}
-		if (isString(key)) {
-			key = [key];
-		}
-		return arrayImport(key, value  || () => {
-
+		return arrayImport(isString(key) ? [key] : key, isPlainObject(value)? value : {
+			call: value
 		});
-	},
-	//Save CSS and JS files directories
-	directoryNames = (name) => {
-		return directoryNames[name] || emptyString;
 	};
-
-directoryNames.css = emptyString;
-directoryNames.js = emptyString;
-
-$.dir = directoryNames;
