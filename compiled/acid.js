@@ -163,11 +163,15 @@
 		concatArray = generatePrototype(arrayPrototype.concat),
 		pushArray = generatePrototype(arrayPrototype.push),
 		pushApply = $.pushApply = (array, arrayToPush) => {
-			return apply(pushArray, array, arrayToPush);
+			return apply(arrayPrototype.push, array, arrayToPush);
 		},
 		arraySliceCall = generatePrototype(arrayPrototype.slice),
 		spliceArray = generatePrototype(arrayPrototype.splice),
 		shiftArray = $.rest = generatePrototype(arrayPrototype.shift),
+		unShiftArray = generatePrototype(arrayPrototype.unshift),
+		unShiftApply = $.unShiftApply = (array, arrayToPush) => {
+			return apply(arrayPrototype.unshift, array, arrayToPush);
+		},
 		joinArray = generatePrototype(arrayPrototype.join),
 		/*
 			Object Helpers
@@ -501,7 +505,7 @@
 	/*
 		Each Methods
 		Array
-			each,eachSafe,eachRaw,eachwhileFalse,eachWhile,whileLength,eachRight
+			each,eachwhileFalse,eachWhile,whileLength,eachRight
 		Object
 			Each
 		Number
@@ -517,32 +521,6 @@
 					return True;
 				}
 			}
-		},
-		mapArray = $.mapArray = function(array, fn, safeMode) {
-			var results = [],
-				returned;
-			eachArray(array, function(item, index, array, length, safe) {
-				returned = fn(item, index, array, length, results, safe);
-				(hasValue(returned) ? results[index] = returned : False)
-			}, safeMode);
-			return results;
-		},
-		filterArray = $.filterArray = function(array, fn, safeMode) {
-			var results = [],
-				returned;
-			eachArray(array, function(item, index, array, length, safe) {
-				returned = fn(item, index, array, length, results, safe);
-				(hasValue(returned) ? pushArray(results, returned) : False)
-			}, safeMode);
-			return results;
-		},
-		mapRaw = $.mapRaw = function(array, fn) {
-			for (var returned, length = getLength(array), results = [], i = 0; i < length; i++) {
-				returned = fn(array[i], i, array, length, results);
-				(hasValue(returned) ? results[i] = returned : False)
-				length = getLength(array);
-			}
-			return results;
 		},
 		whileGenerator = (mainFunc, optBool) => {
 			return function(array, fn, includeLastResult) {
@@ -562,40 +540,39 @@
 				}, True);
 			}
 		},
-		//loop while the returned result is False
-		whileFalse = $.mapWhileFalse = whileGenerator(mapArray, True),
-		//each while the check function is True
-		mapWhile = $.mapWhile = whileGenerator(mapArray, False),
+		generateMap = (method) => {
+			return function(array, fn, safeMode) {
+				var results = [],
+					returned;
+				eachArray(array, function(item, index, array, length, safe) {
+					returned = fn(item, index, array, length, results, safe);
+					(hasValue(returned) ? results[index] = returned : False)
+				}, safeMode);
+				return results;
+			};
+		},
+		filterArray = $.filterArray = function(array, fn, safeMode) {
+			var results = [],
+				returned;
+			eachArray(array, function(item, index, array, length, safe) {
+				returned = fn(item, index, array, length, results, safe);
+				(hasValue(returned) ? pushArray(results, returned) : False)
+			}, safeMode);
+			return results;
+		},
 		//loop while the count is less than the length of the array
 		whileLength = $.mapWhileLength = function(array, fn) {
 			//an array of results will be returned
 			var results = [],
-				len = getLength(array),
-				i = 0;
-			while (i < len) {
-				results[i] = fn(array[i], i, array, len, results);
-				len = getLength(array);
-				i++;
+				length = getLength(array),
+				index = 0;
+			while (length) {
+				results[i] = fn(array[index], index, array, length, results);
+				length = getLength(array);
+				index++;
 			}
 			return results;
 		},
-		//loop through array backwards aka from the right
-		mapArrayFromRight = $.mapRight = function(array, fn, safeMode) {
-			safeMode = (safeMode) ? {} : safeMode;
-			for (var safeModeResult, returned, results = [], len = getLength(array), i = len - 1; i >= 0; i--) {
-				safeModeResult = safeModeCall(safeMode);
-				if (safeModeResult) {
-					continue;
-				} else if (safeModeResult === False) {
-					break;
-				}
-				returned = fn(array[i], i, array, len, results, safeMode);
-				(hasValue(returned) ? pushArray(results, returned) : False)
-			}
-			return results;
-		},
-		//loop through array backwards aka from the right while true
-		mapArrayFromRightWhile = $.mapRightWhile = whileGenerator(mapArrayFromRight, False),
 		//loop through based on number
 		mapNumber = $.mapNumber = function(start, end, fn) {
 			if (!fn) {
@@ -610,6 +587,18 @@
 			}
 			return results;
 		},
+		eachArrayRight = $.eachArrayRight = function(array, fn, safeMode) {
+			safeMode = (safeMode) ? {} : safeMode;
+			for (var safeModeResult, length = getLength(array), i = length - 1; i >= 0; i--) {
+				safeModeResult = safeModeCall(safeMode);
+				if (safeModeResult) {
+					continue;
+				} else if (safeModeResult === False) {
+					break;
+				}
+				fn(array[i], i, array, length, safeMode);
+			}
+		},
 		eachArray = $.eachArray = function(array, fn, safeMode) {
 			safeMode = (safeMode) ? {} : safeMode;
 			for (var safeModeResult, length = getLength(array), i = 0; i < length; i++) {
@@ -622,10 +611,18 @@
 				fn(array[i], i, array, length, safeMode);
 			}
 		},
+		mapArray = $.mapArray = generateMap(eachArray),
+		mapArrayRight = $.mapArrayRight = generateMap(eachArrayRight),
 		//loop while the returned result is False
 		eachWhileFalse = $.eachWhileFalse = whileGenerator(eachArray, True),
 		//each while the check function is True
-		eachWhile = $.eachWhile = whileGenerator(eachArray, False);
+		eachWhile = $.eachWhile = whileGenerator(eachArray, False),
+		//loop while the returned result is False
+		whileFalse = $.mapWhileFalse = whileGenerator(mapArray, True),
+		//loop through array backwards aka from the right while true
+		mapArrayRightWhile = $.mapArrayRightWhile = whileGenerator(mapArrayRight, False),
+		//each while the check function is True
+		mapWhile = $.mapWhile = whileGenerator(mapArray, False);
 
 	/*
 	   Determines if the arrays are equal by doing a shallow comparison of their elements using strict equality.
@@ -652,23 +649,24 @@
 		return (num) ? sliceArray(array, 0, num) : array[0];
 	};
 
+	function returnFlow(method) {
+		return function() {
+			var funcs = flatten(toArray(arguments));
+			console.log(funcs);
+			return function wrapped() {
+				var args = toArray(arguments),
+					value = [];
+				method(funcs, (item) => {
+					value[0] = apply(item, wrapped, value[0] ? value : args);
+				});
+				return value[0];
+			};
+		};
+	}
 	//Returns the composition of a list of functions, where each function consumes the return value of the function that follows. In math terms, composing the functions f(), g(), and h() produces f(g(h())).
-	$.flow = function(array, args) {
-		return () => {
-			return mapArray(array, (item) => {
-				return apply(array[i], null, ensureArray(args));
-			});
-		};
-	};
-
-	//flowright is like flow except that it creates a function that invokes the provided functions from right to left.
-	$.flowRight = function(array, args) {
-		return () => {
-			return mapArrayFromRight(array, (item) => {
-				return apply(array[i], null, ensureArray(args));
-			});
-		};
-	};
+	$.flow = returnFlow(eachArray),
+		//Returns the composition of a list of functions, where each function consumes the return value of the function that follows. In math terms, composing the functions f(), g(), and h() produces f(g(h())).
+		$.flowRight = returnFlow(eachArrayRight);
 
 	//Splits a collection into sets, grouped by the result of running each value through iteratee.
 	$.groupBy = function(array, funct) {
@@ -1449,37 +1447,32 @@
 
 
 	$.inAsync = function(fns) {
-		eachArray(isFunction(fns) ? [fns] : fns, asyncMethod);
+		eachArray(ensureArray(fns), asyncMethod);
 	};
 
-	//wrap 2 functions 'this' is launched after the argument function(s)
-	var wrapCall = $.wrap = (funct, object, bind) => {
-			if (isFunction(object)) {
-				return function() {
-					var args = toArray(arguments);
-					return [apply(object, bind, args), apply(funct, bind, args)];
-				};
-			} else if (isPlainObject(object)) {
-				mapObject(object, (item, key) => {
-					object[key] = apply(wrapCall, funct, funct, [item, bind]);
+	var returnWraped = (method, flipTrue) => {
+		return function() {
+			var functs = [];
+
+			function wrapped() {
+				var args = toArray(arguments);
+				return mapArray(functs, (item) => {
+					return apply(item, wrapped, args);
 				});
 			}
-			return object;
-		},
-		//wrap 2 functions 'this' is launched before the argument function(s)
-		wrapBefore = $.wrapBefore = (funct, object, bind) => {
-			if (isFunction(object)) {
-				return function() {
-					var args = toArray(arguments);
-					return [apply(funct, bind, args), apply(object, bind, args)];
-				};
-			} else if (isPlainObject(object)) {
-				mapObject(object, (item, key) => {
-					object[key] = call(wrapBefore, bind, funct, item, bind);
-				});
-			}
-			return object;
+			objectAssign(wrapped, {
+				list: functs,
+				add: function() {
+					var args = flatten(toArray(arguments));
+					method(functs, (flipTrue) ? args.reverse() : args);
+				},
+			});
+			wrapped.add(toArray(arguments));
+			return wrapped;
 		};
+	};
+	var wrapCall = $.wrap = returnWraped(pushApply),
+		wrapBefore = $.wrapBefore = returnWraped(unShiftApply, true);
 
 	//is number zero
 	$.isZero = function(item) {

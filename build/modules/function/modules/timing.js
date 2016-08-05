@@ -77,5 +77,5 @@ $.clearIntervals = generateClear(intervalMethod, clearInterval);
 
 
 $.inAsync = function (fns) {
-	eachArray(isFunction(fns) ? [fns] : fns, asyncMethod);
+	eachArray( ensureArray(fns), asyncMethod);
 };

@@ -1,7 +1,7 @@
 /*
 	Each Methods
 	Array
-		each,eachSafe,eachRaw,eachwhileFalse,eachWhile,whileLength,eachRight
+		each,eachwhileFalse,eachWhile,whileLength,eachRight
 	Object
 		Each
 	Number
@@ -17,32 +17,6 @@ var safeModeCall = (safeMode) => {
                 return True;
             }
         }
-    },
-    mapArray = $.mapArray = function(array, fn, safeMode) {
-        var results = [],
-            returned;
-        eachArray(array, function(item, index, array, length, safe) {
-            returned = fn(item, index, array, length, results, safe);
-            (hasValue(returned) ? results[index] = returned : False)
-        }, safeMode);
-        return results;
-    },
-    filterArray = $.filterArray = function(array, fn, safeMode) {
-		var results = [],
-            returned;
-        eachArray(array, function(item, index, array, length, safe) {
-            returned = fn(item, index, array, length, results, safe);
-            (hasValue(returned) ? pushArray(results, returned) : False)
-        }, safeMode);
-        return results;
-    },
-    mapRaw = $.mapRaw = function(array, fn) {
-        for (var returned, length = getLength(array), results = [], i = 0; i < length; i++) {
-            returned = fn(array[i], i, array, length, results);
-            (hasValue(returned) ? results[i] = returned : False)
-			length = getLength(array);
-        }
-        return results;
     },
     whileGenerator = (mainFunc, optBool) => {
         return function(array, fn, includeLastResult) {
@@ -62,40 +36,39 @@ var safeModeCall = (safeMode) => {
             }, True);
         }
     },
-    //loop while the returned result is False
-    whileFalse = $.mapWhileFalse = whileGenerator(mapArray, True),
-    //each while the check function is True
-    mapWhile = $.mapWhile = whileGenerator(mapArray, False),
+	generateMap = (method) =>{
+		return function(array, fn, safeMode) {
+			var results = [],
+				returned;
+			eachArray(array, function(item, index, array, length, safe) {
+				returned = fn(item, index, array, length, results, safe);
+				(hasValue(returned) ? results[index] = returned : False)
+			}, safeMode);
+			return results;
+		};
+	},
+	filterArray = $.filterArray = function(array, fn, safeMode) {
+		var results = [],
+			returned;
+		eachArray(array, function(item, index, array, length, safe) {
+			returned = fn(item, index, array, length, results, safe);
+			(hasValue(returned) ? pushArray(results, returned) : False)
+		}, safeMode);
+		return results;
+	},
     //loop while the count is less than the length of the array
     whileLength = $.mapWhileLength = function(array, fn) {
         //an array of results will be returned
         var results = [],
-            len = getLength(array),
-            i = 0;
-        while (i < len) {
-            results[i] = fn(array[i], i, array, len, results);
-            len = getLength(array);
-            i++;
+            length = getLength(array),
+            index = 0;
+        while (length) {
+            results[i] = fn(array[index], index, array, length, results);
+            length = getLength(array);
+            index++;
         }
         return results;
     },
-    //loop through array backwards aka from the right
-    mapArrayFromRight = $.mapRight = function(array, fn, safeMode) {
-        safeMode = (safeMode) ? {} : safeMode;
-        for (var safeModeResult, returned, results = [], len = getLength(array), i = len - 1; i >= 0; i--) {
-            safeModeResult = safeModeCall(safeMode);
-            if (safeModeResult) {
-                continue;
-            } else if (safeModeResult === False) {
-                break;
-            }
-            returned = fn(array[i], i, array, len, results, safeMode);
-            (hasValue(returned) ? pushArray(results, returned) : False)
-        }
-        return results;
-    },
-    //loop through array backwards aka from the right while true
-    mapArrayFromRightWhile = $.mapRightWhile = whileGenerator(mapArrayFromRight, False),
     //loop through based on number
     mapNumber = $.mapNumber = function(start, end, fn) {
         if (!fn) {
@@ -110,7 +83,19 @@ var safeModeCall = (safeMode) => {
         }
         return results;
     },
-    eachArray = $.eachArray = function(array, fn, safeMode) {
+    eachArrayRight = $.eachArrayRight = function(array, fn, safeMode) {
+        safeMode = (safeMode) ? {} : safeMode;
+        for (var safeModeResult, length = getLength(array), i = length - 1; i >= 0; i--) {
+            safeModeResult = safeModeCall(safeMode);
+            if (safeModeResult) {
+                continue;
+            } else if (safeModeResult === False) {
+                break;
+            }
+            fn(array[i], i, array, length, safeMode);
+        }
+    },
+	eachArray = $.eachArray = function(array, fn, safeMode) {
         safeMode = (safeMode) ? {} : safeMode;
         for (var safeModeResult, length = getLength(array), i = 0; i < length; i++) {
             safeModeResult = safeModeCall(safeMode);
@@ -122,7 +107,15 @@ var safeModeCall = (safeMode) => {
             fn(array[i], i, array, length, safeMode);
         }
     },
+	mapArray = $.mapArray = generateMap(eachArray),
+	mapArrayRight = $.mapArrayRight = generateMap(eachArrayRight),
 	//loop while the returned result is False
 	eachWhileFalse = $.eachWhileFalse = whileGenerator(eachArray, True),
 	//each while the check function is True
-	eachWhile = $.eachWhile = whileGenerator(eachArray, False);
+	eachWhile = $.eachWhile = whileGenerator(eachArray, False),
+	//loop while the returned result is False
+	whileFalse = $.mapWhileFalse = whileGenerator(mapArray, True),
+	//loop through array backwards aka from the right while true
+	mapArrayRightWhile = $.mapArrayRightWhile = whileGenerator(mapArrayRight, False),
+	//each while the check function is True
+	mapWhile = $.mapWhile = whileGenerator(mapArray, False);

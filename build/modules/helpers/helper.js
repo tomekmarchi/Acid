@@ -41,11 +41,15 @@ var getLength = $.getLength = (item) => {
 	concatArray = generatePrototype(arrayPrototype.concat),
 	pushArray = generatePrototype(arrayPrototype.push),
 	pushApply = $.pushApply = (array, arrayToPush) => {
-		return apply(pushArray, array, arrayToPush);
+		return apply(arrayPrototype.push, array, arrayToPush);
 	},
 	arraySliceCall = generatePrototype(arrayPrototype.slice),
 	spliceArray = generatePrototype(arrayPrototype.splice),
 	shiftArray = $.rest = generatePrototype(arrayPrototype.shift),
+	unShiftArray = generatePrototype(arrayPrototype.unshift),
+	unShiftApply = $.unShiftApply = (array, arrayToPush) => {
+		return apply(arrayPrototype.unshift, array, arrayToPush);
+	},
 	joinArray = generatePrototype(arrayPrototype.join),
 	/*
 		Object Helpers
