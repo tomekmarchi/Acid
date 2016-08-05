@@ -22,22 +22,21 @@ JS
     });
     //returns an async module
     $.module('moduleName',{
-    	import:['each','eachObject','testModel.js'],
-    	import:(each,eachObject,testModel) => {
+    	import:['testModel.js'],
+    	import:(testModel) => {
+    		var {each,eachObject} = $;
     		each([1,2,3],(item,index)=>{
     			console.log(item,index);
     		});
     	}
     })();
     //returns a sync module not used for importing scripts
-    $.define('moduleName',{
-    	import:['each','eachObject'],
-    	import:(each,eachObject) => {
+    $.define('moduleName',() => {
+    		var {each,eachObject} = $;
     		each([],(item,index)=>{
     			console.log(item,index);
     		});
-    	}
-    })();
+    	})();
 
 
 Import & Ensure
