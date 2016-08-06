@@ -90,8 +90,6 @@
 		regexDot = /\./g,
 		regexDash = /-/g,
 		regexFowardslash = /\//g,
-		replaceTemplateString = /\{(.*?)\}/g,
-		regexExt = /\.[0-9a-z]+$/i,
 		regexUnderscore = /_/g,
 		isJSRegex = /\.js$/,
 		isCSSRegex = /\.css$/,
@@ -103,6 +101,7 @@
 		moreThanRegex = />/g,
 		doubleQuoteRegex = /"/g,
 		decimalCheck = /\.|\+/,
+		fileExtension = /\.([0-9a-z]+)/,
 		slashRegex = /\//g;
 
 	var dotString = '.',
@@ -1063,6 +1062,9 @@
 		isFileCSS = $.isFileCSS = regexGenerator(isCSSRegex),
 		isFileJSON = $.isFileJSON = regexGenerator(isJSONRegex),
 		isFileJS = $.isFileJS = regexGenerator(isJSRegex),
+		extension = $.extension = (string) => {
+			return stringMatchCall(string, /\.([0-9a-z]+)/);
+		},
 		hasDot = $.hasDot = regexGenerator(hasDotRegex),
 		getModelRootName = $.getModelRootName = function(string) {
 			return splitCall(string, dotString)[0];
@@ -1837,7 +1839,7 @@
 	};
 
 	var ensure = $.ensure = function(models, funct) {
-		importMethod(mapArray((isString(models)) ? [models] : models, (item) => {
+		importMethod(mapArray(ensureArray(models), (item) => {
 			return `${item}.js`;
 		}), funct);
 	};
@@ -2015,7 +2017,7 @@
 
 		},
 		importMethod = $.require = (key, value) => {
-			return arrayImport(isString(key) ? [key] : key, isPlainObject(value) ? value : {
+			return arrayImport(ensureArray(key), isPlainObject(value) ? value : {
 				call: value
 			});
 		};

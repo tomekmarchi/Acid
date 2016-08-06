@@ -96,7 +96,7 @@ var directoryNames = $.importDirectory = (name) => {
 
 	},
 	importMethod = $.require = (key, value) => {
-		return arrayImport(isString(key) ? [key] : key, isPlainObject(value)? value : {
+		return arrayImport(ensureArray(key), isPlainObject(value)? value : {
 			call: value
 		});
 	};

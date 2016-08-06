@@ -1,5 +1,5 @@
 var ensure = $.ensure =  function(models, funct) {
-	importMethod(mapArray((isString(models)) ? [models] : models, (item) => {
+	importMethod(mapArray(ensureArray(models), (item) => {
 		return `${item}.js`;
 	}), funct);
 };
