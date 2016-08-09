@@ -2,7 +2,7 @@ var generateCheckLoops = (first, second) => {
 		return (object, funct, optional, rawProp) => {
 			var returned;
 			if (!hasValue(object)) {
-				return False;
+				return;
 			} else if (isArray(object)) {
 				returned = first;
 			} else if (isPlainObject(object) || isFunction(object)) {
@@ -24,14 +24,4 @@ var generateCheckLoops = (first, second) => {
 	},
 	map = $.map = generateCheckLoops(mapArray, mapObject),
 	each = $.each = generateCheckLoops(eachArray, eachObject),
-	filter = $.filter = function (object, funct, safeMode) {
-		var returned;
-		if (!hasValue(object)) {
-			return False;
-		} else if (isArray(object)) {
-			returned = filterArray;
-		} else if (isPlainObject(object) || isFunction(object)) {
-			returned = filterObject;
-		}
-		return returned(object, funct, safeMode);
-	};
+	filter = $.filter = generateCheckLoops(filterArray, filterObject);

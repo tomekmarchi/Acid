@@ -1,12 +1,12 @@
 var batchCancelFrame = False,
 	batchChanges = [],
 	batchLoop = () => {
-		eachArray(batchChanges,item);
+		eachArray(batchChanges,ifInvoke);
 		clearArray(batchChanges);
 		batchCancelFrame = False;
 	},
 	batchAdd = $.batch = (item) => {
-		eachArray(ensureArray(item) ,batchAdd);
+		pushApply(batchChanges,ensureArray(item));
 		if (!batchCancelFrame) {
 			batchCancelFrame = raf(batchLoop);
 		}

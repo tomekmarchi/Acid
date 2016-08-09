@@ -39,13 +39,14 @@ var getLength = $.getLength = (item) => {
 		Array Helpers
 	*/
 	concatArray = generatePrototype(arrayPrototype.concat),
+	popArray = generatePrototype(arrayPrototype.pop),
 	pushArray = generatePrototype(arrayPrototype.push),
 	pushApply = $.pushApply = (array, arrayToPush) => {
 		return apply(arrayPrototype.push, array, arrayToPush);
 	},
 	arraySliceCall = generatePrototype(arrayPrototype.slice),
 	spliceArray = generatePrototype(arrayPrototype.splice),
-	shiftArray = $.rest = generatePrototype(arrayPrototype.shift),
+	shiftArray = generatePrototype(arrayPrototype.shift),
 	unShiftArray = generatePrototype(arrayPrototype.unshift),
 	unShiftApply = $.unShiftApply = (array, arrayToPush) => {
 		return apply(arrayPrototype.unshift, array, arrayToPush);

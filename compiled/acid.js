@@ -160,13 +160,14 @@
 			Array Helpers
 		*/
 		concatArray = generatePrototype(arrayPrototype.concat),
+		popArray = generatePrototype(arrayPrototype.pop),
 		pushArray = generatePrototype(arrayPrototype.push),
 		pushApply = $.pushApply = (array, arrayToPush) => {
 			return apply(arrayPrototype.push, array, arrayToPush);
 		},
 		arraySliceCall = generatePrototype(arrayPrototype.slice),
 		spliceArray = generatePrototype(arrayPrototype.splice),
-		shiftArray = $.rest = generatePrototype(arrayPrototype.shift),
+		shiftArray = generatePrototype(arrayPrototype.shift),
 		unShiftArray = generatePrototype(arrayPrototype.unshift),
 		unShiftApply = $.unShiftApply = (array, arrayToPush) => {
 			return apply(arrayPrototype.unshift, array, arrayToPush);
@@ -307,7 +308,7 @@
 			return ucFirstChar(string) + addRest(string);
 		},
 		ucFirstAll = $.ucFirstAll = function(string) {
-			return mapArray(splitCall(joinArray(string, spaceCharacter), (item) => {
+			return joinArray(mapArray(splitCall(string, spaceCharacter), function(item) {
 				return ucFirst(item);
 			}), ' ');
 		},
@@ -317,7 +318,7 @@
 		},
 		//uppercase first letter lower case the rest all
 		ucFirstOnlyAll = $.ucFirstOnlyAll = function(string) {
-			return mapArray(splitCall(joinArray(string, spaceCharacter), (item) => {
+			return joinArray(mapArray(splitCall(string, spaceCharacter), function(item) {
 				return ucFirstOnly(item);
 			}), ' ');
 		},
@@ -686,12 +687,14 @@
 	};
 
 	var generateArrayRange = (method) => {
-		return (array) => {
-			array = cloneArray(array);
-			method(array);
-			return array;
-		};
-	};
+			return (array) => {
+				array = cloneArray(array);
+				method(array);
+				return array;
+			};
+		},
+		arrayInitial = $.initial = generateArrayRange(popArray),
+		arrayRest = $.rest = generateArrayRange(shiftArray);
 
 	//Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more of the arrays.
 	/**
@@ -1077,7 +1080,13 @@
 		};
 
 	$.compactKeys = (object) => {
-		return objectKeys(compact(object));
+		var keys = [];
+		each(object, (item, key) => {
+			if (item) {
+				pushArray(keys, key);
+			}
+		});
+		return keys;
 	};
 
 	//loop through an object
@@ -1592,7 +1601,7 @@
 			return (object, funct, optional, rawProp) => {
 				var returned;
 				if (!hasValue(object)) {
-					return False;
+					return;
 				} else if (isArray(object)) {
 					returned = first;
 				} else if (isPlainObject(object) || isFunction(object)) {
@@ -1614,17 +1623,7 @@
 		},
 		map = $.map = generateCheckLoops(mapArray, mapObject),
 		each = $.each = generateCheckLoops(eachArray, eachObject),
-		filter = $.filter = function(object, funct, safeMode) {
-			var returned;
-			if (!hasValue(object)) {
-				return False;
-			} else if (isArray(object)) {
-				returned = filterArray;
-			} else if (isPlainObject(object) || isFunction(object)) {
-				returned = filterObject;
-			}
-			return returned(object, funct, safeMode);
-		};
+		filter = $.filter = generateCheckLoops(filterArray, filterObject);
 
 	/*
 
@@ -1783,12 +1782,12 @@
 	var batchCancelFrame = False,
 		batchChanges = [],
 		batchLoop = () => {
-			eachArray(batchChanges, item);
+			eachArray(batchChanges, ifInvoke);
 			clearArray(batchChanges);
 			batchCancelFrame = False;
 		},
 		batchAdd = $.batch = (item) => {
-			eachArray(ensureArray(item), batchAdd);
+			pushApply(batchChanges, ensureArray(item));
 			if (!batchCancelFrame) {
 				batchCancelFrame = raf(batchLoop);
 			}
