@@ -55,7 +55,12 @@ var objectStringGenerate = function (name) {
 		return !getLength(obj);
 	},
 	isEmpty = $.isEmpty = function (obj) {
-		return hasValue(obj) ? (isPlainObject(obj)) ? !objectSize(obj) : !isLength(obj) : False;
+		if(isString(obj) || isArray(obj)){
+			return isLength(obj)
+		}else if(isPlainObject(obj)){
+			return !objectSize(obj);
+		}
+		return !hasValue(obj);
 	},
 	regexGenerator = (regexType) => {
 		return (item) => {

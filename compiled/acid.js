@@ -394,7 +394,7 @@
 		//cache for function that removes Falsey values from array or object
 		compact = $.compact = (array) => {
 			return filter(array, (item) => {
-				return item;
+				return isString(item) && !getLength(item) ? undefinedNative : item;
 			});
 		},
 		arraySortToObject = (func, array, object) => {
@@ -1055,7 +1055,12 @@
 			return !getLength(obj);
 		},
 		isEmpty = $.isEmpty = function(obj) {
-			return hasValue(obj) ? (isPlainObject(obj)) ? !objectSize(obj) : !isLength(obj) : False;
+			if (isString(obj) || isArray(obj)) {
+				return isLength(obj)
+			} else if (isPlainObject(obj)) {
+				return !objectSize(obj);
+			}
+			return !hasValue(obj);
 		},
 		regexGenerator = (regexType) => {
 			return (item) => {
