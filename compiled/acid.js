@@ -125,7 +125,7 @@
 		indexOfCall = (string, index) => {
 			return string.indexOf(index);
 		},
-		ensureArray = (object) => {
+		ensureArray = $.ensureArray = (object) => {
 			return (isArray(object)) ? object : [object];
 		},
 		ifInvoke = $.ifInvoke = function() {
@@ -134,7 +134,7 @@
 			return isFunction(method) ? apply(method, args) : undefinedNative;
 		},
 		ifNotEqual = $.ifNotEqual = function(root, property, equalThis) {
-			return property ? ((root[property] = root[property] || equalThis), root[property]) : root
+			return property ? ((root[property] = root[property] || equalThis), root[property]) : root;
 		},
 		/*
 			String related
@@ -368,7 +368,7 @@
 
 	//add paramaters to a URL
 	var addParam = $.addParam = (url, newItem) => {
-		if (hasLength(url) && has(url, questionMarkString)) {
+		if (getLength(url) && has(url, questionMarkString)) {
 			if (arrayLastItem(url) === questionMarkString) {
 				url = url + newItem;
 			} else {
@@ -1152,7 +1152,7 @@
 		Return a copy of the object, filtered to omit the blacklisted keys (or array of keys). Alternatively accepts a predicate indicating which keys to omit.
 	*/
 	var omit = $.omit = (originalObject, array) => {
-		return mapObject(originalObject, (item, key) => {
+		return filterObject(originalObject, (item, key) => {
 			if (!has(array, key)) {
 				return item;
 			}
@@ -1677,7 +1677,6 @@
 		return new Promise(callback);
 	};
 
-
 	$.toggle = function(value, a, b) {
 		return (value === a) ? b : a;
 	};
@@ -1923,6 +1922,11 @@
 				'src': url
 			}, options)), data);
 		};
+	$.toDOM = (html) => {
+		var div = createTag('div');
+		emptyNode.innerHTML = html;
+		return div;
+	};
 
 	/*
 		This imports any type of file & just like require in the browser.

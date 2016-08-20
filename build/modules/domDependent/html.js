@@ -68,3 +68,8 @@ var domHeadNode,
             'src': url
         },options)), data);
     };
+$.toDOM=(html) =>{
+	var div = createTag('div');
+	emptyNode.innerHTML=html;
+	return div;
+};

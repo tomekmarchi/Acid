@@ -1,6 +1,6 @@
 //add paramaters to a URL
 var addParam = $.addParam = (url, newItem) => {
-	if (hasLength(url) && has(url, questionMarkString)) {
+	if (getLength(url) && has(url, questionMarkString)) {
 		if (arrayLastItem(url) === questionMarkString) {
 			url = url + newItem;
 		} else {

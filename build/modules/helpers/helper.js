@@ -4,7 +4,7 @@ var getLength = $.getLength = (item) => {
 	indexOfCall = (string, index) => {
 		return string.indexOf(index);
 	},
-	ensureArray = (object) => {
+	ensureArray = $.ensureArray = (object) => {
 		return (isArray(object))? object : [object];
 	},
 	ifInvoke = $.ifInvoke = function(){
@@ -13,7 +13,7 @@ var getLength = $.getLength = (item) => {
 		return isFunction(method)? apply(method,args) : undefinedNative;
 	},
 	ifNotEqual = $.ifNotEqual = function(root,property,equalThis){
-		return property? ((root[property] = root[property] || equalThis),root[property]): root
+		return property? ((root[property] = root[property] || equalThis),root[property]): root;
 	},
 	/*
 		String related
