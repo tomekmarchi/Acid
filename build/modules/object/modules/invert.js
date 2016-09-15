@@ -3,7 +3,7 @@
 */
 var invert = $.invert = (thisObject, object) => {
 	object = object || {};
-	eachObject(originalObject, (item, key) => {
+	eachObject(thisObject, (item, key) => {
 		object[item] = key;
 	});
 	return object;

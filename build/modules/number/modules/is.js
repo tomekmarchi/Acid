@@ -3,14 +3,14 @@ $.isZero = function (item) {
 	return item === 0;
 };
 //is strict equal to
-$.isNumberEqual = function (item,num) {
+$.isNumberEqual = function (item, num) {
 	return item === num;
 };
 //is In range of two numbers
-$.isNumberInRange = function (num,start,end) {
+$.isNumberInRange = function (num, start, end) {
 	if (isUndefined(end)) {
-	 var end = start,
-		 start = 0;
+		end = start;
+		start = 0;
 	}
 	return num > start && num < end;
 };

@@ -15,7 +15,7 @@ var ucFirstChar = (string) => {
 	},
 	//uppercase first letter lower case the rest
 	ucFirstOnly = $.ucFirstOnly = function (string) {
-		return ucFirstChar(item) + toLowerCaseCall(addRest(item));
+		return ucFirstChar(string) + toLowerCaseCall(addRest(string));
 	},
 	//uppercase first letter lower case the rest all
 	ucFirstOnlyAll = $.ucFirstOnlyAll = function (string) {
@@ -60,7 +60,7 @@ var ucFirstChar = (string) => {
 	},
 	//returns the trunced version of the string
 	truncateWord = $.truncateWord = (string, amount) => {
-		var cut = indexOfObject(string, ' ', amount);
+		var cut = indexOfCall(string, ' ', amount);
 		if (amount != -1) {
 			string = substringCall(string, 0, amount);
 		}

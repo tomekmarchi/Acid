@@ -1,10 +1,10 @@
 var isDocumentReady = $.isDocumentReady = (func) => {
-	var state = document.readyState;
+	var state = documentNode.readyState;
 	if (state === 'interactive' || state === 'completed' || state === 'complete') {
 		return (func) ? func() : True;
 	}
 	if (func) {
-		eventAdd(document, "DOMContentLoaded", func);
+		eventAdd(documentNode, "DOMContentLoaded", func);
 	}
 	return False;
 };

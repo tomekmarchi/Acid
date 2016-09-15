@@ -63,7 +63,7 @@ var safeModeCall = (safeMode) => {
             length = getLength(array),
             index = 0;
         while (length) {
-            results[i] = fn(array[index], index, array, length, results);
+            results[index] = fn(array[index], index, array, length, results);
             length = getLength(array);
             index++;
         }

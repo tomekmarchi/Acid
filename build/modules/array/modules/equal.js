@@ -9,7 +9,7 @@
           result=True;
       }else{
 		  eachArray(array,(item,index,length,safe)=>{
-			  if (array[i] !== item[i]) {
+			  if (array[index] !== item[index]) {
 				  	safe.halt=true;
 					result = False;
 				}

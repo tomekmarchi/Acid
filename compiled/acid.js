@@ -38,8 +38,7 @@
 		numberNative = Number,
 		regExp = RegExp,
 		parseIntNative = parseInt,
-		consoleNative = console,
-		consoleNative = consoleNative.log.bind(consoleNative),
+		consoleNative = console.log.bind(console),
 		/*
 
 			Prototypes
@@ -314,7 +313,7 @@
 		},
 		//uppercase first letter lower case the rest
 		ucFirstOnly = $.ucFirstOnly = function(string) {
-			return ucFirstChar(item) + toLowerCaseCall(addRest(item));
+			return ucFirstChar(string) + toLowerCaseCall(addRest(string));
 		},
 		//uppercase first letter lower case the rest all
 		ucFirstOnlyAll = $.ucFirstOnlyAll = function(string) {
@@ -359,7 +358,7 @@
 		},
 		//returns the trunced version of the string
 		truncateWord = $.truncateWord = (string, amount) => {
-			var cut = indexOfObject(string, ' ', amount);
+			var cut = indexOfCall(string, ' ', amount);
 			if (amount != -1) {
 				string = substringCall(string, 0, amount);
 			}
@@ -407,7 +406,7 @@
 
 	//Creates an array of elements split into groups the length of size. If collection can't be split evenly, the final chunk will be the remaining elements.
 	var arrayChunk = $.chunk = (array, size = 1, index = 0) => {
-		return filterArray(newArray(ceilmethod(getLength(array) / size)), (item, i) => {
+		return filterArray(new arrayNative(ceilMethod(getLength(array) / size)), (item, i) => {
 			return chunkSlice(array, index, (index += size));
 		});
 	};
@@ -567,7 +566,7 @@
 				length = getLength(array),
 				index = 0;
 			while (length) {
-				results[i] = fn(array[index], index, array, length, results);
+				results[index] = fn(array[index], index, array, length, results);
 				length = getLength(array);
 				index++;
 			}
@@ -635,7 +634,7 @@
 			result = True;
 		} else {
 			eachArray(array, (item, index, length, safe) => {
-				if (array[i] !== item[i]) {
+				if (array[index] !== item[index]) {
 					safe.halt = true;
 					result = False;
 				}
@@ -646,7 +645,7 @@
 
 	//Returns the first element of an array. Passing num will return the first n elements of the array.
 	var firstItem = $.first = function(array, num) {
-		return (num) ? sliceArray(array, 0, num) : array[0];
+		return (num) ? arraySliceCall(array, 0, num) : array[0];
 	};
 
 	function returnFlow(method) {
@@ -742,7 +741,7 @@
 	//Returns the last element of an array. Passing n will return the last n elements of the array.
 	var arrayLastItem = $.last = function(array, indexFrom) {
 		var length = getLength(array);
-		return (indexFrom) ? sliceArray(array, length - indexFrom, length) : array[length - 1];
+		return (indexFrom) ? arraySliceCall(array, length - indexFrom, length) : array[length - 1];
 	};
 
 	/**
@@ -824,8 +823,8 @@
 	 * // -> [4]
 	 */
 	$.remove = function(array, args) {
-		var isFN = isFunction(args),
-			args = ensureArray(args);
+		var isFN = isFunction(args);
+		args = ensureArray(args);
 		eachArray(array, (item, index) => {
 			if ((isFN) ? args(item) : has(args, item)) {
 				spliceArray(array, index, 1);
@@ -915,8 +914,8 @@
 	};
 
 	var chunkSlice = (array, start, end) => {
-			return mapArray(newArray(mathNative.min(end, getLength(array)) - start), () => {
-				return array[start + i];
+			return mapArray(new arrayNative(mathNative.min(end, getLength(array)) - start), (item, index) => {
+				return array[start + index];
 			});
 		},
 		numericalCompare = (a, b) => {
@@ -926,8 +925,8 @@
 			return b - a;
 		},
 		xorBase = (a, b) => {
-			return mapArray(concatArray(a, b), (item) => {
-				if (!has(b, item) && indexOfCall(result, item) < 0) {
+			return mapArray(concatArray(a, b), (item, index, array) => {
+				if (!has(b, item) && indexOfCall(array, item) < 0) {
 					return item;
 				}
 			});
@@ -945,8 +944,8 @@
 
 	//Returns a copy of the array with all instances of the values removed.
 	$.without = function(array, args) {
-		var isFN = isFunction(args),
-			args = ensureArray(args);
+		var isFN = isFunction(args);
+		args = ensureArray(args);
 		return mapArray(array, (item, index) => {
 			if ((isFN) ? args(item) : has(args, item)) {
 				return item;
@@ -1007,10 +1006,10 @@
 		},
 		isSameObjectGenerator = (type) => {
 			return (obj) => {
-				return (hasValue(obj)) ? toString.call(obj) === type : False;
+				return (hasValue(obj)) ? toStringCall(obj) === type : False;
 			}
 		},
-		isDecimal = $.isDecimal = function() {
+		isDecimal = $.isDecimal = function(string) {
 			return stringMatchCall(toStringCall(string), decimalCheck);
 		},
 		hasValue = $.hasValue = function(item) {
@@ -1120,7 +1119,7 @@
 		},
 		forEach = $.forEach = (array, funct, optional) => {
 			array.forEach(funct, optional);
-			return results;
+			return array;
 		},
 		mapProperty = $.mapProperty = (array, funct) => {
 			var object = {};
@@ -1142,7 +1141,7 @@
 	*/
 	var invert = $.invert = (thisObject, object) => {
 		object = object || {};
-		eachObject(originalObject, (item, key) => {
+		eachObject(thisObject, (item, key) => {
 			object[item] = key;
 		});
 		return object;
@@ -1357,9 +1356,10 @@
 
 	//Creates a function that invokes func with arguments arranged according to the specified indexes where the argument value at the first index is provided as the first argument, the argument value at the second index is provided as the second argument, and so on.
 	$.reArg = (funct, list) => {
-		return function() {
-			return apply(funct, eachArray(arguments, function(item, index) {
-				pushArray(args, order[list[index]]);
+		return function named() {
+			var args = arguments;
+			return apply(funct, named, mapArray(list, function(item, index) {
+				return args[item];
 			}));
 		};
 	};
@@ -1501,8 +1501,8 @@
 	//is In range of two numbers
 	$.isNumberInRange = function(num, start, end) {
 		if (isUndefined(end)) {
-			var end = start,
-				start = 0;
+			end = start;
+			start = 0;
 		}
 		return num > start && num < end;
 	};
@@ -1574,18 +1574,18 @@
 	//console.log
 	var acidConsole = $.console = (data, theme) => {
 			data = isString(data) ? data : stringify(data);
-			apply(consoleNative, ['%c' + data, `${LTs[theme]}font-size:13px;padding:2px 5px;border-radius:3px;`]);
+			apply(consoleNative, ['%c' + data, `${logTheme[theme]}font-size:13px;padding:2px 5px;border-radius:2px;`]);
 		},
 		generateLogTheme = (color, bg) => {
 			return `color:${color};background:${bg};`;
 		},
-		LTs = {
+		logTheme = {
 			notify: generateLogTheme('#01c690', '#0e2a36'),
 			warning: generateLogTheme('#ebb227', '#262626'),
 			important: generateLogTheme('#ffe4ea', '#dc3153')
 		},
 		addTheme = $.addConsoleTheme = (name, color, bg) => {
-			logThemes[name] = generateLogTheme(color, bg);
+			logTheme[name] = generateLogTheme(color, bg);
 		};
 
 	/**
@@ -1734,7 +1734,8 @@
 			});
 		};
 
-	var clsSelector = $.getClass = bindTo(documentNode.getElementsByClassName, documentNode);
+	var clsSelector = $.getClass = bindTo(documentNode.getElementsByClassName, documentNode),
+		tagSelector = $.getTag = bindTo(documentNode.getElementsByTagName, documentNode);
 
 	var idSelector = $.getId = bindTo(documentNode.getElementById, documentNode);
 
@@ -1810,8 +1811,8 @@
 			return node.classList;
 		},
 		nodeClassList = (node, args, mode) => {
-			var nodeClassList = getClassList(node),
-				mode = nodeClassList.add || mode;
+			var nodeClassList = getClassList(node);
+			mode = nodeClassList.add || mode;
 			return (args) ? apply(mode, nodeClassList, ensureArray(args)) : nodeClassList;
 		},
 		//classlist functions
@@ -1883,9 +1884,6 @@
 		createTag = $.createTag = bindTo(documentNode.createElement, documentNode),
 		nodeAttachLoadingEvents = (node, data) => {
 			var launchEvent = (fnct, node, event) => {
-					if (isString(fnct)) {
-						fnct = find(fnc, $);
-					}
 					if (fnct) {
 						fnct(node, event);
 					}
@@ -1924,7 +1922,7 @@
 		};
 	$.toDOM = (html) => {
 		var div = createTag('div');
-		emptyNode.innerHTML = html;
+		div.innerHTML = html;
 		return div;
 	};
 
@@ -1965,7 +1963,8 @@
 			url = (!has(url, '//')) ? directoryNames(type) + url : url;
 			((!imported[url]) ?
 				(imported[url] = True, node = nodeTypes[type](url, importEvents(url, data, remove)), append(domHeadNode, node)) :
-				(node = qsSelector(`[href="${url}"]`), (node && imported[url] !== 1) ?
+				(node = qsSelector(`[href="${url}"]`),
+					(node && imported[url] !== 1) ?
 					nodeAttachLoadingEvents(node, importEvents(url, data, remove)) : data.call()));
 		},
 		orderArgumentObjects = (item) => {
@@ -2041,12 +2040,12 @@
 	};
 
 	var isDocumentReady = $.isDocumentReady = (func) => {
-		var state = document.readyState;
+		var state = documentNode.readyState;
 		if (state === 'interactive' || state === 'completed' || state === 'complete') {
 			return (func) ? func() : True;
 		}
 		if (func) {
-			eventAdd(document, "DOMContentLoaded", func);
+			eventAdd(documentNode, "DOMContentLoaded", func);
 		}
 		return False;
 	};
@@ -2078,8 +2077,8 @@
 		aNode.href = data;
 		var root = splitCall(aNode.hostname, dotString),
 			pathName = aNode.pathname,
-			len = getLength(root),
-			root = root[len - 2] + dotString + root[len - 1];
+			len = getLength(root);
+		root = root[len - 2] + dotString + root[len - 1];
 		return pick(aNode, ['href', 'protocol', 'hostname', 'port', 'search', 'hash', 'host'], {
 			path: (pathName[0] !== slashString) ? slashString + pathName : pathName,
 			pathroot: (pathName[0] !== slashString) ? splitCall(pathName, slashString)[0] : splitCall(pathName, slashString)[1],

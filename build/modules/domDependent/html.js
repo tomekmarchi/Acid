@@ -29,9 +29,6 @@ var domHeadNode,
     createTag = $.createTag = bindTo(documentNode.createElement,documentNode),
     nodeAttachLoadingEvents = (node, data) => {
         var launchEvent = (fnct, node, event) => {
-                if (isString(fnct)) {
-                    fnct = find(fnc, $);
-                }
                 if (fnct) {
                     fnct(node, event);
                 }
@@ -70,6 +67,6 @@ var domHeadNode,
     };
 $.toDOM=(html) =>{
 	var div = createTag('div');
-	emptyNode.innerHTML=html;
+	div.innerHTML=html;
 	return div;
 };

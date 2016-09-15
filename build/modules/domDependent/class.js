@@ -6,8 +6,8 @@ var getClassList = (node) => {
 		return node.classList;
 	},
 	nodeClassList = (node, args, mode) => {
-		var nodeClassList = getClassList(node),
-			mode = nodeClassList.add || mode;
+		var nodeClassList = getClassList(node);
+		mode = nodeClassList.add || mode;
 		return (args) ? apply(mode, nodeClassList, ensureArray(args)) : nodeClassList;
 	},
 	//classlist functions

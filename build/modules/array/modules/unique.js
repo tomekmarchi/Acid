@@ -1,6 +1,6 @@
 var chunkSlice = (array, start, end) => {
-		return mapArray(newArray(mathNative.min(end, getLength(array)) - start), () => {
-			return array[start + i];
+		return mapArray(new arrayNative(mathNative.min(end, getLength(array)) - start), (item,index) => {
+			return array[start + index];
 		});
 	},
 	numericalCompare = (a, b) => {
@@ -10,8 +10,8 @@ var chunkSlice = (array, start, end) => {
 		return b - a;
 	},
 	xorBase = (a, b) => {
-		return mapArray(concatArray(a, b), (item) => {
-			if (!has(b, item) && indexOfCall(result, item) < 0) {
+		return mapArray(concatArray(a, b), (item, index, array) => {
+			if (!has(b, item) && indexOfCall(array, item) < 0) {
 				return item;
 			}
 		});

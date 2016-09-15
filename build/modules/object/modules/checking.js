@@ -7,10 +7,10 @@ var objectStringGenerate = function (name) {
 	},
 	isSameObjectGenerator = (type) => {
 		return (obj) => {
-			return (hasValue(obj)) ? toString.call(obj) === type : False;
+			return (hasValue(obj)) ? toStringCall(obj) === type : False;
 		}
 	},
-	isDecimal = $.isDecimal = function () {
+	isDecimal = $.isDecimal = function (string) {
 		return stringMatchCall(toStringCall(string), decimalCheck);
 	},
 	hasValue = $.hasValue = function (item) {

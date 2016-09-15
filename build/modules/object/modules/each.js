@@ -24,7 +24,7 @@ var mapObject = $.mapObject = (object, fn) => {
 	},
 	forEach = $.forEach = (array, funct, optional) => {
 		array.forEach(funct, optional);
-		return results;
+		return array;
 	},
 	mapProperty = $.mapProperty = (array, funct) => {
 		var object = {};

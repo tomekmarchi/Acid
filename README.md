@@ -4,7 +4,7 @@ Acidjs is an ECMA script utility library for building scalable real-time self-co
 
 Strings,Objects & Arrays
 -----------------------
-All methods for Strings,Objects and Arrays are avalible from the root object typically $ and ACID as a fallback. 
+All methods for Strings,Objects and Arrays are available from the root object typically $ and ACID as a fallback. 
 
 Model, Define & Module
 -----------------------
@@ -46,11 +46,9 @@ JS Example Import
     $.require('post.js',function(post){
 		//post model is loaded
 	});
-	
+
 JS Example Ensure
 
     $.ensure('post',function(post){
 		//post model is loaded
 	});
-
-
