@@ -14,11 +14,16 @@
 (function(global) {
 	"use strict";
 
-	var $ = function() {
-		return apply(($.super || modelMethod), arguments);
-	};
+	var $ = function(name, data) {
+			return (cacheSuper || data ? data.import ? moduleMethod : modelMethod : get)(name, data || modelMethod);
+		},
+		cacheSuper;
 	//avoid
 	global.$ = global.ACID = $;
+
+	$.super = (method) => {
+		cacheSuper = method;
+	};
 
 	/*
 
@@ -1738,15 +1743,6 @@
 	var appState = $.appState = {
 		screenHeight: screen.height,
 		screenWidth: screen.width
-	};
-
-	var cacheMethod = $.cache = (key, value) => {
-		return (!key) ? cacheMethod : (hasValue(value)) ? cacheMethod[key] = value : cacheMethod[key];
-	};
-
-	//toggle a cache item with two values
-	$.cacheToggle = (key, a, b) => {
-		((cacheMethod[key] === a) ? cacheMethod[key] = b : cacheMethod[key] = a);
 	};
 
 

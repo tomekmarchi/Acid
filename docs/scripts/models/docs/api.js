@@ -1,72 +1,17 @@
 (function () {
-	var api = $.model.api = {};
+	var api = $('api',{});
 	//globals
-	$.model.api.global = {
+	api.global = {
 		$: {
-			descrip: 'Main Namespace & Main CSS selector with optimizations',
-			example: '$(\'div a\')'
-		},
-		$$: {
-			descrip: 'Main CSS selector without optimizations',
-			example: '$$(\'div a\')'
-		},
-		$tag: {
-			descrip: 'Get elements by tag name',
-			example: '$tag(\'div\')'
-		},
-		$cls: {
-			descrip: 'Get elements by class name',
-			example: '$cls(\'box\')'
-		},
-		$id: {
-			descrip: 'Get element by id',
-			example: '$id(\'scroll_wrap\')'
-		},
-		$qs: {
-			descrip: 'querySelector returns a single first match',
-			example: '$qs(\'div a\')'
-		},
-		$qsa: {
-			descrip: 'querySelector returns all matchs',
-			example: '$qsa(\'div a\')'
+			descrip: 'Main Namespace',
+			example: `$('core')`
 		}
 	};
 	//math operations cached
-	$.model.api.math_wrapers = {
-		e: {
-			descrip: 'Euler\'s constant and the base of natural logarithms, approximately 2.718',
-			example: '$.e'
-		},
-		ln2: {
-			descrip: 'Natural logarithm of 2, approximately 0.693',
-			example: '$.ln2'
-		},
-		ln10: {
-			descrip: 'Natural logarithm of 10, approximately 2.303',
-			example: '$.ln10'
-		},
-		log2e: {
-			descrip: 'Base 2 logarithm of E, approximately 1.443',
-			example: '$.log2e'
-		},
-		log10e: {
-			descrip: 'Base 10 logarithm of E, approximately 0.434',
-			example: '$.log10e'
-		},
-		pi: {
-			descrip: 'Ratio of the circumference of a circle to its diameter, approximately 3.14159',
-			example: '$.pi'
-		},
-		sqrt1_2: {
-			descrip: 'Square root of 1/2; equivalently, 1 over the square root of 2, approximately 0.707',
-			example: '$.sqrt1_2'
-		},
-		sqrt2: {
-			descrip: 'Square root of 2, approximately 1.414',
-			example: '$.sqrt2'
-		}
+	api.math = {
+
 	};
-	$.model.api.checking = {
+	api.checking = {
 		isArray: {
 			descrip: 'Check if object is array',
 			example: '$.isArray(obj)'
@@ -205,36 +150,17 @@
 		}
 	};
 	//storage
-	$.model.api.storage = {
-		local: {
-			descrip: 'localstorage set/get',
-			example: '$.local.name'
-		},
-		clearLocal: {
-			descrip: 'clear localstorage',
-			example: '$.clearLocal()'
-		},
-		session: {
-			descrip: 'sessionstorage set/get',
-			example: '$.session.name'
-		},
-		clearSession: {
-			descrip: 'clear sessionstorage',
-			example: '$.clearSession()'
-		}
+	api.storage = {
+
 	};
-	$.model.api.global_dom = {
-		frag: {
+	api.global_dom = {
+		createFragment: {
 			descrip: 'Returns a document fragment',
 			example: '$.frag()'
 		},
-		tag: {
+		createTag: {
 			descrip: 'Makes a dom node from string name',
 			example: '$.tag(\'div\')'
-		},
-		dom: {
-			descrip: 'Makes a dom node from string name and object syntax',
-			example: '$.dom(\'div\',obj)'
 		},
 		html: {
 			descrip: 'Makes a HTML string from string name and object syntax',
@@ -245,7 +171,7 @@
 			example: '$.toDOM(\'<div></div>\')'
 		}
 	};
-	$.model.api.timing = {
+	api.timing = {
 		caf: {
 			descrip: 'Cancel Animation Frame',
 			example: '$.caf(number_of_raf)'
@@ -254,7 +180,11 @@
 			descrip: 'Request Animation Frame',
 			example: '$.caf(number_of_raf)'
 		},
-		async: {
+		inAsync: {
+			descrip: 'Launch functions in async accepts an array',
+			example: '$.async([fn1,fn2])'
+		},
+		inSync: {
 			descrip: 'Launch functions in async accepts an array',
 			example: '$.async([fn1,fn2])'
 		},
@@ -268,30 +198,18 @@
 		}
 	};
 	//$ methods
-	$.model.api.$ = {
-		acid: {
+	api.utility = {
+		info: {
 			descrip: 'Access the ACID engine. Info & functions',
 			example: '$.acid.start $.acid.version'
-		},
-		debug: {
-			descrip: 'Turn debugging on 1 or 0',
-			example: '$.debug(1)'
 		},
 		console: {
 			descrip: 'Console.log',
 			example: '$.console(obj)'
 		},
-		socket: {
-			descrip: 'Open a web socket',
-			example: '$.socket(obj_syntax)'
-		},
-		cache: {
-			descrip: 'set/get Cache an object',
-			example: '$.cache(key,value) $.cache(key)'
-		},
-		cacheToggle: {
-			descrip: 'Toggle Cache object between two values',
-			example: '$.cacheToggle(key,value,value2)'
+		toggle: {
+			descrip: 'Toggle between two values',
+			example: '$.toggle(key,value,value2)'
 		},
 		ensure: {
 			descrip: 'Ensure a model is loaded',
@@ -305,57 +223,29 @@
 			descrip: 'execCommand',
 			example: '$.exec(String aCommandName, Boolean aShowDefaultUI, String aValueArgument)'
 		},
-		faceplate: {
-			descrip: 'Used to save function or object that is used to place template data',
-			example: '$.faceplate(name,fnc)'
-		},
 		get: {
 			descrip: 'Get object property from string',
 			example: '$.get(\'acid.name\',$)'
 		},
-		import: {
+		require: {
 			descrip: 'Import from a URL with object syntax - Accepts an array to import',
 			example: '$.import(\'plugins/tip.js\',obj)'
-		},
-		plugin: {
-			descrip: 'Import & extend extrernal libraries to the acid namespace',
-			example: '$.plugin({pluginsObject},callback)'
 		},
 		json: {
 			descrip: 'Convert string to JSON object',
 			example: '$.json(\'{"acid":1}\')'
 		},
-		promise: {
+		contract: {
 			descrip: 'Create a promise from an array or complete a item in a promise',
 			example: '$.promise([\'css\',\'js\'],\'promise_name\',function) $.promise(\'css\',\'promise_name\')'
-		},
-		service: {
-			descrip: 'Get a service',
-			example: '$.service(\'service_name\')'
-		},
-		serviceCreate: {
-			descrip: 'Create a service',
-			example: '$.serviceCreate(\'service_name\')'
-		},
-		template: {
-			descrip: 'Create a template',
-			example: '$.template(\'template_name\',node/string/function)'
 		},
 		xhr: {
 			descrip: 'XHR request',
 			example: '$.worker(object_syntax)'
 		},
-		fetch: {
-			descrip: 'XHR request simple',
-			example: '$.get(url,callback)'
-		},
 		linkParse: {
 			descrip: 'Parse a URL into an object with seperated info',
 			example: '$.linkParse(\'http://lnkit.com/signup\')'
-		},
-		view: {
-			descrip: 'Create a simple view combine a faceplate and a template used for live DOM fast templating',
-			example: '$.view(name,template_node,function)'
 		},
 		module: {
 			descrip: 'Creates a module takes [acid ($[*]) methods,css files,js files] as strings and uses them as arguments in a function. This returns a compiled function as a module.',
@@ -387,7 +277,7 @@
 	};
 
 	//object prototype
-	$.model.api.object = {
+	api.object = {
 		clone: {
 			descrip: 'Return a clone of an object',
 			example: 'object.clone()'
@@ -421,96 +311,9 @@
 			example: 'obj.unobsrv(observer)'
 		}
 	};
-	$.model.api.node = {
-		ab: {
-			descrip: 'AfterBegin insert HTML',
-			example: 'document.body.ab(\"<div></div>\")'
-		},
-		ae: {
-			descrip: 'AfterEnd insert HTML',
-			example: 'document.body.ae(\"<div></div>\")'
-		},
-		bb: {
-			descrip: 'BeforeBegin insert HTML',
-			example: 'document.body.bb(\"<div></div>\")'
-		},
-		be: {
-			descrip: 'BeforeEnd insert HTML',
-			example: 'document.body.be(\"<div></div>\")'
-		},
-		ap: {
-			descrip: 'Append a node',
-			example: 'document.body.ap(node)'
-		},
-		prepend: {
-			descrip: 'Prepend a node',
-			example: 'document.body.prepend(node)'
-		},
-		act: {
-			descrip: 'Execute an acid event on a node',
-			example: 'node.act(\'click\')'
-		},
-		add: {
-			descrip: 'Get text number in node and add to it',
-			example: 'node_counter.add(2)'
-		},
-		minus: {
-			descrip: 'Get text number in node and minus it',
-			example: 'node_counter.minus(2)'
-		},
-		after: {
-			descrip: 'Insert node after',
-			example: 'node.after(other_node)'
-		},
-		afterNth: {
-			descrip: 'Insert node after child number',
-			example: 'document.body.afternth(node,1)'
-		},
-		beforeNth: {
-			descrip: 'Insert node before child number',
-			example: 'document.body.beforeNth(node,1)'
-		},
-		apTo: {
-			descrip: 'Append Node to another Node',
-			example: 'node.apTo(document.body)'
-		},
-		plugInto: {
-			descrip: 'This allows models to take DOM nodes and chain them. Think chainable plugins.',
-			example: 'node.plugInto(\'change_color\',object_sytnax)'
-		},
-		first: {
-			descrip: 'Get first child',
-			example: 'nodes.first()'
-		},
-		last: {
-			descrip: 'Get last child optional arg for from last',
-			example: 'nodes.last()'
-		},
-	};
-	$.model.api.dom_lists = {
-		each: {
-			descrip: 'Loop through each node',
-			example: 'nodes.each(function(node){})'
-		},
-		firstIn: {
-			descrip: 'Get first item in collection',
-			example: 'nodes.firstIn()'
-		},
-		lastIn: {
-			descrip: 'Get last item in collection',
-			example: 'nodes.lastIn()'
-		},
-		toArray: {
-			descrip: 'Convert list to an array',
-			example: 'nodes.toarray()'
-		},
-		removeRange: {
-			descrip: 'Remove nodes from DOM with a start index and end index',
-			example: 'nodes.removeRange(startIndex,endIndex)'
-		}
 
-	};
-	$.model.api.array = {
+
+	api.array = {
 		eachArray: {
 			descrip: 'Loop through an array',
 			example: 'array.each(function(item,i){})'
@@ -782,11 +585,11 @@
 		}
 	};
 	//string prototype
-	$.model.api.string = {};
+	api.string = {};
 	//number prototype
-	$.model.api.number = {};
-	$.model.api['function'] = {
-		async: {
+	api.number = {};
+	api['function'] = {
+		inAsync: {
 			descrip: 'Launch function in async',
 			descriplong: 'If .next is not supported timeout 0 will be used',
 			example: 'function.async()'
@@ -813,52 +616,4 @@
 			example: 'function.once()'
 		}
 	};
-	//event
-	$.model.api.event = {
-		isEnter: {
-			descrip: 'Checks if enter was pressed with the event returns true/false',
-			example: 'event.isEnter()'
-		}
-	};
-	//array to display for HTML pages
-	$.model.api.display = [{
-		obj: api.global,
-		name: 'Globals',
-		id:'gloabls'
-	}, {
-		obj: api.$,
-		name: '$'
-	}, {
-		obj: api.math_wrapers,
-		name: '$[Math]',
-		id:'math$'
-	}, {
-		obj: api.checking,
-		name: '$[Checking]',
-		id:'Checking$'
-	}, {
-		obj: api.storage,
-		name: '$[Storage]',
-		id:'Storage$'
-	}, {
-		obj: api.global_dom,
-		name: '$[DOM]',
-		id:'DOM$'
-	}, {
-		obj: api.timing,
-		name: '$[Timing]',
-		id:'Timing$'
-	}, {
-		obj: api.object,
-		name: 'Object',
-		id:'object'
-	}, {
-		obj: api.dom_lists,
-		name: 'DOM Collection & List',
-		id:'collections'
-	}, {
-		obj: api.event,
-		name: 'Events',
-		id:'Events'
-	}];
 })();

@@ -1,0 +1,59 @@
+/* layout mods with header blocks */
+
+.pageWrap {
+    z-index: 1;
+    width: 70vw;
+    background-color: #fff;
+    border-radius: 2px;
+    margin-top: -150px;
+    position: relative;
+}
+
+.pageWrap.withButtonBlock {
+    border-radius: 2px 2px 0 0;
+}
+
+.withHeaderBlock .contentWrap {
+    box-shadow: none;
+}
+
+.withHeaderBlock .headerBlock {
+    position: relative;
+}
+
+.withHeaderBlock.withButtonBlock .contentWrap {
+    margin-bottom: 0px;
+}
+
+.headerBlock {
+    width: 100%;
+    height: 300px;
+    background-size: cover;
+}
+
+.headerBlock .wrap {
+    padding: 50px calc(1em + 0.2vw);
+    margin: 0 auto;
+    width: 70vw;
+    padding-bottom: 100px
+}
+
+.headerBlock .title {
+    margin: 0px;
+    font-size: 28px;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.headerBlock .title .icon {
+    margin-right: 10px;
+}
+
+.headerBlock .description {
+    font-weight: 700;
+    display: block;
+}
+
+.withHeaderBlock .headerBlock {
+    box-shadow: inset 0 -1px 0px rgba(0, 0, 0, 0.1);
+}

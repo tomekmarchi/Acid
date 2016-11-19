@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0">
+	<link rel="shortcut icon" href="/site/favicon.png?v=2" type="image/x-icon">
+	<link type="text/css" href="/styles/blotr.css" rel="stylesheet">
+	<link type="text/css" href="/styles/theme.css" rel="stylesheet">
+	<link type="text/css" href="/styles/page.css" rel="stylesheet">
+	<script async src="/acidMin.js" id="acidjs" data-model="scripts/models/" type="text/javascript"></script>
+	<title>ACIDjs</title>
+	<meta name="description" content="A javascript utility library for conscious web apps" />
+</head>
+
+<body>
+	<script id='template' type='text/ractive'>
+		<div class="fill scroll animated">
+			<div class="headerBlock block {{color ? color : 'blue'}} clearfix" style="{{this.bgColor ? '' : 'background-color:url({{this.bgColor}});'}}background-image:url({{this.bg}});background-position:{{this.bgPosition}};">
+				<div class="wrap clearfix">
+					<div class="left">
+						{{#titleIcon}}
+							<span class="title">
+								<icon name="{{titleIcon}}" />
+							</span>
+						{{/}}
+						<span class="title">{{language.title}}</span>
+						{{#language.description}}
+							<span class="description">{{language.description}}</span>
+						{{/language.description}}
+					</div>
+				</div>
+			</div>
+			<div class="animate pageWrap maxFull marginAuto fadeInDown {{buttonTitle ? 'withButtonBlock' : ''}} {{color ? color : 'blue'}}">
+				<div class="contentWrap">
+					{{#methods}}
+		  				<p><b>{{this.key}}</b> - {{this.descrip}}</p>
+		  				<code>{{this.example}}</code>
+		  				<code>{{this.returns}}</code>
+						<hr />
+		  			{{/}}
+					{{#buttonTitle}}
+						<btn title="{{buttonTitle}}" icon="{{buttonIcon}}" click="{{buttonClick ? buttonClick : ''}}" class="{{buttonColor ? buttonColor : 'blue'}}" />
+					{{/buttonTitle}}
+				</div>
+			</div>
+		</div>
+	</script>
+</body>
+
+</html>

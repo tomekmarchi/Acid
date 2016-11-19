@@ -16,7 +16,7 @@
 		//start up server plus livereload
 		livereload_start = () => {
 			app.use(livereload()); //use livereload in express
-			app.use(express.static(__dirname)); //dir of project
+			app.use(express.static(__dirname+'/docs')); //dir of project
 			app.listen(EXPRESS_PORT); //web port
 			lr.listen(LIVERELOAD_PORT); //listen port for websocket live reload
 		},
@@ -98,7 +98,11 @@
 					ast:false,
 					compact: true,
 					minified:true
-				})).pipe(gulp.dest('compiled')).pipe(concat('acidMin')).pipe(gzip()).pipe(gulp.dest('compiled')).pipe(notify(() => {
+				}))
+				.pipe(gulp.dest('compiled'))
+				.pipe(gulp.dest('docs'))
+				.pipe(concat('acidMin')).pipe(gzip()).pipe(gulp.dest('compiled'))
+				.pipe(notify(() => {
 					return 'Acid Minified Saved';
 				}));
 
