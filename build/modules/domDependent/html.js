@@ -4,7 +4,7 @@ var domHeadNode,
         return node.hasAttribute(n);
     },
     //set/get attribute
-    nodeAttribute = $.nodeAttribute = function(node, keys, value) {
+    nodeAttribute = function(node, keys, value) {
         var results;
         if (isString(keys)) {
             if (hasValue(value)) {

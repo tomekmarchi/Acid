@@ -32,15 +32,28 @@
 			</div>
 			<div class="animate pageWrap maxFull marginAuto fadeInDown {{buttonTitle ? 'withButtonBlock' : ''}} {{color ? color : 'blue'}}">
 				<div class="contentWrap">
-					{{#methods}}
-		  				<p><b>{{this.key}}</b> - {{this.descrip}}</p>
-		  				<code>{{this.example}}</code>
-		  				<code>{{this.returns}}</code>
-						<hr />
-		  			{{/}}
-					{{#buttonTitle}}
-						<btn title="{{buttonTitle}}" icon="{{buttonIcon}}" click="{{buttonClick ? buttonClick : ''}}" class="{{buttonColor ? buttonColor : 'blue'}}" />
-					{{/buttonTitle}}
+					<div class="tabs clearfix">
+						<div class="tab {{tab=='methods'? 'active': ''}} animate" on-click='@this.set("tab","methods")'>Methods</div>
+						<div class="tab {{tab=='docs'? 'active': ''}} animate" on-click='@this.set("tab","docs")'>Docs</div>
+					</div>
+					<div class="padded">
+						{{#tab=='docs'}}
+							{{#methods}}
+				  				<p><b>{{this.key}}</b> - {{this.descrip}}</p>
+				  				<code>{{this.example}}</code>
+				  				<code>{{this.returns}}</code>
+								<hr />
+				  			{{/}}
+						{{/}}
+						{{#tab=='methods'}}
+							<b>Total:{{totalMethods}}</b>
+							<ul class="textList">
+								{{#list}}
+					  				<li>{{this.name}}</li>
+					  			{{/}}
+							</ul>
+						{{/}}
+					</div>
 				</div>
 			</div>
 		</div>

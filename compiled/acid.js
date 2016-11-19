@@ -751,7 +751,9 @@
 		//Returns the composition of a list of functions, where each function consumes the return value of the function that follows. In math terms, composing the functions f(), g(), and h() produces f(g(h())).
 		$.flowRight = returnFlow(eachArrayRight);
 
-	//Splits a collection into sets, grouped by the result of running each value through iteratee.
+	/*
+		Splits a collection into sets, grouped by the result of running each value through iteratee.
+	*/
 	$.groupBy = function(array, funct) {
 		return arraySortToObject = ((item, index, object) => {
 			let results = funct(item);
@@ -945,6 +947,20 @@
 	$.smallest = function(item) {
 		return apply(mathNative.min, mathNative, item);
 	};
+	/*
+		Perform alphabetical sort on collection on provided key name
+	*/
+	$.sortAlpha = (collection, key) => {
+		var currentKey,
+			nextKey;
+		collection.sort((current, next) => {
+			currentKey = current[key];
+			nextKey = next[key];
+			return (currentKey < nextKey) ? -1 : (currentKey > nextKey) ? 1 : 0;
+		});
+		return collection;
+	};
+
 	//Uses a binary search to determine the index at which the value should be inserted into the list in order to maintain the list's sorted order.
 	$.sortedIndex = function(array, n) {
 		var min = 0;
@@ -2122,7 +2138,7 @@
 			return node.hasAttribute(n);
 		},
 		//set/get attribute
-		nodeAttribute = $.nodeAttribute = function(node, keys, value) {
+		nodeAttribute = function(node, keys, value) {
 			var results;
 			if (isString(keys)) {
 				if (hasValue(value)) {

@@ -1,13 +1,13 @@
 {
   "name": "Acid",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Utility library for building CWAs (Conscious Web Apps).",
   "keywords": [
-    "acid",
+    "Acid",
     "utility",
-	"lucy",
+	"Lucy",
 	"cwa",
-    "lsd"
+    "LSD"
   ],
   "license": "MIT",
   "main": "index.js",

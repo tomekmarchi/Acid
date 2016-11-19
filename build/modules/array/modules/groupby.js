@@ -1,4 +1,6 @@
-//Splits a collection into sets, grouped by the result of running each value through iteratee.
+/*
+	Splits a collection into sets, grouped by the result of running each value through iteratee.
+*/
 $.groupBy = function (array,funct) {
 	return arraySortToObject = ((item,index,object)=>{
 		let results = funct(item);

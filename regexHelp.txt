@@ -2,4 +2,4 @@
 stringReplace($1,$2)
 
 ([\w\.\[\]]+)\.apply\((.*?)\)
-stringReplace($1,$2)
+stringReplace($1,$2)  
