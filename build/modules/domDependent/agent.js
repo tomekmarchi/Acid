@@ -1,11 +1,8 @@
 //Get useragent info
 var isAgent = $.isAgent = (name) => {
-	return (!name) ? agentInfo : agentInfo[name];
+	return (!name) ? objectKeys(isAgent) : isAgent[name];
 };
 
-var agentInfo = () => {
-	agentInfo.string = toLowerCaseCall(navigator.userAgent);
-	eachArray(splitCall(stringReplaceCall(stringReplaceCall(agentInfo.string, /_/g, '.'), /[#_\,\;\(\)]/g, ''), / |\//), (item) => {
-		isAgent[item] = True;
-	});
-};
+eachArray(splitCall(stringReplaceCall(stringReplaceCall(toLowerCaseCall(navigator.userAgent), /_/g, dotString), /[#_\,\;\(\)]/g, ''), / |\//), (item) => {
+	isAgent[item] = True;
+});

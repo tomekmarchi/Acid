@@ -1,17 +1,36 @@
 What is Acid?
 =======
-Acidjs is an ECMA script utility library for building scalable real-time self-constructing SPAs(single-page applications). What I call an autonomous web app (AWA). Acid embraces a highly modular philosophy in which all files of the system are split up, organized, and called individually when absolutly required. Think of a bridge being formed in front of you while walking across.
+Acid.js is a utility library for building CWAs (Conscious Web Apps). CWAs build themselves based on realtime application demands. Think of a bridge being formed in front of you while walking across. Instead of the entire step being formed little bits of it come only exactly when you need it. Acid embraces a modular philosophy that results in a complete separation of concerns.
 
-Strings,Objects & Arrays
+CWA's have several advantages over modern SPAs  
+ - Scalability for large apps
+ - Real-time
+ - Fine grained self-construction
+ - Less code
+ - Faster development
+ - Streaming apps
+
+Acid Stacks
+=======
+Default Stack - Node , RethinkDB, Lucy, Acid, Ractive & Menrvah
+Mongo Stack - Node , Mongo, Lucy, Acid, React & Menrvah
+
+Menrvah - Coming soon next generation web app framework & platform.
+
+Methods
 -----------------------
-All methods for Strings,Objects and Arrays are available from the root object typically $ and ACID as a fallback. 
+All methods are available from the root object typically $ and ACID as a fallback.
 
 Model, Define & Module
 -----------------------
-In Acid everything is a model (Simple plain objects). Models can be "define" which are compiled models for immediately available objects. Models can also be "modules" which are asynchronously compiled models with built-in import capabilities. Modules can have various files,models and JS objects that are loaded on the fly and compiled into the final model.
+In Acid everything is a model. Models can be created using "define","module","model". Models created using these methods have an info property accessed via "*._".
+
+Module
+-----------------------
+Modules are asynchronously compiled models with built-in import capabilities. Dependencies can be imported and injected into the model's function when invoked.
 
 JS
-
+	//returns a plain model
     $.model('post',{
     	like:(node,event) => {
     		console.log('Post Liked');
@@ -20,20 +39,20 @@ JS
     		console.log('other event launched');
     	}
     });
-    //returns an async module
+    //returns an async model
     $.module('moduleName',{
     	import:['testModel.js'],
-    	import:(testModel) => {
+    	invoke:function(testModel) {
     		var {each,eachObject} = $;
     		each([1,2,3],(item,index)=>{
     			console.log(item,index);
     		});
     	}
     })();
-    //returns a sync module not used for importing scripts
+    //returns a sync model not used for importing scripts
     $.define('moduleName',() => {
     		var {each,eachObject} = $;
-    		each([],(item,index)=>{
+    		each(['a',2],(item,index)=>{
     			console.log(item,index);
     		});
     	})();

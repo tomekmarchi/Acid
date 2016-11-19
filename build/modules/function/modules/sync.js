@@ -1,6 +1,7 @@
 //Launch functions in sync
-$.inSync = function(functions) {
-	return mapArray(functions,(functionObject) =>{
-		return functionObject();
+$.inSync = function(fns, params) {
+	params = ensureArray(params);
+	return mapArray(ensureArray(fns), (item) => {
+		apply(item, params);
 	});
 };

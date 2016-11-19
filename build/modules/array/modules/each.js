@@ -1,7 +1,7 @@
 /*
 	Each Methods
 	Array
-		each,eachwhileFalse,eachWhile,whileLength,eachRight
+		each,eachWhileFalse,eachWhile,whileLength,eachRight
 	Object
 		Each
 	Number
@@ -70,7 +70,7 @@ var safeModeCall = (safeMode) => {
         return results;
     },
     //loop through based on number
-    mapNumber = $.mapNumber = function(start, end, fn) {
+    times = $.times = function(start, end, fn) {
         if (!fn) {
             var fn = end,
                 end = start,

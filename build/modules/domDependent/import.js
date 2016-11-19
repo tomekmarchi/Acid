@@ -41,7 +41,7 @@ var directoryNames = $.importDirectory = (name) => {
 	},
 	orderArgumentObjects = (item) => {
 		var original = item;
-		return isString(item) ? (isFileJS(item) ? getModelName(item) : (isFileCSS(item) ? qsSelector('[href="' + item + '"]') : item = find(item, $), hasValue(item) ? item : find(original, modelMethod))) : item;
+		return isString(item) ? (isFileJS(item) ? getModelName(item) : (isFileCSS(item) ? qsSelector('[href="' + item + '"]') : item = get(item, $), hasValue(item) ? item : get(original, modelMethod))) : item;
 	},
 	setUpModel = (wrapFunct, data) => {
 		objectAssign(wrapFunct, data.invoke);

@@ -14,8 +14,8 @@
 (function(global) {
 	"use strict";
 
-	var $ = (string, object) => {
-		return find(string, object || modelMethod);
+	var $ = function() {
+		return apply(($.super || modelMethod), arguments);
 	};
 	//avoid
 	global.$ = global.ACID = $;
@@ -88,6 +88,8 @@
 		regexSpaceglobal = /\s/g,
 		regexDot = /\./g,
 		regexDash = /-/g,
+		regexToPath = /\.|\[/,
+		regexOpenBracket = /]/g,
 		regexFowardslash = /\//g,
 		regexUnderscore = /_/g,
 		isJSRegex = /\.js$/,
@@ -467,19 +469,63 @@
 	*/
 
 	//create an array from a range
-	var createRange = $.createRange = function(start, stop, increment) {
-		var array = [];
-		increment = increment || 1;
-		while (start < stop) {
+	var range = $.range = function(start, stop, increment = 1, fliped) {
+		if (increment === 0) {
+			return sameRange(start, stop);
+		}
+		if (!hasValue(stop)) {
+			stop = start;
+			start = 0;
+		}
+		var array = (fliped) ? [] : [start];
+		if (start > stop) {
+			while (start > stop) {
+				start = start - increment;
+				if (start > stop) {
+					pushArray(array, start);
+				}
+			}
+		} else if (start < stop) {
+			while (start < stop) {
+				start = start + increment;
+				if (start < stop) {
+					pushArray(array, start);
+				}
+			}
+		}
+		if (fliped) {
 			pushArray(array, start);
-			start = start + increment;
 		}
 		return array;
 	};
 
+	var sameRange = (start, stop) => {
+		stop = (stop < 0) ? stop * -1 : stop;
+		var array = [],
+			i = 1;
+		while (i < stop) {
+			i++;
+			pushArray(array, start);
+		}
+		return array;
+	};
+
+	var rangeRight = $.rangeRight = function(start = 0, stop, increment) {
+		if (increment === 0) {
+			return sameRange(start, stop);
+		}
+		if (!stop) {
+			stop = start;
+			start = 0;
+		} else if (increment < 0 && start > stop) {
+			increment = increment * -1;
+		}
+		return range(stop, start, increment, True);
+	}
+
 	//create an array from a range
-	$.createRangeTo = function(start, stop, increment) {
-		return createRange(start, stop + (increment || 1), increment);
+	$.rangeTo = function(start, stop, increment) {
+		return range(start, stop + (increment || 1), increment);
 	};
 
 	//Creates an array excluding all values of the provided arrays using SameValueZero for equality comparisons.
@@ -504,7 +550,7 @@
 	/*
 		Each Methods
 		Array
-			each,eachwhileFalse,eachWhile,whileLength,eachRight
+			each,eachWhileFalse,eachWhile,whileLength,eachRight
 		Object
 			Each
 		Number
@@ -573,7 +619,7 @@
 			return results;
 		},
 		//loop through based on number
-		mapNumber = $.mapNumber = function(start, end, fn) {
+		times = $.times = function(start, end, fn) {
 			if (!fn) {
 				var fn = end,
 					end = start,
@@ -624,24 +670,57 @@
 		mapWhile = $.mapWhile = whileGenerator(mapArray, False);
 
 	/*
-	   Determines if the arrays are equal by doing a shallow comparison of their elements using strict equality.
+	 	Determines if the arrays are equal by doing a shallow comparison of their elements using strict equality.
 	*/
-	$.isEqualArray = function(item, array) {
+	var isEqualArray = $.isEqualArray = (original, array) => {
 		var result = True;
-		if (getLength(array) !== getLength(item)) {
+		if (getLength(array) !== getLength(original)) {
 			result = False;
-		} else if (array === item) {
-			result = True;
 		} else {
-			eachArray(array, (item, index, length, safe) => {
-				if (array[index] !== item[index]) {
-					safe.halt = true;
+			eachWhile(array, (item, index) => {
+				if (original[index] !== item) {
 					result = False;
+					return result;
 				}
-			}, true);
+			});
 		}
 		return result;
 	};
+
+	/*
+		Performs a deep comparison between object and source to determine if object contains equivalent property values.
+	*/
+
+	var isEqualArrayDeep = $.isEqualArrayDeep = (original, array) => {
+		var result = True;
+		if (getLength(array) !== getLength(original)) {
+			result = False;
+		} else {
+			eachWhile(array, (item, index) => {
+				result = isMatch(item, original[index])
+				return result;
+			});
+		}
+		return result;
+	};
+
+	var find = $.find = (array, func) => {
+			var result;
+			eachWhileFalse(array, (item, key) => {
+				return result = func(item, key);
+			});
+			return result;
+		},
+		findItem = $.findItem = (array, index, name = 'id', returnKey) => {
+			return find(array, (item, key) => {
+				if (item[name] == index) {
+					return (returnKey) ? key : item;
+				}
+			});
+		},
+		findIndex = $.findIndex = (array, index, name = 'id') => {
+			return findItem(array, index, name, True);
+		};
 
 	//Returns the first element of an array. Passing num will return the first n elements of the array.
 	var firstItem = $.first = function(array, num) {
@@ -679,9 +758,9 @@
 	};
 
 	//Given a list, and an iteratee function that returns a key for each element in the list (or a property name), returns an object with an index of each item. Just like groupBy, but for when you know your keys are unique.
-	$.indexBy = function(array, key) {
+	$.indexBy = function(array, index) {
 		return arraySortToObject = ((item, key, object) => {
-			object[item[key]] = item;
+			object[item[index]] = item;
 		}, array);
 	};
 
@@ -1080,7 +1159,7 @@
 			return arrayLastItem(splitCall(string, slashString));
 		},
 		getModelName = $.getModelName = function(string) {
-			return find(arrayLastItem(splitCall(string, slashString)).replace(/\.js$/, ''), modelMethod);
+			return get(arrayLastItem(splitCall(string, slashString)).replace(/\.js$/, ''), modelMethod);
 		};
 
 	$.compactKeys = (object) => {
@@ -1137,6 +1216,29 @@
 		};
 
 	/*
+		Perform check on object to ensure all keys listed are present on the object.
+	*/
+	var hasKeys = $.hasKeys = (object, keys) => {
+		var flag = False;
+		eachWhile(keys, (key) => {
+			flag = hasValue(object[key]);
+			return flag
+		});
+		return flag;
+	};
+	/*
+		Perform check on object to ensure any of the keys listed are present on the object.
+	*/
+	var hasAnyKeys = $.hasAnyKeys = (object, keys) => {
+		var flag = False;
+		eachWhileFalse(keys, (key) => {
+			flag = hasValue(object[key]);
+			return flag
+		});
+		return flag;
+	};
+
+	/*
 		Returns a copy of the object where the keys have become the values and the values the keys. For this to work, all of your object's values should be unique and string serializable.
 	*/
 	var invert = $.invert = (thisObject, object) => {
@@ -1145,6 +1247,63 @@
 			object[item] = key;
 		});
 		return object;
+	};
+
+	/*
+		Performs a deep comparison on listed property values
+		props will default to first objects
+	*/
+	var isPropsEqual = $.isPropsEqual = (object, compareObject, props) => {
+		var result = False;
+		eachWhile(props || objectKeys(object), (key) => {
+			result = isMatch(object[key], compareObject[key])
+			return result;
+		});
+		return result;
+	};
+
+	/*
+		Creates a function that performs a partial deep comparison between a given object and source, returning true if the given object has equivalent property values, else false.
+	*/
+	$.matches = (object) => {
+		var objectsKeys = objectKeys(object);
+		return (compareObject) => {
+			return isPropsEqual(object, compareObject, objectsKeys);
+		};
+	};
+
+	/*
+		Performs a deep comparison between object and source to determine if object contains equivalent property values.
+	*/
+
+	var isPropsEqualDeep = $.isPropsEqualDeep = (object, compareObject) => {
+		var result = False;
+		if (isEqualArray(objectKeys(object), objectKeys(compareObject))) {
+			eachWhile(objectKeys(object), (key) => {
+				result = isMatch(object[key], compareObject[key])
+				return result;
+			});
+		}
+		return result;
+	};
+
+	/*
+		Performs a deep comparison between object and source to determine if object contains equivalent property values.
+	*/
+
+	var isMatch = $.isMatch = (object, compareObject) => {
+		var result = False;
+		if (object === compareObject) {
+			result = True;
+		}
+		if (toStringCall(object) === toStringCall(compareObject)) {
+			if (isPlainObject(object)) {
+				result = isPropsEqualDeep(object, compareObject);
+			} else if (isArray(object)) {
+				result = isEqualArrayDeep(object, compareObject);
+			}
+		}
+		return result;
 	};
 
 	/*
@@ -1308,11 +1467,27 @@
 
 	*/
 
+	$.method = (string) => {
+		return (item) => {
+			return get(isArray(string) ? joinArray(string, dotString) : string, item);
+		};
+	};
+
 	//Creates a function that negates the result of the predicate func. The func predicate is invoked with the this binding and arguments of the created function.
 	$.negate = (func) => {
 		return function() {
 			return apply(func, func, toArray(arguments)) ? False : True;
 		};
+	};
+
+	$.nthArg = (num) => {
+		return function() {
+			var args = arguments;
+			if (num < 0) {
+				num = args.length - (num * -1);
+			}
+			return args[num];
+		}
 	};
 
 	//Creates a function that is restricted to execute func once. Repeat calls to the function will return the value of the first call. The func is executed with the this binding of the created function.
@@ -1377,9 +1552,10 @@
 	*/
 
 	//Launch functions in sync
-	$.inSync = function(functions) {
-		return mapArray(functions, (functionObject) => {
-			return functionObject();
+	$.inSync = function(fns, params) {
+		params = ensureArray(params);
+		return mapArray(ensureArray(fns), (item) => {
+			apply(item, params);
 		});
 	};
 
@@ -1402,18 +1578,17 @@
 
 	//debounce function
 	$.debounce = (original, time) => {
-		var timeout = False;
-
-		function fn() {
-			if (timeout !== False) {
-				clearTimer(timeout);
-			}
-			var args = toArray(arguments);
-			timeout = timerMethod(function() {
-				apply(original, fn, args);
-				timeout = False;
-			}, time);
-		}
+		var timeout = False,
+			fn = () => {
+				if (timeout !== False) {
+					clearTimer(timeout);
+				}
+				var args = toArray(arguments);
+				timeout = timerMethod(function() {
+					apply(original, fn, args);
+					timeout = False;
+				}, time);
+			};
 
 		fn.clear = function() {
 			if (timeout) {
@@ -1427,22 +1602,22 @@
 	//throttle function
 	$.throttle = function(func, time) {
 		var timeout = False,
-			shouldThrottle;
-
-		function fn() {
-			if (timeout) {
-				shouldThrottle = True;
-				return;
-			}
-			var args = toArray(arguments);
-			apply(func, fn, args);
-			timeout = timerMethod(function() {
-				if (shouldThrottle) {
-					apply(func, fn, args);
+			shouldThrottle,
+			fn = () => {
+				if (timeout) {
+					shouldThrottle = True;
+					return;
 				}
-				timeout = False;
-			}, time);
-		}
+				var args = toArray(arguments);
+				apply(func, fn, args);
+				timeout = timerMethod(function() {
+					if (shouldThrottle) {
+						apply(func, fn, args);
+					}
+					timeout = False;
+				}, time);
+			};
+
 		fn.clear = () => {
 			clearTimer(timeout);
 			timeout = False;
@@ -1452,7 +1627,7 @@
 
 	function generateClear(method, clearMethod) {
 		return () => {
-			mapNumber(0, method(() => {}, 1000), (index) => {
+			times(0, method(() => {}, 1000), (index) => {
 				clearMethod(index);
 			});
 		};
@@ -1462,8 +1637,13 @@
 	$.clearIntervals = generateClear(intervalMethod, clearInterval);
 
 
-	$.inAsync = function(fns) {
-		eachArray(ensureArray(fns), asyncMethod);
+	$.inAsync = function(fns, params) {
+		params = ensureArray(params);
+		eachArray(ensureArray(fns), (item) => {
+			asyncMethod(() => {
+				apply(item, params);
+			});
+		});
 	};
 
 	var returnWraped = (method, flipTrue) => {
@@ -1635,7 +1815,7 @@
 		Navigate down an object's chain via a string.
 
 	*/
-	var find = $.get = (name, obj) => {
+	var get = $.get = (name, obj) => {
 		obj = obj || $;
 		eachWhile(splitCall(arrayLastItem(splitCall(name, slashString)), dotString), (item, index) => {
 			obj = obj[item];
@@ -1670,7 +1850,7 @@
 				}
 			});
 		}
-		return find(modelName, modelMethod);
+		return get(modelName, modelMethod);
 	};
 
 	var promise = $.promise = (callback) => {
@@ -1734,6 +1914,96 @@
 			});
 		};
 
+	$.matchesProperty = (path, srcValue) => {
+		return function(item) {
+			return get(path, item) === srcValue;
+		};
+	};
+
+	/*
+		Creates a function that checks if all of the predicates return truthy when invoked with the arguments it receives.
+		Arguments
+
+		[predicates=[_.identity]] (...(Function|Function[])): The predicates to check.
+		Returns
+
+		(Function): Returns the new function.
+	*/
+	$.overEvery = function(array) {
+		return function() {
+			var result,
+				args = arguments;
+			eachWhile(array, (item) => {
+				return apply(item, args);
+			});
+			return !!result;
+		}
+	};
+	/*
+		Creates a function that invokes iteratees with the arguments it receives and returns their results.
+	*/
+	$.over = function(array) {
+		return function() {
+			var args = arguments;
+			return mapArray(array, (item) => {
+				return apply(item, args);
+			});
+		}
+	};
+
+	/*
+		This method returns an empty object.
+		$.times(2, $.stubObject);
+		// => [{}, {}]
+	*/
+	$.stubObject = () => {
+		return {};
+	};
+	/*
+		This method returns an empty array.
+		$.times(2, $.stubArray);
+		// => [[], []]
+	*/
+	$.stubArray = () => {
+		return [];
+	};
+	/*
+		This method returns an empty string.
+		$.times(2, $.stubString);
+		// => ['', '']
+	*/
+	$.stubString = () => {
+		return '';
+	};
+	/*
+		This method returns false.
+		$.times(2, $.stubFalse);
+		// => [false, false]
+	*/
+	$.stubFalse = () => {
+		return False;
+	};
+	/*
+		This method returns True.
+		$.times(2, $.stubTrue);
+		// => [true, true]
+	*/
+	$.stubTrue = () => {
+		return True;
+	};
+	/*
+		This method returns undefined.
+		$.times(2, _.noop);
+		// => [undefined, undefined]
+	*/
+	$.noop = () => {
+		return undefinedNative;
+	};
+
+	$.toPath = (string) => {
+		return string.replace(regexOpenBracket, emptyString).split(regexToPath);
+	};
+
 	var clsSelector = $.getClass = bindTo(documentNode.getElementsByClassName, documentNode),
 		tagSelector = $.getTag = bindTo(documentNode.getElementsByTagName, documentNode);
 
@@ -1766,15 +2036,12 @@
 
 	//Get useragent info
 	var isAgent = $.isAgent = (name) => {
-		return (!name) ? agentInfo : agentInfo[name];
+		return (!name) ? objectKeys(isAgent) : isAgent[name];
 	};
 
-	var agentInfo = () => {
-		agentInfo.string = toLowerCaseCall(navigator.userAgent);
-		eachArray(splitCall(stringReplaceCall(stringReplaceCall(agentInfo.string, /_/g, '.'), /[#_\,\;\(\)]/g, ''), / |\//), (item) => {
-			isAgent[item] = True;
-		});
-	};
+	eachArray(splitCall(stringReplaceCall(stringReplaceCall(toLowerCaseCall(navigator.userAgent), /_/g, dotString), /[#_\,\;\(\)]/g, ''), / |\//), (item) => {
+		isAgent[item] = True;
+	});
 
 	var raf = $.raf = requestAnimationFrame.bind(selfWindow),
 		caf = $.caf = cancelAnimationFrame.bind(selfWindow);
@@ -1969,7 +2236,7 @@
 		},
 		orderArgumentObjects = (item) => {
 			var original = item;
-			return isString(item) ? (isFileJS(item) ? getModelName(item) : (isFileCSS(item) ? qsSelector('[href="' + item + '"]') : item = find(item, $), hasValue(item) ? item : find(original, modelMethod))) : item;
+			return isString(item) ? (isFileJS(item) ? getModelName(item) : (isFileCSS(item) ? qsSelector('[href="' + item + '"]') : item = get(item, $), hasValue(item) ? item : get(original, modelMethod))) : item;
 		},
 		setUpModel = (wrapFunct, data) => {
 			objectAssign(wrapFunct, data.invoke);

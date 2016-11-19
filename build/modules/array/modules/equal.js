@@ -1,19 +1,34 @@
- /*
-    Determines if the arrays are equal by doing a shallow comparison of their elements using strict equality.
- */
-  $.isEqualArray = function(item,array) {
-	  var result=True;
-	  if (getLength(array) !== getLength(item)) {
-          result=False;
-      }else if (array === item) {
-          result=True;
-      }else{
-		  eachArray(array,(item,index,length,safe)=>{
-			  if (array[index] !== item[index]) {
-				  	safe.halt=true;
-					result = False;
-				}
-		  },true);
-	  }
-      return result;
-  };
+/*
+ 	Determines if the arrays are equal by doing a shallow comparison of their elements using strict equality.
+*/
+var isEqualArray = $.isEqualArray = (original, array) =>{
+	var result = True;
+	if (getLength(array) !== getLength(original)) {
+		result = False;
+	} else {
+		eachWhile(array,(item, index) => {
+			if (original[index] !== item) {
+				result = False;
+				return result;
+			}
+		});
+	}
+	return result;
+};
+
+/*
+	Performs a deep comparison between object and source to determine if object contains equivalent property values.
+*/
+
+var isEqualArrayDeep = $.isEqualArrayDeep = (original, array) =>{
+	var result = True;
+	if (getLength(array) !== getLength(original)) {
+		result = False;
+	} else {
+		eachWhile(array,(item, index) => {
+			result = isMatch(item,original[index])
+			return result;
+		});
+	}
+	return result;
+};

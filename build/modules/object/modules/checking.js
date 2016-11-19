@@ -81,5 +81,5 @@ var objectStringGenerate = function (name) {
 		return arrayLastItem(splitCall(string, slashString));
 	},
 	getModelName = $.getModelName = function (string) {
-		return find(arrayLastItem(splitCall(string, slashString)).replace(/\.js$/, ''), modelMethod);
+		return  get(arrayLastItem(splitCall(string, slashString)).replace(/\.js$/, ''), modelMethod);
 	};

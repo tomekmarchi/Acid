@@ -5,6 +5,7 @@
 		notify = require('gulp-notify'),
 		concat = require('gulp-concat'),
 		lr = require('tiny-lr')(),
+		gzip = require('gulp-gzip'),
 		livereload = require('connect-livereload'),
 		express = require('express'),
 		babel = require('gulp-babel'),
@@ -61,6 +62,8 @@
 
 			'build/modules/native/*.js',
 
+			'build/modules/utils/*.js',
+
 			'build/modules/domDependent/selector/*.js',
 			'build/modules/domDependent/*.js',
 
@@ -87,7 +90,7 @@
 					"plugins": [
 						["transform-strict-mode", {
 							"strict": false
-						}]
+						}],"minify-empty-function"
 					],
 					"presets": ["babili"],
 					comments: false,
@@ -95,7 +98,7 @@
 					ast:false,
 					compact: true,
 					minified:true
-				})).pipe(gulp.dest('compiled')).pipe(notify(() => {
+				})).pipe(gulp.dest('compiled')).pipe(concat('acidMin')).pipe(gzip()).pipe(gulp.dest('compiled')).pipe(notify(() => {
 					return 'Acid Minified Saved';
 				}));
 

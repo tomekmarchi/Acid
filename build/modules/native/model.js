@@ -6,5 +6,5 @@ var modelMethod = $.model = (modelName, object) => {
 			}
 		});
 	}
-	return find(modelName, modelMethod);
+	return get(modelName, modelMethod);
 };
