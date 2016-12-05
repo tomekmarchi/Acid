@@ -1,5 +1,5 @@
 var $ = function(name,data) {
-	return (cacheSuper || data? data.import? moduleMethod : modelMethod : get)(name,data || modelMethod);
+	return (cacheSuper? cacheSuper : data && data.import? moduleMethod : modelMethod)(name,data);
 },
 cacheSuper;
 //avoid

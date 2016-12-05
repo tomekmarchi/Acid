@@ -15,7 +15,7 @@
 	"use strict";
 
 	var $ = function(name, data) {
-			return (cacheSuper || data ? data.import ? moduleMethod : modelMethod : get)(name, data || modelMethod);
+			return (cacheSuper ? cacheSuper : data && data.import ? moduleMethod : modelMethod)(name, data);
 		},
 		cacheSuper;
 	//avoid
@@ -1764,7 +1764,7 @@
 
 
 	//console.log
-	var acidConsole = $.console = (data, theme) => {
+	var acidConsole = $.cnsl = (data, theme) => {
 			data = isString(data) ? data : stringify(data);
 			apply(consoleNative, ['%c' + data, `${logTheme[theme]}font-size:13px;padding:2px 5px;border-radius:2px;`]);
 		},
@@ -1772,9 +1772,10 @@
 			return `color:${color};background:${bg};`;
 		},
 		logTheme = {
-			notify: generateLogTheme('#01c690', '#0e2a36'),
-			warning: generateLogTheme('#ebb227', '#262626'),
-			important: generateLogTheme('#ffe4ea', '#dc3153')
+			notify: generateLogTheme('#fff', '#651FFF'),
+			warning: generateLogTheme('#000', '#FFEA00'),
+			important: generateLogTheme('#fff', '#E91E63'),
+			alert: generateLogTheme('#fff', '#f44336')
 		},
 		addTheme = $.addConsoleTheme = (name, color, bg) => {
 			logTheme[name] = generateLogTheme(color, bg);
@@ -1836,13 +1837,24 @@
 		return obj;
 	};
 
-	//for inline JS object notion.
-	var inlineJson = $.iJson = (str) => {
+	/*
+		Create a new function from a string and bind it to itself.
+			Return
+	*/
+	var newFunction = (string, optional) => {
 		try {
-			return new functionNative(`"use strict";return ${str};`)();
+			var funct = new functionNative('"use strict";' + string).bind(optional || funct);
+			return funct;
 		} catch (e) {
 			return False;
 		}
+	};
+	$.newFunction = (string, optional) => {
+		return newFunction(string + 'return this;', optional || {});
+	};
+	//for inline JS object notion.
+	var inlineJson = $.iJson = (string) => {
+		return newFunction('return ' + string)();
 	};
 
 	//convert from json string to json object cache it to use across lib
@@ -1856,11 +1868,12 @@
 
 	var modelMethod = $.model = (modelName, object) => {
 		if (hasValue(object)) {
-			modelMethod[modelName] = assignDeep(isFunction(object) ? bindTo(object, object) : bindAll(object, object, true), {
+			modelMethod[modelName] = assignDeep(isFunction(object) ? object : bindAll(object, object, true), {
 				_: {
 					name: modelName
 				}
 			});
+			modelMethod[modelName]
 		}
 		return get(modelName, modelMethod);
 	};
