@@ -1,9 +1,13 @@
-(function () {
+(function() {
 	'use strict';
 	var gulp = require('gulp'),
 		beautify = require('gulp-beautify'),
 		notify = require('gulp-notify'),
 		concat = require('gulp-concat'),
+		lucy = require('Lucy')(),
+		{
+			last
+		} = lucy,
 		lr = require('tiny-lr')(),
 		gzip = require('gulp-gzip'),
 		livereload = require('connect-livereload'),
@@ -16,7 +20,7 @@
 		//start up server plus livereload
 		livereload_start = () => {
 			app.use(livereload()); //use livereload in express
-			app.use(express.static(__dirname+'/docs')); //dir of project
+			app.use(express.static(__dirname + '/docs')); //dir of project
 			app.listen(EXPRESS_PORT); //web port
 			lr.listen(LIVERELOAD_PORT); //listen port for websocket live reload
 		},
@@ -31,6 +35,7 @@
 				}
 			});
 		},
+		docsLocations = ['package.json', 'README.md', 'LICENSE'],
 		//file locations in order
 		locations = [
 			'build/start/credits.js',
@@ -75,7 +80,7 @@
 		],
 		locations_length = locations.length,
 		//compile the acid library
-		compile_acid = () => {
+		compileAcid = () => {
 			gulp.src(locations)
 				//compile source
 				.pipe(concat('acid.js'))
@@ -84,32 +89,41 @@
 					indent_with_tabs: true
 				}))
 				//make it fabulous
-				.pipe(gulp.dest('compiled')).pipe(notify(function () {
+				.pipe(gulp.dest('compiled')).pipe(notify(function() {
 					return 'Acid Beautified Saved';
 				})).pipe(concat('acidMin.js')).pipe(babel({
 					"plugins": [
 						["transform-strict-mode", {
 							"strict": false
-						}],"minify-empty-function"
+						}], "minify-empty-function"
 					],
 					"presets": ["babili"],
 					comments: false,
-					highlightCode:false,
-					ast:false,
+					highlightCode: false,
+					ast: false,
 					compact: true,
-					minified:true
+					minified: true
 				}))
 				.pipe(gulp.dest('compiled'))
 				.pipe(gulp.dest('docs'))
+				.pipe(concat('index.js'))
+				.pipe(gulp.dest('npm'))
 				.pipe(concat('acidMin')).pipe(gzip()).pipe(gulp.dest('compiled'))
 				.pipe(notify(() => {
+					compileDocsOnly();
 					return 'Acid Minified Saved';
 				}));
 
+		},
+		compileDocsOnly = () => {
+			gulp.src(docsLocations).pipe(gulp.dest('npm')).pipe(notify(function(file) {
+				var filename = last(file.base.split('/'));
+				return 'NPM Compiled > ' + filename;
+			}));
 		};
 	//compile acid
 	gulp.task('scripts', () => {
-		return compile_acid();
+		return compileAcid();
 	});
 	//start livereload
 	gulp.task('default', ['scripts'], () => {
@@ -117,7 +131,7 @@
 		livereload_start();
 		//watch files then compile and notify lr
 		gulp.watch(locations, (event) => {
-			compile_acid(event);
+			compileAcid(event);
 			notifyLivereload(event);
 		});
 		//watch docs then compile and notify lr
@@ -125,5 +139,9 @@
 		gulp.watch('site/styles/**', notifyLivereload);
 		gulp.watch('site/scripts/**', notifyLivereload);
 		gulp.watch('site/demos/**', notifyLivereload);
+
+		gulp.watch(docsLocations, (event) => {
+			compileDocsOnly(event);
+		});
 	});
 })();

@@ -38,8 +38,8 @@
 		mathNative = Math,
 		booleanNative = Boolean,
 		undefinedNative = undefined,
-		weakMap = global.WeakMap,
-		mapNative = global.Map,
+		weakMap = WeakMap,
+		mapNative = Map,
 		numberNative = Number,
 		regExp = RegExp,
 		parseIntNative = parseInt,
@@ -222,7 +222,6 @@
 
 	//acid platform information
 	$.info = {
-		version: 2,
 		host: {
 			// EX http https
 			protocol: protocol,
@@ -1600,7 +1599,7 @@
 	//debounce function
 	$.debounce = (original, time) => {
 		var timeout = False,
-			fn = () => {
+			fn = function() {
 				if (timeout !== False) {
 					clearTimer(timeout);
 				}
@@ -1624,7 +1623,7 @@
 	$.throttle = function(func, time) {
 		var timeout = False,
 			shouldThrottle,
-			fn = () => {
+			fn = function() {
 				if (timeout) {
 					shouldThrottle = True;
 					return;
@@ -1647,8 +1646,8 @@
 	};
 
 	function generateClear(method, clearMethod) {
-		return () => {
-			times(0, method(() => {}, 1000), (index) => {
+		return (max) => {
+			times(0, method(() => {}, max || 1000), (index) => {
 				clearMethod(index);
 			});
 		};

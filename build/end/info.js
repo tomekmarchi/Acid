@@ -1,6 +1,5 @@
 //acid platform information
 $.info = {
-	version: 2,
 	host : {
 		// EX http https
 		protocol: protocol,
