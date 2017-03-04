@@ -42,11 +42,10 @@ Modules are asynchronously compiled models with built-in import capabilities. De
 	- Menrvah (Coming soon)
 - Default Stack
 	- Node
-	- RethinkDB or Mongo
+	- RethinkDB
 	- Lucy
 	- Acid
-	- Ractive, React, Angular, Polymer, Vue
-	- Co
+	- Ractive
 
 ##### Menrvah
 Coming soon next generation web app framework & platform.
