@@ -2,7 +2,7 @@
 $.countBy = function(array, funct) {
     var object = {},
 		result;
-    mapObject(array, (item) => {
+    eachArray(array, (item) => {
         result = funct(item);
         if (!object[result]) {
             object[result] = 0;
@@ -10,6 +10,26 @@ $.countBy = function(array, funct) {
         object[result]++;
     });
     return object;
+};
+
+$.countKey = function(array,keyName){
+	var count = 0;
+	eachArray(array, (item) => {
+        if(item[keyName]){
+			count++;
+		}
+    });
+	return count;
+};
+
+$.countNoKey = function(array,keyName){
+	var count = 0;
+	eachArray(array, (item) => {
+        if(!item[keyName]){
+			count++;
+		}
+    });
+	return count;
 };
 
 /*

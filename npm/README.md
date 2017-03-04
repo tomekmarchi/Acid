@@ -30,43 +30,10 @@ Modules are asynchronously compiled models with built-in import capabilities. De
     	}
     }); //returns a plain model
 
-	/*
-		Requires testModel.js file &
-		injects $.model.testModel into function's (invoke) arguments
-	*/
-    $.module('asyncModelName',{
-    	import:['testModel.js'],
-    	invoke:function(testModel) {
-    		var {each,eachObject} = $;
-    		each([1,2,3],(item,index)=>{
-    			console.log(item,index);
-    		});
-    	}
-    })(); //returns an async model
-
-	/*
-		Follows object path of model.core on $ ($.model.core) &
-		injects $.model.core into function's (invoke) arguments
-	*/
-	$.define('syncModelName',{
-    	import:['model.core'],
-    	invoke:function(coreModel) {
-    		var {each,eachObject} = $;
-    		each([1,2,3],(item,index)=>{
-    			console.log(item,index);
-    		});
-    	}
-    })(); //returns an async model
-
 	//Example file import. $.require imports must have file extension.
-    $.require('post.js',function(post){
-		//post model is loaded
-	});
-
-	//Example js file import. File extension .js is automatically injected.
-    $.ensure('post',function(post){
-		//post model is loaded
-	});
+  $.require({
+    post:'post.js'
+  });
 
 ##### Acid Stacks
 - CWA Stack

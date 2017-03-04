@@ -1,10 +1,10 @@
-var $ = function(name,data) {
-	return (cacheSuper? cacheSuper : data && data.import? moduleMethod : modelMethod)(name,data);
-},
-cacheSuper;
+const $ = function (name, data) {
+  return modelMethod(name, data);
+};
+let cacheSuper,
+  corePath;
 //avoid
 global.$ = global.ACID = $;
-
-$.super = (method)=>{
-	cacheSuper = method;
+$.super = (method) => {
+  cacheSuper = method;
 };

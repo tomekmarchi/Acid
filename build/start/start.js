@@ -1,2 +1,2 @@
-(function (global) {
+((global) => {
 	"use strict";
