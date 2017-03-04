@@ -51,12 +51,12 @@ var objectStringGenerate = function (name) {
 	has = $.has = (string, search) => {
 		return (isArray(search)) ? apply(string.includes, string, search) : string.includes(search);
 	},
-	isLength = $.isLength = function (obj) {
-		return !getLength(obj);
+	hasLength = $.hasLength = function (obj) {
+		return !!getLength(obj);
 	},
 	isEmpty = $.isEmpty = function (obj) {
 		if(isString(obj) || isArray(obj)){
-			return isLength(obj)
+			return hasLength(obj);
 		}else if(isPlainObject(obj)){
 			return !objectSize(obj);
 		}
