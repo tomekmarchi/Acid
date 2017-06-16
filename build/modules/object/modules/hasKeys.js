@@ -1,22 +1,22 @@
 /*
 	Perform check on object to ensure all keys listed are present on the object.
 */
-var hasKeys = $.hasKeys = (object, keys) => {
-	var flag = False;
-	eachWhile(keys,(key)=>{
-		flag = hasValue(object[key]);
-		return flag
-	});
-	return flag;
+const hasKeys = (object, keys) => {
+  let flag = false;
+  eachWhile(keys, (key) => {
+    flag = hasValue(object[key]);
+    return flag;
+  });
+  return flag;
 };
+$.hasKeys = hasKeys;
 /*
 	Perform check on object to ensure any of the keys listed are present on the object.
 */
-var hasAnyKeys = $.hasAnyKeys = (object, keys) => {
-	var flag = False;
-	eachWhileFalse(keys,(key)=>{
-		flag = hasValue(object[key]);
-		return flag
-	});
-	return flag;
+const hasAnyKeys = (object, keys) => {
+  const flag = keys.find((item) => {
+    return hasValue(object[item]);
+  });
+  return flag;
 };
+$.hasAnyKeys = hasAnyKeys;

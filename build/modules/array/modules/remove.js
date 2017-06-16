@@ -19,13 +19,14 @@
  * remove(array,[2, 5]);
  * // -> [4]
  */
-$.remove = function (array, args) {
-	var isFN = isFunction(args);
-	args = ensureArray(args);
-	eachArray(array, (item, index) => {
-		if ((isFN) ? args(item) : has(args, item)) {
-			spliceArray(array, index, 1);
-		}
-	});
-	return array;
+const remove = function (array, functArgs) {
+  const isFN = isFunction(args);
+  const args = ensureArray(functArgs);
+  eachArray(array, (item, index) => {
+    if ((isFN) ? args(item) : has(args, item)) {
+      spliceArray(array, index, 1);
+    }
+  });
+  return array;
 };
+$.remove = remove;

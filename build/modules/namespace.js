@@ -1,10 +1,10 @@
-const $ = function (name, data) {
-  return modelMethod(name, data);
+let cacheSuper;
+let corePath;
+const $ = (...args) => {
+  return cacheSuper(...args);
 };
-let cacheSuper,
-  corePath;
-//avoid
-global.$ = global.ACID = $;
+global.$ = $;
+global.ACID = $;
 $.super = (method) => {
   cacheSuper = method;
 };

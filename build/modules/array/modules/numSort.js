@@ -11,6 +11,7 @@
    * console.log(files);
    * // -> [0, 1, 2, 3]
    */
-$.numSort = function (array) {
-	return array.sort(numericalCompare);
+const numSort = function (array) {
+  return array.sort(numericalCompare);
 };
+$.numSort = numSort;

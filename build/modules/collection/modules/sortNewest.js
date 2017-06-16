@@ -1,6 +1,6 @@
-const sortNewest = $.sortNewest = function (arrayArg, key, pureMode) {
+const sortNewest = (arrayArg, key, pureMode) => {
   const array = (pureMode) ? arrayArg : [...arrayArg];
-  return array.sort((previous, next) => {
+  return arraySort(array, (previous, next) => {
     if (!next[key]) {
       return -1;
     } else if (!previous[key]) {
@@ -13,6 +13,7 @@ const sortNewest = $.sortNewest = function (arrayArg, key, pureMode) {
     return 0;
   });
 };
+$.sortNewest = sortNewest;
 $.getNewest = (array, key) => {
   return sortNewest(array, key)[0];
 };

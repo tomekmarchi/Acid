@@ -1,15 +1,16 @@
-//Pluck an attribute from each object in an array.
-var pluck = $.pluck = function(array, pluckThis) {
-	if (isArray(pluckThis)) {
-		var pluckMethod = (item, index) => {
-			return arraySortToObject((pluckItem, pluckKey, object) => {
-				object[pluckItem] = item[pluckItem];
-			}, pluckThis);
-		};
-	} else {
-		var pluckMethod = (item, index) => {
-			return item[pluckThis];
-		};
-	}
-	return mapArray(array, pluckMethod);
+// Pluck an attribute from each object in an array.
+const pluck = function (array, pluckThis) {
+  let pluckMethod;
+  if (isArray(pluckThis)) {
+    pluckMethod = (item, index) => arraySortToObject((pluckItem, pluckKey, object) => {
+      object[pluckItem] = item[pluckItem];
+    }, pluckThis);
+  } else {
+    pluckMethod = (item) => {
+      const result = item[pluckThis];
+      return result;
+    };
+  }
+  return mapArray(array, pluckMethod);
 };
+$.pluck = pluck;

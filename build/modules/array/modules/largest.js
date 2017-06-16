@@ -1,4 +1,3 @@
-//get largest number from array
-$.largest =  (array) => {
-	return apply(mathNativeMax,mathNative, array);
-};
+// get largest number from array
+const largest = array => apply(mathNativeMax, mathNative, array);
+$.largest = largest;

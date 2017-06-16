@@ -1,23 +1,24 @@
-$.findSum = function(array, sum) {
-	var len = getLength(array),
-		returnedObject = {},
-		item,
-		end,
-		check;
+const findSum = function (array, sum) {
+  const returnedObject = {};
+  const len = getLength(array);
+  let item;
+  let end;
+  let check;
 
-	for (var i = 0; i < len; i++) {
-		item = array[i];
-		end = sum - item;
-		check = array.indexOf(end);
+  for (let i = 0; i < len; i++) {
+    item = array[i];
+    end = sum - item;
+    check = array.indexOf(end);
 
-		if (check != -1 && check != i) {
-			returned.start = item;
-			returned.end = end;
-			returned.startIndex = i;
-			returned.endIndex = check;
-			break;
-		}
-	}
+    if (check !== -1 && check !== i) {
+      returnedObject.start = item;
+      returnedObject.end = end;
+      returnedObject.startIndex = i;
+      returnedObject.endIndex = check;
+      break;
+    }
+  }
 
-	return returnedObject;
+  return returnedObject;
 };
+$.findSum = findSum;

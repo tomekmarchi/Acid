@@ -1,5 +1,5 @@
 //add paramaters to a URL
-var addParam = $.addParam = (url, newItem) => {
+const addParam = $.addParam = (url, newItem) => {
 	if (getLength(url) && has(url, questionMarkString)) {
 		if (lastItem(url) === questionMarkString) {
 			url = url + newItem;

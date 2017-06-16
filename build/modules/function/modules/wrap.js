@@ -1,23 +1,23 @@
-var returnWraped = (method, flipTrue) => {
-	return function () {
-		var functs = [];
-
-		function wrapped() {
-			var args = toArray(arguments);
-			return mapArray(functs, (item) => {
-				return apply(item, wrapped, args);
-			});
-		}
-		objectAssign(wrapped, {
-			list: functs,
-			add: function () {
-				var args = flatten(toArray(arguments));
-				method(functs, (flipTrue) ? args.reverse() : args);
-			},
-		});
-		wrapped.add(toArray(arguments));
-		return wrapped;
-	};
+const returnWraped = (method, fliptrue) => {
+  return () => {
+    const list = [];
+    const wrapped = (...wrappedArgs) => {
+      return mapArray(list, (item) => {
+        return apply(item, wrapped, wrappedArgs);
+      });
+    };
+    objectAssign(wrapped, {
+      list,
+      add(...addTheseArg) {
+        const addThese = flatten(addTheseArg);
+        method(list, (fliptrue) ? addThese.reverse() : addThese);
+      },
+    });
+    wrapped.add(args);
+    return wrapped;
+  };
 };
-var wrapCall = $.wrap = returnWraped(pushApply),
-	wrapBefore = $.wrapBefore = returnWraped(unShiftApply, true);
+const wrapCall = returnWraped(pushApply);
+$.wrap = wrapCall;
+const wrapBefore = returnWraped(unShiftApply, true);
+$.wrapBefore = wrapBefore;

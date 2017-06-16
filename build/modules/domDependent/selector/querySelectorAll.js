@@ -1,1 +1,2 @@
-var qsaSelector = $.querySelectorAll = bindTo(documentNode.querySelectorAll, documentNode);
+const qsaSelector = bindTo(documentNode.querySelectorAll, documentNode);
+$.querySelectorAll = qsaSelector;

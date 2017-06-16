@@ -8,6 +8,7 @@
  * var a = [1, 2, 3];
  * var b = a.clone();
  * console.log(b, b === a);
- * // -> [1, 2, 3] False
+ * // -> [1, 2, 3] false
  */
-var cloneArray = $.cloneArray = arraySliceCall;
+const cloneArray = arraySliceCall;
+$.cloneArray = arraySliceCall;

@@ -24,19 +24,19 @@ $.stubString = () => {
 };
 /*
 	This method returns false.
-	$.times(2, $.stubFalse);
+	$.times(2, $.stubfalse);
 	// => [false, false]
 */
-$.stubFalse = () => {
-	return False;
+$.stubfalse = () => {
+	return false;
 };
 /*
-	This method returns True.
-	$.times(2, $.stubTrue);
+	This method returns true.
+	$.times(2, $.stubtrue);
 	// => [true, true]
 */
-$.stubTrue = () => {
-	return True;
+$.stubtrue = () => {
+	return true;
 };
 /*
 	This method returns undefined.
@@ -44,5 +44,5 @@ $.stubTrue = () => {
 	// => [undefined, undefined]
 */
 $.noop = () =>{
-	return undefinedNative;
+	return undefined;
 };

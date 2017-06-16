@@ -1,6 +1,6 @@
-const sortOldest = $.sortOldest = function (arrayArg, key, pureMode) {
+const sortOldest = (arrayArg, key, pureMode) => {
   const array = (pureMode) ? arrayArg : [...arrayArg];
-  return array.sort((previous, next) => {
+  return arraySort(array, (previous, next) => {
     if (!next[key]) {
       return -1;
     } else if (!previous[key]) {
@@ -13,6 +13,7 @@ const sortOldest = $.sortOldest = function (arrayArg, key, pureMode) {
     return 0;
   });
 };
+$.sortOldest = sortOldest;
 $.getOldest = (array, key) => {
   return sortOldest(array, key)[0];
 };

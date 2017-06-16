@@ -2,18 +2,19 @@
 	Create a new function from a string and bind it to itself.
 		Return
 */
-var newFunction = (string, optional) => {
-    try {
-        var funct = new functionNative('"use strict";'+string).bind(optional || funct);
-        return funct;
-    } catch (e) {
-        return False;
-    }
+const newFunction = (string, optional) => {
+  try {
+    const funct = eval(`(function(){"use strict";${string}})`).bind(optional || funct);
+    return funct;
+  } catch (e) {
+    return false;
+  }
 };
-$.newFunction = (string,optional) => {
-    return newFunction(string + 'return this;', optional || {});
+$.newFunction = function (string, optional = {}) {
+  return newFunction(`${string} return this;`, optional);
 };
-//for inline JS object notion.
-var inlineJson = $.iJson = (string) => {
-    return newFunction('return ' + string)();
+// for inline JS object notion.
+const inlineJson = function (string) {
+  return eval(`(${string})`);
 };
+$.iJson = inlineJson;

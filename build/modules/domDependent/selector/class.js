@@ -1,2 +1,4 @@
-var clsSelector = $.getClass = bindTo(documentNode.getElementsByClassName, documentNode),
-	tagSelector = $.getTag = bindTo(documentNode.getElementsByTagName, documentNode);
+const clsSelector = bindTo(documentNode.getElementsByClassName, documentNode);
+const tagSelector = bindTo(documentNode.getElementsByTagName, documentNode);
+$.getClass = clsSelector;
+$.getTag = tagSelector;
