@@ -1,2 +1,4 @@
-var raf = $.raf = requestAnimationFrame.bind(selfWindow),
-    caf = $.caf = cancelAnimationFrame.bind(selfWindow);
+const raf = requestAnimationFrame.bind(selfWindow);
+const caf = cancelAnimationFrame.bind(selfWindow);
+$.raf = raf;
+$.caf = caf;

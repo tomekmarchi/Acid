@@ -1,1 +1,2 @@
-var idSelector = $.getId = bindTo(documentNode.getElementById, documentNode);
+const idSelector = bindTo(documentNode.getElementById, documentNode);
+$.getId = idSelector;

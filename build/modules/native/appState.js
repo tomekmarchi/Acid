@@ -1,4 +1,5 @@
-var appState = $.appState = {
+const appState = {
     screenHeight: screen.height,
     screenWidth: screen.width
 };
+$.appState = appState;

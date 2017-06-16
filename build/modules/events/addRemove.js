@@ -1,9 +1,10 @@
-var	eventAdd = $.eventAdd = function (obj, name, func, capture) {
-		obj.addEventListener(name, func, capture);
-		return obj;
-	},
-	//remove event
-	eventRemove = $.eventRemove = function (obj, name, func, capture) {
-		obj.removeEventListener(name, func, capture);
-		return obj;
-	};
+const	eventAdd = (obj, eventName, func, capture) => {
+  obj.addEventListener(eventName, func, capture);
+  return obj;
+};
+$.eventAdd = eventAdd;
+const eventRemove = (obj, eventName, func, capture) => {
+  obj.removeEventListener(eventName, func, capture);
+  return obj;
+};
+$.eventRemove = eventRemove;

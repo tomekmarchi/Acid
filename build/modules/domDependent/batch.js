@@ -1,13 +1,14 @@
-var batchCancelFrame = False,
-	batchChanges = [],
-	batchLoop = () => {
-		eachArray(batchChanges,ifInvoke);
-		clearArray(batchChanges);
-		batchCancelFrame = False;
-	},
-	batchAdd = $.batch = (item) => {
-		pushApply(batchChanges,ensureArray(item));
-		if (!batchCancelFrame) {
-			batchCancelFrame = raf(batchLoop);
-		}
-	};
+let batchCancelFrame = false;
+const batchChanges = [];
+const batchLoop = () => {
+  eachArray(batchChanges, ifInvoke);
+  clearArray(batchChanges);
+  batchCancelFrame = false;
+};
+const batchAdd = (item) => {
+  pushApply(batchChanges, ensureArray(item));
+  if (!batchCancelFrame) {
+    batchCancelFrame = raf(batchLoop);
+  }
+};
+$.batch = batchAdd;

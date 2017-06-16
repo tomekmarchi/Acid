@@ -4,9 +4,10 @@
  * @param      {Number}   Starting number
  * @return     {Number} returns the sum of the array
  */
-var sumOf = $.sumOf = function (array,result = 0) {
-	each(array,(item,key)=>{
-		result = (item)? result + (isString(item)? numberNative(item) : item) : result;
-	});
-	return result;
+const sumOf = function (array, result = 0) {
+  each(array, (item, key) => {
+    result = (item) ? result + (isString(item) ? numberNative(item) : item) : result;
+  });
+  return result;
 };
+$.sumOf = sumOf;

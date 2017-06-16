@@ -1,59 +1,30 @@
-//create an array from a range
-var range = $.range = function(start, stop, increment = 1, fliped) {
-	if (increment === 0) {
-		return sameRange(start, stop);
-	}
-	if (!hasValue(stop)) {
-		stop = start;
-		start = 0;
-	}
-	var array = (fliped) ? [] : [start];
-	if (start > stop) {
-		while (start > stop) {
-			start = start - increment;
-			if (start > stop) {
-				pushArray(array, start);
-			}
-		}
-	} else if (start < stop) {
-		while (start < stop) {
-			start = start + increment;
-			if (start < stop) {
-				pushArray(array, start);
-			}
-		}
-	}
-	if (fliped) {
-		pushArray(array, start);
-	}
-	return array;
+// Creates an array of numbers (positive and/or negative) progressing from start up to, but not including, end. A step of -1 is used if a negative start is specified without an end or step. If end is not specified, it's set to start with start then set to 0.
+const rangeUp = (start, stop, increment) => {
+  const rangeArray = [];
+  let position = start;
+  while (start < stop) {
+    rangeArray.push(position);
+    position += increment;
+  }
+  return rangeArray;
 };
-
-var sameRange = (start, stop) => {
-	stop = (stop < 0)? stop * -1: stop;
-	var array = [],
-		i = 1;
-	while (i < stop) {
-		i++;
-		pushArray(array, start);
-	}
-	return array;
+const rangeDown = (start, stop, incrementArg) => {
+  const increment = (incrementArg < 0) ? incrementArg * -1 : incrementArg;
+  const rangeArray = [];
+  let position = start;
+  while (start < stop) {
+    rangeArray.push(position);
+    position -= increment;
+  }
+  return rangeArray;
 };
-
-var rangeRight = $.rangeRight = function(start = 0, stop, increment) {
-	if (increment === 0) {
-		return sameRange(start, stop);
-	}
-	if (!stop) {
-		stop = start;
-		start = 0;
-	} else if (increment < 0 && start > stop) {
-		increment = increment * -1;
-	}
-	return range(stop, start, increment, True);
-}
-
-//create an array from a range
-$.rangeTo = function(start, stop, increment) {
-	return range(start, stop + (increment || 1), increment);
+const range = (start, stop, increment = 1) => {
+  if (start < stop) {
+    return rangeUp(start, stop, increment);
+  } else {
+    return rangeDown(start, stop, increment);
+  }
 };
+$.range = range;
+const rangeRight = (start, stop, increment = 1) => rangeDown(stop, start, increment);
+$.rangeRight = rangeRight;

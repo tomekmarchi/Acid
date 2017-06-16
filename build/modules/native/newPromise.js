@@ -1,3 +1,4 @@
-var promise = $.promise = (callback) => {
-	return new Promise(callback);
+const promise = (callback) => {
+  return new Promise(callback);
 };
+$.promise = promise;

@@ -1,83 +1,91 @@
-const objectStringGenerate = function (name) {
-    return `[object ${name}]`;
-  },
-  isSameObjectGenerator = (type) => {
-    return (obj) => {
-      return (hasValue(obj)) ? toStringCall(obj) === type : False;
-    }
-  },
-  isDecimal = $.isDecimal = function (string) {
-    return stringMatchCall(toStringCall(string), decimalCheck);
-  },
-  hasValue = $.hasValue = function (item) {
-    return !isUndefined(item) && !isNull(item);
-  },
-  isUndefined = $.isUndefined = function (obj) {
-    return obj === undefined;
-  },
-  isNull = $.isNull = function (obj) {
-    return obj === null;
-  },
-  isAll = $.isAll = function () {
-    var args = toArray(arguments),
-      result = true,
-      method = shiftArray(args);
-    eachArray(args, (item, index, array, length, safe) => {
-      result = method(item);
-      if (!result) {
-        safe.halt = True;
-      }
-    }, True);
-    return result;
-  },
-  isArray = $.isArray = arrayNative.isArray,
-  isConstructor = $.isConstructor = (constructor) => {
-    return (obj) => {
-      return (hasValue(obj)) ? obj.constructor === constructor : False;
-    };
-  },
-  isString = $.isString = isConstructor(stringNative),
-  isNumber = $.isNumber = isConstructor(numberNative),
-  isPlainObject = $.isPlainObject = function (obj) {
-    return (hasValue(obj)) ? stringSliceCall(toStringCall(obj.constructor)
-      .trim(), 9, 16) === 'Object(' : False;
-  },
-  isFunction = $.isFunction = function (obj) {
-    return (hasValue(obj)) ? obj instanceof functionNative : False;
-  },
-  has = $.has = (string, search) => {
-    return (isArray(search)) ? apply(string.includes, string, search) : string.includes(search);
-  },
-  hasLength = $.hasLength = function (obj) {
-    return !!getLength(obj);
-  },
-  isEmpty = $.isEmpty = function (obj) {
-    if (isString(obj) || isArray(obj)) {
-      return !hasLength(obj);
-    } else if (isPlainObject(obj)) {
-      return !objectSize(obj);
-    }
-    return !hasValue(obj);
-  },
-  regexGenerator = (regexType) => {
-    return (item) => {
-      return (hasValue(item)) ? regexType.test(item) : False;
-    };
-  },
-  isFileCSS = $.isFileCSS = regexGenerator(isCSSRegex),
-  isFileJSON = $.isFileJSON = regexGenerator(isJSONRegex),
-  isFileJS = $.isFileJS = regexGenerator(isJSRegex),
-  extension = $.extension = (string) => {
-    return stringMatchCall(string, /\.([0-9a-z]+)/);
-  },
-  hasDot = $.hasDot = regexGenerator(hasDotRegex),
-  getModelRootName = $.getModelRootName = function (string) {
-    return splitCall(string, dotString)[0];
-  },
-  getModelProperty = $.getModelProperty = function (string) {
-    return lastItem(splitCall(string, slashString));
-  },
-  getModelName = $.getModelName = function (string) {
-    return get(lastItem(splitCall(string, slashString))
-      .replace(/\.js$/, ''), modelMethod);
+const objectStringGenerate = (objectName) => {
+  return `[object ${objectName}]`;
+};
+const isSameObjectGenerator = (type) => {
+  return (obj) => {
+    return (hasValue(obj)) ? toStringCall(obj) === type : false;
   };
+};
+const isDecimal = (string) => {
+  return stringMatchCall(toStringCall(string), decimalCheck);
+};
+$.isDecimal = isDecimal;
+const hasValue = (item) => {
+  return !isUndefined(item) && !isNull(item);
+};
+$.hasValue = hasValue;
+const isUndefined = function(obj) {
+  return obj === undefined;
+};
+$.isUndefined = isUndefined;
+const isNull = (obj) => {
+  return obj === null;
+};
+$.isNull = isNull;
+const isAll = (...args) => {
+  const method = shiftArray(args);
+  let result = true;
+  eachArray(args, (item, index, array, length, safe) => {
+    result = method(item);
+    if (!result) {
+      safe.halt = true;
+    }
+  }, true);
+  return result;
+};
+$.isAll = isAll;
+const isArray = arrayNative.isArray;
+$.isArray = isArray;
+const isConstructor = (constructor) => {
+  return (obj) => {
+    return (hasValue(obj)) ? obj.constructor === constructor : false;
+  };
+};
+$.isConstructor = isConstructor;
+const isString = isConstructor(stringNative);
+$.isString = isString;
+const isNumber = isConstructor(numberNative);
+$.isNumber = isNumber;
+const isPlainObject = (obj) => {
+  return (hasValue(obj)) ? stringSliceCall(toStringCall(obj.constructor)
+    .trim(), 9, 16) === 'Object(' : false;
+};
+$.isPlainObject = isPlainObject;
+const isFunction = (obj) => {
+  return (hasValue(obj)) ? obj instanceof functionNative : false;
+};
+$.isFunction = isFunction;
+const has = (string, search) => {
+  return (isArray(search)) ? apply(string.includes, string, search) : string.includes(search);
+};
+$.has = has;
+const hasLength = (obj) => {
+  return Boolean(getLength(obj));
+};
+$.hasLength = hasLength;
+const isEmpty = (obj) => {
+  if (isString(obj) || isArray(obj)) {
+    return !hasLength(obj);
+  } else if (isPlainObject(obj)) {
+    return !objectSize(obj);
+  }
+  return !hasValue(obj);
+};
+$.isEmpty = isEmpty;
+const regexGenerator = (regexType) => {
+  return (item) => {
+    return (hasValue(item)) ? regexType.test(item) : false;
+  };
+};
+const isFileCSS = regexGenerator(isCSSRegex);
+$.isFileCSS = isFileCSS;
+const isFileJSON = regexGenerator(isJSONRegex);
+$.isFileJSON = isFileJSON;
+const isFileJS = regexGenerator(isJSRegex);
+$.isFileJS = isFileJS;
+const extension = (string) => {
+  return stringMatchCall(string, /\.([0-9a-z]+)/);
+};
+$.extension = extension;
+const hasDot = regexGenerator(hasDotRegex);
+$.hasDot = hasDot;

@@ -1,1 +1,2 @@
-var qsSelector = $.querySelector = bindTo(documentNode.querySelector, documentNode);
+const qsSelector = bindTo(documentNode.querySelector, documentNode);
+$.querySelector = qsSelector;

@@ -3,11 +3,13 @@
 	Navigate down an object's chain via a string.
 
 */
-var get = $.get = (name, obj) => {
-  obj = obj || $;
-  eachWhile(splitCall(lastItem(splitCall(name, slashString)), dotString), (item) => {
-    obj = obj[item];
-    return hasValue(obj) ? True : False;
+const get = (propertyString, objectChain = $) => {
+  let link = objectChain;
+  const stringChain = splitCall(lastItem(splitCall(propertyString, slashString)), dotString);
+  eachWhile(stringChain, (item) => {
+    link = link[item];
+    return hasValue(link);
   });
-  return obj;
+  return link;
 };
+$.get = get;

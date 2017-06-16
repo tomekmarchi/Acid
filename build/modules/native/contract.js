@@ -5,9 +5,13 @@
  * @param      {Function} callback
  * @return     {Undefined} returns nothing from the function
  */
-
-var contract = $.contract = (arry, name, callback) => {
-	(!callback) ? contract[name](arry): (contract[name] = (part) => {
-		return has(arry,part) && shiftArray(arry) && !getLength(arry) && asyncMethod(callback);
-	});
+const contract = (arry, contractName, callback) => {
+  if (callback) {
+    contract[contractName] = (part) => {
+      return has(arry, part) && shiftArray(arry) && !getLength(arry) && asyncMethod(callback);
+    };
+  } else {
+    contract[contractName](arry);
+  }
 };
+$.contract = contract;

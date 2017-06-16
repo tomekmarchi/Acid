@@ -1,2 +1,3 @@
-//create fragment
-var createFragment = $.createFragment = bindTo(documentNode.createDocumentFragment,documentNode);
+// create fragment
+const createFragment = bindTo(documentNode.createDocumentFragment, documentNode);
+$.createFragment = createFragment;

@@ -9,7 +9,8 @@
 * console.log(array);
 * // -> []
 */
-var clearArray = $.clear = function(array) {
+const clearArray = (array) => {
   array.length = 0;
   return array;
 };
+$.clear = clearArray;

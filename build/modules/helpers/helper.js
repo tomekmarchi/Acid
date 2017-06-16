@@ -1,94 +1,106 @@
-var getLength = $.getLength = (item) => {
-		return item.length;
-	},
-	indexOfCall = (string, index) => {
-		return string.indexOf(index);
-	},
-	ensureArray = $.ensureArray = (object) => {
-		return (isArray(object))? object : [object];
-	},
-	ifInvoke = $.ifInvoke = function(){
-		var args=toArray(arguments),
-			method=shiftArray(args);
-		return isFunction(method)? apply(method,args) : undefinedNative;
-	},
-	ifNotEqual = $.ifNotEqual = function(root,property,equalThis){
-		return property? ((root[property] = root[property] || equalThis),root[property]): root;
-	},
-	/*
-		String related
-	*/
-	generatePrototype = (funct) => {
-		return functionPrototype.call.bind(funct);
-	},
-	substringCall = generatePrototype(stringPrototype.substring),
-	substrCall = generatePrototype(stringPrototype.substr),
-	stringSliceCall = generatePrototype(stringPrototype.slice),
-	toLowerCaseCall = generatePrototype(stringPrototype.toLowerCase),
-	toUpperCaseCall = generatePrototype(stringPrototype.toUpperCase),
-	splitCall = generatePrototype(stringPrototype.split),
-	stringRepeatCall = generatePrototype(stringPrototype.repeat),
-	charAtCall = generatePrototype(stringPrototype.charAt),
-	stringMatchCall = generatePrototype(stringPrototype.match),
-	stringReplaceCall = generatePrototype(stringPrototype.replace),
-	/*
-		Regex Helpers
-	*/
-	testRegex = generatePrototype(regExpPrototype.test),
-	/*
-		Array Helpers
-	*/
-	concatArray = generatePrototype(arrayPrototype.concat),
-	popArray = generatePrototype(arrayPrototype.pop),
-	pushArray = generatePrototype(arrayPrototype.push),
-	pushApply = $.pushApply = (array, arrayToPush) => {
-		return apply(arrayPrototype.push, array, arrayToPush);
-	},
-	arraySliceCall = generatePrototype(arrayPrototype.slice),
-	spliceArray = generatePrototype(arrayPrototype.splice),
-	shiftArray = generatePrototype(arrayPrototype.shift),
-	unShiftArray = generatePrototype(arrayPrototype.unshift),
-	unShiftApply = $.unShiftApply = (array, arrayToPush) => {
-		return apply(arrayPrototype.unshift, array, arrayToPush);
-	},
-	joinArray = generatePrototype(arrayPrototype.join),
-	/*
-		Object Helpers
-	*/
-	toStringCall = (item) => {
-		return item.toString();
-	},
-	/*
-		Function calls
-	*/
-	bindTo = $.bindTo = generatePrototype(functionPrototype.bind),
-	call = $.callFn = (method, bindTo, arg) => {
-		if (!arg) {
-			arg = bindTo;
-			bindTo = method;
-		}
-		return method.call(bindTo, arg);
-	},
-	apply = $.applyFn = (method, bindTo, args) => {
-		if (!args) {
-			args = bindTo;
-			bindTo = method;
-		}
-		return method.apply(bindTo, args);
-	},
-	count = 0,
-	uuidFree = [],
-	uuidClosed = {},
-	uuid = $.uuid = function (max) {
-		var result = shiftArray(uuidFree);
-		if (!hasValue(result)) {
-			result = count;
-			uuidClosed[result] = True;
-			count++;
-		}
-		return result;
-	},
-	uuidRemove = uuid.remove = (id) => {
-		uuidClosed[id] = null;
-		pushArray(uuidFree,id);
-	};
+const getLength = (item) => {
+  return item.length;
+};
+$.getLength = getLength;
+const indexOfCall = (string, index) => {
+  return string.indexOf(index);
+};
+const ensureArray = (object) => {
+  return (isArray(object)) ? object : [
+    object
+  ];
+};
+$.ensureArray = ensureArray;
+const ifInvoke = (...args) => {
+  const method = shiftArray(args);
+  return isFunction(method) ? apply(method, args) : undefined;
+};
+$.ifInvoke = ifInvoke;
+const ifNotEqual = (rootObject, property, equalThis) => {
+  if (property) {
+    rootObject[property] = rootObject[property] || equalThis;
+    return rootObject[property];
+  }
+  return rootObject;
+};
+$.ifNotEqual = ifNotEqual;
+/* String relate*/
+const generatePrototype = (funct) => {
+  return functionPrototype.call.bind(funct);
+};
+const substringCall = generatePrototype(stringPrototype.substring);
+const substrCall = generatePrototype(stringPrototype.substr);
+const stringSliceCall = generatePrototype(stringPrototype.slice);
+const toLowerCaseCall = generatePrototype(stringPrototype.toLowerCase);
+const toUpperCaseCall = generatePrototype(stringPrototype.toUpperCase);
+const splitCall = generatePrototype(stringPrototype.split);
+const stringRepeatCall = generatePrototype(stringPrototype.repeat);
+const charAtCall = generatePrototype(stringPrototype.charAt);
+const stringMatchCall = generatePrototype(stringPrototype.match);
+const stringReplaceCall = generatePrototype(stringPrototype.replace);
+/* Regex Helper*/
+const testRegex = generatePrototype(regExpPrototype.test);
+/* Array Helper*/
+const concatArray = generatePrototype(arrayPrototype.concat);
+const popArray = generatePrototype(arrayPrototype.pop);
+const pushArray = generatePrototype(arrayPrototype.push);
+const pushApply = $.pushApply = (array, arrayToPush) => {
+  return apply(arrayPrototype.push, array, arrayToPush);
+};
+const arraySliceCall = generatePrototype(arrayPrototype.slice);
+const arraySort = generatePrototype(arrayPrototype.sort);
+const spliceArray = generatePrototype(arrayPrototype.splice);
+const shiftArray = generatePrototype(arrayPrototype.shift);
+const unShiftArray = generatePrototype(arrayPrototype.unshift);
+const unShiftApply = $.unShiftApply = (array, arrayToPush) => {
+  return apply(arrayPrototype.unshift, array, arrayToPush);
+};
+const joinArray = generatePrototype(arrayPrototype.join);
+const findIndexArray = generatePrototype(arrayPrototype.findIndex);
+const findArray = generatePrototype(arrayPrototype.find);
+$.find = findArray;
+/*
+	Object Helpers
+*/
+const toStringCall = (item) => {
+  return item.toString();
+};
+/*
+	Function calls
+*/
+const bindTo = generatePrototype(functionPrototype.bind);
+$.bindTo = bindTo;
+const call = (method, bindTo, arg) => {
+  if (!arg) {
+    arg = bindTo;
+    bindTo = method;
+  }
+  return method.call(bindTo, arg);
+};
+$.callFn = call;
+const apply = (method, bindTo, args) => {
+  if (!args) {
+    args = bindTo;
+    bindTo = method;
+  }
+  return method.apply(bindTo, args);
+};
+$.applyFn = apply;
+let count = 0;
+const uuidFree = [];
+const uuidClosed = {};
+const uuid = (max) => {
+  let result = shiftArray(uuidFree);
+  if (!hasValue(result)) {
+    result = count;
+    uuidClosed[result] = true;
+    count++;
+  }
+  return result;
+};
+$.uuid = uuid;
+const uuidRemove = (id) => {
+  uuidClosed[id] = null;
+  pushArray(uuidFree, id);
+};
+uuid.remove = uuidRemove;

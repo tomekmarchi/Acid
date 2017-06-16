@@ -1,7 +1,7 @@
-$.isEnter=function (event) { //checks if this an enter key
-	var i = event.keyCode;
-	if (i == 13) {
-		return True;
-	}
-	return False;
-}
+$.isEnter = (event) => {
+  const keyCode = event.keyCode;
+  if (keyCode === 13) {
+    return true;
+  }
+  return false;
+};
