@@ -5,4 +5,4 @@ const modelMethod = (modelName, object) => {
   return get(modelName, modelMethod);
 };
 $.model = modelMethod;
-$.super(modelMethod);
+$.superMethod(modelMethod);

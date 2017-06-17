@@ -21,9 +21,9 @@ const livereloadStart = () => {
   app.listen(EXPRESS_PORT);
   lr.listen(LIVERELOAD_PORT);
 };
-const notifyLivereload = (event) => {
+const notifyLivereload = (reloadEvent) => {
   const fileName = require('path')
-      .relative(EXPRESS_ROOT, event.path);
+    .relative(EXPRESS_ROOT, reloadEvent.path);
   lr.changed({
     body: {
       files: [fileName],
@@ -61,65 +61,69 @@ const locations = [
 ];
 const compileDocsOnly = () => {
   gulp.src(docsLocations)
-      .pipe(gulp.dest('npm'))
-      .pipe(notify((file) => {
-        const filename = last(file.base.split('/'));
-        return `NPM Compiled > ${filename}`;
-      }));
+    .pipe(gulp.dest('npm'))
+    .pipe(notify((file) => {
+      const filename = last(file.base.split('/'));
+      return `NPM Compiled > ${filename}`;
+    }));
 };
 const compileAcid = () => {
   gulp.src(locations)
-      .pipe(concat('acid.js'))
-      .pipe(beautify({
-        indent_size: 1,
-        indent_with_tabs: true,
-      }))
-      .pipe(gulp.dest('compiled'))
-      .pipe(notify(() => { return 'Acid Beautified Saved'; }))
-      .pipe(gulp.dest('docs'))
-      .pipe(concat('acidMin.js'))
-      .pipe(babel({
-        plugins: [
-          [
-            'transform-strict-mode',
-            {
-              strict: false,
-            }],
-          'minify-empty-function'
-        ],
-        presets: ['babili'],
-        comments: false,
-        highlightCode: false,
-        ast: false,
-        compact: true,
-        minified: true,
-      }))
-      .pipe(gulp.dest('compiled'))
-      .pipe(gulp.dest('docs'))
-      .pipe(concat('index.js'))
-      .pipe(gulp.dest('npm'))
-      .pipe(concat('acidMin'))
-      .pipe(gzip())
-      .pipe(gulp.dest('compiled'))
-      .pipe(notify(() => {
-        compileDocsOnly();
-        return 'Acid Minified Saved';
-      }));
+    .pipe(concat('acid.js'))
+    .pipe(beautify({
+      indent_size: 1,
+      indent_with_tabs: true,
+    }))
+    .pipe(gulp.dest('compiled'))
+    .pipe(notify(() => {
+      return 'Acid Beautified Saved';
+    }))
+    .pipe(gulp.dest('docs'))
+    .pipe(concat('acidMin.js'))
+    .pipe(babel({
+      plugins: [
+        [
+          'transform-strict-mode',
+          {
+            strict: false,
+          }],
+        'minify-empty-function'
+      ],
+      presets: ['babili'],
+      comments: false,
+      highlightCode: false,
+      ast: false,
+      compact: true,
+      minified: true,
+    }))
+    .pipe(gulp.dest('compiled'))
+    .pipe(gulp.dest('docs'))
+    .pipe(concat('index.js'))
+    .pipe(gulp.dest('npm'))
+    .pipe(concat('acidMin'))
+    .pipe(gzip())
+    .pipe(gulp.dest('compiled'))
+    .pipe(notify(() => {
+      compileDocsOnly();
+      return 'Acid Minified Saved';
+    }));
 };
-gulp.task('scripts', () => { return compileAcid(); });
+gulp.task('scripts', () => {
+  return compileAcid();
+});
 gulp.task('default', ['scripts'], () => {
   livereloadStart();
-  gulp.watch(locations, (event) => {
-    compileAcid(event);
+  gulp.watch(locations, (gulpEvent) => {
+    compileAcid(gulpEvent);
     setTimeout(() => {
-      notifyLivereload(event);
+      notifyLivereload(gulpEvent);
     }, 2000);
   });
   gulp.watch('*.html', notifyLivereload);
   gulp.watch('site/styles/**', notifyLivereload);
   gulp.watch('site/scripts/**', notifyLivereload);
   gulp.watch('site/demos/**', notifyLivereload);
-  gulp.watch(docsLocations, (event) => {
-    compileDocsOnly(event);
+  gulp.watch(docsLocations, (gulpEvent) => {
+    compileDocsOnly(gulpEvent);
   });
 });

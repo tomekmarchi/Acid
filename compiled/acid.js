@@ -21,14 +21,12 @@
 	};
 	global.$ = $;
 	global.ACID = $;
-	$.super = (method) => {
+	$.superMethod = (method) => {
 		cacheSuper = method;
 	};
 
 	/*
-
 		Native objects
-
 	*/
 	const arrayNative = Array;
 	const objectNative = Object;
@@ -57,29 +55,28 @@
 	/*
 		Array.prototype Functions
 	*/
-	const toArray = $.toArray = arrayNative.from.bind(arrayNative);
+	const toArray = arrayNative.from.bind(arrayNative);
+	$.toArray = toArray;
 	/*
-	    	Object Functions
-	    */
-	const objectKeys = $.keys = objectNative.keys;
-	const objectIs = $.is = objectNative.is;
-	const objectAssign = $.assign = objectNative.assign;
-	const getOwnPropertyDescriptor = $.getPropDescrip = objectNative.getOwnPropertyDescriptor;
-	const defineProperty = $.defineProperty = objectNative.defineProperty;
-	const getOwnPropertyNames = $.getOwnPropertyNames = objectNative.getOwnPropertyNames;
+	  Object Functions
+	*/
+	const objectKeys = objectNative.keys;
+	$.keys = objectKeys;
+	const objectIs = objectNative.is;
+	$.is = objectIs;
+	const objectAssign = objectNative.assign;
+	$.assign = objectAssign;
+	const getOwnPropertyDescriptor = objectNative.getOwnPropertyDescriptor;
+	$.getPropDescrip = getOwnPropertyDescriptor;
+	const defineProperty = objectNative.defineProperty;
+	$.defineProperty = defineProperty;
+	const getOwnPropertyNames = objectNative.getOwnPropertyNames;
+	$.getOwnPropertyNames = getOwnPropertyNames;
 	/*
 		JSON
 	*/
 	const stringify = json.stringify;
 	const jsonParse = json.parse;
-	/*
-		System Hardware Info
-	*/
-	const systemCores = navigator.hardwareConcurrency;
-
-	let bodyNode;
-	const selfWindow = window;
-	const documentNode = document;
 
 	const classTest = /^.[\w_-]+$/;
 	const tagTest = /^[A-Za-z]+$/;
@@ -113,10 +110,6 @@
 	const andString = '&';
 	const poundString = '#';
 	const spaceCharacter = ' ';
-
-	const protocol = location.protocol;
-	const protocolSocket = ('protocol' === 'http:') ? 'ws' : 'wss';
-	const hostname = location.hostname;
 
 	const getLength = (item) => {
 		return item.length;
@@ -224,21 +217,6 @@
 		pushArray(uuidFree, id);
 	};
 	uuid.remove = uuidRemove;
-
-	//acid platform information
-	$.info = {
-		host: {
-			// EX http https
-			protocol: protocol,
-			// ws or wss
-			protocolSocket: protocolSocket,
-			//hostname
-			name: hostname
-		},
-		hardware: {
-			cores: systemCores
-		}
-	};
 
 	const eventAdd = (obj, eventName, func, capture) => {
 		obj.addEventListener(eventName, func, capture);
@@ -381,20 +359,6 @@
 			string = substringCall(string, 0, amount);
 		}
 		return string;
-	};
-
-	//add paramaters to a URL
-	const addParam = $.addParam = (url, newItem) => {
-		if (getLength(url) && has(url, questionMarkString)) {
-			if (lastItem(url) === questionMarkString) {
-				url = url + newItem;
-			} else {
-				url = url + andString + newItem;
-			}
-		} else {
-			url = questionMarkString + newItem;
-		}
-		return url;
 	};
 
 	//shared functions
@@ -1249,41 +1213,45 @@
 	};
 
 
-	const assignDeep = $.assignDeep = (object, otherObject, mergeArrays) => {
+	const assignDeep = (object, otherObject, mergeArrays) => {
 		eachObject(otherObject, (item, key) => {
 			if (isPlainObject(item) && isPlainObject(object[key])) {
 				assignDeep(object[key], item, mergeArrays);
 			} else if (mergeArrays && isArray(item) && isArray(object[key])) {
 				pushApply(object[key], item);
 			} else {
-				object[key] = item
+				object[key] = item;
 			}
 		});
 		return object;
 	};
+	$.assignDeep = assignDeep;
 
-	const objectStringGenerate = function(name) {
-		return `[object ${name}]`;
+	const objectStringGenerate = (objectName) => {
+		return `[object ${objectName}]`;
 	};
 	const isSameObjectGenerator = (type) => {
 		return (obj) => {
 			return (hasValue(obj)) ? toStringCall(obj) === type : false;
-		}
+		};
 	};
-	const isDecimal = $.isDecimal = function(string) {
+	const isDecimal = (string) => {
 		return stringMatchCall(toStringCall(string), decimalCheck);
 	};
-	const hasValue = $.hasValue = function(item) {
+	$.isDecimal = isDecimal;
+	const hasValue = (item) => {
 		return !isUndefined(item) && !isNull(item);
 	};
-	const isUndefined = $.isUndefined = function(obj) {
+	$.hasValue = hasValue;
+	const isUndefined = function(obj) {
 		return obj === undefined;
 	};
-	const isNull = $.isNull = function(obj) {
+	$.isUndefined = isUndefined;
+	const isNull = (obj) => {
 		return obj === null;
 	};
-	const isAll = $.isAll = function() {
-		const args = toArray(arguments);
+	$.isNull = isNull;
+	const isAll = (...args) => {
 		const method = shiftArray(args);
 		let result = true;
 		eachArray(args, (item, index, array, length, safe) => {
@@ -1294,28 +1262,37 @@
 		}, true);
 		return result;
 	};
-	const isArray = $.isArray = arrayNative.isArray;
-	const isConstructor = $.isConstructor = (constructor) => {
+	$.isAll = isAll;
+	const isArray = arrayNative.isArray;
+	$.isArray = isArray;
+	const isConstructor = (constructor) => {
 		return (obj) => {
 			return (hasValue(obj)) ? obj.constructor === constructor : false;
 		};
 	};
-	const isString = $.isString = isConstructor(stringNative);
-	const isNumber = $.isNumber = isConstructor(numberNative);
-	const isPlainObject = $.isPlainObject = function(obj) {
+	$.isConstructor = isConstructor;
+	const isString = isConstructor(stringNative);
+	$.isString = isString;
+	const isNumber = isConstructor(numberNative);
+	$.isNumber = isNumber;
+	const isPlainObject = (obj) => {
 		return (hasValue(obj)) ? stringSliceCall(toStringCall(obj.constructor)
 			.trim(), 9, 16) === 'Object(' : false;
 	};
-	const isFunction = $.isFunction = function(obj) {
+	$.isPlainObject = isPlainObject;
+	const isFunction = (obj) => {
 		return (hasValue(obj)) ? obj instanceof functionNative : false;
 	};
-	const has = $.has = (string, search) => {
+	$.isFunction = isFunction;
+	const has = (string, search) => {
 		return (isArray(search)) ? apply(string.includes, string, search) : string.includes(search);
 	};
-	const hasLength = $.hasLength = function(obj) {
-		return !!getLength(obj);
+	$.has = has;
+	const hasLength = (obj) => {
+		return Boolean(getLength(obj));
 	};
-	const isEmpty = $.isEmpty = function(obj) {
+	$.hasLength = hasLength;
+	const isEmpty = (obj) => {
 		if (isString(obj) || isArray(obj)) {
 			return !hasLength(obj);
 		} else if (isPlainObject(obj)) {
@@ -1323,28 +1300,24 @@
 		}
 		return !hasValue(obj);
 	};
+	$.isEmpty = isEmpty;
 	const regexGenerator = (regexType) => {
 		return (item) => {
 			return (hasValue(item)) ? regexType.test(item) : false;
 		};
 	};
-	const isFileCSS = $.isFileCSS = regexGenerator(isCSSRegex);
-	const isFileJSON = $.isFileJSON = regexGenerator(isJSONRegex);
-	const isFileJS = $.isFileJS = regexGenerator(isJSRegex);
-	const extension = $.extension = (string) => {
+	const isFileCSS = regexGenerator(isCSSRegex);
+	$.isFileCSS = isFileCSS;
+	const isFileJSON = regexGenerator(isJSONRegex);
+	$.isFileJSON = isFileJSON;
+	const isFileJS = regexGenerator(isJSRegex);
+	$.isFileJS = isFileJS;
+	const extension = (string) => {
 		return stringMatchCall(string, /\.([0-9a-z]+)/);
 	};
-	const hasDot = $.hasDot = regexGenerator(hasDotRegex);
-	const getModelRootName = $.getModelRootName = function(string) {
-		return splitCall(string, dotString)[0];
-	};
-	const getModelProperty = $.getModelProperty = function(string) {
-		return lastItem(splitCall(string, slashString));
-	};
-	const getModelName = $.getModelName = function(string) {
-		return get(lastItem(splitCall(string, slashString))
-			.replace(/\.js$/, ''), modelMethod);
-	};
+	$.extension = extension;
+	const hasDot = regexGenerator(hasDotRegex);
+	$.hasDot = hasDot;
 
 	$.compactKeys = (object) => {
 		const keys = [];
@@ -1359,8 +1332,8 @@
 	//loop through an object
 	const mapObject = (object, fn) => {
 		const results = {};
-		eachObject(object, function(item, key) {
-			results[key] = apply(fn, arguments);
+		eachObject(object, (item, key, thisObject, len) => {
+			results[key] = fn(item, key, thisObject, len);
 		});
 		return results;
 	};
@@ -1368,8 +1341,8 @@
 	const filterObject = (object, fn) => {
 		const results = {};
 		let result;
-		eachObject(object, function(item, key) {
-			result = apply(fn, arguments);
+		eachObject(object, (item, key, thisObject, len) => {
+			result = fn(item, key, thisObject, len);
 			if (hasValue(result)) {
 				results[key] = result;
 			}
@@ -1377,9 +1350,9 @@
 		return results;
 	};
 	$.filterObject = filterObject;
-	const eachObject = (object, fn) => {
-		eachArray(objectKeys(object), (key, index, array, len) => {
-			fn(object[key], key, object, len);
+	const eachObject = (thisObject, fn) => {
+		eachArray(objectKeys(thisObject), (key, index, array, len) => {
+			fn(thisObject[key], key, thisObject, len);
 		});
 	};
 	$.eachObject = eachObject;
@@ -1389,19 +1362,19 @@
 	};
 	$.forEach = forEach;
 	const mapProperty = (array, funct) => {
-		const object = {};
-		eachArray(getOwnPropertyNames(array), (item, key, length) => {
-			object[item] = funct(array[item], item, array, length, object);
+		const thisObject = {};
+		eachArray(getOwnPropertyNames(array), (item, key, arrayLength) => {
+			thisObject[item] = funct(array[item], item, array, arrayLength, thisObject);
 		});
-		return object;
+		return thisObject;
 	};
 	$.mapProperty = mapProperty;
-	const forIn = (object, fn) => {
-		const results = {};
-		for (let key in object) {
-			results[key] = fn(object[key], key, object, results);
+	const forIn = (thisObject, fn) => {
+		const mappedObject = {};
+		for (let key in thisObject) {
+			mappedObject[key] = fn(thisObject[key], key, thisObject, mappedObject);
 		}
-		return results;
+		return mappedObject;
 	};
 	$.forIn = forIn;
 
@@ -1421,10 +1394,8 @@
 		Perform check on object to ensure any of the keys listed are present on the object.
 	*/
 	const hasAnyKeys = (object, keys) => {
-		let flag = false;
-		eachWhilefalse(keys, (key) => {
-			flag = hasValue(object[key]);
-			return flag;
+		const flag = keys.find((item) => {
+			return hasValue(object[item]);
 		});
 		return flag;
 	};
@@ -1464,11 +1435,9 @@
 			return isPropsEqual(object, compareObject, keys);
 		};
 	};
-
 	/*
 		Performs a deep comparison between object and source to determine if object contains equivalent property values.
 	*/
-
 	const isPropsEqualDeep = $.isPropsEqualDeep = (object, compareObject) => {
 		let result = false;
 		if (isEqualArray(objectKeys(object), objectKeys(compareObject))) {
@@ -1479,11 +1448,9 @@
 		}
 		return result;
 	};
-
 	/*
 		Performs a deep comparison between object and source to determine if object contains equivalent property values.
 	*/
-
 	const isMatch = (object, compareObject) => {
 		let result = false;
 		if (object === compareObject) {
@@ -1503,39 +1470,41 @@
 	/*
 		Return a copy of the object, filtered to omit the blacklisted keys (or array of keys). Alternatively accepts a predicate indicating which keys to omit.
 	*/
-	const omit = $.omit = (originalObject, array) => {
+	const omit = (originalObject, array) => {
 		return filterObject(originalObject, (item, key) => {
 			if (!has(array, key)) {
 				return item;
 			}
 		});
 	};
+	$.omit = omit;
 
 	/*
 		pick specific properties, listed in an array, from an object and a new object is returned with those specfic properties.
 	*/
-	const pick = $.pick = (array, originalObject, newObject) => {
+	const pick = (array, originalObject, newObject) => {
 		return arraySortToObject((item, key, object) => {
 			object[item] = originalObject[item];
 		}, array, newObject);
 	};
+	$.pick = pick;
 
 	/*
 		Return the number of values in the list.
 	*/
-	const objectSize = $.size = (object) => {
-		return getLength(objectKeys(object));
+	const objectSize = (thisObject) => {
+		return getLength(objectKeys(thisObject));
 	};
+	$.size = objectSize;
 
-	//copy an object ES6 + ES5
 	$.stringify = stringify;
 
-	$.zipObject = function(keys, values, object) {
+	$.zipObject = (keys, values, object) => {
 		return arraySortToObject((item, index, object) => {
 			object[item] = values[index];
 		}, keys, object);
 	};
-	$.unZipObject = function(object) {
+	$.unZipObject = (object) => {
 		const keys = [];
 		const values = [];
 		eachObject(object, (item, key) => {
@@ -1832,15 +1801,15 @@
 	$.wrapBefore = wrapBefore;
 
 	// is number zero
-	$.isZero = function(item) {
+	$.isZero = (item) => {
 		return item === 0;
 	};
 	// is strict equal to
-	$.isNumberEqual = function(item, num) {
+	$.isNumberEqual = (item, num) => {
 		return item === num;
 	};
 	// is In range of two numbers
-	$.isNumberInRange = function(num, start, end) {
+	$.isNumberInRange = (num, start, end) => {
 		if (isUndefined(end)) {
 			end = start;
 			start = 0;
@@ -1848,41 +1817,31 @@
 		return num > start && num < end;
 	};
 
-	// cache math functions
 	const floorMethod = mathNative.floor;
 	const randomMethod = mathNative.random;
 	const mathNativeMax = mathNative.max;
 	const ceilMethod = mathNative.ceil;
 	const roundMethod = mathNative.round;
-
 	$.math = mathNative;
-
-	// add this and value
-	$.add = function(number, value) {
+	$.add = (number, value) => {
 		return number + value;
 	};
-	// minus this and value
-	$.minus = function(number, value) {
+	$.minus = (number, value) => {
 		return number - value;
 	};
-	// divide this and value
-	$.divide = function(number, value) {
+	$.divide = (number, value) => {
 		return number / value;
 	};
-	// multiply this and value
-	$.multiply = function(number, value) {
+	$.multiply = (number, value) => {
 		return number * value;
 	};
-	// The modulo function is the integer remainder of dividing this by value
-	$.remainder = function(number, value) {
+	$.remainder = (number, value) => {
 		return number % value;
 	};
-	// add 1
-	$.increment = function(number) {
+	$.increment = (number) => {
 		return number + 1;
 	};
-	// minus 1
-	$.deduct = function(number) {
+	$.deduct = (number) => {
 		return number - 1;
 	};
 	// Returns a random number between min (inclusive) and max (exclusive)
@@ -1901,24 +1860,6 @@
 	};
 	$.appState = appState;
 
-	//console.log
-	const acidConsole = $.cnsl = (data, theme) => {
-		data = isString(data) ? data : stringify(data);
-		apply(consoleNative, [`%c${data}`, `${logTheme[theme]}font-size:13px;padding:2px 5px;border-radius:2px;`]);
-	};
-	const generateLogTheme = (color, bg) => {
-		return `color:${color};background:${bg};`;
-	};
-	const logTheme = {
-		notify: generateLogTheme('#fff', '#651FFF'),
-		warning: generateLogTheme('#000', '#FFEA00'),
-		important: generateLogTheme('#fff', '#E91E63'),
-		alert: generateLogTheme('#fff', '#f44336')
-	};
-	const addTheme = $.addConsoleTheme = (name, color, bg) => {
-		logTheme[name] = generateLogTheme(color, bg);
-	};
-
 	/**
 	 * Create a lazy contract using an array of strings required to satisfy the contract. After the contract is completed an async callback is executed.
 	 * @param      {Array,String}   Contract array when setting & String if satisfying a portion of the contract
@@ -1926,13 +1867,13 @@
 	 * @param      {Function} callback
 	 * @return     {Undefined} returns nothing from the function
 	 */
-	const contract = (arry, name, callback) => {
-		if (!callback) {
-			contract[name](arry);
-		} else {
-			contract[name] = (part) => {
+	const contract = (arry, contractName, callback) => {
+		if (callback) {
+			contract[contractName] = (part) => {
 				return has(arry, part) && shiftArray(arry) && !getLength(arry) && asyncMethod(callback);
 			};
+		} else {
+			contract[contractName](arry);
 		}
 	};
 	$.contract = contract;
@@ -1968,12 +1909,12 @@
 		Navigate down an object's chain via a string.
 
 	*/
-	const get = (name, objectChain) => {
-		let link = objectChain || $;
-		const stringChain = splitCall(lastItem(splitCall(name, slashString)), dotString);
+	const get = (propertyString, objectChain = $) => {
+		let link = objectChain;
+		const stringChain = splitCall(lastItem(splitCall(propertyString, slashString)), dotString);
 		eachWhile(stringChain, (item) => {
 			link = link[item];
-			return hasValue(link) ? true : false;
+			return hasValue(link);
 		});
 		return link;
 	};
@@ -2017,7 +1958,7 @@
 		return get(modelName, modelMethod);
 	};
 	$.model = modelMethod;
-	$.super(modelMethod);
+	$.superMethod(modelMethod);
 
 	const promise = (callback) => {
 		return new Promise(callback);
@@ -2029,7 +1970,7 @@
 	};
 
 	$.matchesProperty = (path, srcValue) => {
-		return function(item) {
+		return (item) => {
 			return get(path, item) === srcValue;
 		};
 	};
@@ -2043,26 +1984,24 @@
 
 		(Function): Returns the new function.
 	*/
-	$.overEvery = function(array) {
-		return function() {
-			var result,
-				args = arguments;
+	$.overEvery = (array) => {
+		return (...args) => {
+			let result;
 			eachWhile(array, (item) => {
 				return apply(item, args);
 			});
-			return !!result;
-		}
+			return Boolean(result);
+		};
 	};
 	/*
 		Creates a function that invokes iteratees with the arguments it receives and returns their results.
 	*/
-	$.over = function(array) {
-		return function() {
-			var args = arguments;
+	$.over = (array) => {
+		return (...args) => {
 			return mapArray(array, (item) => {
 				return apply(item, args);
 			});
-		}
+		};
 	};
 
 	/*
@@ -2094,7 +2033,7 @@
 		$.times(2, $.stubfalse);
 		// => [false, false]
 	*/
-	$.stubfalse = () => {
+	$.stubFalse = () => {
 		return false;
 	};
 	/*
@@ -2102,7 +2041,7 @@
 		$.times(2, $.stubtrue);
 		// => [true, true]
 	*/
-	$.stubtrue = () => {
+	$.stubTrue = () => {
 		return true;
 	};
 	/*
@@ -2117,182 +2056,6 @@
 	$.toPath = (string) => {
 		return string.replace(regexOpenBracket, emptyString).split(regexToPath);
 	};
-
-	const clsSelector = bindTo(documentNode.getElementsByClassName, documentNode);
-	const tagSelector = bindTo(documentNode.getElementsByTagName, documentNode);
-	$.getClass = clsSelector;
-	$.getTag = tagSelector;
-
-	const idSelector = bindTo(documentNode.getElementById, documentNode);
-	$.getId = idSelector;
-
-	const qsSelector = bindTo(documentNode.querySelector, documentNode);
-	$.querySelector = qsSelector;
-
-	const qsaSelector = bindTo(documentNode.querySelectorAll, documentNode);
-	$.querySelectorAll = qsaSelector;
-
-	const selector = (select) => {
-		const firstLetter = select[0];
-		switch (firstLetter) {
-			case poundString:
-				if (!testRegex(regexSpace, select)) {
-					return idSelector(stringSliceCall(select, 1));
-				}
-				break;
-			case dotString:
-				if (testRegex(classTest, select)) {
-					return clsSelector(stringSliceCall(select, 1));
-				}
-				break;
-			default:
-				if (testRegex(tagTest, select)) {
-					return tagSelector(select);
-				}
-		}
-		return qsaSelector(select);
-	};
-	$.selector = selector;
-
-	// Get useragent info
-	const isAgent = (name) => {
-		return (name) ? isAgent[name] : objectKeys(isAgent);
-	};
-	eachArray(splitCall(stringReplaceCall(stringReplaceCall(toLowerCaseCall(navigator.userAgent), /_/g, dotString), /[#_,;()]/g, ''), / |\//), (item) => {
-		isAgent[item] = true;
-	});
-	$.isAgent = isAgent;
-
-	const raf = requestAnimationFrame.bind(selfWindow);
-	const caf = cancelAnimationFrame.bind(selfWindow);
-	$.raf = raf;
-	$.caf = caf;
-
-	const append = (node, child) => {
-		node.appendChild(child);
-		return node;
-	};
-
-	let batchCancelFrame = false;
-	const batchChanges = [];
-	const batchLoop = () => {
-		eachArray(batchChanges, ifInvoke);
-		clearArray(batchChanges);
-		batchCancelFrame = false;
-	};
-	const batchAdd = (item) => {
-		pushApply(batchChanges, ensureArray(item));
-		if (!batchCancelFrame) {
-			batchCancelFrame = raf(batchLoop);
-		}
-	};
-	$.batch = batchAdd;
-
-	// create fragment
-	const createFragment = bindTo(documentNode.createDocumentFragment, documentNode);
-	$.createFragment = createFragment;
-
-	// create node
-	let domHeadNode;
-	const nodeAttribute = (node, keys, value) => {
-		let results;
-		if (isString(keys)) {
-			if (hasValue(value)) {
-				node.setAttribute(keys, value);
-			} else {
-				return node.getAttribute(keys);
-			}
-		} else if (isPlainObject(keys)) {
-			results = mapObject(keys, (item, key) => {
-				return nodeAttribute(node, key, item);
-			});
-			if (value) {
-				return results;
-			}
-		}
-		return node;
-	};
-	const createTag = bindTo(documentNode.createElement, documentNode);
-	$.createTag = createTag;
-	const nodeAttachLoadingEvents = (node, data) => {
-		const loaded = (event) => {
-			data.accept(event);
-			end();
-		};
-		const onerror = (event) => {
-			data.reject(event);
-			end();
-		};
-		const end = () => {
-			eventRemove(eventRemove(node, 'error', onerror, true), 'load', loaded, true);
-		};
-		eventAdd(eventAdd(node, 'error', onerror, true), 'load', loaded, true);
-		append(domHeadNode, node);
-	};
-	const importcss = (url) => {
-		return promise((accept, reject) => {
-			nodeAttachLoadingEvents(nodeAttribute(createTag('link'), {
-				type: 'text/css',
-				rel: 'stylesheet',
-				href: `${url}.css`
-			}), {
-				accept,
-				reject
-			});
-		});
-	};
-	$.importcss = importcss;
-	const importjs = (urlArg) => {
-		return promise((accept, reject) => {
-			let url = urlArg;
-			if (!url.includes('//')) {
-				url = `${corePath}${url}`;
-			}
-			if (lastItem(url) === '/') {
-				url = `${url}index`;
-			}
-			nodeAttachLoadingEvents(nodeAttribute(createTag('script'), {
-				async: emptyString,
-				src: `${url}.js`,
-				accept,
-				reject
-			}), {
-				accept,
-				reject
-			});
-		});
-	};
-	$.importjs = importjs;
-
-	const isDocumentReady = (func) => {
-		const state = documentNode.readyState;
-		if (state === 'interactive' || state === 'completed' || state === 'complete') {
-			return (func) ? func() : true;
-		}
-		if (func) {
-			eventAdd(documentNode, 'DOMContentLoaded', func);
-		}
-		return false;
-	};
-	isDocumentReady(() => {
-		domHeadNode = qsSelector('head');
-	});
-	$.isDocumentReady = isDocumentReady;
-
-	const saveDimensions = () => {
-		objectAssign(appState, {
-			windowHeight: global.innerHeight,
-			windowWidth: global.innerWidth,
-			bodyWidth: bodyNode.offsetWidth,
-			bodyHeight: bodyNode.offsetHeight
-		});
-	};
-	$.updateDimensions = saveDimensions;
-	isDocumentReady(() => {
-		bodyNode = documentNode.body;
-		raf(saveDimensions);
-	});
-	eventAdd(eventAdd(window, 'resize', saveDimensions, true), 'load', saveDimensions, true);
 
 	$.isDocumentReady(() => {
 		const acidLib = idSelector('acidjs');

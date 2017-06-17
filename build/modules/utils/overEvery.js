@@ -7,24 +7,22 @@
 
 	(Function): Returns the new function.
 */
-$.overEvery = function(array) {
-	return function() {
-		var result,
-			args = arguments;
-		eachWhile(array, (item)=>{
-			return apply(item,args);
-		});
-		return !!result;
-	}
+$.overEvery = (array) => {
+  return (...args) => {
+    let result;
+    eachWhile(array, (item) => {
+      return apply(item, args);
+    });
+    return Boolean(result);
+  };
 };
 /*
 	Creates a function that invokes iteratees with the arguments it receives and returns their results.
 */
-$.over = function(array) {
-	return function() {
-		var args = arguments;
-		return mapArray(array, (item)=>{
-			return apply(item,args);
-		});
-	}
+$.over = (array) => {
+  return (...args) => {
+    return mapArray(array, (item) => {
+      return apply(item, args);
+    });
+  };
 };
