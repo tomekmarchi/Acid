@@ -5,7 +5,7 @@ $.countBy([4.3, 6.1, 6.4],function(numb) {
 });
 { '4': 1, '6': 2 }
 */
-const countBy = function (array, funct) {
+const countBy =  (array, funct) => {
   const object = {};
   let result;
   eachArray(array, (item) => {
@@ -18,7 +18,7 @@ const countBy = function (array, funct) {
   return object;
 };
 $.countBy = countBy;
-const countKey = function (array, keyName) {
+const countKey = (array, keyName) => {
   let count = 0;
   eachArray(array, (item) => {
     if (item[keyName]) {
@@ -28,7 +28,7 @@ const countKey = function (array, keyName) {
   return count;
 };
 $.countKey = countKey;
-const countNoKey = function (array, keyName) {
+const countNoKey = (array, keyName) => {
   let count = 0;
   eachArray(array, (item) => {
     if (!item[keyName]) {
