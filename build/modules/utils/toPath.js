@@ -1,3 +1,3 @@
-$.toPath = (string) =>{
-	return string.replace(regexOpenBracket,emptyString).split(regexToPath);
+$.toPath = (string) => {
+  return string.replace(regexOpenBracket, emptyString).split(regexToPath);
 };

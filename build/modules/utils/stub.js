@@ -4,7 +4,7 @@
 	// => [{}, {}]
 */
 $.stubObject = () => {
-	return {};
+  return {};
 };
 /*
 	This method returns an empty array.
@@ -12,7 +12,7 @@ $.stubObject = () => {
 	// => [[], []]
 */
 $.stubArray = () => {
-	return [];
+  return [];
 };
 /*
 	This method returns an empty string.
@@ -20,29 +20,29 @@ $.stubArray = () => {
 	// => ['', '']
 */
 $.stubString = () => {
-	return '';
+  return '';
 };
 /*
 	This method returns false.
 	$.times(2, $.stubfalse);
 	// => [false, false]
 */
-$.stubfalse = () => {
-	return false;
+$.stubFalse = () => {
+  return false;
 };
 /*
 	This method returns true.
 	$.times(2, $.stubtrue);
 	// => [true, true]
 */
-$.stubtrue = () => {
-	return true;
+$.stubTrue = () => {
+  return true;
 };
 /*
 	This method returns undefined.
 	$.times(2, _.noop);
 	// => [undefined, undefined]
 */
-$.noop = () =>{
-	return undefined;
+$.noop = () => {
+  return undefined;
 };

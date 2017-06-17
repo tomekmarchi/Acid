@@ -5,6 +5,6 @@ const $ = (...args) => {
 };
 global.$ = $;
 global.ACID = $;
-$.super = (method) => {
+$.superMethod = (method) => {
   cacheSuper = method;
 };
