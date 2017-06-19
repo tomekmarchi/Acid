@@ -7,6 +7,7 @@
     serviceworker: true
   },
    'parserOptions': {
+     sourceType: 'module',
     'ecmaVersion': 8,
     'ecmaFeatures': {
       'experimentalObjectRestSpread': true,
@@ -14,6 +15,8 @@
     }
   },
   'rules': {
+    "object-curly-newline": 'off',
+    object-property-newline: "error",
     no-return-await: 'error',
     'no-cond-assign': ['error', 'always'],
     'no-constant-condition': 'error',
@@ -170,8 +173,7 @@
     'no-unneeded-ternary': 'error',
     'no-whitespace-before-property': 'error',
     'object-curly-spacing': ['error', 'always'],
-    'object-property-newline': 'off',
-    'one-var-declaration-per-line': 'warn',
+    'one-var-declaration-per-line': ["error", "always"],
     'operator-assignment': 'off',
     'operator-linebreak': ['error', 'after'],
     'padded-blocks': ['error', 'never'],

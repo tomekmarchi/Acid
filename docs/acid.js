@@ -238,17 +238,50 @@
 	};
 
 
-	//get characters in a range in a string
-	const insertInRange = $.insertInRange = (text, start, end, insert) => {
+	const upperCase = (string) => {
+		return string.replace(normalizeCase, ' ')
+			.trim()
+			.toUpperCase();
+	};
+	$.upperCase = upperCase;
+	const camelCase = (stringArg) => {
+		const string = stringArg
+			.toLowerCase()
+			.replace(spaceFirstLetter, (match) => {
+				return toUpperCaseCall(match);
+			});
+		return string;
+	};
+	$.camel = camelCase;
+	const kebabCase = (string) => {
+		return string.replace(normalizeCase, ' ')
+			.trim()
+			.toLowerCase()
+			.replace(/ (.)/g, '-$1');
+	};
+	$.kebab = kebabCase;
+	const snakeCase = (string) => {
+		return string.replace(normalizeCase, ' ')
+			.trim()
+			.toLowerCase()
+			.replace(/ (.)/g, '_$1');
+	};
+	$.snake = snakeCase;
+
+	// get characters in a range in a string
+	const insertInRange = (text, start, end, insert) => {
 		return stringSliceCall(text, 0, start) + insert + stringSliceCall(text, end, getLength(text));
 	};
-	//start index from right of string
-	const rightString = $.rightString = function(text, a) {
+	$.insertInRange = insertInRange;
+	// start index from right of string
+	const rightString = (text, a) => {
 		return text[getLength(text) - 1 - a];
 	};
-	const chunkString = $.chunkString = (string, size) => {
+	$.rightString = rightString;
+	const chunkString = (string, size) => {
 		return stringMatchCall(string, new regExp(`(.|[\r\n]){1, ${size}}`, 'g'));
 	};
+	$.chunkString = chunkString;
 	$.initialString = (string) => {
 		return string.slice(0, -1);
 	};
@@ -256,110 +289,106 @@
 		return string.slice(1, getLength(string));
 	};
 
-	//replace all items in an array with a string
-	const replaceWithList = $.replaceWithList = (string, array, toReplace) => {
-		return stringReplaceCall(string, new regExp(`\\b${joinArray(array,'|')}\\b`, 'gi'), toReplace);
+	// replace all items in an array with a string
+	const replaceWithList = (string, array, toReplace) => {
+		return stringReplaceCall(string, new regExp(`\\b${joinArray(array, '|')}\\b`, 'gi'), toReplace);
 	};
+	$.replaceWithList = replaceWithList;
 
-	//raw URL encode
-	const rawURLDecode = $.rawURLDecode = (string) => {
-		return decodeURIComponent(stringReplaceCall(string, rawURLDecodeRegex, function() {
+	// raw URL encode
+	const rawURLDecode = (string) => {
+		return decodeURIComponent(stringReplaceCall(string, rawURLDecodeRegex, () => {
 			return '%25';
 		}));
 	};
-	//html entities
-	const createHtmlEntities = $.htmlEntities = (string) => {
+	$.replaceWithList = rawURLDecode;
+	// html entities
+	const createHtmlEntities = (stringArg) => {
+		let string = stringArg;
 		string = stringReplaceCall(string, andRegex, '&amp;');
 		string = stringReplaceCall(string, lessThanRegex, '&lt;');
 		string = stringReplaceCall(string, moreThanRegex, '&gt;');
 		string = stringReplaceCall(string, doubleQuoteRegex, '&quot;');
 		return stringReplaceCall(string, slashRegex, '&quot;');
 	};
-	const sanitize = $.sanitize = (string) => {
+	$.replaceWithList = createHtmlEntities;
+	const sanitize = (string) => {
 		return createHtmlEntities(rawURLDecode(string));
 	};
-	//decode URI Component
-	const duc = $.duc = decodeURIComponent;
-	//encode URI Component
-	const euc = $.euc = encodeURIComponent;
+	$.replaceWithList = sanitize;
+	// decode URI Component
+	const duc = decodeURIComponent;
+	$.duc = duc;
+	// encode URI Component
+	const euc = encodeURIComponent;
+	$.euc = euc;
 
-	//tokenize split by groups of characters that are not whitespace
-	$.tokenize = function(string) {
+	// tokenize split by groups of characters that are not whitespace
+	$.tokenize = (string) => {
 		return stringMatchCall(string, /\S+/g) || [];
 	};
-	//match by alphanumeric+underscore
-	$.words = function(string) {
+	// match by alphanumeric+underscore
+	$.words = (string) => {
 		return stringMatchCall(string, /\w+/g) || [];
 	};
 
-	//uppercase first letter for all
-	var ucFirstChar = (string) => {
-		return toUpperCaseCall(charAtCall(string, 0));
-	};
-	const addRest = $.restString = (string, num) => {
-		return substrCall(string, num || 1);
-	};
-	const ucFirst = $.ucFirst = function(string) {
-		return ucFirstChar(string) + addRest(string);
-	};
-	const ucFirstAll = $.ucFirstAll = function(string) {
-		return joinArray(mapArray(splitCall(string, spaceCharacter), function(item) {
-			return ucFirst(item);
-		}), ' ');
-	};
-	//uppercase first letter lower case the rest
-	const ucFirstOnly = $.ucFirstOnly = (string) => {
-		return ucFirstChar(string) + toLowerCaseCall(addRest(string));
-	};
-	//uppercase first letter lower case the rest all
-	const ucFirstOnlyAll = $.ucFirstOnlyAll = (string) => {
-		return joinArray(mapArray(splitCall(string, spaceCharacter), function(item) {
-			return ucFirstOnly(item);
-		}), ' ');
-	};
-	//Returns the camel cased string
-	const camelCase = $.camel = (string) => {
-		string = ucFirstAll(
-			stringReplaceCall(
-				stringReplaceCall(string, regexUnderscore, spaceCharacter),
-				regexDash, spaceCharacter)
-		);
-		return toLowerCaseCall(charAtCall(string, 0)) + stringReplaceCall(substrCall(string, 1), regexSpaceglobal, emptyString);
-	};
-	const setStringCase = (string, caseLetter) => {
-		return stringReplaceCall(stringReplaceCall(toLowerCaseCall(string), regexUnderscore, spaceCharacter), regexSpaceglobal, caseLetter);
-	};
-	//Returns the kebab cased string
-	const kebabCase = $.kebab = (string) => {
-		return setStringCase(string, dashString);
-	};
-	//Returns the snake cased string
-	const snakeCase = $.snake = (string) => {
-		return setStringCase(string, dashString);
-	};
-	//returns the trunced version of the string
-	const truncate = $.truncate = (string, amount) => {
+	// returns the trunced version of the string
+	const truncate = (stringArg, amount) => {
+		let string = stringArg;
 		if (getLength(string) > amount) {
 			string = stringSliceCall(string, 0, amount);
 		}
 		return string;
 	};
-	//returns the trunced version of the string starting from the right
-	const truncateLeft = $.truncateLeft = (string, amount) => {
-		var length = getLength(string);
-		if (length > amount) {
-			string = substrCall(string, amount, length);
+	$.truncate = truncate;
+	// returns the trunced version of the string starting from the right
+	const truncateLeft = (stringArg, amount) => {
+		let string = stringArg;
+		const stringLength = getLength(string);
+		if (stringLength > amount) {
+			string = substrCall(string, amount, stringLength);
 		}
 		return string;
 	};
-	//returns the trunced version of the string
-	const truncateWord = $.truncateWord = (string, amount) => {
-		var cut = indexOfCall(string, ' ', amount);
-		if (amount != -1) {
-			string = substringCall(string, 0, amount);
-		}
-		return string;
+	$.truncateLeft = truncateLeft;
+	// returns the trunced version of the string
+	const truncateWord = (string, amount) => {
+		return substringCall(string, 0, amount);
 	};
+	$.truncateWord = truncateWord;
+
+	const normalizeCase = /[-_]/g;
+	const spaceFirstLetter = / (.)/g;
+	const upperFirstLetter = (string) => {
+		return toUpperCaseCall(string[0]);
+	};
+	const restString = (string, num) => {
+		return substrCall(string, num || 1);
+	};
+	$.restString = restString;
+	const upperFirst = (string) => {
+		return upperFirstLetter(string) + restString(string);
+	};
+	$.upperFirst = upperFirst;
+	const upperFirstAll = (string) => {
+		return string.replace(spaceFirstLetter, (match) => {
+			return toUpperCaseCall(match);
+		});
+	};
+	$.upperFirstAll = upperFirstAll;
+	// uppercase first letter lower case the rest
+	const upperFirstOnly = (string) => {
+		return upperFirstLetter(string) + toLowerCaseCall(restString(string));
+	};
+	$.upperFirstOnly = upperFirstOnly;
+	// uppercase first letter lower case the rest all
+	const upperFirstOnlyAll = (string) => {
+		return string.toLowerCase()
+			.replace(spaceFirstLetter, (match) => {
+				return toUpperCaseCall(match);
+			});
+	};
+	$.upperFirstOnlyAll = upperFirstOnlyAll;
 
 	//shared functions
 	//Flattens a nested array. Pass level to flatten up to a depth;
@@ -444,7 +473,7 @@
 	});
 	{ '4': 1, '6': 2 }
 	*/
-	const countBy = function(array, funct) {
+	const countBy = (array, funct) => {
 		const object = {};
 		let result;
 		eachArray(array, (item) => {
@@ -457,7 +486,7 @@
 		return object;
 	};
 	$.countBy = countBy;
-	const countKey = function(array, keyName) {
+	const countKey = (array, keyName) => {
 		let count = 0;
 		eachArray(array, (item) => {
 			if (item[keyName]) {
@@ -467,7 +496,7 @@
 		return count;
 	};
 	$.countKey = countKey;
-	const countNoKey = function(array, keyName) {
+	const countNoKey = (array, keyName) => {
 		let count = 0;
 		eachArray(array, (item) => {
 			if (!item[keyName]) {
