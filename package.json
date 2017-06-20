@@ -1,6 +1,6 @@
 {
   "name": "Acid",
-  "version": "1.1.0",
+  "version": "2.0",
   "description": "Utility library for building CWAs (Conscious Web Apps).",
   "keywords": [
     "Acid",
@@ -17,7 +17,7 @@
       "name": "Tomek Marchi"
     }
   ],
-  "dependencies": {
+  "devDependencies": {
     "Lucy": "*",
     "babel-core": "*",
     "babel-eslint": "*",
@@ -34,6 +34,7 @@
     "gulp-concat": "*",
     "gulp-gzip": "*",
     "gulp-notify": "*",
-    "tiny-lr": "*"
+    "tiny-lr": "*",
+    "rollup": "^0.43.0"
   }
 }

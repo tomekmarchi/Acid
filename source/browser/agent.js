@@ -5,4 +5,4 @@ const isAgent = (name) => {
 eachArray(splitCall(stringReplaceCall(stringReplaceCall(toLowerCaseCall(navigator.userAgent), /_/g, dotString), /[#_,;()]/g, ''), / |\//), (item) => {
   isAgent[item] = true;
 });
-$.isAgent = isAgent;
+acid.isAgent = isAgent;

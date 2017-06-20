@@ -1,6 +1,6 @@
-import $ from '../../../namespace/index';
+import acid from '../namespace/index';
 import { assign } from './object';
 export const apply = Reflect.apply;
-assign($, {
+assign(acid, {
   apply
 });

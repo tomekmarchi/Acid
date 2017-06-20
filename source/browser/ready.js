@@ -11,4 +11,4 @@ const isDocumentReady = (func) => {
 isDocumentReady(() => {
   domHeadNode = qsSelector('head');
 });
-$.isDocumentReady = isDocumentReady;
+acid.isDocumentReady = isDocumentReady;

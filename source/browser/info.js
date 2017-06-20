@@ -1,5 +1,5 @@
 const protocol = location.protocol;
-$.info = {
+acid.info = {
   host: {
     protocol,
     protocolSocket: ('protocol' === 'http:') ? 'ws' : 'wss',

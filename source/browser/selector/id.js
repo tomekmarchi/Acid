@@ -1,2 +1,2 @@
 const idSelector = bindTo(documentNode.getElementById, documentNode);
-$.getId = idSelector;
+acid.getId = idSelector;

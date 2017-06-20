@@ -1,9 +1,8 @@
 let cacheSuper;
-const $ = (...args) => {
+const acid = (...args) => {
   return cacheSuper(...args);
 };
-$.superMethod = (method) => {
+acid.superMethod = (method) => {
   cacheSuper = method;
 };
-global.$ = $;
-export default $;
+export default acid;

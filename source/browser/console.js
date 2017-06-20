@@ -3,7 +3,7 @@ const acidConsole = (dataArg, themeName) => {
   const data = isString(dataArg) ? dataArg : stringify(dataArg);
   apply(consoleNative, [`%c${data}`, `${themes[themeName]}font-size:13px;padding:2px 5px;border-radius:2px;`]);
 };
-$.cnsl = acidConsole;
+acid.cnsl = acidConsole;
 const generateTheme = (color, bg) => {
   return `color:${color};background:${bg};`;
 };
@@ -16,4 +16,4 @@ const themes = {
 const addTheme = (themeName, color, bg) => {
   themes[themeName] = generateTheme(color, bg);
 };
-$.addConsoleTheme = addTheme;
+acid.addConsoleTheme = addTheme;

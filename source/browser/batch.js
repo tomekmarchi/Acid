@@ -11,4 +11,4 @@ const batchAdd = (item) => {
     batchCancelFrame = raf(batchLoop);
   }
 };
-$.batch = batchAdd;
+acid.batch = batchAdd;

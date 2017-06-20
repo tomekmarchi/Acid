@@ -1,2 +1,2 @@
 const qsSelector = bindTo(documentNode.querySelector, documentNode);
-$.querySelector = qsSelector;
+acid.querySelector = qsSelector;

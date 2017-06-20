@@ -6,7 +6,7 @@ const saveDimensions = () => {
     bodyHeight: bodyNode.offsetHeight
   });
 };
-$.updateDimensions = saveDimensions;
+acid.updateDimensions = saveDimensions;
 isDocumentReady(() => {
   bodyNode = documentNode.body;
   raf(saveDimensions);

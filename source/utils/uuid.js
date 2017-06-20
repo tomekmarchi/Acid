@@ -1,0 +1,19 @@
+import acid from '../../../namespace/index';
+import { hasValue } from '../object/checking';
+let count = 0;
+const uuidFree = [];
+const uuidClosed = {};
+export const uuid = () => {
+  let result = uuidFree.shift(uuidFree);
+  if (!hasValue(result)) {
+    result = count;
+    uuidClosed[result] = true;
+    count++;
+  }
+  return result;
+};
+uuid.remove = (id) => {
+  uuidClosed[id] = null;
+  uuidFree.push(id);
+};
+acid.uuid = uuid;

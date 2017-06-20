@@ -19,7 +19,7 @@ const nodeAttribute = (node, keys, value) => {
   return node;
 };
 const createTag = bindTo(documentNode.createElement, documentNode);
-$.createTag = createTag;
+acid.createTag = createTag;
 const nodeAttachLoadingEvents = (node, data) => {
   const loaded = (event) => {
     data.accept(event);
@@ -47,7 +47,7 @@ const importcss = (url) => {
     });
   });
 };
-$.importcss = importcss;
+acid.importcss = importcss;
 const importjs = (urlArg) => {
   return promise((accept, reject) => {
     let url = urlArg;
@@ -68,4 +68,4 @@ const importjs = (urlArg) => {
     });
   });
 };
-$.importjs = importjs;
+acid.importjs = importjs;

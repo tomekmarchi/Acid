@@ -1,4 +1,5 @@
 const gulp = require('gulp');
+const rollup = require('rollup');
 const beautify = require('gulp-beautify');
 const notify = require('gulp-notify');
 const concat = require('gulp-concat');
@@ -31,34 +32,6 @@ const notifyLivereload = (reloadEvent) => {
   });
 };
 const docsLocations = ['package.json', 'README.md', 'LICENSE'];
-const locations = [
-  'build/start/credits.js',
-  'build/start/start.js',
-  'build/modules/namespace.js',
-  'build/modules/shared/*.js',
-  'build/modules/helpers/*.js',
-  'build/modules/dom/methods/*.js',
-  'build/end/info.js',
-  'build/modules/events/*.js',
-  'build/modules/string/*.js',
-  'build/modules/string/modules/*.js',
-  'build/modules/array/*.js',
-  'build/modules/array/modules/*.js',
-  'build/modules/collection/modules/*.js',
-  'build/modules/object/*.js',
-  'build/modules/object/modules/*.js',
-  'build/modules/function/*.js',
-  'build/modules/function/modules/*.js',
-  'build/modules/number/*.js',
-  'build/modules/number/modules/*.js',
-  'build/modules/native/*.js',
-  'build/modules/utils/*.js',
-  'build/modules/domDependent/selector/*.js',
-  'build/modules/domDependent/*.js',
-  'build/end/loadcore.js',
-  'build/end/documentReady.js',
-  'build/end/end.js'
-];
 const compileDocsOnly = () => {
   gulp.src(docsLocations)
     .pipe(gulp.dest('npm'))
@@ -71,8 +44,8 @@ const compileAcid = () => {
   gulp.src(locations)
     .pipe(concat('acid.js'))
     .pipe(beautify({
-      indent_size: 1,
-      indent_with_tabs: true,
+      indent_size: 2,
+      indent_with_tabs: false,
     }))
     .pipe(gulp.dest('compiled'))
     .pipe(notify(() => {
@@ -108,10 +81,19 @@ const compileAcid = () => {
       return 'Acid Minified Saved';
     }));
 };
-gulp.task('scripts', () => {
-  return compileAcid();
+gulp.task('scripts', async () => {
+  const bundle = await rollup.rollup({
+    entry: './source/index.js'
+  });
+  bundle.write({
+    format: 'umd',
+    moduleName: '$',
+    dest: './build/acid.js',
+    sourceMap: true
+  });
 });
 gulp.task('default', ['scripts'], () => {
+  return;
   livereloadStart();
   gulp.watch(locations, (gulpEvent) => {
     compileAcid(gulpEvent);

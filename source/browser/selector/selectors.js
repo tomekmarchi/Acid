@@ -18,4 +18,4 @@ const selector = (select) => {
   }
   return qsaSelector(select);
 };
-$.selector = selector;
+acid.selector = selector;
