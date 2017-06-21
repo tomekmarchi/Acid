@@ -13,11 +13,10 @@ export const uuid = () => {
   }
   return result;
 };
-export const remove = (id) => {
+uuid.remove = (id) => {
   uuidClosed[id] = null;
   uuidFree.push(id);
 };
 assign(acid, {
   uuid,
-  remove,
 });
