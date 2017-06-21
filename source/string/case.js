@@ -1,6 +1,5 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-const caseRegEx = / (.)/g;
 const normalizeCase = /[-_]/g;
 const spaceFirstLetter = / (.)/g;
 export const upperCase = (string) => {
@@ -20,13 +19,13 @@ export const kebabCase = (string) => {
   return string.replace(normalizeCase, ' ')
     .trim()
     .toLowerCase()
-    .replace(/ (.)/g, '-$1');
+    .replace(spaceFirstLetter, '-$1');
 };
 export const snakeCase = (string) => {
   return string.replace(normalizeCase, ' ')
     .trim()
     .toLowerCase()
-    .replace(/ (.)/g, '_$1');
+    .replace(spaceFirstLetter, '_$1');
 };
 assign(acid, {
   upperCase,
