@@ -1,32 +1,34 @@
-const normalizeCase = /[-_]/g;
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
 const spaceFirstLetter = / (.)/g;
-const upperFirstLetter = (string) => {
-  return toUpperCaseCall(string[0]);
+export const upperFirstLetter = (string) => {
+  return string[0].toUpperCase();
 };
-const restString = (string, num) => {
-  return substrCall(string, num || 1);
+export const restString = (string, num = 1) => {
+  return string.substr(num);
 };
-acid.restString = restString;
-const upperFirst = (string) => {
+export const upperFirst = (string) => {
   return upperFirstLetter(string) + restString(string);
 };
-acid.upperFirst = upperFirst;
-const upperFirstAll = (string) => {
+export const upperFirstAll = (string) => {
   return string.replace(spaceFirstLetter, (match) => {
-    return toUpperCaseCall(match);
+    return match.toUpperCase();
   });
 };
-acid.upperFirstAll = upperFirstAll;
-// uppercase first letter lower case the rest
-const upperFirstOnly = (string) => {
-  return upperFirstLetter(string) + toLowerCaseCall(restString(string));
+export const upperFirstOnly = (string) => {
+  return upperFirstLetter(string) + restString(string).toLowerCase();
 };
-acid.upperFirstOnly = upperFirstOnly;
-// uppercase first letter lower case the rest all
-const upperFirstOnlyAll = (string) => {
+export const upperFirstOnlyAll = (string) => {
   return string.toLowerCase()
     .replace(spaceFirstLetter, (match) => {
-      return toUpperCaseCall(match);
+      return match.toUpperCase();
     });
 };
-acid.upperFirstOnlyAll = upperFirstOnlyAll;
+
+assign(acid, {
+  restString,
+  upperFirst,
+  upperFirstAll,
+  upperFirstOnly,
+  upperFirstOnlyAll,
+});
