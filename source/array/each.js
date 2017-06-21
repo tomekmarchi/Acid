@@ -1,126 +1,75 @@
-const safeModeCall = (safeMode) => {
-  if (safeMode) {
-    if (safeMode.halt) {
-      return false;
-    } else if (safeMode.skip) {
-      safeMode.skip = false;
-      return true;
+import { hasValue } from '../internal/is';
+const whileGenerator = (optBool) => {
+  return (array, fnc) => {
+    const arrayLength = array.length;
+    for (let index = 0; index < arrayLength; index++) {
+      if (fnc(array[index], index, array, arrayLength) !== optBool) {
+        break;
+      }
     }
+  };
+};
+// loop through based on number
+export const times = (start = 0, end = start, fn = end) => {
+  for (let position = start; position < end; position++) {
+    fn(position, end);
   }
 };
-const whileGenerator = (mainFunc, optBool) => {
-  function compiled(array, fn, includeLastResult) {
-    return mainFunc(array, function (item, index, array, length, results, safeMode) {
-      if (!safeMode) {
-        safeMode = results;
-      }
-      const result = apply(fn, fn, arguments);
-      if (result === optBool) {
-        safeMode.halt = true;
-        if (includeLastResult) {
-          return result;
-        }
-      } else {
-        return result;
-      }
-    }, true);
-  }
-  return compiled;
+export const timesMap = (start = 0, end = start, fn = end) => {
+  const results = [];
+  let result;
+  times(start, end, (startArg, endArg) => {
+    result = fn(startArg, endArg, results);
+    if (hasValue(result)) {
+      results.push(result);
+    }
+  });
 };
-const generateMap = function (method) {
-  return function (array, fn, safeMode) {
+export const eachArrayRight = (array, fn) => {
+  const arrayLength = array.length;
+  for (let index = arrayLength - 1; index >= 0; index--) {
+    fn(array[index], index, array, arrayLength);
+  }
+};
+export const eachArray = (array, fn) => {
+  const arrayLength = array.length;
+  for (let index = 0; index < arrayLength; index++) {
+    fn(array[index], index, array, arrayLength);
+  }
+};
+const generateMap = (method) => {
+  return (array, fn) => {
     const results = [];
-    let returned;
-    eachArray(array, function (item, index, array, length, safe) {
-      returned = fn(item, index, array, length, results, safe);
-      (hasValue(returned) ? results[index] = returned : false)
-    }, safeMode);
+    method(array, (item, index, arrayOriginal, arrayLength) => {
+      results[index] = fn(item, index, arrayOriginal, arrayLength, results);
+    });
     return results;
   };
 };
-const filterArray = function (array, fn, safeMode) {
+export const filterArray = (array, fn) => {
   const results = [];
   let returned;
-  eachArray(array, (item, index, array, length, safe) => {
-    returned = fn(item, index, array, length, results, safe);
-    (hasValue(returned) ? pushArray(results, returned) : false)
-  }, safeMode);
+  eachArray(array, (item, index, arrayOriginal, arrayLength) => {
+    returned = fn(item, index, arrayOriginal, arrayLength, results);
+    if (hasValue(returned)) {
+      results.push(returned);
+    }
+  });
   return results;
 };
-acid.filterArray = filterArray;
-// loop while the count is less than the length of the array
-const whileLength = function (array, fn) {
-  // an array of results will be returned
+export const mapWhile = (array, fn) => {
+  const arrayLength = array.length;
   const results = [];
-  let length = getLength(array);
-  let index = 0;
-  while (length) {
-    results[index] = fn(array[index], index, array, length, results);
-    length = getLength(array);
-    index++;
-  }
-  return results;
-};
-acid.whileLength = whileLength;
-// loop through based on number
-const times = function (start, end, fn) {
-  if (!fn) {
-    let fn = end;
-    let end = start;
-    let start = 0;
-  }
-  const results = [];
-  for (let returned; start < end; start++) {
-    // call function get result
-    returned = fn(start, end, results);
-    (hasValue(returned) ? pushArray(results, returned) : false)
-  }
-  return results;
-};
-acid.times = times;
-const eachArrayRight = (array, fn, safeMode) => {
-  safeMode = (safeMode) ? {} : safeMode;
-  for (safeModeResult, length = getLength(array), i = length - 1; i >= 0; i--) {
-    safeModeResult = safeModeCall(safeMode);
-    if (safeModeResult) {
-      continue;
-    } else if (safeModeResult === false) {
+  let returned;
+  for (let index = 0; index < arrayLength; index++) {
+    returned = fn(array[index], index, array, arrayLength);
+    if (!returned) {
       break;
     }
-    fn(array[i], i, array, length, safeMode);
+    results[index] = returned;
   }
+  return results;
 };
-acid.eachArrayRight = eachArrayRight;
-const eachArray = (array, fn, safeMode) => {
-  safeMode = (safeMode) ? {} : safeMode;
-  const length = getLength(array);
-  for (let safeModeResult, i = 0; i < length; i++) {
-    safeModeResult = safeModeCall(safeMode);
-    if (safeModeResult) {
-      continue;
-    } else if (safeModeResult === false) {
-      break;
-    }
-    fn(array[i], i, array, length, safeMode);
-  }
-};
-acid.eachArray = eachArray;
-const mapArray = generateMap(eachArray);
-acid.mapArray =  mapArray;
-const mapArrayRight = generateMap(eachArrayRight);
-acid.mapArrayRight = mapArrayRight;
-// loop while the returned result is false
-const eachWhilefalse = whileGenerator(eachArray, true);
-acid.eachWhilefalse = eachWhilefalse;
-// each while the check function is true
-const eachWhile = whileGenerator(eachArray, false);
-acid.eachWhile = eachWhile;
-// loop while the returned result is false
-const whilefalse = whileGenerator(mapArray, true);
-acid.mapWhilefalse = whilefalse;
-// loop through array backwards aka from the right while true
-const mapArrayRightWhile = whileGenerator(mapArrayRight, false);
-acid.mapArrayRightWhile = mapArrayRightWhile;
-// each while the check function is true
-const mapWhile =  whileGenerator(mapArray, false);
-acid.mapWhile = mapWhile;
+export const mapArray = generateMap(eachArray);
+export const mapArrayRight = generateMap(eachArrayRight);
+export const eachWhile = whileGenerator(true);

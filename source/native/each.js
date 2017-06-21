@@ -20,6 +20,6 @@ const generateCheckLoops = (first, second) => {
     return returned(object, funct, optional);
   };
 };
-const map = acid.map = generateCheckLoops(mapArray, mapObject);
-const each = acid.each = generateCheckLoops(eachArray, eachObject);
-const filter = acid.filter = generateCheckLoops(filterArray, filterObject);
+const map = generateCheckLoops(mapArray, mapObject);
+const each = generateCheckLoops(eachArray, eachObject);
+const filter = generateCheckLoops(filterArray, filterObject);

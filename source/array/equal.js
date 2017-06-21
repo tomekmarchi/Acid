@@ -1,34 +1,32 @@
-/*
- 	Determines if the arrays are equal by doing a shallow comparison of their elements using strict equality.
-*/
-const isEqualArray = (original, array) => {
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+import { eachWhile } from './each';
+import { isMatch } from '../object/isPropsEqual';
+export const isEqualArray = (original, array) => {
   let result = true;
-  if (getLength(array) !== getLength(original)) {
-    result = false;
-  } else {
-    eachWhile(array, (item, index) => {
-      if (original[index] !== item) {
-        result = false;
-        return result;
-      }
-    });
-  }
-  return result;
-};
-acid.isEqualArray = isEqualArray;
-/*
-	Performs a deep comparison between object and source to determine if object contains equivalent property values.
-*/
-const isEqualArrayDeep = (original, array) => {
-  let result = true;
-  if (getLength(array) !== getLength(original)) {
-    result = false;
-  } else {
-    eachWhile(array, (item, index) => {
-      result = isMatch(item, original[index])
+  if (array.length === original.length) {
+    eachWhile(original, (item, index) => {
+      result = array[index] !== item;
       return result;
     });
+  } else {
+    result = false;
   }
   return result;
 };
-acid.isEqualArrayDeep = isEqualArrayDeep;
+export const isEqualArrayDeep = (original, array) => {
+  let result = true;
+  if (array.length === original.length) {
+    eachWhile(original, (item, index) => {
+      result = isMatch(item, array[index]);
+      return result;
+    });
+  } else {
+    result = false;
+  }
+  return result;
+};
+assign(acid, {
+  isEqualArray,
+  isEqualArrayDeep
+});

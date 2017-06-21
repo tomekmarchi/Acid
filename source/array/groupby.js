@@ -1,13 +1,15 @@
-/*
-	Splits a collection into sets, grouped by the result of running each value through iteratee.
-*/
-const groupBy = function (array, funct) {
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+import { arraySortToObject } from './sortToObject';
+const groupBy = (array, funct) => {
   return arraySortToObject((item, index, objectArg) => {
     const results = funct(item);
     if (!objectArg[results]) {
       objectArg[results] = [];
     }
-    pushArray(objectArg[results], item);
+    objectArg[results].push(item);
   }, array);
 };
-acid.groupBy = groupBy;
+assign(acid, {
+  groupBy
+});

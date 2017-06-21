@@ -1,11 +1,7 @@
-/*
-Sorts a list into groups and returns a count for the number of objects in each group.
-acid.countBy([4.3, 6.1, 6.4],function(numb) {
-  return Math.floor(numb);
-});
-{ '4': 1, '6': 2 }
-*/
-const countBy =  (array, funct) => {
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+import { eachArray } from './each';
+export const countBy = (array, funct) => {
   const object = {};
   let result;
   eachArray(array, (item) => {
@@ -17,8 +13,7 @@ const countBy =  (array, funct) => {
   });
   return object;
 };
-acid.countBy = countBy;
-const countKey = (array, keyName) => {
+export const countKey = (array, keyName) => {
   let count = 0;
   eachArray(array, (item) => {
     if (item[keyName]) {
@@ -27,8 +22,7 @@ const countKey = (array, keyName) => {
   });
   return count;
 };
-acid.countKey = countKey;
-const countNoKey = (array, keyName) => {
+export const countNoKey = (array, keyName) => {
   let count = 0;
   eachArray(array, (item) => {
     if (!item[keyName]) {
@@ -37,4 +31,8 @@ const countNoKey = (array, keyName) => {
   });
   return count;
 };
-acid.countNoKey = countNoKey;
+assign(acid, {
+  countBy,
+  countKey,
+  countNoKey
+});

@@ -1,13 +1,17 @@
-/**
- * Adds all values in an array
- * @param      {Array}   Array of numbers or numbers as string.
- * @param      {Number}   Starting number
- * @return     {Number} returns the sum of the array
- */
-const sumOf = function (array, result = 0) {
-  each(array, (item, key) => {
-    result = (item) ? result + (isString(item) ? numberNative(item) : item) : result;
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+import { each } from '../native/each';
+const sumOf = (array, resultArg = 0) => {
+  let result = resultArg;
+  let item;
+  each(array, (itemArg) => {
+    item = itemArg;
+    if (item) {
+      result = result + Number(item);
+    }
   });
   return result;
 };
-acid.sumOf = sumOf;
+assign(acid, {
+  sumOf
+});

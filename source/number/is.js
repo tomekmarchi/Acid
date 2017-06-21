@@ -1,16 +1,16 @@
-// is number zero
-acid.isZero = (item) => {
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+export const isZero = (item) => {
   return item === 0;
 };
-// is strict equal to
-acid.isNumberEqual = (item, num) => {
+export const isNumberEqual = (item, num) => {
   return item === num;
 };
-// is In range of two numbers
-acid.isNumberInRange = (num, start, end) => {
-  if (isUndefined(end)) {
-    end = start;
-    start = 0;
-  }
+export const isNumberInRange = (num, start = 0, end = start) => {
   return num > start && num < end;
 };
+assign(acid, {
+  isNumberInRange,
+  isNumberEqual,
+  isZero
+});
