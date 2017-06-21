@@ -1,4 +1,4 @@
-// create node
+import { emptyString } from '../internal/shared';
 let domHeadNode;
 const nodeAttribute = (node, keys, value) => {
   let results;
@@ -18,8 +18,7 @@ const nodeAttribute = (node, keys, value) => {
   }
   return node;
 };
-const createTag = bindTo(documentNode.createElement, documentNode);
-acid.createTag = createTag;
+const createTag = document.createElement.bind(document);
 const nodeAttachLoadingEvents = (node, data) => {
   const loaded = (event) => {
     data.accept(event);
@@ -47,7 +46,6 @@ const importcss = (url) => {
     });
   });
 };
-acid.importcss = importcss;
 const importjs = (urlArg) => {
   return promise((accept, reject) => {
     let url = urlArg;
@@ -58,7 +56,7 @@ const importjs = (urlArg) => {
       url = `${url}index`;
     }
     nodeAttachLoadingEvents(nodeAttribute(createTag('script'), {
-      async: emptyString,
+      async: '',
       src: `${url}.js`,
       accept,
       reject
@@ -68,4 +66,3 @@ const importjs = (urlArg) => {
     });
   });
 };
-acid.importjs = importjs;

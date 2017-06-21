@@ -6,6 +6,9 @@ export const assign = objectNative.assign;
 export const getOwnPropertyDescriptor = objectNative.getOwnPropertyDescriptor;
 export const defineProperty = objectNative.defineProperty;
 export const getOwnPropertyNames = objectNative.getOwnPropertyNames;
+export const objectSize = (thisObject) => {
+  return keys(thisObject).length;
+};
 assign(acid, {
   keys,
   is,
@@ -13,4 +16,5 @@ assign(acid, {
   getOwnPropertyDescriptor,
   defineProperty,
   getOwnPropertyNames,
+  objectSize
 });

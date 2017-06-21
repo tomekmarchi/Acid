@@ -1,6 +1,11 @@
-// cache for function that removes falsey values from array or object
-compact: (array) => {
-  return filter(array, (item) => {
-    return isString(item) && !getLength(item) ? undefined : item;
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+import { isString } from '../internal/is';
+export const compact = (array) => {
+  return array.filter((item) => {
+    return isString(item) && !item.length ? false : item;
   });
-},
+};
+assign(acid, {
+  compact,
+});

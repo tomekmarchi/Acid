@@ -1,16 +1,9 @@
-/**
-* Removes all elements from the array.
-*
-* @function Array#clear
-*
-* @example
-* var array = [1, 2, 3];
-* array.clear();
-* console.log(array);
-* // -> []
-*/
-const clearArray = (array) => {
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+export const clear = (array) => {
   array.length = 0;
   return array;
 };
-acid.clear = clearArray;
+assign(acid, {
+  clear,
+});
