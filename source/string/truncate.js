@@ -1,24 +1,25 @@
-// returns the trunced version of the string
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
 const truncate = (stringArg, amount) => {
   let string = stringArg;
-  if (getLength(string) > amount) {
-    string = stringSliceCall(string, 0, amount);
+  if (string.length > amount) {
+    string = string.slice(0, amount);
   }
   return string;
 };
-acid.truncate = truncate;
-// returns the trunced version of the string starting from the right
 const truncateLeft = (stringArg, amount) => {
   let string = stringArg;
-  const stringLength = getLength(string);
+  const stringLength = string.length;
   if (stringLength > amount) {
-    string = substrCall(string, amount, stringLength);
+    string = string.substr(amount, stringLength);
   }
   return string;
 };
-acid.truncateLeft = truncateLeft;
-// returns the trunced version of the string
 const truncateWord = (string, amount) => {
-  return substringCall(string, 0, amount);
+  return string.substring(0, amount);
 };
-acid.truncateWord = truncateWord;
+assign(acid, {
+  truncate,
+  truncateLeft,
+  truncateWord,
+});
