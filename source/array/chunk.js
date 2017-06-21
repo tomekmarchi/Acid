@@ -1,5 +1,6 @@
-// Creates an array of elements split into groups the length of size. If collection can't be split evenly, the final chunk will be the remaining elements.
-const arrayChunk = (array, size = 1) => {
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+export const chunk = (array, size = 1) => {
   const chunked = [];
   let index = 0;
   array.forEach((item, key) => {
@@ -13,5 +14,6 @@ const arrayChunk = (array, size = 1) => {
   });
   return chunked;
 };
-
-acid.chunk = arrayChunk;
+assign(acid, {
+  chunk,
+});
