@@ -1,8 +1,14 @@
-// tokenize split by groups of characters that are not whitespace
-acid.tokenize = (string) => {
-  return stringMatchCall(string, /\S+/g) || [];
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+const tokenizeRegEx = /\S+/g;
+const wordsRegEx = /\w+/g;
+export const tokenize = (string) => {
+  return string.match(tokenizeRegEx) || [];
 };
-// match by alphanumeric+underscore
-acid.words = (string) => {
-  return stringMatchCall(string, /\w+/g) || [];
+export const words = (string) => {
+  return string.match(wordsRegEx) || [];
 };
+assign(acid, {
+  tokenize,
+  words
+});

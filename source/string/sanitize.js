@@ -1,27 +1,29 @@
-// raw URL encode
-const rawURLDecode = (string) => {
-  return decodeURIComponent(stringReplaceCall(string, rawURLDecodeRegex, () => {
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+const rawURLDecodeRegex = /%(?![\da-f]{2})/gi;
+const andRegex = /&/g;
+const lessThanRegex = /</g;
+const moreThanRegex = />/g;
+const doubleQuoteRegex = /"/g;
+const forwardSlashRegex = /\//g;
+export const rawURLDecode = (string) => {
+  return decodeURIComponent(string.replace(rawURLDecodeRegex, () => {
     return '%25';
   }));
 };
-acid.replaceWithList = rawURLDecode;
-// html entities
-const createHtmlEntities = (stringArg) => {
+export const createHtmlEntities = (stringArg) => {
   let string = stringArg;
-  string = stringReplaceCall(string, andRegex, '&amp;');
-  string = stringReplaceCall(string, lessThanRegex, '&lt;');
-  string = stringReplaceCall(string, moreThanRegex, '&gt;');
-  string = stringReplaceCall(string, doubleQuoteRegex, '&quot;');
-  return stringReplaceCall(string, slashRegex, '&quot;');
+  string = string.replace(andRegex, '&amp;');
+  string = string.replace(lessThanRegex, '&lt;');
+  string = string.replace(moreThanRegex, '&gt;');
+  string = string.replace(doubleQuoteRegex, '&quot;');
+  return string.replace(forwardSlashRegex, '&quot;');
 };
-acid.replaceWithList = createHtmlEntities;
-const sanitize = (string) => {
+export const sanitize = (string) => {
   return createHtmlEntities(rawURLDecode(string));
 };
-acid.replaceWithList = sanitize;
-// decode URI Component
-const duc = decodeURIComponent;
-acid.duc = duc;
-// encode URI Component
-const euc = encodeURIComponent;
-acid.euc = euc;
+assign(acid, {
+  rawURLDecode,
+  createHtmlEntities,
+  sanitize
+});
