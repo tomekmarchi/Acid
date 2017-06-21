@@ -1,10 +1,13 @@
-// Creates an array excluding all values of the provided arrays using SameValueZero for equality comparisons.
-const arrayDifference = (array, compare) => {
-  const result = filterArray(array, (item) => {
-    if (!has(item, compare)) {
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+import { filterArray } from './each';
+export const difference = (array, compare) => {
+  return filterArray(array, (item) => {
+    if (!compare.includes(item)) {
       return item;
     }
   });
-  return result;
 };
-acid.difference = arrayDifference;
+assign(acid, {
+  difference
+});

@@ -1,36 +1,45 @@
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+const mathNative = Math;
 const floorMethod = mathNative.floor;
 const randomMethod = mathNative.random;
-const mathNativeMax = mathNative.max;
-const ceilMethod = mathNative.ceil;
-const roundMethod = mathNative.round;
-acid.math = mathNative;
-acid.add =  (number, value) => {
+export const add = (number, value) => {
   return number + value;
 };
-acid.minus =  (number, value) => {
+export const minus = (number, value) => {
   return number - value;
 };
-acid.divide =  (number, value) => {
+export const divide = (number, value) => {
   return number / value;
 };
-acid.multiply =  (number, value) => {
+export const multiply = (number, value) => {
   return number * value;
 };
-acid.remainder =  (number, value) => {
+export const remainder = (number, value) => {
   return number % value;
 };
-acid.increment = (number) => {
+export const increment = (number) => {
   return number + 1;
 };
-acid.deduct = (number) => {
+export const deduct = (number) => {
   return number - 1;
 };
 // Returns a random number between min (inclusive) and max (exclusive)
-acid.randomArbitrary = (max, min = 0) => {
+export const randomArbitrary = (max, min = 0) => {
   return randomMethod() * (max - min) + min;
 };
 // Returns a random integer between min (included) and max (excluded)
-const randomInt = (max, min = 0) => {
+export const randomInt = (max, min = 0) => {
   return floorMethod(randomMethod() * (max - min)) + min;
 };
-acid.randomInt = randomInt;
+assign(acid, {
+  add,
+  minus,
+  divide,
+  multiply,
+  remainder,
+  increment,
+  deduct,
+  randomArbitrary,
+  randomInt
+});

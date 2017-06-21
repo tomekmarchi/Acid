@@ -1,30 +1,35 @@
-// Creates an array of numbers (positive and/or negative) progressing from start up to, but not including, end. A step of -1 is used if a negative start is specified without an end or step. If end is not specified, it's set to start with start then set to 0.
-const rangeUp = (start, stop, increment) => {
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+const rangeUp = (start, end, increment) => {
   const rangeArray = [];
   let position = start;
-  while (start < stop) {
+  while (position < end) {
     rangeArray.push(position);
     position += increment;
   }
   return rangeArray;
 };
-const rangeDown = (start, stop, incrementArg) => {
+const rangeDown = (start, end, incrementArg) => {
   const increment = (incrementArg < 0) ? incrementArg * -1 : incrementArg;
   const rangeArray = [];
   let position = start;
-  while (start < stop) {
+  while (position < end) {
     rangeArray.push(position);
     position -= increment;
   }
   return rangeArray;
 };
-const range = (start, stop, increment = 1) => {
-  if (start < stop) {
-    return rangeUp(start, stop, increment);
+export const range = (start, end, increment = 1) => {
+  if (start < end) {
+    return rangeUp(start, end, increment);
   } else {
-    return rangeDown(start, stop, increment);
+    return rangeDown(start, end, increment);
   }
 };
-acid.range = range;
-const rangeRight = (start, stop, increment = 1) => rangeDown(stop, start, increment);
-acid.rangeRight = rangeRight;
+export const rangeRight = (start, end, increment = 1) => {
+  return rangeDown(end, start, increment);
+};
+assign(acid, {
+  range,
+  rangeRight
+});
