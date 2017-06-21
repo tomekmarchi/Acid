@@ -1,9 +1,11 @@
-/*
-	pick specific properties, listed in an array, from an object and a new object is returned with those specfic properties.
-*/
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+import { arraySortToObject } from '../source/array/arraySortToObject';
 const pick = (array, originalObject, newObject) => {
   return arraySortToObject((item, key, object) => {
     object[item] = originalObject[item];
   }, array, newObject);
 };
-acid.pick = pick;
+assign(acid, {
+  pick
+});

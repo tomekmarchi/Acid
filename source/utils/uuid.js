@@ -1,5 +1,6 @@
 import acid from '../../../namespace/index';
 import { hasValue } from '../object/checking';
+import { assign } from '..internal/object';
 let count = 0;
 const uuidFree = [];
 const uuidClosed = {};
@@ -12,8 +13,11 @@ export const uuid = () => {
   }
   return result;
 };
-uuid.remove = (id) => {
+export const remove = (id) => {
   uuidClosed[id] = null;
   uuidFree.push(id);
 };
-acid.uuid = uuid;
+assign(acid, {
+  uuid,
+  remove,
+});

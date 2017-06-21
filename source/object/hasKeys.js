@@ -1,22 +1,23 @@
-/*
-	Perform check on object to ensure all keys listed are present on the object.
-*/
-const hasKeys = (object, keys) => {
+import acid from '../namespace/index';
+import { assign, keys } from '../internal/object';
+import { eachWhile } from '../array/each';
+export const hasKeys = (object, properties) => {
   let flag = false;
-  eachWhile(keys, (key) => {
-    flag = hasValue(object[key]);
+  const objectKeys = keys(object);
+  eachWhile(properties, (item) => {
+    flag = objectKeys.include(item);
     return flag;
   });
   return flag;
 };
-acid.hasKeys = hasKeys;
-/*
-	Perform check on object to ensure any of the keys listed are present on the object.
-*/
-const hasAnyKeys = (object, keys) => {
-  const flag = keys.find((item) => {
-    return hasValue(object[item]);
+export const hasAnyKeys = (object, properties) => {
+  const objectKeys = keys(object);
+  const flag = properties.find((item) => {
+    return objectKeys.include(item);
   });
   return flag;
 };
-acid.hasAnyKeys = hasAnyKeys;
+assign(acid, {
+  hasKeys,
+  hasAnyKeys,
+});

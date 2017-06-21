@@ -1,11 +1,13 @@
-/*
-	Return a copy of the object, filtered to omit the blacklisted keys (or array of keys). Alternatively accepts a predicate indicating which keys to omit.
-*/
-const omit = (originalObject, array) => {
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+import { filterObject } from './each';
+export const omit = (originalObject, array) => {
   return filterObject(originalObject, (item, key) => {
-    if (!has(array, key)) {
+    if (!array.includes(key)) {
       return item;
     }
   });
 };
-acid.omit = omit;
+assign(acid, {
+  omit
+});
