@@ -1,5 +1,9 @@
-// replace all items in an array with a string
-const replaceWithList = (string, array, toReplace) => {
-  return stringReplaceCall(string, new regExp(`\\b${joinArray(array, '|')}\\b`, 'gi'), toReplace);
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+
+export const replaceWithList = (string, array, toReplace) => {
+  return string.replace(new RegExp(`\\b${array.join('|')}\\b`, 'gi'), toReplace);
 };
-acid.replaceWithList = replaceWithList;
+assign(acid, {
+  replaceWithList
+});

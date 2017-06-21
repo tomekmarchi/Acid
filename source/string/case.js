@@ -1,29 +1,36 @@
-const upperCase = (string) => {
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+const caseRegEx = / (.)/g;
+const normalizeCase = /[-_]/g;
+const spaceFirstLetter = / (.)/g;
+export const upperCase = (string) => {
   return string.replace(normalizeCase, ' ')
     .trim()
     .toUpperCase();
 };
-acid.upperCase = upperCase;
-const camelCase = (stringArg) => {
+export const camelCase = (stringArg) => {
   const string = stringArg
     .toLowerCase()
     .replace(spaceFirstLetter, (match) => {
-      return toUpperCaseCall(match);
+      return match.toUpperCase();
     });
   return string;
 };
-acid.camel = camelCase;
-const kebabCase = (string) => {
+export const kebabCase = (string) => {
   return string.replace(normalizeCase, ' ')
     .trim()
     .toLowerCase()
     .replace(/ (.)/g, '-$1');
 };
-acid.kebab = kebabCase;
-const snakeCase = (string) => {
+export const snakeCase = (string) => {
   return string.replace(normalizeCase, ' ')
     .trim()
     .toLowerCase()
     .replace(/ (.)/g, '_$1');
 };
-acid.snake = snakeCase;
+assign(acid, {
+  upperCase,
+  camelCase,
+  kebabCase,
+  snakeCase,
+});
