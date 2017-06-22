@@ -1,3 +1,7 @@
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+import { ensureArray } from './ensure';
+import { eachArray } from './each';
 /**
  * Removes all occurrences of the passed in items from the array and returns the array.
  *
@@ -19,14 +23,15 @@
  * remove(array,[2, 5]);
  * // -> [4]
  */
-const remove = function (array, functArgs) {
-  const isFN = isFunction(args);
-  const args = ensureArray(functArgs);
+export const remove = (array, removeTheseArg) => {
+  const removeThese = ensureArray(removeTheseArg);
   eachArray(array, (item, index) => {
-    if ((isFN) ? args(item) : has(args, item)) {
-      spliceArray(array, index, 1);
+    if (removeThese.includes(item)) {
+      array.splice(array, index, 1);
     }
   });
   return array;
 };
-acid.remove = remove;
+assign(acid, {
+  remove
+});

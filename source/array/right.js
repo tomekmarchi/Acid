@@ -1,5 +1,9 @@
-// start from end array using a as index
-const right = function (array, amount) {
-  return array[getLength(array) - 1 - amount];
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+// start from end array using amount as index
+export const right = (array, amount) => {
+  return array[array.length - 1 - amount];
 };
-acid.right = right;
+assign(acid, {
+  right
+});

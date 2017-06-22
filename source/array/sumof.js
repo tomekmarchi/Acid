@@ -1,10 +1,10 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-import { each } from '../native/each';
+import { eachArray } from './each';
 const sumOf = (array, resultArg = 0) => {
   let result = resultArg;
   let item;
-  each(array, (itemArg) => {
+  eachArray(array, (itemArg) => {
     item = itemArg;
     if (item) {
       result = result + Number(item);

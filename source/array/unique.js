@@ -1,29 +1,17 @@
-const chunkSlice = (array, start, end) => {
-  return mapArray(new arrayNative(mathNative.min(end, getLength(array)) - start), (item, index) => {
-    return array[start + index];
-  });
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+const onlyUnique = (value, index, array) => {
+  return array.indexOf(value) === index;
 };
-const numericalCompare = (a, b) => {
-  return a - b;
+const sortUnique = (item, index, array) => {
+  return item !== array[index - 1];
 };
-const numericalCompareReverse = (a, b) => {
-  return b - a;
+export const unique = (array, isSorted) => {
+  if (isSorted) {
+    return array.filter(sortUnique);
+  }
+  return array.filter(onlyUnique);
 };
-const xorBase = (a, b) => {
-  return mapArray(concatArray(a, b), (item, index, array) => {
-    if (!has(b, item) && indexOfCall(array, item) < 0) {
-      return item;
-    }
-  });
-};
-const onlyUnique = (value, index, self) => {
-  return self.indexOf(value) === index;
-};
-const uniqueArray = (array, isSorted) => {
-  return (isSorted) ? mapArray(array, (item, index) => {
-    if (item !== array[index - 1]) {
-      return item;
-    }
-  }) : array.filter(onlyUnique);
-};
-acid.uniq = uniqueArray;
+assign(acid, {
+  unique
+});

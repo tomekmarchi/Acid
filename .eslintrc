@@ -157,7 +157,7 @@
     'newline-per-chained-call': 'warn',
     'no-array-constructor': 'error',
     'no-bitwise': 'error',
-    'no-continue': 'warn',
+    'no-continue': 'off',
     'no-inline-comments': 'warn',
     'no-lonely-if': 'warn',
     'no-mixed-spaces-and-tabs': 'error',

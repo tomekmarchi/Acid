@@ -12,18 +12,19 @@ const whileGenerator = (optBool) => {
 // loop through based on number
 export const times = (start = 0, end = start, fn = end) => {
   for (let position = start; position < end; position++) {
-    fn(position, end);
+    fn(position, start, end);
   }
 };
 export const timesMap = (start = 0, end = start, fn = end) => {
   const results = [];
   let result;
-  times(start, end, (startArg, endArg) => {
-    result = fn(startArg, endArg, results);
+  times(start, end, (position, startArg, endArg) => {
+    result = fn(position, startArg, endArg, results);
     if (hasValue(result)) {
       results.push(result);
     }
   });
+  return results;
 };
 export const eachArrayRight = (array, fn) => {
   const arrayLength = array.length;

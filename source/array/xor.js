@@ -1,15 +1,21 @@
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+import { eachArray } from './each';
+import { unique } from './unique';
 // Creates an array that is the symmetric difference of the provided arrays. See Wikipedia for more details.
-const xor = function (arrayOG) {
-  const args = arguments;
-  const numArgs = getLength(args);
-  let result;
-  if (!numArgs) {
-    return uniqueArray(arrayOG);
-  }
-  result = xorBase(arrayOG, args[0]);
-  eachArray(args, (item) => {
-    result = xorBase(result, item);
+export const xor = (others) => {
+  const xored = [];
+  eachArray(others, (array) => {
+    eachArray(unique(array), (item) => {
+      if (xored.includes(item)) {
+        xored.splice(xored.indexOf(item), 1);
+      } else {
+        xored.push(item);
+      }
+    });
   });
-  return result;
+  return xored;
 };
-acid.xor = xor;
+assign(acid, {
+  xor
+});

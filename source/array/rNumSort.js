@@ -1,3 +1,5 @@
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
 /**
  * Sorts an array in place using a reverse numerical comparison algorithm
  * (sorts numbers from highest to lowest) and returns the array.
@@ -11,7 +13,12 @@
  * console.log(files);
  * // -> [3, 2, 1, 0]
  */
-const rNumSort = function (array) {
+export const numericalCompareReverse = (a, b) => {
+  return b - a;
+};
+export const rNumSort = (array) => {
   return array.sort(numericalCompareReverse);
 };
-acid.rNumSort = rNumSort;
+assign(acid, {
+  rNumSort
+});

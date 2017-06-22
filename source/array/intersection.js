@@ -1,4 +1,6 @@
-//Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more of the arrays.
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+import { filterArray, eachArray } from './each';
 /**
  * Returns an new array that is the [set intersection](http://en.wikipedia.org/wiki/Intersection_(set_theory))
  * of the array and the input array(s).
@@ -8,18 +10,18 @@
  * @returns {Array} The new array of unique values shared by all of the arrays.
  *
  * @example
- * [1, 2, 3].intersect([2, 3, 4]);
+ * $.intersect([1, 2, 3], [2, 3, 4]);
  * // -> [2, 3]
  *
- * [1, 2, 3].intersect([101, 2, 50, 1], [2, 1]);
+ * $.intersect([1, 2, 3], [101, 2, 50, 1], [2, 1]);
  * // -> [1, 2]
  */
-const intersection = function (...args) {
+export const intersection = (array, ...args) => {
   let yes;
-  return filterArray(args[0], (item) => {
+  return filterArray(array, (item) => {
     yes = true;
     eachArray(args, (otherItem) => {
-      if (!has(otherItem, item)) {
+      if (!otherItem.includes(item)) {
         yes = false;
       }
     });
@@ -28,4 +30,6 @@ const intersection = function (...args) {
     }
   });
 };
-acid.intersect = intersection;
+assign(acid, {
+  intersection
+});
