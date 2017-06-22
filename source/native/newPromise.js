@@ -1,4 +1,8 @@
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
 const promise = (callback) => {
   return new Promise(callback);
 };
-acid.promise = promise;
+assign(acid, {
+  promise
+});

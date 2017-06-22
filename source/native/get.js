@@ -1,15 +1,21 @@
-/*
-
-	Navigate down an object's chain via a string.
-
-*/
-const get = (propertyString, objectChain = $) => {
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+import { hasValue } from '../internal/is';
+import { dotString, emptyString } from '../internal/shared';
+import { eachWhile } from '../array/each';
+const openBracket = '[';
+const closeBracket = ']';
+const get = (propertyString, objectChain = acid) => {
   let link = objectChain;
-  const stringChain = splitCall(lastItem(splitCall(propertyString, slashString)), dotString);
+  const normalizeProperty = propertyString.replace(openBracket, dotString)
+    .replace(closeBracket, emptyString);
+  const stringChain = normalizeProperty.split(dotString);
   eachWhile(stringChain, (item) => {
     link = link[item];
     return hasValue(link);
   });
   return link;
 };
-acid.get = get;
+assign(acid, {
+  get
+});

@@ -2,6 +2,7 @@ import acid from '../namespace/index';
 import { assign, objectSize } from './object';
 import { isArray } from './array';
 import { isConstructor } from './isConstructor';
+import { eachArray } from '../array/each';
 export const objectStringGenerate = (objectName) => {
   return `[object ${objectName}]`;
 };
@@ -62,6 +63,13 @@ export const getExtensionRegex = /\.([0-9a-z]+)/;
 export const getFileExtension = (string) => {
   return string.match(getExtensionRegex);
 };
+const nativeObjectNames = ['RegExp', 'Arguments', 'Boolean', 'Date', 'Error', 'Map', 'Object', 'Set', 'WeakMap',
+  'ArrayBuffer', 'Float32Array', 'Float64Array', 'Int8Array', 'Int16Array', 'Int32Array',
+  'Uint8Array', 'Uint8ClampedArray',
+  'Uint16Array', 'Uint32Array'];
+eachArray(nativeObjectNames, (item) => {
+  acid[`is${item}`] = isSameObjectGenerator(objectStringGenerate(item));
+});
 assign(acid, {
   isFileCSS,
   isFileJSON,

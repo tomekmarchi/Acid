@@ -1,8 +1,14 @@
-const modelMethod = (modelName, object) => {
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+import { get } from './get';
+import { hasValue } from '../internal/is';
+export const model = (modelName, object) => {
   if (hasValue(object)) {
-    modelMethod[modelName] = object;
+    model[modelName] = object;
   }
-  return get(modelName, modelMethod);
+  return get(modelName, model);
 };
-acid.model = modelMethod;
-acid.superMethod(modelMethod);
+acid.superMethod(model);
+assign(acid, {
+  model
+});

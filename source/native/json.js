@@ -1,6 +1,9 @@
-/*
-	JSON
-*/
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
 const jsonNative = JSON;
-acid.jsonParse = jsonNative.jsonParse;
-acid.stringify = jsonNative.stringify;
+export const jsonParse = jsonNative.jsonParse;
+export const stringify = jsonNative.stringify;
+assign(acid, {
+  jsonParse,
+  stringify
+});
