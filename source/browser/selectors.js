@@ -9,8 +9,8 @@ const regexSpace = /\s/;
 export const getByClass = document.getElementsByClassName.bind(document);
 export const getByTag = document.getElementsByTagName.bind(document);
 export const getById = document.getElementById.bind(document);
-export const qsSelector = document.querySelector.bind(document);
-export const qsSelectorAll = document.querySelectorAll.bind(document);
+export const querySelector = document.querySelector.bind(document);
+export const querySelectorAll = document.querySelectorAll.bind(document);
 export const selector = (select) => {
   const firstLetter = select[0];
   switch (firstLetter) {
@@ -29,13 +29,13 @@ export const selector = (select) => {
       return getByTag(select);
     }
   }
-  return qsSelectorAll(select);
+  return querySelectorAll(select);
 };
 assign(acid, {
   getByClass,
   getByTag,
   getById,
-  qsSelector,
-  qsSelectorAll,
+  querySelector,
+  querySelectorAll,
   selector
 });

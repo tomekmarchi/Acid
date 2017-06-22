@@ -1,14 +1,21 @@
-const saveDimensions = () => {
-  objectAssign(appState, {
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+import { eventAdd } from './event';
+import { isDocumentReady } from './ready';
+export const saveDimensions = () => {
+  assign(acid.appState, {
     windowHeight: global.innerHeight,
     windowWidth: global.innerWidth,
-    bodyWidth: bodyNode.offsetWidth,
-    bodyHeight: bodyNode.offsetHeight
+    bodyWidth: document.body.offsetWidth,
+    bodyHeight: document.body.offsetHeight
   });
 };
 acid.updateDimensions = saveDimensions;
 isDocumentReady(() => {
-  bodyNode = documentNode.body;
-  raf(saveDimensions);
+  requestAnimationFrame(saveDimensions);
 });
-eventAdd(eventAdd(window, 'resize', saveDimensions, true), 'load', saveDimensions, true);
+eventAdd(window, 'load', saveDimensions, true);
+eventAdd(window, 'resize', saveDimensions, true);
+assign(acid, {
+  saveDimensions
+});
