@@ -1,6 +1,8 @@
-const sortOldest = (arrayArg, key, pureMode) => {
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+export const sortOldest = (arrayArg, key, pureMode) => {
   const array = (pureMode) ? arrayArg : [...arrayArg];
-  return arraySort(array, (previous, next) => {
+  return array.sort((previous, next) => {
     if (!next[key]) {
       return -1;
     } else if (!previous[key]) {
@@ -13,7 +15,10 @@ const sortOldest = (arrayArg, key, pureMode) => {
     return 0;
   });
 };
-acid.sortOldest = sortOldest;
-acid.getOldest = (array, key) => {
+export const getOldest = (array, key) => {
   return sortOldest(array, key)[0];
 };
+assign(acid, {
+  sortOldest,
+  getOldest,
+});
