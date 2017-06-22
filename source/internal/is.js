@@ -1,6 +1,5 @@
 import acid from '../namespace/index';
 import { assign, objectSize } from './object';
-import { apply } from './function';
 import { isArray } from './array';
 import { isConstructor } from './isConstructor';
 export const objectStringGenerate = (objectName) => {
@@ -36,8 +35,8 @@ export const isPlainObject = (obj) => {
 export const isFunction = (obj) => {
   return (hasValue(obj)) ? obj instanceof Function : false;
 };
-export const has = (string, search) => {
-  return (isArray(search)) ? apply(string.includes, string, search) : string.includes(search);
+export const has = (string, ...search) => {
+  return string.includes(...search);
 };
 export const hasLength = (obj) => {
   return Boolean(obj.length);

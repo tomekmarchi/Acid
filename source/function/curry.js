@@ -1,53 +1,38 @@
-acid.curry = (funts) => {
-  const argsLength = getLength(funts);
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+import { eachArray } from '../array/each';
+import { clear } from '../array/clear';
+export const curry = (funts) => {
   const args = [];
-  const curry = (...curryArgs) => {
+  const curried = (...curryArgs) => {
     eachArray(curryArgs, (item) => {
-      pushArray(args, item);
+      args.push(item);
     });
-    return curry;
+    return curried;
   };
-  curry.result = () => {
-    const results = apply(funts, curry, args);
-    clearArray(args);
+  curried.result = () => {
+    const results = funts(...args);
+    clear(args);
     return results;
   };
-  return curry;
+  return curried;
 };
-/*
-	const curried=curry(function(a,b,c){
-		return [a,b,c];
-	});
-
-	curried(1)(2)(3);
-	curried.result(); [1, 2, 3]
-
-*/
-acid.curryRight = function(funts) {
-  const argsLength = getLength(funts);
+export const curryRight = (funts) => {
   const args = [];
-  const curry = function(...curryArgs) {
+  const curried = (...curryArgs) => {
     eachArray(curryArgs, (item) => {
-      unShiftArray(args, item);
+      args.unshift(item);
     });
-    return curry;
+    return curried;
   };
-  curry.result = () => {
-    const results = apply(funts, curry, args);
-    clearArray(args);
+  curried.result = () => {
+    const results = funts(...args);
+    clear(args);
     return results;
   };
-  return curry;
+  return curried;
 };
-/*
-
-	curried(1)(2)(3);
-	// → [1, 2, 3]
-
-	curried(1, 2)(3);
-	// → [1, 2, 3]
-
-	curried(1, 2, 3);
-	// → [1, 2, 3]
-
-*/
+assign(acid, {
+  curry,
+  curryRight
+});

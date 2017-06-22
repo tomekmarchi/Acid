@@ -1,23 +1,38 @@
-const returnWraped = (method, fliptrue) => {
-  return () => {
-    const list = [];
-    const wrapped = (...wrappedArgs) => {
-      return mapArray(list, (item) => {
-        return apply(item, wrapped, wrappedArgs);
-      });
-    };
-    objectAssign(wrapped, {
-      list,
-      add(...addTheseArg) {
-        const addThese = flatten(addTheseArg);
-        method(list, (fliptrue) ? addThese.reverse() : addThese);
-      },
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+export const wrap = (...args) => {
+  const list = [];
+  const wrapped = (...wrappedArgs) => {
+    return list.map((item) => {
+      return item(...wrappedArgs);
     });
-    wrapped.add(args);
-    return wrapped;
   };
+  assign(wrapped, {
+    list,
+    add(...addTheseArg) {
+      list.push(...addTheseArg);
+    },
+  });
+  wrapped.add(args);
+  return wrapped;
 };
-const wrapCall = returnWraped(pushApply);
-acid.wrap = wrapCall;
-const wrapBefore = returnWraped(unShiftApply, true);
-acid.wrapBefore = wrapBefore;
+export const wrapBefore = (...args) => {
+  const list = [];
+  const wrapped = (...wrappedArgs) => {
+    return list.map((item) => {
+      return item(...wrappedArgs);
+    });
+  };
+  assign(wrapped, {
+    list,
+    add(...addThese) {
+      list.unshift(...addThese.reverse());
+    },
+  });
+  wrapped.add(args);
+  return wrapped;
+};
+assign(acid, {
+  wrap,
+  wrapBefore
+});

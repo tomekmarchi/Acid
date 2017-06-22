@@ -1,3 +1,5 @@
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
 export const stubObject = () => {
   return {};
 };
@@ -16,3 +18,11 @@ export const stubTrue = () => {
 export const noop = () => {
   return undefined;
 };
+assign(acid, {
+  stubObject,
+  stubArray,
+  stubString,
+  stubTrue,
+  stubFalse,
+  noop
+});

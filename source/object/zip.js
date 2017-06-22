@@ -1,11 +1,11 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
 import { eachObject } from './each';
-import { arraySortToObject } from '../source/array/sortToObject';
-export const zipObject = (keys, values, object) => {
+import { arraySortToObject } from '../array/sortToObject';
+export const zipObject = (keys, values) => {
   return arraySortToObject((item, index, object) => {
     object[item] = values[index];
-  }, keys, object);
+  }, keys);
 };
 export const unZipObject = (object) => {
   const keys = [];

@@ -1,7 +1,7 @@
 const consoleNative = console.log.bind(console);
 const acidConsole = (dataArg, themeName) => {
   const data = isString(dataArg) ? dataArg : stringify(dataArg);
-  apply(consoleNative, [`%c${data}`, `${themes[themeName]}font-size:13px;padding:2px 5px;border-radius:2px;`]);
+  consoleNative(`%c${data}`, `${themes[themeName]}font-size:13px;padding:2px 5px;border-radius:2px;`);
 };
 acid.cnsl = acidConsole;
 const generateTheme = (color, bg) => {
