@@ -1,13 +1,19 @@
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+import { eachArray } from './each';
+import { unique } from './unique';
 // Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more of the arrays.
-const union = function () {
+export const union = (...args) => {
   const result = [];
-  eachArray(arguments, (array) => {
-    eachArray(array, (item) => {
-      if (has(result, item)) {
-        pushArray(result, item);
+  eachArray(args, (array) => {
+    eachArray(unique(array), (item) => {
+      if (result.includes(item)) {
+        result.push(item);
       }
     });
   });
   return result;
 };
-acid.union = union;
+assign(acid, {
+  union
+});

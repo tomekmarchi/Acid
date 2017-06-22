@@ -1,19 +1,28 @@
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+import { randomInt } from '../number/math';
 /*
   Produce a random sample from the list. Pass a number to return n random elements from the list. Otherwise a single random item will be returned.
-  acid.sample([1,2,3,4] , 2);
+  sample([1,2,3,4] , 2);
 */
-const sample = (array, amount = 1) => {
-  const sampleArray = toArray(array);
+export const sample = (array, amount = 1) => {
+  if (amount === 1) {
+    return array[randomInt(array.length - 1, 0)];
+  }
+  const sampleArray = [];
+  const used = {};
   let count = 0;
   let index;
-  let value;
   while (count < amount) {
-    index = randomInt(sampleArray.length - 1, 0);
-    value = sampleArray[count];
-    sampleArray[count] = sampleArray[index];
-    sampleArray[index] = value;
-    count++;
+    index = randomInt(array.length - 1, 0);
+    if (!used[index]) {
+      sampleArray.push(sampleArray[index]);
+      used[index] = true;
+      count++;
+    }
   }
   return sampleArray;
 };
-acid.sample = sample;
+assign(acid, {
+  sample
+});

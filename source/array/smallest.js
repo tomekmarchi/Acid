@@ -1,5 +1,10 @@
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+const mathNativeMin = Math.min;
 // get smallest number from array
-const smallest = function (item) {
-  return apply(mathNative.min, mathNative, item);
+export const smallest = (array) => {
+  return mathNativeMin(...array);
 };
-acid.smallest = smallest;
+assign(acid, {
+  smallest
+});

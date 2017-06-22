@@ -1,3 +1,5 @@
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
 /*
 const array = [async function(...args){
   console.log(1,args);
@@ -6,7 +8,7 @@ const array = [async function(...args){
 }];
 acid.asyncEach(array,[3,4]);
 */
-const asyncEach = async (array, args, indexArg = 0, arrayLength = array.length) => {
+export const asyncEach = async (array, args, indexArg = 0, arrayLength = array.length) => {
   let index = indexArg;
   if (index < length) {
     const item = array[index];
@@ -15,8 +17,7 @@ const asyncEach = async (array, args, indexArg = 0, arrayLength = array.length) 
     await asyncEach(array, args, index, arrayLength);
   }
 };
-acid.asyncEach = asyncEach;
-const eachAsync = async (array, funct, indexArg = 0, arrayLength = array.length) => {
+export const eachAsync = async (array, funct, indexArg = 0, arrayLength = array.length) => {
   let index = indexArg;
   if (index < length) {
     const item = array[index];
@@ -25,4 +26,7 @@ const eachAsync = async (array, funct, indexArg = 0, arrayLength = array.length)
     await eachAsync(array, funct, index, arrayLength);
   }
 };
-acid.eachAsync = eachAsync;
+assign(acid, {
+  asyncEach,
+  eachAsync,
+});

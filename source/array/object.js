@@ -1,7 +1,12 @@
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+import { arraySortToObject } from './sortToObject';
 // Converts arrays into objects.
-const arrayToObject = function (values, keys) {
+export const arrayToObject = (values, keys) => {
   return arraySortToObject((item, index, objectArg) => {
     objectArg[keys[index]] = item;
   }, values);
 };
-acid.object = arrayToObject;
+assign(acid, {
+  arrayToObject
+});
