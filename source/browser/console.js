@@ -1,9 +1,8 @@
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+import { isString } from '../internal/is';
+import { stringify } from '../native/json';
 const consoleNative = console.log.bind(console);
-const acidConsole = (dataArg, themeName) => {
-  const data = isString(dataArg) ? dataArg : stringify(dataArg);
-  apply(consoleNative, [`%c${data}`, `${themes[themeName]}font-size:13px;padding:2px 5px;border-radius:2px;`]);
-};
-acid.cnsl = acidConsole;
 const generateTheme = (color, bg) => {
   return `color:${color};background:${bg};`;
 };
@@ -13,7 +12,14 @@ const themes = {
   important: generateTheme('#fff', '#E91E63'),
   alert: generateTheme('#fff', '#f44336')
 };
-const addTheme = (themeName, color, bg) => {
+const cnsl = (dataArg, themeName) => {
+  const data = isString(dataArg) ? dataArg : stringify(dataArg);
+  consoleNative(`%c${data}`, `${themes[themeName]}font-size:13px;padding:2px 5px;border-radius:2px;`);
+};
+const addConsoleTheme = (themeName, color, bg) => {
   themes[themeName] = generateTheme(color, bg);
 };
-acid.addConsoleTheme = addTheme;
+assign(acid, {
+  cnsl,
+  addConsoleTheme
+});

@@ -1,17 +1,16 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-import { apply } from '../internal/function';
 import { eachArray, eachArrayRight } from './each';
-import { flatten } from './flatten';
+import { hasValue } from '../internal/is';
 const returnFlow = (method) => {
-  return (...mainArgs) => {
-    const funcs = flatten(mainArgs);
-    return function wrapped(...wrapArgs) {
-      const value = [];
+  return (...funcs) => {
+    return (arg) => {
+      let value;
       method(funcs, (item) => {
-        value[0] = apply(item, wrapped, value[0] ? value : wrapArgs);
+        const temp = (hasValue(value)) ? value : arg;
+        value = item(temp);
       });
-      return value[0];
+      return value;
     };
   };
 };

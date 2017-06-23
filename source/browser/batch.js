@@ -1,3 +1,8 @@
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+import { eachArray, clearArray } from '../array/each';
+import { ensureArray } from '../array/ensure';
+import { ifInvoke } from '../array/function';
 let batchCancelFrame = false;
 const batchChanges = [];
 const batchLoop = () => {
@@ -5,10 +10,12 @@ const batchLoop = () => {
   clearArray(batchChanges);
   batchCancelFrame = false;
 };
-const batchAdd = (item) => {
-  pushApply(batchChanges, ensureArray(item));
+export const batch = (item) => {
+  batchChanges.push(...ensureArray(item));
   if (!batchCancelFrame) {
-    batchCancelFrame = raf(batchLoop);
+    batchCancelFrame = requestAnimationFrame(batchLoop);
   }
 };
-acid.batch = batchAdd;
+assign(acid, {
+  batch
+});

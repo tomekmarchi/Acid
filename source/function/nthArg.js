@@ -1,4 +1,6 @@
-acid.nthArg = (numArg) => {
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+export const nthArg = (numArg) => {
   let num = numArg;
   return (...args) => {
     if (num < 0) {
@@ -7,3 +9,6 @@ acid.nthArg = (numArg) => {
     return args[num];
   };
 };
+assign(acid, {
+  nthArg
+});

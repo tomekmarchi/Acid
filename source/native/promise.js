@@ -1,8 +1,8 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-export const toggle = (value, a, b) => {
-  return (value === a) ? b : a;
+const promise = (callback) => {
+  return new Promise(callback);
 };
 assign(acid, {
-  toggle
+  promise
 });

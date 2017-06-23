@@ -1,3 +1,6 @@
-// create fragment
-const createFragment = bindTo(documentNode.createDocumentFragment, documentNode);
-acid.createFragment = createFragment;
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+export const createFragment = document.createDocumentFragment.bind(document);
+assign(acid, {
+  createFragment
+});

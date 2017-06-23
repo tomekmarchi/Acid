@@ -1,4 +1,4 @@
-const append = (node, child) => {
+export const append = (node, child) => {
   node.appendChild(child);
   return node;
 };

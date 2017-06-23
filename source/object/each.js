@@ -1,10 +1,9 @@
 import acid from '../namespace/index';
-import { assign, getOwnPropertyNames } from '../internal/object';
+import { assign, getOwnPropertyNames, keys } from '../internal/object';
 import { hasValue } from '../internal/is';
-import { objectKeys } from './hasKeys';
 import { eachArray } from '../array/each';
 export const eachObject = (thisObject, fn) => {
-  eachArray(objectKeys(thisObject), (key, index, array, propertyCount) => {
+  eachArray(keys(thisObject), (key, index, array, propertyCount) => {
     fn(thisObject[key], key, thisObject, propertyCount);
   });
 };

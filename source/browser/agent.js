@@ -1,8 +1,16 @@
-// Get useragent info
-const isAgent = (name) => {
-  return (name) ? isAgent[name] : objectKeys(isAgent);
+import acid from '../namespace/index';
+import { assign, keys } from '../internal/object';
+import { eachArray } from '../array/each';
+const isAgent = (string) => {
+  return (string) ? isAgent[string] : keys(isAgent);
 };
-eachArray(splitCall(stringReplaceCall(stringReplaceCall(toLowerCaseCall(navigator.userAgent), /_/g, dotString), /[#_,;()]/g, ''), / |\//), (item) => {
+let userAgentNormalized = navigator.userAgent.toLowerCase();
+userAgentNormalized = userAgentNormalized.replace(/_/g, '.');
+userAgentNormalized = userAgentNormalized.replace(/[#_,;()]/g, '');
+const userAgentSplit = userAgentNormalized.split(/ |\//);
+eachArray(userAgentSplit, (item) => {
   isAgent[item] = true;
 });
-acid.isAgent = isAgent;
+assign(acid, {
+  isAgent
+});

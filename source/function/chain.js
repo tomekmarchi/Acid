@@ -1,29 +1,35 @@
-const addChain = (chain, addToChain) => {
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+import { each } from './each';
+const addLink = (link, addToChain) => {
   each(addToChain, (item, key) => {
-    chain.methods[key] = (...args) => {
-      unShiftArray(args, chain.value);
-      apply(item, args);
-      return chain.methods;
+    link.methods[key] = (...args) => {
+      args.unshift(link.value);
+      item(...args);
+      return link.methods;
     };
   });
-  return chain;
+  return link;
 };
-acid.chain = (methods) => {
-  const chain = (value) => {
-    chain.value = value;
-    return chain.methods;
+export const chain = (methods) => {
+  const link = (value) => {
+    link.value = value;
+    return link.methods;
   };
-  objectAssign(chain, {
+  assign(link, {
     methods: {},
-    add(addToChain) {
-      return addChain(chain, addToChain);
+    link(addToChain) {
+      return addLink(link, addToChain);
     },
     done() {
-      const value = chain.value;
-      chain.value = null;
+      const value = link.value;
+      link.value = null;
       return value;
     }
   });
-  chain.add(methods);
-  return chain;
+  link.link(methods);
+  return link;
 };
+assign(acid, {
+  chain
+});

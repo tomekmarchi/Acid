@@ -1,14 +1,12 @@
-const clearTimer = clearTimeout;
-const timerMethod = (fn, time) => {
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+import { times } from '../array/each';
+export const timer = (fn, time) => {
   return setTimeout(fn, time);
 };
-acid.clearTimers = generateClear(timerMethod, clearTimer);
-acid.clearIntervals = generateClear(intervalMethod, clearInterval);
-acid.timer = timerMethod;
-const intervalMethod = (fn, time) => {
+export const interval = (fn, time) => {
   return setInterval(fn, time);
 };
-acid.interval = intervalMethod;
 const generateClear = (method, clearMethod) => {
   return (max) => {
     times(0, method(() => {}, max || 1000), (index) => {
@@ -16,14 +14,16 @@ const generateClear = (method, clearMethod) => {
     });
   };
 };
-acid.debounce = (original, time) => {
+export const clearTimers = generateClear(timer, clearTimeout);
+export const clearIntervals = generateClear(interval, clearInterval);
+export const debounce = (original, time) => {
   let timeout = false;
   const fn = (...args) => {
     if (timeout !== false) {
-      clearTimer(timeout);
+      clearTimeout(timeout);
     }
-    timeout = timerMethod(() => {
-      apply(original, fn, args);
+    timeout = timer(() => {
+      original(...args);
       timeout = false;
     }, time);
   };
@@ -35,7 +35,7 @@ acid.debounce = (original, time) => {
   };
   return fn;
 };
-acid.throttle = (func, time) => {
+export const throttle = (func, time) => {
   let timeout = false;
   let shouldThrottle;
   const fn = (...args) => {
@@ -43,22 +43,23 @@ acid.throttle = (func, time) => {
       shouldThrottle = true;
       return;
     }
-    apply(func, fn, args);
-    timeout = timerMethod(() => {
+    func(...args);
+    timeout = timer(() => {
       if (shouldThrottle) {
-        apply(func, fn, args);
+        func(...args);
       }
       timeout = false;
     }, time);
   };
   fn.clear = () => {
-    clearTimer(timeout);
+    clearTimeout(timeout);
     timeout = false;
   };
   return fn;
 };
-acid.inAsync = async (fns, params) => {
-  await eachAsync(fns, async (item) => {
-    await apply(item, params);
-  });
-};
+assign(acid, {
+  interval,
+  timer,
+  debounce,
+  throttle,
+});
