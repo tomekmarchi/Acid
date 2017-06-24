@@ -1,6 +1,7 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-import { ensureArray, isArray } from '../internal/array';
+import { ensureArray } from '../array/ensure';
+import { isArray } from '../internal/is';
 // Flattens a nested array. Pass level to flatten up to a depth;
 export const flatten = (arrayArg, level = 1) => {
   let array = arrayArg;

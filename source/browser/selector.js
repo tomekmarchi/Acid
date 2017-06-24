@@ -1,6 +1,6 @@
 import acid from '../namespace/index';
-import { restString } from '../string/rest';
 import { assign } from '../internal/object';
+import { restString } from '../string/range';
 const dotString = '.';
 const poundString = '#';
 const classTest = /^.[\w_-]+$/;

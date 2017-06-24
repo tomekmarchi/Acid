@@ -21,12 +21,12 @@
     "Lucy": "*",
     "babel-core": "*",
     "babel-eslint": "*",
-    "eslint": "*",
     "babel-plugin-minify-empty-function": "*",
     "babel-preset-babili": "*",
     "babel-preset-es2015": "*",
     "body-parser": "*",
     "connect-livereload": "*",
+    "eslint": "*",
     "express": "*",
     "gulp": "*",
     "gulp-babel": "*",
@@ -34,7 +34,7 @@
     "gulp-concat": "*",
     "gulp-gzip": "*",
     "gulp-notify": "*",
-    "tiny-lr": "*",
-    "rollup": "^0.43.0"
+    "rollup": "^0.43.0",
+    "tiny-lr": "*"
   }
 }

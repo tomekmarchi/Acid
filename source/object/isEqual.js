@@ -1,9 +1,8 @@
 import acid from '../namespace/index';
-import { assign, keys } from '../internal/object';
-import { isPlainObject } from '../internal/is';
-import { isArray } from '../internal/array';
-import { isMatchArray } from '../array/match';
 import { eachWhile } from '../array/each';
+import { isMatchArray } from '../array/isMatch';
+import { assign, keys } from '../internal/object';
+import { isArray, isPlainObject } from '../internal/is';
 /*
 	Performs a deep comparison between object and source to determine if object contains equivalent property values.
 */

@@ -1,6 +1,6 @@
-import acid from '../../../namespace/index';
-import { hasValue } from '../object/checking';
-import { assign } from '..internal/object';
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
+import { hasValue } from '../internal/is';
 let count = 0;
 const uuidFree = [];
 const uuidClosed = {};

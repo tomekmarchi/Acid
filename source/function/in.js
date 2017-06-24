@@ -1,6 +1,6 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-import { each } from '../native/each';
+import { each } from '../utility/each';
 import { eachAsync } from '../array/eachAsync';
 export const inSync = (fns, args) => {
   return each(fns, (item) => {

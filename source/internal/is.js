@@ -1,7 +1,5 @@
 import acid from '../namespace/index';
 import { assign, objectSize } from './object';
-import { isArray } from './array';
-import { isConstructor } from './isConstructor';
 import { eachArray } from '../array/each';
 export const objectStringGenerate = (objectName) => {
   return `[object ${objectName}]`;
@@ -20,10 +18,16 @@ export const isSameObjectGenerator = (type) => {
     return (hasValue(obj)) ? obj.toString() === type : false;
   };
 };
+export const isConstructor = (nativeObject) => {
+  return (obj) => {
+    return (hasValue(obj)) ? obj.constructor === nativeObject : false;
+  };
+};
 export const decimalCheck = /\.|\+/;
 export const isDecimal = (string) => {
   return string.toString().match(decimalCheck);
 };
+export const isArray = Array.isArray;
 export const isString = isConstructor(String);
 export const isNumber = isConstructor(Number);
 export const isPlainObject = (obj) => {

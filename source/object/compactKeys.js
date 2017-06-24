@@ -1,7 +1,7 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
+import { eachObject } from '../object/each';
 import { hasValue } from '../internal/is';
-import { eachObject } from '../native/each';
 export const compactKeys = (object) => {
   const keys = [];
   eachObject(object, (item, key) => {

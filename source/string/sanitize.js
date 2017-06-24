@@ -23,7 +23,7 @@ export const sanitize = (string) => {
   return createHtmlEntities(rawURLDecode(string));
 };
 assign(acid, {
-  rawURLDecode,
   createHtmlEntities,
+  rawURLDecode,
   sanitize
 });

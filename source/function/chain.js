@@ -1,6 +1,6 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-import { each } from '../native/each';
+import { each } from '../utility/each';
 const addLink = (link, addToChain) => {
   each(addToChain, (item, key) => {
     link.methods[key] = (...args) => {

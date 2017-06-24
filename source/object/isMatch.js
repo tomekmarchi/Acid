@@ -1,7 +1,7 @@
 import acid from '../namespace/index';
-import { assign, keys } from '../internal/object';
-import { isMatchArray } from '../array/match';
 import { eachWhile } from '../array/each';
+import { isMatchArray } from '../array/isMatch';
+import { assign, keys } from '../internal/object';
 export const isMatchObject = (source, compare) => {
   let result = false;
   const sourceProperties = keys(source);
