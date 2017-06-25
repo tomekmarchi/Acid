@@ -1,7 +1,6 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-import { isArray } from '../internal/array';
-import { hasValue, isPlainObject, isFunction } from '../internal/is';
+import { hasValue, isPlainObject, isFunction, isArray } from '../internal/is';
 import { mapObject, eachObject, filterObject } from '../object/each';
 import { eachArray, mapArray, filterArray } from '../array/each';
 const forEachWrap = (object, funct) => {

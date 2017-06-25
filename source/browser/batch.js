@@ -1,13 +1,14 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-import { eachArray, clearArray } from '../array/each';
+import { clear } from '../array/clear';
+import { eachArray } from '../array/each';
 import { ensureArray } from '../array/ensure';
-import { ifInvoke } from '../array/function';
+import { ifInvoke } from '../function/ifInvoke';
 let batchCancelFrame = false;
 const batchChanges = [];
 const batchLoop = () => {
   eachArray(batchChanges, ifInvoke);
-  clearArray(batchChanges);
+  clear(batchChanges);
   batchCancelFrame = false;
 };
 export const batch = (item) => {

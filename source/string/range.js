@@ -16,9 +16,9 @@ export const restString = (string) => {
   return string.slice(1, string.length);
 };
 assign(acid, {
-  insertInRange,
-  rightString,
   chunkString,
   initialString,
-  restString
+  insertInRange,
+  restString,
+  rightString,
 });

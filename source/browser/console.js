@@ -1,7 +1,7 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
 import { isString } from '../internal/is';
-import { stringify } from '../native/json';
+import { stringify } from '../utility/json';
 const consoleNative = console.log.bind(console);
 const generateTheme = (color, bg) => {
   return `color:${color};background:${bg};`;

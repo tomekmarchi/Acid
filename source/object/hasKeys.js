@@ -1,6 +1,6 @@
 import acid from '../namespace/index';
-import { assign, keys } from '../internal/object';
 import { eachWhile } from '../array/each';
+import { assign, keys } from '../internal/object';
 export const hasKeys = (object, properties) => {
   let flag = false;
   const objectKeys = keys(object);
@@ -18,6 +18,6 @@ export const hasAnyKeys = (object, properties) => {
   return flag;
 };
 assign(acid, {
-  hasKeys,
   hasAnyKeys,
+  hasKeys,
 });

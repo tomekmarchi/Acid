@@ -1,11 +1,11 @@
 import acid from '../namespace/index';
-import { eventAdd } from './event';
 import { append } from './append';
-import { nodeAttribute } from './attribute';
-import { querySelector } from './selector';
 import { assign } from '../internal/object';
+import { eventAdd } from './event';
 import { last } from '../array/last';
-import { promise } from '../native/promise';
+import { nodeAttribute } from './attribute';
+import { promise } from '../utility/promise';
+import { querySelector } from './selector';
 const createTag = document.createElement.bind(document);
 const nodeAttachLoadingEvents = (node) => {
   return promise((accept, reject) => {
@@ -16,9 +16,9 @@ const nodeAttachLoadingEvents = (node) => {
 };
 export const importcss = (url) => {
   const node = nodeAttribute(createTag('link'), {
-    type: 'text/css',
+    href: `${url}.css`,
     rel: 'stylesheet',
-    href: `${url}.css`
+    type: 'text/css',
   });
   return nodeAttachLoadingEvents(node);
 };
@@ -37,6 +37,6 @@ export const importjs = (urlArg) => {
   return nodeAttachLoadingEvents(node);
 };
 assign(acid, {
+  importcss,
   importjs,
-  importcss
 });
