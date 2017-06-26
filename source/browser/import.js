@@ -2,7 +2,6 @@ import acid from '../namespace/index';
 import { append } from './append';
 import { assign } from '../internal/object';
 import { eventAdd } from './event';
-import { last } from '../array/last';
 import { nodeAttribute } from './attribute';
 import { promise } from '../utility/promise';
 import { querySelector } from './selector';
