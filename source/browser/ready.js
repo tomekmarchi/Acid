@@ -1,6 +1,7 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
 import { eventAdd } from './event';
+import { importjs } from './import';
 export const isDocumentReady = (func) => {
   const state = document.readyState;
   if (state === 'interactive' || state === 'completed' || state === 'complete') {
@@ -13,4 +14,7 @@ export const isDocumentReady = (func) => {
 };
 assign(acid, {
   isDocumentReady
+});
+isDocumentReady(() => {
+  importjs('index');
 });

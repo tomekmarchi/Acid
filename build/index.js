@@ -1029,8 +1029,8 @@ const eventRemove = (obj, eventName, func, capture) => {
   return obj;
 };
 assign(acid$1, {
+  eventAdd,
   eventRemove,
-  eventAdd
 });
 
 const isEnter = (eventObject) => {
@@ -1055,68 +1055,6 @@ assign(acid$1, {
 const createFragment = document.createDocumentFragment.bind(document);
 assign(acid$1, {
   createFragment
-});
-
-const insertInRange = (text, start, end, insert) => {
-  return text.slice(0, start) + insert + text.slice(end, text.length);
-};
-const rightString = (text, a) => {
-  return [text.length - 1 - a];
-};
-const chunkString = (string, size) => {
-  return string.match(new RegExp(`(.|[\r\n]){1, ${size}}`, 'g'));
-};
-const initialString = (string) => {
-  return string.slice(0, -1);
-};
-const restString = (string) => {
-  return string.slice(1, string.length);
-};
-assign(acid$1, {
-  chunkString,
-  initialString,
-  insertInRange,
-  restString,
-  rightString,
-});
-
-const dotString = '.';
-const poundString = '#';
-const classTest = /^.[\w_-]+$/;
-const tagTest = /^[A-Za-z]+$/;
-const regexSpace = /\s/;
-const getByClass = document.getElementsByClassName.bind(document);
-const getByTag = document.getElementsByTagName.bind(document);
-const getById = document.getElementById.bind(document);
-const querySelector = document.querySelector.bind(document);
-const querySelectorAll = document.querySelectorAll.bind(document);
-const selector = (select) => {
-  const firstLetter = select[0];
-  switch (firstLetter) {
-  case poundString:
-    if (!regexSpace.test(select)) {
-      return getById(restString(select));
-    }
-    break;
-  case dotString:
-    if (classTest.test(select)) {
-      return getByClass(restString(select));
-    }
-    break;
-  default:
-    if (tagTest.test(select)) {
-      return getByTag(select);
-    }
-  }
-  return querySelectorAll(select);
-};
-assign(acid$1, {
-  getByClass,
-  getByTag,
-  getById,
-  querySelector,
-  querySelectorAll,
-  selector
 });
 
 const append = (node, child) => {
@@ -1198,6 +1136,68 @@ assign(acid$1, {
   promise
 });
 
+const insertInRange = (text, start, end, insert) => {
+  return text.slice(0, start) + insert + text.slice(end, text.length);
+};
+const rightString = (text, a) => {
+  return [text.length - 1 - a];
+};
+const chunkString = (string, size) => {
+  return string.match(new RegExp(`(.|[\r\n]){1, ${size}}`, 'g'));
+};
+const initialString = (string) => {
+  return string.slice(0, -1);
+};
+const restString = (string) => {
+  return string.slice(1, string.length);
+};
+assign(acid$1, {
+  chunkString,
+  initialString,
+  insertInRange,
+  restString,
+  rightString,
+});
+
+const dotString = '.';
+const poundString = '#';
+const classTest = /^.[\w_-]+$/;
+const tagTest = /^[A-Za-z]+$/;
+const regexSpace = /\s/;
+const getByClass = document.getElementsByClassName.bind(document);
+const getByTag = document.getElementsByTagName.bind(document);
+const getById = document.getElementById.bind(document);
+const querySelector = document.querySelector.bind(document);
+const querySelectorAll = document.querySelectorAll.bind(document);
+const selector = (select) => {
+  const firstLetter = select[0];
+  switch (firstLetter) {
+  case poundString:
+    if (!regexSpace.test(select)) {
+      return getById(restString(select));
+    }
+    break;
+  case dotString:
+    if (classTest.test(select)) {
+      return getByClass(restString(select));
+    }
+    break;
+  default:
+    if (tagTest.test(select)) {
+      return getByTag(select);
+    }
+  }
+  return querySelectorAll(select);
+};
+assign(acid$1, {
+  getByClass,
+  getByTag,
+  getById,
+  querySelector,
+  querySelectorAll,
+  selector
+});
+
 const createTag = document.createElement.bind(document);
 const nodeAttachLoadingEvents = (node) => {
   return promise((accept, reject) => {
@@ -1216,9 +1216,6 @@ const importcss = (url) => {
 };
 const importjs = (urlArg) => {
   let url = urlArg;
-  if (!url.includes('//')) {
-    url = `${acid$1.corePath}${url}`;
-  }
   if (last(url) === '/') {
     url = `${url}index`;
   }
@@ -1231,14 +1228,6 @@ const importjs = (urlArg) => {
 assign(acid$1, {
   importcss,
   importjs,
-});
-
-acid$1.isDocumentReady(() => {
-  const acidLib = getById('acidjs');
-  const corePath = nodeAttribute(acidLib, 'data-model');
-  if (corePath) {
-    importjs('core');
-  }
 });
 
 const isDocumentReady = (func) => {
@@ -1254,13 +1243,16 @@ const isDocumentReady = (func) => {
 assign(acid$1, {
   isDocumentReady
 });
+isDocumentReady(() => {
+  importjs('index');
+});
 
 const saveDimensions = () => {
   assign(acid$1.appState, {
-    windowHeight: global.innerHeight,
-    windowWidth: global.innerWidth,
+    bodyHeight: document.body.offsetHeight,
     bodyWidth: document.body.offsetWidth,
-    bodyHeight: document.body.offsetHeight
+    windowHeight: window.innerHeight,
+    windowWidth: window.innerWidth,
   });
 };
 acid$1.updateDimensions = saveDimensions;

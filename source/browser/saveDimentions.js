@@ -4,10 +4,10 @@ import { eventAdd } from './event';
 import { isDocumentReady } from './ready';
 export const saveDimensions = () => {
   assign(acid.appState, {
-    windowHeight: global.innerHeight,
-    windowWidth: global.innerWidth,
+    bodyHeight: document.body.offsetHeight,
     bodyWidth: document.body.offsetWidth,
-    bodyHeight: document.body.offsetHeight
+    windowHeight: window.innerHeight,
+    windowWidth: window.innerWidth,
   });
 };
 acid.updateDimensions = saveDimensions;

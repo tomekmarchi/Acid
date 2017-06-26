@@ -9,6 +9,6 @@ export const eventRemove = (obj, eventName, func, capture) => {
   return obj;
 };
 assign(acid, {
+  eventAdd,
   eventRemove,
-  eventAdd
 });

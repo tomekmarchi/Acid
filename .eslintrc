@@ -16,7 +16,10 @@
     }
   },
   'rules': {
-    "object-curly-newline": 'off',
+    "object-curly-newline": ["error", {
+        "ObjectExpression": "always",
+        "ObjectPattern": { "multiline": true }
+    }],
     object-property-newline: "error",
     no-return-await: 'error',
     'no-cond-assign': ['error', 'always'],

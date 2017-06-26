@@ -61,21 +61,25 @@ const compileAcid = () => {
       return 'Acid Minified Saved';
     }));
 };
-gulp.task('scripts', async () => {
-  const bundle = await rollup.rollup({
+const bundle = async () => {
+  const bundled = await rollup.rollup({
     entry: './source/index.js'
   });
-  await bundle.write({
+  await bundled.write({
     dest: './build/index.js',
     format: 'umd',
     moduleName: '$',
     sourceMap: true
   });
+};
+gulp.task('scripts', async () => {
+  await bundle();
   compileAcid();
 });
 gulp.task('default', ['scripts'], () => {
   livereloadStart();
-  gulp.watch('source/**', (gulpEvent) => {
+  gulp.watch('source/**', async (gulpEvent) => {
+    await bundle();
     compileAcid(gulpEvent);
     setTimeout(() => {
       notifyLivereload(gulpEvent);

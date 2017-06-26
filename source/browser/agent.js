@@ -1,6 +1,6 @@
 import acid from '../namespace/index';
-import { assign, keys } from '../internal/object';
 import { eachArray } from '../array/each';
+import { assign, keys } from '../internal/object';
 const isAgent = (string) => {
   return (string) ? isAgent[string] : keys(isAgent);
 };

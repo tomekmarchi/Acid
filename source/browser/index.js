@@ -3,7 +3,6 @@ import './event';
 import './isEnter';
 import './appState';
 import './frag';
-import './loadcore';
 import './append';
 import './import';
 import './ready';

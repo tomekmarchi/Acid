@@ -24,9 +24,6 @@ export const importcss = (url) => {
 };
 export const importjs = (urlArg) => {
   let url = urlArg;
-  if (!url.includes('//')) {
-    url = `${acid.corePath}${url}`;
-  }
   if (last(url) === '/') {
     url = `${url}index`;
   }
