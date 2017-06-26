@@ -26,6 +26,7 @@
     "babel-preset-es2015": "*",
     "body-parser": "*",
     "connect-livereload": "*",
+    "esdoc": "^0.5.2",
     "eslint": "*",
     "express": "*",
     "gulp": "*",
