@@ -1,6 +1,6 @@
 import acid from '../namespace/index';
-import { assign, objectSize } from './object';
 import { eachArray } from '../array/each';
+import { assign, objectSize } from './object';
 export const objectStringGenerate = (objectName) => {
   return `[object ${objectName}]`;
 };
