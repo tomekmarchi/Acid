@@ -33,8 +33,8 @@ export const selector = (select) => {
 };
 assign(acid, {
   getByClass,
-  getByTag,
   getById,
+  getByTag,
   querySelector,
   querySelectorAll,
   selector

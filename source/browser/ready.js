@@ -4,7 +4,8 @@ import { eventAdd } from './event';
 import { importjs } from './import';
 export const isDocumentReady = (func) => {
   const state = document.readyState;
-  if (state === 'interactive' || state === 'completed' || state === 'complete') {
+  const checkStatus = state === 'interactive' || state === 'completed' || state === 'complete';
+  if (checkStatus) {
     return (func) ? func() : true;
   }
   if (func) {

@@ -2,17 +2,16 @@ import acid from '../namespace/index';
 import { assign } from '../internal/object';
 import { clear } from '../array/clear';
 import { eachArray } from '../array/each';
-import { ensureArray } from '../array/ensure';
 import { ifInvoke } from '../function/ifInvoke';
-let batchCancelFrame = false;
+let batchCancelFrame;
 const batchChanges = [];
 const batchLoop = () => {
   eachArray(batchChanges, ifInvoke);
   clear(batchChanges);
   batchCancelFrame = false;
 };
-export const batch = (item) => {
-  batchChanges.push(...ensureArray(item));
+export const batch = (...items) => {
+  batchChanges.push(...items);
   if (!batchCancelFrame) {
     batchCancelFrame = requestAnimationFrame(batchLoop);
   }

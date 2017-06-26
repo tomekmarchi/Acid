@@ -4,13 +4,13 @@ const protocol = location.protocol;
 const protocolSocket = (protocol === 'http:') ? 'ws' : 'wss';
 const hostname = location.hostname;
 export const info = {
-  host: {
-    protocol,
-    protocolSocket,
-    name: hostname
-  },
   hardware: {
     cores: navigator.hardwareConcurrency
+  },
+  host: {
+    name: hostname,
+    protocol,
+    protocolSocket,
   }
 };
 assign(acid, {

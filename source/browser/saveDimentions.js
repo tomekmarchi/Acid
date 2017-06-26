@@ -10,12 +10,13 @@ export const saveDimensions = () => {
     windowWidth: window.innerWidth,
   });
 };
-acid.updateDimensions = saveDimensions;
-isDocumentReady(() => {
+export const updateDimensions = () => {
   requestAnimationFrame(saveDimensions);
-});
-eventAdd(window, 'load', saveDimensions, true);
-eventAdd(window, 'resize', saveDimensions, true);
+};
+isDocumentReady(updateDimensions);
+eventAdd(window, 'load', updateDimensions, true);
+eventAdd(window, 'resize', updateDimensions, true);
 assign(acid, {
-  saveDimensions
+  saveDimensions,
+  updateDimensions
 });

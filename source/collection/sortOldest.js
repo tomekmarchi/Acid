@@ -19,6 +19,6 @@ export const getOldest = (array, key) => {
   return sortOldest(array, key)[0];
 };
 assign(acid, {
-  sortOldest,
   getOldest,
+  sortOldest,
 });

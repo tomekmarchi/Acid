@@ -1,6 +1,6 @@
 {
   "name": "Acid",
-  "version": "2.0",
+  "version": "2.0.0",
   "description": "Utility library for building CWAs (Conscious Web Apps).",
   "keywords": [
     "Acid",
@@ -26,6 +26,7 @@
     "babel-preset-es2015": "*",
     "body-parser": "*",
     "connect-livereload": "*",
+    "esdoc": "^0.5.2",
     "eslint": "*",
     "express": "*",
     "gulp": "*",
@@ -33,6 +34,7 @@
     "gulp-beautify": "*",
     "gulp-better-rollup": "^1.1.1",
     "gulp-concat": "*",
+    "gulp-esdoc": "^0.4.1",
     "gulp-gzip": "*",
     "gulp-notify": "*",
     "rollup": "^0.43.0",

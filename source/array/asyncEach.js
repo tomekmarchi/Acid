@@ -8,11 +8,11 @@ const array = [async function(...args){
 }];
 acid.asyncEach(array,[3,4]);
 */
-export const asyncEach = async (array, args) => {
+export const asyncEach = async (array, arg) => {
   const arrayLength = array.length;
   for (let index = 0; index < arrayLength; index++) {
     const item = array[index];
-    await item(args, index, arrayLength);
+    await item(arg, index, arrayLength);
   }
 };
 assign(acid, {

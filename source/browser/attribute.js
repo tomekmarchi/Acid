@@ -1,7 +1,7 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-import { isString, hasValue, isPlainObject } from '../internal/is';
 import { mapObject } from '../object/each';
+import { hasValue, isPlainObject, isString } from '../internal/is';
 export const nodeAttribute = (node, keys, value) => {
   let results;
   if (isString(keys)) {

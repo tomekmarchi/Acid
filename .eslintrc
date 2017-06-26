@@ -16,10 +16,7 @@
     }
   },
   'rules': {
-    "object-curly-newline": ["error", {
-        "ObjectExpression": "always",
-        "ObjectPattern": { "multiline": true }
-    }],
+    "object-curly-newline": ["error", { "minProperties": 1 }],
     object-property-newline: "error",
     no-return-await: 'error',
     'no-cond-assign': ['error', 'always'],
@@ -49,7 +46,6 @@
     'use-isnan': 'error',
     'valid-jsdoc': 'off',
     'valid-typeof': 'error',
-
     'accessor-pairs': 'error',
     'array-callback-return': 'error',
     'block-scoped-var': 'error',
@@ -119,7 +115,6 @@
     'no-undefined': 'off',
     'no-unused-vars': 'error',
     'no-use-before-define': 'error',
-
     'callback-return': ['error', ['callback', 'cb', 'next']],
     'handle-callback-err': 'error',
     'no-mixed-requires': 'error',
