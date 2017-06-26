@@ -1216,11 +1216,7 @@
     });
     return nodeAttachLoadingEvents(node);
   };
-  const importjs = (urlArg) => {
-    let url = urlArg;
-    if (last(url) === '/') {
-      url = `${url}index`;
-    }
+  const importjs = (url) => {
     const node = nodeAttribute(createTag('script'), {
       async: '',
       src: `${url}.js`

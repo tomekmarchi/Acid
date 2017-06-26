@@ -22,11 +22,7 @@ export const importcss = (url) => {
   });
   return nodeAttachLoadingEvents(node);
 };
-export const importjs = (urlArg) => {
-  let url = urlArg;
-  if (last(url) === '/') {
-    url = `${url}index`;
-  }
+export const importjs = (url) => {
   const node = nodeAttribute(createTag('script'), {
     async: '',
     src: `${url}.js`
