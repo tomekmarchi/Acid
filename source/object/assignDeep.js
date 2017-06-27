@@ -1,7 +1,7 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-import { isPlainObject, isArray } from '../internal/is';
 import { eachObject } from './each';
+import { isArray, isPlainObject } from '../internal/is';
 export const assignDeep = (object, otherObject, mergeArrays) => {
   eachObject(otherObject, (item, key) => {
     if (isPlainObject(item) && isPlainObject(object[key])) {

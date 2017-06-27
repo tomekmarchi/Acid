@@ -41,11 +41,11 @@
   }];
   acid.asyncEach(array,[3,4]);
   */
-  const asyncEach = async(array, args) => {
+  const asyncEach = async(array, arg) => {
     const arrayLength = array.length;
     for (let index = 0; index < arrayLength; index++) {
       const item = array[index];
-      await item(args, index, arrayLength);
+      await item(arg, index, arrayLength);
     }
   };
   assign(acid$1, {
@@ -341,7 +341,7 @@
   });
 
   const cloneArray = (array) => {
-    return [...array];
+    return array.splice();
   };
   assign(acid$1, {
     cloneArray
@@ -1036,20 +1036,13 @@
   });
 
   const isEnter = (eventObject) => {
-    const keyCode = eventObject.keyCode;
-    if (keyCode === 13) {
-      return true;
-    }
-    return false;
+    return eventObject.keyCode === 13;
   };
   assign(acid$1, {
     isEnter
   });
 
-  const appState = {
-    screenHeight: screen.height,
-    screenWidth: screen.width
-  };
+  const appState = {};
   assign(acid$1, {
     appState
   });
@@ -1193,8 +1186,8 @@
   };
   assign(acid$1, {
     getByClass,
-    getByTag,
     getById,
+    getByTag,
     querySelector,
     querySelectorAll,
     selector
@@ -1230,7 +1223,8 @@
 
   const isDocumentReady = (func) => {
     const state = document.readyState;
-    if (state === 'interactive' || state === 'completed' || state === 'complete') {
+    const checkStatus = state === 'interactive' || state === 'completed' || state === 'complete';
+    if (checkStatus) {
       return (func) ? func() : true;
     }
     if (func) {
@@ -1253,14 +1247,15 @@
       windowWidth: window.innerWidth,
     });
   };
-  acid$1.updateDimensions = saveDimensions;
-  isDocumentReady(() => {
+  const updateDimensions = () => {
     requestAnimationFrame(saveDimensions);
-  });
-  eventAdd(window, 'load', saveDimensions, true);
-  eventAdd(window, 'resize', saveDimensions, true);
+  };
+  isDocumentReady(updateDimensions);
+  eventAdd(window, 'load', updateDimensions, true);
+  eventAdd(window, 'resize', updateDimensions, true);
   assign(acid$1, {
-    saveDimensions
+    saveDimensions,
+    updateDimensions
   });
 
   const ifInvoke = (method, ...args) => {
@@ -1272,15 +1267,15 @@
     ifInvoke
   });
 
-  let batchCancelFrame = false;
+  let batchCancelFrame;
   const batchChanges = [];
   const batchLoop = () => {
     eachArray(batchChanges, ifInvoke);
     clear(batchChanges);
     batchCancelFrame = false;
   };
-  const batch = (item) => {
-    batchChanges.push(...ensureArray(item));
+  const batch = (...items) => {
+    batchChanges.push(...items);
     if (!batchCancelFrame) {
       batchCancelFrame = requestAnimationFrame(batchLoop);
     }
@@ -1293,13 +1288,13 @@
   const protocolSocket = (protocol === 'http:') ? 'ws' : 'wss';
   const hostname = location.hostname;
   const info = {
-    host: {
-      protocol,
-      protocolSocket,
-      name: hostname
-    },
     hardware: {
       cores: navigator.hardwareConcurrency
+    },
+    host: {
+      name: hostname,
+      protocol,
+      protocolSocket,
     }
   };
   assign(acid$1, {
@@ -1314,26 +1309,25 @@
     stringify
   });
 
-  const consoleNative = console.log.bind(console);
   const generateTheme = (color, bg) => {
     return `color:${color};background:${bg};`;
   };
   const themes = {
+    alert: generateTheme('#fff', '#f44336'),
+    important: generateTheme('#fff', '#E91E63'),
     notify: generateTheme('#fff', '#651FFF'),
     warning: generateTheme('#000', '#FFEA00'),
-    important: generateTheme('#fff', '#E91E63'),
-    alert: generateTheme('#fff', '#f44336')
   };
   const cnsl = (dataArg, themeName) => {
     const data = isString(dataArg) ? dataArg : stringify(dataArg);
-    consoleNative(`%c${data}`, `${themes[themeName]}font-size:13px;padding:2px 5px;border-radius:2px;`);
+    console.trace(`%c${data}`, `${themes[themeName]}font-size:13px;padding:2px 5px;border-radius:2px;`);
   };
   const addConsoleTheme = (themeName, color, bg) => {
     themes[themeName] = generateTheme(color, bg);
   };
   assign(acid$1, {
+    addConsoleTheme,
     cnsl,
-    addConsoleTheme
   });
 
   eachArray(['HTMLCollection', 'NodeList'], (item) => {
@@ -1382,8 +1376,8 @@
     return sortOldest(array, key)[0];
   };
   assign(acid$1, {
-    sortOldest,
     getOldest,
+    sortOldest,
   });
 
   // Creates a function that accepts up to n arguments ignoring any additional arguments. The 2nd argument will be binded if none the initial new function will be.
@@ -1553,15 +1547,6 @@
     negate
   });
 
-  /*
-  	Creates a function that checks if all of the predicates return truthy when invoked with the arguments it receives.
-  	Arguments
-
-  	[predicates=[_.identity]] (...(Function|Function[])): The predicates to check.
-  	Returns
-
-  	(Function): Returns the new function.
-  */
   const overEvery = (array) => {
     return (...args) => {
       let result;
@@ -1572,9 +1557,6 @@
       return result;
     };
   };
-  /*
-  	Creates a function that invokes iteratees with the arguments it receives and returns their results.
-  */
   const over = (array) => {
     return (...args) => {
       return array.map((item) => {
@@ -1676,19 +1658,19 @@
     chain
   });
 
-  const inSync = (fns, args) => {
+  const inSync = (fns, arg) => {
     return each(fns, (item) => {
-      item(args);
+      item(arg);
     });
   };
-  const inAsync = async(fns, args) => {
+  const inAsync = async(fns, arg) => {
     await eachAsync(fns, async(item) => {
-      await item(args);
+      await item(arg);
     });
   };
   assign(acid$1, {
+    inAsync,
     inSync,
-    inAsync
   });
 
   const nthArg = (numArg) => {
