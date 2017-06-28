@@ -26,17 +26,17 @@
     "babel-preset-es2015": "*",
     "body-parser": "*",
     "connect-livereload": "*",
-    "esdoc": "*",
     "eslint": "*",
     "express": "*",
     "gulp": "*",
     "gulp-babel": "*",
     "gulp-beautify": "*",
     "gulp-concat": "*",
-    "gulp-esdoc": "^0.4.1",
+    "gulp-esdoc": "*",
     "gulp-gzip": "*",
     "gulp-notify": "*",
-    "rollup": "^0.43.0",
+    "rollup": "*",
     "tiny-lr": "*"
-  }
+  },
+  "dependencies": {}
 }
