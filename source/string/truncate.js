@@ -24,7 +24,7 @@ const foo = 'bar';
 const amount = 1;
 truncateLeft(foo, amount)
 */
-*/
+
 const truncateLeft = (stringArg, amount) => {
   let string = stringArg;
   const stringLength = string.length;
