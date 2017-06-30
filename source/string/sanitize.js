@@ -6,6 +6,13 @@ const lessThanRegex = /</g;
 const moreThanRegex = />/g;
 const doubleQuoteRegex = /"/g;
 const forwardSlashRegex = /\//g;
+/**
+rawURLDecode takes a string and decodes it using native methods as well as regexToPath
+@property  {string} - takes a url string
+@example
+const foo = 'http://bar.com'
+rawURLDecode(foo)
+*/
 export const rawURLDecode = (string) => {
   return decodeURIComponent(string.replace(rawURLDecodeRegex, () => {
     return '%25';

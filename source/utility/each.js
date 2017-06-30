@@ -55,7 +55,7 @@ const example = ['foo', 'bar'];
 const fooFunction = () => {
   console.log()
 };
-each(example fooFunction);
+each(example, fooFunction);
 Taking an object
 const example = {
 foo: bar,
