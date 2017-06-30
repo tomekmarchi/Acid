@@ -24,7 +24,6 @@ const foo = 'bar';
 const amount = 1;
 truncateLeft(foo, amount)
 */
-
 const truncateLeft = (stringArg, amount) => {
   let string = stringArg;
   const stringLength = string.length;
@@ -40,7 +39,6 @@ truncateWord extracts the letters between the first character of a string and a 
 const foo = 'bar';
 const amount = 1;
 truncateWord(foo, amount)
-*/
 */
 const truncateWord = (string, amount) => {
   return string.substring(0, amount);

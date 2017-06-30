@@ -46,7 +46,7 @@ bar: foo,
 };
 map(example);*/
 export const map = generateCheckLoops(mapArray, mapObject);
-  /** each takes an array or an object. If an array is given, an array will have an operation performed on each item in the array. If an object is given, an object will have an operation performed on each property of the object.
+/** each takes an array or an object. If an array is given, an array will have an operation performed on each item in the array. If an object is given, an object will have an operation performed on each property of the object.
 * @property {eachArray}  - Takes two arguments: an array, and a function that will be performed on each item in the array.
 * @property {eachObject}  -Takes two arguments: an object and a function that will be performed on each key and or value property of that object.
 * @example
