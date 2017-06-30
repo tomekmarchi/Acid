@@ -10,7 +10,7 @@ const forEachWrap = (object, funct) => {
   return object.forEach(funct);
 };
 /**
-   * generateCheckLoops parses the argument it is given and checks too see if it is a array, or object.
+   * generateCheckLoops parses the argument it is given and checks too see if it is an array, or object.
 */
 const generateCheckLoops = (arrayLoop, objectLoop) => {
   return (object, funct) => {
@@ -47,8 +47,6 @@ bar: foo,
 map(example);*/
 export const map = generateCheckLoops(mapArray, mapObject);
   /** each takes an array or an object. If an array is given, an array will have an operation performed on each item in the array. If an object is given, an object will have an operation performed on each property of the object.
-*
-*
 * @property {eachArray}  - Takes two arguments: an array, and a function that will be performed on each item in the array.
 * @property {eachObject}  -Takes two arguments: an object and a function that will be performed on each key and or value property of that object.
 * @example
@@ -57,7 +55,7 @@ const example = ['foo', 'bar'];
 const fooFunction = () => {
   console.log()
 };
-each(eachArray(example, fooFunction));
+each(example fooFunction);
 Taking an object
 const example = {
 foo: bar,
@@ -66,7 +64,7 @@ bar: foo,
 const fooFunction = () => {
   console.log()
 };
-each(eachArray(example, fooFunction));
+each(example, fooFunction);
 */
 export const each = generateCheckLoops(eachArray, eachObject);
 /**
@@ -79,7 +77,7 @@ const example = ['foo', 'bar'];
 const fooFunction = () => {
   console.log()
 };
-filter(filterArray(example, fooFunction));
+filter(example, fooFunction);
 Taking an object
 const example = {
 foo: bar,
@@ -88,7 +86,7 @@ bar: foo,
 const fooFunction = () => {
   console.log()
 };
-filter(filterObject(example, fooFunction));
+filter(example, fooFunction);
 */
 export const filter = generateCheckLoops(filterArray, filterObject);
 assign(acid, {
