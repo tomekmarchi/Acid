@@ -1,12 +1,12 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
+import { eachAsync } from './eachAsync';
 export const mapAsync = async (array, funct) => {
   const results = [];
-  const arrayLength = array.length;
-  for (let index = 0; index < arrayLength; index++) {
-    const item = array[index];
+  await eachAsync(array, async (item, index, arrayLength) => {
     results[index] = await funct(item, index, arrayLength);
-  }
+  });
+  return results;
 };
 assign(acid, {
   mapAsync,

@@ -7,16 +7,25 @@
     "utility",
     "Lucy",
     "cwa",
-    "LSD"
+    "LSD",
+    "self constructing"
   ],
   "license": "MIT",
   "main": "index.js",
   "maintainers": [
     {
-      "email": "tomekmarchi@gmail.com",
-      "name": "Tomek Marchi"
+      "email": "tommarchi@protonmail.com",
+      "name": "Tom Marchi"
+    },
+    {
+      "email": "erickdelgado@protonmail.com",
+      "name": "Erick Delgado"
     }
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomekmarchi/Acid.git"
+  },
   "devDependencies": {
     "Lucy": "*",
     "babel-core": "*",
@@ -32,7 +41,6 @@
     "gulp-babel": "*",
     "gulp-beautify": "*",
     "gulp-concat": "*",
-    "gulp-esdoc": "*",
     "gulp-gzip": "*",
     "gulp-notify": "*",
     "rollup": "*",

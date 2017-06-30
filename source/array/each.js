@@ -1,3 +1,5 @@
+import acid from '../namespace/index';
+import { assign } from '../internal/object';
 import { hasValue } from '../internal/is';
 const whileGenerator = (optBool) => {
   return (array, fnc) => {
@@ -10,16 +12,22 @@ const whileGenerator = (optBool) => {
   };
 };
 // loop through based on number
-export const times = (start = 0, end = start, fn = end) => {
+export const times = (startArg, endArg, fnArg) => {
+  const start = (fnArg) ? startArg : 0;
+  const end = (fnArg) ? endArg : startArg;
+  const fn = fnArg || endArg;
   for (let position = start; position < end; position++) {
     fn(position, start, end);
   }
 };
-export const timesMap = (start = 0, end = start, fn = end) => {
+export const timesMap = (startArg, endArg, fnArg) => {
+  const start = (fnArg) ? startArg : 0;
+  const end = (fnArg) ? endArg : startArg;
+  const fn = fnArg || endArg;
   const results = [];
   let result;
-  times(start, end, (position, startArg, endArg) => {
-    result = fn(position, startArg, endArg, results);
+  times(start, end, (position) => {
+    result = fn(position, results, start, end);
     if (hasValue(result)) {
       results.push(result);
     }
@@ -74,3 +82,14 @@ export const mapWhile = (array, fn) => {
 export const mapArray = generateMap(eachArray);
 export const mapArrayRight = generateMap(eachArrayRight);
 export const eachWhile = whileGenerator(true);
+assign(acid, {
+  eachArray,
+  eachArrayRight,
+  eachWhile,
+  filterArray,
+  mapArray,
+  mapArrayRight,
+  mapWhile,
+  times,
+  timesMap,
+});
