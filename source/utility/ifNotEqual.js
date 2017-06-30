@@ -1,5 +1,6 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
+<<<<<<< HEAD
 /**
    * ifNotEqual checks if a particular property on an object has a value. If that property is without a value, it reassigns that property to the equalThis argument.
    @property {rootObject} - takes an object
@@ -13,9 +14,12 @@ import { assign } from '../internal/object';
   const c = 1;
    ifNotEqual(obj, b, c)
 */
+=======
+import { hasValue } from '../internal/is';
+>>>>>>> ac71e399979c3ed42c404442d13d610398ab48a1
 export const ifNotEqual = (rootObject, property, equalThis) => {
-  if (property) {
-    rootObject[property] = rootObject[property] || equalThis;
+  if (property && !hasValue(rootObject[property])) {
+    rootObject[property] = equalThis;
     return rootObject[property];
   }
   return rootObject;

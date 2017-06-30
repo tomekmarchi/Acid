@@ -1,7 +1,7 @@
 import acid from '../namespace/index';
-import { assign, getOwnPropertyNames, keys } from '../internal/object';
-import { hasValue } from '../internal/is';
 import { eachArray } from '../array/each';
+import { hasValue } from '../internal/is';
+import { assign, getOwnPropertyNames, keys } from '../internal/object';
 export const eachObject = (thisObject, fn) => {
   eachArray(keys(thisObject), (key, index, array, propertyCount) => {
     fn(thisObject[key], key, thisObject, propertyCount);
@@ -40,9 +40,9 @@ export const forIn = (thisObject, fn) => {
   return mappedObject;
 };
 assign(acid, {
-  mapObject,
-  filterObject,
   eachObject,
-  mapProperty,
+  filterObject,
   forIn,
+  mapObject,
+  mapProperty,
 });
