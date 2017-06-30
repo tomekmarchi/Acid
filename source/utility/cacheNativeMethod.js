@@ -13,3 +13,6 @@ cacheNativeMethod takes a prototype method and returns a cached version of that 
 export function cacheNativeMethod(funct) {
   return functionPrototype.call.bind(funct);
 }
+assign(acid, {
+  cacheNativeMethod
+});

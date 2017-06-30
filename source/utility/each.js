@@ -1,8 +1,8 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-import { hasValue, isArray, isFunction, isPlainObject } from '../internal/is';
-import { eachObject, filterObject, mapObject } from '../object/each';
 import { eachArray, filterArray, mapArray } from '../array/each';
+import { eachObject, filterObject, mapObject } from '../object/each';
+import { hasValue, isArray, isFunction, isPlainObject } from '../internal/is';
 /**
    * forEachWrap is a wrapped version of the forEach function
 */
