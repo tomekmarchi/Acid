@@ -5,7 +5,7 @@ let count = 0;
 const uuidFree = [];
 const uuidClosed = {};
 /**
-uuid returns a unique id
+*uuid returns a unique id
 */
 export const uuid = () => {
   let result = uuidFree.shift(uuidFree);
@@ -16,6 +16,9 @@ export const uuid = () => {
   }
   return result;
 };
+/**
+*uuid.remove nullifies a unique id within the uuidClosed object
+*/
 uuid.remove = (id) => {
   uuidClosed[id] = null;
   uuidFree.push(id);

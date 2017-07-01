@@ -1,13 +1,17 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
 /**
- toggle does a strict comparison between the value and an argument. If it returns true, then it returns the b argument. Else it returns the a argument.
- @property  {value} - Can be any data type
- @property {on} -  Can be any data type. Is compared against value.
- @example
- const value = 1;
- const on = 1;
- toggle(value, on)
+* toggle does a strict comparison between the value and an argument. If it returns true, then it returns the b *argument. Else it returns the a argument.
+* @property  {value} - Can be any data type
+* @property {on} -  Can be any data type
+* @example
+* const value = 1;
+* const on = 1;
+* const off = 2;
+* toggle(value, on, off);
+* //-> 2
+*  @returns
+*  Can return any data type
  */
 export const toggle = (value, on, off) => {
   return (value === on) ? off : on;
