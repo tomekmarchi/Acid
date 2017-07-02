@@ -11,8 +11,7 @@ import { assign } from '../internal/object';
 export const eachAsync = async (array, funct) => {
   const arrayLength = array.length;
   for (let index = 0; index < arrayLength; index++) {
-    const item = array[index];
-    await funct(item, index, arrayLength);
+    await funct(array[index], index, arrayLength);
   }
 };
 assign(acid, {

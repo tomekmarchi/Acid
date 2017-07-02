@@ -1,17 +1,17 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
+import { eachAsync } from './eachAsync';
 import { hasValue } from '../internal/is';
 export const filterAsync = async (array, funct) => {
   const results = [];
-  const arrayLength = array.length;
   let result;
-  for (let index = 0; index < arrayLength; index++) {
-    const item = array[index];
+  await eachAsync(array, async (item, index, arrayLength) => {
     result = await funct(item, index, arrayLength);
     if (hasValue(result)) {
-      results.push(await funct(item, index, arrayLength));
+      results.push(result);
     }
-  }
+  });
+  return results;
 };
 assign(acid, {
   filterAsync,
