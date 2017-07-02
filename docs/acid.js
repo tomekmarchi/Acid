@@ -6,12 +6,36 @@
   'use strict';
 
   let cacheSuper;
+  /**
+   * Acid Object accessible through $ default method is model.
+   *
+   * @function acid
+   * @param {string} modelName - Model key.
+   * @param {Object} model - An object that is saved as the value using the modelName as the string.
+   * @returns {Array} The model associated with the modelName as the key.
+   *
+   * @example
+   * $('modelName', {example: 1});
+   * // -> {example: 1}
+   */
   const acid$1 = (...args) => {
     return cacheSuper(...args);
   };
-  acid$1.superMethod = (method) => {
+  /**
+   * Re-assigns the main Acid function.
+   *
+   * @function superMethod
+   * @param {Function} method - The method that will be used as the main Acid objects method.
+   *
+   * @example
+   * $.superMethod($.get);
+   * // -> $('flow', $);
+   * // -> $.flow
+   */
+  const superMethod = (method) => {
     cacheSuper = method;
   };
+  acid$1.superMethod = superMethod;
 
   const objectNative$1 = Object;
   const keys = objectNative$1.keys;
@@ -237,7 +261,6 @@
     ensureArray
   });
 
-  // Flattens a nested array. Pass level to flatten up to a depth;
   const flatten = (arrayArg, level = 1) => {
     let array = arrayArg;
     for (let i = 0; i < level; i++) {
@@ -257,26 +280,6 @@
     flattenDeep,
   });
 
-  /**
-   * Removes all occurrences of the passed in items from the array and returns the array.
-   *
-   * @function remove
-   * @param {Array} array - Mutated Array without with removed occurrences.
-   * @param {Array} removeThese - Items to remove from the array.
-   * @returns {Array} The array this method was called on.
-   *
-   * @example
-   * const array = [1, 2, 3, 3, 4, 3, 5];
-   *
-   * remove(array,1);
-   * // -> [2, 3, 3, 4, 3, 5]
-   *
-   * remove(array,3);
-   * // -> [2, 4, 5]
-   *
-   * remove(array,[2, 5]);
-   * // -> [4]
-   */
   const remove = (array, removeThese) => {
     const removeTheseArray = ensureArray(removeThese);
     eachArray(array, (item) => {
@@ -367,7 +370,6 @@
     groupBy
   });
 
-  // start from end array using amount as index
   const right = (array, amount) => {
     return array[array.length - 1 - amount];
   };
@@ -426,10 +428,6 @@
     randomInt
   });
 
-  /*
-    Produce a random sample from the list. Pass a number to return n random elements from the list. Otherwise a single random item will be returned.
-    sample([1,2,3,4] , 2);
-  */
   const sample = (array, amount = 1) => {
     if (amount === 1) {
       return array[randomInt(array.length - 1, 0)];
@@ -461,7 +459,6 @@
     compact,
   });
 
-  // Given a list, and an iteratee function that returns a key for each element in the list (or a property name), returns an object with an index of each item. Just like groupBy, but for when you know your keys are unique.
   const indexBy = (array, index) => {
     return arraySortToObject((item, key, object) => {
       object[item[index]] = item;
@@ -477,7 +474,6 @@
     toArray,
   });
 
-  // shuffle an array and return a new array
   const shuffle = (array, amount = 1) => {
     const shuffleArray = toArray(array);
     let count = 0;
@@ -582,22 +578,6 @@
     rangeRight
   });
 
-  /**
-   * Returns an new array that is the [set intersection](http://en.wikipedia.org/wiki/Intersection_(set_theory))
-   * of the array and the input array(s).
-   *
-   * @function intersect
-   * @param {Array} array - Array to compare other arrays to.
-   * @param {...Array} arrays - A variable number of arrays.
-   * @returns {Array} The new array of unique values shared by all of the arrays.
-   *
-   * @example
-   * intersect([1, 2, 3], [2, 3, 4]);
-   * // -> [2, 3]
-   *
-   * intersect([1, 2, 3], [101, 2, 50, 1], [2, 1]);
-   * // -> [1, 2]
-   */
   const intersect = (array, ...arrays) => {
     let yes;
     return filterArray(array, (item) => {
@@ -617,9 +597,6 @@
     intersect
   });
 
-  /*
-  	Perform alphabetical sort on collection on provided key name
-  */
   const sortAlpha = (collection, key) => {
     let currentKey;
     let nextKey;
@@ -650,7 +627,6 @@
     difference
   });
 
-  // Calls the method named by methodName on each value in the list. Any extra arguments passed to invoke will be forwarded on to the method invocation.
   const invoke = (array, methodName, args) => {
     return mapArray(array, (item) => {
       return item[methodName](...args);
@@ -685,7 +661,6 @@
     isMatchArray,
   });
 
-  // Uses a binary search to determine the index at which the value should be inserted into the list in order to maintain the list's sorted order.
   const sortedIndex = (array, n) => {
     let min = 0;
     eachArray(array, (item, index) => {
@@ -702,7 +677,6 @@
     sortedIndex
   });
 
-  // get largest number from array
   const mathNativeMax = Math.max;
   const largest = (array) => {
     return mathNativeMax(...array);
@@ -726,14 +700,6 @@
     sumOf
   });
 
-  /*
-    const array = [async function(...args){
-      console.log(1,args);
-    }, async function(...args){
-      console.log(2,args);
-    }];
-    acid.asyncEach(array,[3,4]);
-  */
   const eachAsync = async(array, funct) => {
     const arrayLength = array.length;
     for (let index = 0; index < arrayLength; index++) {
@@ -744,7 +710,6 @@
     eachAsync,
   });
 
-  // Returns the last element of an array. Passing n will return the last n elements of the array.
   const last = (array, indexFrom) => {
     const arrayLength = array.length;
     return (indexFrom) ? array.slice(arrayLength - indexFrom, arrayLength) : array[arrayLength - 1];
@@ -791,7 +756,6 @@
     unique
   });
 
-  // Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more of the arrays.
   const union = (...args) => {
     const result = [];
     eachArray(args, (array) => {
@@ -869,7 +833,6 @@
     findDifference
   });
 
-  // Converts arrays into objects.
   const arrayToObject = (values, keys$$1) => {
     return arraySortToObject((item, index, objectArg) => {
       objectArg[keys$$1[index]] = item;
@@ -879,7 +842,6 @@
     arrayToObject
   });
 
-  // Returns a copy of the array with all instances of the values removed.
   const without = (array, ...args) => {
     return array.filter((item) => {
       return !args.includes(item);
@@ -911,7 +873,6 @@
     findIndex
   });
 
-  // Split array into two arrays: one whose elements all satisfy predicate and one whose elements all do not satisfy predicate.
   const partition = (array, funct) => {
     const failed = [];
     return [
@@ -928,7 +889,6 @@
     partition
   });
 
-  // Creates an array that is the symmetric difference of the provided arrays. See Wikipedia for more details.
   const xor = (others) => {
     const xored = [];
     eachArray(others, (array) => {
@@ -970,7 +930,6 @@
     findSum
   });
 
-  // Pluck an attribute from each object in an array.
   const pluck = (array, pluckThis) => {
     let pluckMethod;
     if (isArray(pluckThis)) {
@@ -991,7 +950,6 @@
     pluck
   });
 
-  // Merges together the values of each of the arrays with the values at the corresponding position.
   const zip = (...args) => {
     return args[0].map((item, index) => {
       return args.map((array) => {
@@ -1019,18 +977,6 @@
     first
   });
 
-  /**
-   * Sorts an array in place using a reverse numerical comparison algorithm
-   * (sorts numbers from highest to lowest) and returns the array.
-   *
-   * @function rnumsort
-   * @returns {Array} The array this method was called on.
-   *
-   * @example
-   * var files = [10, 0, 2, 1];
-   * rnumsort(files);
-   * // -> [3, 2, 1, 0]
-   */
   const numericalCompareReverse = (a, b) => {
     return b - a;
   };
@@ -1157,9 +1103,6 @@
     nodeAttribute
   });
 
-  /**
-   *promise is a wrapper around a constructor
-   */
   const promise = (callback) => {
     return new Promise(callback);
   };
@@ -1167,9 +1110,6 @@
     promise
   });
 
-  /**
-  insertInRange inserts a text into a user defined range
-  */
   const insertInRange = (text, start, end, insert) => {
     return text.slice(0, start) + insert + text.slice(end, text.length);
   };
@@ -1451,7 +1391,6 @@
     sortOldest,
   });
 
-  // Creates a function that accepts up to n arguments ignoring any additional arguments. The 2nd argument will be binded if none the initial new function will be.
   const ary = (funct, amount) => {
     return (...args) => {
       return funct(...args.splice(0, amount));
@@ -1496,7 +1435,6 @@
     curryRight
   });
 
-  // Creates a function that is restricted to execute func once. Repeat calls to the function will return the value of the first call. The func is executed with the this binding of the created function.
   const once = (fn) => {
     let value;
     const onlyOnce = (...args) => {
@@ -1570,9 +1508,6 @@
     noop
   });
 
-  /**
-   * forEachWrap is a wrapped version of the forEach function
-   */
   const forEachWrap = (object, funct) => {
     return object.forEach(funct);
   };
@@ -1701,7 +1636,6 @@
     bindAll
   });
 
-  // Creates a function that negates the result of the predicate func. The func predicate is invoked with the this binding and arguments of the created function.
   const negate = (func) => {
     return (...args) => {
       return !func(...args);
@@ -1850,7 +1784,6 @@
     nthArg
   });
 
-  // Creates a function that invokes func with arguments arranged according to the specified indexes where the argument value at the first index is provided as the first argument, the argument value at the second index is provided as the second argument, and so on.
   const reArg = (funct, list) => {
     return (...args) => {
       return funct(...list.map((item) => {
@@ -1959,9 +1892,6 @@
     hasKeys,
   });
 
-  /*
-  	Performs a deep comparison between object and source to determine if object contains equivalent property values.
-  */
   const isEqual = (object, compareObject) => {
     let result = false;
     if (object === compareObject) {
@@ -2125,17 +2055,6 @@
     snakeCase,
   });
 
-  /**
-  replaceWithList takes an array of strings and replaces them with the assigned value of the toReplace argument
-  @property {string} - takes a string
-  @property {array} - takes an array of strings
-  @property {toReplace} - takes a string which is used to replace the array of strings
-  @example
-  const foo = 'bar';
-  const bar = [foo];
-  const toReplace ='value which will replace';
-  replaceWithList(foo, bar, toReplace)
-  */
   const replaceWithList = (string, array, toReplace) => {
     return string.replace(new RegExp(`\\b${array.join('|')}\\b`, 'gi'), toReplace);
   };
@@ -2203,15 +2122,6 @@
     words
   });
 
-  /**
-  truncate takes a string and shortens based on arguments given
-  @property {stringArg} - takes a string to be shortened
-  @property {amount} - takes an integer value which determines the degree to which the stringArg will be shortened
-  @example
-  const foo = 'bar';
-  const amount = 1;
-  truncate(foo, amount)
-  */
   const truncate = (stringArg, amount) => {
     let string = stringArg;
     if (string.length > amount) {
@@ -2345,23 +2255,6 @@
     cacheNativeMethod
   });
 
-  /**
-   *    ifNotEqual checks if a particular property on an object has a value. If that property is without a     *    value, it reassigns that property to the equalThis argument.
-   *   @property {rootObject} - takes an object
-   *   @property {property} - the property which is being checked
-   *   @property {equalThis} - the reassignment value of the property being checked
-   *   @example
-   *   const obj = {
-   *   a:1,
-   *   b,
-   * };
-   *  const c = 1;
-   *  ifNotEqual(obj, b, c)
-   * // -> obj.b = 1
-   *
-   *   @returns
-   *   object
-   */
   const ifNotEqual = (rootObject, property, equalThis) => {
     if (property && !hasValue(rootObject[property])) {
       rootObject[property] = equalThis;
@@ -2373,26 +2266,6 @@
     ifNotEqual,
   });
 
-  /**
-   *   matchesProperty compares the properties of two objects.
-   *   @property {object} - takes an object
-   *   @property {compareObject} - takes an object
-   *   @property {properties} - takes in an array of properties
-   *   @example
-   *    const objOne = {
-   *      a:1,
-   *      b:2
-   *    };
-   *    const objTwo = {
-   *       a:1,
-   *       b:3
-   *    };
-   *     const propertiesToCompare = [a, b];
-   *     matchesProperty(objOne, objTwo, propertiesToCompare );
-   * //-> True, false
-   *   @returns
-   *   Boolean
-   */
   const propertyMatch = (object, compareObject, properties) => {
     let result = false;
     eachWhile(properties, (property) => {
@@ -2444,21 +2317,6 @@
     uuid,
   });
 
-  /**
-   * get uses a string to go down an object chain and returns an object
-   * @property {propertyString} - takes a string which is used to go down an objectChain
-   * @property {objectChain} - takes an object
-   * @example
-   * const foo = {
-   * obj: 1,
-   * bar: 2
-   * }
-   *const string = foo.obj
-   * get(string, foo)
-   * // -> 1
-   *@returns
-   *the value of a designated key
-   */
   const get = (propertyString, objectChain = acid$1) => {
     let link = objectChain;
     eachWhile(toPath(propertyString), (item) => {
@@ -2471,20 +2329,6 @@
     get
   });
 
-  /**
-   *  model assigns a property on itself
-   *  @property {modelName} - takes a string
-   *  @property {object} - takes an object
-   *  @example
-   *  const obj = {
-   *  foo: bar
-   *};
-   *  const string = 'model.foo'
-   *  model(string, obj)
-   * //-> model.foo = obj
-   *  @returns
-   *  object
-   */
   const model = (modelName, object) => {
     if (hasValue(object)) {
       model[modelName] = object;
@@ -2496,19 +2340,6 @@
     model
   });
 
-  /**
-   * toggle does a strict comparison between the value and an argument. If it returns true, then it returns the b *argument. Else it returns the a argument.
-   * @property  {value} - Can be any data type
-   * @property {on} -  Can be any data type
-   * @example
-   * const value = 1;
-   * const on = 1;
-   * const off = 2;
-   * toggle(value, on, off);
-   * //-> 2
-   *  @returns
-   *  Can return any data type
-   */
   const toggle = (value, on, off) => {
     return (value === on) ? off : on;
   };
@@ -2519,3 +2350,5 @@
   return acid$1;
 
 })));
+
+//# sourceMappingURL=index.js.map

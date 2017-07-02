@@ -25,9 +25,9 @@
               
                 
                 <li><a
-                  href='#remove'
+                  href='#acid'
                   class="">
-                  remove
+                  acid
                   
                 </a>
                 
@@ -35,9 +35,9 @@
               
                 
                 <li><a
-                  href='#intersect'
+                  href='#supermethod'
                   class="">
-                  intersect
+                  superMethod
                   
                 </a>
                 
@@ -48,36 +48,6 @@
                   href='#numsort'
                   class="">
                   numsort
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#rnumsort'
-                  class="">
-                  rnumsort
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#promise'
-                  class="">
-                  promise
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#insertinrange'
-                  class="">
-                  insertInRange
                   
                 </a>
                 
@@ -138,16 +108,6 @@
                   href='#stringify'
                   class="">
                   stringify
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#foreachwrap'
-                  class="">
-                  forEachWrap
                   
                 </a>
                 
@@ -235,16 +195,6 @@
               
                 
                 <li><a
-                  href='#replacewithlist'
-                  class="">
-                  replaceWithList
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
                   href='#rawurldecode'
                   class="">
                   rawURLDecode
@@ -268,16 +218,6 @@
                   href='#words'
                   class="">
                   words
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#truncate'
-                  class="">
-                  truncate
                   
                 </a>
                 
@@ -375,26 +315,6 @@
               
                 
                 <li><a
-                  href='#ifnotequal'
-                  class="">
-                  ifNotEqual
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#propertymatch'
-                  class="">
-                  propertyMatch
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
                   href='#topath'
                   class="">
                   toPath
@@ -430,36 +350,6 @@
                 
                 </li>
               
-                
-                <li><a
-                  href='#get'
-                  class="">
-                  get
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#model'
-                  class="">
-                  model
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#toggle'
-                  class="">
-                  toggle
-                  
-                </a>
-                
-                </li>
-              
             </ul>
           </div>
           <div class='mt1 h6 quiet'>
@@ -475,18 +365,18 @@
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='remove'>
-      remove
+    <h3 class='fl m0' id='acid'>
+      acid
     </h3>
     
     
   </div>
   
 
-  <p>Removes all occurrences of the passed in items from the array and returns the array.</p>
+  <p>Acid Object accessible through $ default method is model.</p>
 
 
-  <div class='pre p1 fill-light mt0'>remove(array: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, removeThese: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  <div class='pre p1 fill-light mt0'>acid(modelName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, model: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, args: ...any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
   
   
 
@@ -502,8 +392,8 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>array</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
-	    Mutated Array without with removed occurrences.
+            <span class='code bold'>modelName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    Model key.
 
           </div>
           
@@ -511,9 +401,17 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>removeThese</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
-	    Items to remove from the array.
+            <span class='code bold'>model</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    An object that is saved as the value using the modelName as the string.
 
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>args</span> <code class='quiet'>(...any)</code>
+	    
           </div>
           
         </div>
@@ -527,7 +425,7 @@
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
       <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
-        The array this method was called on.
+        The model associated with the modelName as the key.
 
       
     
@@ -539,16 +437,8 @@
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> array = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>];
-
-remove(array,<span class="hljs-number">1</span>);
-<span class="hljs-comment">// -&gt; [2, 3, 3, 4, 3, 5]</span>
-
-remove(array,<span class="hljs-number">3</span>);
-<span class="hljs-comment">// -&gt; [2, 4, 5]</span>
-
-remove(array,[<span class="hljs-number">2</span>, <span class="hljs-number">5</span>]);
-<span class="hljs-comment">// -&gt; [4]</span></pre>
+      <pre class='p1 overflow-auto round fill-light'>$(<span class="hljs-string">'modelName'</span>, {<span class="hljs-attr">example</span>: <span class="hljs-number">1</span>});
+<span class="hljs-comment">// -&gt; {example: 1}</span></pre>
     
   
 
@@ -567,19 +457,18 @@ remove(array,[<span class="hljs-number">2</span>, <span class="hljs-number">5</s
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='intersect'>
-      intersect
+    <h3 class='fl m0' id='supermethod'>
+      superMethod
     </h3>
     
     
   </div>
   
 
-  <p>Returns an new array that is the <a href="http://en.wikipedia.org/wiki/Intersection_(set_theory)">set intersection</a>
-of the array and the input array(s).</p>
+  <p>Re-assigns the main Acid function.</p>
 
 
-  <div class='pre p1 fill-light mt0'>intersect(array: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, arrays: ...<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  <div class='pre p1 fill-light mt0'>superMethod(method: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</div>
   
   
 
@@ -595,17 +484,8 @@ of the array and the input array(s).</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>array</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
-	    Array to compare other arrays to.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>arrays</span> <code class='quiet'>(...<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
-	    A variable number of arrays.
+            <span class='code bold'>method</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+	    The method that will be used as the main Acid objects method.
 
           </div>
           
@@ -617,14 +497,6 @@ of the array and the input array(s).</p>
   
 
   
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
-        The new array of unique values shared by all of the arrays.
-
-      
-    
-  
 
   
 
@@ -632,11 +504,9 @@ of the array and the input array(s).</p>
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]);
-<span class="hljs-comment">// -&gt; [2, 3]</span>
-
-intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">101</span>, <span class="hljs-number">2</span>, <span class="hljs-number">50</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">2</span>, <span class="hljs-number">1</span>]);
-<span class="hljs-comment">// -&gt; [1, 2]</span></pre>
+      <pre class='p1 overflow-auto round fill-light'>$.superMethod($.get);
+<span class="hljs-comment">// -&gt; $('flow', $);</span>
+<span class="hljs-comment">// -&gt; $.flow</span></pre>
     
   
 
@@ -715,232 +585,6 @@ numsort(files);
 <span class="hljs-built_in">console</span>.log(files);
 <span class="hljs-comment">// -&gt; [0, 1, 2, 3]</span></pre>
     
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='rnumsort'>
-      rnumsort
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Sorts an array in place using a reverse numerical comparison algorithm
-(sorts numbers from highest to lowest) and returns the array.</p>
-
-
-  <div class='pre p1 fill-light mt0'>rnumsort(a: any, b: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>a</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>b</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
-        The array this method was called on.
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> files = [<span class="hljs-number">10</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>];
-rnumsort(files);
-<span class="hljs-comment">// -&gt; [3, 2, 1, 0]</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='promise'>
-      promise
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>promise is a wrapper around a constructor</p>
-
-
-  <div class='pre p1 fill-light mt0'>promise</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>callback</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='insertinrange'>
-      insertInRange
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>insertInRange inserts a text into a user defined range</p>
-
-
-  <div class='pre p1 fill-light mt0'>insertInRange</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>text</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>start</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>end</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>insert</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
   
 
   
@@ -1299,73 +943,6 @@ restString(foo)</pre>
   
   
 
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='foreachwrap'>
-      forEachWrap
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>forEachWrap is a wrapped version of the forEach function</p>
-
-
-  <div class='pre p1 fill-light mt0'>forEachWrap</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>object</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>funct</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
   
 
   
@@ -1958,90 +1535,6 @@ snakeCase(foo);</pre>
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='replacewithlist'>
-      replaceWithList
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>replaceWithList takes an array of strings and replaces them with the assigned value of the toReplace argument</p>
-
-
-  <div class='pre p1 fill-light mt0'>replaceWithList</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>string</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>array</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>toReplace</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> foo = <span class="hljs-string">'bar'</span>;
-<span class="hljs-keyword">const</span> bar = [foo];
-<span class="hljs-keyword">const</span> toReplace =<span class="hljs-string">'value which will replace'</span>;
-replaceWithList(foo, bar, toReplace)</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
     <h3 class='fl m0' id='rawurldecode'>
       rawURLDecode
     </h3>
@@ -2222,81 +1715,6 @@ tokenize(foo)</pre>
       
       <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> foo = <span class="hljs-string">'bar'</span>;
 words(foo)</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='truncate'>
-      truncate
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>truncate takes a string and shortens based on arguments given</p>
-
-
-  <div class='pre p1 fill-light mt0'>truncate</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>stringArg</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>amount</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> foo = <span class="hljs-string">'bar'</span>;
-<span class="hljs-keyword">const</span> amount = <span class="hljs-number">1</span>;
-truncate(foo, amount)</pre>
     
   
 
@@ -2922,200 +2340,6 @@ cacheNativeMethod(fooFunction)</pre>
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='ifnotequal'>
-      ifNotEqual
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>ifNotEqual checks if a particular property on an object has a value. If that property is without a     *    value, it reassigns that property to the equalThis argument.</p>
-
-
-  <div class='pre p1 fill-light mt0'>ifNotEqual</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>rootObject</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>property</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>equalThis</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>any</code>:
-        object
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> obj = {
-  <span class="hljs-attr">a</span>:<span class="hljs-number">1</span>,
-  b,
-};
- <span class="hljs-keyword">const</span> c = <span class="hljs-number">1</span>;
- ifNotEqual(obj, b, c)
-<span class="hljs-comment">// -&gt; obj.b = 1</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='propertymatch'>
-      propertyMatch
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>matchesProperty compares the properties of two objects.</p>
-
-
-  <div class='pre p1 fill-light mt0'>propertyMatch</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>object</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>compareObject</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>properties</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>any</code>:
-        Boolean
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> objOne = {
-     <span class="hljs-attr">a</span>:<span class="hljs-number">1</span>,
-     <span class="hljs-attr">b</span>:<span class="hljs-number">2</span>
-   };
-   <span class="hljs-keyword">const</span> objTwo = {
-      <span class="hljs-attr">a</span>:<span class="hljs-number">1</span>,
-      <span class="hljs-attr">b</span>:<span class="hljs-number">3</span>
-   };
-    <span class="hljs-keyword">const</span> propertiesToCompare = [a, b];
-    matchesProperty(objOne, objTwo, propertiesToCompare );
-<span class="hljs-comment">//-&gt; True, false</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
     <h3 class='fl m0' id='topath'>
       toPath
     </h3>
@@ -3269,273 +2493,6 @@ cacheNativeMethod(fooFunction)</pre>
     </div>
   
 </div>
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='get'>
-      get
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>get uses a string to go down an object chain and returns an object</p>
-
-
-  <div class='pre p1 fill-light mt0'>get</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>propertyString</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>objectChain</span> <code class='quiet'>(any
-            = <code>perty </code>)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>any</code>:
-        the value of a designated key
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> foo = {
-<span class="hljs-attr">obj</span>: <span class="hljs-number">1</span>,
-<span class="hljs-attr">bar</span>: <span class="hljs-number">2</span>
-}
-<span class="hljs-keyword">const</span> string = foo.obj
-get(string, foo)
-<span class="hljs-comment">// -&gt; 1</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='model'>
-      model
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>model assigns a property on itself</p>
-
-
-  <div class='pre p1 fill-light mt0'>model</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>modelName</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>object</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>any</code>:
-        object
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> obj = {
- <span class="hljs-attr">foo</span>: bar
-};
- <span class="hljs-keyword">const</span> string = <span class="hljs-string">'model.foo'</span>
- model(string, obj)
-<span class="hljs-comment">//-&gt; model.foo = obj</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='toggle'>
-      toggle
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>toggle does a strict comparison between the value and an argument. If it returns true, then it returns the b *argument. Else it returns the a argument.</p>
-
-
-  <div class='pre p1 fill-light mt0'>toggle</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>value</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>on</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>off</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>any</code>:
-        Can return any data type
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> value = <span class="hljs-number">1</span>;
-<span class="hljs-keyword">const</span> on = <span class="hljs-number">1</span>;
-<span class="hljs-keyword">const</span> off = <span class="hljs-number">2</span>;
-toggle(value, on, off);
-<span class="hljs-comment">//-&gt; 2</span></pre>
-    
-  
 
   
 
