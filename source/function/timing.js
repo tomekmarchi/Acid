@@ -58,8 +58,8 @@ export const throttle = (func, time) => {
   return fn;
 };
 assign(acid, {
-  interval,
-  timer,
   debounce,
+  interval,
   throttle,
+  timer,
 });

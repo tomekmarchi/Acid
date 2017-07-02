@@ -1,8 +1,10 @@
 const gulp = require('gulp');
-const rollup = require('rollup');
+const rollup = require('gulp-better-rollup');
+const sourcemaps = require('gulp-sourcemaps');
 const beautify = require('gulp-beautify');
 const notify = require('gulp-notify');
 const concat = require('gulp-concat');
+const gulpDocumentation = require('gulp-documentation');
 const lr = require('tiny-lr')();
 const livereload = require('connect-livereload');
 const express = require('express');
@@ -27,7 +29,7 @@ const notifyLivereload = (reloadEvent) => {
   });
 };
 const compileAcid = () => {
-  gulp.src('build/index.js')
+  return gulp.src('build/index.js')
     .pipe(beautify({
       indent_size: 2,
       indent_with_tabs: false,
@@ -59,28 +61,38 @@ const compileAcid = () => {
     .pipe(gulp.dest('npm'))
     .pipe(notify(() => {
       return 'Acid Minified Saved';
+    }))
+    .pipe(notify(() => {
+      return `Documentation Building`;
     }));
 };
-const bundle = async () => {
-  const bundled = await rollup.rollup({
-    entry: './source/index.js'
-  });
-  await bundled.write({
-    dest: './build/index.js',
-    format: 'umd',
-    moduleName: '$',
-    sourceMap: true
-  });
-};
-gulp.task('scripts', async () => {
-  await bundle();
-  compileAcid();
+gulp.task('bundle', async () => {
+  return gulp.src('./source/index.js')
+    .pipe(sourcemaps.init())
+    .pipe(rollup({
+      entry: 'source/index.js',
+      format: 'umd',
+      moduleName: '$'
+    }))
+    .pipe(sourcemaps.write(''))
+    .pipe(gulp.dest('build'))
+    .pipe(notify(() => {
+      return `Bundled`;
+    }));
 });
-gulp.task('default', ['scripts'], () => {
+gulp.task('build', async () => {
+  return compileAcid();
+});
+gulp.task('docs', () => {
+  return gulp.src('./build/index.js')
+    .pipe(gulpDocumentation('html'))
+    .pipe(gulp.dest('docs'));
+});
+const tasks = ['bundle', 'build', 'docs'];
+gulp.task('default', tasks, () => {
   livereloadStart();
-  gulp.watch('source/**', async (gulpEvent) => {
-    await bundle();
-    compileAcid(gulpEvent);
+  const watcher = gulp.watch('./source/**/*.js', tasks);
+  watcher.on('change', (gulpEvent) => {
     setTimeout(() => {
       notifyLivereload(gulpEvent);
     }, 2000);
