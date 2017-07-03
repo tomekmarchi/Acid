@@ -12,7 +12,7 @@ const spaceFirstLetter = / (.)/g;
   *
   * @example
   * upperCase('upper case');
-  * //-> UPPER CASE
+  * // => UPPER CASE
 */
 export const upperCase = (string) => {
   return string.replace(normalizeCase, ' ')
@@ -29,7 +29,7 @@ export const upperCase = (string) => {
   *
   * @example
   * camelCase('camel case');
-  * //-> camelCase
+  * // => camelCase
 */
 export const camelCase = (string) => {
   return string.toLowerCase()
@@ -48,7 +48,7 @@ export const camelCase = (string) => {
   * @example
   * const foo = 'kebab case';
   * kebabCase(foo);
-  * //-> kebab-case
+  * // => kebab-case
 */
 export const kebabCase = (string) => {
   return string.replace(normalizeCase, ' ')
@@ -67,7 +67,7 @@ export const kebabCase = (string) => {
   * @example
   * const foo = 'snake case';
   * snakeCase(foo);
-  * //-> snake_case
+  * // => snake_case
 */
 export const snakeCase = (string) => {
   return string.replace(normalizeCase, ' ')

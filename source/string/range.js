@@ -8,11 +8,11 @@ import { assign } from '../internal/object';
   * @param {string} string - String to insert the text into.
   * @param {number} index - Point of insertion.
   * @param {string} text - The string to be inserted.
-  * @returns {string} The string with the text inserted between the given points.
+  * @returns {string} The string with the text inserted at the given point.
   *
   * @example
   * insertInRange('A from Lucy.', 1, ' tab');
-  * //-> A tab from Lucy.
+  * // => A tab from Lucy.
 */
 export const insertInRange = (string, index, text) => {
   return string.slice(0, index) + text + string.slice(index, string.length);
@@ -28,10 +28,10 @@ export const insertInRange = (string, index, text) => {
   *
   * @example
   * rightString('rightString');
-  * //-> g
+  * // => g
   *
   * rightString('rightString', 2);
-  * //-> n
+  * // => n
 */
 export const rightString = (string, index = 1) => {
   return string[string.length - index];
