@@ -2,25 +2,20 @@ import acid from '../namespace/index';
 import { assign } from '../internal/object';
 const spaceFirstLetter = / (.)/g;
 /**
-upperFirstLetter takes a string and extracts a capitalized version of its first character.
-@property {string} - takes a string
-@example
-foo = 'bar';
-upperFirstLetter(foo)
+  * Returns the first letter capitalized.
+  *
+  * @function upperFirstLetter
+  * @type {Function}
+  * @param {string} string - String to extract first letter from.
+  * @returns {string} A single upper case letter.
+  *
+  * @example
+  * const foo = 'upper';
+  * upperFirstLetter(foo);
+  * //-> U
 */
 export const upperFirstLetter = (string) => {
   return string[0].toUpperCase();
-};
-/**
-restString returns the characters of a string based on the arguments given. If num = 0, it will return all characters in the string. If it = 1, it will return all characters after the first character etc.
-@property {string} - takes a string
-@property {num} - takes an integer
-@example
-foo = 'bar';
-restString(foo)
-*/
-export const restString = (string, num = 1) => {
-  return string.substr(num);
 };
 /**
 upperFirst takes a string returns it with its first character capitalized
@@ -67,9 +62,7 @@ export const upperFirstOnlyAll = (string) => {
       return match.toUpperCase();
     });
 };
-
 assign(acid, {
-  restString,
   upperFirst,
   upperFirstAll,
   upperFirstOnly,
