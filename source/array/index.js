@@ -16,7 +16,7 @@ import './countby';
 import './initial';
 import './smallest';
 import './createrange';
-import './intersection';
+import './intersect';
 import './sortAlphabet';
 import './difference';
 import './invoke';

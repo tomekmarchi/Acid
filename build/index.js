@@ -1,16 +1,40 @@
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
+	typeof define === 'function' && define.amd ? define('$', factory) :
 	(global.$ = factory());
 }(this, (function () { 'use strict';
 
 let cacheSuper;
+/**
+ * Acid Object accessible through $ default method is model.
+ *
+ * @function acid
+ * @param {string} modelName - Model key.
+ * @param {Object} model - An object that is saved as the value using the modelName as the string.
+ * @returns {Array} The model associated with the modelName as the key.
+ *
+ * @example
+ * $('modelName', {example: 1});
+ * // -> {example: 1}
+ */
 const acid$1 = (...args) => {
   return cacheSuper(...args);
 };
-acid$1.superMethod = (method) => {
+/**
+ * Re-assigns the main Acid function.
+ *
+ * @function superMethod
+ * @param {Function} method - The method that will be used as the main Acid objects method.
+ *
+ * @example
+ * $.superMethod($.get);
+ * // -> $('flow', $);
+ * // -> $.flow
+ */
+const superMethod = (method) => {
   cacheSuper = method;
 };
+acid$1.superMethod = superMethod;
 
 const objectNative$1 = Object;
 const keys = objectNative$1.keys;
@@ -32,14 +56,6 @@ assign(acid$1, {
   objectSize
 });
 
-/*
-const array = [async function(...args){
-  console.log(1,args);
-}, async function(...args){
-  console.log(2,args);
-}];
-acid.asyncEach(array,[3,4]);
-*/
 const asyncEach = async (array, arg) => {
   const arrayLength = array.length;
   for (let index = 0; index < arrayLength; index++) {
@@ -266,14 +282,13 @@ assign(acid$1, {
 /**
  * Removes all occurrences of the passed in items from the array and returns the array.
  *
- * __Note:__ Unlike {@link Array#without|`.without()`}, this method mutates the array.
- *
- * @function Array#remove
- * @param {...*} *items - Items to remove from the array.
+ * @function remove
+ * @param {Array} array - Mutated Array without with removed occurrences.
+ * @param {Array} removeThese - Items to remove from the array.
  * @returns {Array} The array this method was called on.
  *
  * @example
- * var array = [1, 2, 3, 3, 4, 3, 5];
+ * const array = [1, 2, 3, 3, 4, 3, 5];
  *
  * remove(array,1);
  * // -> [2, 3, 3, 4, 3, 5]
@@ -284,11 +299,11 @@ assign(acid$1, {
  * remove(array,[2, 5]);
  * // -> [4]
  */
-const remove = (array, removeTheseArg) => {
-  const removeThese = ensureArray(removeTheseArg);
-  eachArray(array, (item, index) => {
-    if (removeThese.includes(item)) {
-      array.splice(array, index, 1);
+const remove = (array, removeThese) => {
+  const removeTheseArray = ensureArray(removeThese);
+  eachArray(array, (item) => {
+    if (removeTheseArray.includes(item)) {
+      array.splice(array, removeTheseArray.indexOf(item), 1);
     }
   });
   return array;
@@ -593,25 +608,27 @@ assign(acid$1, {
  * Returns an new array that is the [set intersection](http://en.wikipedia.org/wiki/Intersection_(set_theory))
  * of the array and the input array(s).
  *
- * @function Array#intersect
- * @param {...Array} *arrays - A variable number of arrays.
+ * @function intersect
+ * @param {Array} array - Array to compare other arrays to.
+ * @param {...Array} arrays - A variable number of arrays.
  * @returns {Array} The new array of unique values shared by all of the arrays.
  *
  * @example
- * $.intersect([1, 2, 3], [2, 3, 4]);
+ * intersect([1, 2, 3], [2, 3, 4]);
  * // -> [2, 3]
  *
- * $.intersect([1, 2, 3], [101, 2, 50, 1], [2, 1]);
+ * intersect([1, 2, 3], [101, 2, 50, 1], [2, 1]);
  * // -> [1, 2]
  */
-const intersection = (array, ...args) => {
+const intersect = (array, ...arrays) => {
   let yes;
   return filterArray(array, (item) => {
     yes = true;
-    eachArray(args, (otherItem) => {
+    eachWhile(arrays, (otherItem) => {
       if (!otherItem.includes(item)) {
         yes = false;
       }
+      return yes;
     });
     if (yes) {
       return item;
@@ -619,7 +636,7 @@ const intersection = (array, ...args) => {
   });
 };
 assign(acid$1, {
-  intersection
+  intersect
 });
 
 /*
@@ -827,22 +844,22 @@ assign(acid$1, {
   filterAsync,
 });
 
+const numericalCompare = (a, b) => {
+  return a - b;
+};
 /**
  * Sorts an array in place using a numerical comparison algorithm
  * (sorts numbers from lowest to highest) and returns the array.
  *
- * @function Array#numsort
+ * @function numsort
  * @returns {Array} The array this method was called on.
  *
  * @example
  * var files = [10, 0, 2, 1];
- * files.numsort();
+ * numsort(files);
  * console.log(files);
  * // -> [0, 1, 2, 3]
  */
-const numericalCompare = (a, b) => {
-  return a - b;
-};
 const numSort = (array) => {
   return array.sort(numericalCompare);
 };
@@ -1028,13 +1045,12 @@ assign(acid$1, {
  * Sorts an array in place using a reverse numerical comparison algorithm
  * (sorts numbers from highest to lowest) and returns the array.
  *
- * @function Array#rnumsort
+ * @function rnumsort
  * @returns {Array} The array this method was called on.
  *
  * @example
  * var files = [10, 0, 2, 1];
- * files.rnumsort();
- * console.log(files);
+ * rnumsort(files);
  * // -> [3, 2, 1, 0]
  */
 const numericalCompareReverse = (a, b) => {
@@ -1163,6 +1179,9 @@ assign(acid$1, {
   nodeAttribute
 });
 
+/**
+*promise is a wrapper around a constructor
+*/
 const promise = (callback) => {
   return new Promise(callback);
 };
@@ -1170,18 +1189,57 @@ assign(acid$1, {
   promise
 });
 
+/**
+  * insertInRange inserts a text into a user defined range
+*/
 const insertInRange = (text, start, end, insert) => {
   return text.slice(0, start) + insert + text.slice(end, text.length);
 };
+/**
+  * rightString returns the letter on the right side of the string
+*/
 const rightString = (text, a) => {
-  return [text.length - 1 - a];
+  return text[text.length - 1 - a];
 };
+/**
+  * chunkString chunks a string contingent on what integer is placed in the size argument
+  * @property {string} - string to be chunked
+  * @property {size} - integer which will define how often the string is chunked
+  * @example
+  const foo = 'bar';
+  size = 2;
+  chunkString(foo, size)
+*/
 const chunkString = (string, size) => {
   return string.match(new RegExp(`(.|[\r\n]){1, ${size}}`, 'g'));
 };
+/**
+  * Returns the string without the last letter.
+  *
+  * @function initialString
+  * @property {string} - takes a string
+  * @returns {string} The string without the last letter.
+  *
+  * @example
+  * const foo = 'bar';
+  * initialString(foo);
+  * //-> 'ba'
+*/
 const initialString = (string) => {
   return string.slice(0, -1);
 };
+/**
+  * Returns the string without the first letter.
+  *
+  * @function restString
+  * @property {string} - takes a string
+  * @returns {string} The string without the first letter.
+  *
+  * @example
+  * const const foo = 'bar';
+  * restString(foo);
+  * //-> 'ar'
+*/
 const restString = (string) => {
   return string.slice(1, string.length);
 };
@@ -1341,7 +1399,13 @@ assign(acid$1, {
 });
 
 const jsonNative = JSON;
+/**
+   * jsonParse is a wrapped version of the forEach function
+*/
 const jsonParse = jsonNative.jsonParse;
+/**
+   * stringify is a wrapped version of the forEach function
+*/
 const stringify = jsonNative.stringify;
 assign(acid$1, {
   jsonParse,
@@ -1538,9 +1602,15 @@ assign(acid$1, {
   noop
 });
 
+/**
+   * forEachWrap is a wrapped version of the forEach function
+*/
 const forEachWrap = (object, funct) => {
   return object.forEach(funct);
 };
+/**
+   * generateCheckLoops parses the argument it is given and checks whether said argument is an array, or an object.
+*/
 const generateCheckLoops = (arrayLoop, objectLoop) => {
   return (object, funct) => {
     let returned;
@@ -1558,8 +1628,95 @@ const generateCheckLoops = (arrayLoop, objectLoop) => {
     return returned(object, funct);
   };
 };
+/**
+*map takes an array or an object. If an array is given, an array will be mapped. If an object is given, an *object will be mapped.
+*
+*
+* @property {mapArray}  - Takes an array to be mapped.
+* @property {mapObject}  -Takes an object to be mapped.
+ * @example
+*Taking an array
+*const example = ['foo', 'bar'];
+*const fooFunction = (x) => {
+*  return x;
+*});
+* const newMap = map(example, fooFunction);
+* //-> newMap = ['foo', 'bar']
+* @returns
+* Each value in the array after being run through a function. Can be any datatype.
+* @example
+*Taking an object
+*const example = [{
+*key: bar,
+*value: foo,
+*}];
+*const fooFunction = (x) => {
+*   var rObj = {};
+*   Obj[obj.key] = obj.value;
+*   return rObj;
+*});
+*var reformatted = map(example, fooFunction) ;
+* //-> reformatted = {
+*       bar:foo
+*}
+* @returns
+* The value of each property in an object after being run through a user defined function
+*/
 const map = generateCheckLoops(mapArray, mapObject);
+/** each takes an array or an object. If an array is given, an array will have an operation performed on *each item in the array. If an object is given, an object will have an operation performed on each property *of the object.
+* @property {eachArray}  - Takes two arguments: an array, and a function that will be performed on each item *in the array.
+* @property {eachObject}  -Takes two arguments: an object and a function that will be performed on each key *and or value property of that object.
+* @example
+*Taking an array
+*const example = ['foo', 'bar'];
+*const fooFunction = () => {
+*  console.log()
+*};
+*each(example, fooFunction);
+*Taking an object
+*const example = {
+*foo: bar,
+*bar: foo,
+*};
+*const fooFunction = () => {
+*  console.log()
+*};
+*each(example, fooFunction);
+*/
 const each = generateCheckLoops(eachArray, eachObject);
+/**
+*filter takes an array or an object. If it is given an array, it will run a function on each item on the *array. If it is given an object, it will run a function on each key and or value of an object
+*@property {filterArray} - Takes two arguments: an array, and a function
+*@property {filterObject} - Takes two arguments: an object, and a function
+*@example
+*Taking an array
+*const example = ['foo', 'bar', 'foobar'];
+*const fooFunction = () => {
+*  return example.length <4;
+*};
+*const value = filter(example, fooFunction);
+* //-> const value = ['foo', 'bar']
+* @returns
+* The value of each item in the given array after being run through a given function
+* @example
+*Taking an object
+*const example = [{
+*foo: bar,
+*bar: foo,
+*}];
+*const fooFunction = (item) => {
+*  if hasValue(item.id) {
+*   return item.id
+*}
+*};
+* const value = filter(example, fooFunction);
+* //-> const value = [{
+*foo: bar,
+*bar: foo,
+*}]
+* @returns
+* The value of each property within an object after being ran through a given function
+*/
 const filter = generateCheckLoops(filterArray, filterObject);
 assign(acid$1, {
   each,
@@ -1658,10 +1815,10 @@ const throttle = (func, time) => {
   return fn;
 };
 assign(acid$1, {
-  interval,
-  timer,
   debounce,
+  interval,
   throttle,
+  timer,
 });
 
 const addLink = (link, addToChain) => {
@@ -1944,11 +2101,21 @@ assign(acid$1, {
 
 const normalizeCase = /[-_]/g;
 const spaceFirstLetter = / (.)/g;
+/**
+upperCase takes a string and converts it entirely into uppercase.
+*/
 const upperCase = (string) => {
   return string.replace(normalizeCase, ' ')
     .trim()
     .toUpperCase();
 };
+/**
+camelCase takes a string and converts it to camel case format
+@property {stringArg} - takes a string to be converted into camel case
+@example
+const foo = 'bar';
+camelCase(foo);
+*/
 const camelCase = (stringArg) => {
   const string = stringArg
     .toLowerCase()
@@ -1957,12 +2124,26 @@ const camelCase = (stringArg) => {
     });
   return string;
 };
+/**
+kebabCase takes a string and converts it into kebab case format
+@property {string} - takes a string to be converted into kebab case format
+@example
+const foo = 'bar';
+kebabCase(foo)
+*/
 const kebabCase = (string) => {
   return string.replace(normalizeCase, ' ')
     .trim()
     .toLowerCase()
     .replace(spaceFirstLetter, '-$1');
 };
+/**
+snakeCase takes a string and converts it into snake case format
+@property {string} - takes a string to be converted into snake case
+@example
+const foo = 'bar';
+snakeCase(foo);
+*/
 const snakeCase = (string) => {
   return string.replace(normalizeCase, ' ')
     .trim()
@@ -1976,6 +2157,17 @@ assign(acid$1, {
   snakeCase,
 });
 
+/**
+replaceWithList takes an array of strings and replaces them with the assigned value of the toReplace argument
+@property {string} - takes a string
+@property {array} - takes an array of strings
+@property {toReplace} - takes a string which is used to replace the array of strings
+@example
+const foo = 'bar';
+const bar = [foo];
+const toReplace ='value which will replace';
+replaceWithList(foo, bar, toReplace)
+*/
 const replaceWithList = (string, array, toReplace) => {
   return string.replace(new RegExp(`\\b${array.join('|')}\\b`, 'gi'), toReplace);
 };
@@ -1988,7 +2180,13 @@ const andRegex = /&/g;
 const lessThanRegex = /</g;
 const moreThanRegex = />/g;
 const doubleQuoteRegex = /"/g;
-const forwardSlashRegex = /\//g;
+/**
+rawURLDecode takes a string and decodes it using native methods as well as regexToPath
+@property  {string} - takes a url string
+@example
+const foo = 'http://bar.com'
+rawURLDecode(foo)
+*/
 const rawURLDecode = (string) => {
   return decodeURIComponent(string.replace(rawURLDecodeRegex, () => {
     return '%25';
@@ -1999,8 +2197,7 @@ const createHtmlEntities = (stringArg) => {
   string = string.replace(andRegex, '&amp;');
   string = string.replace(lessThanRegex, '&lt;');
   string = string.replace(moreThanRegex, '&gt;');
-  string = string.replace(doubleQuoteRegex, '&quot;');
-  return string.replace(forwardSlashRegex, '&quot;');
+  return string.replace(doubleQuoteRegex, '&quot;');
 };
 const sanitize = (string) => {
   return createHtmlEntities(rawURLDecode(string));
@@ -2013,9 +2210,23 @@ assign(acid$1, {
 
 const tokenizeRegEx = /\S+/g;
 const wordsRegEx = /\w+/g;
+/**
+tokenize takes a string and checks to see if it has anything but whitespace. If it does, it returns that string. If it does not, it returns an empty array.
+@property {string} - takes a string
+@example
+const foo = 'bar';
+tokenize(foo)
+*/
 const tokenize = (string) => {
   return string.match(tokenizeRegEx) || [];
 };
+/**
+words takes a string and checks to see if it has a single character or more. If it does, it returns that string. If it does not, it returns an empty array.
+@property {string} - takes a string
+@example
+const foo = 'bar';
+words(foo)
+*/
 const words = (string) => {
   return string.match(wordsRegEx) || [];
 };
@@ -2024,6 +2235,15 @@ assign(acid$1, {
   words
 });
 
+/**
+truncate takes a string and shortens based on arguments given
+@property {stringArg} - takes a string to be shortened
+@property {amount} - takes an integer value which determines the degree to which the stringArg will be shortened
+@example
+const foo = 'bar';
+const amount = 1;
+truncate(foo, amount)
+*/
 const truncate = (stringArg, amount) => {
   let string = stringArg;
   if (string.length > amount) {
@@ -2031,6 +2251,14 @@ const truncate = (stringArg, amount) => {
   }
   return string;
 };
+/**
+truncate left returns a string based on arguments given
+@property {stringArg} - takes a string to be truncateWor
+@property {amount} - integer value determining the degree of truncation
+const foo = 'bar';
+const amount = 1;
+truncateLeft(foo, amount)
+*/
 const truncateLeft = (stringArg, amount) => {
   let string = stringArg;
   const stringLength = string.length;
@@ -2039,6 +2267,14 @@ const truncateLeft = (stringArg, amount) => {
   }
   return string;
 };
+/**
+truncateWord extracts the letters between the first character of a string and a given integer
+@property {string} - takes a string to be truncated
+@property {amount} - integer value determining the degree of truncation
+const foo = 'bar';
+const amount = 1;
+truncateWord(foo, amount)
+*/
 const truncateWord = (string, amount) => {
   return string.substring(0, amount);
 };
@@ -2049,23 +2285,66 @@ assign(acid$1, {
 });
 
 const spaceFirstLetter$1 = / (.)/g;
+/**
+upperFirstLetter takes a string and extracts a capitalized version of its first character.
+@property {string} - takes a string
+@example
+foo = 'bar';
+upperFirstLetter(foo)
+*/
 const upperFirstLetter = (string) => {
   return string[0].toUpperCase();
 };
+/**
+restString returns the characters of a string based on the arguments given. If num = 0, it will return all characters in the string. If it = 1, it will return all characters after the first character etc.
+@property {string} - takes a string
+@property {num} - takes an integer
+@example
+foo = 'bar';
+restString(foo)
+*/
 const restString$1 = (string, num = 1) => {
   return string.substr(num);
 };
+/**
+upperFirst takes a string returns it with its first character capitalized
+@property {string} - takes a string
+@example
+foo = 'bar';
+upperFirst(foo)
+*/
 const upperFirst = (string) => {
   return upperFirstLetter(string) + restString$1(string);
 };
+/**
+upperFirstAll returns a string wherein the first letter of every word in that string is capitalized
+@property {string} - takes a string
+@example
+foo = 'bar';
+upperFirstAll(foo)
+*/
 const upperFirstAll = (string) => {
   return string.replace(spaceFirstLetter$1, (match) => {
     return match.toUpperCase();
   });
 };
+/**
+upperFirstOnly returns a string wherein the first letter of the first word in that string is capitalized
+@property {string} - takes a string
+@example
+foo = 'bar';
+upperFirstOnly(foo)
+*/
 const upperFirstOnly = (string) => {
   return upperFirstLetter(string) + restString$1(string).toLowerCase();
 };
+/**
+upperFirstOnlyAll takes a string and first converts it to lower case. Then capitalizes all characters that follow a space
+@property {string} - takes a string
+@example
+foo = 'bar';
+upperFirstOnlyAll(foo)
+*/
 const upperFirstOnlyAll = (string) => {
   return string.toLowerCase()
     .replace(spaceFirstLetter$1, (match) => {
@@ -2082,6 +2361,15 @@ assign(acid$1, {
 });
 
 const functionPrototype = Function.prototype;
+/**
+cacheNativeMethod takes a prototype method and returns a cached version of that method.
+* @property {funct} -takes a function to be cached
+ * @example
+ const fooFunction() =>{
+  console.log();
+};
+ cacheNativeMethod(fooFunction)
+*/
 function cacheNativeMethod(funct) {
   return functionPrototype.call.bind(funct);
 }
@@ -2089,6 +2377,23 @@ assign(acid$1, {
   cacheNativeMethod
 });
 
+/**
+*    ifNotEqual checks if a particular property on an object has a value. If that property is without a     *    value, it reassigns that property to the equalThis argument.
+*   @property {rootObject} - takes an object
+*   @property {property} - the property which is being checked
+*   @property {equalThis} - the reassignment value of the property being checked
+*   @example
+*   const obj = {
+*   a:1,
+*   b,
+* };
+*  const c = 1;
+*  ifNotEqual(obj, b, c)
+* // -> obj.b = 1
+*
+*   @returns
+*   object
+*/
 const ifNotEqual = (rootObject, property, equalThis) => {
   if (property && !hasValue(rootObject[property])) {
     rootObject[property] = equalThis;
@@ -2100,16 +2405,92 @@ assign(acid$1, {
   ifNotEqual,
 });
 
+/**
+*   matchesProperty compares the properties of two objects.
+*   @property {object} - takes an object
+*   @property {compareObject} - takes an object
+*   @property {properties} - takes in an array of properties
+*   @example
+*    const objOne = {
+*      a:1,
+*      b:2
+*    };
+*    const objTwo = {
+*       a:1,
+*       b:3
+*    };
+*     const propertiesToCompare = [a, b];
+*     matchesProperty(objOne, objTwo, propertiesToCompare );
+* //-> True, false
+*   @returns
+*   Boolean
+*/
+const propertyMatch = (object, compareObject, properties) => {
+  let result = false;
+  eachWhile(properties, (property) => {
+    result = object[property] === compareObject[property];
+    return result;
+  });
+  return result;
+};
+assign(acid$1, {
+  propertyMatch,
+});
+
 const regexToPath = /\.|\[/;
 const regexCloseBracket = /]/g;
 const emptyString = '';
-const toPath = (string = emptyString) => {
+/**
+toPath replaces a closed bracket with an empty string and splits on an opening bracket and periods.
+*/
+const toPath = (string) => {
   return string.replace(regexCloseBracket, emptyString).split(regexToPath);
 };
 assign(acid$1, {
   toPath,
 });
 
+let count = 0;
+const uuidFree = [];
+const uuidClosed = {};
+/**
+*uuid returns a unique id
+*/
+const uuid = () => {
+  let result = uuidFree.shift(uuidFree);
+  if (!hasValue(result)) {
+    result = count;
+    uuidClosed[result] = true;
+    count++;
+  }
+  return result;
+};
+/**
+*uuid.remove nullifies a unique id within the uuidClosed object
+*/
+uuid.remove = (id) => {
+  uuidClosed[id] = null;
+  uuidFree.push(id);
+};
+assign(acid$1, {
+  uuid,
+});
+
+/**
+* get uses a string to go down an object chain and returns an object
+* @property {propertyString} - takes a string which is used to go down an objectChain
+* @property {objectChain} - takes an object
+* @example
+* const foo = {
+* obj: 1,
+* bar: 2
+* }
+*const string = foo.obj
+* get(string, foo)
+* // -> 1
+*@returns
+*the value of a designated key
+*/
 const get = (propertyString, objectChain = acid$1) => {
   let link = objectChain;
   eachWhile(toPath(propertyString), (item) => {
@@ -2122,35 +2503,20 @@ assign(acid$1, {
   get
 });
 
-const matchesProperty = (path, srcValue) => {
-  return (item) => {
-    return get(path, item) === srcValue;
-  };
-};
-assign(acid$1, {
-  matchesProperty
-});
-
-let count = 0;
-const uuidFree = [];
-const uuidClosed = {};
-const uuid = () => {
-  let result = uuidFree.shift(uuidFree);
-  if (!hasValue(result)) {
-    result = count;
-    uuidClosed[result] = true;
-    count++;
-  }
-  return result;
-};
-uuid.remove = (id) => {
-  uuidClosed[id] = null;
-  uuidFree.push(id);
-};
-assign(acid$1, {
-  uuid,
-});
-
+/**
+*  model assigns a property on itself
+*  @property {modelName} - takes a string
+*  @property {object} - takes an object
+*  @example
+*  const obj = {
+*  foo: bar
+*};
+*  const string = 'model.foo'
+*  model(string, obj)
+* //-> model.foo = obj
+*  @returns
+*  object
+*/
 const model = (modelName, object) => {
   if (hasValue(object)) {
     model[modelName] = object;
@@ -2162,6 +2528,19 @@ assign(acid$1, {
   model
 });
 
+/**
+* toggle does a strict comparison between the value and an argument. If it returns true, then it returns the b *argument. Else it returns the a argument.
+* @property  {value} - Can be any data type
+* @property {on} -  Can be any data type
+* @example
+* const value = 1;
+* const on = 1;
+* const off = 2;
+* toggle(value, on, off);
+* //-> 2
+*  @returns
+*  Can return any data type
+ */
 const toggle = (value, on, off) => {
   return (value === on) ? off : on;
 };
@@ -2172,4 +2551,5 @@ assign(acid$1, {
 return acid$1;
 
 })));
+
 //# sourceMappingURL=index.js.map

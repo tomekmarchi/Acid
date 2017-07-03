@@ -35,16 +35,24 @@
     "babel-preset-es2015": "*",
     "body-parser": "*",
     "connect-livereload": "*",
+    "documentation": "^3.0.4",
     "eslint": "*",
+    "eslint-plugin-jsdoc": "^3.1.1",
     "express": "*",
     "gulp": "*",
     "gulp-babel": "*",
     "gulp-beautify": "*",
+    "gulp-better-rollup": "^1.1.1",
     "gulp-concat": "*",
+    "gulp-documentation": "^3.2.0",
     "gulp-gzip": "*",
     "gulp-notify": "*",
+    "gulp-sourcemaps": "^2.6.0",
     "rollup": "*",
     "tiny-lr": "*"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "scripts": {
+    "build": "gulp"
+  }
 }
