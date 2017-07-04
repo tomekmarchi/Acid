@@ -1,19 +1,22 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
 /**
-  replaceWithList takes an array of strings and replaces them with the assigned value of the toReplace argument
-  @property {string} - takes a string
-  @property {array} - takes an array of strings
-  @property {toReplace} - takes a string which is used to replace the array of strings
-  @example
-  const foo = 'bar';
-  const bar = [foo];
-  const toReplace ='value which will replace';
-  replaceWithList(foo, bar, toReplace)
+  * Replaces all occurrences of strings in an array with a value.
+  *
+  * @function replaceList
+  * @type {Function}
+  * @param {string} string - String to be replaced.
+  * @param {Array} array - Strings to replace.
+  * @param {string} value - The match replacement.
+  * @returns {string} Converted string in Snake case.
+  *
+  * @example
+  * replaceList('Her name was @user.', ['@user'], 'Lucy');
+  * // => Her name was Lucy.
 */
-export const replaceWithList = (string, array, toReplace) => {
-  return string.replace(new RegExp(`\\b${array.join('|')}\\b`, 'gi'), toReplace);
+export const replaceList = (string, array, value) => {
+  return string.replace(new RegExp(`\\b${array.join('|')}\\b`, 'gi'), value);
 };
 assign(acid, {
-  replaceWithList
+  replaceList
 });

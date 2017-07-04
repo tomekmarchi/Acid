@@ -46,8 +46,7 @@ export const camelCase = (string) => {
   * @returns {string} Converted string in Kebab case.
   *
   * @example
-  * const foo = 'kebab case';
-  * kebabCase(foo);
+  * kebabCase('kebab case');
   * // => kebab-case
 */
 export const kebabCase = (string) => {
@@ -65,8 +64,7 @@ export const kebabCase = (string) => {
   * @returns {string} Converted string in Snake case.
   *
   * @example
-  * const foo = 'snake case';
-  * snakeCase(foo);
+  * snakeCase('snake case');
   * // => snake_case
 */
 export const snakeCase = (string) => {
