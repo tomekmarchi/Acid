@@ -1,50 +1,64 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-/**
-truncate takes a string and shortens based on arguments given
-@property {stringArg} - takes a string to be shortened
-@property {amount} - takes an integer value which determines the degree to which the stringArg will be shortened
-@example
-const foo = 'bar';
-const amount = 1;
-truncate(foo, amount)
-*/
-const truncate = (stringArg, amount) => {
-  let string = stringArg;
-  if (string.length > amount) {
-    string = string.slice(0, amount);
+const truncateDown = (string, maxLength, stringLength) => {
+  const breakAll = string.split('');
+  const breakAllLength = breakAll.length;
+  let item;
+  let index = stringLength - maxLength;
+  for (; index < breakAllLength && index >= 0; index--) {
+    item = breakAll[index];
+    if (item === ' ') {
+      break;
+    }
   }
-  return string;
+  return string.slice(0, index).trim();
+};
+const truncateUp = (string, maxLength, stringLength) => {
+  const breakAll = string.split('');
+  const breakAllLength = breakAll.length;
+  let item;
+  let index = maxLength;
+  for (; index < breakAllLength && index > 0; index++) {
+    item = breakAll[index];
+    if (item === ' ') {
+      break;
+    }
+  }
+  return string.substr(index, stringLength).trim();
 };
 /**
-truncate left returns a string based on arguments given
-@property {stringArg} - takes a string to be truncateWor
-@property {amount} - integer value determining the degree of truncation
-const foo = 'bar';
-const amount = 1;
-truncateLeft(foo, amount)
+  * Returns the first letter capitalized.
+  *
+  * @function upperFirstLetter
+  * @type {Function}
+  * @param {string} string - String to extract first letter from.
+  * @returns {string} An upper case letter.
+  *
+  * @example
+  * upperFirstLetter('upper');
+  * // => U
 */
-const truncateLeft = (stringArg, amount) => {
-  let string = stringArg;
+const truncate = (string, maxLength) => {
   const stringLength = string.length;
-  if (stringLength > amount) {
-    string = string.substr(amount, stringLength);
-  }
-  return string;
+  return (stringLength > maxLength) ? truncateDown(string, maxLength, stringLength) : string;
 };
 /**
-truncateWord extracts the letters between the first character of a string and a given integer
-@property {string} - takes a string to be truncated
-@property {amount} - integer value determining the degree of truncation
-const foo = 'bar';
-const amount = 1;
-truncateWord(foo, amount)
+  * Returns the first letter capitalized.
+  *
+  * @function upperFirstLetter
+  * @type {Function}
+  * @param {string} string - String to extract first letter from.
+  * @returns {string} An upper case letter.
+  *
+  * @example
+  * upperFirstLetter('upper');
+  * // => U
 */
-const truncateWord = (string, amount) => {
-  return string.substring(0, amount);
+const truncateRight = (string, maxLength) => {
+  const stringLength = string.length;
+  return (stringLength > maxLength) ? truncateUp(string, maxLength, stringLength) : string;
 };
 assign(acid, {
   truncate,
-  truncateLeft,
-  truncateWord,
+  truncateRight,
 });

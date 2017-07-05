@@ -36,23 +36,18 @@
     "body-parser": "*",
     "connect-livereload": "*",
     "documentation": "*",
+    "esformatter": "^0.10.0",
     "eslint": "*",
     "eslint-plugin-jsdoc": "*",
     "express": "*",
-    "gulp": "*",
-    "gulp-babel": "*",
-    "gulp-beautify": "*",
-    "gulp-better-rollup": "*",
-    "gulp-concat": "*",
-    "gulp-documentation": "*",
-    "gulp-gzip": "*",
-    "gulp-notify": "*",
-    "gulp-sourcemaps": "*",
+    "node-watch": "^0.5.5",
     "rollup": "*",
-    "tiny-lr": "*"
+    "rollup-plugin-babili": "^3.1.0",
+    "tiny-lr": "*",
+    "vinyl-fs": "^2.4.4"
   },
   "dependencies": {},
   "scripts": {
-    "build": "gulp"
+    "build": "node index.js"
   }
 }

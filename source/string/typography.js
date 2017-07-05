@@ -1,5 +1,6 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
+import { restString } from './range';
 const spaceFirstLetter = / (.)/g;
 /**
   * Returns the first letter capitalized.
@@ -7,32 +8,41 @@ const spaceFirstLetter = / (.)/g;
   * @function upperFirstLetter
   * @type {Function}
   * @param {string} string - String to extract first letter from.
-  * @returns {string} A single upper case letter.
+  * @returns {string} An upper case letter.
   *
   * @example
-  * const foo = 'upper';
-  * upperFirstLetter(foo);
-  * //-> U
+  * upperFirstLetter('upper');
+  * // => U
 */
 export const upperFirstLetter = (string) => {
   return string[0].toUpperCase();
 };
 /**
-upperFirst takes a string returns it with its first character capitalized
-@property {string} - takes a string
-@example
-foo = 'bar';
-upperFirst(foo)
+  * Capitalizes the first letter.
+  *
+  * @function upperFirst
+  * @type {Function}
+  * @param {string} string - String to be mutated.
+  * @returns {string} String with first letter capitalized.
+  *
+  * @example
+  * upperFirstLetter('upper');
+  * // => Upper
 */
 export const upperFirst = (string) => {
   return upperFirstLetter(string) + restString(string);
 };
 /**
-upperFirstAll returns a string wherein the first letter of every word in that string is capitalized
-@property {string} - takes a string
-@example
-foo = 'bar';
-upperFirstAll(foo)
+  * Capitalize all first letters.
+  *
+  * @function upperFirstAll
+  * @type {Function}
+  * @param {string} string - String to be mutated.
+  * @returns {string} String with all first letters capitalized.
+  *
+  * @example
+  * upperFirstAll('Lucy is next up.');
+  * // => Lucy Is Next Up.
 */
 export const upperFirstAll = (string) => {
   return string.replace(spaceFirstLetter, (match) => {
@@ -40,21 +50,31 @@ export const upperFirstAll = (string) => {
   });
 };
 /**
-upperFirstOnly returns a string wherein the first letter of the first word in that string is capitalized
-@property {string} - takes a string
-@example
-foo = 'bar';
-upperFirstOnly(foo)
+  * Capitalize first letter and lower case the rest.
+  *
+  * @function upperFirstOnly
+  * @type {Function}
+  * @param {string} string - String to be mutated.
+  * @returns {string} String with first letter capitalized.
+  *
+  * @example
+  * upperFirstOnly('LYSERGIC ACID DIETHYLAMIDE');
+  * // => Lysergic acid diethylamide
 */
 export const upperFirstOnly = (string) => {
   return upperFirstLetter(string) + restString(string).toLowerCase();
 };
 /**
-upperFirstOnlyAll takes a string and first converts it to lower case. Then capitalizes all characters that follow a space
-@property {string} - takes a string
-@example
-foo = 'bar';
-upperFirstOnlyAll(foo)
+  * Capitalize all first letters and lower case the rest.
+  *
+  * @function upperFirstOnlyAll
+  * @type {Function}
+  * @param {string} string - String to be mutated.
+  * @returns {string} String with all first letters capitalized.
+  *
+  * @example
+  * upperFirstOnlyAll('LYSERGIC ACID DIETHYLAMIDE');
+  * // => Lysergic Acid Diethylamide
 */
 export const upperFirstOnlyAll = (string) => {
   return string.toLowerCase()

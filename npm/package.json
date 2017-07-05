@@ -7,33 +7,47 @@
     "utility",
     "Lucy",
     "cwa",
-    "LSD"
+    "LSD",
+    "self constructing"
   ],
   "license": "MIT",
   "main": "index.js",
   "maintainers": [
     {
-      "email": "tomekmarchi@gmail.com",
-      "name": "Tomek Marchi"
+      "email": "tommarchi@protonmail.com",
+      "name": "Tom Marchi"
+    },
+    {
+      "email": "erickdelgado@protonmail.com",
+      "name": "Erick Delgado"
     }
   ],
-  "dependencies": {
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomekmarchi/Acid.git"
+  },
+  "devDependencies": {
     "Lucy": "*",
     "babel-core": "*",
     "babel-eslint": "*",
-    "eslint": "*",
     "babel-plugin-minify-empty-function": "*",
     "babel-preset-babili": "*",
     "babel-preset-es2015": "*",
     "body-parser": "*",
     "connect-livereload": "*",
+    "documentation": "*",
+    "esformatter": "^0.10.0",
+    "eslint": "*",
+    "eslint-plugin-jsdoc": "*",
     "express": "*",
-    "gulp": "*",
-    "gulp-babel": "*",
-    "gulp-beautify": "*",
-    "gulp-concat": "*",
-    "gulp-gzip": "*",
-    "gulp-notify": "*",
-    "tiny-lr": "*"
+    "node-watch": "^0.5.5",
+    "rollup": "*",
+    "rollup-plugin-babili": "^3.1.0",
+    "tiny-lr": "*",
+    "vinyl-fs": "^2.4.4"
+  },
+  "dependencies": {},
+  "scripts": {
+    "build": "node index.js"
   }
 }
