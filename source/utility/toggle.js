@@ -1,7 +1,7 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
 /**
-  * Performs strict comparison between the value and an argument. If it *returns true, then it returns the b *argument. Else it returns the a *argument.
+  * Performs strict comparison between the value and an argument. If it *returns true, then it returns the b argument. Else it returns the a *argument.
   *
   * @function toggle
   * @type {Function}
