@@ -68,11 +68,11 @@ const build = async () => {
     sourceMap: true
   });
   copyFile('./build/bundle.js', './docs/bundle.js');
-  copyFile('./build/index.js', './docs/index.js');
+  copyFile('./build/index.js', './docs/bundle.min.js');
   console.log('Build Complete');
   console.log('Docs Started');
   const docs = await new Promise((accept) => {
-    documentation(['build/bundle.js'], {}, (error, value) => {
+    documentation('./build/bundle.js', {}, (error, value) => {
       if (error) {
         return console.log(error);
       }

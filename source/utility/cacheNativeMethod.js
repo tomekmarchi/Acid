@@ -2,16 +2,19 @@ import acid from '../namespace/index';
 import { assign } from '../internal/object';
 const functionPrototype = Function.prototype;
 /**
-cacheNativeMethod takes a prototype method and returns a cached version of that method.
-* @property {funct} -takes a function to be cached
- * @example
- const fooFunction() =>{
-  console.log();
-};
- cacheNativeMethod(fooFunction)
+  * Caches a prototype method.
+  *
+  * @function cacheNativeMethod
+  * @type {Function}
+  * @param {Function} method - Prototype method.
+  * @returns {Function} Cached method.
+  *
+  * @example
+  * cacheNativeMethod(Array.prototype.push);
+  * // => function call() { [native code] }
 */
-export function cacheNativeMethod(funct) {
-  return functionPrototype.call.bind(funct);
+export function cacheNativeMethod(method) {
+  return functionPrototype.call.bind(method);
 }
 assign(acid, {
   cacheNativeMethod

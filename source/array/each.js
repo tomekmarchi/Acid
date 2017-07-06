@@ -2,76 +2,76 @@ import acid from '../namespace/index';
 import { assign } from '../internal/object';
 import { hasValue } from '../internal/is';
 const whileGenerator = (optBool) => {
-  return (array, fnc) => {
+  return (array, iteratee) => {
     const arrayLength = array.length;
     for (let index = 0; index < arrayLength; index++) {
-      if (fnc(array[index], index, array, arrayLength) !== optBool) {
+      if (iteratee(array[index], index, array, arrayLength) !== optBool) {
         break;
       }
     }
   };
 };
 // loop through based on number
-export const times = (startArg, endArg, fnArg) => {
-  const start = (fnArg) ? startArg : 0;
-  const end = (fnArg) ? endArg : startArg;
-  const fn = fnArg || endArg;
+export const times = (startArg, endArg, iterateeArg) => {
+  const start = (iterateeArg) ? startArg : 0;
+  const end = (iterateeArg) ? endArg : startArg;
+  const iteratee = iterateeArg || endArg;
   for (let position = start; position < end; position++) {
-    fn(position, start, end);
+    iteratee(position, start, end);
   }
 };
-export const timesMap = (startArg, endArg, fnArg) => {
-  const start = (fnArg) ? startArg : 0;
-  const end = (fnArg) ? endArg : startArg;
-  const fn = fnArg || endArg;
+export const timesMap = (startArg, endArg, iterateeArg) => {
+  const start = (iterateeArg) ? startArg : 0;
+  const end = (iterateeArg) ? endArg : startArg;
+  const iteratee = iterateeArg || endArg;
   const results = [];
   let result;
   times(start, end, (position) => {
-    result = fn(position, results, start, end);
+    result = iteratee(position, results, start, end);
     if (hasValue(result)) {
       results.push(result);
     }
   });
   return results;
 };
-export const eachArrayRight = (array, fn) => {
+export const eachArrayRight = (array, iteratee) => {
   const arrayLength = array.length;
   for (let index = arrayLength - 1; index >= 0; index--) {
-    fn(array[index], index, array, arrayLength);
+    iteratee(array[index], index, array, arrayLength);
   }
 };
-export const eachArray = (array, fn) => {
+export const eachArray = (array, iteratee) => {
   const arrayLength = array.length;
   for (let index = 0; index < arrayLength; index++) {
-    fn(array[index], index, array, arrayLength);
+    iteratee(array[index], index, array, arrayLength);
   }
 };
 const generateMap = (method) => {
-  return (array, fn) => {
+  return (array, iteratee) => {
     const results = [];
     method(array, (item, index, arrayOriginal, arrayLength) => {
-      results[index] = fn(item, index, arrayOriginal, arrayLength, results);
+      results[index] = iteratee(item, index, results, arrayOriginal, arrayLength);
     });
     return results;
   };
 };
-export const filterArray = (array, fn) => {
+export const compactMapArray = (array, iteratee) => {
   const results = [];
   let returned;
   eachArray(array, (item, index, arrayOriginal, arrayLength) => {
-    returned = fn(item, index, arrayOriginal, arrayLength, results);
+    returned = iteratee(item, index, results, arrayOriginal, arrayLength);
     if (hasValue(returned)) {
       results.push(returned);
     }
   });
   return results;
 };
-export const mapWhile = (array, fn) => {
+export const mapWhile = (array, iteratee) => {
   const arrayLength = array.length;
   const results = [];
   let returned;
   for (let index = 0; index < arrayLength; index++) {
-    returned = fn(array[index], index, array, arrayLength);
+    returned = iteratee(array[index], index, results, array, arrayLength);
     if (!returned) {
       break;
     }
@@ -83,10 +83,10 @@ export const mapArray = generateMap(eachArray);
 export const mapArrayRight = generateMap(eachArrayRight);
 export const eachWhile = whileGenerator(true);
 assign(acid, {
+  compactMapArray,
   eachArray,
   eachArrayRight,
   eachWhile,
-  filterArray,
   mapArray,
   mapArrayRight,
   mapWhile,

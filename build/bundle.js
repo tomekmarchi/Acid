@@ -68,76 +68,76 @@
   });
 
   const whileGenerator = (optBool) => {
-    return (array, fnc) => {
+    return (array, iteratee) => {
       const arrayLength = array.length;
       for (let index = 0; index < arrayLength; index++) {
-        if (fnc(array[index], index, array, arrayLength) !== optBool) {
+        if (iteratee(array[index], index, array, arrayLength) !== optBool) {
           break;
         }
       }
     };
   };
   // loop through based on number
-  const times = (startArg, endArg, fnArg) => {
-    const start = (fnArg) ? startArg : 0;
-    const end = (fnArg) ? endArg : startArg;
-    const fn = fnArg || endArg;
+  const times = (startArg, endArg, iterateeArg) => {
+    const start = (iterateeArg) ? startArg : 0;
+    const end = (iterateeArg) ? endArg : startArg;
+    const iteratee = iterateeArg || endArg;
     for (let position = start; position < end; position++) {
-      fn(position, start, end);
+      iteratee(position, start, end);
     }
   };
-  const timesMap = (startArg, endArg, fnArg) => {
-    const start = (fnArg) ? startArg : 0;
-    const end = (fnArg) ? endArg : startArg;
-    const fn = fnArg || endArg;
+  const timesMap = (startArg, endArg, iterateeArg) => {
+    const start = (iterateeArg) ? startArg : 0;
+    const end = (iterateeArg) ? endArg : startArg;
+    const iteratee = iterateeArg || endArg;
     const results = [];
     let result;
     times(start, end, (position) => {
-      result = fn(position, results, start, end);
+      result = iteratee(position, results, start, end);
       if (hasValue(result)) {
         results.push(result);
       }
     });
     return results;
   };
-  const eachArrayRight = (array, fn) => {
+  const eachArrayRight = (array, iteratee) => {
     const arrayLength = array.length;
     for (let index = arrayLength - 1; index >= 0; index--) {
-      fn(array[index], index, array, arrayLength);
+      iteratee(array[index], index, array, arrayLength);
     }
   };
-  const eachArray = (array, fn) => {
+  const eachArray = (array, iteratee) => {
     const arrayLength = array.length;
     for (let index = 0; index < arrayLength; index++) {
-      fn(array[index], index, array, arrayLength);
+      iteratee(array[index], index, array, arrayLength);
     }
   };
   const generateMap = (method) => {
-    return (array, fn) => {
+    return (array, iteratee) => {
       const results = [];
       method(array, (item, index, arrayOriginal, arrayLength) => {
-        results[index] = fn(item, index, arrayOriginal, arrayLength, results);
+        results[index] = iteratee(item, index, results, arrayOriginal, arrayLength);
       });
       return results;
     };
   };
-  const filterArray = (array, fn) => {
+  const compactMapArray = (array, iteratee) => {
     const results = [];
     let returned;
     eachArray(array, (item, index, arrayOriginal, arrayLength) => {
-      returned = fn(item, index, arrayOriginal, arrayLength, results);
+      returned = iteratee(item, index, results, arrayOriginal, arrayLength);
       if (hasValue(returned)) {
         results.push(returned);
       }
     });
     return results;
   };
-  const mapWhile = (array, fn) => {
+  const mapWhile = (array, iteratee) => {
     const arrayLength = array.length;
     const results = [];
     let returned;
     for (let index = 0; index < arrayLength; index++) {
-      returned = fn(array[index], index, array, arrayLength);
+      returned = iteratee(array[index], index, results, array, arrayLength);
       if (!returned) {
         break;
       }
@@ -149,10 +149,10 @@
   const mapArrayRight = generateMap(eachArrayRight);
   const eachWhile = whileGenerator(true);
   assign($, {
+    compactMapArray,
     eachArray,
     eachArrayRight,
     eachWhile,
-    filterArray,
     mapArray,
     mapArrayRight,
     mapWhile,
@@ -622,7 +622,7 @@
    */
   const intersect = (array, ...arrays) => {
     let yes;
-    return filterArray(array, (item) => {
+    return compactMapArray(array, (item) => {
       yes = true;
       eachWhile(arrays, (otherItem) => {
         if (!otherItem.includes(item)) {
@@ -662,7 +662,7 @@
   });
 
   const difference = (array, compare) => {
-    return filterArray(array, (item) => {
+    return compactMapArray(array, (item) => {
       if (!compare.includes(item)) {
         return item;
       }
@@ -829,7 +829,7 @@
     union
   });
 
-  const filterAsync = async (array, funct) => {
+  const compactMapAsync = async (array, funct) => {
     const results = [];
     let result;
     await eachAsync(array, async (item, index, arrayLength) => {
@@ -841,7 +841,7 @@
     return results;
   };
   assign($, {
-    filterAsync,
+    compactMapAsync,
   });
 
   const numericalCompare = (a, b) => {
@@ -937,7 +937,7 @@
   const partition = (array, funct) => {
     const failed = [];
     return [
-      filterArray(array, (item) => {
+      compactMapArray(array, (item) => {
         if (funct(item)) {
           return item;
         }
@@ -1112,46 +1112,48 @@
     return node;
   };
 
-  const eachObject = (thisObject, fn) => {
-    eachArray(keys(thisObject), (key, index, array, propertyCount) => {
-      fn(thisObject[key], key, thisObject, propertyCount);
+  const eachObject = (thisObject, iteratee) => {
+    const objectKeys = keys(thisObject);
+    eachArray(keys, (key, index, array, propertyCount) => {
+      iteratee(thisObject[key], key, thisObject, propertyCount, objectKeys);
     });
   };
-  const mapObject = (object, fn) => {
+  const mapObject = (object, iteratee) => {
     const results = {};
-    eachObject(object, (item, key, thisObject, propertyCount) => {
-      results[key] = fn(item, key, thisObject, propertyCount);
+    eachObject(object, (item, key, thisObject, propertyCount, objectKeys) => {
+      results[key] = iteratee(item, key, results, thisObject, propertyCount, objectKeys);
     });
     return results;
   };
-  const filterObject = (object, fn) => {
+  const compactMapObject = (object, iteratee) => {
     const results = {};
     let result;
-    eachObject(object, (item, key, thisObject, propertyCount) => {
-      result = fn(item, key, thisObject, propertyCount);
+    eachObject(object, (item, key, thisObject, propertyCount, objectKeys) => {
+      result = iteratee(item, key, results, propertyCount, objectKeys);
       if (hasValue(result)) {
         results[key] = result;
       }
     });
     return results;
   };
-  const mapProperty = (array, funct) => {
-    const thisObject = {};
-    eachArray(getOwnPropertyNames(array), (item, key, arrayLength) => {
-      thisObject[item] = funct(array[item], item, array, arrayLength, thisObject);
+  const mapProperty = (thisObject, iteratee) => {
+    const results = {};
+    const properties = getOwnPropertyNames(thisObject);
+    eachArray(properties, (item, key, propertyCount) => {
+      results[item] = iteratee(thisObject[item], item, results, properties, propertyCount, thisObject);
     });
     return thisObject;
   };
-  const forIn = (thisObject, fn) => {
+  const forIn = (thisObject, iteratee) => {
     const mappedObject = {};
     for (const key in thisObject) {
-      mappedObject[key] = fn(thisObject[key], key, thisObject, mappedObject);
+      mappedObject[key] = iteratee(thisObject[key], key, thisObject, mappedObject);
     }
     return mappedObject;
   };
   assign($, {
+    compactMapObject,
     eachObject,
-    filterObject,
     forIn,
     mapObject,
     mapProperty,
@@ -1212,7 +1214,7 @@
     * @function rightString
     * @type {Function}
     * @param {string} string - String to extract the letter from.
-    * @param {number} [index = 1] - The starting position.
+    * @param {number} [index=1] - The starting position.
     * @returns {string} A letter at the given index.
     *
     * @example
@@ -1248,7 +1250,7 @@
     * @function initialString
     * @type {Function}
     * @param {string} string - String to extract the initial letters from.
-    * @param {number} [index = 1] - Starting point from the right.
+    * @param {number} [index=1] - Starting point from the right.
     * @returns {string} A string with the characters before the index starting from the right.
     *
     * @example
@@ -1267,7 +1269,7 @@
     * @function restString
     * @type {Function}
     * @param {string} string - String to extract the rest of the letters from.
-    * @param {number} [index = 1] - Starting point.
+    * @param {number} [index=1] - Starting point.
     * @returns {string} A string without the characters up-to to the index.
     *
     * @example
@@ -1639,17 +1641,11 @@
     noop
   });
 
-  /**
-     * forEachWrap is a wrapped version of the forEach function
-  */
-  const forEachWrap = (object, funct) => {
-    return object.forEach(funct);
+  const forEachWrap = (object, callback) => {
+    return object.forEach(callback);
   };
-  /**
-     * generateCheckLoops parses the argument it is given and checks whether said argument is an array, or an object.
-  */
   const generateCheckLoops = (arrayLoop, objectLoop) => {
-    return (object, funct) => {
+    return (object, callback) => {
       let returned;
       if (!hasValue(object)) {
         return;
@@ -1662,102 +1658,72 @@
       } else {
         returned = objectLoop;
       }
-      return returned(object, funct);
+      return returned(object, callback);
     };
   };
   /**
-  *map takes an array or an object. If an array is given, an array will be mapped. If an object is given, an *object will be mapped.
-  *
-  *
-  * @property {mapArray}  - Takes an array to be mapped.
-  * @property {mapObject}  -Takes an object to be mapped.
-   * @example
-  *Taking an array
-  *const example = ['foo', 'bar'];
-  *const fooFunction = (x) => {
-  *  return x;
-  *});
-  * const newMap = map(example, fooFunction);
-  * //-> newMap = ['foo', 'bar']
-  * @returns
-  * Each value in the array after being run through a function. Can be any datatype.
-  * @example
-  *Taking an object
-  *const example = [{
-  *key: bar,
-  *value: foo,
-  *}];
-  *const fooFunction = (x) => {
-  *   var rObj = {};
-  *   Obj[obj.key] = obj.value;
-  *   return rObj;
-  *});
-  *var reformatted = map(example, fooFunction) ;
-  * //-> reformatted = {
-  *       bar:foo
-  *}
-  * @returns
-  * The value of each property in an object after being run through a user defined function
+    * Iterates through the calling object and creates a new object based on the calling object's type with the results of the iteratee on every element in the calling object.
+    *
+    * @function map
+    * @type {Function}
+    * @param {(Array|Object|Map|WeakMap|Function|Set)} callingObject - Object that will be looped through.
+    * @param {Function} iteratee - Transformation function which is passed item, key, the newly created map object and arguments unique to mapArray or mapObject depending on the object type.
+    * @returns {Object} A mapped object with matching keys and values returned from the iteratee.
+    *
+    * @example
+    * map([1, 2, 3], (item) => {
+    *   return item * 2;
+    * });
+    * // => [2, 4, 6]
+    * map({a: 1, b: 2, c: 3}, (item) => {
+    *   return item * 2;
+    * });
+    * // => {a: 2, b: 4, c: 6}
   */
   const map = generateCheckLoops(mapArray, mapObject);
-  /** each takes an array or an object. If an array is given, an array will have an operation performed on *each item in the array. If an object is given, an object will have an operation performed on each property *of the object.
-  * @property {eachArray}  - Takes two arguments: an array, and a function that will be performed on each item *in the array.
-  * @property {eachObject}  -Takes two arguments: an object and a function that will be performed on each key *and or value property of that object.
-  * @example
-  *Taking an array
-  *const example = ['foo', 'bar'];
-  *const fooFunction = () => {
-  *  console.log()
-  *};
-  *each(example, fooFunction);
-  *Taking an object
-  *const example = {
-  *foo: bar,
-  *bar: foo,
-  *};
-  *const fooFunction = () => {
-  *  console.log()
-  *};
-  *each(example, fooFunction);
+  /**
+    * Iterates through the given object.
+    *
+    * @function map
+    * @type {Function}
+    * @param {(Array|Object|Map|WeakMap|Function|Set)} callingObject - Object that will be looped through.
+    * @param {Function} iteratee - Transformation function which is passed item, key, the newly created map object and arguments unique to mapArray or mapObject depending on the object type.
+    * @returns {Object} The originally given object.
+    *
+    * @example
+    * each([1, 2, 3], (item) => {
+    *   console.log(item);
+    * });
+    * // => [1, 2, 3]
+    * each({a: 1, b: 2, c: 3}, (item) => {
+    *   console.log(item);
+    * });
+    * // => {a: 1, b: 2, c: 3}
   */
   const each = generateCheckLoops(eachArray, eachObject);
   /**
-  *filter takes an array or an object. If it is given an array, it will run a function on each item on the *array. If it is given an object, it will run a function on each key and or value of an object
-  *@property {filterArray} - Takes two arguments: an array, and a function
-  *@property {filterObject} - Takes two arguments: an object, and a function
-  *@example
-  *Taking an array
-  *const example = ['foo', 'bar', 'foobar'];
-  *const fooFunction = () => {
-  *  return example.length <4;
-  *};
-  *const value = filter(example, fooFunction);
-  * //-> const value = ['foo', 'bar']
-  * @returns
-  * The value of each item in the given array after being run through a given function
-  * @example
-  *Taking an object
-  *const example = [{
-  *foo: bar,
-  *bar: foo,
-  *}];
-  *const fooFunction = (item) => {
-  *  if hasValue(item.id) {
-  *   return item.id
-  *}
-  *};
-  * const value = filter(example, fooFunction);
-  * //-> const value = [{
-  *foo: bar,
-  *bar: foo,
-  *}]
-  * @returns
-  * The value of each property within an object after being ran through a given function
+    * Iterates through the calling object and creates a new object based on the calling object's type with the results, (excludes results which are null or undefined), of the iteratee on every element in the calling object.
+    *
+    * @function compactMap
+    * @type {Function}
+    * @param {(Array|Object|Map|WeakMap|Function|Set)} callingObject - Object that will be looped through.
+    * @param {Function} iteratee - Transformation function which is passed item, key, the newly created map object and arguments unique to mapArray or mapObject depending on the object type.
+    * @returns {Object} A mapped object with matching keys and values returned from the iteratee.
+    *
+    * @example
+    * compactMap([0, 2, 3], (item) => {
+    *   return item * 2;
+    * });
+    * // => [4, 6]
+    * compactMap({a: 0, b: 2, c: 3}, (item) => {
+    *   return item * 2;
+    * });
+    * // => {b: 4, c: 6}
   */
-  const filter = generateCheckLoops(filterArray, filterObject);
+  const compactMap = generateCheckLoops(compactMapArray, compactMapObject);
   assign($, {
+    compactMap,
     each,
-    filter,
     map
   });
 
@@ -2126,7 +2092,7 @@
   });
 
   const omit = (originalObject, array) => {
-    return filterObject(originalObject, (item, key) => {
+    return compactMapObject(originalObject, (item, key) => {
       if (!array.includes(key)) {
         return item;
       }
@@ -2300,9 +2266,33 @@
 
   const tokenizeRegEx = /\S+/g;
   const wordsRegEx = /\w+/g;
+  /**
+    * Break string by non-white space characters matches.
+    *
+    * @function tokenize
+    * @type {Function}
+    * @param {string} string - String to be broken up.
+    * @returns {Array} Array of words without white space characters.
+    *
+    * @example
+    * tokenize('I am Lucy!');
+    * // => ["I", "am", "Lucy!"]
+  */
   const tokenize = (string) => {
     return string.match(tokenizeRegEx) || [];
   };
+  /**
+    * Break string into word matches.
+    *
+    * @function words
+    * @type {Function}
+    * @param {string} string - String to be broken up.
+    * @returns {Array} Array of words with word characters only.
+    *
+    * @example
+    * words('I am Lucy!');
+    * // => ["I", "am", "Lucy"]
+  */
   const words = (string) => {
     return string.match(wordsRegEx) || [];
   };
@@ -2338,32 +2328,34 @@
     return string.substr(index, stringLength).trim();
   };
   /**
-    * Returns the first letter capitalized.
+    * Truncates the string, accounting for word placement and character count.
     *
-    * @function upperFirstLetter
+    * @function truncate
     * @type {Function}
-    * @param {string} string - String to extract first letter from.
+    * @param {string} string - String to be truncated.
+    * @param {number} maxLength - The desired max length of the string.
     * @returns {string} An upper case letter.
     *
     * @example
-    * upperFirstLetter('upper');
-    * // => U
+    * truncate('Where is Lucy?', 2);
+    * // => Where is
   */
   const truncate = (string, maxLength) => {
     const stringLength = string.length;
     return (stringLength > maxLength) ? truncateDown(string, maxLength, stringLength) : string;
   };
   /**
-    * Returns the first letter capitalized.
+    * Truncates the string, accounting for word placement and character count from the right.
     *
-    * @function upperFirstLetter
+    * @function truncateRight
     * @type {Function}
-    * @param {string} string - String to extract first letter from.
+    * @param {string} string - String to be truncated.
+    * @param {number} maxLength - The desired max length of the string.
     * @returns {string} An upper case letter.
     *
     * @example
-    * upperFirstLetter('upper');
-    * // => U
+    * truncateRight('Where is Lucy?', 6);
+    * // => Lucy?
   */
   const truncateRight = (string, maxLength) => {
     const stringLength = string.length;
@@ -2464,38 +2456,24 @@
 
   const functionPrototype = Function.prototype;
   /**
-  cacheNativeMethod takes a prototype method and returns a cached version of that method.
-  * @property {funct} -takes a function to be cached
-   * @example
-   const fooFunction() =>{
-    console.log();
-  };
-   cacheNativeMethod(fooFunction)
+    * Caches a prototype method.
+    *
+    * @function cacheNativeMethod
+    * @type {Function}
+    * @param {Function} method - Prototype method.
+    * @returns {Function} Cached method.
+    *
+    * @example
+    * cacheNativeMethod(Array.prototype.push);
+    * // => function call() { [native code] }
   */
-  function cacheNativeMethod(funct) {
-    return functionPrototype.call.bind(funct);
+  function cacheNativeMethod(method) {
+    return functionPrototype.call.bind(method);
   }
   assign($, {
     cacheNativeMethod
   });
 
-  /**
-  *    ifNotEqual checks if a particular property on an object has a value. If that property is without a     *    value, it reassigns that property to the equalThis argument.
-  *   @property {rootObject} - takes an object
-  *   @property {property} - the property which is being checked
-  *   @property {equalThis} - the reassignment value of the property being checked
-  *   @example
-  *   const obj = {
-  *   a:1,
-  *   b,
-  * };
-  *  const c = 1;
-  *  ifNotEqual(obj, b, c)
-  * // -> obj.b = 1
-  *
-  *   @returns
-  *   object
-  */
   const ifNotEqual = (rootObject, property, equalThis) => {
     if (property && !hasValue(rootObject[property])) {
       rootObject[property] = equalThis;
@@ -2578,21 +2556,6 @@
     uuid,
   });
 
-  /**
-  * get uses a string to go down an object chain and returns an object
-  * @property {propertyString} - takes a string which is used to go down an objectChain
-  * @property {objectChain} - takes an object
-  * @example
-  * const foo = {
-  * obj: 1,
-  * bar: 2
-  * }
-  *const string = foo.obj
-  * get(string, foo)
-  * // -> 1
-  *@returns
-  *the value of a designated key
-  */
   const get = (propertyString, objectChain = $) => {
     let link = objectChain;
     eachWhile(toPath(propertyString), (item) => {

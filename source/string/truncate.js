@@ -27,32 +27,34 @@ const truncateUp = (string, maxLength, stringLength) => {
   return string.substr(index, stringLength).trim();
 };
 /**
-  * Returns the first letter capitalized.
+  * Truncates the string, accounting for word placement and character count.
   *
-  * @function upperFirstLetter
+  * @function truncate
   * @type {Function}
-  * @param {string} string - String to extract first letter from.
+  * @param {string} string - String to be truncated.
+  * @param {number} maxLength - The desired max length of the string.
   * @returns {string} An upper case letter.
   *
   * @example
-  * upperFirstLetter('upper');
-  * // => U
+  * truncate('Where is Lucy?', 2);
+  * // => Where is
 */
 const truncate = (string, maxLength) => {
   const stringLength = string.length;
   return (stringLength > maxLength) ? truncateDown(string, maxLength, stringLength) : string;
 };
 /**
-  * Returns the first letter capitalized.
+  * Truncates the string, accounting for word placement and character count from the right.
   *
-  * @function upperFirstLetter
+  * @function truncateRight
   * @type {Function}
-  * @param {string} string - String to extract first letter from.
+  * @param {string} string - String to be truncated.
+  * @param {number} maxLength - The desired max length of the string.
   * @returns {string} An upper case letter.
   *
   * @example
-  * upperFirstLetter('upper');
-  * // => U
+  * truncateRight('Where is Lucy?', 6);
+  * // => Lucy?
 */
 const truncateRight = (string, maxLength) => {
   const stringLength = string.length;

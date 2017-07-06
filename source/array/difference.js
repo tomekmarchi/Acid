@@ -1,8 +1,8 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-import { filterArray } from './each';
+import { compactMapArray } from './each';
 export const difference = (array, compare) => {
-  return filterArray(array, (item) => {
+  return compactMapArray(array, (item) => {
     if (!compare.includes(item)) {
       return item;
     }

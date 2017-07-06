@@ -23,7 +23,7 @@ export const insertInRange = (string, index, text) => {
   * @function rightString
   * @type {Function}
   * @param {string} string - String to extract the letter from.
-  * @param {number} [index = 1] - The starting position.
+  * @param {number} [index=1] - The starting position.
   * @returns {string} A letter at the given index.
   *
   * @example
@@ -58,7 +58,7 @@ export const chunkString = (string, size) => {
   * @function initialString
   * @type {Function}
   * @param {string} string - String to extract the initial letters from.
-  * @param {number} [index = 1] - Starting point from the right.
+  * @param {number} [index=1] - Starting point from the right.
   * @returns {string} A string with the characters before the index starting from the right.
   *
   * @example
@@ -77,7 +77,7 @@ export const initialString = (string, index = 1) => {
   * @function restString
   * @type {Function}
   * @param {string} string - String to extract the rest of the letters from.
-  * @param {number} [index = 1] - Starting point.
+  * @param {number} [index=1] - Starting point.
   * @returns {string} A string without the characters up-to to the index.
   *
   * @example
