@@ -1145,6 +1145,16 @@
     });
     return results;
   };
+  const filterObject = (object, iteratee) => {
+    const results = {};
+    let result;
+    eachObject(object, (item, key, thisObject, propertyCount, objectKeys) => {
+      if (iteratee(item, key, results, propertyCount, objectKeys) === true) {
+        results[key] = result;
+      }
+    });
+    return results;
+  };
   const mapProperty = (thisObject, iteratee) => {
     const results = {};
     const properties = getOwnPropertyNames(thisObject);
@@ -1153,17 +1163,10 @@
     });
     return thisObject;
   };
-  const forIn = (thisObject, iteratee) => {
-    const mappedObject = {};
-    for (const key in thisObject) {
-      mappedObject[key] = iteratee(thisObject[key], key, thisObject, mappedObject);
-    }
-    return mappedObject;
-  };
   assign($, {
     compactMapObject,
     eachObject,
-    forIn,
+    filterObject,
     mapObject,
     mapProperty,
   });
@@ -1191,7 +1194,17 @@
   });
 
   /**
-  *promise is a wrapper around a constructor
+    * A wrapper around the promise constructor.
+    *
+    * @function promise
+    * @type {Function}
+    * @param {Function} callback - Function to be called back.
+    *
+    * @example
+    * promise((a) => {});
+    * //=> promise((a) => {})
+    * @returns {Object} - A constructor with a callback function
+    *
   */
   const promise = (callback) => {
     return new Promise(callback);
@@ -1730,9 +1743,30 @@
     * // => {b: 4, c: 6}
   */
   const compactMap = generateCheckLoops(compactMapArray, compactMapObject);
+  /**
+    * Iterates through the given and creates a new object of the same calling object's type with all elements that pass the test implemented by the iteratee.
+    *
+    * @function filter
+    * @type {Function}
+    * @param {(Array|Object|Map|WeakMap|Function|Set)} callingObject - Object that will be looped through.
+    * @param {Function} iteratee - Transformation function which is passed item, key, the newly created map object and arguments unique to mapArray or mapObject depending on the object type.
+    * @returns {Object} A new object of the same calling object's type.
+    *
+    * @example
+    * filter([false, true, true], (item) => {
+    *   return item;
+    * });
+    * // => [true, true]
+    * filter({a: false, b: true, c: true}, (item) => {
+    *   return true;
+    * });
+    * // => {b: true, c: true}
+  */
+  const filter = generateCheckLoops(filterArray, filterObject);
   assign($, {
     compactMap,
     each,
+    filter,
     map
   });
 
@@ -2529,6 +2563,19 @@
   const regexToPath = /\.|\[/;
   const regexCloseBracket = /]/g;
   const emptyString = '';
+  /**
+    * Breaks up string into object chain list.
+    *
+    * @function toPath
+    * @type {Function}
+    * @param {string} string - String to be broken up.
+    *
+    * @example
+    * toPath('post.like[2]');
+    * //=> ['post', 'like', '2']
+    * @returns {Array} - Array used to go through object chain.
+    *
+  */
   const toPath = (string) => {
     return string.replace(regexCloseBracket, emptyString).split(regexToPath);
   };
@@ -2562,6 +2609,24 @@
     uuid,
   });
 
+  /**
+    * Returns property on an object.
+    *
+    * @function get
+    * @type {Function}
+    * @param  {string} propertyString - String used to retrieve properties.
+    * @param {Object} objectChain - Object which has a property retrieved from it.
+    * @example
+    * const api = {
+    *  post: {
+    *   like: ['a','b','c']
+    *  }
+    * }
+    * get('post.like[2]', api);
+    * //=> c
+    * @returns {Object} - Returns property from the given object.
+    *
+  */
   const get = (propertyString, objectChain = $) => {
     let link = objectChain;
     eachWhile(toPath(propertyString), (item) => {
@@ -2600,18 +2665,20 @@
   });
 
   /**
-  * toggle does a strict comparison between the value and an argument. If it returns true, then it returns the b *argument. Else it returns the a argument.
-  * @property  {value} - Can be any data type
-  * @property {on} -  Can be any data type
-  * @example
-  * const value = 1;
-  * const on = 1;
-  * const off = 2;
-  * toggle(value, on, off);
-  * //-> 2
-  *  @returns
-  *  Can return any data type
-   */
+    * Performs strict comparison between the value and an argument. If it *returns true, then it returns the b *argument. Else it returns the a *argument.
+    *
+    * @function toggle
+    * @type {Function}
+    * @param  {(string|number)} value - Strictly compared against the on argument
+    * @param {(string|number)} on -  Strictly compared against the value argument
+    * @param {(string|number)} off -  Value to be returned
+    *
+    * @example
+    * toggle(1, 2, 3);
+    * //=> 2
+    * @returns {(string|number)} - The on or off argument
+    *
+  */
   const toggle = (value, on, off) => {
     return (value === on) ? off : on;
   };
