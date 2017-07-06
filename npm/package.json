@@ -2,38 +2,63 @@
   "name": "Acid",
   "version": "2.0.0",
   "description": "Utility library for building CWAs (Conscious Web Apps).",
+  "bugs": {
+    "url": "https://github.com/tomekmarchi/Acid/issues"
+  },
+  "homepage": "https://acidjs.com",
+  "directories": {
+    "doc": "docs",
+    "source": "source",
+    "build": "build",
+    "test": "tests"
+  },
+  "readme": "README.md",
   "keywords": [
     "Acid",
     "utility",
     "Lucy",
-    "cwa",
-    "LSD"
+    "CWA",
+    "LSD",
+    "self constructing"
   ],
   "license": "MIT",
   "main": "index.js",
   "maintainers": [
     {
-      "email": "tomekmarchi@gmail.com",
-      "name": "Tomek Marchi"
+      "email": "tommarchi@protonmail.com",
+      "name": "Tom Marchi"
+    },
+    {
+      "email": "erickdelgado@protonmail.com",
+      "name": "Erick Delgado"
     }
   ],
-  "dependencies": {
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomekmarchi/Acid.git"
+  },
+  "devDependencies": {
     "Lucy": "*",
     "babel-core": "*",
     "babel-eslint": "*",
-    "eslint": "*",
     "babel-plugin-minify-empty-function": "*",
     "babel-preset-babili": "*",
     "babel-preset-es2015": "*",
     "body-parser": "*",
     "connect-livereload": "*",
+    "documentation": "*",
+    "esformatter": "*",
+    "eslint": "*",
+    "eslint-plugin-jsdoc": "*",
     "express": "*",
-    "gulp": "*",
-    "gulp-babel": "*",
-    "gulp-beautify": "*",
-    "gulp-concat": "*",
-    "gulp-gzip": "*",
-    "gulp-notify": "*",
-    "tiny-lr": "*"
+    "node-watch": "*",
+    "rollup": "*",
+    "rollup-plugin-babili": "*",
+    "tiny-lr": "*",
+    "vinyl-fs": "*"
+  },
+  "dependencies": {},
+  "scripts": {
+    "build": "node index.js"
   }
 }

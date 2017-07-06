@@ -6,29 +6,57 @@ const lessThanRegex = /</g;
 const moreThanRegex = />/g;
 const doubleQuoteRegex = /"/g;
 /**
-rawURLDecode takes a string and decodes it using native methods as well as regexToPath
-@property  {string} - takes a url string
-@example
-const foo = 'http://bar.com'
-rawURLDecode(foo)
+  * Raw URL decoder.
+  *
+  * @function rawURLDecode
+  * @type {Function}
+  * @param {string} string - String to be replaced.
+  * @returns {string} Converted string into the decoded URI Component .
+  *
+  * @example
+  * rawURLDecode('Lucy%20saw%20diamonds%20in%20the%20sky.');
+  * // => Lucy saw diamonds in the sky.
 */
 export const rawURLDecode = (string) => {
   return decodeURIComponent(string.replace(rawURLDecodeRegex, () => {
     return '%25';
   }));
 };
-export const createHtmlEntities = (stringArg) => {
-  let string = stringArg;
-  string = string.replace(andRegex, '&amp;');
-  string = string.replace(lessThanRegex, '&lt;');
-  string = string.replace(moreThanRegex, '&gt;');
-  return string.replace(doubleQuoteRegex, '&quot;');
+/**
+  * Replaced sensitive characters with their matching html entity.
+  *
+  * @function htmlEntities
+  * @type {Function}
+  * @param {string} string - String to be replaced.
+  * @returns {string} Replaced string.
+  *
+  * @example
+  * htmlEntities(`<script>console.log('Lucy & diamonds.')</script>`);
+  * // => &lt;script&gt;console.log('Lucy &amp; diamonds.')&lt;/script&gt;
+*/
+export const htmlEntities = (string) => {
+  return string.replace(andRegex, '&amp;')
+    .replace(lessThanRegex, '&lt;')
+    .replace(moreThanRegex, '&gt;')
+    .replace(doubleQuoteRegex, '&quot;');
 };
+/**
+  * Executes rawURLDecode then htmlEntities methods on a string.
+  *
+  * @function sanitize
+  * @type {Function}
+  * @param {string} string - String to be replaced.
+  * @returns {string} Replaced string.
+  *
+  * @example
+  * sanitize(`<script>console.log('Lucy%20&%20diamonds.')</script>`);
+  * // => &lt;script&gt;console.log('Lucy &amp; diamonds.')&lt;/script&gt;
+*/
 export const sanitize = (string) => {
-  return createHtmlEntities(rawURLDecode(string));
+  return htmlEntities(rawURLDecode(string));
 };
 assign(acid, {
-  createHtmlEntities,
+  htmlEntities,
   rawURLDecode,
   sanitize
 });

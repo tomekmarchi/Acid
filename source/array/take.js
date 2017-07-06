@@ -7,6 +7,6 @@ export const takeRight = (array, amount) => {
   return array.slice(array.length - amount, amount);
 };
 assign(acid, {
-  takeRight,
-  take
+  take,
+  takeRight
 });

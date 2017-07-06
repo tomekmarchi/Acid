@@ -2,11 +2,22 @@
   "name": "Acid",
   "version": "2.0.0",
   "description": "Utility library for building CWAs (Conscious Web Apps).",
+  "bugs": {
+    "url": "https://github.com/tomekmarchi/Acid/issues"
+  },
+  "homepage": "https://acidjs.com",
+  "directories": {
+    "doc": "docs",
+    "source": "source",
+    "build": "build",
+    "test": "tests"
+  },
+  "readme": "README.md",
   "keywords": [
     "Acid",
     "utility",
     "Lucy",
-    "cwa",
+    "CWA",
     "LSD",
     "self constructing"
   ],
@@ -35,24 +46,19 @@
     "babel-preset-es2015": "*",
     "body-parser": "*",
     "connect-livereload": "*",
-    "documentation": "^3.0.4",
+    "documentation": "*",
+    "esformatter": "*",
     "eslint": "*",
-    "eslint-plugin-jsdoc": "^3.1.1",
+    "eslint-plugin-jsdoc": "*",
     "express": "*",
-    "gulp": "*",
-    "gulp-babel": "*",
-    "gulp-beautify": "*",
-    "gulp-better-rollup": "^1.1.1",
-    "gulp-concat": "*",
-    "gulp-documentation": "^3.2.0",
-    "gulp-gzip": "*",
-    "gulp-notify": "*",
-    "gulp-sourcemaps": "^2.6.0",
+    "node-watch": "*",
     "rollup": "*",
-    "tiny-lr": "*"
+    "rollup-plugin-babili": "*",
+    "tiny-lr": "*",
+    "vinyl-fs": "*"
   },
   "dependencies": {},
   "scripts": {
-    "build": "gulp"
+    "build": "node index.js"
   }
 }

@@ -33,7 +33,7 @@ import './take';
 import './ensure';
 import './mapAsync';
 import './union';
-import './filterAsync';
+import './compactMapAsync';
 import './numSort';
 import './unique';
 import './findDifference';

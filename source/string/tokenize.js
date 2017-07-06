@@ -3,21 +3,31 @@ import { assign } from '../internal/object';
 const tokenizeRegEx = /\S+/g;
 const wordsRegEx = /\w+/g;
 /**
-tokenize takes a string and checks to see if it has anything but whitespace. If it does, it returns that string. If it does not, it returns an empty array.
-@property {string} - takes a string
-@example
-const foo = 'bar';
-tokenize(foo)
+  * Break string by non-white space characters matches.
+  *
+  * @function tokenize
+  * @type {Function}
+  * @param {string} string - String to be broken up.
+  * @returns {Array} Array of words without white space characters.
+  *
+  * @example
+  * tokenize('I am Lucy!');
+  * // => ["I", "am", "Lucy!"]
 */
 export const tokenize = (string) => {
   return string.match(tokenizeRegEx) || [];
 };
 /**
-words takes a string and checks to see if it has a single character or more. If it does, it returns that string. If it does not, it returns an empty array.
-@property {string} - takes a string
-@example
-const foo = 'bar';
-words(foo)
+  * Break string into word matches.
+  *
+  * @function words
+  * @type {Function}
+  * @param {string} string - String to be broken up.
+  * @returns {Array} Array of words with word characters only.
+  *
+  * @example
+  * words('I am Lucy!');
+  * // => ["I", "am", "Lucy"]
 */
 export const words = (string) => {
   return string.match(wordsRegEx) || [];

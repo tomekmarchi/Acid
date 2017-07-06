@@ -4,722 +4,949 @@
   <meta charset='utf-8' />
   <title>  | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Source+Code+Pro:400,500,700' rel='stylesheet' type='text/css'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
   <link href='assets/github.css' type='text/css' rel='stylesheet' />
+  <script src="./bundle.js" async></script>
 </head>
 <body class='documentation'>
-  <div class='max-width-4 mx-auto'>
+  <div class='container'>
     <div class='clearfix md-mxn2'>
-      <div class='fixed xs-hide fix-3 overflow-auto max-height-100'>
+      <div class='fixed md-show fix-3 overflow-auto max-height-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'></h3>
           <div class='mb1'><code></code></div>
           <input
             placeholder='Filter'
             id='filter-input'
-            class='col12 block input'
+            class='col12 block field'
             type='text' />
           <div id='toc'>
-            <ul class='list-reset h5 py1-ul'>
-              
-                
-                <li><a
-                  href='#acid'
-                  class="">
-                  acid
-                  
+              <a
+                href='#$'
+                class='block bold'>
+                $
+              </a>
+                <a
+                  href='#$.superMethod'
+                  class='regular block'>
+                  .superMethod
                 </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#supermethod'
-                  class="">
-                  superMethod
-                  
+              <a
+                href='#cacheNativeMethod'
+                class='block bold'>
+                cacheNativeMethod
+              </a>
+              <a
+                href='#camelCase'
+                class='block bold'>
+                camelCase
+              </a>
+              <a
+                href='#chunkString'
+                class='block bold'>
+                chunkString
+              </a>
+              <a
+                href='#compactMap'
+                class='block bold'>
+                compactMap
+              </a>
+              <a
+                href='#each'
+                class='block bold'>
+                each
+              </a>
+              <a
+                href='#htmlEntities'
+                class='block bold'>
+                htmlEntities
+              </a>
+              <a
+                href='#initialString'
+                class='block bold'>
+                initialString
+              </a>
+              <a
+                href='#insertInRange'
+                class='block bold'>
+                insertInRange
+              </a>
+              <a
+                href='#intersect'
+                class='block bold'>
+                intersect
+              </a>
+              <a
+                href='#jsonParse'
+                class='block bold'>
+                jsonParse
+              </a>
+              <a
+                href='#kebabCase'
+                class='block bold'>
+                kebabCase
+              </a>
+              <a
+                href='#map'
+                class='block bold'>
+                map
+              </a>
+              <a
+                href='#model'
+                class='block bold'>
+                model
+              </a>
+              <a
+                href='#numericalCompareReverse'
+                class='block bold'>
+                numericalCompareReverse
+              </a>
+              <a
+                href='#numSort'
+                class='block bold'>
+                numSort
+              </a>
+              <a
+                href='#promise'
+                class='block bold'>
+                promise
+              </a>
+              <a
+                href='#propertyMatch'
+                class='block bold'>
+                propertyMatch
+              </a>
+              <a
+                href='#rawURLDecode'
+                class='block bold'>
+                rawURLDecode
+              </a>
+              <a
+                href='#uuid'
+                class='block bold'>
+                uuid
+              </a>
+                <a
+                  href='#uuid.remove'
+                  class='regular block'>
+                  .remove
                 </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#remove'
-                  class="">
-                  remove
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#intersect'
-                  class="">
-                  intersect
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#numsort'
-                  class="">
-                  numsort
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#rnumsort'
-                  class="">
-                  rnumsort
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#promise'
-                  class="">
-                  promise
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#insertinrange'
-                  class="">
-                  insertInRange
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#rightstring'
-                  class="">
-                  rightString
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#chunkstring'
-                  class="">
-                  chunkString
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#initialstring'
-                  class="">
-                  initialString
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#reststring'
-                  class="">
-                  restString
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#jsonparse'
-                  class="">
-                  jsonParse
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#stringify'
-                  class="">
-                  stringify
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#foreachwrap'
-                  class="">
-                  forEachWrap
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#generatecheckloops'
-                  class="">
-                  generateCheckLoops
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#map'
-                  class="">
-                  map
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#each'
-                  class="">
-                  each
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#filter'
-                  class="">
-                  filter
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#uppercase'
-                  class="">
-                  upperCase
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#camelcase'
-                  class="">
-                  camelCase
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#kebabcase'
-                  class="">
-                  kebabCase
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#snakecase'
-                  class="">
-                  snakeCase
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#replacewithlist'
-                  class="">
-                  replaceWithList
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#rawurldecode'
-                  class="">
-                  rawURLDecode
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#tokenize'
-                  class="">
-                  tokenize
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#words'
-                  class="">
-                  words
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#truncate'
-                  class="">
-                  truncate
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#truncateleft'
-                  class="">
-                  truncateLeft
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#truncateword'
-                  class="">
-                  truncateWord
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#upperfirstletter'
-                  class="">
-                  upperFirstLetter
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#reststring1'
-                  class="">
-                  restString$1
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#upperfirst'
-                  class="">
-                  upperFirst
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#upperfirstall'
-                  class="">
-                  upperFirstAll
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#upperfirstonly'
-                  class="">
-                  upperFirstOnly
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#upperfirstonlyall'
-                  class="">
-                  upperFirstOnlyAll
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#cachenativemethod'
-                  class="">
-                  cacheNativeMethod
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#ifnotequal'
-                  class="">
-                  ifNotEqual
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#propertymatch'
-                  class="">
-                  propertyMatch
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#topath'
-                  class="">
-                  toPath
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#uuid'
-                  class=" toggle-sibling">
-                  uuid
-                  <span class='icon'>▸</span>
-                </a>
-                
-                <div class='toggle-target display-none'>
-                  
-                  <ul class='list-reset py1-ul pl1'>
-                    <li class='h5'><span>Static members</span></li>
-                    
-                      <li><a
-                        href='#uuid.remove'
-                        class='regular pre-open'>
-                        .remove
-                      </a></li>
-                    
-                    </ul>
-                  
-                  
-                  
-                </div>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#get'
-                  class="">
-                  get
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#model'
-                  class="">
-                  model
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#toggle'
-                  class="">
-                  toggle
-                  
-                </a>
-                
-                </li>
-              
-            </ul>
-          </div>
-          <div class='mt1 h6 quiet'>
-            <a href='http://documentation.js.org/reading-documentation.html'>Need help reading this?</a>
+              <a
+                href='#remove'
+                class='block bold'>
+                remove
+              </a>
+              <a
+                href='#replaceList'
+                class='block bold'>
+                replaceList
+              </a>
+              <a
+                href='#restString'
+                class='block bold'>
+                restString
+              </a>
+              <a
+                href='#rightString'
+                class='block bold'>
+                rightString
+              </a>
+              <a
+                href='#sanitize'
+                class='block bold'>
+                sanitize
+              </a>
+              <a
+                href='#snakeCase'
+                class='block bold'>
+                snakeCase
+              </a>
+              <a
+                href='#stringify'
+                class='block bold'>
+                stringify
+              </a>
+              <a
+                href='#toggle'
+                class='block bold'>
+                toggle
+              </a>
+              <a
+                href='#tokenize'
+                class='block bold'>
+                tokenize
+              </a>
+              <a
+                href='#truncate'
+                class='block bold'>
+                truncate
+              </a>
+              <a
+                href='#truncateRight'
+                class='block bold'>
+                truncateRight
+              </a>
+              <a
+                href='#upperCase'
+                class='block bold'>
+                upperCase
+              </a>
+              <a
+                href='#upperFirst'
+                class='block bold'>
+                upperFirst
+              </a>
+              <a
+                href='#upperFirstAll'
+                class='block bold'>
+                upperFirstAll
+              </a>
+              <a
+                href='#upperFirstLetter'
+                class='block bold'>
+                upperFirstLetter
+              </a>
+              <a
+                href='#upperFirstOnly'
+                class='block bold'>
+                upperFirstOnly
+              </a>
+              <a
+                href='#upperFirstOnlyAll'
+                class='block bold'>
+                upperFirstOnlyAll
+              </a>
+              <a
+                href='#words'
+                class='block bold'>
+                words
+              </a>
           </div>
         </div>
       </div>
       <div class='fix-margin-3'>
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='acid'>
-      acid
-    </h3>
-    
-    
-  </div>
-  
-
+        <div class='px2'>
+<div class='py1'><section class='py2 clearfix'>
+  <h2 id='$' class='mt0'>
+    $<span class='gray'>(modelName, model, args)</span>
+  </h2>
   <p>Acid Object accessible through $ default method is model.</p>
 
-
-  <div class='pre p1 fill-light mt0'>acid(modelName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, model: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, args: ...any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>modelName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    Model key.
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>modelName</strong>
+          :
+          <div class='force-inline'>
+            <p>Model key.</p>
 
           </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>model</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    An object that is saved as the value using the modelName as the string.
+        </li>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code> <strong>model</strong>
+          :
+          <div class='force-inline'>
+            <p>An object that is saved as the value using the modelName as the string.</p>
 
           </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>args</span> <code class='quiet'>(...any)</code>
-	    
+        </li>
+        <li>... <strong>args</strong>
+          :
+          <div class='force-inline'>
+            
           </div>
-          
-        </div>
-      
-    </div>
-  
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>The model associated with the modelName as the key.</p>
 
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
-        The model associated with the modelName as the key.
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>$(<span class="hljs-string">'modelName'</span>, {<span class="hljs-attr">example</span>: <span class="hljs-number">1</span>});
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>$(<span class="hljs-string">'modelName'</span>, {example: <span class="hljs-number">1</span>});
 <span class="hljs-comment">// -&gt; {example: 1}</span></pre>
-    
-  
+      <h4>Static members</h4>
+        <div class='collapsible' id='$.superMethod'>
+          <a href='#$.superMethod'>
+            <code>
+              .superMethod<span class='gray'>(method)</span>
+            </code>
+            <div class='force-inline'>
+              <p>Re-assigns the main Acid function.</p>
 
-  
-
-  
-
-  
+            </div>
+          </a>
+          <div class='collapser border px2 m2'>
+            <section class='py2 clearfix'>
+              <h2 id='$.superMethod' class='mt0'>
+                superMethod<span class='gray'>(method)</span>
+              </h2>
+              <p>Re-assigns the main Acid function.</p>
+            
+                <h4>Parameters</h4>
+                <ul class='suppress-p-margin'>
+                    <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code> <strong>method</strong>
+                      :
+                      <div class='force-inline'>
+                        <p>The function that will become the main object&apos;s method.</p>
+            
+                      </div>
+                    </li>
+                </ul>
+                <h4>Examples</h4>
+            <pre class='overflow-auto'>$.superMethod($.get);
+            <span class="hljs-comment">// -&gt; $('flow', $);</span>
+            <span class="hljs-comment">// -&gt; $.flow</span></pre>
+            </section>
+          </div>
+        </div>
 </section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='cacheNativeMethod' class='mt0'>
+    cacheNativeMethod<span class='gray'>(method)</span>
+  </h2>
+  <p>Caches a prototype method.</p>
 
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='supermethod'>
-      superMethod
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Re-assigns the main Acid function.</p>
-
-
-  <div class='pre p1 fill-light mt0'>superMethod(method: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>method</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
-	    The method that will be used as the main Acid objects method.
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code> <strong>method</strong>
+          :
+          <div class='force-inline'>
+            <p>Prototype method.</p>
 
           </div>
-          
-        </div>
-      
-    </div>
-  
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>Cached method.</p>
 
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>$.superMethod($.get);
-<span class="hljs-comment">// -&gt; $('flow', $);</span>
-<span class="hljs-comment">// -&gt; $.flow</span></pre>
-    
-  
-
-  
-
-  
-
-  
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>cacheNativeMethod(<span class="hljs-built_in">Array</span>.prototype.push);
+<span class="hljs-comment">// =&gt; function call() { [native code] }</span></pre>
 </section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='camelCase' class='mt0'>
+    camelCase<span class='gray'>(string)</span>
+  </h2>
+  <p>Converts a string into Camel case format.</p>
 
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>string</strong>
+          :
+          <div class='force-inline'>
+            <p>String to be converted into Camel case.</p>
 
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='remove'>
-      remove
-    </h3>
-    
-    
-  </div>
-  
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>Converted string in Camel case.</p>
 
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>camelCase(<span class="hljs-string">'camel case'</span>);
+<span class="hljs-comment">// =&gt; camelCase</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='chunkString' class='mt0'>
+    chunkString<span class='gray'>(string, [size])</span>
+  </h2>
+  <p>Splits up a string into chunks.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>string</strong>
+          :
+          <div class='force-inline'>
+            <p>String to chunked.</p>
+
+          </div>
+        </li>
+        <li><code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>]</code> <strong>size</strong>
+          :
+          <div class='force-inline'>
+            <p>The max string length per chunk.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>An array with strings that are &lt;= size parameter.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>chunkString(<span class="hljs-string">'chunk'</span>, <span class="hljs-number">2</span>);
+<span class="hljs-comment">//-&gt; ['ch', 'un', 'k']</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='compactMap' class='mt0'>
+    compactMap<span class='gray'>(callingObject, iteratee)</span>
+  </h2>
+  <p>Iterates through the calling object and creates a new object based on the calling object&apos;s type with the results, (excludes results which are null or undefined), of the iteratee on every element in the calling object.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a></code> <strong>callingObject</strong>
+          :
+          <div class='force-inline'>
+            <p>Object that will be looped through.</p>
+
+          </div>
+        </li>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code> <strong>iteratee</strong>
+          :
+          <div class='force-inline'>
+            <p>Transformation function which is passed item, key, the newly created map object and arguments unique to mapArray or mapObject depending on the object type.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>A mapped object with matching keys and values returned from the iteratee.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>compactMap([<span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], (item) =&gt; {
+  <span class="hljs-keyword">return</span> item * <span class="hljs-number">2</span>;
+});
+<span class="hljs-comment">// =&gt; [4, 6]</span>
+compactMap({a: <span class="hljs-number">0</span>, b: <span class="hljs-number">2</span>, c: <span class="hljs-number">3</span>}, (item) =&gt; {
+  <span class="hljs-keyword">return</span> item * <span class="hljs-number">2</span>;
+});
+<span class="hljs-comment">// =&gt; {b: 4, c: 6}</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='each' class='mt0'>
+    each<span class='gray'>(callingObject, iteratee)</span>
+  </h2>
+  <p>Iterates through the given object.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a></code> <strong>callingObject</strong>
+          :
+          <div class='force-inline'>
+            <p>Object that will be looped through.</p>
+
+          </div>
+        </li>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code> <strong>iteratee</strong>
+          :
+          <div class='force-inline'>
+            <p>Transformation function which is passed item, key, the newly created map object and arguments unique to mapArray or mapObject depending on the object type.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>The originally given object.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>each([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], (item) =&gt; {
+  <span class="hljs-built_in">console</span>.log(item);
+});
+<span class="hljs-comment">// =&gt; [1, 2, 3]</span>
+each({a: <span class="hljs-number">1</span>, b: <span class="hljs-number">2</span>, c: <span class="hljs-number">3</span>}, (item) =&gt; {
+  <span class="hljs-built_in">console</span>.log(item);
+});
+<span class="hljs-comment">// =&gt; {a: 1, b: 2, c: 3}</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='htmlEntities' class='mt0'>
+    htmlEntities<span class='gray'>(string)</span>
+  </h2>
+  <p>Replaced sensitive characters with their matching html entity.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>string</strong>
+          :
+          <div class='force-inline'>
+            <p>String to be replaced.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>Replaced string.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>htmlEntities(<span class="hljs-string">`&lt;script&gt;console.log('Lucy &amp; diamonds.')&lt;/script&gt;`</span>);
+<span class="hljs-comment">// =&gt; &amp;lt;script&amp;gt;console.log('Lucy &amp;amp; diamonds.')&amp;lt;/script&amp;gt;</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='initialString' class='mt0'>
+    initialString<span class='gray'>(string, [index])</span>
+  </h2>
+  <p>Truncates everything before the index starting from the right.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>string</strong>
+          :
+          <div class='force-inline'>
+            <p>String to extract the initial letters from.</p>
+
+          </div>
+        </li>
+        <li><code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>]</code> <strong>index</strong>
+            (default <code>1</code>)
+          :
+          <div class='force-inline'>
+            <p>Starting point from the right.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>A string with the characters before the index starting from the right.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>initialString(<span class="hljs-string">'initialString'</span>);
+<span class="hljs-comment">//-&gt; initialStrin</span>
+
+initialString(<span class="hljs-string">'initialString'</span>, <span class="hljs-number">2</span>);
+<span class="hljs-comment">//-&gt; initialStri</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='insertInRange' class='mt0'>
+    insertInRange<span class='gray'>(string, index, text)</span>
+  </h2>
+  <p>Inserts text into a string at a given position.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>string</strong>
+          :
+          <div class='force-inline'>
+            <p>String to insert the text into.</p>
+
+          </div>
+        </li>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code> <strong>index</strong>
+          :
+          <div class='force-inline'>
+            <p>Point of insertion.</p>
+
+          </div>
+        </li>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>text</strong>
+          :
+          <div class='force-inline'>
+            <p>The string to be inserted.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>The string with the text inserted at the given point.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>insertInRange(<span class="hljs-string">'A from Lucy.'</span>, <span class="hljs-number">1</span>, <span class="hljs-string">' tab'</span>);
+<span class="hljs-comment">// =&gt; A tab from Lucy.</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='intersect' class='mt0'>
+    intersect<span class='gray'>(array, arrays)</span>
+  </h2>
+  <p>Returns an new array that is the <a href="http://en.wikipedia.org/wiki/Intersection_(set_theory)">set intersection</a>
+of the array and the input array(s).</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code> <strong>array</strong>
+          :
+          <div class='force-inline'>
+            <p>Array to compare other arrays to.</p>
+
+          </div>
+        </li>
+        <li>...<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code> <strong>arrays</strong>
+          :
+          <div class='force-inline'>
+            <p>A variable number of arrays.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>The new array of unique values shared by all of the arrays.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]);
+<span class="hljs-comment">// -&gt; [2, 3]</span>
+
+intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">101</span>, <span class="hljs-number">2</span>, <span class="hljs-number">50</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">2</span>, <span class="hljs-number">1</span>]);
+<span class="hljs-comment">// -&gt; [1, 2]</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='jsonParse' class='mt0'>
+    jsonParse<span class='gray'></span>
+  </h2>
+  <p>jsonParse is a wrapped version of the forEach function</p>
+
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='kebabCase' class='mt0'>
+    kebabCase<span class='gray'>(string)</span>
+  </h2>
+  <p>Converts a string into Kebab case format.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>string</strong>
+          :
+          <div class='force-inline'>
+            <p>String to be converted into Kebab case.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>Converted string in Kebab case.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>kebabCase(<span class="hljs-string">'kebab case'</span>);
+<span class="hljs-comment">// =&gt; kebab-case</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='map' class='mt0'>
+    map<span class='gray'>(callingObject, iteratee)</span>
+  </h2>
+  <p>Iterates through the calling object and creates a new object based on the calling object&apos;s type with the results of the iteratee on every element in the calling object.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a></code> <strong>callingObject</strong>
+          :
+          <div class='force-inline'>
+            <p>Object that will be looped through.</p>
+
+          </div>
+        </li>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code> <strong>iteratee</strong>
+          :
+          <div class='force-inline'>
+            <p>Transformation function which is passed item, key, the newly created map object and arguments unique to mapArray or mapObject depending on the object type.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>A mapped object with matching keys and values returned from the iteratee.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>map([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], (item) =&gt; {
+  <span class="hljs-keyword">return</span> item * <span class="hljs-number">2</span>;
+});
+<span class="hljs-comment">// =&gt; [2, 4, 6]</span>
+map({a: <span class="hljs-number">1</span>, b: <span class="hljs-number">2</span>, c: <span class="hljs-number">3</span>}, (item) =&gt; {
+  <span class="hljs-keyword">return</span> item * <span class="hljs-number">2</span>;
+});
+<span class="hljs-comment">// =&gt; {a: 2, b: 4, c: 6}</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='model' class='mt0'>
+    model<span class='gray'>(modelName, object)</span>
+  </h2>
+  <p>model assigns a property on itself</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li> <strong>modelName</strong>
+          :
+          <div class='force-inline'>
+            
+          </div>
+        </li>
+        <li> <strong>object</strong>
+          :
+          <div class='force-inline'>
+            
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code></code>
+      :
+      <div class='force-inline'>
+        <p>object</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'><span class="hljs-keyword">const</span> obj = {
+ foo: bar
+};
+ <span class="hljs-keyword">const</span> string = <span class="hljs-string">'model.foo'</span>
+ model(string, obj)
+<span class="hljs-comment">//-&gt; model.foo = obj</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='numericalCompareReverse' class='mt0'>
+    numericalCompareReverse<span class='gray'>(a, b)</span>
+  </h2>
+  <p>Sorts an array in place using a reverse numerical comparison algorithm
+(sorts numbers from highest to lowest) and returns the array.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li> <strong>a</strong>
+          :
+          <div class='force-inline'>
+            
+          </div>
+        </li>
+        <li> <strong>b</strong>
+          :
+          <div class='force-inline'>
+            
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>The array this method was called on.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'><span class="hljs-keyword">var</span> files = [<span class="hljs-number">10</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>];
+rnumsort(files);
+<span class="hljs-comment">// -&gt; [3, 2, 1, 0]</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='numSort' class='mt0'>
+    numSort<span class='gray'>(array)</span>
+  </h2>
+  <p>Sorts an array in place using a numerical comparison algorithm
+(sorts numbers from lowest to highest) and returns the array.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li> <strong>array</strong>
+          :
+          <div class='force-inline'>
+            
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>The array this method was called on.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'><span class="hljs-keyword">var</span> files = [<span class="hljs-number">10</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>];
+numsort(files);
+<span class="hljs-built_in">console</span>.log(files);
+<span class="hljs-comment">// -&gt; [0, 1, 2, 3]</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='promise' class='mt0'>
+    promise<span class='gray'>(callback)</span>
+  </h2>
+  <p>promise is a wrapper around a constructor</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li> <strong>callback</strong>
+          :
+          <div class='force-inline'>
+            
+          </div>
+        </li>
+    </ul>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='propertyMatch' class='mt0'>
+    propertyMatch<span class='gray'>(object, compareObject, properties)</span>
+  </h2>
+  <p>matchesProperty compares the properties of two objects.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li> <strong>object</strong>
+          :
+          <div class='force-inline'>
+            
+          </div>
+        </li>
+        <li> <strong>compareObject</strong>
+          :
+          <div class='force-inline'>
+            
+          </div>
+        </li>
+        <li> <strong>properties</strong>
+          :
+          <div class='force-inline'>
+            
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code></code>
+      :
+      <div class='force-inline'>
+        <p>Boolean</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'><span class="hljs-keyword">const</span> objOne = {
+     a:<span class="hljs-number">1</span>,
+     b:<span class="hljs-number">2</span>
+   };
+   <span class="hljs-keyword">const</span> objTwo = {
+      a:<span class="hljs-number">1</span>,
+      b:<span class="hljs-number">3</span>
+   };
+    <span class="hljs-keyword">const</span> propertiesToCompare = [a, b];
+    matchesProperty(objOne, objTwo, propertiesToCompare );
+<span class="hljs-comment">//-&gt; True, false</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='rawURLDecode' class='mt0'>
+    rawURLDecode<span class='gray'>(string)</span>
+  </h2>
+  <p>Raw URL decoder.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>string</strong>
+          :
+          <div class='force-inline'>
+            <p>String to be replaced.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>Converted string into the decoded URI Component .</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>rawURLDecode(<span class="hljs-string">'Lucy%20saw%20diamonds%20in%20the%20sky.'</span>);
+<span class="hljs-comment">// =&gt; Lucy saw diamonds in the sky.</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='uuid' class='mt0'>
+    uuid<span class='gray'></span>
+  </h2>
+  <p>uuid returns a unique id</p>
+
+      <h4>Static members</h4>
+        <div class='collapsible' id='uuid.remove'>
+          <a href='#uuid.remove'>
+            <code>
+              .remove<span class='gray'>(id)</span>
+            </code>
+            <div class='force-inline'>
+              <p>uuid.remove nullifies a unique id within the uuidClosed object</p>
+
+            </div>
+          </a>
+          <div class='collapser border px2 m2'>
+            <section class='py2 clearfix'>
+              <h2 id='uuid.remove' class='mt0'>
+                remove<span class='gray'>(id)</span>
+              </h2>
+              <p>uuid.remove nullifies a unique id within the uuidClosed object</p>
+            
+                <h4>Parameters</h4>
+                <ul class='suppress-p-margin'>
+                    <li> <strong>id</strong>
+                      :
+                      <div class='force-inline'>
+                        
+                      </div>
+                    </li>
+                </ul>
+            </section>
+          </div>
+        </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='remove' class='mt0'>
+    remove<span class='gray'>(array, removeThese)</span>
+  </h2>
   <p>Removes all occurrences of the passed in items from the array and returns the array.</p>
 
-
-  <div class='pre p1 fill-light mt0'>remove(array: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, removeThese: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>array</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
-	    Mutated Array without with removed occurrences.
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code> <strong>array</strong>
+          :
+          <div class='force-inline'>
+            <p>Mutated Array without with removed occurrences.</p>
 
           </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>removeThese</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
-	    Items to remove from the array.
+        </li>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code> <strong>removeThese</strong>
+          :
+          <div class='force-inline'>
+            <p>Items to remove from the array.</p>
 
           </div>
-          
-        </div>
-      
-    </div>
-  
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>The array this method was called on.</p>
 
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
-        The array this method was called on.
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> array = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>];
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'><span class="hljs-keyword">const</span> array = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>];
 
 remove(array,<span class="hljs-number">1</span>);
 <span class="hljs-comment">// -&gt; [2, 3, 3, 4, 3, 5]</span>
@@ -729,3021 +956,512 @@ remove(array,<span class="hljs-number">3</span>);
 
 remove(array,[<span class="hljs-number">2</span>, <span class="hljs-number">5</span>]);
 <span class="hljs-comment">// -&gt; [4]</span></pre>
-    
-  
-
-  
-
-  
-
-  
 </section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='replaceList' class='mt0'>
+    replaceList<span class='gray'>(string, array, value)</span>
+  </h2>
+  <p>Replaces all occurrences of strings in an array with a value.</p>
 
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='intersect'>
-      intersect
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Returns an new array that is the <a href="http://en.wikipedia.org/wiki/Intersection_(set_theory)">set intersection</a>
-of the array and the input array(s).</p>
-
-
-  <div class='pre p1 fill-light mt0'>intersect(array: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, arrays: ...<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>array</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
-	    Array to compare other arrays to.
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>string</strong>
+          :
+          <div class='force-inline'>
+            <p>String to be replaced.</p>
 
           </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>arrays</span> <code class='quiet'>(...<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
-	    A variable number of arrays.
+        </li>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code> <strong>array</strong>
+          :
+          <div class='force-inline'>
+            <p>Strings to replace.</p>
 
           </div>
-          
-        </div>
-      
-    </div>
-  
+        </li>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>value</strong>
+          :
+          <div class='force-inline'>
+            <p>The match replacement.</p>
 
-  
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>Converted string in Snake case.</p>
 
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
-        The new array of unique values shared by all of the arrays.
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]);
-<span class="hljs-comment">// -&gt; [2, 3]</span>
-
-intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">101</span>, <span class="hljs-number">2</span>, <span class="hljs-number">50</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">2</span>, <span class="hljs-number">1</span>]);
-<span class="hljs-comment">// -&gt; [1, 2]</span></pre>
-    
-  
-
-  
-
-  
-
-  
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>replaceList(<span class="hljs-string">'Her name was @user.'</span>, [<span class="hljs-string">'@user'</span>], <span class="hljs-string">'Lucy'</span>);
+<span class="hljs-comment">// =&gt; Her name was Lucy.</span></pre>
 </section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='restString' class='mt0'>
+    restString<span class='gray'>(string, [index])</span>
+  </h2>
+  <p>Truncates everything after a index.</p>
 
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>string</strong>
+          :
+          <div class='force-inline'>
+            <p>String to extract the rest of the letters from.</p>
 
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='numsort'>
-      numsort
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Sorts an array in place using a numerical comparison algorithm
-(sorts numbers from lowest to highest) and returns the array.</p>
-
-
-  <div class='pre p1 fill-light mt0'>numsort(array: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>array</span> <code class='quiet'>(any)</code>
-	    
           </div>
-          
-        </div>
-      
-    </div>
-  
+        </li>
+        <li><code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>]</code> <strong>index</strong>
+            (default <code>1</code>)
+          :
+          <div class='force-inline'>
+            <p>Starting point.</p>
 
-  
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>A string without the characters up-to to the index.</p>
 
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
-        The array this method was called on.
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>restString(<span class="hljs-string">'restString'</span>);
+<span class="hljs-comment">//-&gt; estString</span>
 
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> files = [<span class="hljs-number">10</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>];
-numsort(files);
-<span class="hljs-built_in">console</span>.log(files);
-<span class="hljs-comment">// -&gt; [0, 1, 2, 3]</span></pre>
-    
-  
-
-  
-
-  
-
-  
+restString(<span class="hljs-string">'restString'</span>, <span class="hljs-number">2</span>);
+<span class="hljs-comment">//-&gt; stString</span></pre>
 </section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='rightString' class='mt0'>
+    rightString<span class='gray'>(string, [index])</span>
+  </h2>
+  <p>Plucks a letter using the index starting from the right.</p>
 
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>string</strong>
+          :
+          <div class='force-inline'>
+            <p>String to extract the letter from.</p>
 
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='rnumsort'>
-      rnumsort
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Sorts an array in place using a reverse numerical comparison algorithm
-(sorts numbers from highest to lowest) and returns the array.</p>
-
-
-  <div class='pre p1 fill-light mt0'>rnumsort(a: any, b: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>a</span> <code class='quiet'>(any)</code>
-	    
           </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>b</span> <code class='quiet'>(any)</code>
-	    
+        </li>
+        <li><code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>]</code> <strong>index</strong>
+            (default <code>1</code>)
+          :
+          <div class='force-inline'>
+            <p>The starting position.</p>
+
           </div>
-          
-        </div>
-      
-    </div>
-  
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>A letter at the given index.</p>
 
-  
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>rightString(<span class="hljs-string">'rightString'</span>);
+<span class="hljs-comment">// =&gt; g</span>
 
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
-        The array this method was called on.
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> files = [<span class="hljs-number">10</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>];
-rnumsort(files);
-<span class="hljs-comment">// -&gt; [3, 2, 1, 0]</span></pre>
-    
-  
-
-  
-
-  
-
-  
+rightString(<span class="hljs-string">'rightString'</span>, <span class="hljs-number">2</span>);
+<span class="hljs-comment">// =&gt; n</span></pre>
 </section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='sanitize' class='mt0'>
+    sanitize<span class='gray'>(string)</span>
+  </h2>
+  <p>Executes rawURLDecode then htmlEntities methods on a string.</p>
 
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>string</strong>
+          :
+          <div class='force-inline'>
+            <p>String to be replaced.</p>
 
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='promise'>
-      promise
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>promise is a wrapper around a constructor</p>
-
-
-  <div class='pre p1 fill-light mt0'>promise</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>callback</span> <code class='quiet'>(any)</code>
-	    
           </div>
-          
-        </div>
-      
-    </div>
-  
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>Replaced string.</p>
 
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>sanitize(<span class="hljs-string">`&lt;script&gt;console.log('Lucy%20&amp;%20diamonds.')&lt;/script&gt;`</span>);
+<span class="hljs-comment">// =&gt; &amp;lt;script&amp;gt;console.log('Lucy &amp;amp; diamonds.')&amp;lt;/script&amp;gt;</span></pre>
 </section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='snakeCase' class='mt0'>
+    snakeCase<span class='gray'>(string)</span>
+  </h2>
+  <p>Converts a string into snake case format.</p>
 
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>string</strong>
+          :
+          <div class='force-inline'>
+            <p>String to be converted into snake case.</p>
 
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='insertinrange'>
-      insertInRange
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>insertInRange inserts a text into a user defined range</p>
-
-
-  <div class='pre p1 fill-light mt0'>insertInRange</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>text</span> <code class='quiet'>(any)</code>
-	    
           </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>start</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>end</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>insert</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>Converted string in Snake case.</p>
 
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>snakeCase(<span class="hljs-string">'snake case'</span>);
+<span class="hljs-comment">// =&gt; snake_case</span></pre>
 </section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='rightstring'>
-      rightString
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>rightString returns the letter on the right side of the string</p>
-
-
-  <div class='pre p1 fill-light mt0'>rightString</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>text</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>a</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='chunkstring'>
-      chunkString
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>chunkString chunks a string contingent on what integer is placed in the size argument</p>
-
-
-  <div class='pre p1 fill-light mt0'>chunkString</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>string</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>size</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> foo = <span class="hljs-string">'bar'</span>;
-size = <span class="hljs-number">2</span>;
-chunkString(foo, size)</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='initialstring'>
-      initialString
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Returns the string without the last letter.</p>
-
-
-  <div class='pre p1 fill-light mt0'>initialString(string: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>string</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>:
-        The string without the last letter.
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> foo = <span class="hljs-string">'bar'</span>;
-initialString(foo);
-<span class="hljs-comment">//-&gt; 'ba'</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='reststring'>
-      restString
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Returns the string without the first letter.</p>
-
-
-  <div class='pre p1 fill-light mt0'>restString(string: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>string</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>:
-        The string without the first letter.
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> <span class="hljs-keyword">const</span> foo = <span class="hljs-string">'bar'</span>;
-restString(foo);
-<span class="hljs-comment">//-&gt; 'ar'</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='jsonparse'>
-      jsonParse
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>jsonParse is a wrapped version of the forEach function</p>
-
-
-  <div class='pre p1 fill-light mt0'>jsonParse</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='stringify'>
-      stringify
-    </h3>
-    
-    
-  </div>
-  
-
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='stringify' class='mt0'>
+    stringify<span class='gray'></span>
+  </h2>
   <p>stringify is a wrapped version of the forEach function</p>
 
-
-  <div class='pre p1 fill-light mt0'>stringify</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
 </section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='foreachwrap'>
-      forEachWrap
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>forEachWrap is a wrapped version of the forEach function</p>
-
-
-  <div class='pre p1 fill-light mt0'>forEachWrap</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>object</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>funct</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='generatecheckloops'>
-      generateCheckLoops
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>generateCheckLoops parses the argument it is given and checks whether said argument is an array, or an object.</p>
-
-
-  <div class='pre p1 fill-light mt0'>generateCheckLoops</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>arrayLoop</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>objectLoop</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='map'>
-      map
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>map takes an array or an object. If an array is given, an array will be mapped. If an object is given, an *object will be mapped.</p>
-
-
-  <div class='pre p1 fill-light mt0'>map</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>any</code>:
-        Each value in the array after being run through a function. Can be any datatype.
-
-      
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>any</code>:
-        The value of each property in an object after being run through a user defined function
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>Taking an array
-<span class="hljs-keyword">const</span> example = [<span class="hljs-string">'foo'</span>, <span class="hljs-string">'bar'</span>];
-<span class="hljs-keyword">const</span> fooFunction = <span class="hljs-function">(<span class="hljs-params">x</span>) =&gt;</span> {
- <span class="hljs-keyword">return</span> x;
-});
-<span class="hljs-keyword">const</span> newMap = map(example, fooFunction);
-<span class="hljs-comment">//-&gt; newMap = ['foo', 'bar']</span></pre>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>Taking an object
-<span class="hljs-keyword">const</span> example = [{
-<span class="hljs-attr">key</span>: bar,
-<span class="hljs-attr">value</span>: foo,
-}];
-<span class="hljs-keyword">const</span> fooFunction = <span class="hljs-function">(<span class="hljs-params">x</span>) =&gt;</span> {
-  <span class="hljs-keyword">var</span> rObj = {};
-  Obj[obj.key] = obj.value;
-  <span class="hljs-keyword">return</span> rObj;
-});
-<span class="hljs-keyword">var</span> reformatted = map(example, fooFunction) ;
-<span class="hljs-comment">//-&gt; reformatted = {</span>
-      bar:foo
-}</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='each'>
-      each
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>each takes an array or an object. If an array is given, an array will have an operation performed on <em>each item in the array. If an object is given, an object will have an operation performed on each property </em>of the object.</p>
-
-
-  <div class='pre p1 fill-light mt0'>each</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>Taking an array
-<span class="hljs-keyword">const</span> example = [<span class="hljs-string">'foo'</span>, <span class="hljs-string">'bar'</span>];
-<span class="hljs-keyword">const</span> fooFunction = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
- <span class="hljs-built_in">console</span>.log()
-};
-each(example, fooFunction);
-Taking an object
-<span class="hljs-keyword">const</span> example = {
-<span class="hljs-attr">foo</span>: bar,
-<span class="hljs-attr">bar</span>: foo,
-};
-<span class="hljs-keyword">const</span> fooFunction = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
- <span class="hljs-built_in">console</span>.log()
-};
-each(example, fooFunction);</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='filter'>
-      filter
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>filter takes an array or an object. If it is given an array, it will run a function on each item on the *array. If it is given an object, it will run a function on each key and or value of an object</p>
-
-
-  <div class='pre p1 fill-light mt0'>filter</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>any</code>:
-        The value of each item in the given array after being run through a given function
-
-      
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>any</code>:
-        The value of each property within an object after being ran through a given function
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>Taking an array
-<span class="hljs-keyword">const</span> example = [<span class="hljs-string">'foo'</span>, <span class="hljs-string">'bar'</span>, <span class="hljs-string">'foobar'</span>];
-<span class="hljs-keyword">const</span> fooFunction = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
- <span class="hljs-keyword">return</span> example.length &lt;<span class="hljs-number">4</span>;
-};
-<span class="hljs-keyword">const</span> value = filter(example, fooFunction);
-<span class="hljs-comment">//-&gt; const value = ['foo', 'bar']</span></pre>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>Taking an object
-<span class="hljs-keyword">const</span> example = [{
-<span class="hljs-attr">foo</span>: bar,
-<span class="hljs-attr">bar</span>: foo,
-}];
-<span class="hljs-keyword">const</span> fooFunction = <span class="hljs-function">(<span class="hljs-params">item</span>) =&gt;</span> {
- <span class="hljs-keyword">if</span> hasValue(item.id) {
-  <span class="hljs-keyword">return</span> item.id
-}
-};
-<span class="hljs-keyword">const</span> value = filter(example, fooFunction);
-<span class="hljs-comment">//-&gt; const value = [{</span>
-foo: bar,
-<span class="hljs-attr">bar</span>: foo,
-}]</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='uppercase'>
-      upperCase
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>upperCase takes a string and converts it entirely into uppercase.</p>
-
-
-  <div class='pre p1 fill-light mt0'>upperCase</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>string</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='camelcase'>
-      camelCase
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>camelCase takes a string and converts it to camel case format</p>
-
-
-  <div class='pre p1 fill-light mt0'>camelCase</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>stringArg</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> foo = <span class="hljs-string">'bar'</span>;
-camelCase(foo);</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='kebabcase'>
-      kebabCase
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>kebabCase takes a string and converts it into kebab case format</p>
-
-
-  <div class='pre p1 fill-light mt0'>kebabCase</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>string</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> foo = <span class="hljs-string">'bar'</span>;
-kebabCase(foo)</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='snakecase'>
-      snakeCase
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>snakeCase takes a string and converts it into snake case format</p>
-
-
-  <div class='pre p1 fill-light mt0'>snakeCase</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>string</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> foo = <span class="hljs-string">'bar'</span>;
-snakeCase(foo);</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='replacewithlist'>
-      replaceWithList
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>replaceWithList takes an array of strings and replaces them with the assigned value of the toReplace argument</p>
-
-
-  <div class='pre p1 fill-light mt0'>replaceWithList</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>string</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>array</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>toReplace</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> foo = <span class="hljs-string">'bar'</span>;
-<span class="hljs-keyword">const</span> bar = [foo];
-<span class="hljs-keyword">const</span> toReplace =<span class="hljs-string">'value which will replace'</span>;
-replaceWithList(foo, bar, toReplace)</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='rawurldecode'>
-      rawURLDecode
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>rawURLDecode takes a string and decodes it using native methods as well as regexToPath</p>
-
-
-  <div class='pre p1 fill-light mt0'>rawURLDecode</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>string</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> foo = <span class="hljs-string">'http://bar.com'</span>
-rawURLDecode(foo)</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='tokenize'>
-      tokenize
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>tokenize takes a string and checks to see if it has anything but whitespace. If it does, it returns that string. If it does not, it returns an empty array.</p>
-
-
-  <div class='pre p1 fill-light mt0'>tokenize</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>string</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> foo = <span class="hljs-string">'bar'</span>;
-tokenize(foo)</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='words'>
-      words
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>words takes a string and checks to see if it has a single character or more. If it does, it returns that string. If it does not, it returns an empty array.</p>
-
-
-  <div class='pre p1 fill-light mt0'>words</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>string</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> foo = <span class="hljs-string">'bar'</span>;
-words(foo)</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='truncate'>
-      truncate
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>truncate takes a string and shortens based on arguments given</p>
-
-
-  <div class='pre p1 fill-light mt0'>truncate</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>stringArg</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>amount</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> foo = <span class="hljs-string">'bar'</span>;
-<span class="hljs-keyword">const</span> amount = <span class="hljs-number">1</span>;
-truncate(foo, amount)</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='truncateleft'>
-      truncateLeft
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>truncate left returns a string based on arguments given</p>
-
-
-  <div class='pre p1 fill-light mt0'>truncateLeft</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>stringArg</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>amount</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='truncateword'>
-      truncateWord
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>truncateWord extracts the letters between the first character of a string and a given integer</p>
-
-
-  <div class='pre p1 fill-light mt0'>truncateWord</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>string</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>amount</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='upperfirstletter'>
-      upperFirstLetter
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>upperFirstLetter takes a string and extracts a capitalized version of its first character.</p>
-
-
-  <div class='pre p1 fill-light mt0'>upperFirstLetter</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>string</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>foo = <span class="hljs-string">'bar'</span>;
-upperFirstLetter(foo)</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='reststring1'>
-      restString$1
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>restString returns the characters of a string based on the arguments given. If num = 0, it will return all characters in the string. If it = 1, it will return all characters after the first character etc.</p>
-
-
-  <div class='pre p1 fill-light mt0'>restString$1</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>string</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>num</span> <code class='quiet'>(any
-            = <code>p</code>)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>foo = <span class="hljs-string">'bar'</span>;
-restString(foo)</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='upperfirst'>
-      upperFirst
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>upperFirst takes a string returns it with its first character capitalized</p>
-
-
-  <div class='pre p1 fill-light mt0'>upperFirst</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>string</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>foo = <span class="hljs-string">'bar'</span>;
-upperFirst(foo)</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='upperfirstall'>
-      upperFirstAll
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>upperFirstAll returns a string wherein the first letter of every word in that string is capitalized</p>
-
-
-  <div class='pre p1 fill-light mt0'>upperFirstAll</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>string</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>foo = <span class="hljs-string">'bar'</span>;
-upperFirstAll(foo)</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='upperfirstonly'>
-      upperFirstOnly
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>upperFirstOnly returns a string wherein the first letter of the first word in that string is capitalized</p>
-
-
-  <div class='pre p1 fill-light mt0'>upperFirstOnly</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>string</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>foo = <span class="hljs-string">'bar'</span>;
-upperFirstOnly(foo)</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='upperfirstonlyall'>
-      upperFirstOnlyAll
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>upperFirstOnlyAll takes a string and first converts it to lower case. Then capitalizes all characters that follow a space</p>
-
-
-  <div class='pre p1 fill-light mt0'>upperFirstOnlyAll</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>string</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>foo = <span class="hljs-string">'bar'</span>;
-upperFirstOnlyAll(foo)</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='cachenativemethod'>
-      cacheNativeMethod
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>cacheNativeMethod takes a prototype method and returns a cached version of that method.</p>
-
-
-  <div class='pre p1 fill-light mt0'>cacheNativeMethod(funct: any)</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>funct</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> fooFunction() =&gt;{
-<span class="hljs-built_in">console</span>.log();
-};
-cacheNativeMethod(fooFunction)</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='ifnotequal'>
-      ifNotEqual
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>ifNotEqual checks if a particular property on an object has a value. If that property is without a     *    value, it reassigns that property to the equalThis argument.</p>
-
-
-  <div class='pre p1 fill-light mt0'>ifNotEqual</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>rootObject</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>property</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>equalThis</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>any</code>:
-        object
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> obj = {
-  <span class="hljs-attr">a</span>:<span class="hljs-number">1</span>,
-  b,
-};
- <span class="hljs-keyword">const</span> c = <span class="hljs-number">1</span>;
- ifNotEqual(obj, b, c)
-<span class="hljs-comment">// -&gt; obj.b = 1</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='propertymatch'>
-      propertyMatch
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>matchesProperty compares the properties of two objects.</p>
-
-
-  <div class='pre p1 fill-light mt0'>propertyMatch</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>object</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>compareObject</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>properties</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>any</code>:
-        Boolean
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> objOne = {
-     <span class="hljs-attr">a</span>:<span class="hljs-number">1</span>,
-     <span class="hljs-attr">b</span>:<span class="hljs-number">2</span>
-   };
-   <span class="hljs-keyword">const</span> objTwo = {
-      <span class="hljs-attr">a</span>:<span class="hljs-number">1</span>,
-      <span class="hljs-attr">b</span>:<span class="hljs-number">3</span>
-   };
-    <span class="hljs-keyword">const</span> propertiesToCompare = [a, b];
-    matchesProperty(objOne, objTwo, propertiesToCompare );
-<span class="hljs-comment">//-&gt; True, false</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='topath'>
-      toPath
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>toPath replaces a closed bracket with an empty string and splits on an opening bracket and periods.</p>
-
-
-  <div class='pre p1 fill-light mt0'>toPath</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>string</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='uuid'>
-      uuid
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>uuid returns a unique id</p>
-
-
-  <div class='pre p1 fill-light mt0'>uuid</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Static Members</div>
-    <div class="clearfix">
-  
-    <div class='border-bottom' id='uuid.remove'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>remove(id)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>uuid.remove nullifies a unique id within the uuidClosed object</p>
-
-
-  <div class='pre p1 fill-light mt0'>remove(id: any)</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>id</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-</div>
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='get'>
-      get
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>get uses a string to go down an object chain and returns an object</p>
-
-
-  <div class='pre p1 fill-light mt0'>get</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>propertyString</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>objectChain</span> <code class='quiet'>(any
-            = <code>perty </code>)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>any</code>:
-        the value of a designated key
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> foo = {
-<span class="hljs-attr">obj</span>: <span class="hljs-number">1</span>,
-<span class="hljs-attr">bar</span>: <span class="hljs-number">2</span>
-}
-<span class="hljs-keyword">const</span> string = foo.obj
-get(string, foo)
-<span class="hljs-comment">// -&gt; 1</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='model'>
-      model
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>model assigns a property on itself</p>
-
-
-  <div class='pre p1 fill-light mt0'>model</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>modelName</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>object</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>any</code>:
-        object
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> obj = {
- <span class="hljs-attr">foo</span>: bar
-};
- <span class="hljs-keyword">const</span> string = <span class="hljs-string">'model.foo'</span>
- model(string, obj)
-<span class="hljs-comment">//-&gt; model.foo = obj</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='toggle'>
-      toggle
-    </h3>
-    
-    
-  </div>
-  
-
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='toggle' class='mt0'>
+    toggle<span class='gray'>(value, on, off)</span>
+  </h2>
   <p>toggle does a strict comparison between the value and an argument. If it returns true, then it returns the b *argument. Else it returns the a argument.</p>
 
-
-  <div class='pre p1 fill-light mt0'>toggle</div>
-  
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>value</span> <code class='quiet'>(any)</code>
-	    
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li> <strong>value</strong>
+          :
+          <div class='force-inline'>
+            
           </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>on</span> <code class='quiet'>(any)</code>
-	    
+        </li>
+        <li> <strong>on</strong>
+          :
+          <div class='force-inline'>
+            
           </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>off</span> <code class='quiet'>(any)</code>
-	    
+        </li>
+        <li> <strong>off</strong>
+          :
+          <div class='force-inline'>
+            
           </div>
-          
-        </div>
-      
-    </div>
-  
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code></code>
+      :
+      <div class='force-inline'>
+        <p>Can return any data type</p>
 
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>any</code>:
-        Can return any data type
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> value = <span class="hljs-number">1</span>;
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'><span class="hljs-keyword">const</span> value = <span class="hljs-number">1</span>;
 <span class="hljs-keyword">const</span> on = <span class="hljs-number">1</span>;
 <span class="hljs-keyword">const</span> off = <span class="hljs-number">2</span>;
 toggle(value, on, off);
 <span class="hljs-comment">//-&gt; 2</span></pre>
-    
-  
-
-  
-
-  
-
-  
 </section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='tokenize' class='mt0'>
+    tokenize<span class='gray'>(string)</span>
+  </h2>
+  <p>Break string by non-white space characters matches.</p>
 
-          
-        
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>string</strong>
+          :
+          <div class='force-inline'>
+            <p>String to be broken up.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>Array of words without white space characters.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>tokenize(<span class="hljs-string">'I am Lucy!'</span>);
+<span class="hljs-comment">// =&gt; ["I", "am", "Lucy!"]</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='truncate' class='mt0'>
+    truncate<span class='gray'>(string, maxLength)</span>
+  </h2>
+  <p>Truncates the string, accounting for word placement and character count.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>string</strong>
+          :
+          <div class='force-inline'>
+            <p>String to be truncated.</p>
+
+          </div>
+        </li>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code> <strong>maxLength</strong>
+          :
+          <div class='force-inline'>
+            <p>The desired max length of the string.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>An upper case letter.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>truncate(<span class="hljs-string">'Where is Lucy?'</span>, <span class="hljs-number">2</span>);
+<span class="hljs-comment">// =&gt; Where is</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='truncateRight' class='mt0'>
+    truncateRight<span class='gray'>(string, maxLength)</span>
+  </h2>
+  <p>Truncates the string, accounting for word placement and character count from the right.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>string</strong>
+          :
+          <div class='force-inline'>
+            <p>String to be truncated.</p>
+
+          </div>
+        </li>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code> <strong>maxLength</strong>
+          :
+          <div class='force-inline'>
+            <p>The desired max length of the string.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>An upper case letter.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>truncateRight(<span class="hljs-string">'Where is Lucy?'</span>, <span class="hljs-number">6</span>);
+<span class="hljs-comment">// =&gt; Lucy?</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='upperCase' class='mt0'>
+    upperCase<span class='gray'>(string)</span>
+  </h2>
+  <p>Converts a string and converts it entirely into uppercase.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>string</strong>
+          :
+          <div class='force-inline'>
+            <p>String to be converted into upper case.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>Converted string in upper case.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>upperCase(<span class="hljs-string">'upper case'</span>);
+<span class="hljs-comment">// =&gt; UPPER CASE</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='upperFirst' class='mt0'>
+    upperFirst<span class='gray'>(string)</span>
+  </h2>
+  <p>Capitalizes the first letter.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>string</strong>
+          :
+          <div class='force-inline'>
+            <p>String to be mutated.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>String with first letter capitalized.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>upperFirstLetter(<span class="hljs-string">'upper'</span>);
+<span class="hljs-comment">// =&gt; Upper</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='upperFirstAll' class='mt0'>
+    upperFirstAll<span class='gray'>(string)</span>
+  </h2>
+  <p>Capitalize all first letters.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>string</strong>
+          :
+          <div class='force-inline'>
+            <p>String to be mutated.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>String with all first letters capitalized.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>upperFirstAll(<span class="hljs-string">'Lucy is next up.'</span>);
+<span class="hljs-comment">// =&gt; Lucy Is Next Up.</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='upperFirstLetter' class='mt0'>
+    upperFirstLetter<span class='gray'>(string)</span>
+  </h2>
+  <p>Returns the first letter capitalized.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>string</strong>
+          :
+          <div class='force-inline'>
+            <p>String to extract first letter from.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>An upper case letter.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>upperFirstLetter(<span class="hljs-string">'upper'</span>);
+<span class="hljs-comment">// =&gt; U</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='upperFirstOnly' class='mt0'>
+    upperFirstOnly<span class='gray'>(string)</span>
+  </h2>
+  <p>Capitalize first letter and lower case the rest.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>string</strong>
+          :
+          <div class='force-inline'>
+            <p>String to be mutated.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>String with first letter capitalized.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>upperFirstOnly(<span class="hljs-string">'LYSERGIC ACID DIETHYLAMIDE'</span>);
+<span class="hljs-comment">// =&gt; Lysergic acid diethylamide</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='upperFirstOnlyAll' class='mt0'>
+    upperFirstOnlyAll<span class='gray'>(string)</span>
+  </h2>
+  <p>Capitalize all first letters and lower case the rest.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>string</strong>
+          :
+          <div class='force-inline'>
+            <p>String to be mutated.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>String with all first letters capitalized.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>upperFirstOnlyAll(<span class="hljs-string">'LYSERGIC ACID DIETHYLAMIDE'</span>);
+<span class="hljs-comment">// =&gt; Lysergic Acid Diethylamide</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='words' class='mt0'>
+    words<span class='gray'>(string)</span>
+  </h2>
+  <p>Break string into word matches.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>string</strong>
+          :
+          <div class='force-inline'>
+            <p>String to be broken up.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>Array of words with word characters only.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>words(<span class="hljs-string">'I am Lucy!'</span>);
+<span class="hljs-comment">// =&gt; ["I", "am", "Lucy"]</span></pre>
+</section>
+</div>
+        </div>
       </div>
     </div>
   </div>

@@ -1,0 +1,54 @@
+{
+  "_from": "documentation-theme-default@^1.0.0",
+  "_id": "documentation-theme-default@1.0.2",
+  "_inBundle": false,
+  "_integrity": "sha1-D7d9m6euCVtkwvsfYiD0N5OU/j0=",
+  "_location": "/documentation-theme-default",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "documentation-theme-default@^1.0.0",
+    "name": "documentation-theme-default",
+    "escapedName": "documentation-theme-default",
+    "rawSpec": "^1.0.0",
+    "saveSpec": null,
+    "fetchSpec": "^1.0.0"
+  },
+  "_requiredBy": [
+    "/documentation"
+  ],
+  "_resolved": "https://registry.npmjs.org/documentation-theme-default/-/documentation-theme-default-1.0.2.tgz",
+  "_shasum": "0fb77d9ba7ae095b64c2fb1f6220f4379394fe3d",
+  "_spec": "documentation-theme-default@^1.0.0",
+  "_where": "/Volumes/work/projects/Acid/node_modules/documentation",
+  "author": {
+    "name": "Tom MacWright"
+  },
+  "bugs": {
+    "url": "https://github.com/documentationjs/documentation-theme-default/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "the default theme for documentation",
+  "devDependencies": {
+    "handlebars": "^3.0.3"
+  },
+  "homepage": "https://github.com/documentationjs/documentation-theme-default",
+  "keywords": [
+    "documentation",
+    "documentation-theme",
+    "theme"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "documentation-theme-default",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/documentationjs/documentation-theme-default.git"
+  },
+  "scripts": {
+    "test": "handlebars index.hbs section.hbs > /dev/null"
+  },
+  "version": "1.0.2"
+}

@@ -1,7 +1,7 @@
 (function(global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-    typeof define === 'function' && define.amd ? define('$', factory) :
-    (global.$ = factory());
+    typeof define === 'function' && define.amd ? define(factory) :
+      (global.$ = factory());
 }(this, (function() {
   'use strict';
 
@@ -9,33 +9,32 @@
   /**
    * Acid Object accessible through $ default method is model.
    *
-   * @function acid
+   * @function $
    * @param {string} modelName - Model key.
    * @param {Object} model - An object that is saved as the value using the modelName as the string.
-   * @returns {Array} The model associated with the modelName as the key.
+   * @returns {Object} The model associated with the modelName as the key.
    *
    * @example
    * $('modelName', {example: 1});
    * // -> {example: 1}
    */
-  const acid$1 = (...args) => {
+  const $ = (...args) => {
     return cacheSuper(...args);
   };
   /**
    * Re-assigns the main Acid function.
    *
-   * @function superMethod
-   * @param {Function} method - The method that will be used as the main Acid objects method.
+   * @function $.superMethod
+   * @param {Function} method - The function that will become the main object's method.
    *
    * @example
    * $.superMethod($.get);
    * // -> $('flow', $);
    * // -> $.flow
    */
-  const superMethod = (method) => {
+  $.superMethod = (method) => {
     cacheSuper = method;
   };
-  acid$1.superMethod = superMethod;
 
   const objectNative$1 = Object;
   const keys = objectNative$1.keys;
@@ -47,7 +46,7 @@
   const objectSize = (thisObject) => {
     return keys(thisObject).length;
   };
-  assign(acid$1, {
+  assign($, {
     keys,
     is,
     assign,
@@ -57,88 +56,96 @@
     objectSize
   });
 
-  const asyncEach = async(array, arg) => {
+  const asyncEach = async (array, arg) => {
     const arrayLength = array.length;
     for (let index = 0; index < arrayLength; index++) {
       const item = array[index];
       await item(arg, index, arrayLength);
     }
   };
-  assign(acid$1, {
+  assign($, {
     asyncEach,
   });
 
   const whileGenerator = (optBool) => {
-    return (array, fnc) => {
+    return (array, iteratee) => {
       const arrayLength = array.length;
       for (let index = 0; index < arrayLength; index++) {
-        if (fnc(array[index], index, array, arrayLength) !== optBool) {
+        if (iteratee(array[index], index, array, arrayLength) !== optBool) {
           break;
         }
       }
     };
   };
-  // loop through based on number
-  const times = (startArg, endArg, fnArg) => {
-    const start = (fnArg) ? startArg : 0;
-    const end = (fnArg) ? endArg : startArg;
-    const fn = fnArg || endArg;
+  const times = (startArg, endArg, iterateeArg) => {
+    const start = (iterateeArg) ? startArg : 0;
+    const end = (iterateeArg) ? endArg : startArg;
+    const iteratee = iterateeArg || endArg;
     for (let position = start; position < end; position++) {
-      fn(position, start, end);
+      iteratee(position, start, end);
     }
   };
-  const timesMap = (startArg, endArg, fnArg) => {
-    const start = (fnArg) ? startArg : 0;
-    const end = (fnArg) ? endArg : startArg;
-    const fn = fnArg || endArg;
+  const timesMap = (startArg, endArg, iterateeArg) => {
+    const start = (iterateeArg) ? startArg : 0;
+    const end = (iterateeArg) ? endArg : startArg;
+    const iteratee = iterateeArg || endArg;
     const results = [];
     let result;
     times(start, end, (position) => {
-      result = fn(position, results, start, end);
+      result = iteratee(position, results, start, end);
       if (hasValue(result)) {
         results.push(result);
       }
     });
     return results;
   };
-  const eachArrayRight = (array, fn) => {
+  const eachArrayRight = (array, iteratee) => {
     const arrayLength = array.length;
     for (let index = arrayLength - 1; index >= 0; index--) {
-      fn(array[index], index, array, arrayLength);
+      iteratee(array[index], index, array, arrayLength);
     }
   };
-  const eachArray = (array, fn) => {
+  const eachArray = (array, iteratee) => {
     const arrayLength = array.length;
     for (let index = 0; index < arrayLength; index++) {
-      fn(array[index], index, array, arrayLength);
+      iteratee(array[index], index, array, arrayLength);
     }
   };
   const generateMap = (method) => {
-    return (array, fn) => {
+    return (array, iteratee) => {
       const results = [];
       method(array, (item, index, arrayOriginal, arrayLength) => {
-        results[index] = fn(item, index, arrayOriginal, arrayLength, results);
+        results[index] = iteratee(item, index, results, arrayOriginal, arrayLength);
       });
       return results;
     };
   };
-  const filterArray = (array, fn) => {
+  const compactMapArray = (array, iteratee) => {
     const results = [];
     let returned;
     eachArray(array, (item, index, arrayOriginal, arrayLength) => {
-      returned = fn(item, index, arrayOriginal, arrayLength, results);
+      returned = iteratee(item, index, results, arrayOriginal, arrayLength);
       if (hasValue(returned)) {
         results.push(returned);
       }
     });
     return results;
   };
-  const mapWhile = (array, fn) => {
+  const filterArray = (array, iteratee) => {
+    const results = [];
+    eachArray(array, (item, index, arrayOriginal, arrayLength) => {
+      if (iteratee(item, index, results, arrayOriginal, arrayLength) === true) {
+        results.push(item);
+      }
+    });
+    return results;
+  };
+  const mapWhile = (array, iteratee) => {
     const arrayLength = array.length;
     const results = [];
     let returned;
     for (let index = 0; index < arrayLength; index++) {
-      returned = fn(array[index], index, array, arrayLength);
+      returned = iteratee(array[index], index, results, array, arrayLength);
       if (!returned) {
         break;
       }
@@ -149,7 +156,8 @@
   const mapArray = generateMap(eachArray);
   const mapArrayRight = generateMap(eachArrayRight);
   const eachWhile = whileGenerator(true);
-  assign(acid$1, {
+  assign($, {
+    compactMapArray,
     eachArray,
     eachArrayRight,
     eachWhile,
@@ -193,7 +201,7 @@
   const isPlainObject = (obj) => {
     if (hasValue(obj)) {
       return obj.constructor.toString().trim()
-        .slice(9, 16) === 'Object(';
+          .slice(9, 16) === 'Object(';
     }
     return false;
   };
@@ -230,12 +238,11 @@
   const nativeObjectNames = ['RegExp', 'Arguments', 'Boolean', 'Date', 'Error', 'Map', 'Object', 'Set', 'WeakMap',
     'ArrayBuffer', 'Float32Array', 'Float64Array', 'Int8Array', 'Int16Array', 'Int32Array',
     'Uint8Array', 'Uint8ClampedArray',
-    'Uint16Array', 'Uint32Array'
-  ];
+    'Uint16Array', 'Uint32Array'];
   eachArray(nativeObjectNames, (item) => {
-    acid$1[`is${item}`] = isSameObjectGenerator(objectStringGenerate(item));
+    $[`is${item}`] = isSameObjectGenerator(objectStringGenerate(item));
   });
-  assign(acid$1, {
+  assign($, {
     getFileExtension,
     has,
     hasLength,
@@ -257,10 +264,11 @@
   const ensureArray = (object) => {
     return (isArray(object)) ? object : [object];
   };
-  assign(acid$1, {
+  assign($, {
     ensureArray
   });
 
+  // Flattens a nested array. Pass level to flatten up to a depth;
   const flatten = (arrayArg, level = 1) => {
     let array = arrayArg;
     for (let i = 0; i < level; i++) {
@@ -275,11 +283,31 @@
       return previousValue.concat((isArray(currentValue)) ? flatten(currentValue) : currentValue);
     }, []);
   };
-  assign(acid$1, {
+  assign($, {
     flatten,
     flattenDeep,
   });
 
+  /**
+   * Removes all occurrences of the passed in items from the array and returns the array.
+   *
+   * @function remove
+   * @param {Array} array - Mutated Array without with removed occurrences.
+   * @param {Array} removeThese - Items to remove from the array.
+   * @returns {Array} The array this method was called on.
+   *
+   * @example
+   * const array = [1, 2, 3, 3, 4, 3, 5];
+   *
+   * remove(array,1);
+   * // -> [2, 3, 3, 4, 3, 5]
+   *
+   * remove(array,3);
+   * // -> [2, 4, 5]
+   *
+   * remove(array,[2, 5]);
+   * // -> [4]
+   */
   const remove = (array, removeThese) => {
     const removeTheseArray = ensureArray(removeThese);
     eachArray(array, (item) => {
@@ -289,7 +317,7 @@
     });
     return array;
   };
-  assign(acid$1, {
+  assign($, {
     remove
   });
 
@@ -307,7 +335,7 @@
     });
     return chunked;
   };
-  assign(acid$1, {
+  assign($, {
     chunk,
   });
 
@@ -327,7 +355,7 @@
   const flow = returnFlow(eachArray);
   // Returns the composition of a list of functions, where each function consumes the return value of the function that follows. In math terms, composing the functions f(), g(), and h() produces f(g(h())).
   const flowRight = returnFlow(eachArrayRight);
-  assign(acid$1, {
+  assign($, {
     flow,
     flowRight,
   });
@@ -335,7 +363,7 @@
   const rest = (array) => {
     return array.slice(1, array.length - 1);
   };
-  assign(acid$1, {
+  assign($, {
     rest
   });
 
@@ -343,7 +371,7 @@
     array.length = 0;
     return array;
   };
-  assign(acid$1, {
+  assign($, {
     clear,
   });
 
@@ -353,7 +381,7 @@
     });
     return sortedObject;
   };
-  assign(acid$1, {
+  assign($, {
     arraySortToObject
   });
 
@@ -366,21 +394,22 @@
       objectArg[results].push(item);
     }, array);
   };
-  assign(acid$1, {
+  assign($, {
     groupBy
   });
 
+  // start from end array using amount as index
   const right = (array, amount) => {
     return array[array.length - 1 - amount];
   };
-  assign(acid$1, {
+  assign($, {
     right
   });
 
   const cloneArray = (array) => {
     return array.splice();
   };
-  assign(acid$1, {
+  assign($, {
     cloneArray
   });
 
@@ -416,7 +445,7 @@
   const randomInt = (max, min = 0) => {
     return floorMethod(randomMethod() * (max - min)) + min;
   };
-  assign(acid$1, {
+  assign($, {
     add,
     minus,
     divide,
@@ -428,6 +457,10 @@
     randomInt
   });
 
+  /*
+    Produce a random sample from the list. Pass a number to return n random elements from the list. Otherwise a single random item will be returned.
+    sample([1,2,3,4] , 2);
+  */
   const sample = (array, amount = 1) => {
     if (amount === 1) {
       return array[randomInt(array.length - 1, 0)];
@@ -446,7 +479,7 @@
     }
     return sampleArray;
   };
-  assign(acid$1, {
+  assign($, {
     sample
   });
 
@@ -455,25 +488,27 @@
       return isString(item) && !item.length ? false : item;
     });
   };
-  assign(acid$1, {
+  assign($, {
     compact,
   });
 
+  // Given a list, and an iteratee function that returns a key for each element in the list (or a property name), returns an object with an index of each item. Just like groupBy, but for when you know your keys are unique.
   const indexBy = (array, index) => {
     return arraySortToObject((item, key, object) => {
       object[item[index]] = item;
     }, array);
   };
-  assign(acid$1, {
+  assign($, {
     indexBy
   });
 
   const arrayNative = Array;
   const toArray = arrayNative.from;
-  assign(acid$1, {
+  assign($, {
     toArray,
   });
 
+  // shuffle an array and return a new array
   const shuffle = (array, amount = 1) => {
     const shuffleArray = toArray(array);
     let count = 0;
@@ -488,7 +523,7 @@
     }
     return shuffleArray;
   };
-  assign(acid$1, {
+  assign($, {
     shuffle
   });
 
@@ -522,7 +557,7 @@
     });
     return count;
   };
-  assign(acid$1, {
+  assign($, {
     countBy,
     countKey,
     countNoKey
@@ -531,7 +566,7 @@
   const initial = (array) => {
     return array.slice(0, array.length - 1);
   };
-  assign(acid$1, {
+  assign($, {
     initial
   });
 
@@ -540,7 +575,7 @@
   const smallest = (array) => {
     return mathNativeMin(...array);
   };
-  assign(acid$1, {
+  assign($, {
     smallest
   });
 
@@ -573,14 +608,30 @@
   const rangeRight = (start, end, increment = 1) => {
     return rangeDown(end, start, increment);
   };
-  assign(acid$1, {
+  assign($, {
     range,
     rangeRight
   });
 
+  /**
+   * Returns an new array that is the [set intersection](http://en.wikipedia.org/wiki/Intersection_(set_theory))
+   * of the array and the input array(s).
+   *
+   * @function intersect
+   * @param {Array} array - Array to compare other arrays to.
+   * @param {...Array} arrays - A variable number of arrays.
+   * @returns {Array} The new array of unique values shared by all of the arrays.
+   *
+   * @example
+   * intersect([1, 2, 3], [2, 3, 4]);
+   * // -> [2, 3]
+   *
+   * intersect([1, 2, 3], [101, 2, 50, 1], [2, 1]);
+   * // -> [1, 2]
+   */
   const intersect = (array, ...arrays) => {
     let yes;
-    return filterArray(array, (item) => {
+    return compactMapArray(array, (item) => {
       yes = true;
       eachWhile(arrays, (otherItem) => {
         if (!otherItem.includes(item)) {
@@ -593,10 +644,13 @@
       }
     });
   };
-  assign(acid$1, {
+  assign($, {
     intersect
   });
 
+  /*
+  	Perform alphabetical sort on collection on provided key name
+  */
   const sortAlpha = (collection, key) => {
     let currentKey;
     let nextKey;
@@ -612,27 +666,28 @@
     });
     return collection;
   };
-  assign(acid$1, {
+  assign($, {
     sortAlpha
   });
 
   const difference = (array, compare) => {
-    return filterArray(array, (item) => {
+    return compactMapArray(array, (item) => {
       if (!compare.includes(item)) {
         return item;
       }
     });
   };
-  assign(acid$1, {
+  assign($, {
     difference
   });
 
+  // Calls the method named by methodName on each value in the list. Any extra arguments passed to invoke will be forwarded on to the method invocation.
   const invoke = (array, methodName, args) => {
     return mapArray(array, (item) => {
       return item[methodName](...args);
     });
   };
-  assign(acid$1, {
+  assign($, {
     invoke
   });
 
@@ -642,7 +697,7 @@
   const dropRight = (array, amount) => {
     return drop(array, 0, array.length - amount);
   };
-  assign(acid$1, {
+  assign($, {
     drop,
     dropRight
   });
@@ -657,10 +712,11 @@
     }
     return result;
   };
-  assign(acid$1, {
+  assign($, {
     isMatchArray,
   });
 
+  // Uses a binary search to determine the index at which the value should be inserted into the list in order to maintain the list's sorted order.
   const sortedIndex = (array, n) => {
     let min = 0;
     eachArray(array, (item, index) => {
@@ -673,15 +729,16 @@
     }
     return min;
   };
-  assign(acid$1, {
+  assign($, {
     sortedIndex
   });
 
+  // get largest number from array
   const mathNativeMax = Math.max;
   const largest = (array) => {
     return mathNativeMax(...array);
   };
-  assign(acid$1, {
+  assign($, {
     largest
   });
 
@@ -696,25 +753,34 @@
     });
     return result;
   };
-  assign(acid$1, {
+  assign($, {
     sumOf
   });
 
-  const eachAsync = async(array, funct) => {
+  /*
+    const array = [async function(...args){
+      console.log(1,args);
+    }, async function(...args){
+      console.log(2,args);
+    }];
+    acid.asyncEach(array,[3,4]);
+  */
+  const eachAsync = async (array, funct) => {
     const arrayLength = array.length;
     for (let index = 0; index < arrayLength; index++) {
       await funct(array[index], index, arrayLength);
     }
   };
-  assign(acid$1, {
+  assign($, {
     eachAsync,
   });
 
+  // Returns the last element of an array. Passing n will return the last n elements of the array.
   const last = (array, indexFrom) => {
     const arrayLength = array.length;
     return (indexFrom) ? array.slice(arrayLength - indexFrom, arrayLength) : array[arrayLength - 1];
   };
-  assign(acid$1, {
+  assign($, {
     last
   });
 
@@ -724,19 +790,19 @@
   const takeRight = (array, amount) => {
     return array.slice(array.length - amount, amount);
   };
-  assign(acid$1, {
-    takeRight,
-    take
+  assign($, {
+    take,
+    takeRight
   });
 
-  const mapAsync = async(array, funct) => {
+  const mapAsync = async (array, iteratee) => {
     const results = [];
-    await eachAsync(array, async(item, index, arrayLength) => {
-      results[index] = await funct(item, index, arrayLength);
+    await eachAsync(array, async (item, index, arrayLength) => {
+      results[index] = await iteratee(item, index, arrayLength);
     });
     return results;
   };
-  assign(acid$1, {
+  assign($, {
     mapAsync,
   });
 
@@ -752,10 +818,11 @@
     }
     return array.filter(onlyUnique);
   };
-  assign(acid$1, {
+  assign($, {
     unique
   });
 
+  // Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more of the arrays.
   const union = (...args) => {
     const result = [];
     eachArray(args, (array) => {
@@ -767,14 +834,14 @@
     });
     return result;
   };
-  assign(acid$1, {
+  assign($, {
     union
   });
 
-  const filterAsync = async(array, funct) => {
+  const compactMapAsync = async (array, funct) => {
     const results = [];
     let result;
-    await eachAsync(array, async(item, index, arrayLength) => {
+    await eachAsync(array, async (item, index, arrayLength) => {
       result = await funct(item, index, arrayLength);
       if (hasValue(result)) {
         results.push(result);
@@ -782,8 +849,8 @@
     });
     return results;
   };
-  assign(acid$1, {
-    filterAsync,
+  assign($, {
+    compactMapAsync,
   });
 
   const numericalCompare = (a, b) => {
@@ -805,7 +872,7 @@
   const numSort = (array) => {
     return array.sort(numericalCompare);
   };
-  assign(acid$1, {
+  assign($, {
     numSort
   });
 
@@ -829,25 +896,27 @@
     }
     return returnedObject;
   };
-  assign(acid$1, {
+  assign($, {
     findDifference
   });
 
+  // Converts arrays into objects.
   const arrayToObject = (values, keys$$1) => {
     return arraySortToObject((item, index, objectArg) => {
       objectArg[keys$$1[index]] = item;
     }, values);
   };
-  assign(acid$1, {
+  assign($, {
     arrayToObject
   });
 
+  // Returns a copy of the array with all instances of the values removed.
   const without = (array, ...args) => {
     return array.filter((item) => {
       return !args.includes(item);
     });
   };
-  assign(acid$1, {
+  assign($, {
     without
   });
 
@@ -868,15 +937,16 @@
     });
     return (result === -1) ? false : result;
   };
-  assign(acid$1, {
+  assign($, {
     findItem,
     findIndex
   });
 
+  // Split array into two arrays: one whose elements all satisfy predicate and one whose elements all do not satisfy predicate.
   const partition = (array, funct) => {
     const failed = [];
     return [
-      filterArray(array, (item) => {
+      compactMapArray(array, (item) => {
         if (funct(item)) {
           return item;
         }
@@ -885,10 +955,11 @@
       failed
     ];
   };
-  assign(acid$1, {
+  assign($, {
     partition
   });
 
+  // Creates an array that is the symmetric difference of the provided arrays. See Wikipedia for more details.
   const xor = (others) => {
     const xored = [];
     eachArray(others, (array) => {
@@ -902,7 +973,7 @@
     });
     return xored;
   };
-  assign(acid$1, {
+  assign($, {
     xor
   });
 
@@ -926,10 +997,11 @@
     }
     return returnedObject;
   };
-  assign(acid$1, {
+  assign($, {
     findSum
   });
 
+  // Pluck an attribute from each object in an array.
   const pluck = (array, pluckThis) => {
     let pluckMethod;
     if (isArray(pluckThis)) {
@@ -946,10 +1018,11 @@
     }
     return mapArray(array, pluckMethod);
   };
-  assign(acid$1, {
+  assign($, {
     pluck
   });
 
+  // Merges together the values of each of the arrays with the values at the corresponding position.
   const zip = (...args) => {
     return args[0].map((item, index) => {
       return args.map((array) => {
@@ -965,7 +1038,7 @@
       });
     });
   };
-  assign(acid$1, {
+  assign($, {
     zip,
     unZip
   });
@@ -973,17 +1046,29 @@
   const first = (array, upTo) => {
     return (upTo) ? array.slice(0, upTo) : array[0];
   };
-  assign(acid$1, {
+  assign($, {
     first
   });
 
+  /**
+   * Sorts an array in place using a reverse numerical comparison algorithm
+   * (sorts numbers from highest to lowest) and returns the array.
+   *
+   * @function rnumsort
+   * @returns {Array} The array this method was called on.
+   *
+   * @example
+   * var files = [10, 0, 2, 1];
+   * rnumsort(files);
+   * // -> [3, 2, 1, 0]
+   */
   const numericalCompareReverse = (a, b) => {
     return b - a;
   };
   const rNumSort = (array) => {
     return array.sort(numericalCompareReverse);
   };
-  assign(acid$1, {
+  assign($, {
     rNumSort
   });
 
@@ -997,7 +1082,7 @@
   eachArray(userAgentSplit, (item) => {
     isAgent[item] = true;
   });
-  assign(acid$1, {
+  assign($, {
     isAgent
   });
 
@@ -1009,7 +1094,7 @@
     obj.removeEventListener(eventName, func, capture);
     return obj;
   };
-  assign(acid$1, {
+  assign($, {
     eventAdd,
     eventRemove,
   });
@@ -1017,17 +1102,17 @@
   const isEnter = (eventObject) => {
     return eventObject.keyCode === 13;
   };
-  assign(acid$1, {
+  assign($, {
     isEnter
   });
 
   const appState = {};
-  assign(acid$1, {
+  assign($, {
     appState
   });
 
   const createFragment = document.createDocumentFragment.bind(document);
-  assign(acid$1, {
+  assign($, {
     createFragment
   });
 
@@ -1036,46 +1121,48 @@
     return node;
   };
 
-  const eachObject = (thisObject, fn) => {
-    eachArray(keys(thisObject), (key, index, array, propertyCount) => {
-      fn(thisObject[key], key, thisObject, propertyCount);
+  const eachObject = (thisObject, iteratee) => {
+    const objectKeys = keys(thisObject);
+    eachArray(keys, (key, index, array, propertyCount) => {
+      iteratee(thisObject[key], key, thisObject, propertyCount, objectKeys);
     });
   };
-  const mapObject = (object, fn) => {
+  const mapObject = (object, iteratee) => {
     const results = {};
-    eachObject(object, (item, key, thisObject, propertyCount) => {
-      results[key] = fn(item, key, thisObject, propertyCount);
+    eachObject(object, (item, key, thisObject, propertyCount, objectKeys) => {
+      results[key] = iteratee(item, key, results, thisObject, propertyCount, objectKeys);
     });
     return results;
   };
-  const filterObject = (object, fn) => {
+  const compactMapObject = (object, iteratee) => {
     const results = {};
     let result;
-    eachObject(object, (item, key, thisObject, propertyCount) => {
-      result = fn(item, key, thisObject, propertyCount);
+    eachObject(object, (item, key, thisObject, propertyCount, objectKeys) => {
+      result = iteratee(item, key, results, propertyCount, objectKeys);
       if (hasValue(result)) {
         results[key] = result;
       }
     });
     return results;
   };
-  const mapProperty = (array, funct) => {
-    const thisObject = {};
-    eachArray(getOwnPropertyNames(array), (item, key, arrayLength) => {
-      thisObject[item] = funct(array[item], item, array, arrayLength, thisObject);
+  const mapProperty = (thisObject, iteratee) => {
+    const results = {};
+    const properties = getOwnPropertyNames(thisObject);
+    eachArray(properties, (item, key, propertyCount) => {
+      results[item] = iteratee(thisObject[item], item, results, properties, propertyCount, thisObject);
     });
     return thisObject;
   };
-  const forIn = (thisObject, fn) => {
+  const forIn = (thisObject, iteratee) => {
     const mappedObject = {};
     for (const key in thisObject) {
-      mappedObject[key] = fn(thisObject[key], key, thisObject, mappedObject);
+      mappedObject[key] = iteratee(thisObject[key], key, thisObject, mappedObject);
     }
     return mappedObject;
   };
-  assign(acid$1, {
+  assign($, {
+    compactMapObject,
     eachObject,
-    filterObject,
     forIn,
     mapObject,
     mapProperty,
@@ -1099,72 +1186,112 @@
     }
     return node;
   };
-  assign(acid$1, {
+  assign($, {
     nodeAttribute
   });
 
+  /**
+  *promise is a wrapper around a constructor
+  */
   const promise = (callback) => {
     return new Promise(callback);
   };
-  assign(acid$1, {
+  assign($, {
     promise
   });
 
   /**
-   * insertInRange inserts a text into a user defined range
-   */
-  const insertInRange = (text, start, end, insert) => {
-    return text.slice(0, start) + insert + text.slice(end, text.length);
-  };
-  /**
-   * rightString returns the letter on the right side of the string
-   */
-  const rightString = (text, a) => {
-    return text[text.length - 1 - a];
-  };
-  /**
-    * chunkString chunks a string contingent on what integer is placed in the size argument
-    * @property {string} - string to be chunked
-    * @property {size} - integer which will define how often the string is chunked
+    * Inserts text into a string at a given position.
+    *
+    * @function insertInRange
+    * @type {Function}
+    * @param {string} string - String to insert the text into.
+    * @param {number} index - Point of insertion.
+    * @param {string} text - The string to be inserted.
+    * @returns {string} The string with the text inserted at the given point.
+    *
     * @example
-    const foo = 'bar';
-    size = 2;
-    chunkString(foo, size)
+    * insertInRange('A from Lucy.', 1, ' tab');
+    * // => A tab from Lucy.
+  */
+  const insertInRange = (string, index, text) => {
+    return string.slice(0, index) + text + string.slice(index, string.length);
+  };
+  /**
+    * Plucks a letter using the index starting from the right.
+    *
+    * @function rightString
+    * @type {Function}
+    * @param {string} string - String to extract the letter from.
+    * @param {number} [index=1] - The starting position.
+    * @returns {string} A letter at the given index.
+    *
+    * @example
+    * rightString('rightString');
+    * // => g
+    *
+    * rightString('rightString', 2);
+    * // => n
+  */
+  const rightString = (string, index = 1) => {
+    return string[string.length - index];
+  };
+  /**
+    * Splits up a string into chunks.
+    *
+    * @function chunkString
+    * @type {Function}
+    * @param {string} string - String to chunked.
+    * @param {number} [size] - The max string length per chunk.
+    * @returns {Array} An array with strings that are <= size parameter.
+    *
+    * @example
+    * chunkString('chunk', 2);
+    * //-> ['ch', 'un', 'k']
   */
   const chunkString = (string, size) => {
-    return string.match(new RegExp(`(.|[\r\n]){1, ${size}}`, 'g'));
+    return string.match(new RegExp(`(.|[
+]){1, ${size}}`, 'g'));
   };
   /**
-   * Returns the string without the last letter.
-   *
-   * @function initialString
-   * @property {string} - takes a string
-   * @returns {string} The string without the last letter.
-   *
-   * @example
-   * const foo = 'bar';
-   * initialString(foo);
-   * //-> 'ba'
-   */
-  const initialString = (string) => {
-    return string.slice(0, -1);
+    * Truncates everything before the index starting from the right.
+    *
+    * @function initialString
+    * @type {Function}
+    * @param {string} string - String to extract the initial letters from.
+    * @param {number} [index=1] - Starting point from the right.
+    * @returns {string} A string with the characters before the index starting from the right.
+    *
+    * @example
+    * initialString('initialString');
+    * //-> initialStrin
+    *
+    * initialString('initialString', 2);
+    * //-> initialStri
+  */
+  const initialString = (string, index = 1) => {
+    return string.slice(0, index * -1);
   };
   /**
-   * Returns the string without the first letter.
-   *
-   * @function restString
-   * @property {string} - takes a string
-   * @returns {string} The string without the first letter.
-   *
-   * @example
-   * const const foo = 'bar';
-   * restString(foo);
-   * //-> 'ar'
-   */
-  const restString = (string) => {
-    return string.slice(1, string.length);
+    * Truncates everything after a index.
+    *
+    * @function restString
+    * @type {Function}
+    * @param {string} string - String to extract the rest of the letters from.
+    * @param {number} [index=1] - Starting point.
+    * @returns {string} A string without the characters up-to to the index.
+    *
+    * @example
+    * restString('restString');
+    * //-> estString
+    *
+    * restString('restString', 2);
+    * //-> stString
+  */
+  const restString = (string, index = 1) => {
+    return string.substr(index);
   };
-  assign(acid$1, {
+  assign($, {
     chunkString,
     initialString,
     insertInRange,
@@ -1202,7 +1329,7 @@
     }
     return querySelectorAll(select);
   };
-  assign(acid$1, {
+  assign($, {
     getByClass,
     getById,
     getByTag,
@@ -1234,7 +1361,7 @@
     });
     return nodeAttachLoadingEvents(node);
   };
-  assign(acid$1, {
+  assign($, {
     importcss,
     importjs,
   });
@@ -1250,7 +1377,7 @@
     }
     return false;
   };
-  assign(acid$1, {
+  assign($, {
     isDocumentReady
   });
   isDocumentReady(() => {
@@ -1258,7 +1385,7 @@
   });
 
   const saveDimensions = () => {
-    assign(acid$1.appState, {
+    assign($.appState, {
       bodyHeight: document.body.offsetHeight,
       bodyWidth: document.body.offsetWidth,
       windowHeight: window.innerHeight,
@@ -1271,7 +1398,7 @@
   isDocumentReady(updateDimensions);
   eventAdd(window, 'load', updateDimensions, true);
   eventAdd(window, 'resize', updateDimensions, true);
-  assign(acid$1, {
+  assign($, {
     saveDimensions,
     updateDimensions
   });
@@ -1281,7 +1408,7 @@
       return method(...args);
     }
   };
-  assign(acid$1, {
+  assign($, {
     ifInvoke
   });
 
@@ -1298,7 +1425,7 @@
       batchCancelFrame = requestAnimationFrame(batchLoop);
     }
   };
-  assign(acid$1, {
+  assign($, {
     batch
   });
 
@@ -1315,20 +1442,20 @@
       protocolSocket,
     }
   };
-  assign(acid$1, {
+  assign($, {
     info
   });
 
   const jsonNative = JSON;
   /**
-   * jsonParse is a wrapped version of the forEach function
-   */
+     * jsonParse is a wrapped version of the forEach function
+  */
   const jsonParse = jsonNative.jsonParse;
   /**
-   * stringify is a wrapped version of the forEach function
-   */
+     * stringify is a wrapped version of the forEach function
+  */
   const stringify = jsonNative.stringify;
-  assign(acid$1, {
+  assign($, {
     jsonParse,
     stringify
   });
@@ -1349,13 +1476,13 @@
   const addConsoleTheme = (themeName, color, bg) => {
     themes[themeName] = generateTheme(color, bg);
   };
-  assign(acid$1, {
+  assign($, {
     addConsoleTheme,
     cnsl,
   });
 
   eachArray(['HTMLCollection', 'NodeList'], (item) => {
-    acid$1[`is${item}`] = isSameObjectGenerator(objectStringGenerate(item));
+    $[`is${item}`] = isSameObjectGenerator(objectStringGenerate(item));
   });
 
   const sortNewest = (arrayArg, key, pureMode) => {
@@ -1376,7 +1503,7 @@
   const getNewest = (array, key) => {
     return sortNewest(array, key)[0];
   };
-  assign(acid$1, {
+  assign($, {
     getNewest,
     sortNewest,
   });
@@ -1399,17 +1526,18 @@
   const getOldest = (array, key) => {
     return sortOldest(array, key)[0];
   };
-  assign(acid$1, {
+  assign($, {
     getOldest,
     sortOldest,
   });
 
+  // Creates a function that accepts up to n arguments ignoring any additional arguments. The 2nd argument will be binded if none the initial new function will be.
   const ary = (funct, amount) => {
     return (...args) => {
       return funct(...args.splice(0, amount));
     };
   };
-  assign(acid$1, {
+  assign($, {
     ary
   });
 
@@ -1443,11 +1571,12 @@
     };
     return curried;
   };
-  assign(acid$1, {
+  assign($, {
     curry,
     curryRight
   });
 
+  // Creates a function that is restricted to execute func once. Repeat calls to the function will return the value of the first call. The func is executed with the this binding of the created function.
   const once = (fn) => {
     let value;
     const onlyOnce = (...args) => {
@@ -1488,7 +1617,7 @@
   const onBefore = (amount, fn) => {
     return beforeFn(amount + 1, fn);
   };
-  assign(acid$1, {
+  assign($, {
     onAfter,
     onBefore,
     once
@@ -1512,7 +1641,7 @@
   const noop = () => {
     return undefined;
   };
-  assign(acid$1, {
+  assign($, {
     stubObject,
     stubArray,
     stubString,
@@ -1521,14 +1650,11 @@
     noop
   });
 
-  const forEachWrap = (object, funct) => {
-    return object.forEach(funct);
+  const forEachWrap = (object, callback) => {
+    return object.forEach(callback);
   };
-  /**
-   * generateCheckLoops parses the argument it is given and checks whether said argument is an array, or an object.
-   */
   const generateCheckLoops = (arrayLoop, objectLoop) => {
-    return (object, funct) => {
+    return (object, iteratee) => {
       let returned;
       if (!hasValue(object)) {
         return;
@@ -1541,102 +1667,72 @@
       } else {
         returned = objectLoop;
       }
-      return returned(object, funct);
+      return returned(object, iteratee);
     };
   };
   /**
-   *map takes an array or an object. If an array is given, an array will be mapped. If an object is given, an *object will be mapped.
-   *
-   *
-   * @property {mapArray}  - Takes an array to be mapped.
-   * @property {mapObject}  -Takes an object to be mapped.
-   * @example
-   *Taking an array
-   *const example = ['foo', 'bar'];
-   *const fooFunction = (x) => {
-   *  return x;
-   *});
-   * const newMap = map(example, fooFunction);
-   * //-> newMap = ['foo', 'bar']
-   * @returns
-   * Each value in the array after being run through a function. Can be any datatype.
-   * @example
-   *Taking an object
-   *const example = [{
-   *key: bar,
-   *value: foo,
-   *}];
-   *const fooFunction = (x) => {
-   *   var rObj = {};
-   *   Obj[obj.key] = obj.value;
-   *   return rObj;
-   *});
-   *var reformatted = map(example, fooFunction) ;
-   * //-> reformatted = {
-   *       bar:foo
-   *}
-   * @returns
-   * The value of each property in an object after being run through a user defined function
-   */
+    * Iterates through the calling object and creates a new object based on the calling object's type with the results of the iteratee on every element in the calling object.
+    *
+    * @function map
+    * @type {Function}
+    * @param {(Array|Object|Map|WeakMap|Function|Set)} callingObject - Object that will be looped through.
+    * @param {Function} iteratee - Transformation function which is passed item, key, the newly created map object and arguments unique to mapArray or mapObject depending on the object type.
+    * @returns {Object} A mapped object with matching keys and values returned from the iteratee.
+    *
+    * @example
+    * map([1, 2, 3], (item) => {
+    *   return item * 2;
+    * });
+    * // => [2, 4, 6]
+    * map({a: 1, b: 2, c: 3}, (item) => {
+    *   return item * 2;
+    * });
+    * // => {a: 2, b: 4, c: 6}
+  */
   const map = generateCheckLoops(mapArray, mapObject);
-  /** each takes an array or an object. If an array is given, an array will have an operation performed on *each item in the array. If an object is given, an object will have an operation performed on each property *of the object.
-   * @property {eachArray}  - Takes two arguments: an array, and a function that will be performed on each item *in the array.
-   * @property {eachObject}  -Takes two arguments: an object and a function that will be performed on each key *and or value property of that object.
-   * @example
-   *Taking an array
-   *const example = ['foo', 'bar'];
-   *const fooFunction = () => {
-   *  console.log()
-   *};
-   *each(example, fooFunction);
-   *Taking an object
-   *const example = {
-   *foo: bar,
-   *bar: foo,
-   *};
-   *const fooFunction = () => {
-   *  console.log()
-   *};
-   *each(example, fooFunction);
-   */
+  /**
+    * Iterates through the given object.
+    *
+    * @function map
+    * @type {Function}
+    * @param {(Array|Object|Map|WeakMap|Function|Set)} callingObject - Object that will be looped through.
+    * @param {Function} iteratee - Transformation function which is passed item, key, the newly created map object and arguments unique to mapArray or mapObject depending on the object type.
+    * @returns {Object} The originally given object.
+    *
+    * @example
+    * each([1, 2, 3], (item) => {
+    *   console.log(item);
+    * });
+    * // => [1, 2, 3]
+    * each({a: 1, b: 2, c: 3}, (item) => {
+    *   console.log(item);
+    * });
+    * // => {a: 1, b: 2, c: 3}
+  */
   const each = generateCheckLoops(eachArray, eachObject);
   /**
-   *filter takes an array or an object. If it is given an array, it will run a function on each item on the *array. If it is given an object, it will run a function on each key and or value of an object
-   *@property {filterArray} - Takes two arguments: an array, and a function
-   *@property {filterObject} - Takes two arguments: an object, and a function
-   *@example
-   *Taking an array
-   *const example = ['foo', 'bar', 'foobar'];
-   *const fooFunction = () => {
-   *  return example.length <4;
-   *};
-   *const value = filter(example, fooFunction);
-   * //-> const value = ['foo', 'bar']
-   * @returns
-   * The value of each item in the given array after being run through a given function
-   * @example
-   *Taking an object
-   *const example = [{
-   *foo: bar,
-   *bar: foo,
-   *}];
-   *const fooFunction = (item) => {
-   *  if hasValue(item.id) {
-   *   return item.id
-   *}
-   *};
-   * const value = filter(example, fooFunction);
-   * //-> const value = [{
-   *foo: bar,
-   *bar: foo,
-   *}]
-   * @returns
-   * The value of each property within an object after being ran through a given function
-   */
-  const filter = generateCheckLoops(filterArray, filterObject);
-  assign(acid$1, {
+    * Iterates through the calling object and creates a new object based on the calling object's type with the results, (excludes results which are null or undefined), of the iteratee on every element in the calling object.
+    *
+    * @function compactMap
+    * @type {Function}
+    * @param {(Array|Object|Map|WeakMap|Function|Set)} callingObject - Object that will be looped through.
+    * @param {Function} iteratee - Transformation function which is passed item, key, the newly created map object and arguments unique to mapArray or mapObject depending on the object type.
+    * @returns {Object} A mapped object with matching keys and values returned from the iteratee.
+    *
+    * @example
+    * compactMap([0, 2, 3], (item) => {
+    *   return item * 2;
+    * });
+    * // => [4, 6]
+    * compactMap({a: 0, b: 2, c: 3}, (item) => {
+    *   return item * 2;
+    * });
+    * // => {b: 4, c: 6}
+  */
+  const compactMap = generateCheckLoops(compactMapArray, compactMapObject);
+  assign($, {
+    compactMap,
     each,
-    filter,
     map
   });
 
@@ -1645,16 +1741,17 @@
       return isFunction(item) ? item.bind(withThis) : item;
     });
   };
-  assign(acid$1, {
+  assign($, {
     bindAll
   });
 
+  // Creates a function that negates the result of the predicate func. The func predicate is invoked with the this binding and arguments of the created function.
   const negate = (func) => {
     return (...args) => {
       return !func(...args);
     };
   };
-  assign(acid$1, {
+  assign($, {
     negate
   });
 
@@ -1675,7 +1772,7 @@
       });
     };
   };
-  assign(acid$1, {
+  assign($, {
     over,
     overEvery,
   });
@@ -1729,7 +1826,7 @@
     };
     return fn;
   };
-  assign(acid$1, {
+  assign($, {
     debounce,
     interval,
     throttle,
@@ -1765,7 +1862,7 @@
     link.link(methods);
     return link;
   };
-  assign(acid$1, {
+  assign($, {
     chain
   });
 
@@ -1774,12 +1871,12 @@
       item(arg);
     });
   };
-  const inAsync = async(fns, arg) => {
-    await eachAsync(fns, async(item) => {
+  const inAsync = async (fns, arg) => {
+    await eachAsync(fns, async (item) => {
       await item(arg);
     });
   };
-  assign(acid$1, {
+  assign($, {
     inAsync,
     inSync,
   });
@@ -1793,10 +1890,11 @@
       return args[num];
     };
   };
-  assign(acid$1, {
+  assign($, {
     nthArg
   });
 
+  // Creates a function that invokes func with arguments arranged according to the specified indexes where the argument value at the first index is provided as the first argument, the argument value at the second index is provided as the second argument, and so on.
   const reArg = (funct, list) => {
     return (...args) => {
       return funct(...list.map((item) => {
@@ -1812,7 +1910,7 @@
   rearg(1,2,3);
   -> [2, 3, 1]
   */
-  assign(acid$1, {
+  assign($, {
     reArg
   });
 
@@ -1848,7 +1946,7 @@
     wrapped.add(args);
     return wrapped;
   };
-  assign(acid$1, {
+  assign($, {
     wrap,
     wrapBefore
   });
@@ -1862,7 +1960,7 @@
   const isNumberInRange = (num, start = 0, end = start) => {
     return num > start && num < end;
   };
-  assign(acid$1, {
+  assign($, {
     isNumberInRange,
     isNumberEqual,
     isZero
@@ -1880,7 +1978,7 @@
     });
     return object;
   };
-  assign(acid$1, {
+  assign($, {
     assignDeep
   });
 
@@ -1900,11 +1998,14 @@
     });
     return flag;
   };
-  assign(acid$1, {
+  assign($, {
     hasAnyKeys,
     hasKeys,
   });
 
+  /*
+  	Performs a deep comparison between object and source to determine if object contains equivalent property values.
+  */
   const isEqual = (object, compareObject) => {
     let result = false;
     if (object === compareObject) {
@@ -1929,7 +2030,7 @@
     }
     return result;
   };
-  assign(acid$1, {
+  assign($, {
     isEqual,
   });
 
@@ -1938,7 +2039,7 @@
       object[item] = originalObject[item];
     }, array, newObject);
   };
-  assign(acid$1, {
+  assign($, {
     pick
   });
 
@@ -1951,7 +2052,7 @@
     });
     return keys$$1;
   };
-  assign(acid$1, {
+  assign($, {
     compactKeys
   });
 
@@ -1966,7 +2067,7 @@
     }
     return result;
   };
-  assign(acid$1, {
+  assign($, {
     isMatchObject,
   });
 
@@ -1984,7 +2085,7 @@
     });
     return [keys$$1, values];
   };
-  assign(acid$1, {
+  assign($, {
     zipObject,
     unZipObject,
   });
@@ -1995,25 +2096,34 @@
     });
     return invertedObject;
   };
-  assign(acid$1, {
+  assign($, {
     invert,
   });
 
   const omit = (originalObject, array) => {
-    return filterObject(originalObject, (item, key) => {
+    return compactMapObject(originalObject, (item, key) => {
       if (!array.includes(key)) {
         return item;
       }
     });
   };
-  assign(acid$1, {
+  assign($, {
     omit
   });
 
   const normalizeCase = /[-_]/g;
   const spaceFirstLetter = / (.)/g;
   /**
-  upperCase takes a string and converts it entirely into uppercase.
+    * Converts a string and converts it entirely into uppercase.
+    *
+    * @function upperCase
+    * @type {Function}
+    * @param {string} string - String to be converted into upper case.
+    * @returns {string} Converted string in upper case.
+    *
+    * @example
+    * upperCase('upper case');
+    * // => UPPER CASE
   */
   const upperCase = (string) => {
     return string.replace(normalizeCase, ' ')
@@ -2021,26 +2131,34 @@
       .toUpperCase();
   };
   /**
-  camelCase takes a string and converts it to camel case format
-  @property {stringArg} - takes a string to be converted into camel case
-  @example
-  const foo = 'bar';
-  camelCase(foo);
+    * Converts a string into Camel case format.
+    *
+    * @function camelCase
+    * @type {Function}
+    * @param {string} string - String to be converted into Camel case.
+    * @returns {string} Converted string in Camel case.
+    *
+    * @example
+    * camelCase('camel case');
+    * // => camelCase
   */
-  const camelCase = (stringArg) => {
-    const string = stringArg
-      .toLowerCase()
+  const camelCase = (string) => {
+    return string.toLowerCase()
       .replace(spaceFirstLetter, (match) => {
         return match.toUpperCase();
       });
-    return string;
   };
   /**
-  kebabCase takes a string and converts it into kebab case format
-  @property {string} - takes a string to be converted into kebab case format
-  @example
-  const foo = 'bar';
-  kebabCase(foo)
+    * Converts a string into Kebab case format.
+    *
+    * @function kebabCase
+    * @type {Function}
+    * @param {string} string - String to be converted into Kebab case.
+    * @returns {string} Converted string in Kebab case.
+    *
+    * @example
+    * kebabCase('kebab case');
+    * // => kebab-case
   */
   const kebabCase = (string) => {
     return string.replace(normalizeCase, ' ')
@@ -2049,11 +2167,16 @@
       .replace(spaceFirstLetter, '-$1');
   };
   /**
-  snakeCase takes a string and converts it into snake case format
-  @property {string} - takes a string to be converted into snake case
-  @example
-  const foo = 'bar';
-  snakeCase(foo);
+    * Converts a string into snake case format.
+    *
+    * @function snakeCase
+    * @type {Function}
+    * @param {string} string - String to be converted into snake case.
+    * @returns {string} Converted string in Snake case.
+    *
+    * @example
+    * snakeCase('snake case');
+    * // => snake_case
   */
   const snakeCase = (string) => {
     return string.replace(normalizeCase, ' ')
@@ -2061,18 +2184,32 @@
       .toLowerCase()
       .replace(spaceFirstLetter, '_$1');
   };
-  assign(acid$1, {
-    upperCase,
+  assign($, {
     camelCase,
     kebabCase,
     snakeCase,
+    upperCase,
   });
 
-  const replaceWithList = (string, array, toReplace) => {
-    return string.replace(new RegExp(`\\b${array.join('|')}\\b`, 'gi'), toReplace);
+  /**
+    * Replaces all occurrences of strings in an array with a value.
+    *
+    * @function replaceList
+    * @type {Function}
+    * @param {string} string - String to be replaced.
+    * @param {Array} array - Strings to replace.
+    * @param {string} value - The match replacement.
+    * @returns {string} Converted string in Snake case.
+    *
+    * @example
+    * replaceList('Her name was @user.', ['@user'], 'Lucy');
+    * // => Her name was Lucy.
+  */
+  const replaceList = (string, array, value) => {
+    return string.replace(new RegExp(`\b${array.join('|')}\b`, 'gi'), value);
   };
-  assign(acid$1, {
-    replaceWithList
+  assign($, {
+    replaceList
   });
 
   const rawURLDecodeRegex = /%(?![\da-f]{2})/gi;
@@ -2081,29 +2218,57 @@
   const moreThanRegex = />/g;
   const doubleQuoteRegex = /"/g;
   /**
-  rawURLDecode takes a string and decodes it using native methods as well as regexToPath
-  @property  {string} - takes a url string
-  @example
-  const foo = 'http://bar.com'
-  rawURLDecode(foo)
+    * Raw URL decoder.
+    *
+    * @function rawURLDecode
+    * @type {Function}
+    * @param {string} string - String to be replaced.
+    * @returns {string} Converted string into the decoded URI Component .
+    *
+    * @example
+    * rawURLDecode('Lucy%20saw%20diamonds%20in%20the%20sky.');
+    * // => Lucy saw diamonds in the sky.
   */
   const rawURLDecode = (string) => {
     return decodeURIComponent(string.replace(rawURLDecodeRegex, () => {
       return '%25';
     }));
   };
-  const createHtmlEntities = (stringArg) => {
-    let string = stringArg;
-    string = string.replace(andRegex, '&amp;');
-    string = string.replace(lessThanRegex, '&lt;');
-    string = string.replace(moreThanRegex, '&gt;');
-    return string.replace(doubleQuoteRegex, '&quot;');
+  /**
+    * Replaced sensitive characters with their matching html entity.
+    *
+    * @function htmlEntities
+    * @type {Function}
+    * @param {string} string - String to be replaced.
+    * @returns {string} Replaced string.
+    *
+    * @example
+    * htmlEntities(`<script>console.log('Lucy & diamonds.')</script>`);
+    * // => &lt;script&gt;console.log('Lucy &amp; diamonds.')&lt;/script&gt;
+  */
+  const htmlEntities = (string) => {
+    return string.replace(andRegex, '&amp;')
+      .replace(lessThanRegex, '&lt;')
+      .replace(moreThanRegex, '&gt;')
+      .replace(doubleQuoteRegex, '&quot;');
   };
+  /**
+    * Executes rawURLDecode then htmlEntities methods on a string.
+    *
+    * @function sanitize
+    * @type {Function}
+    * @param {string} string - String to be replaced.
+    * @returns {string} Replaced string.
+    *
+    * @example
+    * sanitize(`<script>console.log('Lucy%20&%20diamonds.')</script>`);
+    * // => &lt;script&gt;console.log('Lucy &amp; diamonds.')&lt;/script&gt;
+  */
   const sanitize = (string) => {
-    return createHtmlEntities(rawURLDecode(string));
+    return htmlEntities(rawURLDecode(string));
   };
-  assign(acid$1, {
-    createHtmlEntities,
+  assign($, {
+    htmlEntities,
     rawURLDecode,
     sanitize
   });
@@ -2111,108 +2276,147 @@
   const tokenizeRegEx = /\S+/g;
   const wordsRegEx = /\w+/g;
   /**
-  tokenize takes a string and checks to see if it has anything but whitespace. If it does, it returns that string. If it does not, it returns an empty array.
-  @property {string} - takes a string
-  @example
-  const foo = 'bar';
-  tokenize(foo)
+    * Break string by non-white space characters matches.
+    *
+    * @function tokenize
+    * @type {Function}
+    * @param {string} string - String to be broken up.
+    * @returns {Array} Array of words without white space characters.
+    *
+    * @example
+    * tokenize('I am Lucy!');
+    * // => ["I", "am", "Lucy!"]
   */
   const tokenize = (string) => {
     return string.match(tokenizeRegEx) || [];
   };
   /**
-  words takes a string and checks to see if it has a single character or more. If it does, it returns that string. If it does not, it returns an empty array.
-  @property {string} - takes a string
-  @example
-  const foo = 'bar';
-  words(foo)
+    * Break string into word matches.
+    *
+    * @function words
+    * @type {Function}
+    * @param {string} string - String to be broken up.
+    * @returns {Array} Array of words with word characters only.
+    *
+    * @example
+    * words('I am Lucy!');
+    * // => ["I", "am", "Lucy"]
   */
   const words = (string) => {
     return string.match(wordsRegEx) || [];
   };
-  assign(acid$1, {
+  assign($, {
     tokenize,
     words
   });
 
-  const truncate = (stringArg, amount) => {
-    let string = stringArg;
-    if (string.length > amount) {
-      string = string.slice(0, amount);
+  const truncateDown = (string, maxLength, stringLength) => {
+    const breakAll = string.split('');
+    const breakAllLength = breakAll.length;
+    let item;
+    let index = stringLength - maxLength;
+    for (; index < breakAllLength && index >= 0; index--) {
+      item = breakAll[index];
+      if (item === ' ') {
+        break;
+      }
     }
-    return string;
+    return string.slice(0, index).trim();
+  };
+  const truncateUp = (string, maxLength, stringLength) => {
+    const breakAll = string.split('');
+    const breakAllLength = breakAll.length;
+    let item;
+    let index = maxLength;
+    for (; index < breakAllLength && index > 0; index++) {
+      item = breakAll[index];
+      if (item === ' ') {
+        break;
+      }
+    }
+    return string.substr(index, stringLength).trim();
   };
   /**
-  truncate left returns a string based on arguments given
-  @property {stringArg} - takes a string to be truncateWor
-  @property {amount} - integer value determining the degree of truncation
-  const foo = 'bar';
-  const amount = 1;
-  truncateLeft(foo, amount)
+    * Truncates the string, accounting for word placement and character count.
+    *
+    * @function truncate
+    * @type {Function}
+    * @param {string} string - String to be truncated.
+    * @param {number} maxLength - The desired max length of the string.
+    * @returns {string} An upper case letter.
+    *
+    * @example
+    * truncate('Where is Lucy?', 2);
+    * // => Where is
   */
-  const truncateLeft = (stringArg, amount) => {
-    let string = stringArg;
+  const truncate = (string, maxLength) => {
     const stringLength = string.length;
-    if (stringLength > amount) {
-      string = string.substr(amount, stringLength);
-    }
-    return string;
+    return (stringLength > maxLength) ? truncateDown(string, maxLength, stringLength) : string;
   };
   /**
-  truncateWord extracts the letters between the first character of a string and a given integer
-  @property {string} - takes a string to be truncated
-  @property {amount} - integer value determining the degree of truncation
-  const foo = 'bar';
-  const amount = 1;
-  truncateWord(foo, amount)
+    * Truncates the string, accounting for word placement and character count from the right.
+    *
+    * @function truncateRight
+    * @type {Function}
+    * @param {string} string - String to be truncated.
+    * @param {number} maxLength - The desired max length of the string.
+    * @returns {string} An upper case letter.
+    *
+    * @example
+    * truncateRight('Where is Lucy?', 6);
+    * // => Lucy?
   */
-  const truncateWord = (string, amount) => {
-    return string.substring(0, amount);
+  const truncateRight = (string, maxLength) => {
+    const stringLength = string.length;
+    return (stringLength > maxLength) ? truncateUp(string, maxLength, stringLength) : string;
   };
-  assign(acid$1, {
+  assign($, {
     truncate,
-    truncateLeft,
-    truncateWord,
+    truncateRight,
   });
 
   const spaceFirstLetter$1 = / (.)/g;
   /**
-  upperFirstLetter takes a string and extracts a capitalized version of its first character.
-  @property {string} - takes a string
-  @example
-  foo = 'bar';
-  upperFirstLetter(foo)
+    * Returns the first letter capitalized.
+    *
+    * @function upperFirstLetter
+    * @type {Function}
+    * @param {string} string - String to extract first letter from.
+    * @returns {string} An upper case letter.
+    *
+    * @example
+    * upperFirstLetter('upper');
+    * // => U
   */
   const upperFirstLetter = (string) => {
     return string[0].toUpperCase();
   };
   /**
-  restString returns the characters of a string based on the arguments given. If num = 0, it will return all characters in the string. If it = 1, it will return all characters after the first character etc.
-  @property {string} - takes a string
-  @property {num} - takes an integer
-  @example
-  foo = 'bar';
-  restString(foo)
-  */
-  const restString$1 = (string, num = 1) => {
-    return string.substr(num);
-  };
-  /**
-  upperFirst takes a string returns it with its first character capitalized
-  @property {string} - takes a string
-  @example
-  foo = 'bar';
-  upperFirst(foo)
+    * Capitalizes the first letter.
+    *
+    * @function upperFirst
+    * @type {Function}
+    * @param {string} string - String to be mutated.
+    * @returns {string} String with first letter capitalized.
+    *
+    * @example
+    * upperFirstLetter('upper');
+    * // => Upper
   */
   const upperFirst = (string) => {
-    return upperFirstLetter(string) + restString$1(string);
+    return upperFirstLetter(string) + restString(string);
   };
   /**
-  upperFirstAll returns a string wherein the first letter of every word in that string is capitalized
-  @property {string} - takes a string
-  @example
-  foo = 'bar';
-  upperFirstAll(foo)
+    * Capitalize all first letters.
+    *
+    * @function upperFirstAll
+    * @type {Function}
+    * @param {string} string - String to be mutated.
+    * @returns {string} String with all first letters capitalized.
+    *
+    * @example
+    * upperFirstAll('Lucy is next up.');
+    * // => Lucy Is Next Up.
   */
   const upperFirstAll = (string) => {
     return string.replace(spaceFirstLetter$1, (match) => {
@@ -2220,21 +2424,31 @@
     });
   };
   /**
-  upperFirstOnly returns a string wherein the first letter of the first word in that string is capitalized
-  @property {string} - takes a string
-  @example
-  foo = 'bar';
-  upperFirstOnly(foo)
+    * Capitalize first letter and lower case the rest.
+    *
+    * @function upperFirstOnly
+    * @type {Function}
+    * @param {string} string - String to be mutated.
+    * @returns {string} String with first letter capitalized.
+    *
+    * @example
+    * upperFirstOnly('LYSERGIC ACID DIETHYLAMIDE');
+    * // => Lysergic acid diethylamide
   */
   const upperFirstOnly = (string) => {
-    return upperFirstLetter(string) + restString$1(string).toLowerCase();
+    return upperFirstLetter(string) + restString(string).toLowerCase();
   };
   /**
-  upperFirstOnlyAll takes a string and first converts it to lower case. Then capitalizes all characters that follow a space
-  @property {string} - takes a string
-  @example
-  foo = 'bar';
-  upperFirstOnlyAll(foo)
+    * Capitalize all first letters and lower case the rest.
+    *
+    * @function upperFirstOnlyAll
+    * @type {Function}
+    * @param {string} string - String to be mutated.
+    * @returns {string} String with all first letters capitalized.
+    *
+    * @example
+    * upperFirstOnlyAll('LYSERGIC ACID DIETHYLAMIDE');
+    * // => Lysergic Acid Diethylamide
   */
   const upperFirstOnlyAll = (string) => {
     return string.toLowerCase()
@@ -2242,9 +2456,7 @@
         return match.toUpperCase();
       });
   };
-
-  assign(acid$1, {
-    restString: restString$1,
+  assign($, {
     upperFirst,
     upperFirstAll,
     upperFirstOnly,
@@ -2253,18 +2465,21 @@
 
   const functionPrototype = Function.prototype;
   /**
-  cacheNativeMethod takes a prototype method and returns a cached version of that method.
-  * @property {funct} -takes a function to be cached
-   * @example
-   const fooFunction() =>{
-    console.log();
-  };
-   cacheNativeMethod(fooFunction)
+    * Caches a prototype method.
+    *
+    * @function cacheNativeMethod
+    * @type {Function}
+    * @param {Function} method - Prototype method.
+    * @returns {Function} Cached method.
+    *
+    * @example
+    * cacheNativeMethod(Array.prototype.push);
+    * // => function call() { [native code] }
   */
-  function cacheNativeMethod(funct) {
-    return functionPrototype.call.bind(funct);
+  function cacheNativeMethod(method) {
+    return functionPrototype.call.bind(method);
   }
-  assign(acid$1, {
+  assign($, {
     cacheNativeMethod
   });
 
@@ -2275,10 +2490,30 @@
     }
     return rootObject;
   };
-  assign(acid$1, {
+  assign($, {
     ifNotEqual,
   });
 
+  /**
+  *   matchesProperty compares the properties of two objects.
+  *   @property {object} - takes an object
+  *   @property {compareObject} - takes an object
+  *   @property {properties} - takes in an array of properties
+  *   @example
+  *    const objOne = {
+  *      a:1,
+  *      b:2
+  *    };
+  *    const objTwo = {
+  *       a:1,
+  *       b:3
+  *    };
+  *     const propertiesToCompare = [a, b];
+  *     matchesProperty(objOne, objTwo, propertiesToCompare );
+  * //-> True, false
+  *   @returns
+  *   Boolean
+  */
   const propertyMatch = (object, compareObject, properties) => {
     let result = false;
     eachWhile(properties, (property) => {
@@ -2287,20 +2522,17 @@
     });
     return result;
   };
-  assign(acid$1, {
+  assign($, {
     propertyMatch,
   });
 
   const regexToPath = /\.|\[/;
   const regexCloseBracket = /]/g;
   const emptyString = '';
-  /**
-  toPath replaces a closed bracket with an empty string and splits on an opening bracket and periods.
-  */
   const toPath = (string) => {
     return string.replace(regexCloseBracket, emptyString).split(regexToPath);
   };
-  assign(acid$1, {
+  assign($, {
     toPath,
   });
 
@@ -2308,8 +2540,8 @@
   const uuidFree = [];
   const uuidClosed = {};
   /**
-   *uuid returns a unique id
-   */
+    * uuid returns a unique id
+  */
   const uuid = () => {
     let result = uuidFree.shift(uuidFree);
     if (!hasValue(result)) {
@@ -2320,17 +2552,17 @@
     return result;
   };
   /**
-   *uuid.remove nullifies a unique id within the uuidClosed object
-   */
+    * uuid.remove nullifies a unique id within the uuidClosed object
+  */
   uuid.remove = (id) => {
     uuidClosed[id] = null;
     uuidFree.push(id);
   };
-  assign(acid$1, {
+  assign($, {
     uuid,
   });
 
-  const get = (propertyString, objectChain = acid$1) => {
+  const get = (propertyString, objectChain = $) => {
     let link = objectChain;
     eachWhile(toPath(propertyString), (item) => {
       link = link[item];
@@ -2338,30 +2570,56 @@
     });
     return link;
   };
-  assign(acid$1, {
+  assign($, {
     get
   });
 
+  /**
+  *  model assigns a property on itself
+  *  @property {modelName} - takes a string
+  *  @property {object} - takes an object
+  *  @example
+  *  const obj = {
+  *  foo: bar
+  *};
+  *  const string = 'model.foo'
+  *  model(string, obj)
+  * //-> model.foo = obj
+  *  @returns
+  *  object
+  */
   const model = (modelName, object) => {
     if (hasValue(object)) {
       model[modelName] = object;
     }
     return get(modelName, model);
   };
-  acid$1.superMethod(model);
-  assign(acid$1, {
+  $.superMethod(model);
+  assign($, {
     model
   });
 
+  /**
+  * toggle does a strict comparison between the value and an argument. If it returns true, then it returns the b *argument. Else it returns the a argument.
+  * @property  {value} - Can be any data type
+  * @property {on} -  Can be any data type
+  * @example
+  * const value = 1;
+  * const on = 1;
+  * const off = 2;
+  * toggle(value, on, off);
+  * //-> 2
+  *  @returns
+  *  Can return any data type
+   */
   const toggle = (value, on, off) => {
     return (value === on) ? off : on;
   };
-  assign(acid$1, {
+  assign($, {
     toggle
   });
 
-  return acid$1;
+  return $;
 
 })));
-
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=bundle.js.map
