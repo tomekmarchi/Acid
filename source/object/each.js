@@ -26,6 +26,16 @@ export const compactMapObject = (object, iteratee) => {
   });
   return results;
 };
+export const filterObject = (object, iteratee) => {
+  const results = {};
+  let result;
+  eachObject(object, (item, key, thisObject, propertyCount, objectKeys) => {
+    if (iteratee(item, key, results, propertyCount, objectKeys) === true) {
+      results[key] = result;
+    }
+  });
+  return results;
+};
 export const mapProperty = (thisObject, iteratee) => {
   const results = {};
   const properties = getOwnPropertyNames(thisObject);
@@ -34,17 +44,10 @@ export const mapProperty = (thisObject, iteratee) => {
   });
   return thisObject;
 };
-export const forIn = (thisObject, iteratee) => {
-  const mappedObject = {};
-  for (const key in thisObject) {
-    mappedObject[key] = iteratee(thisObject[key], key, thisObject, mappedObject);
-  }
-  return mappedObject;
-};
 assign(acid, {
   compactMapObject,
   eachObject,
-  forIn,
+  filterObject,
   mapObject,
   mapProperty,
 });

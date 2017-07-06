@@ -77,7 +77,6 @@
       }
     };
   };
-  // loop through based on number
   const times = (startArg, endArg, iterateeArg) => {
     const start = (iterateeArg) ? startArg : 0;
     const end = (iterateeArg) ? endArg : startArg;
@@ -132,6 +131,15 @@
     });
     return results;
   };
+  const filterArray = (array, iteratee) => {
+    const results = [];
+    eachArray(array, (item, index, arrayOriginal, arrayLength) => {
+      if (iteratee(item, index, results, arrayOriginal, arrayLength) === true) {
+        results.push(item);
+      }
+    });
+    return results;
+  };
   const mapWhile = (array, iteratee) => {
     const arrayLength = array.length;
     const results = [];
@@ -153,6 +161,7 @@
     eachArray,
     eachArrayRight,
     eachWhile,
+    filterArray,
     mapArray,
     mapArrayRight,
     mapWhile,
@@ -782,14 +791,14 @@
     return array.slice(array.length - amount, amount);
   };
   assign($, {
-    takeRight,
-    take
+    take,
+    takeRight
   });
 
-  const mapAsync = async (array, funct) => {
+  const mapAsync = async (array, iteratee) => {
     const results = [];
     await eachAsync(array, async (item, index, arrayLength) => {
-      results[index] = await funct(item, index, arrayLength);
+      results[index] = await iteratee(item, index, arrayLength);
     });
     return results;
   };
@@ -1645,7 +1654,7 @@
     return object.forEach(callback);
   };
   const generateCheckLoops = (arrayLoop, objectLoop) => {
-    return (object, callback) => {
+    return (object, iteratee) => {
       let returned;
       if (!hasValue(object)) {
         return;
@@ -1658,7 +1667,7 @@
       } else {
         returned = objectLoop;
       }
-      return returned(object, callback);
+      return returned(object, iteratee);
     };
   };
   /**
@@ -2520,9 +2529,6 @@
   const regexToPath = /\.|\[/;
   const regexCloseBracket = /]/g;
   const emptyString = '';
-  /**
-  toPath replaces a closed bracket with an empty string and splits on an opening bracket and periods.
-  */
   const toPath = (string) => {
     return string.replace(regexCloseBracket, emptyString).split(regexToPath);
   };

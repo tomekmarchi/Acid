@@ -11,7 +11,6 @@ const whileGenerator = (optBool) => {
     }
   };
 };
-// loop through based on number
 export const times = (startArg, endArg, iterateeArg) => {
   const start = (iterateeArg) ? startArg : 0;
   const end = (iterateeArg) ? endArg : startArg;
@@ -66,6 +65,15 @@ export const compactMapArray = (array, iteratee) => {
   });
   return results;
 };
+export const filterArray = (array, iteratee) => {
+  const results = [];
+  eachArray(array, (item, index, arrayOriginal, arrayLength) => {
+    if (iteratee(item, index, results, arrayOriginal, arrayLength) === true) {
+      results.push(item);
+    }
+  });
+  return results;
+};
 export const mapWhile = (array, iteratee) => {
   const arrayLength = array.length;
   const results = [];
@@ -87,6 +95,7 @@ assign(acid, {
   eachArray,
   eachArrayRight,
   eachWhile,
+  filterArray,
   mapArray,
   mapArrayRight,
   mapWhile,
