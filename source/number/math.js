@@ -4,7 +4,7 @@ const mathNative = Math;
 const floorMethod = mathNative.floor;
 const randomMethod = mathNative.random;
 /**
-  * Adds two numbers
+  * Adds two numbers.
   *
   * @function add
   * @type {Function}
@@ -107,7 +107,7 @@ export const increment = (number) => {
   * @returns {number} - Returns a decremented version of the number.
   *
   * @example
-  * decremented(10);
+  * deduct(10);
   * // => 9
 */
 export const deduct = (number) => {
@@ -139,7 +139,7 @@ export const randomArbitrary = (max, min = 0) => {
   * @returns {number} - Returns random integer between the max and min range.
   *
   * @example
-  * randomArbitrary(10);
+  * randomInt(10);
   * // => 9
 */
 export const randomInt = (max, min = 0) => {
