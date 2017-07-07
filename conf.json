@@ -1,0 +1,4 @@
+{
+  "plugins": ["jsDocPlugins/category"],
+  "categoryfile" : "jsDocPlugins/category.json"
+}

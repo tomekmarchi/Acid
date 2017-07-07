@@ -7,7 +7,7 @@ const functionPrototype = Function.prototype;
   * @function cacheNativeMethod
   * @type {Function}
   * @param {Function} method - Prototype method.
-  * @returns {Function} Cached method.
+  * @returns {Function} - Cached method.
   *
   * @example
   * cacheNativeMethod(Array.prototype.push);

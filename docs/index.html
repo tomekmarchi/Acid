@@ -64,6 +64,16 @@
                 filter
               </a>
               <a
+                href='#uid'
+                class='block bold'>
+                uid
+              </a>
+                <a
+                  href='#uid.free'
+                  class='regular block'>
+                  .free
+                </a>
+              <a
                 href='#get'
                 class='block bold'>
                 get
@@ -92,6 +102,21 @@
                 href='#intersect'
                 class='block bold'>
                 intersect
+              </a>
+              <a
+                href='#isNumberEqual'
+                class='block bold'>
+                isNumberEqual
+              </a>
+              <a
+                href='#isNumberInRange'
+                class='block bold'>
+                isNumberInRange
+              </a>
+              <a
+                href='#isZero'
+                class='block bold'>
+                isZero
               </a>
               <a
                 href='#jsonParse'
@@ -143,16 +168,6 @@
                 class='block bold'>
                 remove
               </a>
-              <a
-                href='#uuid'
-                class='block bold'>
-                uuid
-              </a>
-                <a
-                  href='#uuid.remove'
-                  class='regular block'>
-                  .remove
-                </a>
               <a
                 href='#replaceList'
                 class='block bold'>
@@ -252,6 +267,7 @@
   <h2 id='$' class='mt0'>
     $<span class='gray'>(modelName, model, args)</span>
   </h2>
+  
   <p>Acid Object accessible through $ default method is model.</p>
 
     <h4>Parameters</h4>
@@ -303,6 +319,7 @@
               <h2 id='$.superMethod' class='mt0'>
                 superMethod<span class='gray'>(method)</span>
               </h2>
+              
               <p>Re-assigns the main Acid function.</p>
             
                 <h4>Parameters</h4>
@@ -327,6 +344,7 @@
   <h2 id='cacheNativeMethod' class='mt0'>
     cacheNativeMethod<span class='gray'>(method)</span>
   </h2>
+  
   <p>Caches a prototype method.</p>
 
     <h4>Parameters</h4>
@@ -354,6 +372,7 @@
   <h2 id='camelCase' class='mt0'>
     camelCase<span class='gray'>(string)</span>
   </h2>
+  
   <p>Converts a string into Camel case format.</p>
 
     <h4>Parameters</h4>
@@ -381,6 +400,7 @@
   <h2 id='chunkString' class='mt0'>
     chunkString<span class='gray'>(string, [size])</span>
   </h2>
+  
   <p>Splits up a string into chunks.</p>
 
     <h4>Parameters</h4>
@@ -415,6 +435,7 @@
   <h2 id='compactMap' class='mt0'>
     compactMap<span class='gray'>(callingObject, iteratee)</span>
   </h2>
+  
   <p>Iterates through the calling object and creates a new object based on the calling object&apos;s type with the results, (excludes results which are null or undefined), of the iteratee on every element in the calling object.</p>
 
     <h4>Parameters</h4>
@@ -455,6 +476,7 @@ compactMap({a: <span class="hljs-number">0</span>, b: <span class="hljs-number">
   <h2 id='each' class='mt0'>
     each<span class='gray'>(callingObject, iteratee)</span>
   </h2>
+  
   <p>Iterates through the given object.</p>
 
     <h4>Parameters</h4>
@@ -495,6 +517,7 @@ each({a: <span class="hljs-number">1</span>, b: <span class="hljs-number">2</spa
   <h2 id='filter' class='mt0'>
     filter<span class='gray'>(callingObject, iteratee)</span>
   </h2>
+  
   <p>Iterates through the given and creates a new object of the same calling object&apos;s type with all elements that pass the test implemented by the iteratee.</p>
 
     <h4>Parameters</h4>
@@ -532,9 +555,94 @@ filter({a: <span class="hljs-literal">false</span>, b: <span class="hljs-literal
 <span class="hljs-comment">// =&gt; {b: true, c: true}</span></pre>
 </section>
 </div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='uid' class='mt0'>
+    uid<span class='gray'></span>
+  </h2>
+  
+  <p>Creates a numerical unique ID and recycles old ones. UID numerically ascends however freed UIDs are later reused.</p>
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>Returns a unique id.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>uid();
+<span class="hljs-comment">//=&gt; 0</span>
+
+uid();
+<span class="hljs-comment">//=&gt; 1</span>
+
+uid.free(<span class="hljs-number">0</span>);
+<span class="hljs-comment">//=&gt; undefined</span>
+
+uid();
+<span class="hljs-comment">//=&gt; 0</span></pre>
+      <h4>Static members</h4>
+        <div class='collapsible' id='uid.free'>
+          <a href='#uid.free'>
+            <code>
+              .free<span class='gray'>(uid, id)</span>
+            </code>
+            <div class='force-inline'>
+              <p>Frees an UID so that it may be recycled for later use.</p>
+
+            </div>
+          </a>
+          <div class='collapser border px2 m2'>
+            <section class='py2 clearfix'>
+              <h2 id='uid.free' class='mt0'>
+                free<span class='gray'>(uid, id)</span>
+              </h2>
+              
+              <p>Frees an UID so that it may be recycled for later use.</p>
+            
+                <h4>Parameters</h4>
+                <ul class='suppress-p-margin'>
+                    <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code> <strong>uid</strong>
+                      :
+                      <div class='force-inline'>
+                        <p>Number to freed.</p>
+            
+                      </div>
+                    </li>
+                    <li> <strong>id</strong>
+                      :
+                      <div class='force-inline'>
+                        
+                      </div>
+                    </li>
+                </ul>
+                  <h4>Returns</h4>
+                  <code>undefined</code>
+                  :
+                  <div class='force-inline'>
+                    <p>Nothing is returned.</p>
+            
+                  </div>
+                <h4>Examples</h4>
+            <pre class='overflow-auto'>uid();
+            <span class="hljs-comment">//=&gt; 0</span>
+            
+            uid();
+            <span class="hljs-comment">//=&gt; 1</span>
+            
+            uid.free(<span class="hljs-number">0</span>);
+            <span class="hljs-comment">//=&gt; undefined</span>
+            
+            uid();
+            <span class="hljs-comment">//=&gt; 0</span></pre>
+            </section>
+          </div>
+        </div>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
   <h2 id='get' class='mt0'>
     get<span class='gray'>(propertyString, objectChain)</span>
   </h2>
+  
   <p>Returns property on an object.</p>
 
     <h4>Parameters</h4>
@@ -574,6 +682,7 @@ get(<span class="hljs-string">'post.like[2]'</span>, api);
   <h2 id='htmlEntities' class='mt0'>
     htmlEntities<span class='gray'>(string)</span>
   </h2>
+  
   <p>Replaced sensitive characters with their matching html entity.</p>
 
     <h4>Parameters</h4>
@@ -601,7 +710,8 @@ get(<span class="hljs-string">'post.like[2]'</span>, api);
   <h2 id='ifNotEqual' class='mt0'>
     ifNotEqual<span class='gray'>(rootObject, property, equalThis)</span>
   </h2>
-  <p>Checks if a property on an object has a value if not it will assign a value.</p>
+  
+  <p>Checks if a property on an object has a value. If not, it will assign a value.</p>
 
     <h4>Parameters</h4>
     <ul class='suppress-p-margin'>
@@ -642,6 +752,7 @@ get(<span class="hljs-string">'post.like[2]'</span>, api);
   <h2 id='initialString' class='mt0'>
     initialString<span class='gray'>(string, [index])</span>
   </h2>
+  
   <p>Truncates everything before the index starting from the right.</p>
 
     <h4>Parameters</h4>
@@ -680,6 +791,7 @@ initialString(<span class="hljs-string">'initialString'</span>, <span class="hlj
   <h2 id='insertInRange' class='mt0'>
     insertInRange<span class='gray'>(string, index, text)</span>
   </h2>
+  
   <p>Inserts text into a string at a given position.</p>
 
     <h4>Parameters</h4>
@@ -721,6 +833,7 @@ initialString(<span class="hljs-string">'initialString'</span>, <span class="hlj
   <h2 id='intersect' class='mt0'>
     intersect<span class='gray'>(array, arrays)</span>
   </h2>
+  
   <p>Returns an new array that is the <a href="http://en.wikipedia.org/wiki/Intersection_(set_theory)">set intersection</a>
 of the array and the input array(s).</p>
 
@@ -756,9 +869,128 @@ intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span
 <span class="hljs-comment">// -&gt; [1, 2]</span></pre>
 </section>
 </div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='isNumberEqual' class='mt0'>
+    isNumberEqual<span class='gray'>(item, num)</span>
+  </h2>
+  
+  <p>Strictly checks if a number equal to another number.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code> <strong>item</strong>
+          :
+          <div class='force-inline'>
+            <p>Number to be checked against num.</p>
+
+          </div>
+        </li>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code> <strong>num</strong>
+          :
+          <div class='force-inline'>
+            <p>Number to be checked against item.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code></code>
+      
+      <div class='force-inline'>
+        
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>isNumberEqual(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+<span class="hljs-comment">// =&gt; true</span>
+
+isNumberEqual(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>);
+<span class="hljs-comment">// =&gt; False</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='isNumberInRange' class='mt0'>
+    isNumberInRange<span class='gray'>(num, number, start, [end])</span>
+  </h2>
+  
+  <p>Checks if a number is within a range.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code> <strong>num</strong>
+          :
+          <div class='force-inline'>
+            <p>Number to be checked.</p>
+
+          </div>
+        </li>
+        <li> <strong>number</strong>
+          :
+          <div class='force-inline'>
+            <p>= 0] - Beginning of range.</p>
+
+          </div>
+        </li>
+        <li> <strong>start</strong>
+            (default <code>0</code>)
+          :
+          <div class='force-inline'>
+            
+          </div>
+        </li>
+        <li><code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>]</code> <strong>end</strong>
+          :
+          <div class='force-inline'>
+            <p>End of range.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code></code>
+      
+      <div class='force-inline'>
+        
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>isNumberInRange(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>);
+<span class="hljs-comment">// =&gt; True</span>
+
+isNumberEqual(<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>, <span class="hljs-number">0</span>);
+<span class="hljs-comment">// =&gt; False</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='isZero' class='mt0'>
+    isZero<span class='gray'>(item)</span>
+  </h2>
+  
+  <p>Strictly checks if a number is zero.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code> <strong>item</strong>
+          :
+          <div class='force-inline'>
+            <p>Number to be checked.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code></code>
+      
+      <div class='force-inline'>
+        
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>isZero(<span class="hljs-number">0</span>);
+<span class="hljs-comment">// =&gt; true</span>
+
+isZero(<span class="hljs-number">1</span>);
+<span class="hljs-comment">// =&gt; False</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
   <h2 id='jsonParse' class='mt0'>
     jsonParse<span class='gray'>(string)</span>
   </h2>
+  
   <p>Parses JSON string.</p>
 
     <h4>Parameters</h4>
@@ -786,6 +1018,7 @@ intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span
   <h2 id='kebabCase' class='mt0'>
     kebabCase<span class='gray'>(string)</span>
   </h2>
+  
   <p>Converts a string into Kebab case format.</p>
 
     <h4>Parameters</h4>
@@ -813,6 +1046,7 @@ intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span
   <h2 id='map' class='mt0'>
     map<span class='gray'>(callingObject, iteratee)</span>
   </h2>
+  Utility
   <p>Iterates through the calling object and creates a new object based on the calling object&apos;s type with the results of the iteratee on every element in the calling object.</p>
 
     <h4>Parameters</h4>
@@ -853,6 +1087,7 @@ map({a: <span class="hljs-number">1</span>, b: <span class="hljs-number">2</span
   <h2 id='model' class='mt0'>
     model<span class='gray'>(modelName, object)</span>
   </h2>
+  
   <p>Set &amp; Get a model.</p>
 
     <h4>Parameters</h4>
@@ -880,15 +1115,16 @@ map({a: <span class="hljs-number">1</span>, b: <span class="hljs-number">2</span
       </div>
     <h4>Examples</h4>
 <pre class='overflow-auto'>model(<span class="hljs-string">'test'</span>, {a: <span class="hljs-number">1</span>});
-<span class="hljs-comment">//-&gt; {a: 1}</span>
+<span class="hljs-comment">//=&gt; {a: 1}</span>
 
 model(<span class="hljs-string">'test'</span>);
-<span class="hljs-comment">//-&gt; {a: 1}</span></pre>
+<span class="hljs-comment">//=&gt; {a: 1}</span></pre>
 </section>
 </div><div class='py1'><section class='py2 clearfix'>
   <h2 id='numericalCompareReverse' class='mt0'>
     numericalCompareReverse<span class='gray'>(a, b)</span>
   </h2>
+  
   <p>Sorts an array in place using a reverse numerical comparison algorithm
 (sorts numbers from highest to lowest) and returns the array.</p>
 
@@ -923,6 +1159,7 @@ rnumsort(files);
   <h2 id='numSort' class='mt0'>
     numSort<span class='gray'>(array)</span>
   </h2>
+  
   <p>Sorts an array in place using a numerical comparison algorithm
 (sorts numbers from lowest to highest) and returns the array.</p>
 
@@ -952,6 +1189,7 @@ numsort(files);
   <h2 id='promise' class='mt0'>
     promise<span class='gray'>(callback)</span>
   </h2>
+  
   <p>A wrapper around the promise constructor.</p>
 
     <h4>Parameters</h4>
@@ -979,7 +1217,8 @@ numsort(files);
   <h2 id='propertyMatch' class='mt0'>
     propertyMatch<span class='gray'>(object, compareObject, properties)</span>
   </h2>
-  <p>matchesProperty compares the properties of two objects.</p>
+  
+  <p>Using a deep comparison it checks if properties of two objects using an array are equal.</p>
 
     <h4>Parameters</h4>
     <ul class='suppress-p-margin'>
@@ -996,36 +1235,28 @@ numsort(files);
           </div>
         </li>
         <li> <strong>properties</strong>
+            (default <code>keys(object)</code>)
           :
           <div class='force-inline'>
             
           </div>
         </li>
     </ul>
-      <h4>Returns</h4>
-      <code></code>
-      :
-      <div class='force-inline'>
-        <p>Boolean</p>
-
-      </div>
     <h4>Examples</h4>
-<pre class='overflow-auto'><span class="hljs-keyword">const</span> objOne = {
-     a:<span class="hljs-number">1</span>,
-     b:<span class="hljs-number">2</span>
-   };
-   <span class="hljs-keyword">const</span> objTwo = {
-      a:<span class="hljs-number">1</span>,
-      b:<span class="hljs-number">3</span>
-   };
-    <span class="hljs-keyword">const</span> propertiesToCompare = [a, b];
-    matchesProperty(objOne, objTwo, propertiesToCompare );
-<span class="hljs-comment">//-&gt; True, false</span></pre>
+<pre class='overflow-auto'>propertyMatch({
+  a: <span class="hljs-number">1</span>,
+  b: <span class="hljs-number">2</span>
+}, {
+  a: <span class="hljs-number">1</span>,
+  b: <span class="hljs-number">2</span>
+}, [<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>]);
+<span class="hljs-comment">//-&gt; true</span></pre>
 </section>
 </div><div class='py1'><section class='py2 clearfix'>
   <h2 id='rawURLDecode' class='mt0'>
     rawURLDecode<span class='gray'>(string)</span>
   </h2>
+  
   <p>Raw URL decoder.</p>
 
     <h4>Parameters</h4>
@@ -1053,6 +1284,7 @@ numsort(files);
   <h2 id='remove' class='mt0'>
     remove<span class='gray'>(array, removeThese)</span>
   </h2>
+  
   <p>Removes all occurrences of the passed in items from the array and returns the array.</p>
 
     <h4>Parameters</h4>
@@ -1092,46 +1324,10 @@ remove(array,[<span class="hljs-number">2</span>, <span class="hljs-number">5</s
 <span class="hljs-comment">// -&gt; [4]</span></pre>
 </section>
 </div><div class='py1'><section class='py2 clearfix'>
-  <h2 id='uuid' class='mt0'>
-    uuid<span class='gray'></span>
-  </h2>
-  <p>uuid returns a unique id</p>
-
-      <h4>Static members</h4>
-        <div class='collapsible' id='uuid.remove'>
-          <a href='#uuid.remove'>
-            <code>
-              .remove<span class='gray'>(id)</span>
-            </code>
-            <div class='force-inline'>
-              <p>uuid.remove nullifies a unique id within the uuidClosed object</p>
-
-            </div>
-          </a>
-          <div class='collapser border px2 m2'>
-            <section class='py2 clearfix'>
-              <h2 id='uuid.remove' class='mt0'>
-                remove<span class='gray'>(id)</span>
-              </h2>
-              <p>uuid.remove nullifies a unique id within the uuidClosed object</p>
-            
-                <h4>Parameters</h4>
-                <ul class='suppress-p-margin'>
-                    <li> <strong>id</strong>
-                      :
-                      <div class='force-inline'>
-                        
-                      </div>
-                    </li>
-                </ul>
-            </section>
-          </div>
-        </div>
-</section>
-</div><div class='py1'><section class='py2 clearfix'>
   <h2 id='replaceList' class='mt0'>
     replaceList<span class='gray'>(string, array, value)</span>
   </h2>
+  
   <p>Replaces all occurrences of strings in an array with a value.</p>
 
     <h4>Parameters</h4>
@@ -1162,7 +1358,7 @@ remove(array,[<span class="hljs-number">2</span>, <span class="hljs-number">5</s
       <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
       :
       <div class='force-inline'>
-        <p>Converted string in Snake case.</p>
+        <p>The string with the replacement.</p>
 
       </div>
     <h4>Examples</h4>
@@ -1173,6 +1369,7 @@ remove(array,[<span class="hljs-number">2</span>, <span class="hljs-number">5</s
   <h2 id='restString' class='mt0'>
     restString<span class='gray'>(string, [index])</span>
   </h2>
+  
   <p>Truncates everything after a index.</p>
 
     <h4>Parameters</h4>
@@ -1211,6 +1408,7 @@ restString(<span class="hljs-string">'restString'</span>, <span class="hljs-numb
   <h2 id='rightString' class='mt0'>
     rightString<span class='gray'>(string, [index])</span>
   </h2>
+  
   <p>Plucks a letter using the index starting from the right.</p>
 
     <h4>Parameters</h4>
@@ -1249,7 +1447,8 @@ rightString(<span class="hljs-string">'rightString'</span>, <span class="hljs-nu
   <h2 id='sanitize' class='mt0'>
     sanitize<span class='gray'>(string)</span>
   </h2>
-  <p>Executes rawURLDecode then htmlEntities methods on a string.</p>
+  
+  <p>Executes rawURLDecode followd by htmlEntities methods on a string.</p>
 
     <h4>Parameters</h4>
     <ul class='suppress-p-margin'>
@@ -1276,6 +1475,7 @@ rightString(<span class="hljs-string">'rightString'</span>, <span class="hljs-nu
   <h2 id='snakeCase' class='mt0'>
     snakeCase<span class='gray'>(string)</span>
   </h2>
+  
   <p>Converts a string into snake case format.</p>
 
     <h4>Parameters</h4>
@@ -1303,6 +1503,7 @@ rightString(<span class="hljs-string">'rightString'</span>, <span class="hljs-nu
   <h2 id='stringify' class='mt0'>
     stringify<span class='gray'>(object)</span>
   </h2>
+  
   <p>Stringify an object into a JSON string.</p>
 
     <h4>Parameters</h4>
@@ -1330,25 +1531,26 @@ rightString(<span class="hljs-string">'rightString'</span>, <span class="hljs-nu
   <h2 id='toggle' class='mt0'>
     toggle<span class='gray'>(value, on, off)</span>
   </h2>
-  <p>Performs strict comparison between the value and an argument. If it returns true, then it returns the b argument. Else it returns the a argument.</p>
+  
+  <p>Performs a toggle between 2 values using a deep or strict comparison.</p>
 
     <h4>Parameters</h4>
     <ul class='suppress-p-margin'>
-        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code> <strong>value</strong>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code> <strong>value</strong>
           :
           <div class='force-inline'>
             <p>Strictly compared against the on argument.</p>
 
           </div>
         </li>
-        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code> <strong>on</strong>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code> <strong>on</strong>
           :
           <div class='force-inline'>
             <p>Strictly compared against the value argument.</p>
 
           </div>
         </li>
-        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code> <strong>off</strong>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code> <strong>off</strong>
           :
           <div class='force-inline'>
             <p>Value to be returned.</p>
@@ -1357,10 +1559,10 @@ rightString(<span class="hljs-string">'rightString'</span>, <span class="hljs-nu
         </li>
     </ul>
       <h4>Returns</h4>
-      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code></code>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code></code>
       :
       <div class='force-inline'>
-        <p>The on or off argument.</p>
+        <p>The opposing value to the current.</p>
 
       </div>
     <h4>Examples</h4>
@@ -1371,6 +1573,7 @@ rightString(<span class="hljs-string">'rightString'</span>, <span class="hljs-nu
   <h2 id='tokenize' class='mt0'>
     tokenize<span class='gray'>(string)</span>
   </h2>
+  
   <p>Break string by non-white space characters matches.</p>
 
     <h4>Parameters</h4>
@@ -1398,6 +1601,7 @@ rightString(<span class="hljs-string">'rightString'</span>, <span class="hljs-nu
   <h2 id='toPath' class='mt0'>
     toPath<span class='gray'>(string)</span>
   </h2>
+  
   <p>Breaks up string into object chain list.</p>
 
     <h4>Parameters</h4>
@@ -1425,6 +1629,7 @@ rightString(<span class="hljs-string">'rightString'</span>, <span class="hljs-nu
   <h2 id='truncate' class='mt0'>
     truncate<span class='gray'>(string, maxLength)</span>
   </h2>
+  
   <p>Truncates the string, accounting for word placement and character count.</p>
 
     <h4>Parameters</h4>
@@ -1453,12 +1658,13 @@ rightString(<span class="hljs-string">'rightString'</span>, <span class="hljs-nu
       </div>
     <h4>Examples</h4>
 <pre class='overflow-auto'>truncate(<span class="hljs-string">'Where is Lucy?'</span>, <span class="hljs-number">2</span>);
-<span class="hljs-comment">// =&gt; Where is</span></pre>
+<span class="hljs-comment">// =&gt; Where</span></pre>
 </section>
 </div><div class='py1'><section class='py2 clearfix'>
   <h2 id='truncateRight' class='mt0'>
     truncateRight<span class='gray'>(string, maxLength)</span>
   </h2>
+  
   <p>Truncates the string, accounting for word placement and character count from the right.</p>
 
     <h4>Parameters</h4>
@@ -1493,6 +1699,7 @@ rightString(<span class="hljs-string">'rightString'</span>, <span class="hljs-nu
   <h2 id='upperCase' class='mt0'>
     upperCase<span class='gray'>(string)</span>
   </h2>
+  
   <p>Converts a string and converts it entirely into uppercase.</p>
 
     <h4>Parameters</h4>
@@ -1520,6 +1727,7 @@ rightString(<span class="hljs-string">'rightString'</span>, <span class="hljs-nu
   <h2 id='upperFirst' class='mt0'>
     upperFirst<span class='gray'>(string)</span>
   </h2>
+  
   <p>Capitalizes the first letter.</p>
 
     <h4>Parameters</h4>
@@ -1547,6 +1755,7 @@ rightString(<span class="hljs-string">'rightString'</span>, <span class="hljs-nu
   <h2 id='upperFirstAll' class='mt0'>
     upperFirstAll<span class='gray'>(string)</span>
   </h2>
+  
   <p>Capitalize all first letters.</p>
 
     <h4>Parameters</h4>
@@ -1574,6 +1783,7 @@ rightString(<span class="hljs-string">'rightString'</span>, <span class="hljs-nu
   <h2 id='upperFirstLetter' class='mt0'>
     upperFirstLetter<span class='gray'>(string)</span>
   </h2>
+  
   <p>Returns the first letter capitalized.</p>
 
     <h4>Parameters</h4>
@@ -1601,6 +1811,7 @@ rightString(<span class="hljs-string">'rightString'</span>, <span class="hljs-nu
   <h2 id='upperFirstOnly' class='mt0'>
     upperFirstOnly<span class='gray'>(string)</span>
   </h2>
+  
   <p>Capitalize first letter and lower case the rest.</p>
 
     <h4>Parameters</h4>
@@ -1628,6 +1839,7 @@ rightString(<span class="hljs-string">'rightString'</span>, <span class="hljs-nu
   <h2 id='upperFirstOnlyAll' class='mt0'>
     upperFirstOnlyAll<span class='gray'>(string)</span>
   </h2>
+  
   <p>Capitalize all first letters and lower case the rest.</p>
 
     <h4>Parameters</h4>
@@ -1655,6 +1867,7 @@ rightString(<span class="hljs-string">'rightString'</span>, <span class="hljs-nu
   <h2 id='words' class='mt0'>
     words<span class='gray'>(string)</span>
   </h2>
+  
   <p>Break string into word matches.</p>
 
     <h4>Parameters</h4>

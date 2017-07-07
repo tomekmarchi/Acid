@@ -8,7 +8,7 @@ import { assign } from '../internal/object';
   * @param {string} string - String to insert the text into.
   * @param {number} index - Point of insertion.
   * @param {string} text - The string to be inserted.
-  * @returns {string} The string with the text inserted at the given point.
+  * @returns {string} - The string with the text inserted at the given point.
   *
   * @example
   * insertInRange('A from Lucy.', 1, ' tab');
@@ -24,7 +24,7 @@ export const insertInRange = (string, index, text) => {
   * @type {Function}
   * @param {string} string - String to extract the letter from.
   * @param {number} [index=1] - The starting position.
-  * @returns {string} A letter at the given index.
+  * @returns {string} - A letter at the given index.
   *
   * @example
   * rightString('rightString');
@@ -43,7 +43,7 @@ export const rightString = (string, index = 1) => {
   * @type {Function}
   * @param {string} string - String to chunked.
   * @param {number} [size] - The max string length per chunk.
-  * @returns {Array} An array with strings that are <= size parameter.
+  * @returns {Array} - An array with strings that are <= size parameter.
   *
   * @example
   * chunkString('chunk', 2);
@@ -78,7 +78,7 @@ export const initialString = (string, index = 1) => {
   * @type {Function}
   * @param {string} string - String to extract the rest of the letters from.
   * @param {number} [index=1] - Starting point.
-  * @returns {string} A string without the characters up-to to the index.
+  * @returns {string} - A string without the characters up-to to the index.
   *
   * @example
   * restString('restString');

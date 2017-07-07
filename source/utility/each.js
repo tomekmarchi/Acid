@@ -7,26 +7,27 @@ const forEachWrap = (object, callback) => {
   return object.forEach(callback);
 };
 const generateCheckLoops = (arrayLoop, objectLoop) => {
-  return (object, iteratee) => {
+  return (callingObject, iteratee) => {
     let returned;
-    if (!hasValue(object)) {
+    if (!hasValue(callingObject)) {
       return;
-    } else if (isArray(object)) {
+    } else if (isArray(callingObject)) {
       returned = arrayLoop;
-    } else if (isPlainObject(object) || isFunction(object)) {
+    } else if (isPlainObject(callingObject) || isFunction(callingObject)) {
       returned = objectLoop;
     } else if (object.forEach) {
       returned = forEachWrap;
     } else {
       returned = objectLoop;
     }
-    return returned(object, iteratee);
+    return returned(callingObject, iteratee);
   };
 };
 /**
   * Iterates through the calling object and creates a new object based on the calling object's type with the results of the iteratee on every element in the calling object.
   *
   * @function map
+  * @category Utility
   * @type {Function}
   * @param {(Array|Object|Map|WeakMap|Function|Set)} callingObject - Object that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, key, the newly created map object and arguments unique to mapArray or mapObject depending on the object type.
@@ -90,7 +91,7 @@ export const compactMap = generateCheckLoops(compactMapArray, compactMapObject);
   * @type {Function}
   * @param {(Array|Object|Map|WeakMap|Function|Set)} callingObject - Object that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, key, the newly created map object and arguments unique to mapArray or mapObject depending on the object type.
-  * @returns {Object} A new object of the same calling object's type.
+  * @returns {Object} - A new object of the same calling object's type.
   *
   * @example
   * filter([false, true, true], (item) => {
