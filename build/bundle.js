@@ -1220,7 +1220,7 @@
     * @param {string} string - String to insert the text into.
     * @param {number} index - Point of insertion.
     * @param {string} text - The string to be inserted.
-    * @returns {string} The string with the text inserted at the given point.
+    * @returns {string} - The string with the text inserted at the given point.
     *
     * @example
     * insertInRange('A from Lucy.', 1, ' tab');
@@ -1236,7 +1236,7 @@
     * @type {Function}
     * @param {string} string - String to extract the letter from.
     * @param {number} [index=1] - The starting position.
-    * @returns {string} A letter at the given index.
+    * @returns {string} - A letter at the given index.
     *
     * @example
     * rightString('rightString');
@@ -1255,7 +1255,7 @@
     * @type {Function}
     * @param {string} string - String to chunked.
     * @param {number} [size] - The max string length per chunk.
-    * @returns {Array} An array with strings that are <= size parameter.
+    * @returns {Array} - An array with strings that are <= size parameter.
     *
     * @example
     * chunkString('chunk', 2);
@@ -1291,7 +1291,7 @@
     * @type {Function}
     * @param {string} string - String to extract the rest of the letters from.
     * @param {number} [index=1] - Starting point.
-    * @returns {string} A string without the characters up-to to the index.
+    * @returns {string} - A string without the characters up-to to the index.
     *
     * @example
     * restString('restString');
@@ -1684,26 +1684,27 @@
     return object.forEach(callback);
   };
   const generateCheckLoops = (arrayLoop, objectLoop) => {
-    return (object, iteratee) => {
+    return (callingObject, iteratee) => {
       let returned;
-      if (!hasValue(object)) {
+      if (!hasValue(callingObject)) {
         return;
-      } else if (isArray(object)) {
+      } else if (isArray(callingObject)) {
         returned = arrayLoop;
-      } else if (isPlainObject(object) || isFunction(object)) {
+      } else if (isPlainObject(callingObject) || isFunction(callingObject)) {
         returned = objectLoop;
       } else if (object.forEach) {
         returned = forEachWrap;
       } else {
         returned = objectLoop;
       }
-      return returned(object, iteratee);
+      return returned(callingObject, iteratee);
     };
   };
   /**
     * Iterates through the calling object and creates a new object based on the calling object's type with the results of the iteratee on every element in the calling object.
     *
     * @function map
+    * @category Utility
     * @type {Function}
     * @param {(Array|Object|Map|WeakMap|Function|Set)} callingObject - Object that will be looped through.
     * @param {Function} iteratee - Transformation function which is passed item, key, the newly created map object and arguments unique to mapArray or mapObject depending on the object type.
@@ -1767,7 +1768,7 @@
     * @type {Function}
     * @param {(Array|Object|Map|WeakMap|Function|Set)} callingObject - Object that will be looped through.
     * @param {Function} iteratee - Transformation function which is passed item, key, the newly created map object and arguments unique to mapArray or mapObject depending on the object type.
-    * @returns {Object} A new object of the same calling object's type.
+    * @returns {Object} - A new object of the same calling object's type.
     *
     * @example
     * filter([false, true, true], (item) => {
@@ -2002,12 +2003,60 @@
     wrapBefore
   });
 
+  /**
+    * Strictly checks if a number is zero.
+    *
+    * @function isZero
+    * @type {Function}
+    * @param {number} item - Number to be checked.
+    * @returns {boolean}
+    *
+    * @example
+    * isZero(0);
+    * // => true
+    *
+    * isZero(1);
+    * // => False
+  */
   const isZero = (item) => {
     return item === 0;
   };
+  /**
+    * Strictly checks if a number equal to another number.
+    *
+    * @function isNumberEqual
+    * @type {Function}
+    * @param {number} item - Number to be checked against num.
+    * @param {number} num - Number to be checked against item.
+    * @returns {boolean}
+    *
+    * @example
+    * isNumberEqual(0, 0);
+    * // => true
+    *
+    * isNumberEqual(0, 1);
+    * // => False
+  */
   const isNumberEqual = (item, num) => {
     return item === num;
   };
+  /**
+    * Checks if a number is within a range.
+    *
+    * @function isNumberInRange
+    * @type {Function}
+    * @param {number} num - Number to be checked.
+    * @param {number} [start = 0] - Beginning of range.
+    * @param {number} [end] - End of range.
+    * @returns {boolean}
+    *
+    * @example
+    * isNumberInRange(1, 0, 2);
+    * // => True
+    *
+    * isNumberEqual(1, -1, 0);
+    * // => False
+  */
   const isNumberInRange = (num, start = 0, end = start) => {
     return num > start && num < end;
   };
@@ -2052,37 +2101,6 @@
   assign($, {
     hasAnyKeys,
     hasKeys,
-  });
-
-  /*
-  	Performs a deep comparison between object and source to determine if object contains equivalent property values.
-  */
-  const isEqual = (object, compareObject) => {
-    let result = false;
-    if (object === compareObject) {
-      result = true;
-    } else if (object.toString() === compareObject.toString()) {
-      if (isPlainObject(object)) {
-        const sourceProperties = keys(object);
-        if (isMatchArray(sourceProperties, keys(compareObject))) {
-          eachWhile(sourceProperties, (key) => {
-            result = isEqual(object[key], compareObject[key]);
-            return result;
-          });
-        }
-      } else if (isArray(object)) {
-        if (object.length === compareObject.length) {
-          eachWhile(object, (item, index) => {
-            result = isEqual(item, compareObject[index]);
-            return result;
-          });
-        }
-      }
-    }
-    return result;
-  };
-  assign($, {
-    isEqual,
   });
 
   const pick = (array, originalObject, newObject) => {
@@ -2170,7 +2188,7 @@
     * @function upperCase
     * @type {Function}
     * @param {string} string - String to be converted into upper case.
-    * @returns {string} Converted string in upper case.
+    * @returns {string} - Converted string in upper case.
     *
     * @example
     * upperCase('upper case');
@@ -2187,7 +2205,7 @@
     * @function camelCase
     * @type {Function}
     * @param {string} string - String to be converted into Camel case.
-    * @returns {string} Converted string in Camel case.
+    * @returns {string} - Converted string in Camel case.
     *
     * @example
     * camelCase('camel case');
@@ -2205,7 +2223,7 @@
     * @function kebabCase
     * @type {Function}
     * @param {string} string - String to be converted into Kebab case.
-    * @returns {string} Converted string in Kebab case.
+    * @returns {string} - Converted string in Kebab case.
     *
     * @example
     * kebabCase('kebab case');
@@ -2223,7 +2241,7 @@
     * @function snakeCase
     * @type {Function}
     * @param {string} string - String to be converted into snake case.
-    * @returns {string} Converted string in Snake case.
+    * @returns {string} - Converted string in Snake case.
     *
     * @example
     * snakeCase('snake case');
@@ -2250,7 +2268,7 @@
     * @param {string} string - String to be replaced.
     * @param {Array} array - Strings to replace.
     * @param {string} value - The match replacement.
-    * @returns {string} Converted string in Snake case.
+    * @returns {string} - The string with the replacement.
     *
     * @example
     * replaceList('Her name was @user.', ['@user'], 'Lucy');
@@ -2274,7 +2292,7 @@
     * @function rawURLDecode
     * @type {Function}
     * @param {string} string - String to be replaced.
-    * @returns {string} Converted string into the decoded URI Component .
+    * @returns {string} - Converted string into the decoded URI Component .
     *
     * @example
     * rawURLDecode('Lucy%20saw%20diamonds%20in%20the%20sky.');
@@ -2304,7 +2322,7 @@
       .replace(doubleQuoteRegex, '&quot;');
   };
   /**
-    * Executes rawURLDecode then htmlEntities methods on a string.
+    * Executes rawURLDecode followd by htmlEntities methods on a string.
     *
     * @function sanitize
     * @type {Function}
@@ -2332,7 +2350,7 @@
     * @function tokenize
     * @type {Function}
     * @param {string} string - String to be broken up.
-    * @returns {Array} Array of words without white space characters.
+    * @returns {Array} - Array of words without white space characters.
     *
     * @example
     * tokenize('I am Lucy!');
@@ -2347,7 +2365,7 @@
     * @function words
     * @type {Function}
     * @param {string} string - String to be broken up.
-    * @returns {Array} Array of words with word characters only.
+    * @returns {Array} - Array of words with word characters only.
     *
     * @example
     * words('I am Lucy!');
@@ -2394,11 +2412,11 @@
     * @type {Function}
     * @param {string} string - String to be truncated.
     * @param {number} maxLength - The desired max length of the string.
-    * @returns {string} An upper case letter.
+    * @returns {string} - An upper case letter.
     *
     * @example
     * truncate('Where is Lucy?', 2);
-    * // => Where is
+    * // => Where
   */
   const truncate = (string, maxLength) => {
     const stringLength = string.length;
@@ -2411,7 +2429,7 @@
     * @type {Function}
     * @param {string} string - String to be truncated.
     * @param {number} maxLength - The desired max length of the string.
-    * @returns {string} An upper case letter.
+    * @returns {string} - An upper case letter.
     *
     * @example
     * truncateRight('Where is Lucy?', 6);
@@ -2433,7 +2451,7 @@
     * @function upperFirstLetter
     * @type {Function}
     * @param {string} string - String to extract first letter from.
-    * @returns {string} An upper case letter.
+    * @returns {string} - An upper case letter.
     *
     * @example
     * upperFirstLetter('upper');
@@ -2448,7 +2466,7 @@
     * @function upperFirst
     * @type {Function}
     * @param {string} string - String to be mutated.
-    * @returns {string} String with first letter capitalized.
+    * @returns {string} - String with first letter capitalized.
     *
     * @example
     * upperFirstLetter('upper');
@@ -2463,7 +2481,7 @@
     * @function upperFirstAll
     * @type {Function}
     * @param {string} string - String to be mutated.
-    * @returns {string} String with all first letters capitalized.
+    * @returns {string} - String with all first letters capitalized.
     *
     * @example
     * upperFirstAll('Lucy is next up.');
@@ -2480,7 +2498,7 @@
     * @function upperFirstOnly
     * @type {Function}
     * @param {string} string - String to be mutated.
-    * @returns {string} String with first letter capitalized.
+    * @returns {string} - String with first letter capitalized.
     *
     * @example
     * upperFirstOnly('LYSERGIC ACID DIETHYLAMIDE');
@@ -2495,7 +2513,7 @@
     * @function upperFirstOnlyAll
     * @type {Function}
     * @param {string} string - String to be mutated.
-    * @returns {string} String with all first letters capitalized.
+    * @returns {string} - String with all first letters capitalized.
     *
     * @example
     * upperFirstOnlyAll('LYSERGIC ACID DIETHYLAMIDE');
@@ -2521,7 +2539,7 @@
     * @function cacheNativeMethod
     * @type {Function}
     * @param {Function} method - Prototype method.
-    * @returns {Function} Cached method.
+    * @returns {Function} - Cached method.
     *
     * @example
     * cacheNativeMethod(Array.prototype.push);
@@ -2535,14 +2553,14 @@
   });
 
   /**
-     * Checks if a property on an object has a value if not it will assign a value.
+     * Checks if a property on an object has a value. If not, it will assign a value.
      *
      * @function ifNotEqual
      * @type {Function}
      * @param {Object} rootObject - The object to check.
      * @param {string} property - The property name which is to be checked.
      * @param {*} equalThis - The reassignment value for the property being checked.
-     * @returns {Object} Returns the provided rootObject.
+     * @returns {Object} - Returns the provided rootObject.
      *
      * @example
      * ifNotEqual({}, 'a', 1);
@@ -2558,30 +2576,60 @@
     ifNotEqual,
   });
 
-  /**
-  *   matchesProperty compares the properties of two objects.
-  *   @property {object} - takes an object
-  *   @property {compareObject} - takes an object
-  *   @property {properties} - takes in an array of properties
-  *   @example
-  *    const objOne = {
-  *      a:1,
-  *      b:2
-  *    };
-  *    const objTwo = {
-  *       a:1,
-  *       b:3
-  *    };
-  *     const propertiesToCompare = [a, b];
-  *     matchesProperty(objOne, objTwo, propertiesToCompare );
-  * //-> True, false
-  *   @returns
-  *   Boolean
+  /*
+  	Performs a deep comparison between object and source to determine if object contains equivalent property values.
   */
-  const propertyMatch = (object, compareObject, properties) => {
+  const isEqual = (object, compareObject) => {
+    let result = false;
+    if (object === compareObject) {
+      result = true;
+    } else if (object.toString() === compareObject.toString()) {
+      if (isPlainObject(object)) {
+        const sourceProperties = keys(object);
+        if (isMatchArray(sourceProperties, keys(compareObject))) {
+          eachWhile(sourceProperties, (key) => {
+            result = isEqual(object[key], compareObject[key]);
+            return result;
+          });
+        }
+      } else if (isArray(object)) {
+        if (object.length === compareObject.length) {
+          eachWhile(object, (item, index) => {
+            result = isEqual(item, compareObject[index]);
+            return result;
+          });
+        }
+      }
+    }
+    return result;
+  };
+  assign($, {
+    isEqual,
+  });
+
+  /**
+    * Using a deep comparison it checks if properties of two objects using an array are equal.
+    *
+    * @function propertyMatch
+    * @type {Function}
+    * @property {Object} - takes an object.
+    * @property {Object} - takes an object.
+    * @property {Array} - takes in an array of properties.
+    *
+    * @example
+    * propertyMatch({
+    *   a: 1,
+    *   b: 2
+    * }, {
+    *   a: 1,
+    *   b: 2
+    * }, ['a', 'b']);
+    * //-> true
+  */
+  const propertyMatch = (object, compareObject, properties = keys(object)) => {
     let result = false;
     eachWhile(properties, (property) => {
-      result = object[property] === compareObject[property];
+      result = isEqual(object[property], compareObject[property]);
       return result;
     });
     return result;
@@ -2616,9 +2664,26 @@
   const uuidFree = [];
   const uuidClosed = {};
   /**
-    * uuid returns a unique id
+    * Creates a numerical unique ID and recycles old ones. UID numerically ascends however freed UIDs are later reused.
+    *
+    * @function uid
+    * @type {Function}
+    * @returns {number} - Returns a unique id.
+    *
+    * @example
+    * uid();
+    * //=> 0
+    *
+    * uid();
+    * //=> 1
+    *
+    * uid.free(0);
+    * //=> undefined
+    *
+    * uid();
+    * //=> 0
   */
-  const uuid = () => {
+  const uid = () => {
     let result = uuidFree.shift(uuidFree);
     if (!hasValue(result)) {
       result = count;
@@ -2628,14 +2693,32 @@
     return result;
   };
   /**
-    * uuid.remove nullifies a unique id within the uuidClosed object
+    * Frees an UID so that it may be recycled for later use.
+    *
+    * @function uid
+    * @type {Function}
+    * @param {number} uid - Number to freed.
+    * @returns {undefined} - Nothing is returned.
+    *
+    * @example
+    * uid();
+    * //=> 0
+    *
+    * uid();
+    * //=> 1
+    *
+    * uid.free(0);
+    * //=> undefined
+    *
+    * uid();
+    * //=> 0
   */
-  uuid.remove = (id) => {
+  uid.free = (id) => {
     uuidClosed[id] = null;
     uuidFree.push(id);
   };
   assign($, {
-    uuid,
+    uid,
   });
 
   /**
@@ -2645,6 +2728,8 @@
     * @type {Function}
     * @param  {string} propertyString - String used to retrieve properties.
     * @param {Object} objectChain - Object which has a property retrieved from it.
+    * @returns {Object} - Returns property from the given object.
+    *
     * @example
     * const api = {
     *  post: {
@@ -2653,7 +2738,6 @@
     * }
     * get('post.like[2]', api);
     * //=> c
-    * @returns {Object} - Returns property from the given object.
     *
   */
   const get = (propertyString, objectChain = $) => {
@@ -2679,10 +2763,10 @@
     *
     * @example
     * model('test', {a: 1});
-    * //-> {a: 1}
+    * //=> {a: 1}
     *
     * model('test');
-    * //-> {a: 1}
+    * //=> {a: 1}
   */
   const model = (modelName, object) => {
     if (hasValue(object)) {
@@ -2696,21 +2780,21 @@
   });
 
   /**
-    * Performs strict comparison between the value and an argument. If it returns true, then it returns the b argument. Else it returns the a argument.
+    * Performs a toggle between 2 values using a deep or strict comparison.
     *
     * @function toggle
     * @type {Function}
-    * @param  {(string|number)} value - Strictly compared against the on argument.
-    * @param {(string|number)} on -  Strictly compared against the value argument.
-    * @param {(string|number)} off -  Value to be returned.
-    * @returns {(string|number)} - The on or off argument.
-    * 
+    * @param  {(string|number|Object|Array)} value - Strictly compared against the on argument.
+    * @param {(string|number|Object|Array)} on -  Strictly compared against the value argument.
+    * @param {(string|number|Object|Array)} off -  Value to be returned.
+    * @returns {(string|number|Object|Array)} - The opposing value to the current.
+    *
     * @example
     * toggle(1, 2, 3);
     * //=> 2
   */
   const toggle = (value, on, off) => {
-    return (value === on) ? off : on;
+    return (isEqual(on, value)) ? off : on;
   };
   assign($, {
     toggle

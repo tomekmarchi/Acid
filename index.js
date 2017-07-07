@@ -72,7 +72,11 @@ const build = async () => {
   console.log('Build Complete');
   console.log('Docs Started');
   const docs = await new Promise((accept) => {
-    documentation('./build/bundle.js', {}, (error, value) => {
+    documentation('./build/bundle.js', {
+      hljs: {
+        highlightAuto: true
+      },
+    }, (error, value) => {
       if (error) {
         return console.log(error);
       }

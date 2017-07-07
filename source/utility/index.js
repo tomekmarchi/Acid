@@ -1,7 +1,8 @@
 import './cacheNativeMethod';
 import './ifNotEqual';
-import './matchesProperty';
+import './propertyMatch';
 import './toPath';
+import './isEqual';
 import './uuid';
 import './each';
 import './get';
