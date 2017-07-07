@@ -416,32 +416,145 @@
   const mathNative = Math;
   const floorMethod = mathNative.floor;
   const randomMethod = mathNative.random;
+  /**
+    * Adds two numbers.
+    *
+    * @function add
+    * @type {Function}
+    * @param {number} number - First number.
+    * @param {number} value - Second number.
+    * @returns {number} - Returns the sum of the arguments.
+    *
+    * @example
+    * add(1, 1);
+    * // => 2
+  */
   const add = (number, value) => {
     return number + value;
   };
+  /**
+    * Subtracts two numbers.
+    *
+    * @function minus
+    * @type {Function}
+    * @param {number} number - First number.
+    * @param {number} value - Second number.
+    * @returns {number} - Returns the difference of the arguments.
+    *
+    * @example
+    * minus(1, 1);
+    * // => 0
+  */
   const minus = (number, value) => {
     return number - value;
   };
+  /**
+    * Divides two numbers.
+    *
+    * @function divide
+    * @type {Function}
+    * @param {number} number - First number.
+    * @param {number} value - Second number.
+    * @returns {number} - Returns the quotient of the arguments.
+    *
+    * @example
+    * divide(10, 5);
+    * // => 2
+  */
   const divide = (number, value) => {
     return number / value;
   };
+  /**
+    * Multiplies two numbers.
+    *
+    * @function multiply
+    * @type {Function}
+    * @param {number} number - First number.
+    * @param {number} value - Second number.
+    * @returns {number} - Returns the product of the arguments.
+    *
+    * @example
+    * multiply(10, 5);
+    * // => 50
+  */
   const multiply = (number, value) => {
     return number * value;
   };
+  /**
+    *  Extracts the remainder between two numbers.
+    *
+    * @function remainder
+    * @type {Function}
+    * @param {number} number - First number.
+    * @param {number} value - Second number.
+    * @returns {number} - Returns the remainder of the arguments.
+    *
+    * @example
+    * remainder(10, 6);
+    * // => 4
+  */
   const remainder = (number, value) => {
     return number % value;
   };
+  /**
+    *  Increments a number.
+    *
+    * @function increment
+    * @type {Function}
+    * @param {number} number - First number.
+    * @returns {number} - Returns an incremented version of the number.
+    *
+    * @example
+    * increment(10);
+    * // => 11
+  */
   const increment = (number) => {
     return number + 1;
   };
+  /**
+    *  Decrements a number.
+    *
+    * @function deduct
+    * @type {Function}
+    * @param {number} number - First number.
+    * @returns {number} - Returns a decremented version of the number.
+    *
+    * @example
+    * deduct(10);
+    * // => 9
+  */
   const deduct = (number) => {
     return number - 1;
   };
-  // Returns a random number between min (inclusive) and max (exclusive)
+  /**
+    *  Produces a random number between min (included) and max (excluded).
+    *
+    * @function randomArbitrary
+    * @type {Function}
+    * @param {number} max - Establishes highest possible value for the random number.
+    * @param {number} [min = 0] - Establishes lowest possible value for the random number.
+    * @returns {number} - Returns random integer between the max and min range.
+    *
+    * @example
+    * randomArbitrary(10);
+    * // => 9.1
+  */
   const randomArbitrary = (max, min = 0) => {
     return randomMethod() * (max - min) + min;
   };
-  // Returns a random integer between min (included) and max (excluded)
+  /**
+    *  Produces a random integer between min (included) and max (excluded).
+    *
+    * @function randomInt
+    * @type {Function}
+    * @param {number} max - Establishes highest possible value for the random number.
+    * @param {number} [min = 0] - Establishes lowest possible value for the random number.
+    * @returns {number} - Returns random integer between the max and min range.
+    *
+    * @example
+    * randomInt(10);
+    * // => 9
+  */
   const randomInt = (max, min = 0) => {
     return floorMethod(randomMethod() * (max - min)) + min;
   };
@@ -2066,6 +2179,21 @@
     isZero
   });
 
+  /**
+    * Creates new object with deeply assigned values from another object/array.
+    *
+    * @function assignDeep
+    * @type {Function}
+    * @param {Object} object - Object to be assigned new properties.
+    * @param {Object} otherObject - Object from which properties are extracted.
+    * @param {Array} mergeArrays - Array from which items are assigned to the new object.
+    * @returns {Object} - Returns object with new properties.
+    *
+    * @example
+    * assignDeep({a:1}, {b:2})
+    * //=> {a:1, b:2}
+    *
+  */
   const assignDeep = (object, otherObject, mergeArrays) => {
     eachObject(otherObject, (item, key) => {
       if (isPlainObject(item) && isPlainObject(object[key])) {
@@ -2112,6 +2240,19 @@
     pick
   });
 
+  /**
+    * Extracts all key values from an object.
+    *
+    * @function compactKeys
+    * @type {Function}
+    * @param {Object} object - Object from which keys are extracted.
+    * @returns {Array} - Returns an array of key values.
+    *
+    * @example
+    * compactKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'});
+    * //=> [Lucy, John, Thor]
+    *
+  */
   const compactKeys = (object) => {
     const keys$$1 = [];
     eachObject(object, (item, key) => {
