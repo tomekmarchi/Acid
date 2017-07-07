@@ -27,6 +27,7 @@ const generateCheckLoops = (arrayLoop, objectLoop) => {
   * Iterates through the calling object and creates a new object based on the calling object's type with the results of the iteratee on every element in the calling object.
   *
   * @function map
+  * @category Utility
   * @type {Function}
   * @param {(Array|Object|Map|WeakMap|Function|Set)} callingObject - Object that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, key, the newly created map object and arguments unique to mapArray or mapObject depending on the object type.
