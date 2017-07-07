@@ -33,6 +33,7 @@ export const uid = () => {
   }
   return result;
 };
+<<<<<<< HEAD
 /**
   * Frees an UID so that it may be recycled for later use.
   *
@@ -55,6 +56,9 @@ export const uid = () => {
   * //=> 0
 */
 uid.free = (id) => {
+=======
+uuid.remove = (id) => {
+>>>>>>> origin/master
   uuidClosed[id] = null;
   uuidFree.push(id);
 };
