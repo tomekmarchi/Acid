@@ -74,6 +74,11 @@
                 htmlEntities
               </a>
               <a
+                href='#ifNotEqual'
+                class='block bold'>
+                ifNotEqual
+              </a>
+              <a
                 href='#initialString'
                 class='block bold'>
                 initialString
@@ -593,6 +598,47 @@ get(<span class="hljs-string">'post.like[2]'</span>, api);
 <span class="hljs-comment">// =&gt; &amp;lt;script&amp;gt;console.log('Lucy &amp;amp; diamonds.')&amp;lt;/script&amp;gt;</span></pre>
 </section>
 </div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='ifNotEqual' class='mt0'>
+    ifNotEqual<span class='gray'>(rootObject, property, equalThis)</span>
+  </h2>
+  <p>Checks if a property on an object has a value if not it will assign a value.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code> <strong>rootObject</strong>
+          :
+          <div class='force-inline'>
+            <p>The object to check.</p>
+
+          </div>
+        </li>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>property</strong>
+          :
+          <div class='force-inline'>
+            <p>The property name which is to be checked.</p>
+
+          </div>
+        </li>
+        <li>Any <strong>equalThis</strong>
+          :
+          <div class='force-inline'>
+            <p>The reassignment value for the property being checked.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>Returns the provided rootObject.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>ifNotEqual({}, <span class="hljs-string">'a'</span>, <span class="hljs-number">1</span>);
+<span class="hljs-comment">// =&gt; {a:1}</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
   <h2 id='initialString' class='mt0'>
     initialString<span class='gray'>(string, [index])</span>
   </h2>
@@ -711,10 +757,30 @@ intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span
 </section>
 </div><div class='py1'><section class='py2 clearfix'>
   <h2 id='jsonParse' class='mt0'>
-    jsonParse<span class='gray'></span>
+    jsonParse<span class='gray'>(string)</span>
   </h2>
-  <p>jsonParse is a wrapped version of the forEach function</p>
+  <p>Parses JSON string.</p>
 
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>string</strong>
+          :
+          <div class='force-inline'>
+            <p>String to be parsed.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>Returns the parsed object.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>jsonParse(<span class="hljs-string">'{}'</span>);
+<span class="hljs-comment">// =&gt; {}</span></pre>
 </section>
 </div><div class='py1'><section class='py2 clearfix'>
   <h2 id='kebabCase' class='mt0'>
@@ -787,14 +853,15 @@ map({a: <span class="hljs-number">1</span>, b: <span class="hljs-number">2</span
   <h2 id='model' class='mt0'>
     model<span class='gray'>(modelName, object)</span>
   </h2>
-  <p>model assigns a property on itself</p>
+  <p>Set &amp; Get a model.</p>
 
     <h4>Parameters</h4>
     <ul class='suppress-p-margin'>
-        <li> <strong>modelName</strong>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>modelName</strong>
           :
           <div class='force-inline'>
-            
+            <p>Name of the model.</p>
+
           </div>
         </li>
         <li> <strong>object</strong>
@@ -805,19 +872,18 @@ map({a: <span class="hljs-number">1</span>, b: <span class="hljs-number">2</span
         </li>
     </ul>
       <h4>Returns</h4>
-      <code></code>
+      <code>Any</code>
       :
       <div class='force-inline'>
-        <p>object</p>
+        <p>Returns the associated model.</p>
 
       </div>
     <h4>Examples</h4>
-<pre class='overflow-auto'><span class="hljs-keyword">const</span> obj = {
- foo: bar
-};
- <span class="hljs-keyword">const</span> string = <span class="hljs-string">'model.foo'</span>
- model(string, obj)
-<span class="hljs-comment">//-&gt; model.foo = obj</span></pre>
+<pre class='overflow-auto'>model(<span class="hljs-string">'test'</span>, {a: <span class="hljs-number">1</span>});
+<span class="hljs-comment">//-&gt; {a: 1}</span>
+
+model(<span class="hljs-string">'test'</span>);
+<span class="hljs-comment">//-&gt; {a: 1}</span></pre>
 </section>
 </div><div class='py1'><section class='py2 clearfix'>
   <h2 id='numericalCompareReverse' class='mt0'>
@@ -902,7 +968,7 @@ numsort(files);
       <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code></code>
       :
       <div class='force-inline'>
-        <p>A constructor with a callback function</p>
+        <p>A constructor with a callback function.</p>
 
       </div>
     <h4>Examples</h4>
@@ -1235,37 +1301,57 @@ rightString(<span class="hljs-string">'rightString'</span>, <span class="hljs-nu
 </section>
 </div><div class='py1'><section class='py2 clearfix'>
   <h2 id='stringify' class='mt0'>
-    stringify<span class='gray'></span>
+    stringify<span class='gray'>(object)</span>
   </h2>
-  <p>stringify is a wrapped version of the forEach function</p>
+  <p>Stringify an object into a JSON string.</p>
 
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code> <strong>object</strong>
+          :
+          <div class='force-inline'>
+            <p>Object to Stringify.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>Returns the object as a valid JSON string.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>stringify({});
+<span class="hljs-comment">// =&gt; '{}'</span></pre>
 </section>
 </div><div class='py1'><section class='py2 clearfix'>
   <h2 id='toggle' class='mt0'>
     toggle<span class='gray'>(value, on, off)</span>
   </h2>
-  <p>Performs strict comparison between the value and an argument. If it <em>returns true, then it returns the b </em>argument. Else it returns the a *argument.</p>
+  <p>Performs strict comparison between the value and an argument. If it returns true, then it returns the b argument. Else it returns the a argument.</p>
 
     <h4>Parameters</h4>
     <ul class='suppress-p-margin'>
         <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code> <strong>value</strong>
           :
           <div class='force-inline'>
-            <p>Strictly compared against the on argument</p>
+            <p>Strictly compared against the on argument.</p>
 
           </div>
         </li>
         <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code> <strong>on</strong>
           :
           <div class='force-inline'>
-            <p>Strictly compared against the value argument</p>
+            <p>Strictly compared against the value argument.</p>
 
           </div>
         </li>
         <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code> <strong>off</strong>
           :
           <div class='force-inline'>
-            <p>Value to be returned</p>
+            <p>Value to be returned.</p>
 
           </div>
         </li>
@@ -1274,7 +1360,7 @@ rightString(<span class="hljs-string">'rightString'</span>, <span class="hljs-nu
       <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code></code>
       :
       <div class='force-inline'>
-        <p>The on or off argument</p>
+        <p>The on or off argument.</p>
 
       </div>
     <h4>Examples</h4>

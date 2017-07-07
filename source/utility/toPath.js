@@ -9,12 +9,11 @@ const emptyString = '';
   * @function toPath
   * @type {Function}
   * @param {string} string - String to be broken up.
-  *
+  * @returns {Array} - Array used to go through object chain.
+  * 
   * @example
   * toPath('post.like[2]');
   * //=> ['post', 'like', '2']
-  * @returns {Array} - Array used to go through object chain.
-  *
 */
 export const toPath = (string) => {
   return string.replace(regexCloseBracket, emptyString).split(regexToPath);

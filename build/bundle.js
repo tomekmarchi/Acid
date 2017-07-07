@@ -1199,12 +1199,11 @@
     * @function promise
     * @type {Function}
     * @param {Function} callback - Function to be called back.
+    * @returns {Object} - A constructor with a callback function.
     *
     * @example
     * promise((a) => {});
     * //=> promise((a) => {})
-    * @returns {Object} - A constructor with a callback function
-    *
   */
   const promise = (callback) => {
     return new Promise(callback);
@@ -1461,12 +1460,30 @@
 
   const jsonNative = JSON;
   /**
-     * jsonParse is a wrapped version of the forEach function
-  */
+     * Parses JSON string.
+     *
+     * @function jsonParse
+     * @type {Function}
+     * @param {string} string - String to be parsed.
+     * @returns {Object} Returns the parsed object.
+     *
+     * @example
+     * jsonParse('{}');
+     * // => {}
+   */
   const jsonParse = jsonNative.jsonParse;
   /**
-     * stringify is a wrapped version of the forEach function
-  */
+     * Stringify an object into a JSON string.
+     *
+     * @function jsonParse
+     * @type {Function}
+     * @param {Object} object - Object to Stringify.
+     * @returns {string} Returns the object as a valid JSON string.
+     *
+     * @example
+     * stringify({});
+     * // => '{}'
+   */
   const stringify = jsonNative.stringify;
   assign($, {
     jsonParse,
@@ -2517,10 +2534,23 @@
     cacheNativeMethod
   });
 
+  /**
+     * Checks if a property on an object has a value if not it will assign a value.
+     *
+     * @function ifNotEqual
+     * @type {Function}
+     * @param {Object} rootObject - The object to check.
+     * @param {string} property - The property name which is to be checked.
+     * @param {*} equalThis - The reassignment value for the property being checked.
+     * @returns {Object} Returns the provided rootObject.
+     *
+     * @example
+     * ifNotEqual({}, 'a', 1);
+     * // => {a:1}
+   */
   const ifNotEqual = (rootObject, property, equalThis) => {
     if (property && !hasValue(rootObject[property])) {
       rootObject[property] = equalThis;
-      return rootObject[property];
     }
     return rootObject;
   };
@@ -2569,12 +2599,11 @@
     * @function toPath
     * @type {Function}
     * @param {string} string - String to be broken up.
-    *
+    * @returns {Array} - Array used to go through object chain.
+    * 
     * @example
     * toPath('post.like[2]');
     * //=> ['post', 'like', '2']
-    * @returns {Array} - Array used to go through object chain.
-    *
   */
   const toPath = (string) => {
     return string.replace(regexCloseBracket, emptyString).split(regexToPath);
@@ -2640,18 +2669,20 @@
   });
 
   /**
-  *  model assigns a property on itself
-  *  @property {modelName} - takes a string
-  *  @property {object} - takes an object
-  *  @example
-  *  const obj = {
-  *  foo: bar
-  *};
-  *  const string = 'model.foo'
-  *  model(string, obj)
-  * //-> model.foo = obj
-  *  @returns
-  *  object
+    * Set & Get a model.
+    *
+    * @function model
+    * @type {Function}
+    * @param {string} modelName - Name of the model.
+    * @property {Object} - The model object.
+    * @returns {*} Returns the associated model.
+    *
+    * @example
+    * model('test', {a: 1});
+    * //-> {a: 1}
+    *
+    * model('test');
+    * //-> {a: 1}
   */
   const model = (modelName, object) => {
     if (hasValue(object)) {
@@ -2665,19 +2696,18 @@
   });
 
   /**
-    * Performs strict comparison between the value and an argument. If it *returns true, then it returns the b *argument. Else it returns the a *argument.
+    * Performs strict comparison between the value and an argument. If it returns true, then it returns the b argument. Else it returns the a argument.
     *
     * @function toggle
     * @type {Function}
-    * @param  {(string|number)} value - Strictly compared against the on argument
-    * @param {(string|number)} on -  Strictly compared against the value argument
-    * @param {(string|number)} off -  Value to be returned
-    *
+    * @param  {(string|number)} value - Strictly compared against the on argument.
+    * @param {(string|number)} on -  Strictly compared against the value argument.
+    * @param {(string|number)} off -  Value to be returned.
+    * @returns {(string|number)} - The on or off argument.
+    * 
     * @example
     * toggle(1, 2, 3);
     * //=> 2
-    * @returns {(string|number)} - The on or off argument
-    *
   */
   const toggle = (value, on, off) => {
     return (value === on) ? off : on;
