@@ -8,7 +8,7 @@ const spaceFirstLetter = / (.)/g;
   * @function upperCase
   * @type {Function}
   * @param {string} string - String to be converted into upper case.
-  * @returns {string} Converted string in upper case.
+  * @returns {string} - Converted string in upper case.
   *
   * @example
   * upperCase('upper case');
@@ -25,7 +25,7 @@ export const upperCase = (string) => {
   * @function camelCase
   * @type {Function}
   * @param {string} string - String to be converted into Camel case.
-  * @returns {string} Converted string in Camel case.
+  * @returns {string} - Converted string in Camel case.
   *
   * @example
   * camelCase('camel case');
@@ -43,7 +43,7 @@ export const camelCase = (string) => {
   * @function kebabCase
   * @type {Function}
   * @param {string} string - String to be converted into Kebab case.
-  * @returns {string} Converted string in Kebab case.
+  * @returns {string} - Converted string in Kebab case.
   *
   * @example
   * kebabCase('kebab case');
@@ -61,7 +61,7 @@ export const kebabCase = (string) => {
   * @function snakeCase
   * @type {Function}
   * @param {string} string - String to be converted into snake case.
-  * @returns {string} Converted string in Snake case.
+  * @returns {string} - Converted string in Snake case.
   *
   * @example
   * snakeCase('snake case');

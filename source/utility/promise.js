@@ -6,12 +6,11 @@ import { assign } from '../internal/object';
   * @function promise
   * @type {Function}
   * @param {Function} callback - Function to be called back.
+  * @returns {Object} - A constructor with a callback function.
   *
   * @example
   * promise((a) => {});
   * //=> promise((a) => {})
-  * @returns {Object} - A constructor with a callback function
-  *
 */
 export const promise = (callback) => {
   return new Promise(callback);

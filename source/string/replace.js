@@ -8,7 +8,7 @@ import { assign } from '../internal/object';
   * @param {string} string - String to be replaced.
   * @param {Array} array - Strings to replace.
   * @param {string} value - The match replacement.
-  * @returns {string} Converted string in Snake case.
+  * @returns {string} - The string with the replacement.
   *
   * @example
   * replaceList('Her name was @user.', ['@user'], 'Lucy');

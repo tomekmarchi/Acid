@@ -11,7 +11,7 @@ const doubleQuoteRegex = /"/g;
   * @function rawURLDecode
   * @type {Function}
   * @param {string} string - String to be replaced.
-  * @returns {string} Converted string into the decoded URI Component .
+  * @returns {string} - Converted string into the decoded URI Component .
   *
   * @example
   * rawURLDecode('Lucy%20saw%20diamonds%20in%20the%20sky.');
@@ -41,7 +41,7 @@ export const htmlEntities = (string) => {
     .replace(doubleQuoteRegex, '&quot;');
 };
 /**
-  * Executes rawURLDecode then htmlEntities methods on a string.
+  * Executes rawURLDecode followd by htmlEntities methods on a string.
   *
   * @function sanitize
   * @type {Function}

@@ -8,7 +8,7 @@ const spaceFirstLetter = / (.)/g;
   * @function upperFirstLetter
   * @type {Function}
   * @param {string} string - String to extract first letter from.
-  * @returns {string} An upper case letter.
+  * @returns {string} - An upper case letter.
   *
   * @example
   * upperFirstLetter('upper');
@@ -23,7 +23,7 @@ export const upperFirstLetter = (string) => {
   * @function upperFirst
   * @type {Function}
   * @param {string} string - String to be mutated.
-  * @returns {string} String with first letter capitalized.
+  * @returns {string} - String with first letter capitalized.
   *
   * @example
   * upperFirstLetter('upper');
@@ -38,7 +38,7 @@ export const upperFirst = (string) => {
   * @function upperFirstAll
   * @type {Function}
   * @param {string} string - String to be mutated.
-  * @returns {string} String with all first letters capitalized.
+  * @returns {string} - String with all first letters capitalized.
   *
   * @example
   * upperFirstAll('Lucy is next up.');
@@ -55,7 +55,7 @@ export const upperFirstAll = (string) => {
   * @function upperFirstOnly
   * @type {Function}
   * @param {string} string - String to be mutated.
-  * @returns {string} String with first letter capitalized.
+  * @returns {string} - String with first letter capitalized.
   *
   * @example
   * upperFirstOnly('LYSERGIC ACID DIETHYLAMIDE');
@@ -70,7 +70,7 @@ export const upperFirstOnly = (string) => {
   * @function upperFirstOnlyAll
   * @type {Function}
   * @param {string} string - String to be mutated.
-  * @returns {string} String with all first letters capitalized.
+  * @returns {string} - String with all first letters capitalized.
   *
   * @example
   * upperFirstOnlyAll('LYSERGIC ACID DIETHYLAMIDE');

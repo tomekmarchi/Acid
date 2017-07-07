@@ -2,24 +2,27 @@ import acid from '../namespace/index';
 import { assign } from '../internal/object';
 import { eachWhile } from '../array/each';
 /**
-*   matchesProperty compares the properties of two objects.
-*   @property {object} - takes an object
-*   @property {compareObject} - takes an object
-*   @property {properties} - takes in an array of properties
-*   @example
-*    const objOne = {
-*      a:1,
-*      b:2
-*    };
-*    const objTwo = {
-*       a:1,
-*       b:3
-*    };
-*     const propertiesToCompare = [a, b];
-*     matchesProperty(objOne, objTwo, propertiesToCompare );
-* //-> True, false
-*   @returns
-*   Boolean
+  *   Compares the properties of two objects.
+  *
+  *   @function propertyMatch
+  *   @type {Function}
+  *   @param {Object} object - Takes an object to be compared against compareObject.
+  *   @param {Object} compareObject - Takes an object to be compared against object..
+  *   @param {Array} properties - Takes in an array of properties.
+  *   @returns {boolean} - Returns boolean value based on result of strict comparison between object properties.
+  *
+  *   @example
+  *    const objOne = {
+  *      a:1,
+  *      b:2
+  *    };
+  *    const objTwo = {
+  *       a:1,
+  *       b:3
+  *    };
+  *     const propertiesToCompare = [a, b];
+  *     matchesProperty(objOne, objTwo, propertiesToCompare );
+  * //=> True, false
 */
 export const propertyMatch = (object, compareObject, properties) => {
   let result = false;

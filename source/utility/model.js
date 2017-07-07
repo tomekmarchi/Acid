@@ -3,18 +3,20 @@ import { assign } from '../internal/object';
 import { get } from './get';
 import { hasValue } from '../internal/is';
 /**
-*  model assigns a property on itself
-*  @property {modelName} - takes a string
-*  @property {object} - takes an object
-*  @example
-*  const obj = {
-*  foo: bar
-*};
-*  const string = 'model.foo'
-*  model(string, obj)
-* //-> model.foo = obj
-*  @returns
-*  object
+  * Set & Get a model.
+  *
+  * @function model
+  * @type {Function}
+  * @param {string} modelName - Name of the model.
+  * @property {Object} - The model object.
+  * @returns {*} Returns the associated model.
+  *
+  * @example
+  * model('test', {a: 1});
+  * //=> {a: 1}
+  *
+  * model('test');
+  * //=> {a: 1}
 */
 export const model = (modelName, object) => {
   if (hasValue(object)) {

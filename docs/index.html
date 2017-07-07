@@ -59,9 +59,24 @@
                 each
               </a>
               <a
+                href='#filter'
+                class='block bold'>
+                filter
+              </a>
+              <a
+                href='#get'
+                class='block bold'>
+                get
+              </a>
+              <a
                 href='#htmlEntities'
                 class='block bold'>
                 htmlEntities
+              </a>
+              <a
+                href='#ifNotEqual'
+                class='block bold'>
+                ifNotEqual
               </a>
               <a
                 href='#initialString'
@@ -124,6 +139,11 @@
                 rawURLDecode
               </a>
               <a
+                href='#remove'
+                class='block bold'>
+                remove
+              </a>
+              <a
                 href='#uuid'
                 class='block bold'>
                 uuid
@@ -133,11 +153,6 @@
                   class='regular block'>
                   .remove
                 </a>
-              <a
-                href='#remove'
-                class='block bold'>
-                remove
-              </a>
               <a
                 href='#replaceList'
                 class='block bold'>
@@ -177,6 +192,11 @@
                 href='#tokenize'
                 class='block bold'>
                 tokenize
+              </a>
+              <a
+                href='#toPath'
+                class='block bold'>
+                toPath
               </a>
               <a
                 href='#truncate'
@@ -472,6 +492,85 @@ each({a: <span class="hljs-number">1</span>, b: <span class="hljs-number">2</spa
 <span class="hljs-comment">// =&gt; {a: 1, b: 2, c: 3}</span></pre>
 </section>
 </div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='filter' class='mt0'>
+    filter<span class='gray'>(callingObject, iteratee)</span>
+  </h2>
+  <p>Iterates through the given and creates a new object of the same calling object&apos;s type with all elements that pass the test implemented by the iteratee.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a></code> <strong>callingObject</strong>
+          :
+          <div class='force-inline'>
+            <p>Object that will be looped through.</p>
+
+          </div>
+        </li>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code> <strong>iteratee</strong>
+          :
+          <div class='force-inline'>
+            <p>Transformation function which is passed item, key, the newly created map object and arguments unique to mapArray or mapObject depending on the object type.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>A new object of the same calling object&apos;s type.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>filter([<span class="hljs-literal">false</span>, <span class="hljs-literal">true</span>, <span class="hljs-literal">true</span>], (item) =&gt; {
+  <span class="hljs-keyword">return</span> item;
+});
+<span class="hljs-comment">// =&gt; [true, true]</span>
+filter({a: <span class="hljs-literal">false</span>, b: <span class="hljs-literal">true</span>, c: <span class="hljs-literal">true</span>}, (item) =&gt; {
+  <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+});
+<span class="hljs-comment">// =&gt; {b: true, c: true}</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='get' class='mt0'>
+    get<span class='gray'>(propertyString, objectChain)</span>
+  </h2>
+  <p>Returns property on an object.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>propertyString</strong>
+          :
+          <div class='force-inline'>
+            <p>String used to retrieve properties.</p>
+
+          </div>
+        </li>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code> <strong>objectChain</strong>
+          :
+          <div class='force-inline'>
+            <p>Object which has a property retrieved from it.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>Returns property from the given object.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'><span class="hljs-keyword">const</span> api = {
+ post: {
+  like: [<span class="hljs-string">'a'</span>,<span class="hljs-string">'b'</span>,<span class="hljs-string">'c'</span>]
+ }
+}
+get(<span class="hljs-string">'post.like[2]'</span>, api);
+<span class="hljs-comment">//=&gt; c</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
   <h2 id='htmlEntities' class='mt0'>
     htmlEntities<span class='gray'>(string)</span>
   </h2>
@@ -497,6 +596,47 @@ each({a: <span class="hljs-number">1</span>, b: <span class="hljs-number">2</spa
     <h4>Examples</h4>
 <pre class='overflow-auto'>htmlEntities(<span class="hljs-string">`&lt;script&gt;console.log('Lucy &amp; diamonds.')&lt;/script&gt;`</span>);
 <span class="hljs-comment">// =&gt; &amp;lt;script&amp;gt;console.log('Lucy &amp;amp; diamonds.')&amp;lt;/script&amp;gt;</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='ifNotEqual' class='mt0'>
+    ifNotEqual<span class='gray'>(rootObject, property, equalThis)</span>
+  </h2>
+  <p>Checks if a property on an object has a value if not it will assign a value.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code> <strong>rootObject</strong>
+          :
+          <div class='force-inline'>
+            <p>The object to check.</p>
+
+          </div>
+        </li>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>property</strong>
+          :
+          <div class='force-inline'>
+            <p>The property name which is to be checked.</p>
+
+          </div>
+        </li>
+        <li>Any <strong>equalThis</strong>
+          :
+          <div class='force-inline'>
+            <p>The reassignment value for the property being checked.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>Returns the provided rootObject.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>ifNotEqual({}, <span class="hljs-string">'a'</span>, <span class="hljs-number">1</span>);
+<span class="hljs-comment">// =&gt; {a:1}</span></pre>
 </section>
 </div><div class='py1'><section class='py2 clearfix'>
   <h2 id='initialString' class='mt0'>
@@ -617,10 +757,30 @@ intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span
 </section>
 </div><div class='py1'><section class='py2 clearfix'>
   <h2 id='jsonParse' class='mt0'>
-    jsonParse<span class='gray'></span>
+    jsonParse<span class='gray'>(string)</span>
   </h2>
-  <p>jsonParse is a wrapped version of the forEach function</p>
+  <p>Parses JSON string.</p>
 
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>string</strong>
+          :
+          <div class='force-inline'>
+            <p>String to be parsed.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>Returns the parsed object.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>jsonParse(<span class="hljs-string">'{}'</span>);
+<span class="hljs-comment">// =&gt; {}</span></pre>
 </section>
 </div><div class='py1'><section class='py2 clearfix'>
   <h2 id='kebabCase' class='mt0'>
@@ -693,14 +853,15 @@ map({a: <span class="hljs-number">1</span>, b: <span class="hljs-number">2</span
   <h2 id='model' class='mt0'>
     model<span class='gray'>(modelName, object)</span>
   </h2>
-  <p>model assigns a property on itself</p>
+  <p>Set &amp; Get a model.</p>
 
     <h4>Parameters</h4>
     <ul class='suppress-p-margin'>
-        <li> <strong>modelName</strong>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>modelName</strong>
           :
           <div class='force-inline'>
-            
+            <p>Name of the model.</p>
+
           </div>
         </li>
         <li> <strong>object</strong>
@@ -711,19 +872,18 @@ map({a: <span class="hljs-number">1</span>, b: <span class="hljs-number">2</span
         </li>
     </ul>
       <h4>Returns</h4>
-      <code></code>
+      <code>Any</code>
       :
       <div class='force-inline'>
-        <p>object</p>
+        <p>Returns the associated model.</p>
 
       </div>
     <h4>Examples</h4>
-<pre class='overflow-auto'><span class="hljs-keyword">const</span> obj = {
- foo: bar
-};
- <span class="hljs-keyword">const</span> string = <span class="hljs-string">'model.foo'</span>
- model(string, obj)
-<span class="hljs-comment">//-&gt; model.foo = obj</span></pre>
+<pre class='overflow-auto'>model(<span class="hljs-string">'test'</span>, {a: <span class="hljs-number">1</span>});
+<span class="hljs-comment">//-&gt; {a: 1}</span>
+
+model(<span class="hljs-string">'test'</span>);
+<span class="hljs-comment">//-&gt; {a: 1}</span></pre>
 </section>
 </div><div class='py1'><section class='py2 clearfix'>
   <h2 id='numericalCompareReverse' class='mt0'>
@@ -792,17 +952,28 @@ numsort(files);
   <h2 id='promise' class='mt0'>
     promise<span class='gray'>(callback)</span>
   </h2>
-  <p>promise is a wrapper around a constructor</p>
+  <p>A wrapper around the promise constructor.</p>
 
     <h4>Parameters</h4>
     <ul class='suppress-p-margin'>
-        <li> <strong>callback</strong>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code> <strong>callback</strong>
           :
           <div class='force-inline'>
-            
+            <p>Function to be called back.</p>
+
           </div>
         </li>
     </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>A constructor with a callback function.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>promise((a) =&gt; {});
+<span class="hljs-comment">//=&gt; promise((a) =&gt; {})</span></pre>
 </section>
 </div><div class='py1'><section class='py2 clearfix'>
   <h2 id='propertyMatch' class='mt0'>
@@ -879,43 +1050,6 @@ numsort(files);
 <span class="hljs-comment">// =&gt; Lucy saw diamonds in the sky.</span></pre>
 </section>
 </div><div class='py1'><section class='py2 clearfix'>
-  <h2 id='uuid' class='mt0'>
-    uuid<span class='gray'></span>
-  </h2>
-  <p>uuid returns a unique id</p>
-
-      <h4>Static members</h4>
-        <div class='collapsible' id='uuid.remove'>
-          <a href='#uuid.remove'>
-            <code>
-              .remove<span class='gray'>(id)</span>
-            </code>
-            <div class='force-inline'>
-              <p>uuid.remove nullifies a unique id within the uuidClosed object</p>
-
-            </div>
-          </a>
-          <div class='collapser border px2 m2'>
-            <section class='py2 clearfix'>
-              <h2 id='uuid.remove' class='mt0'>
-                remove<span class='gray'>(id)</span>
-              </h2>
-              <p>uuid.remove nullifies a unique id within the uuidClosed object</p>
-            
-                <h4>Parameters</h4>
-                <ul class='suppress-p-margin'>
-                    <li> <strong>id</strong>
-                      :
-                      <div class='force-inline'>
-                        
-                      </div>
-                    </li>
-                </ul>
-            </section>
-          </div>
-        </div>
-</section>
-</div><div class='py1'><section class='py2 clearfix'>
   <h2 id='remove' class='mt0'>
     remove<span class='gray'>(array, removeThese)</span>
   </h2>
@@ -956,6 +1090,43 @@ remove(array,<span class="hljs-number">3</span>);
 
 remove(array,[<span class="hljs-number">2</span>, <span class="hljs-number">5</span>]);
 <span class="hljs-comment">// -&gt; [4]</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='uuid' class='mt0'>
+    uuid<span class='gray'></span>
+  </h2>
+  <p>uuid returns a unique id</p>
+
+      <h4>Static members</h4>
+        <div class='collapsible' id='uuid.remove'>
+          <a href='#uuid.remove'>
+            <code>
+              .remove<span class='gray'>(id)</span>
+            </code>
+            <div class='force-inline'>
+              <p>uuid.remove nullifies a unique id within the uuidClosed object</p>
+
+            </div>
+          </a>
+          <div class='collapser border px2 m2'>
+            <section class='py2 clearfix'>
+              <h2 id='uuid.remove' class='mt0'>
+                remove<span class='gray'>(id)</span>
+              </h2>
+              <p>uuid.remove nullifies a unique id within the uuidClosed object</p>
+            
+                <h4>Parameters</h4>
+                <ul class='suppress-p-margin'>
+                    <li> <strong>id</strong>
+                      :
+                      <div class='force-inline'>
+                        
+                      </div>
+                    </li>
+                </ul>
+            </section>
+          </div>
+        </div>
 </section>
 </div><div class='py1'><section class='py2 clearfix'>
   <h2 id='replaceList' class='mt0'>
@@ -1130,51 +1301,71 @@ rightString(<span class="hljs-string">'rightString'</span>, <span class="hljs-nu
 </section>
 </div><div class='py1'><section class='py2 clearfix'>
   <h2 id='stringify' class='mt0'>
-    stringify<span class='gray'></span>
+    stringify<span class='gray'>(object)</span>
   </h2>
-  <p>stringify is a wrapped version of the forEach function</p>
+  <p>Stringify an object into a JSON string.</p>
 
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code> <strong>object</strong>
+          :
+          <div class='force-inline'>
+            <p>Object to Stringify.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>Returns the object as a valid JSON string.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>stringify({});
+<span class="hljs-comment">// =&gt; '{}'</span></pre>
 </section>
 </div><div class='py1'><section class='py2 clearfix'>
   <h2 id='toggle' class='mt0'>
     toggle<span class='gray'>(value, on, off)</span>
   </h2>
-  <p>toggle does a strict comparison between the value and an argument. If it returns true, then it returns the b *argument. Else it returns the a argument.</p>
+  <p>Performs strict comparison between the value and an argument. If it returns true, then it returns the b argument. Else it returns the a argument.</p>
 
     <h4>Parameters</h4>
     <ul class='suppress-p-margin'>
-        <li> <strong>value</strong>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code> <strong>value</strong>
           :
           <div class='force-inline'>
-            
+            <p>Strictly compared against the on argument.</p>
+
           </div>
         </li>
-        <li> <strong>on</strong>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code> <strong>on</strong>
           :
           <div class='force-inline'>
-            
+            <p>Strictly compared against the value argument.</p>
+
           </div>
         </li>
-        <li> <strong>off</strong>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code> <strong>off</strong>
           :
           <div class='force-inline'>
-            
+            <p>Value to be returned.</p>
+
           </div>
         </li>
     </ul>
       <h4>Returns</h4>
-      <code></code>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code></code>
       :
       <div class='force-inline'>
-        <p>Can return any data type</p>
+        <p>The on or off argument.</p>
 
       </div>
     <h4>Examples</h4>
-<pre class='overflow-auto'><span class="hljs-keyword">const</span> value = <span class="hljs-number">1</span>;
-<span class="hljs-keyword">const</span> on = <span class="hljs-number">1</span>;
-<span class="hljs-keyword">const</span> off = <span class="hljs-number">2</span>;
-toggle(value, on, off);
-<span class="hljs-comment">//-&gt; 2</span></pre>
+<pre class='overflow-auto'>toggle(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>);
+<span class="hljs-comment">//=&gt; 2</span></pre>
 </section>
 </div><div class='py1'><section class='py2 clearfix'>
   <h2 id='tokenize' class='mt0'>
@@ -1202,6 +1393,33 @@ toggle(value, on, off);
     <h4>Examples</h4>
 <pre class='overflow-auto'>tokenize(<span class="hljs-string">'I am Lucy!'</span>);
 <span class="hljs-comment">// =&gt; ["I", "am", "Lucy!"]</span></pre>
+</section>
+</div><div class='py1'><section class='py2 clearfix'>
+  <h2 id='toPath' class='mt0'>
+    toPath<span class='gray'>(string)</span>
+  </h2>
+  <p>Breaks up string into object chain list.</p>
+
+    <h4>Parameters</h4>
+    <ul class='suppress-p-margin'>
+        <li><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code> <strong>string</strong>
+          :
+          <div class='force-inline'>
+            <p>String to be broken up.</p>
+
+          </div>
+        </li>
+    </ul>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code></code>
+      :
+      <div class='force-inline'>
+        <p>Array used to go through object chain.</p>
+
+      </div>
+    <h4>Examples</h4>
+<pre class='overflow-auto'>toPath(<span class="hljs-string">'post.like[2]'</span>);
+<span class="hljs-comment">//=&gt; ['post', 'like', '2']</span></pre>
 </section>
 </div><div class='py1'><section class='py2 clearfix'>
   <h2 id='truncate' class='mt0'>
