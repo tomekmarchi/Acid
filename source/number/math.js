@@ -29,7 +29,7 @@ export const add = (number, value) => {
   * @returns {number} - Returns the difference of the arguments.
   *
   * @example
-  * add(1, 1);
+  * minus(1, 1);
   * // => 0
 */
 export const minus = (number, value) => {
@@ -38,14 +38,14 @@ export const minus = (number, value) => {
 /**
   * Divides two numbers.
   *
-  * @function divides
+  * @function divide
   * @type {Function}
   * @param {number} number - First number.
   * @param {number} value - Second number.
   * @returns {number} - Returns the quotient of the arguments.
   *
   * @example
-  * add(10, 5);
+  * divide(10, 5);
   * // => 2
 */
 export const divide = (number, value) => {
@@ -61,26 +61,87 @@ export const divide = (number, value) => {
   * @returns {number} - Returns the product of the arguments.
   *
   * @example
-  * add(10, 5);
+  * multiply(10, 5);
   * // => 50
 */
 export const multiply = (number, value) => {
   return number * value;
 };
+/**
+  *  Extracts the remainder between two numbers.
+  *
+  * @function remainder
+  * @type {Function}
+  * @param {number} number - First number.
+  * @param {number} value - Second number.
+  * @returns {number} - Returns the remainder of the arguments.
+  *
+  * @example
+  * remainder(10, 6);
+  * // => 4
+*/
 export const remainder = (number, value) => {
   return number % value;
 };
+/**
+  *  Increments a number.
+  *
+  * @function increment
+  * @type {Function}
+  * @param {number} number - First number.
+  * @returns {number} - Returns an incremented version of the number.
+  *
+  * @example
+  * increment(10);
+  * // => 11
+*/
 export const increment = (number) => {
   return number + 1;
 };
+/**
+  *  Decrements a number.
+  *
+  * @function deduct
+  * @type {Function}
+  * @param {number} number - First number.
+  * @returns {number} - Returns a decremented version of the number.
+  *
+  * @example
+  * decremented(10);
+  * // => 9
+*/
 export const deduct = (number) => {
   return number - 1;
 };
-// Returns a random number between min (inclusive) and max (exclusive)
+/**
+  *  Produces a random number between min (included) and max (excluded).
+  *
+  * @function randomArbitrary
+  * @type {Function}
+  * @param {number} max - Establishes highest possible value for the random number.
+  * @param {number} [min = 0] - Establishes lowest possible value for the random number.
+  * @returns {number} - Returns random integer between the max and min range.
+  *
+  * @example
+  * randomArbitrary(10);
+  * // => 9.1
+*/
 export const randomArbitrary = (max, min = 0) => {
   return randomMethod() * (max - min) + min;
 };
-// Returns a random integer between min (included) and max (excluded)
+/**
+  *  Produces a random integer between min (included) and max (excluded).
+  *
+  * @function randomInt
+  * @type {Function}
+  * @param {number} max - Establishes highest possible value for the random number.
+  * @param {number} [min = 0] - Establishes lowest possible value for the random number.
+  * @returns {number} - Returns random integer between the max and min range.
+  *
+  * @example
+  * randomArbitrary(10);
+  * // => 9
+*/
 export const randomInt = (max, min = 0) => {
   return floorMethod(randomMethod() * (max - min)) + min;
 };
