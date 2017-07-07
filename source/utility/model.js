@@ -13,10 +13,10 @@ import { hasValue } from '../internal/is';
   *
   * @example
   * model('test', {a: 1});
-  * //-> {a: 1}
+  * //=> {a: 1}
   *
   * model('test');
-  * //-> {a: 1}
+  * //=> {a: 1}
 */
 export const model = (modelName, object) => {
   if (hasValue(object)) {

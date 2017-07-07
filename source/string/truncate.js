@@ -33,13 +33,13 @@ const truncateUp = (string, maxLength, stringLength) => {
   * @type {Function}
   * @param {string} string - String to be truncated.
   * @param {number} maxLength - The desired max length of the string.
-  * @returns {string} An upper case letter.
+  * @returns {string} - An upper case letter.
   *
   * @example
   * truncate('Where is Lucy?', 2);
-  * // => Where is
+  * // => Where
 */
-const truncate = (string, maxLength) => {
+export const truncate = (string, maxLength) => {
   const stringLength = string.length;
   return (stringLength > maxLength) ? truncateDown(string, maxLength, stringLength) : string;
 };
@@ -50,13 +50,13 @@ const truncate = (string, maxLength) => {
   * @type {Function}
   * @param {string} string - String to be truncated.
   * @param {number} maxLength - The desired max length of the string.
-  * @returns {string} An upper case letter.
+  * @returns {string} - An upper case letter.
   *
   * @example
   * truncateRight('Where is Lucy?', 6);
   * // => Lucy?
 */
-const truncateRight = (string, maxLength) => {
+export const truncateRight = (string, maxLength) => {
   const stringLength = string.length;
   return (stringLength > maxLength) ? truncateUp(string, maxLength, stringLength) : string;
 };

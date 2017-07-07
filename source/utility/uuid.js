@@ -16,9 +16,6 @@ export const uuid = () => {
   }
   return result;
 };
-/**
-  * uuid.remove nullifies a unique id within the uuidClosed object
-*/
 uuid.remove = (id) => {
   uuidClosed[id] = null;
   uuidFree.push(id);

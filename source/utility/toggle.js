@@ -9,7 +9,7 @@ import { assign } from '../internal/object';
   * @param {(string|number)} on -  Strictly compared against the value argument.
   * @param {(string|number)} off -  Value to be returned.
   * @returns {(string|number)} - The on or off argument.
-  * 
+  *
   * @example
   * toggle(1, 2, 3);
   * //=> 2
