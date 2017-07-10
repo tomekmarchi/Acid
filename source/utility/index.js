@@ -1,3 +1,4 @@
+import './assignDeep';
 import './cacheNativeMethod';
 import './ifNotEqual';
 import './propertyMatch';

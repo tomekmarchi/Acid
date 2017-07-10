@@ -2,16 +2,27 @@ import acid from '../namespace/index';
 import { eachWhile } from '../array/each';
 import { isMatchArray } from '../array/isMatch';
 import { assign, keys } from '../internal/object';
-export const isMatchObject = (source, compare) => {
-  let result = false;
+/**
+   * Performs a shallow strict comparison between two objects.
+   *
+   * @function isMatchObject
+   * @type {Function}
+   * @param {Object} source - Source object.
+   * @param {Object} compareObject - Object to compare to source.
+   * @returns {boolean} Returns the true or false.
+   *
+   * @example
+   * isMatchObject({a: [1,2,3]}, {a: [1,2,3]});
+   * // => true
+ */
+export const isMatchObject = (source, compareObject) => {
   const sourceProperties = keys(source);
-  if (isMatchArray(sourceProperties, keys(compare))) {
-    eachWhile(sourceProperties, (key) => {
-      result = source[key] === compare[key];
-      return result;
+  if (isMatchArray(sourceProperties, keys(compareObject))) {
+    return eachWhile(sourceProperties, (key) => {
+      return source[key] === compareObject[key];
     });
   }
-  return result;
+  return false;
 };
 assign(acid, {
   isMatchObject,
