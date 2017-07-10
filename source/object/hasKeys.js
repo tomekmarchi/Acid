@@ -2,7 +2,7 @@ import acid from '../namespace/index';
 import { eachWhile } from '../array/each';
 import { assign, keys } from '../internal/object';
 /**
-  * Checks to see if an object all of the given property names.
+  * Checks to see if an object has all of the given property names.
   *
   * @function compactKeys
   * @type {Function}
@@ -11,9 +11,11 @@ import { assign, keys } from '../internal/object';
   * @returns {boolean} - Returns true or false.
   *
   * @example
-  * hasKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'});
-  * //=> ['Lucy', 'John', 'Thor']
+  * hasKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Lucy','Thor']);
+  * //=> true
   *
+  * hasKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Lucy','Tom']);
+  * //=> false
 */
 export const hasKeys = (object, properties) => {
   let flag = false;
@@ -37,6 +39,8 @@ export const hasKeys = (object, properties) => {
   * hasAnyKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Lucy','John']);
   * //=> true
   *
+  * hasAnyKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Lucy','Tom']);
+  * //=> true
 */
 export const hasAnyKeys = (object, properties) => {
   const objectKeys = keys(object);
