@@ -214,9 +214,8 @@ export const mapArrayRight = generateMap(eachArrayRight);
   * // => [4, 6]
 */
 export const compactMapArray = (callingArray, iteratee, results = []) => {
-  let returned;
   eachArray(callingArray, (item, index, arrayOriginal, arrayLength) => {
-    returned = iteratee(item, index, results, arrayOriginal, arrayLength);
+    const returned = iteratee(item, index, results, arrayOriginal, arrayLength);
     if (hasValue(returned)) {
       results.push(returned);
     }
@@ -241,9 +240,8 @@ export const compactMapArray = (callingArray, iteratee, results = []) => {
 */
 export const mapWhile = (callingArray, iteratee, results = []) => {
   const arrayLength = callingArray.length;
-  let returned;
   for (let index = 0; index < arrayLength; index++) {
-    returned = iteratee(callingArray[index], index, results, callingArray, arrayLength);
+    const returned = iteratee(callingArray[index], index, results, callingArray, arrayLength);
     if (!returned) {
       break;
     }
