@@ -17,7 +17,7 @@ export const jsonParse = jsonNative.jsonParse;
 /**
    * Stringify an object into a JSON string.
    *
-   * @function jsonParse
+   * @function stringify
    * @type {Function}
    * @param {Object} object - Object to Stringify.
    * @returns {string} Returns the object as a valid JSON string.

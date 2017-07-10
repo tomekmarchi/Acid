@@ -9,7 +9,7 @@ import { isArray, isPlainObject } from '../internal/is';
   * @type {Function}
   * @param {Object} object - Object to be assigned new properties.
   * @param {Object} otherObject - Object from which properties are extracted.
-  * @param {Array} mergeArrays - Array from which items are assigned to the new object.
+  * @param {boolean} [mergeArrays = true] - Array from which items are assigned to the new object.
   * @returns {Object} - Returns object with new properties.
   *
   * @example
@@ -17,7 +17,7 @@ import { isArray, isPlainObject } from '../internal/is';
   * //=> {a:1, b:2}
   *
 */
-export const assignDeep = (object, otherObject, mergeArrays) => {
+export const assignDeep = (object, otherObject, mergeArrays = true) => {
   eachObject(otherObject, (item, key) => {
     if (isPlainObject(item) && isPlainObject(object[key])) {
       assignDeep(object[key], item, mergeArrays);

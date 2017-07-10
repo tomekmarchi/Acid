@@ -1,7 +1,7 @@
 import acid from '../namespace/index';
+import { arraySortToObject } from '../array/sortToObject';
 import { assign } from '../internal/object';
 import { eachObject } from './each';
-import { arraySortToObject } from '../array/sortToObject';
 export const zipObject = (keys, values) => {
   return arraySortToObject((item, index, object) => {
     object[item] = values[index];
@@ -17,6 +17,6 @@ export const unZipObject = (object) => {
   return [keys, values];
 };
 assign(acid, {
-  zipObject,
   unZipObject,
+  zipObject,
 });

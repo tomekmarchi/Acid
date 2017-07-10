@@ -10,9 +10,7 @@
    * Acid Object accessible through $ default method is model.
    *
    * @function $
-   * @param {string} modelName - Model key.
-   * @param {Object} model - An object that is saved as the value using the modelName as the string.
-   * @returns {Object} The model associated with the modelName as the key.
+   * @returns {*} The return value of the superMethod. The default superMethod is model.
    *
    * @example
    * $('modelName', {example: 1});
@@ -22,19 +20,22 @@
     return cacheSuper(...args);
   };
   /**
-   * Re-assigns the main Acid function.
+   * Re-assigns the main method for $.
    *
-   * @function $.superMethod
+   * @function superMethod
+   * @memberof $
    * @param {Function} method - The function that will become the main object's method.
+   * @returns {undefined} - Returns nothing.
    *
    * @example
-   * $.superMethod($.get);
+   * superMethod($.get);
    * // -> $('flow', $);
    * // -> $.flow
    */
-  $.superMethod = (method) => {
+  const superMethod = (method) => {
     cacheSuper = method;
   };
+  $.superMethod = superMethod;
 
   const objectNative$1 = Object;
   const keys = objectNative$1.keys;
@@ -560,14 +561,14 @@
   };
   assign($, {
     add,
-    minus,
-    divide,
-    multiply,
-    remainder,
-    increment,
     deduct,
+    divide,
+    increment,
+    minus,
+    multiply,
     randomArbitrary,
-    randomInt
+    randomInt,
+    remainder,
   });
 
   /*
@@ -970,20 +971,19 @@
     return a - b;
   };
   /**
-   * Sorts an array in place using a numerical comparison algorithm
-   * (sorts numbers from lowest to highest) and returns the array.
-   *
-   * @function numsort
-   * @returns {Array} The array this method was called on.
-   *
-   * @example
-   * var files = [10, 0, 2, 1];
-   * numsort(files);
-   * console.log(files);
-   * // -> [0, 1, 2, 3]
+    * Sorts an array in place using a numerical comparison algorithm from lowest to highest.
+    *
+    * @function numSort
+    * @type {Function}
+    * @param {Array} numberList - List of numbers.
+    * @returns {Array} The array this method was called on.
+    *
+    * @example
+    * numSort([10, 0, 2, 1]);
+    * // -> [0, 1, 2, 10]
    */
-  const numSort = (array) => {
-    return array.sort(numericalCompare);
+  const numSort = (numberList) => {
+    return numberList.sort(numericalCompare);
   };
   assign($, {
     numSort
@@ -1163,23 +1163,22 @@
     first
   });
 
-  /**
-   * Sorts an array in place using a reverse numerical comparison algorithm
-   * (sorts numbers from highest to lowest) and returns the array.
-   *
-   * @function rnumsort
-   * @returns {Array} The array this method was called on.
-   *
-   * @example
-   * var files = [10, 0, 2, 1];
-   * rnumsort(files);
-   * // -> [3, 2, 1, 0]
-   */
   const numericalCompareReverse = (a, b) => {
     return b - a;
   };
-  const rNumSort = (array) => {
-    return array.sort(numericalCompareReverse);
+  /**
+   * Sorts an array in place using a reverse numerical comparison algorithm from highest to lowest.
+   *
+   * @function rNumSort
+   * @param {Array} numberList - List of numbers.
+   * @returns {Array} The array this method was called on.
+   *
+   * @example
+   * rNumSort([10, 0, 2, 1]);
+   * // -> [10, 2, 1, 0]
+   */
+  const rNumSort = (numberList) => {
+    return numberList.sort(numericalCompareReverse);
   };
   assign($, {
     rNumSort
@@ -1234,12 +1233,43 @@
     return node;
   };
 
+  /**
+    * Iterates through the given object.
+    *
+    * @function eachObject
+    * @type {Function}
+    * @param {Object} callingObject - Object that will be looped through.
+    * @param {Function} iteratee - Transformation function which is passed item, key, calling object, key count, and array of keys.
+    * @returns {Object} The originally given object.
+    *
+    * @example
+    * eachObject({a: 1, b: 2, c: 3}, (item) => {
+    *   console.log(item);
+    * });
+    * // => {a: 1, b: 2, c: 3}
+  */
   const eachObject = (thisObject, iteratee) => {
     const objectKeys = keys(thisObject);
     eachArray(keys, (key, index, array, propertyCount) => {
       iteratee(thisObject[key], key, thisObject, propertyCount, objectKeys);
     });
   };
+  /**
+    * Iterates through the calling object and creates a new object with the results of the iteratee on every element in the calling object.
+    *
+    * @function mapObject
+    * @category Utility
+    * @type {Function}
+    * @param {Object} callingObject - Object that will be looped through.
+    * @param {Function} iteratee - Transformation function which is passed item, key, the newly created object, calling object, key count, and array of keys.
+    * @returns {Object} A new object of the same calling object's type.
+    *
+    * @example
+    * mapObject({a: 1, b: 2, c: 3}, (item) => {
+    *   return item * 2;
+    * });
+    * // => {a: 2, b: 4, c: 6}
+  */
   const mapObject = (object, iteratee) => {
     const results = {};
     eachObject(object, (item, key, thisObject, propertyCount, objectKeys) => {
@@ -1247,6 +1277,21 @@
     });
     return results;
   };
+  /**
+    * Iterates through the calling object and creates a new object with the results, (excludes results which are null or undefined), of the iteratee on every element in the calling object.
+    *
+    * @function compactMapObject
+    * @type {Function}
+    * @param {Object} callingObject - Object that will be looped through.
+    * @param {Function} iteratee - Transformation function which is passed item, key, the newly created object, calling object, key count, and array of keys.
+    * @returns {Object} A new object with mapped properties that are not null or undefined.
+    *
+    * @example
+    * compactMapObject({a: 0, b: 2, c: 3}, (item) => {
+    *   return item * 2;
+    * });
+    * // => {b: 4, c: 6}
+  */
   const compactMapObject = (object, iteratee) => {
     const results = {};
     let result;
@@ -1258,30 +1303,36 @@
     });
     return results;
   };
+  /**
+    * Iterates through the given and creates a new object with all elements that pass the test implemented by the iteratee.
+    *
+    * @function filterObject
+    * @type {Function}
+    * @param {Object} callingObject - Object that will be looped through.
+    * @param {Function} iteratee - Transformation function which is passed item, key, the newly created object, calling object, key count, and array of keys.
+    * @returns {Object} A new object with properties that passed the test.
+    *
+    * @example
+    * filterObject({a: false, b: true, c: true}, (item) => {
+    *   return true;
+    * });
+    * // => {b: true, c: true}
+  */
   const filterObject = (object, iteratee) => {
     const results = {};
     let result;
     eachObject(object, (item, key, thisObject, propertyCount, objectKeys) => {
-      if (iteratee(item, key, results, propertyCount, objectKeys) === true) {
+      if (iteratee(item, key, results, thisObject, propertyCount, objectKeys) === true) {
         results[key] = result;
       }
     });
     return results;
-  };
-  const mapProperty = (thisObject, iteratee) => {
-    const results = {};
-    const properties = getOwnPropertyNames(thisObject);
-    eachArray(properties, (item, key, propertyCount) => {
-      results[item] = iteratee(thisObject[item], item, results, properties, propertyCount, thisObject);
-    });
-    return thisObject;
   };
   assign($, {
     compactMapObject,
     eachObject,
     filterObject,
     mapObject,
-    mapProperty,
   });
 
   const nodeAttribute = (node, keys$$1, value) => {
@@ -1588,7 +1639,7 @@
   /**
      * Stringify an object into a JSON string.
      *
-     * @function jsonParse
+     * @function stringify
      * @type {Function}
      * @param {Object} object - Object to Stringify.
      * @returns {string} Returns the object as a valid JSON string.
@@ -1805,7 +1856,7 @@
         returned = arrayLoop;
       } else if (isPlainObject(callingObject) || isFunction(callingObject)) {
         returned = objectLoop;
-      } else if (object.forEach) {
+      } else if (callingObject.forEach) {
         returned = forEachWrap;
       } else {
         returned = objectLoop;
@@ -1819,9 +1870,9 @@
     * @function map
     * @category Utility
     * @type {Function}
-    * @param {(Array|Object|Map|WeakMap|Function|Set)} callingObject - Object that will be looped through.
+    * @param {Array|Object|Map|WeakMap|Function|Set} callingObject - Object that will be looped through.
     * @param {Function} iteratee - Transformation function which is passed item, key, the newly created map object and arguments unique to mapArray or mapObject depending on the object type.
-    * @returns {Object} A mapped object with matching keys and values returned from the iteratee.
+    * @returns {Array|Object|Map|WeakMap|Function|Set} A new object of the same calling object's type.
     *
     * @example
     * map([1, 2, 3], (item) => {
@@ -1837,11 +1888,11 @@
   /**
     * Iterates through the given object.
     *
-    * @function map
+    * @function each
     * @type {Function}
-    * @param {(Array|Object|Map|WeakMap|Function|Set)} callingObject - Object that will be looped through.
+    * @param {Array|Object|Map|WeakMap|Function|Set} callingObject - Object that will be looped through.
     * @param {Function} iteratee - Transformation function which is passed item, key, the newly created map object and arguments unique to mapArray or mapObject depending on the object type.
-    * @returns {Object} The originally given object.
+    * @returns {Array|Object|Map|WeakMap|Function|Set} The originally given object.
     *
     * @example
     * each([1, 2, 3], (item) => {
@@ -1859,9 +1910,9 @@
     *
     * @function compactMap
     * @type {Function}
-    * @param {(Array|Object|Map|WeakMap|Function|Set)} callingObject - Object that will be looped through.
+    * @param {Array|Object|Map|WeakMap|Function|Set} callingObject - Object that will be looped through.
     * @param {Function} iteratee - Transformation function which is passed item, key, the newly created map object and arguments unique to mapArray or mapObject depending on the object type.
-    * @returns {Object} A mapped object with matching keys and values returned from the iteratee.
+    * @returns {Array|Object|Map|WeakMap|Function|Set} A new object of the same calling object's type.
     *
     * @example
     * compactMap([0, 2, 3], (item) => {
@@ -1879,9 +1930,9 @@
     *
     * @function filter
     * @type {Function}
-    * @param {(Array|Object|Map|WeakMap|Function|Set)} callingObject - Object that will be looped through.
+    * @param {Array|Object|Map|WeakMap|Function|Set} callingObject - Object that will be looped through.
     * @param {Function} iteratee - Transformation function which is passed item, key, the newly created map object and arguments unique to mapArray or mapObject depending on the object type.
-    * @returns {Object} - A new object of the same calling object's type.
+    * @returns {Array|Object|Map|WeakMap|Function|Set} - A new object of the same calling object's type.
     *
     * @example
     * filter([false, true, true], (item) => {
@@ -2122,7 +2173,7 @@
     * @function isZero
     * @type {Function}
     * @param {number} item - Number to be checked.
-    * @returns {boolean}
+    * @returns {boolean} True or False.
     *
     * @example
     * isZero(0);
@@ -2141,7 +2192,7 @@
     * @type {Function}
     * @param {number} item - Number to be checked against num.
     * @param {number} num - Number to be checked against item.
-    * @returns {boolean}
+    * @returns {boolean} True or False.
     *
     * @example
     * isNumberEqual(0, 0);
@@ -2161,21 +2212,21 @@
     * @param {number} num - Number to be checked.
     * @param {number} [start = 0] - Beginning of range.
     * @param {number} [end] - End of range.
-    * @returns {boolean}
+    * @returns {boolean} True or False.
     *
     * @example
     * isNumberInRange(1, 0, 2);
     * // => True
     *
-    * isNumberEqual(1, -1, 0);
+    * isNumberInRange(1, -1, 0);
     * // => False
   */
   const isNumberInRange = (num, start = 0, end = start) => {
     return num > start && num < end;
   };
   assign($, {
-    isNumberInRange,
     isNumberEqual,
+    isNumberInRange,
     isZero
   });
 
@@ -2186,7 +2237,7 @@
     * @type {Function}
     * @param {Object} object - Object to be assigned new properties.
     * @param {Object} otherObject - Object from which properties are extracted.
-    * @param {Array} mergeArrays - Array from which items are assigned to the new object.
+    * @param {boolean} [mergeArrays = true] - Array from which items are assigned to the new object.
     * @returns {Object} - Returns object with new properties.
     *
     * @example
@@ -2194,7 +2245,7 @@
     * //=> {a:1, b:2}
     *
   */
-  const assignDeep = (object, otherObject, mergeArrays) => {
+  const assignDeep = (object, otherObject, mergeArrays = true) => {
     eachObject(otherObject, (item, key) => {
       if (isPlainObject(item) && isPlainObject(object[key])) {
         assignDeep(object[key], item, mergeArrays);
@@ -2296,8 +2347,8 @@
     return [keys$$1, values];
   };
   assign($, {
-    zipObject,
     unZipObject,
+    zipObject,
   });
 
   const invert = (thisObject, invertedObject = {}) => {
@@ -2802,12 +2853,13 @@
   });
 
   let count = 0;
-  const uuidFree = [];
-  const uuidClosed = {};
+  const uidFree = [];
+  const uidClosed = {};
   /**
     * Creates a numerical unique ID and recycles old ones. UID numerically ascends however freed UIDs are later reused.
     *
     * @function uid
+    * @category utility
     * @type {Function}
     * @returns {number} - Returns a unique id.
     *
@@ -2817,18 +2869,12 @@
     *
     * uid();
     * //=> 1
-    *
-    * uid.free(0);
-    * //=> undefined
-    *
-    * uid();
-    * //=> 0
   */
   const uid = () => {
-    let result = uuidFree.shift(uuidFree);
+    let result = uidFree.shift(uidFree);
     if (!hasValue(result)) {
       result = count;
-      uuidClosed[result] = true;
+      uidClosed[result] = true;
       count++;
     }
     return result;
@@ -2836,9 +2882,10 @@
   /**
     * Frees an UID so that it may be recycled for later use.
     *
-    * @function uid
+    * @function free
+    * @memberof uid
     * @type {Function}
-    * @param {number} uid - Number to freed.
+    * @param {number} id - Number to be freed.
     * @returns {undefined} - Nothing is returned.
     *
     * @example
@@ -2854,10 +2901,11 @@
     * uid();
     * //=> 0
   */
-  uid.free = (id) => {
-    uuidClosed[id] = null;
-    uuidFree.push(id);
+  const free = (id) => {
+    uidClosed[id] = null;
+    uidFree.push(id);
   };
+  uid.free = free;
   assign($, {
     uid,
   });

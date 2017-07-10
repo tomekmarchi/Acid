@@ -3,9 +3,7 @@ let cacheSuper;
  * Acid Object accessible through $ default method is model.
  *
  * @function $
- * @param {string} modelName - Model key.
- * @param {Object} model - An object that is saved as the value using the modelName as the string.
- * @returns {Object} The model associated with the modelName as the key.
+ * @returns {*} The return value of the superMethod. The default superMethod is model.
  *
  * @example
  * $('modelName', {example: 1});
@@ -15,17 +13,20 @@ const $ = (...args) => {
   return cacheSuper(...args);
 };
 /**
- * Re-assigns the main Acid function.
+ * Re-assigns the main method for $.
  *
- * @function $.superMethod
+ * @function superMethod
+ * @memberof $
  * @param {Function} method - The function that will become the main object's method.
+ * @returns {undefined} - Returns nothing.
  *
  * @example
- * $.superMethod($.get);
+ * superMethod($.get);
  * // -> $('flow', $);
  * // -> $.flow
  */
-$.superMethod = (method) => {
+const superMethod = (method) => {
   cacheSuper = method;
 };
+$.superMethod = superMethod;
 export default $;

@@ -147,12 +147,12 @@ export const randomInt = (max, min = 0) => {
 };
 assign(acid, {
   add,
-  minus,
-  divide,
-  multiply,
-  remainder,
-  increment,
   deduct,
+  divide,
+  increment,
+  minus,
+  multiply,
   randomArbitrary,
-  randomInt
+  randomInt,
+  remainder,
 });

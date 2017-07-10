@@ -39,7 +39,7 @@
                       <li><a
                         href='#supermethod'
                         class='regular pre-open'>
-                        .$.superMethod
+                        .superMethod
                       </a></li>
                     
                     </ul>
@@ -165,7 +165,7 @@
                 <li><a
                   href='#numsort'
                   class="">
-                  numsort
+                  numSort
                   
                 </a>
                 
@@ -175,7 +175,47 @@
                 <li><a
                   href='#rnumsort'
                   class="">
-                  rnumsort
+                  rNumSort
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#eachobject'
+                  class="">
+                  eachObject
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#mapobject'
+                  class="">
+                  mapObject
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#compactmapobject'
+                  class="">
+                  compactMapObject
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#filterobject'
+                  class="">
+                  filterObject
                   
                 </a>
                 
@@ -253,9 +293,9 @@
               
                 
                 <li><a
-                  href='#jsonparse'
+                  href='#stringify'
                   class="">
-                  jsonParse
+                  stringify
                   
                 </a>
                 
@@ -273,9 +313,9 @@
               
                 
                 <li><a
-                  href='#map'
+                  href='#each'
                   class="">
-                  map
+                  each
                   
                 </a>
                 
@@ -575,9 +615,9 @@
                     <li class='h5'><span>Static members</span></li>
                     
                       <li><a
-                        href='#uiduid'
+                        href='#uidfree'
                         class='regular pre-open'>
-                        .uid
+                        .free
                       </a></li>
                     
                     </ul>
@@ -645,7 +685,7 @@
   <p>Acid Object accessible through $ default method is model.</p>
 
 
-  <div class='pre p1 fill-light mt0'>$(args: ...any, modelName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, model: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>$(args: ...any): any</div>
   
   
 
@@ -668,24 +708,6 @@
           
         </div>
       
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>modelName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    Model key.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>model</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    An object that is saved as the value using the modelName as the string.
-
-          </div>
-          
-        </div>
-      
     </div>
   
 
@@ -694,8 +716,8 @@
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
-        The model associated with the modelName as the key.
+      <code>any</code>:
+        The return value of the superMethod. The default superMethod is model.
 
       
     
@@ -720,7 +742,7 @@
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>$.superMethod(method)</span>
+            <span class='code strong strong truncate'>superMethod(method)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -728,10 +750,10 @@
 
   
 
-  <p>Re-assigns the main Acid function.</p>
+  <p>Re-assigns the main method for $.</p>
 
 
-  <div class='pre p1 fill-light mt0'>$.superMethod(method: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</div>
+  <div class='pre p1 fill-light mt0'>superMethod(method: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
   
   
 
@@ -761,6 +783,14 @@
   
 
   
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
+        Returns nothing.
+
+      
+    
+  
 
   
 
@@ -768,7 +798,7 @@
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>$.superMethod($.get);
+      <pre class='p1 overflow-auto round fill-light'>superMethod($.get);
 <span class="hljs-comment">// -&gt; $('flow', $);</span>
 <span class="hljs-comment">// -&gt; $.flow</span></pre>
     
@@ -1733,18 +1763,17 @@ intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span
   <div class='clearfix'>
     
     <h3 class='fl m0' id='numsort'>
-      numsort
+      numSort
     </h3>
     
     
   </div>
   
 
-  <p>Sorts an array in place using a numerical comparison algorithm
-(sorts numbers from lowest to highest) and returns the array.</p>
+  <p>Sorts an array in place using a numerical comparison algorithm from lowest to highest.</p>
 
 
-  <div class='pre p1 fill-light mt0'>numsort(array: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  <div class='pre p1 fill-light mt0'>numSort(numberList: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
   
   
 
@@ -1761,8 +1790,9 @@ intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>array</span> <code class='quiet'>(any)</code>
-	    
+            <span class='code bold'>numberList</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    List of numbers.
+
           </div>
           
         </div>
@@ -1788,10 +1818,8 @@ intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> files = [<span class="hljs-number">10</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>];
-numsort(files);
-<span class="hljs-built_in">console</span>.log(files);
-<span class="hljs-comment">// -&gt; [0, 1, 2, 3]</span></pre>
+      <pre class='p1 overflow-auto round fill-light'>numSort([<span class="hljs-number">10</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>]);
+<span class="hljs-comment">// -&gt; [0, 1, 2, 10]</span></pre>
     
   
 
@@ -1811,18 +1839,17 @@ numsort(files);
   <div class='clearfix'>
     
     <h3 class='fl m0' id='rnumsort'>
-      rnumsort
+      rNumSort
     </h3>
     
     
   </div>
   
 
-  <p>Sorts an array in place using a reverse numerical comparison algorithm
-(sorts numbers from highest to lowest) and returns the array.</p>
+  <p>Sorts an array in place using a reverse numerical comparison algorithm from highest to lowest.</p>
 
 
-  <div class='pre p1 fill-light mt0'>rnumsort(a: any, b: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  <div class='pre p1 fill-light mt0'>rNumSort(numberList: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
   
   
 
@@ -1839,16 +1866,9 @@ numsort(files);
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>a</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>b</span> <code class='quiet'>(any)</code>
-	    
+            <span class='code bold'>numberList</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    List of numbers.
+
           </div>
           
         </div>
@@ -1874,9 +1894,388 @@ numsort(files);
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> files = [<span class="hljs-number">10</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>];
-rnumsort(files);
-<span class="hljs-comment">// -&gt; [3, 2, 1, 0]</span></pre>
+      <pre class='p1 overflow-auto round fill-light'>rNumSort([<span class="hljs-number">10</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>]);
+<span class="hljs-comment">// -&gt; [10, 2, 1, 0]</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='eachobject'>
+      eachObject
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Iterates through the given object.</p>
+
+
+  <div class='pre p1 fill-light mt0'>eachObject(thisObject: any, iteratee: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, callingObject: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>thisObject</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>iteratee</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+	    Transformation function which is passed item, key, calling object, key count, and array of keys.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>callingObject</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    Object that will be looped through.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
+        The originally given object.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>eachObject({<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">c</span>: <span class="hljs-number">3</span>}, (item) =&gt; {
+  <span class="hljs-built_in">console</span>.log(item);
+});
+<span class="hljs-comment">// =&gt; {a: 1, b: 2, c: 3}</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='mapobject'>
+      mapObject
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Iterates through the calling object and creates a new object with the results of the iteratee on every element in the calling object.</p>
+
+
+  <div class='pre p1 fill-light mt0'>mapObject(object: any, iteratee: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, callingObject: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>object</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>iteratee</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+	    Transformation function which is passed item, key, the newly created object, calling object, key count, and array of keys.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>callingObject</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    Object that will be looped through.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
+        A new object of the same calling object's type.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>mapObject({<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">c</span>: <span class="hljs-number">3</span>}, (item) =&gt; {
+  <span class="hljs-keyword">return</span> item * <span class="hljs-number">2</span>;
+});
+<span class="hljs-comment">// =&gt; {a: 2, b: 4, c: 6}</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='compactmapobject'>
+      compactMapObject
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Iterates through the calling object and creates a new object with the results, (excludes results which are null or undefined), of the iteratee on every element in the calling object.</p>
+
+
+  <div class='pre p1 fill-light mt0'>compactMapObject(object: any, iteratee: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, callingObject: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>object</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>iteratee</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+	    Transformation function which is passed item, key, the newly created object, calling object, key count, and array of keys.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>callingObject</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    Object that will be looped through.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
+        A new object with mapped properties that are not null or undefined.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>compactMapObject({<span class="hljs-attr">a</span>: <span class="hljs-number">0</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">c</span>: <span class="hljs-number">3</span>}, (item) =&gt; {
+  <span class="hljs-keyword">return</span> item * <span class="hljs-number">2</span>;
+});
+<span class="hljs-comment">// =&gt; {b: 4, c: 6}</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='filterobject'>
+      filterObject
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Iterates through the given and creates a new object with all elements that pass the test implemented by the iteratee.</p>
+
+
+  <div class='pre p1 fill-light mt0'>filterObject(object: any, iteratee: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, callingObject: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>object</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>iteratee</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+	    Transformation function which is passed item, key, the newly created object, calling object, key count, and array of keys.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>callingObject</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    Object that will be looped through.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
+        A new object with properties that passed the test.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>filterObject({<span class="hljs-attr">a</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">b</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">c</span>: <span class="hljs-literal">true</span>}, (item) =&gt; {
+  <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+});
+<span class="hljs-comment">// =&gt; {b: true, c: true}</span></pre>
     
   
 
@@ -2493,8 +2892,8 @@ restString(<span class="hljs-string">'restString'</span>, <span class="hljs-numb
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='jsonparse'>
-      jsonParse
+    <h3 class='fl m0' id='stringify'>
+      stringify
     </h3>
     
     
@@ -2504,7 +2903,7 @@ restString(<span class="hljs-string">'restString'</span>, <span class="hljs-numb
   <p>Stringify an object into a JSON string.</p>
 
 
-  <div class='pre p1 fill-light mt0'>jsonParse(object: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></div>
+  <div class='pre p1 fill-light mt0'>stringify(object: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></div>
   
   
 
@@ -2580,7 +2979,7 @@ restString(<span class="hljs-string">'restString'</span>, <span class="hljs-numb
   <p>Iterates through the calling object and creates a new object based on the calling object's type with the results of the iteratee on every element in the calling object.</p>
 
 
-  <div class='pre p1 fill-light mt0'>map(callingObject: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a>), iteratee: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>map(callingObject: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a>), iteratee: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a>)</div>
   
   
 
@@ -2621,8 +3020,8 @@ restString(<span class="hljs-string">'restString'</span>, <span class="hljs-numb
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
-        A mapped object with matching keys and values returned from the iteratee.
+      <code>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a>)</code>:
+        A new object of the same calling object's type.
 
       
     
@@ -2660,8 +3059,8 @@ map({<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='map'>
-      map
+    <h3 class='fl m0' id='each'>
+      each
     </h3>
     
     
@@ -2671,7 +3070,7 @@ map({<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span
   <p>Iterates through the given object.</p>
 
 
-  <div class='pre p1 fill-light mt0'>map(callingObject: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a>), iteratee: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>each(callingObject: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a>), iteratee: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a>)</div>
   
   
 
@@ -2712,7 +3111,7 @@ map({<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
+      <code>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a>)</code>:
         The originally given object.
 
       
@@ -2762,7 +3161,7 @@ each({<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <spa
   <p>Iterates through the calling object and creates a new object based on the calling object's type with the results, (excludes results which are null or undefined), of the iteratee on every element in the calling object.</p>
 
 
-  <div class='pre p1 fill-light mt0'>compactMap(callingObject: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a>), iteratee: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>compactMap(callingObject: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a>), iteratee: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a>)</div>
   
   
 
@@ -2803,8 +3202,8 @@ each({<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <spa
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
-        A mapped object with matching keys and values returned from the iteratee.
+      <code>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a>)</code>:
+        A new object of the same calling object's type.
 
       
     
@@ -2853,7 +3252,7 @@ compactMap({<span class="hljs-attr">a</span>: <span class="hljs-number">0</span>
   <p>Iterates through the given and creates a new object of the same calling object's type with all elements that pass the test implemented by the iteratee.</p>
 
 
-  <div class='pre p1 fill-light mt0'>filter(callingObject: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a>), iteratee: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>filter(callingObject: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a>), iteratee: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a>)</div>
   
   
 
@@ -2894,7 +3293,7 @@ compactMap({<span class="hljs-attr">a</span>: <span class="hljs-number">0</span>
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
+      <code>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a>)</code>:
         A new object of the same calling object's type.
 
       
@@ -2977,7 +3376,7 @@ filter({<span class="hljs-attr">a</span>: <span class="hljs-literal">false</span
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
       <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
-        
+        True or False.
 
       
     
@@ -3065,7 +3464,7 @@ isZero(<span class="hljs-number">1</span>);
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
       <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
-        
+        True or False.
 
       
     
@@ -3164,7 +3563,7 @@ isNumberEqual(<span class="hljs-number">0</span>, <span class="hljs-number">1</s
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
       <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
-        
+        True or False.
 
       
     
@@ -3179,7 +3578,7 @@ isNumberEqual(<span class="hljs-number">0</span>, <span class="hljs-number">1</s
       <pre class='p1 overflow-auto round fill-light'>isNumberInRange(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>);
 <span class="hljs-comment">// =&gt; True</span>
 
-isNumberEqual(<span class="hljs-number">1</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">0</span>);
+isNumberInRange(<span class="hljs-number">1</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">0</span>);
 <span class="hljs-comment">// =&gt; False</span></pre>
     
   
@@ -3210,7 +3609,7 @@ isNumberEqual(<span class="hljs-number">1</span>, <span class="hljs-number">-1</
   <p>Creates new object with deeply assigned values from another object/array.</p>
 
 
-  <div class='pre p1 fill-light mt0'>assignDeep(object: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, otherObject: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, mergeArrays: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>assignDeep(object: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, otherObject: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, mergeArrays: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
   
   
 
@@ -3245,7 +3644,8 @@ isNumberEqual(<span class="hljs-number">1</span>, <span class="hljs-number">-1</
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>mergeArrays</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+            <span class='code bold'>mergeArrays</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>
+            = <code>true</code>)</code>
 	    Array from which items are assigned to the new object.
 
           </div>
@@ -5105,13 +5505,7 @@ isNumberEqual(<span class="hljs-number">1</span>, <span class="hljs-number">-1</
 <span class="hljs-comment">//=&gt; 0</span>
 
 uid();
-<span class="hljs-comment">//=&gt; 1</span>
-
-uid.free(<span class="hljs-number">0</span>);
-<span class="hljs-comment">//=&gt; undefined</span>
-
-uid();
-<span class="hljs-comment">//=&gt; 0</span></pre>
+<span class="hljs-comment">//=&gt; 1</span></pre>
     
   
 
@@ -5119,11 +5513,11 @@ uid();
     <div class='py1 quiet mt1 prose-big'>Static Members</div>
     <div class="clearfix">
   
-    <div class='border-bottom' id='uiduid'>
+    <div class='border-bottom' id='uidfree'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>uid(id, uid)</span>
+            <span class='code strong strong truncate'>free(id)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -5134,7 +5528,7 @@ uid();
   <p>Frees an UID so that it may be recycled for later use.</p>
 
 
-  <div class='pre p1 fill-light mt0'>uid(id: any, uid: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
+  <div class='pre p1 fill-light mt0'>free(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
   
   
 
@@ -5151,16 +5545,8 @@ uid();
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>id</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>uid</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-	    Number to freed.
+            <span class='code bold'>id</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    Number to be freed.
 
           </div>
           
