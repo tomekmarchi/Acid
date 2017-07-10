@@ -73,7 +73,7 @@ export const compactMapObject = (object, iteratee) => {
   return results;
 };
 /**
-  * Iterates through the given and creates a new object with all elements that pass the test implemented by the iteratee.
+  * Iterates through the calling object and creates a new object with all elements that pass the test implemented by the iteratee.
   *
   * @function filterObject
   * @type {Function}

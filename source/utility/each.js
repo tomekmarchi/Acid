@@ -85,7 +85,7 @@ export const each = generateCheckLoops(eachArray, eachObject);
 */
 export const compactMap = generateCheckLoops(compactMapArray, compactMapObject);
 /**
-  * Iterates through the given and creates a new object of the same calling object's type with all elements that pass the test implemented by the iteratee.
+  * Iterates through the calling object and creates a new object of the same calling object's type with all elements that pass the test implemented by the iteratee.
   *
   * @function filter
   * @type {Function}
