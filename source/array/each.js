@@ -109,13 +109,16 @@ export const eachArrayRight = (callingArray, iteratee) => {
   * @type {Function}
   * @param {Array} callingArray - Array that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, key, calling array, and array length.
-  * @returns {boolean} Returns the true or false.
+  * @returns {boolean} Returns the true if all values returned are true or false if one value returns false.
   *
   * @example
-  * eachWhile({a: 1, b: 2, c: 3}, (item) => {
+  * eachWhile([true, true, false], (item) => {
   *   console.log(item);
+  *   return item;
   * });
-  * // => {a: 1, b: 2, c: 3}
+  * //true
+  * //true
+  * // => false
 */
 export const eachWhile = (callingArray, iteratee) => {
   const arrayLength = callingArray.length;

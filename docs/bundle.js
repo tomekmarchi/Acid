@@ -176,13 +176,16 @@
     * @type {Function}
     * @param {Array} callingArray - Array that will be looped through.
     * @param {Function} iteratee - Transformation function which is passed item, key, calling array, and array length.
-    * @returns {boolean} Returns the true or false.
+    * @returns {boolean} Returns the true if all values returned are true or false if one value returns false.
     *
     * @example
-    * eachWhile({a: 1, b: 2, c: 3}, (item) => {
+    * eachWhile([true, true, false], (item) => {
     *   console.log(item);
+    *   return item;
     * });
-    * // => {a: 1, b: 2, c: 3}
+    * //true
+    * //true
+    * // => false
   */
   const eachWhile = (callingArray, iteratee) => {
     const arrayLength = callingArray.length;
@@ -1426,17 +1429,17 @@
   /**
   * Iterates through the given object while the iteratee returns true.
   *
-  * @function eachWhile
+  * @function whileObject
   * @type {Function}
   * @param {Object} callingObject - Object that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, key, calling array, and array length.
-  * @returns {boolean} Returns the true or false.
+  * @returns {boolean} Returns the true if all values returned are true or false if one value returns false.
     *
     * @example
-    * filterObject({a: false, b: true, c: true}, (item) => {
-    *   return true;
-    * });
-    * // => {b: true, c: true}
+    * whileObject({a: false, b: true, c: true}, (item) => {
+    *   return item;
+    *  });
+    * // => false
   */
 
   /**

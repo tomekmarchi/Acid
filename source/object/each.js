@@ -26,17 +26,17 @@ export const eachObject = (thisObject, iteratee) => {
 /**
 * Iterates through the given object while the iteratee returns true.
 *
-* @function eachWhile
+* @function whileObject
 * @type {Function}
 * @param {Object} callingObject - Object that will be looped through.
 * @param {Function} iteratee - Transformation function which is passed item, key, calling array, and array length.
-* @returns {boolean} Returns the true or false.
+* @returns {boolean} Returns the true if all values returned are true or false if one value returns false.
   *
   * @example
-  * filterObject({a: false, b: true, c: true}, (item) => {
-  *   return true;
-  * });
-  * // => {b: true, c: true}
+  * whileObject({a: false, b: true, c: true}, (item) => {
+  *   return item;
+  *  });
+  * // => false
 */
 export const whileObject = (callingObject, iteratee, results = {}) => {
   return eachWhile(callingObject, (item, key, thisObject, propertyCount, objectKeys) => {

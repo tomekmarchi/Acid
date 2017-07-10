@@ -103,16 +103,6 @@
               
                 
                 <li><a
-                  href='#eachwhile'
-                  class="">
-                  eachWhile
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
                   href='#filterarray'
                   class="">
                   filterArray
@@ -306,6 +296,16 @@
                   href='#eachobject'
                   class="">
                   eachObject
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#whileobject'
+                  class="">
+                  whileObject
                   
                 </a>
                 
@@ -1424,7 +1424,7 @@
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
       <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
-        Returns the true or false.
+        Returns the true if all values returned are true or false if one value returns false.
 
       
     
@@ -1436,114 +1436,13 @@
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>eachWhile({<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">c</span>: <span class="hljs-number">3</span>}, (item) =&gt; {
+      <pre class='p1 overflow-auto round fill-light'>eachWhile([<span class="hljs-literal">true</span>, <span class="hljs-literal">true</span>, <span class="hljs-literal">false</span>], (item) =&gt; {
   <span class="hljs-built_in">console</span>.log(item);
+  <span class="hljs-keyword">return</span> item;
 });
-<span class="hljs-comment">// =&gt; {a: 1, b: 2, c: 3}</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='eachwhile'>
-      eachWhile
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Iterates through the given object while the iteratee returns true.</p>
-
-
-  <div class='pre p1 fill-light mt0'>eachWhile(object: any, iteratee: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, results: any, callingObject: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>object</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>iteratee</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
-	    Transformation function which is passed item, key, calling array, and array length.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>results</span> <code class='quiet'>(any
-            = <code>{}</code>)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>callingObject</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    Object that will be looped through.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
-        Returns the true or false.
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>filterObject({<span class="hljs-attr">a</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">b</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">c</span>: <span class="hljs-literal">true</span>}, (item) =&gt; {
-  <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
-});
-<span class="hljs-comment">// =&gt; {b: true, c: true}</span></pre>
+<span class="hljs-comment">//true</span>
+<span class="hljs-comment">//true</span>
+<span class="hljs-comment">// =&gt; false</span></pre>
     
   
 
@@ -3292,6 +3191,110 @@ intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span
   <span class="hljs-built_in">console</span>.log(item);
 });
 <span class="hljs-comment">// =&gt; {a: 1, b: 2, c: 3}</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='whileobject'>
+      whileObject
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Iterates through the given object while the iteratee returns true.</p>
+
+
+  <div class='pre p1 fill-light mt0'>whileObject(object: any, iteratee: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, results: any, callingObject: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>object</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>iteratee</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+	    Transformation function which is passed item, key, calling array, and array length.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>results</span> <code class='quiet'>(any
+            = <code>{}</code>)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>callingObject</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    Object that will be looped through.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        Returns the true if all values returned are true or false if one value returns false.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>whileObject({<span class="hljs-attr">a</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">b</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">c</span>: <span class="hljs-literal">true</span>}, (item) =&gt; {
+  <span class="hljs-keyword">return</span> item;
+ });
+<span class="hljs-comment">// =&gt; false</span></pre>
     
   
 
