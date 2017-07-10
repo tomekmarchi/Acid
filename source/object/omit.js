@@ -8,7 +8,7 @@ import { filterObject } from './each';
   * @type {Function}
   * @param {Object} originalObject - Object from which keys are extracted.
   * @param {Array} array - Array of object keys.
-  * @returns {Object} - Returns true or false.
+  * @returns {Object} - A new object with the removed.
   *
   * @example
   * omit({a:1, b:2, ['a']});

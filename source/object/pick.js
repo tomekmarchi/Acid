@@ -8,8 +8,8 @@ import { eachArray } from '../array/each';
   * @type {Function}
   * @param {Array} array - Array used to determine what values to be plucked.
   * @param {Object} originalObject - Object to be cloned.
-  * @param {Object} newObject - Object to be populated with plucked values.
-  * @returns {Object} - Returns object with plucked values.
+  * @param {Object} [newObject = {}] - Object to be populated with plucked values.
+  * @returns {Object} - A new object with plucked values.
   *
   * @example
   * pick({a:1, b:2, c:3}, ['a','b']);

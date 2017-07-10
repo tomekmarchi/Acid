@@ -57,12 +57,32 @@
     objectSize
   });
 
-  const asyncEach = async (array, arg) => {
-    const arrayLength = array.length;
+  /**
+    * Iterates through the given array of async function(s). Each async function is awaited as to ensure synchronous order and is given the supplied object.
+    *
+    * @function eachAsync
+    * @type {Function}
+    * @param {Array} callingArray - Array of async functions that will be looped through.
+    * Functions are given the supplied object, index, the calling array, and the array length.
+    * @param {*} object - The first argument given to each function.
+    * @returns {Object} The originally given array.
+    *
+    * @example
+    * eachAsync([async (item, index) =>{
+    *  console.log(item, index);
+    * }, async (item) =>{
+    *  console.log(item, index);
+    * }], {a:1});
+    * // {a:1} 0
+    * // {a:1} 1
+  */
+  const asyncEach = async (callingArray, object) => {
+    const arrayLength = callingArray.length;
     for (let index = 0; index < arrayLength; index++) {
-      const item = array[index];
-      await item(arg, index, arrayLength);
+      const item = callingArray[index];
+      await item(object, index, callingArray, arrayLength);
     }
+    return callingArray;
   };
   assign($, {
     asyncEach,
@@ -147,6 +167,7 @@
     for (let index = 0; index < arrayLength; index++) {
       iteratee(callingArray[index], index, callingArray, arrayLength);
     }
+    return callingArray;
   };
   /**
     * Iterates through the given array in reverse.
@@ -168,6 +189,7 @@
     for (let index = arrayLength - 1; index >= 0; index--) {
       iteratee(callingArray[index], index, callingArray, arrayLength);
     }
+    return callingArray;
   };
   /**
     * Iterates through the given array while the iteratee returns true.
@@ -535,29 +557,6 @@
     clear,
   });
 
-  const arraySortToObject = (func, array, sortedObject = {}) => {
-    eachArray(array, (item, key) => {
-      func(item, key, sortedObject);
-    });
-    return sortedObject;
-  };
-  assign($, {
-    arraySortToObject
-  });
-
-  const groupBy = (array, funct) => {
-    return arraySortToObject((item, index, objectArg) => {
-      const results = funct(item);
-      if (!objectArg[results]) {
-        objectArg[results] = [];
-      }
-      objectArg[results].push(item);
-    }, array);
-  };
-  assign($, {
-    groupBy
-  });
-
   // start from end array using amount as index
   const right = (array, amount) => {
     return array[array.length - 1 - amount];
@@ -765,16 +764,6 @@
     compact,
   });
 
-  // Given a list, and an iteratee function that returns a key for each element in the list (or a property name), returns an object with an index of each item. Just like groupBy, but for when you know your keys are unique.
-  const indexBy = (array, index) => {
-    return arraySortToObject((item, key, object) => {
-      object[item[index]] = item;
-    }, array);
-  };
-  assign($, {
-    indexBy
-  });
-
   const arrayNative = Array;
   const toArray = arrayNative.from;
   assign($, {
@@ -798,42 +787,6 @@
   };
   assign($, {
     shuffle
-  });
-
-  const countBy = (array, funct) => {
-    const object = {};
-    let result;
-    eachArray(array, (item) => {
-      result = funct(item);
-      if (!object[result]) {
-        object[result] = 0;
-      }
-      object[result]++;
-    });
-    return object;
-  };
-  const countKey = (array, keyName) => {
-    let count = 0;
-    eachArray(array, (item) => {
-      if (item[keyName]) {
-        count++;
-      }
-    });
-    return count;
-  };
-  const countNoKey = (array, keyName) => {
-    let count = 0;
-    eachArray(array, (item) => {
-      if (!item[keyName]) {
-        count++;
-      }
-    });
-    return count;
-  };
-  assign($, {
-    countBy,
-    countKey,
-    countNoKey
   });
 
   const initial = (array) => {
@@ -1041,19 +994,28 @@
     sumOf
   });
 
-  /*
-    const array = [async function(...args){
-      console.log(1,args);
-    }, async function(...args){
-      console.log(2,args);
-    }];
-    acid.asyncEach(array,[3,4]);
+  /**
+    * Iterates through the given array using an async function. Each async function is awaited as to ensure synchronous order.
+    *
+    * @function eachAsync
+    * @type {Function}
+    * @param {Array} callingArray - Array that will be looped through.
+    * @param {Function} iteratee - Transformation function which is passed item, index, calling array, and array length.
+    * @returns {Object} The originally given array.
+    *
+    * @example
+    * eachAsync([3,4], async (item, index) =>{
+    *  console.log(item, index);
+    * });
+    * // 3 0
+    * // 4 1
   */
-  const eachAsync = async (array, funct) => {
-    const arrayLength = array.length;
+  const eachAsync = async (callingArray, iteratee) => {
+    const arrayLength = callingArray.length;
     for (let index = 0; index < arrayLength; index++) {
-      await funct(array[index], index, arrayLength);
+      await iteratee(callingArray[index], index, callingArray, arrayLength);
     }
+    return callingArray;
   };
   assign($, {
     eachAsync,
@@ -1184,10 +1146,12 @@
   });
 
   // Converts arrays into objects.
-  const arrayToObject = (values, keys$$1) => {
-    return arraySortToObject((item, index, objectArg) => {
-      objectArg[keys$$1[index]] = item;
-    }, values);
+  const arrayToObject = (values, properties) => {
+    const sortedObject = {};
+    eachArray(values, (item, key) => {
+      sortedObject[properties[key]] = item;
+    });
+    return sortedObject;
   };
   assign($, {
     arrayToObject
@@ -1282,27 +1246,6 @@
   };
   assign($, {
     findSum
-  });
-
-  // Pluck an attribute from each object in an array.
-  const pluck = (array, pluckThis) => {
-    let pluckMethod;
-    if (isArray(pluckThis)) {
-      pluckMethod = (item) => {
-        return arraySortToObject((pluckItem, pluckKey, object) => {
-          object[pluckItem] = item[pluckItem];
-        }, pluckThis);
-      };
-    } else {
-      pluckMethod = (item) => {
-        const result = item[pluckThis];
-        return result;
-      };
-    }
-    return mapArray(array, pluckMethod);
-  };
-  assign($, {
-    pluck
   });
 
   // Merges together the values of each of the arrays with the values at the corresponding position.
@@ -1914,6 +1857,44 @@
     sortOldest,
   });
 
+  // Given a list, and an iteratee function that returns a key for each element in the list (or a property name), returns an object with an index of each item. Just like groupBy, but for when you know your keys are unique.
+  const indexBy = (array, key) => {
+    const sortedObject = {};
+    eachArray(array, (item) => {
+      sortedObject[item[key]] = item;
+    });
+    return sortedObject;
+  };
+  assign($, {
+    indexBy
+  });
+
+  // Pluck an attribute from each object in an array.
+  const pluck = (array, pluckThis) => {
+    return mapArray(array, (item) => {
+      const result = item[pluckThis];
+      return result;
+    });
+  };
+  assign($, {
+    pluck
+  });
+
+  const groupBy = (array, funct) => {
+    const sortedObject = {};
+    eachArray(array, (item) => {
+      const results = funct(item);
+      if (!sortedObject[results]) {
+        sortedObject[results] = [];
+      }
+      sortedObject[results].push(item);
+    });
+    return sortedObject;
+  };
+  assign($, {
+    groupBy
+  });
+
   // Creates a function that accepts up to n arguments ignoring any additional arguments. The 2nd argument will be binded if none the initial new function will be.
   const ary = (funct, amount) => {
     return (...args) => {
@@ -2475,10 +2456,25 @@
     hasKeys,
   });
 
-  const pick = (array, originalObject, newObject) => {
-    return arraySortToObject((item, key, object) => {
-      object[item] = originalObject[item];
-    }, array, newObject);
+  /**
+    * Returns a clone of the original object with the plucked values.
+    *
+    * @function pick
+    * @type {Function}
+    * @param {Array} array - Array used to determine what values to be plucked.
+    * @param {Object} originalObject - Object to be cloned.
+    * @param {Object} [newObject = {}] - Object to be populated with plucked values.
+    * @returns {Object} - A new object with plucked values.
+    *
+    * @example
+    * pick({a:1, b:2, c:3}, ['a','b']);
+    * //=> {a:1, b:2}
+  */
+  const pick = (originalObject, array, newObject = {}) => {
+    eachArray(array, (item) => {
+      newObject[item] = originalObject[item];
+    });
+    return newObject;
   };
   assign($, {
     pick
@@ -2536,10 +2532,12 @@
     isMatchObject,
   });
 
-  const zipObject = (keys$$1, values) => {
-    return arraySortToObject((item, index, object) => {
-      object[item] = values[index];
-    }, keys$$1);
+  const zipObject = (properties, values) => {
+    const zipedObject = {};
+    eachArray(properties, (item, key) => {
+      zipedObject[item] = values[key];
+    });
+    return zipedObject;
   };
   const unZipObject = (object) => {
     const keys$$1 = [];
@@ -2555,6 +2553,19 @@
     zipObject,
   });
 
+  /**
+    * Creates an inverted version of a given object by switching it's keys and values.
+    *
+    * @function invert
+    * @type {Function}
+    * @param {Object} thisObject - Object to be inverted.
+    * @param {Array} [invertedObject = {}] - Empty object to be populated with inverted values from thisObject.
+    * @returns {Object} - Returns object with keys and values switched.
+    *
+    * @example
+    * invert({a:1});
+    * //=> {1:a}
+  */
   const invert = (thisObject, invertedObject = {}) => {
     eachObject(thisObject, (item, key) => {
       invertedObject[item] = key;
@@ -2565,6 +2576,20 @@
     invert,
   });
 
+  /**
+    * Returns a clone of the given object without the given properties.
+    *
+    * @function omit
+    * @type {Function}
+    * @param {Object} originalObject - Object from which keys are extracted.
+    * @param {Array} array - Array of object keys.
+    * @returns {Object} - A new object with the removed.
+    *
+    * @example
+    * omit({a:1, b:2, ['a']});
+    * //=> {b:2}
+    *
+  */
   const omit = (originalObject, array) => {
     return filterObject(originalObject, (item, key) => {
       return !array.includes(key);

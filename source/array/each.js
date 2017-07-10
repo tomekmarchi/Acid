@@ -80,6 +80,7 @@ export const eachArray = (callingArray, iteratee) => {
   for (let index = 0; index < arrayLength; index++) {
     iteratee(callingArray[index], index, callingArray, arrayLength);
   }
+  return callingArray;
 };
 /**
   * Iterates through the given array in reverse.
@@ -101,6 +102,7 @@ export const eachArrayRight = (callingArray, iteratee) => {
   for (let index = arrayLength - 1; index >= 0; index--) {
     iteratee(callingArray[index], index, callingArray, arrayLength);
   }
+  return callingArray;
 };
 /**
   * Iterates through the given array while the iteratee returns true.

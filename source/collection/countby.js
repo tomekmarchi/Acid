@@ -22,7 +22,7 @@ export const countKey = (array, keyName) => {
   });
   return count;
 };
-export const countNoKey = (array, keyName) => {
+export const countWithoutKey = (array, keyName) => {
   let count = 0;
   eachArray(array, (item) => {
     if (!item[keyName]) {
@@ -34,5 +34,5 @@ export const countNoKey = (array, keyName) => {
 assign(acid, {
   countBy,
   countKey,
-  countNoKey
+  countWithoutKey
 });
