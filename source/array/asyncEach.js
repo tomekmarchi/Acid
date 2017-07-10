@@ -3,7 +3,7 @@ import { assign } from '../internal/object';
 /**
   * Iterates through the given array of async function(s). Each async function is awaited as to ensure synchronous order and is given the supplied object.
   *
-  * @function eachAsync
+  * @function asyncEach
   * @type {Function}
   * @param {Array} callingArray - Array of async functions that will be looped through.
   * Functions are given the supplied object, index, the calling array, and the array length.
@@ -11,7 +11,7 @@ import { assign } from '../internal/object';
   * @returns {Object} The originally given array.
   *
   * @example
-  * eachAsync([async (item, index) =>{
+  * asyncEach([async (item, index) =>{
   *  console.log(item, index);
   * }, async (item) =>{
   *  console.log(item, index);
