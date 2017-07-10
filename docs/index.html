@@ -53,19 +53,9 @@
               
                 
                 <li><a
-                  href='#eachasync'
+                  href='#asynceach'
                   class="">
-                  eachAsync
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#eachasync'
-                  class="">
-                  eachAsync
+                  asyncEach
                   
                 </a>
                 
@@ -286,6 +276,16 @@
                   href='#ismatcharray'
                   class="">
                   isMatchArray
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#eachasync'
+                  class="">
+                  eachAsync
                   
                 </a>
                 
@@ -1041,8 +1041,8 @@
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='eachasync'>
-      eachAsync
+    <h3 class='fl m0' id='asynceach'>
+      asyncEach
     </h3>
     
     
@@ -1052,7 +1052,7 @@
   <p>Iterates through the given array of async function(s). Each async function is awaited as to ensure synchronous order and is given the supplied object.</p>
 
 
-  <div class='pre p1 fill-light mt0'>eachAsync(callingArray: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, object: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>asyncEach(callingArray: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, object: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
   
   
 
@@ -1107,101 +1107,13 @@ Functions are given the supplied object, index, the calling array, and the array
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>eachAsync([<span class="hljs-keyword">async</span> (item, index) =&gt;{
+      <pre class='p1 overflow-auto round fill-light'>asyncEach([<span class="hljs-keyword">async</span> (item, index) =&gt;{
  <span class="hljs-built_in">console</span>.log(item, index);
 }, <span class="hljs-keyword">async</span> (item) =&gt;{
  <span class="hljs-built_in">console</span>.log(item, index);
 }], {<span class="hljs-attr">a</span>:<span class="hljs-number">1</span>});
 <span class="hljs-comment">// {a:1} 0</span>
 <span class="hljs-comment">// {a:1} 1</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='eachasync'>
-      eachAsync
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Iterates through the given array using an async function. Each async function is awaited as to ensure synchronous order.</p>
-
-
-  <div class='pre p1 fill-light mt0'>eachAsync(callingArray: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, iteratee: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>callingArray</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
-	    Array that will be looped through.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>iteratee</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
-	    Transformation function which is passed item, index, calling array, and array length.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
-        The originally given array.
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>eachAsync([<span class="hljs-number">3</span>,<span class="hljs-number">4</span>], <span class="hljs-keyword">async</span> (item, index) =&gt;{
- <span class="hljs-built_in">console</span>.log(item, index);
-});
-<span class="hljs-comment">// 3 0</span>
-<span class="hljs-comment">// 4 1</span></pre>
     
   
 
@@ -3173,6 +3085,94 @@ intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span
       
       <pre class='p1 overflow-auto round fill-light'>isMatchArray([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>], [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]);
 <span class="hljs-comment">// =&gt; true</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='eachasync'>
+      eachAsync
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Iterates through the given array using an async function. Each async function is awaited as to ensure synchronous order.</p>
+
+
+  <div class='pre p1 fill-light mt0'>eachAsync(callingArray: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, iteratee: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>callingArray</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    Array that will be looped through.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>iteratee</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+	    Transformation function which is passed item, index, calling array, and array length.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
+        The originally given array.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>eachAsync([<span class="hljs-number">3</span>,<span class="hljs-number">4</span>], <span class="hljs-keyword">async</span> (item, index) =&gt;{
+ <span class="hljs-built_in">console</span>.log(item, index);
+});
+<span class="hljs-comment">// 3 0</span>
+<span class="hljs-comment">// 4 1</span></pre>
     
   
 

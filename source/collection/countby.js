@@ -1,6 +1,6 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-import { eachArray } from './each';
+import { eachArray } from '../array/each';
 export const countBy = (array, funct) => {
   const object = {};
   let result;

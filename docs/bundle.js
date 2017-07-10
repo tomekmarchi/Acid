@@ -60,7 +60,7 @@
   /**
     * Iterates through the given array of async function(s). Each async function is awaited as to ensure synchronous order and is given the supplied object.
     *
-    * @function eachAsync
+    * @function asyncEach
     * @type {Function}
     * @param {Array} callingArray - Array of async functions that will be looped through.
     * Functions are given the supplied object, index, the calling array, and the array length.
@@ -68,7 +68,7 @@
     * @returns {Object} The originally given array.
     *
     * @example
-    * eachAsync([async (item, index) =>{
+    * asyncEach([async (item, index) =>{
     *  console.log(item, index);
     * }, async (item) =>{
     *  console.log(item, index);
@@ -1893,6 +1893,42 @@
   };
   assign($, {
     groupBy
+  });
+
+  const countBy = (array, funct) => {
+    const object = {};
+    let result;
+    eachArray(array, (item) => {
+      result = funct(item);
+      if (!object[result]) {
+        object[result] = 0;
+      }
+      object[result]++;
+    });
+    return object;
+  };
+  const countKey = (array, keyName) => {
+    let count = 0;
+    eachArray(array, (item) => {
+      if (item[keyName]) {
+        count++;
+      }
+    });
+    return count;
+  };
+  const countWithoutKey = (array, keyName) => {
+    let count = 0;
+    eachArray(array, (item) => {
+      if (!item[keyName]) {
+        count++;
+      }
+    });
+    return count;
+  };
+  assign($, {
+    countBy,
+    countKey,
+    countWithoutKey
   });
 
   // Creates a function that accepts up to n arguments ignoring any additional arguments. The 2nd argument will be binded if none the initial new function will be.
