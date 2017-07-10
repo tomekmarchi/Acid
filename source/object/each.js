@@ -122,4 +122,5 @@ assign(acid, {
   eachObject,
   filterObject,
   mapObject,
+  whileObject,
 });
