@@ -19,7 +19,7 @@ import { eachArray, eachWhile } from '../array/each';
 */
 export const eachObject = (thisObject, iteratee) => {
   const objectKeys = keys(thisObject);
-  eachArray(keys, (key, index, array, propertyCount) => {
+  eachArray(objectKeys, (key, index, array, propertyCount) => {
     iteratee(thisObject[key], key, thisObject, propertyCount, objectKeys);
   });
 };
@@ -60,10 +60,9 @@ export const whileObject = (callingObject, iteratee, results = {}) => {
   * // => {b: true, c: true}
 */
 export const filterObject = (object, iteratee, results = {}) => {
-  let result;
   eachObject(object, (item, key, thisObject, propertyCount, objectKeys) => {
     if (iteratee(item, key, results, thisObject, propertyCount, objectKeys) === true) {
-      results[key] = result;
+      results[key] = item;
     }
   });
   return results;
@@ -108,9 +107,8 @@ export const mapObject = (object, iteratee, results = {}) => {
   * // => {b: 4, c: 6}
 */
 export const compactMapObject = (object, iteratee, results = {}) => {
-  let result;
   eachObject(object, (item, key, thisObject, propertyCount, objectKeys) => {
-    result = iteratee(item, key, results, propertyCount, objectKeys);
+    const result = iteratee(item, key, results, propertyCount, objectKeys);
     if (hasValue(result)) {
       results[key] = result;
     }

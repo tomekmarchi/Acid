@@ -1422,7 +1422,7 @@
   */
   const eachObject = (thisObject, iteratee) => {
     const objectKeys = keys(thisObject);
-    eachArray(keys, (key, index, array, propertyCount) => {
+    eachArray(objectKeys, (key, index, array, propertyCount) => {
       iteratee(thisObject[key], key, thisObject, propertyCount, objectKeys);
     });
   };
@@ -1463,10 +1463,9 @@
     * // => {b: true, c: true}
   */
   const filterObject = (object, iteratee, results = {}) => {
-    let result;
     eachObject(object, (item, key, thisObject, propertyCount, objectKeys) => {
       if (iteratee(item, key, results, thisObject, propertyCount, objectKeys) === true) {
-        results[key] = result;
+        results[key] = item;
       }
     });
     return results;
@@ -1511,9 +1510,8 @@
     * // => {b: 4, c: 6}
   */
   const compactMapObject = (object, iteratee, results = {}) => {
-    let result;
     eachObject(object, (item, key, thisObject, propertyCount, objectKeys) => {
-      result = iteratee(item, key, results, propertyCount, objectKeys);
+      const result = iteratee(item, key, results, propertyCount, objectKeys);
       if (hasValue(result)) {
         results[key] = result;
       }
@@ -2427,7 +2425,7 @@
   });
 
   /**
-    * Checks to see if an object all of the given property names.
+    * Checks to see if an object has all of the given property names.
     *
     * @function compactKeys
     * @type {Function}
@@ -2436,9 +2434,11 @@
     * @returns {boolean} - Returns true or false.
     *
     * @example
-    * hasKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'});
-    * //=> ['Lucy', 'John', 'Thor']
+    * hasKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Lucy','Thor']);
+    * //=> true
     *
+    * hasKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Lucy','Tom']);
+    * //=> false
   */
   const hasKeys = (object, properties) => {
     let flag = false;
@@ -2462,6 +2462,8 @@
     * hasAnyKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Lucy','John']);
     * //=> true
     *
+    * hasAnyKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Lucy','Tom']);
+    * //=> true
   */
   const hasAnyKeys = (object, properties) => {
     const objectKeys = keys(object);
@@ -2566,10 +2568,8 @@
   });
 
   const omit = (originalObject, array) => {
-    return compactMapObject(originalObject, (item, key) => {
-      if (!array.includes(key)) {
-        return item;
-      }
+    return filterObject(originalObject, (item, key) => {
+      return !array.includes(key);
     });
   };
   assign($, {

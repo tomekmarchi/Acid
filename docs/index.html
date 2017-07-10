@@ -4962,7 +4962,7 @@ isNumberInRange(<span class="hljs-number">1</span>, <span class="hljs-number">-1
   </div>
   
 
-  <p>Checks to see if an object all of the given property names.</p>
+  <p>Checks to see if an object has all of the given property names.</p>
 
 
   <div class='pre p1 fill-light mt0'>compactKeys(object: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, properties: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
@@ -5019,8 +5019,11 @@ isNumberInRange(<span class="hljs-number">1</span>, <span class="hljs-number">-1
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>hasKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'</span>, <span class="hljs-attr">John</span>: <span class="hljs-string">'Malkovich'</span>, <span class="hljs-attr">Thor</span>: <span class="hljs-string">'Bobo'</span>});
-<span class="hljs-comment">//=&gt; ['Lucy', 'John', 'Thor']</span></pre>
+      <pre class='p1 overflow-auto round fill-light'>hasKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'</span>, <span class="hljs-attr">John</span>: <span class="hljs-string">'Malkovich'</span>, <span class="hljs-attr">Thor</span>: <span class="hljs-string">'Bobo'</span>}, [<span class="hljs-string">'Lucy'</span>,<span class="hljs-string">'Thor'</span>]);
+<span class="hljs-comment">//=&gt; true</span>
+
+hasKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'</span>, <span class="hljs-attr">John</span>: <span class="hljs-string">'Malkovich'</span>, <span class="hljs-attr">Thor</span>: <span class="hljs-string">'Bobo'</span>}, [<span class="hljs-string">'Lucy'</span>,<span class="hljs-string">'Tom'</span>]);
+<span class="hljs-comment">//=&gt; false</span></pre>
     
   
 
@@ -5181,6 +5184,9 @@ isNumberInRange(<span class="hljs-number">1</span>, <span class="hljs-number">-1
     
       
       <pre class='p1 overflow-auto round fill-light'>hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'</span>, <span class="hljs-attr">John</span>: <span class="hljs-string">'Malkovich'</span>, <span class="hljs-attr">Thor</span>: <span class="hljs-string">'Bobo'</span>}, [<span class="hljs-string">'Lucy'</span>,<span class="hljs-string">'John'</span>]);
+<span class="hljs-comment">//=&gt; true</span>
+
+hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'</span>, <span class="hljs-attr">John</span>: <span class="hljs-string">'Malkovich'</span>, <span class="hljs-attr">Thor</span>: <span class="hljs-string">'Bobo'</span>}, [<span class="hljs-string">'Lucy'</span>,<span class="hljs-string">'Tom'</span>]);
 <span class="hljs-comment">//=&gt; true</span></pre>
     
   
