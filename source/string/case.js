@@ -65,7 +65,6 @@ export const kebabCase = (string) => {
   *
   * @example
   * snakeCase('snake case');
-  * // => snake_case
 */
 export const snakeCase = (string) => {
   return string.replace(normalizeCase, ' ')
