@@ -12,7 +12,6 @@ import { assign } from '../internal/object';
   * @example
   *  chunk([1,2,3], 1);
   * //=> [[1],[2],[3]]
-
 */
 export const chunk = (array, size = 1) => {
   const chunked = [];

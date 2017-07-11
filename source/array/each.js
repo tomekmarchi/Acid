@@ -30,7 +30,7 @@ export const times = (startIndex, endIndex, iteratee) => {
   }
 };
 /**
-  * IIterates based on a start index and end index. Creates an array with the results of the iteratee on every element in the calling array. The loop ends when the start index is equal to the end index.
+  * Iterates based on a start index and end index. Creates an array with the results of the iteratee on every element in the calling array. The loop ends when the start index is equal to the end index.
   *
   * @function timesMap
   * @category Utility
