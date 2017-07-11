@@ -1,4 +1,3 @@
-import './assignDeep';
 import './hasKeys';
 import './pick';
 import './compactKeys';

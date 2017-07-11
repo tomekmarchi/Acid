@@ -4,20 +4,19 @@ export const numericalCompare = (a, b) => {
   return a - b;
 };
 /**
- * Sorts an array in place using a numerical comparison algorithm
- * (sorts numbers from lowest to highest) and returns the array.
- *
- * @function numsort
- * @returns {Array} The array this method was called on.
- *
- * @example
- * var files = [10, 0, 2, 1];
- * numsort(files);
- * console.log(files);
- * // -> [0, 1, 2, 3]
- */
-export const numSort = (array) => {
-  return array.sort(numericalCompare);
+  * Sorts an array in place using a numerical comparison algorithm from lowest to highest.
+  *
+  * @function numSort
+  * @type {Function}
+  * @param {Array} numberList - Array of numbers.
+  * @returns {Array} The array this method was called on.
+  *
+  * @example
+  * numSort([10, 0, 2, 1]);
+  * // -> [0, 1, 2, 10]
+*/
+export const numSort = (numberList) => {
+  return numberList.sort(numericalCompare);
 };
 assign(acid, {
   numSort

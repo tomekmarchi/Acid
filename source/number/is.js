@@ -6,7 +6,7 @@ import { assign } from '../internal/object';
   * @function isZero
   * @type {Function}
   * @param {number} item - Number to be checked.
-  * @returns {boolean}
+  * @returns {boolean} True or False.
   *
   * @example
   * isZero(0);
@@ -25,7 +25,7 @@ export const isZero = (item) => {
   * @type {Function}
   * @param {number} item - Number to be checked against num.
   * @param {number} num - Number to be checked against item.
-  * @returns {boolean}
+  * @returns {boolean} True or False.
   *
   * @example
   * isNumberEqual(0, 0);
@@ -45,20 +45,20 @@ export const isNumberEqual = (item, num) => {
   * @param {number} num - Number to be checked.
   * @param {number} [start = 0] - Beginning of range.
   * @param {number} [end] - End of range.
-  * @returns {boolean}
+  * @returns {boolean} True or False.
   *
   * @example
   * isNumberInRange(1, 0, 2);
   * // => True
   *
-  * isNumberEqual(1, -1, 0);
+  * isNumberInRange(1, -1, 0);
   * // => False
 */
 export const isNumberInRange = (num, start = 0, end = start) => {
   return num > start && num < end;
 };
 assign(acid, {
-  isNumberInRange,
   isNumberEqual,
+  isNumberInRange,
   isZero
 });

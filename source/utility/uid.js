@@ -2,12 +2,13 @@ import acid from '../namespace/index';
 import { assign } from '../internal/object';
 import { hasValue } from '../internal/is';
 let count = 0;
-const uuidFree = [];
-const uuidClosed = {};
+const uidFree = [];
+const uidClosed = {};
 /**
   * Creates a numerical unique ID and recycles old ones. UID numerically ascends however freed UIDs are later reused.
   *
   * @function uid
+  * @category utility
   * @type {Function}
   * @returns {number} - Returns a unique id.
   *
@@ -17,18 +18,12 @@ const uuidClosed = {};
   *
   * uid();
   * //=> 1
-  *
-  * uid.free(0);
-  * //=> undefined
-  *
-  * uid();
-  * //=> 0
 */
 export const uid = () => {
-  let result = uuidFree.shift(uuidFree);
+  let result = uidFree.shift(uidFree);
   if (!hasValue(result)) {
     result = count;
-    uuidClosed[result] = true;
+    uidClosed[result] = true;
     count++;
   }
   return result;
@@ -36,9 +31,10 @@ export const uid = () => {
 /**
   * Frees an UID so that it may be recycled for later use.
   *
-  * @function uid
+  * @function free
+  * @memberof uid
   * @type {Function}
-  * @param {number} uid - Number to freed.
+  * @param {number} id - Number to be freed.
   * @returns {undefined} - Nothing is returned.
   *
   * @example
@@ -54,10 +50,11 @@ export const uid = () => {
   * uid();
   * //=> 0
 */
-uid.free = (id) => {
-  uuidClosed[id] = null;
-  uuidFree.push(id);
+const free = (id) => {
+  uidClosed[id] = null;
+  uidFree.push(id);
 };
+uid.free = free;
 assign(acid, {
   uid,
 });

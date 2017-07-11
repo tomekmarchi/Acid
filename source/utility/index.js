@@ -1,9 +1,10 @@
+import './assignDeep';
 import './cacheNativeMethod';
 import './ifNotEqual';
 import './propertyMatch';
 import './toPath';
 import './isEqual';
-import './uuid';
+import './uid';
 import './each';
 import './get';
 import './json';

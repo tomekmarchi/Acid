@@ -11,8 +11,8 @@ import { hasValue } from '../internal/is';
   * @returns {Array} - Returns an array of key values.
   *
   * @example
-  * compactKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'});
-  * //=> [Lucy, John, Thor]
+  * compactKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: undefined, other: false, that: null});
+  * //=> ['Lucy', 'John', 'other']
   *
 */
 export const compactKeys = (object) => {

@@ -3,7 +3,7 @@ const babel = require('rollup-plugin-babili');
 const esformatter = require('esformatter');
 const tinyLR = require('tiny-lr')();
 const liveReload = require('connect-livereload');
-const documentation = require('documentation');
+const documentation = require('docredux');
 const streamArray = require('stream-array');
 const fs = require('fs');
 const vfs = require('vinyl-fs');
@@ -71,28 +71,14 @@ const build = async () => {
   copyFile('./build/index.js', './docs/bundle.min.js');
   console.log('Build Complete');
   console.log('Docs Started');
-  const docs = await new Promise((accept) => {
-    documentation('./build/bundle.js', {
-      hljs: {
-        highlightAuto: true
-      },
-    }, (error, value) => {
-      if (error) {
-        return console.log(error);
-      }
-      accept(value);
-    });
+  const docs = await documentation.build('./build/bundle.js', {
+    hljs: {
+      highlightAuto: true
+    },
   });
-  const htmlDocs = await new Promise((accept) => {
-    documentation.formats.html(docs, {
-      theme: './documentation-theme-acid'
-    }, (error, value) => {
-      if (error) {
-        return console.log(error);
-      }
-      accept(value);
-    });
-  });
+  console.log('Doc config');
+  const htmlDocs = await documentation.formats.html(docs, {});
+  console.log('HTML Docs compiled');
   await streamArray(htmlDocs).pipe(vfs.dest('./docs'));
   console.log('Docs Complete');
   console.log('NPM Started');
