@@ -1,6 +1,5 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-
 const mathNativeMax = Math.max;
 /**
    * Plucks the largest value from an array.

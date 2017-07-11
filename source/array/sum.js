@@ -1,3 +1,4 @@
+
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
 /**
@@ -5,8 +6,8 @@ import { assign } from '../internal/object';
   *
   * @function sum
   * @type {Function}
-  * @param {Array} array - Array to be reduced
-  * @returns {number} - Returns a single value
+  * @param {Array} array - Array to be reduced.
+  * @returns {number} - Returns a single value.
   *
   * @example
   * sum([1, 2, 3, 4]);
