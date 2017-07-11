@@ -1107,13 +1107,13 @@
     *
     * @function numSort
     * @type {Function}
-    * @param {Array} numberList - List of numbers.
+    * @param {Array} numberList - Array of numbers.
     * @returns {Array} The array this method was called on.
     *
     * @example
     * numSort([10, 0, 2, 1]);
     * // -> [0, 1, 2, 10]
-   */
+  */
   const numSort = (numberList) => {
     return numberList.sort(numericalCompare);
   };
@@ -1248,7 +1248,18 @@
     findSum
   });
 
-  // Merges together the values of each of the arrays with the values at the corresponding position.
+  /**
+    * Merges together the values of each of the arrays with the values at the corresponding position.
+    *
+    * @function zip
+    * @type {Function}
+    * @param {Array} properties - The arrays to process.
+    * @returns {Array} - Returns the new array of regrouped elements.
+    *
+    * @example
+    * zip(['a', 'b'], [1, 2], [true, false]);
+    * // => [['a', 1, true], ['b', 2, false]]
+  */
   const zip = (...args) => {
     return args[0].map((item, index) => {
       return args.map((array) => {
@@ -1256,7 +1267,18 @@
       });
     });
   };
-  // unzip the array of zipped arrays [["fred",30,true],["barney",40,false]]
+  /**
+    * Takes an array of grouped elements and creates an array regrouping the elements to their pre-zip array configuration.
+    *
+    * @function unZip
+    * @type {Function}
+    * @param {Array} properties - The array of grouped elements to process.
+    * @returns {Array} - Returns the new array of regrouped elements.
+    *
+    * @example
+    * unZip([['a', 1, true], ['b', 2, false]]);
+    * // => [['a', 'b'], [1, 2], [true, false]]
+  */
   const unZip = (array) => {
     return array[0].map((item, index) => {
       return array.map((arraySet) => {
@@ -1265,8 +1287,8 @@
     });
   };
   assign($, {
+    unZip,
     zip,
-    unZip
   });
 
   const first = (array, upTo) => {
@@ -1280,16 +1302,16 @@
     return b - a;
   };
   /**
-   * Sorts an array in place using a reverse numerical comparison algorithm from highest to lowest.
-   *
-   * @function rNumSort
-   * @param {Array} numberList - List of numbers.
-   * @returns {Array} The array this method was called on.
-   *
-   * @example
-   * rNumSort([10, 0, 2, 1]);
-   * // -> [10, 2, 1, 0]
-   */
+    * Sorts an array in place using a reverse numerical comparison algorithm from highest to lowest.
+    *
+    * @function rNumSort
+    * @param {Array} numberList - Array of numbers.
+    * @returns {Array} The array this method was called on.
+    *
+    * @example
+    * rNumSort([10, 0, 2, 1]);
+    * // -> [10, 2, 1, 0]
+  */
   const rNumSort = (numberList) => {
     return numberList.sort(numericalCompareReverse);
   };
@@ -1811,8 +1833,22 @@
     $[`is${item}`] = isSameObjectGenerator(objectStringGenerate(item));
   });
 
-  const sortNewest = (arrayArg, key, pureMode) => {
-    const array = (pureMode) ? arrayArg : [...arrayArg];
+  /**
+    * Sorts an array in place using a key from newest to oldest.
+    *
+    * @function sortNewest
+    * @type {Function}
+    * @param {Array} collection - Collection to be sorted.
+    * @param {string} key - The property name to sort by based on it's value.
+    * @param {boolean} [pureMode = true] - Mutates the source array. If set to false creates a new array.
+    * @returns {Array} The sorted array and or a clone of the array sorted.
+    *
+    * @example
+    * sortNewest([{id: 1}, {id: 0}], 'id');
+    * // -> [{id: 1}, {id: 0}]
+  */
+  const sortNewest = (collection, key, pureMode = true) => {
+    const array = (pureMode) ? collection : [...collection];
     return array.sort((previous, next) => {
       if (!next[key]) {
         return -1;
@@ -1826,16 +1862,43 @@
       return 0;
     });
   };
-  const getNewest = (array, key) => {
-    return sortNewest(array, key)[0];
+  /**
+    * Sorts an array in place using a key from newest to oldest and returns the latest. Does not mutate the array.
+    *
+    * @function getNewest
+    * @type {Function}
+    * @param {Array} collection - Collection to be sorted.
+    * @param {string} key - The property name to sort by based on it's value.
+    * @returns {Object} The newest object in the collection.
+    *
+    * @example
+    * getNewest([{id: 1}, {id: 0}], 'id');
+    * // -> {id: 1}
+  */
+  const getNewest = (collection, key) => {
+    return sortNewest(collection, key, false)[0];
   };
   assign($, {
     getNewest,
     sortNewest,
   });
 
-  const sortOldest = (arrayArg, key, pureMode) => {
-    const array = (pureMode) ? arrayArg : [...arrayArg];
+  /**
+    * Sorts an array in place using a key from oldest to newest.
+    *
+    * @function sortOldest
+    * @type {Function}
+    * @param {Array} collection - Collection to be sorted.
+    * @param {string} key - The property name to sort by based on it's value.
+    * @param {boolean} [pureMode = true] - Mutates the source array. If set to false creates a new array.
+    * @returns {Array} The sorted array and or a clone of the array sorted.
+    *
+    * @example
+    * sortOldest([{id: 1}, {id: 0}], 'id');
+    * // -> [{id: 0}, {id: 1}]
+  */
+  const sortOldest = (collection, key, pureMode = true) => {
+    const array = (pureMode) ? collection : [...collection];
     return array.sort((previous, next) => {
       if (!next[key]) {
         return -1;
@@ -1849,41 +1912,46 @@
       return 0;
     });
   };
-  const getOldest = (array, key) => {
-    return sortOldest(array, key)[0];
+  /**
+    * Sorts an array in place using a key from oldest to newest and returns the oldest. Does not mutate the array.
+    *
+    * @function getOldest
+    * @type {Function}
+    * @param {Array} collection - Collection to be sorted.
+    * @param {string} key - The property name to sort by based on it's value.
+    * @returns {Object} The newest object in the collection.
+    *
+    * @example
+    * sortOldest([{id: 1}, {id: 0}], 'id');
+    * // -> {id: 0}
+  */
+  const getOldest = (collection, key) => {
+    return sortOldest(collection, key)[0];
   };
   assign($, {
     getOldest,
     sortOldest,
   });
 
-  // Given a list, and an iteratee function that returns a key for each element in the list (or a property name), returns an object with an index of each item. Just like groupBy, but for when you know your keys are unique.
-  const indexBy = (array, key) => {
+  /**
+    * Creates an object composed of keys generated from the results of running each element of collection thru iteratee.
+    * The order of grouped values is determined by the order they occur in collection.
+    * The corresponding value of each key is an array of elements responsible for generating the key.
+    *
+    * @function groupBy
+    * @type {Function}
+    * @param {Array} collection - Array of objects.
+    * @param {Function} iteratee - The iteratee to transform keys.
+    * @returns {Object} Returns the composed aggregate object.
+    *
+    * @example
+    * groupBy([6.1, 4.2, 6.3], Math.floor);
+    * // => { '4': [4.2], '6': [6.1, 6.3] }
+  */
+  const groupBy = (array, iteratee) => {
     const sortedObject = {};
     eachArray(array, (item) => {
-      sortedObject[item[key]] = item;
-    });
-    return sortedObject;
-  };
-  assign($, {
-    indexBy
-  });
-
-  // Pluck an attribute from each object in an array.
-  const pluck = (array, pluckThis) => {
-    return mapArray(array, (item) => {
-      const result = item[pluckThis];
-      return result;
-    });
-  };
-  assign($, {
-    pluck
-  });
-
-  const groupBy = (array, funct) => {
-    const sortedObject = {};
-    eachArray(array, (item) => {
-      const results = funct(item);
+      const results = iteratee(item);
       if (!sortedObject[results]) {
         sortedObject[results] = [];
       }
@@ -1895,11 +1963,24 @@
     groupBy
   });
 
-  const countBy = (array, funct) => {
+  /**
+    * Creates an object composed of keys generated from the results of running each element of collection through iteratee.
+    *
+    * @function countBy
+    * @type {Function}
+    * @param {Array} collection - Array of objects.
+    * @param {Function} iteratee - The iteratee to transform keys.
+    * @returns {Object} Returns the composed aggregate object.
+    *
+    * @example
+    * countBy([{a:1}, {a:3}], (item) => { return 'a';}));
+    * // => {a: 2}
+  */
+  const countBy = (collection, iteratee) => {
     const object = {};
     let result;
-    eachArray(array, (item) => {
-      result = funct(item);
+    eachArray(collection, (item) => {
+      result = iteratee(item);
       if (!object[result]) {
         object[result] = 0;
       }
@@ -1907,15 +1988,41 @@
     });
     return object;
   };
-  const countKey = (array, keyName) => {
+  /**
+    * Count the amount of times a key is present in a colleciton.
+    *
+    * @function countKey
+    * @type {Function}
+    * @param {Array} collection - Array of objects.
+    * @param {Function} property - The name of the key.
+    * @returns {number} The count.
+    *
+    * @example
+    * countKey([{a:1}, {a:3}], 'a');
+    * // => 2
+  */
+  const countKey = (array, property) => {
     let count = 0;
     eachArray(array, (item) => {
-      if (item[keyName]) {
+      if (item[property]) {
         count++;
       }
     });
     return count;
   };
+  /**
+    * Count the amount of times a key is not present in a colleciton.
+    *
+    * @function countWithoutKey
+    * @type {Function}
+    * @param {Array} collection - Array of objects.
+    * @param {string} property - The name of the key.
+    * @returns {number} The count.
+    *
+    * @example
+    * countWithoutKey([{a:1}, {a:3}], 'b');
+    * // => 2
+  */
   const countWithoutKey = (array, keyName) => {
     let count = 0;
     eachArray(array, (item) => {
@@ -1929,6 +2036,54 @@
     countBy,
     countKey,
     countWithoutKey
+  });
+
+  /**
+    * Given a list, and an iteratee function that returns a key for each element in the list (or a property name), returns an object with an index of each item.
+    * Just like groupBy, but for when you know your keys are unique.
+    *
+    * @function groupBy
+    * @type {Function}
+    * @param {Array} collection - Array of objects.
+    * @param {Function} iteratee - The iteratee to transform keys.
+    * @returns {Object} Returns the composed aggregate object.
+    *
+    * @example
+    * groupBy([{name: 'Lucy', id: 0}, {name: 'Erick', id: 1}], Math.floor);
+    * // => { "0": {name: 'Lucy', id: 0}, "1": {name: 'Erick', id: 1}}
+  */
+  const indexBy = (array, key) => {
+    const sortedObject = {};
+    eachArray(array, (item) => {
+      sortedObject[item[key]] = item;
+    });
+    return sortedObject;
+  };
+  assign($, {
+    indexBy
+  });
+
+  /**
+    * Returns an array of the plucked values from the collection.
+    *
+    * @function pick
+    * @type {Function}
+    * @param {Array} collection - Array used to determine what values to be plucked.
+    * @param {string} pluckThis - Property name.
+    * @returns {Array} - An array of plucked values.
+    *
+    * @example
+    * pick([{lucy: 'Ants moving around on the walls.'}, {lucy: 'In the sky with diamonds.'}], ['a','b']);
+    * //=> ['Ants moving around on the walls.', 'In the sky with diamonds.']
+  */
+  const pluck = (collection, pluckThis) => {
+    return mapArray(collection, (item) => {
+      const result = item[pluckThis];
+      return result;
+    });
+  };
+  assign($, {
+    pluck
   });
 
   // Creates a function that accepts up to n arguments ignoring any additional arguments. The 2nd argument will be binded if none the initial new function will be.
@@ -2493,22 +2648,22 @@
   });
 
   /**
-    * Returns a clone of the original object with the plucked values.
+    * Returns a clone of the source object with the plucked properties.
     *
     * @function pick
     * @type {Function}
+    * @param {Object} source - Object to be cloned.
     * @param {Array} array - Array used to determine what values to be plucked.
-    * @param {Object} originalObject - Object to be cloned.
     * @param {Object} [newObject = {}] - Object to be populated with plucked values.
-    * @returns {Object} - A new object with plucked values.
+    * @returns {Object} - A new object with plucked properties.
     *
     * @example
     * pick({a:1, b:2, c:3}, ['a','b']);
     * //=> {a:1, b:2}
   */
-  const pick = (originalObject, array, newObject = {}) => {
+  const pick = (source, array, newObject = {}) => {
     eachArray(array, (item) => {
-      newObject[item] = originalObject[item];
+      newObject[item] = source[item];
     });
     return newObject;
   };
@@ -2568,6 +2723,19 @@
     isMatchObject,
   });
 
+  /**
+    * Creates an object from two arrays, one of property identifiers and one of corresponding values.
+    *
+    * @function zipObject
+    * @type {Function}
+    * @param {Array} properties - The property identifiers.
+    * @param {Array} values - The property values.
+    * @returns {Object} - Returns the new object.
+    *
+    * @example
+    * zipObject(['a', 'b'], [1, 2]);
+    * // => { 'a': 1, 'b': 2 }
+  */
   const zipObject = (properties, values) => {
     const zipedObject = {};
     eachArray(properties, (item, key) => {
@@ -2575,6 +2743,18 @@
     });
     return zipedObject;
   };
+  /**
+    * Takes an array of grouped elements and creates an array regrouping the elements to their pre-zip object configuration.
+    *
+    * @function unZipObject
+    * @type {Function}
+    * @param {Object} object - The object to process.
+    * @returns {Array} - Returns two arrays one of keys and the other of values inside a single array.
+    *
+    * @example
+    * unZipObject({ 'a': 1, 'b': 2 });
+    * // => [['a', 'b'], [1, 2]]
+  */
   const unZipObject = (object) => {
     const keys$$1 = [];
     const values = [];

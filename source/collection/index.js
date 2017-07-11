@@ -1,6 +1,6 @@
 import './sortNewest';
 import './sortOldest';
-import './indexby';
+import './groupBy';
+import './countBy';
+import './indexBy';
 import './pluck';
-import './groupby';
-import './countby';

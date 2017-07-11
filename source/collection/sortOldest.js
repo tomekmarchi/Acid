@@ -1,7 +1,21 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-export const sortOldest = (arrayArg, key, pureMode) => {
-  const array = (pureMode) ? arrayArg : [...arrayArg];
+/**
+  * Sorts an array in place using a key from oldest to newest.
+  *
+  * @function sortOldest
+  * @type {Function}
+  * @param {Array} collection - Collection to be sorted.
+  * @param {string} key - The property name to sort by based on it's value.
+  * @param {boolean} [pureMode = true] - Mutates the source array. If set to false creates a new array.
+  * @returns {Array} The sorted array and or a clone of the array sorted.
+  *
+  * @example
+  * sortOldest([{id: 1}, {id: 0}], 'id');
+  * // -> [{id: 0}, {id: 1}]
+*/
+export const sortOldest = (collection, key, pureMode = true) => {
+  const array = (pureMode) ? collection : [...collection];
   return array.sort((previous, next) => {
     if (!next[key]) {
       return -1;
@@ -15,8 +29,21 @@ export const sortOldest = (arrayArg, key, pureMode) => {
     return 0;
   });
 };
-export const getOldest = (array, key) => {
-  return sortOldest(array, key)[0];
+/**
+  * Sorts an array in place using a key from oldest to newest and returns the oldest. Does not mutate the array.
+  *
+  * @function getOldest
+  * @type {Function}
+  * @param {Array} collection - Collection to be sorted.
+  * @param {string} key - The property name to sort by based on it's value.
+  * @returns {Object} The newest object in the collection.
+  *
+  * @example
+  * sortOldest([{id: 1}, {id: 0}], 'id');
+  * // -> {id: 0}
+*/
+export const getOldest = (collection, key) => {
+  return sortOldest(collection, key)[0];
 };
 assign(acid, {
   getOldest,
