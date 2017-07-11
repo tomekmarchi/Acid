@@ -465,7 +465,19 @@
     ensureArray
   });
 
-  // Flattens a nested array. Pass level to flatten up to a depth;
+  /**
+    * Takes the first or multiple items from an array.
+    *
+    * @function first
+    * @type {Function}
+    * @param {Array} array - Array to flatten
+    * @param {number} [level = 1] - Number which determines how deep the array nest can be.
+    * @returns {Array} - Returns an array.
+    *
+    * @example
+    * flatten([1, [2, [3, [4]], 5]]);
+    *  // => [1, 2, [3, [4]], 5]
+  */
   const flatten = (arrayArg, level = 1) => {
     let array = arrayArg;
     for (let i = 0; i < level; i++) {
@@ -475,6 +487,18 @@
     }
     return array;
   };
+  /**
+    * Takes the first or multiple items from an array.
+    *
+    * @function flattenDeep
+    * @type {Function}
+    * @param {Array} array - Array to flatten.
+    * @returns {Array} - Returns a completely flattened array.
+    *
+    * @example
+    * flattenDeep([1, [2, [3, [4]], 5]]);
+  // => [1, 2, 3, 4, 5]
+  */
   const flattenDeep = (array) => {
     return array.reduce((previousValue, currentValue) => {
       return previousValue.concat((isArray(currentValue)) ? flatten(currentValue) : currentValue);
@@ -561,7 +585,18 @@
       };
     };
   };
-  // Returns the composition of a list of functions, where each function consumes the return value of the function that follows. In math terms, composing the functions f(), g(), and h() produces f(g(h())).
+  /**
+    * Creates a function that returns the result of invoking the given functions with the this binding of the created function, where each successive invocation is supplied the return value of the previous.
+    *
+    * @function flow
+    * @type {Function}
+    * @param {Array} eachArray - Array to flatten
+    * @returns {*}
+    *
+    * @example
+    * flow()
+    *  // =>
+  */
   const flow = returnFlow(eachArray);
   // Returns the composition of a list of functions, where each function consumes the return value of the function that follows. In math terms, composing the functions f(), g(), and h() produces f(g(h())).
   const flowRight = returnFlow(eachArrayRight);
@@ -853,6 +888,18 @@
     shuffle
   });
 
+  /**
+    * Takes all but the last item in the array.
+    *
+    * @function initial
+    * @type {Function}
+    * @param {Array} array - Array to have items extracted from.
+    * @returns {Array} - Returns a completely flattened array.
+    *
+    * @example
+    * initial( [1, 2, 3, 4, 5]);
+    * // => [1, 2, 3, 4]
+  */
   const initial = (array) => {
     return array.slice(0, array.length - 1);
   };
@@ -869,19 +916,6 @@
     smallest
   });
 
-  /**
-    * 
-    *
-    * @type {Function} rangeUp
-    * @param {Number} start - Array to be compacted.
-    * @param {Number} end - Array to be compacted.
-    * @param {Number} increment - Array to be compacted.
-    * @returns {Array} The new array of filtered values.
-    *
-    * @example
-    * rangeUp([1,'B', Cat, false, null, 0 , '', undefined, NaN]);
-    * //=> [1, 'B', Cat]
-  */
   const rangeUp = (start, end, increment) => {
     const rangeArray = [];
     let position = start;
@@ -901,6 +935,19 @@
     }
     return rangeArray;
   };
+  /**
+    *
+    *
+    * @type {Function} range
+    * @param {Number} start - Value which determines the start of the range.
+    * @param {Number} end - Value which determines the end of the range.
+    * @param {Number} increment - Value which determines the rate of incrementation.
+    * @returns {Array}
+    *
+    * @example
+    * range([1,'B', Cat, false, null, 0 , '', undefined, NaN]);
+    * //=> [1, 'B', Cat]
+  */
   const range = (start, end, increment = 1) => {
     if (start < end) {
       return rangeUp(start, end, increment);
@@ -908,6 +955,19 @@
       return rangeDown(start, end, increment);
     }
   };
+  /**
+    *
+    *
+    * @type {Function} rangeRight
+    * @param {Number} start - Value which determines the start of the range.
+    * @param {Number} end - Value which determines the end of the range.
+    * @param {Number} increment - Value which determines the rate of incrementation.
+    * @returns {Array}
+    *
+    * @example
+    * rangeRight([1,'B', Cat, false, null, 0 , '', undefined, NaN]);
+    * //=> [1, 'B', Cat]
+  */
   const rangeRight = (start, end, increment = 1) => {
     return rangeDown(end, start, increment);
   };
@@ -997,7 +1057,20 @@
     difference
   });
 
-  // Calls the method named by methodName on each value in the list. Any extra arguments passed to invoke will be forwarded on to the method invocation.
+  /**
+    * Runs a method on each item in an collection.
+    *
+    * @function invoke
+    * @type {Function}
+    * @param {Array} array - Array from which method will be taken.
+    * @param {String|Array} methodName - Value used to pluck method from array|object nest.
+    * @param {*} args - Values to be run through method.
+    * @returns {Array} - Returns the results of the invoked method.
+    *
+    * @example
+    * invoke()
+    * // =>
+  */
   const invoke = (array, methodName, args) => {
     return mapArray(array, (item) => {
       return item[methodName](...args);
@@ -1055,7 +1128,7 @@
      * @returns {boolean} Returns the true or false.
      *
      * @example
-     * isMatchArray([1,2,3], [1,2,3]);
+     * isMatchArray([1, 2, 3], [1, 2, 3]);
      * // => true
    */
   const isMatchArray = (source, compareArray) => {
@@ -1087,8 +1160,19 @@
     sortedIndex
   });
 
-  // get largest number from array
   const mathNativeMax = Math.max;
+  /**
+     * Plucks the largest value from an array.
+     *
+     * @function largest
+     * @type {Function}
+     * @param {Array} array - Array from which largest number is taken.
+     * @returns {number} Returns largerst number in array.
+     *
+     * @example
+     * largest([1,2,3]);
+     * // => 3
+   */
   const largest = (array) => {
     return mathNativeMax(...array);
   };
@@ -1096,17 +1180,6 @@
     largest
   });
 
-  const sumOf = (array, resultArg = 0) => {
-    let result = resultArg;
-    let item;
-    eachArray(array, (itemArg) => {
-      item = itemArg;
-      if (item) {
-        result = result + Number(item);
-      }
-    });
-    return result;
-  };
   assign($, {
     sumOf
   });
@@ -1138,7 +1211,19 @@
     eachAsync,
   });
 
-  // Returns the last element of an array. Passing n will return the last n elements of the array.
+  /**
+    * Extracts item(s) from an array starting from the last item in the array.
+    *
+    * @function last
+    * @type {Function}
+    * @param {Array} array - Array to have items extracted from.
+    * @param {number} indexFrom - Value which determines how many items are extracted from the array.
+    * @returns {Array} Items from the array.
+    *
+    * @example
+    * last( [1, 2, 3, 4, 5] , 2);
+    * // => [5, 4]
+  */
   const last = (array, indexFrom) => {
     const arrayLength = array.length;
     return (indexFrom) ? array.slice(arrayLength - indexFrom, arrayLength) : array[arrayLength - 1];
@@ -1251,30 +1336,6 @@
     numSort
   });
 
-  const findDifference = (array, sum) => {
-    const returnedObject = {};
-    const arrayLength = array.length;
-    let item;
-    let end;
-    let check;
-    for (let index = 0; index < arrayLength; index++) {
-      item = array[index];
-      end = sum - item;
-      check = array.indexOf(end);
-      if (check !== -1 && check !== index) {
-        returnedObject.start = item;
-        returnedObject.end = end;
-        returnedObject.startIndex = index;
-        returnedObject.endIndex = check;
-        break;
-      }
-    }
-    return returnedObject;
-  };
-  assign($, {
-    findDifference
-  });
-
   // Converts arrays into objects.
   const arrayToObject = (values, properties) => {
     const sortedObject = {};
@@ -1303,21 +1364,18 @@
     }
   };
   /**
-    *
+    * Checks if a value exists within an array. Returns true if it does and vice versa.
     *
     * @function findItem
     * @type {Function}
-    * @param {Array} array - Takes an array from which a value is plucked.
-    * @param {number} indexMatch - Data to be checked.
-    * @param {String} [propertyName = 'id'] - Data to be checked.
-    * @returns {Array} - Returns an array.
+    * @param {Array} array - Array to be checked for an item
+    * @param {number} indexMatch -
+    * @param {String} [propertyName = 'id'] -
+    * @returns {boolean} - Returns a boolean.
     *
     * @example
-    * ensureArray('Hello');
-    * //=> ['Hello']
-    *
-    * ensureArray({a:1, b:2})
-    * //=> [{a:1, b:2}]
+    * findItem([1, 2, 3], 1)
+    * //=>
   */
   const findItem = (array, indexMatch, propertyName = 'id') => {
     const result = array.find((element, index) => {
@@ -1371,30 +1429,6 @@
     xor
   });
 
-  const findSum = (array, sum) => {
-    const returnedObject = {};
-    const arrayLength = array.length;
-    let item;
-    let end;
-    let check;
-    for (let index = 0; index < arrayLength; index++) {
-      item = array[index];
-      end = sum - item;
-      check = array.indexOf(end);
-      if (check !== -1 && check !== index) {
-        returnedObject.start = item;
-        returnedObject.end = end;
-        returnedObject.startIndex = index;
-        returnedObject.endIndex = check;
-        break;
-      }
-    }
-    return returnedObject;
-  };
-  assign($, {
-    findSum
-  });
-
   /**
     * Merges together the values of each of the arrays with the values at the corresponding position.
     *
@@ -1438,6 +1472,23 @@
     zip,
   });
 
+  /**
+    * Takes the first or multiple items from an array.
+    *
+    * @function first
+    * @type {Function}
+    * @param {Array} array - Array to extract from.
+    * @param {number} upTo - Number which determines how many items after the first item are extracted from the array.
+
+    * @returns {Array} - Returns an array.
+    *
+    * @example
+    * first([1, 2, 3]);
+    * //=> [1]
+    *
+    * first([1, 2, 3], 2);
+    * //=> [1, 2, 3]
+  */
   const first = (array, upTo) => {
     return (upTo) ? array.slice(0, upTo) : array[0];
   };
@@ -2605,31 +2656,43 @@
     timer,
   });
 
-  const addLink = (link, addToChain) => {
-    each(addToChain, (item, key) => {
+  const add$1 = (link, methods) => {
+    each(methods, (item, key) => {
       link.methods[key] = (...args) => {
-        args.unshift(link.value);
-        item(...args);
+        item(link.value, ...args);
         return link.methods;
       };
     });
     return link;
   };
+  /**
+    * Creates a chainable set of functions.
+    *
+    * @function chain
+    * @type {Function}
+    * @param {Array|Object} methods - The object to take methods from.
+    * @returns {*} Returns a function which has value, methods, add, and done. When invoking the function the argument is saved as the value property for further chaining.
+    *
+    * @example
+    * const chained = chain({a(item) { return item;}});
+    * chained('Acid').a();
+    * // => 'Acid'
+  */
   const chain = (methods) => {
     const link = (value) => {
       link.value = value;
       return link.methods;
     };
     assign(link, {
-      methods: {},
-      link(addToChain) {
-        return addLink(link, addToChain);
+      add(addToChain) {
+        return add$1(link, addToChain);
       },
       done() {
         const value = link.value;
         link.value = null;
         return value;
-      }
+      },
+      methods: {},
     });
     link.link(methods);
     return link;

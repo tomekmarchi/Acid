@@ -173,6 +173,36 @@
               
                 
                 <li><a
+                  href='#first'
+                  class="">
+                  first
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#first'
+                  class="">
+                  first
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#flattendeep'
+                  class="">
+                  flattenDeep
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#remove'
                   class="">
                   remove
@@ -186,6 +216,16 @@
                   href='#chunk'
                   class="">
                   chunk
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#flow'
+                  class="">
+                  flow
                   
                 </a>
                 
@@ -313,9 +353,29 @@
               
                 
                 <li><a
-                  href='#rangeup'
+                  href='#initial'
                   class="">
-                  rangeUp
+                  initial
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#range'
+                  class="">
+                  range
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#rangeright'
+                  class="">
+                  rangeRight
                   
                 </a>
                 
@@ -336,6 +396,16 @@
                   href='#difference'
                   class="">
                   difference
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#invoke'
+                  class="">
+                  invoke
                   
                 </a>
                 
@@ -373,9 +443,29 @@
               
                 
                 <li><a
+                  href='#largest'
+                  class="">
+                  largest
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#eachasync'
                   class="">
                   eachAsync
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#last'
+                  class="">
+                  last
                   
                 </a>
                 
@@ -746,6 +836,16 @@
                   href='#bindall'
                   class="">
                   bindAll
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#chain'
+                  class="">
+                  chain
                   
                 </a>
                 
@@ -2446,6 +2546,264 @@ ensureArray({<span class="hljs-attr">a</span>:<span class="hljs-number">1</span>
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='first'>
+      first
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Takes the first or multiple items from an array.</p>
+
+
+  <div class='pre p1 fill-light mt0'>first(arrayArg: any, level: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, array: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>arrayArg</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>level</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
+            = <code>1</code>)</code>
+	    Number which determines how deep the array nest can be.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>array</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    Array to flatten
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
+        Returns an array.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>flatten([<span class="hljs-number">1</span>, [<span class="hljs-number">2</span>, [<span class="hljs-number">3</span>, [<span class="hljs-number">4</span>]], <span class="hljs-number">5</span>]]);
+ <span class="hljs-comment">// =&gt; [1, 2, [3, [4]], 5]</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='first'>
+      first
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Takes the first or multiple items from an array.</p>
+
+
+  <div class='pre p1 fill-light mt0'>first(array: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, upTo: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>array</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    Array to extract from.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>upTo</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    Number which determines how many items after the first item are extracted from the array.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
+        Returns an array.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>first([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]);
+<span class="hljs-comment">//=&gt; [1]</span>
+
+first([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], <span class="hljs-number">2</span>);
+<span class="hljs-comment">//=&gt; [1, 2, 3]</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='flattendeep'>
+      flattenDeep
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Takes the first or multiple items from an array.</p>
+
+
+  <div class='pre p1 fill-light mt0'>flattenDeep(array: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>array</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    Array to flatten.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
+        Returns a completely flattened array.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>flattenDeep([<span class="hljs-number">1</span>, [<span class="hljs-number">2</span>, [<span class="hljs-number">3</span>, [<span class="hljs-number">4</span>]], <span class="hljs-number">5</span>]]);
+<span class="hljs-comment">// =&gt; [1, 2, 3, 4, 5]</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='remove'>
       remove
     </h3>
@@ -2607,6 +2965,82 @@ remove(array,[<span class="hljs-number">2</span>, <span class="hljs-number">5</s
       
       <pre class='p1 overflow-auto round fill-light'>chunk([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>], <span class="hljs-number">1</span>);
 <span class="hljs-comment">//=&gt; [[1],[2],[3]]</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='flow'>
+      flow
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Creates a function that returns the result of invoking the given functions with the this binding of the created function, where each successive invocation is supplied the return value of the previous.</p>
+
+
+  <div class='pre p1 fill-light mt0'>flow(eachArray: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): any</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>eachArray</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    Array to flatten
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>any</code>:
+        
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>flow()
+ <span class="hljs-comment">// =&gt;</span></pre>
     
   
 
@@ -3602,8 +4036,84 @@ remove(array,[<span class="hljs-number">2</span>, <span class="hljs-number">5</s
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='rangeup'>
-      rangeUp
+    <h3 class='fl m0' id='initial'>
+      initial
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Takes all but the last item in the array.</p>
+
+
+  <div class='pre p1 fill-light mt0'>initial(array: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>array</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    Array to have items extracted from.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
+        Returns a completely flattened array.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>initial( [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]);
+<span class="hljs-comment">// =&gt; [1, 2, 3, 4]</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='range'>
+      range
     </h3>
     
     
@@ -3612,7 +4122,7 @@ remove(array,[<span class="hljs-number">2</span>, <span class="hljs-number">5</s
 
   
 
-  <div class='pre p1 fill-light mt0'>rangeUp</div>
+  <div class='pre p1 fill-light mt0'>range</div>
   
   
 
@@ -3630,7 +4140,7 @@ remove(array,[<span class="hljs-number">2</span>, <span class="hljs-number">5</s
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>start</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
-	    Array to be compacted.
+	    Value which determines the start of the range.
 
           </div>
           
@@ -3639,7 +4149,7 @@ remove(array,[<span class="hljs-number">2</span>, <span class="hljs-number">5</s
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>end</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
-	    Array to be compacted.
+	    Value which determines the end of the range.
 
           </div>
           
@@ -3647,8 +4157,9 @@ remove(array,[<span class="hljs-number">2</span>, <span class="hljs-number">5</s
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>increment</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
-	    Array to be compacted.
+            <span class='code bold'>increment</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>
+            = <code>1</code>)</code>
+	    Value which determines the rate of incrementation.
 
           </div>
           
@@ -3663,7 +4174,7 @@ remove(array,[<span class="hljs-number">2</span>, <span class="hljs-number">5</s
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
       <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
-        The new array of filtered values.
+        
 
       
     
@@ -3675,7 +4186,101 @@ remove(array,[<span class="hljs-number">2</span>, <span class="hljs-number">5</s
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>rangeUp([<span class="hljs-number">1</span>,<span class="hljs-string">'B'</span>, Cat, <span class="hljs-literal">false</span>, <span class="hljs-literal">null</span>, <span class="hljs-number">0</span> , <span class="hljs-string">''</span>, <span class="hljs-literal">undefined</span>, <span class="hljs-literal">NaN</span>]);
+      <pre class='p1 overflow-auto round fill-light'>range([<span class="hljs-number">1</span>,<span class="hljs-string">'B'</span>, Cat, <span class="hljs-literal">false</span>, <span class="hljs-literal">null</span>, <span class="hljs-number">0</span> , <span class="hljs-string">''</span>, <span class="hljs-literal">undefined</span>, <span class="hljs-literal">NaN</span>]);
+<span class="hljs-comment">//=&gt; [1, 'B', Cat]</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='rangeright'>
+      rangeRight
+    </h3>
+    
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>rangeRight</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>start</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    Value which determines the start of the range.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>end</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    Value which determines the end of the range.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>increment</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>
+            = <code>1</code>)</code>
+	    Value which determines the rate of incrementation.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
+        
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>rangeRight([<span class="hljs-number">1</span>,<span class="hljs-string">'B'</span>, Cat, <span class="hljs-literal">false</span>, <span class="hljs-literal">null</span>, <span class="hljs-number">0</span> , <span class="hljs-string">''</span>, <span class="hljs-literal">undefined</span>, <span class="hljs-literal">NaN</span>]);
 <span class="hljs-comment">//=&gt; [1, 'B', Cat]</span></pre>
     
   
@@ -3851,6 +4456,100 @@ intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span
       
       <pre class='p1 overflow-auto round fill-light'>compact([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]);
 <span class="hljs-comment">//=&gt; [3]</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='invoke'>
+      invoke
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Runs a method on each item in an collection.</p>
+
+
+  <div class='pre p1 fill-light mt0'>invoke(array: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, methodName: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>), args: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>array</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    Array from which method will be taken.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>methodName</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>))</code>
+	    Value used to pluck method from array|object nest.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>args</span> <code class='quiet'>(any)</code>
+	    Values to be run through method.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
+        Returns the results of the invoked method.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>invoke()
+<span class="hljs-comment">// =&gt;</span></pre>
     
   
 
@@ -4114,8 +4813,84 @@ intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>isMatchArray([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>], [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]);
+      <pre class='p1 overflow-auto round fill-light'>isMatchArray([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]);
 <span class="hljs-comment">// =&gt; true</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='largest'>
+      largest
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Plucks the largest value from an array.</p>
+
+
+  <div class='pre p1 fill-light mt0'>largest(array: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>array</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    Array from which largest number is taken.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>:
+        Returns largerst number in array.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>largest([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]);
+<span class="hljs-comment">// =&gt; 3</span></pre>
     
   
 
@@ -4204,6 +4979,91 @@ intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span
 });
 <span class="hljs-comment">// 3 0</span>
 <span class="hljs-comment">// 4 1</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='last'>
+      last
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Extracts item(s) from an array starting from the last item in the array.</p>
+
+
+  <div class='pre p1 fill-light mt0'>last(array: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, indexFrom: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>array</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    Array to have items extracted from.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>indexFrom</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    Value which determines how many items are extracted from the array.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
+        Items from the array.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>last( [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>] , <span class="hljs-number">2</span>);
+<span class="hljs-comment">// =&gt; [5, 4]</span></pre>
     
   
 
@@ -4391,9 +5251,10 @@ intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span
   </div>
   
 
-  
+  <p>Checks if a value exists within an array. Returns true if it does and vice versa.</p>
 
-  <div class='pre p1 fill-light mt0'>findItem(array: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, indexMatch: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, propertyName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+
+  <div class='pre p1 fill-light mt0'>findItem(array: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, indexMatch: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, propertyName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
   
   
 
@@ -4411,7 +5272,7 @@ intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>array</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
-	    Takes an array from which a value is plucked.
+	    Array to be checked for an item
 
           </div>
           
@@ -4420,7 +5281,7 @@ intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>indexMatch</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-	    Data to be checked.
+	    -
 
           </div>
           
@@ -4430,7 +5291,7 @@ intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span
           <div>
             <span class='code bold'>propertyName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>
             = <code>&#39;id&#39;</code>)</code>
-	    Data to be checked.
+	    -
 
           </div>
           
@@ -4444,8 +5305,8 @@ intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
-        Returns an array.
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        Returns a boolean.
 
       
     
@@ -4457,11 +5318,8 @@ intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>ensureArray(<span class="hljs-string">'Hello'</span>);
-<span class="hljs-comment">//=&gt; ['Hello']</span>
-
-ensureArray({<span class="hljs-attr">a</span>:<span class="hljs-number">1</span>, <span class="hljs-attr">b</span>:<span class="hljs-number">2</span>})
-<span class="hljs-comment">//=&gt; [{a:1, b:2}]</span></pre>
+      <pre class='p1 overflow-auto round fill-light'>findItem([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], <span class="hljs-number">1</span>)
+<span class="hljs-comment">//=&gt;</span></pre>
     
   
 
@@ -7574,6 +8432,83 @@ collection[<span class="hljs-number">0</span>]();
 <span class="hljs-keyword">const</span> collection = bindAll({a() { <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;}}, <span class="hljs-string">'Lucy'</span>);
 collection.a();
 <span class="hljs-comment">// =&gt; 'Lucy'</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='chain'>
+      chain
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Creates a chainable set of functions.</p>
+
+
+  <div class='pre p1 fill-light mt0'>chain(methods: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)): any</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>methods</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>))</code>
+	    The object to take methods from.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>any</code>:
+        Returns a function which has value, methods, add, and done. When invoking the function the argument is saved as the value property for further chaining.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> chained = chain({a(item) { <span class="hljs-keyword">return</span> item;}});
+chained(<span class="hljs-string">'Acid'</span>).a();
+<span class="hljs-comment">// =&gt; 'Acid'</span></pre>
     
   
 
