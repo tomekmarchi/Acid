@@ -443,6 +443,16 @@
               
                 
                 <li><a
+                  href='#ifinvoke'
+                  class="">
+                  ifInvoke
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#jsonparse'
                   class="">
                   jsonParse
@@ -573,6 +583,16 @@
               
                 
                 <li><a
+                  href='#ary'
+                  class="">
+                  ary
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#each'
                   class="">
                   each
@@ -606,6 +626,16 @@
                   href='#compactmap'
                   class="">
                   compactMap
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#bindall'
+                  class="">
+                  bindAll
                   
                 </a>
                 
@@ -4308,7 +4338,7 @@ intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span
     
       
       <pre class='p1 overflow-auto round fill-light'>insertInRange(<span class="hljs-string">'A from Lucy.'</span>, <span class="hljs-number">1</span>, <span class="hljs-string">' tab'</span>);
-<span class="hljs-comment">// =&gt; A tab from Lucy.</span></pre>
+<span class="hljs-comment">// =&gt; 'A tab from Lucy.'</span></pre>
     
   
 
@@ -4394,10 +4424,10 @@ intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span
     
       
       <pre class='p1 overflow-auto round fill-light'>rightString(<span class="hljs-string">'rightString'</span>);
-<span class="hljs-comment">// =&gt; g</span>
+<span class="hljs-comment">// =&gt; 'g'</span>
 
 rightString(<span class="hljs-string">'rightString'</span>, <span class="hljs-number">2</span>);
-<span class="hljs-comment">// =&gt; n</span></pre>
+<span class="hljs-comment">// =&gt; 'n'</span></pre>
     
   
 
@@ -4568,10 +4598,10 @@ rightString(<span class="hljs-string">'rightString'</span>, <span class="hljs-nu
     
       
       <pre class='p1 overflow-auto round fill-light'>initialString(<span class="hljs-string">'initialString'</span>);
-<span class="hljs-comment">//-&gt; initialStrin</span>
+<span class="hljs-comment">//-&gt; 'initialStrin'</span>
 
 initialString(<span class="hljs-string">'initialString'</span>, <span class="hljs-number">2</span>);
-<span class="hljs-comment">//-&gt; initialStri</span></pre>
+<span class="hljs-comment">//-&gt; 'initialStri'</span></pre>
     
   
 
@@ -4657,10 +4687,97 @@ initialString(<span class="hljs-string">'initialString'</span>, <span class="hlj
     
       
       <pre class='p1 overflow-auto round fill-light'>restString(<span class="hljs-string">'restString'</span>);
-<span class="hljs-comment">//-&gt; estString</span>
+<span class="hljs-comment">//-&gt; 'estString'</span>
 
 restString(<span class="hljs-string">'restString'</span>, <span class="hljs-number">2</span>);
-<span class="hljs-comment">//-&gt; stString</span></pre>
+<span class="hljs-comment">//-&gt; 'stString'</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='ifinvoke'>
+      ifInvoke
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Checks if the given method is a function. If it is then it invokes it with the given arguments.</p>
+
+
+  <div class='pre p1 fill-light mt0'>ifInvoke(method: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, args: ...<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): any</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>method</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+	    The function to be invoked if possible.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>args</span> <code class='quiet'>(...<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    Arguments to pass to the method.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>any</code>:
+        Returns the method invoked or undefined.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>ifInvoke(<span class="hljs-function">(<span class="hljs-params">...args</span>) =&gt;</span> { <span class="hljs-keyword">return</span> args;}, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+<span class="hljs-comment">// =&gt; [1, 2]</span>
+ifInvoke(<span class="hljs-literal">undefined</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+<span class="hljs-comment">// =&gt; undefined</span></pre>
     
   
 
@@ -5847,6 +5964,91 @@ Just like groupBy, but for when you know your keys are unique.</p>
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='ary'>
+      ary
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Creates a function that invokes func, with up to n arguments, ignoring any additional arguments.</p>
+
+
+  <div class='pre p1 fill-light mt0'>ary(func: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, amount: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>func</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+	    The function to cap arguments for.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>amount</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    The arity cap.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
+        Returns the new capped function.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>ary(<span class="hljs-function">(<span class="hljs-params">...args</span>) =&gt;</span> { <span class="hljs-keyword">return</span> args;}, <span class="hljs-number">2</span>)(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>);
+<span class="hljs-comment">// =&gt; [1, 2]</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='each'>
       each
     </h3>
@@ -6223,6 +6425,112 @@ compactMap({<span class="hljs-attr">a</span>: <span class="hljs-number">0</span>
   <span class="hljs-keyword">return</span> item * <span class="hljs-number">2</span>;
 });
 <span class="hljs-comment">// =&gt; {b: 4, c: 6}</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='bindall'>
+      bindAll
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Loops through an object or an array and binds the given object to all functions encountered.</p>
+
+
+  <div class='pre p1 fill-light mt0'>bindAll(bindThese: any, withThis: any, method: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, args: ...<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): any</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>bindThese</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>withThis</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>method</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+	    The function to be invoked if possible.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>args</span> <code class='quiet'>(...<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    Arguments to pass to the method.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>any</code>:
+        Returns the method invoked or undefined.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> collection = bindAll([<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> { <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;}], <span class="hljs-string">'Lucy'</span>);
+collection[<span class="hljs-number">0</span>]();
+<span class="hljs-comment">// =&gt; 'Lucy'</span>
+
+<span class="hljs-keyword">const</span> collection = bindAll({a() { <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;}}, <span class="hljs-string">'Lucy'</span>);
+collection.a();
+<span class="hljs-comment">// =&gt; 'Lucy'</span></pre>
     
   
 
@@ -7233,7 +7541,7 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
     
       
       <pre class='p1 overflow-auto round fill-light'>upperCase(<span class="hljs-string">'upper case'</span>);
-<span class="hljs-comment">// =&gt; UPPER CASE</span></pre>
+<span class="hljs-comment">// =&gt; 'UPPER CASE'</span></pre>
     
   
 
@@ -7309,7 +7617,7 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
     
       
       <pre class='p1 overflow-auto round fill-light'>camelCase(<span class="hljs-string">'camel case'</span>);
-<span class="hljs-comment">// =&gt; camelCase</span></pre>
+<span class="hljs-comment">// =&gt; 'camelCase'</span></pre>
     
   
 
@@ -7385,7 +7693,7 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
     
       
       <pre class='p1 overflow-auto round fill-light'>kebabCase(<span class="hljs-string">'kebab case'</span>);
-<span class="hljs-comment">// =&gt; kebab-case</span></pre>
+<span class="hljs-comment">// =&gt; 'kebab-case'</span></pre>
     
   
 
@@ -7461,7 +7769,7 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
     
       
       <pre class='p1 overflow-auto round fill-light'>snakeCase(<span class="hljs-string">'snake case'</span>);
-<span class="hljs-comment">// =&gt; snake_case</span></pre>
+<span class="hljs-comment">// =&gt; 'snake_case'</span></pre>
     
   
 
@@ -7555,7 +7863,7 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
     
       
       <pre class='p1 overflow-auto round fill-light'>replaceList(<span class="hljs-string">'Her name was @user.'</span>, [<span class="hljs-string">'@user'</span>], <span class="hljs-string">'Lucy'</span>);
-<span class="hljs-comment">// =&gt; Her name was Lucy.</span></pre>
+<span class="hljs-comment">// =&gt; 'Her name was Lucy.'</span></pre>
     
   
 
@@ -7631,7 +7939,7 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
     
       
       <pre class='p1 overflow-auto round fill-light'>rawURLDecode(<span class="hljs-string">'Lucy%20saw%20diamonds%20in%20the%20sky.'</span>);
-<span class="hljs-comment">// =&gt; Lucy saw diamonds in the sky.</span></pre>
+<span class="hljs-comment">// =&gt; 'Lucy saw diamonds in the sky.'</span></pre>
     
   
 
@@ -7707,7 +8015,7 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
     
       
       <pre class='p1 overflow-auto round fill-light'>htmlEntities(<span class="hljs-string">`&lt;script&gt;console.log('Lucy &amp; diamonds.')&lt;/script&gt;`</span>);
-<span class="hljs-comment">// =&gt; &amp;lt;script&amp;gt;console.log('Lucy &amp;amp; diamonds.')&amp;lt;/script&amp;gt;</span></pre>
+<span class="hljs-comment">// =&gt; '&amp;lt;script&amp;gt;console.log('Lucy &amp;amp; diamonds.')&amp;lt;/script&amp;gt;'</span></pre>
     
   
 
@@ -7783,7 +8091,7 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
     
       
       <pre class='p1 overflow-auto round fill-light'>sanitize(<span class="hljs-string">`&lt;script&gt;console.log('Lucy%20&amp;%20diamonds.')&lt;/script&gt;`</span>);
-<span class="hljs-comment">// =&gt; &amp;lt;script&amp;gt;console.log('Lucy &amp;amp; diamonds.')&amp;lt;/script&amp;gt;</span></pre>
+<span class="hljs-comment">// =&gt; '&amp;lt;script&amp;gt;console.log('Lucy &amp;amp; diamonds.')&amp;lt;/script&amp;gt;'</span></pre>
     
   
 
@@ -8020,7 +8328,7 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
     
       
       <pre class='p1 overflow-auto round fill-light'>truncate(<span class="hljs-string">'Where is Lucy?'</span>, <span class="hljs-number">2</span>);
-<span class="hljs-comment">// =&gt; Where</span></pre>
+<span class="hljs-comment">// =&gt; 'Where'</span></pre>
     
   
 
@@ -8105,7 +8413,7 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
     
       
       <pre class='p1 overflow-auto round fill-light'>truncateRight(<span class="hljs-string">'Where is Lucy?'</span>, <span class="hljs-number">6</span>);
-<span class="hljs-comment">// =&gt; Lucy?</span></pre>
+<span class="hljs-comment">// =&gt; 'Lucy?'</span></pre>
     
   
 
@@ -8181,7 +8489,7 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
     
       
       <pre class='p1 overflow-auto round fill-light'>upperFirstLetter(<span class="hljs-string">'upper'</span>);
-<span class="hljs-comment">// =&gt; U</span></pre>
+<span class="hljs-comment">// =&gt; 'U'</span></pre>
     
   
 
@@ -8257,7 +8565,7 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
     
       
       <pre class='p1 overflow-auto round fill-light'>upperFirstLetter(<span class="hljs-string">'upper'</span>);
-<span class="hljs-comment">// =&gt; Upper</span></pre>
+<span class="hljs-comment">// =&gt; 'Upper'</span></pre>
     
   
 
@@ -8333,7 +8641,7 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
     
       
       <pre class='p1 overflow-auto round fill-light'>upperFirstAll(<span class="hljs-string">'Lucy is next up.'</span>);
-<span class="hljs-comment">// =&gt; Lucy Is Next Up.</span></pre>
+<span class="hljs-comment">// =&gt; 'Lucy Is Next Up.'</span></pre>
     
   
 
@@ -8409,7 +8717,7 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
     
       
       <pre class='p1 overflow-auto round fill-light'>upperFirstOnly(<span class="hljs-string">'LYSERGIC ACID DIETHYLAMIDE'</span>);
-<span class="hljs-comment">// =&gt; Lysergic acid diethylamide</span></pre>
+<span class="hljs-comment">// =&gt; 'Lysergic acid diethylamide'</span></pre>
     
   
 
@@ -8485,7 +8793,7 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
     
       
       <pre class='p1 overflow-auto round fill-light'>upperFirstOnlyAll(<span class="hljs-string">'LYSERGIC ACID DIETHYLAMIDE'</span>);
-<span class="hljs-comment">// =&gt; Lysergic Acid Diethylamide</span></pre>
+<span class="hljs-comment">// =&gt; 'Lysergic Acid Diethylamide'</span></pre>
     
   
 

@@ -12,7 +12,7 @@ import { assign } from '../internal/object';
   *
   * @example
   * insertInRange('A from Lucy.', 1, ' tab');
-  * // => A tab from Lucy.
+  * // => 'A tab from Lucy.'
 */
 export const insertInRange = (string, index, text) => {
   return string.slice(0, index) + text + string.slice(index, string.length);
@@ -28,10 +28,10 @@ export const insertInRange = (string, index, text) => {
   *
   * @example
   * rightString('rightString');
-  * // => g
+  * // => 'g'
   *
   * rightString('rightString', 2);
-  * // => n
+  * // => 'n'
 */
 export const rightString = (string, index = 1) => {
   return string[string.length - index];
@@ -63,10 +63,10 @@ export const chunkString = (string, size) => {
   *
   * @example
   * initialString('initialString');
-  * //-> initialStrin
+  * //-> 'initialStrin'
   *
   * initialString('initialString', 2);
-  * //-> initialStri
+  * //-> 'initialStri'
 */
 export const initialString = (string, index = 1) => {
   return string.slice(0, index * -1);
@@ -82,10 +82,10 @@ export const initialString = (string, index = 1) => {
   *
   * @example
   * restString('restString');
-  * //-> estString
+  * //-> 'estString'
   *
   * restString('restString', 2);
-  * //-> stString
+  * //-> 'stString'
 */
 export const restString = (string, index = 1) => {
   return string.substr(index);

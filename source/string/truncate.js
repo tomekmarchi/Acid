@@ -37,7 +37,7 @@ const truncateUp = (string, maxLength, stringLength) => {
   *
   * @example
   * truncate('Where is Lucy?', 2);
-  * // => Where
+  * // => 'Where'
 */
 export const truncate = (string, maxLength) => {
   const stringLength = string.length;
@@ -54,7 +54,7 @@ export const truncate = (string, maxLength) => {
   *
   * @example
   * truncateRight('Where is Lucy?', 6);
-  * // => Lucy?
+  * // => 'Lucy?'
 */
 export const truncateRight = (string, maxLength) => {
   const stringLength = string.length;

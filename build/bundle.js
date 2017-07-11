@@ -1542,7 +1542,7 @@
     *
     * @example
     * insertInRange('A from Lucy.', 1, ' tab');
-    * // => A tab from Lucy.
+    * // => 'A tab from Lucy.'
   */
   const insertInRange = (string, index, text) => {
     return string.slice(0, index) + text + string.slice(index, string.length);
@@ -1558,10 +1558,10 @@
     *
     * @example
     * rightString('rightString');
-    * // => g
+    * // => 'g'
     *
     * rightString('rightString', 2);
-    * // => n
+    * // => 'n'
   */
   const rightString = (string, index = 1) => {
     return string[string.length - index];
@@ -1594,10 +1594,10 @@
     *
     * @example
     * initialString('initialString');
-    * //-> initialStrin
+    * //-> 'initialStrin'
     *
     * initialString('initialString', 2);
-    * //-> initialStri
+    * //-> 'initialStri'
   */
   const initialString = (string, index = 1) => {
     return string.slice(0, index * -1);
@@ -1613,10 +1613,10 @@
     *
     * @example
     * restString('restString');
-    * //-> estString
+    * //-> 'estString'
     *
     * restString('restString', 2);
-    * //-> stString
+    * //-> 'stString'
   */
   const restString = (string, index = 1) => {
     return string.substr(index);
@@ -1733,6 +1733,21 @@
     updateDimensions
   });
 
+  /**
+    * Checks if the given method is a function. If it is then it invokes it with the given arguments.
+    *
+    * @function ifInvoke
+    * @type {Function}
+    * @param {Function} method - The function to be invoked if possible.
+    * @param {...Array} args - Arguments to pass to the method.
+    * @returns {*} Returns the method invoked or undefined.
+    *
+    * @example
+    * ifInvoke((...args) => { return args;}, 1, 2);
+    * // => [1, 2]
+    * ifInvoke(undefined, 1, 2);
+    * // => undefined
+  */
   const ifInvoke = (method, ...args) => {
     if (isFunction(method)) {
       return method(...args);
@@ -2086,10 +2101,22 @@
     pluck
   });
 
-  // Creates a function that accepts up to n arguments ignoring any additional arguments. The 2nd argument will be binded if none the initial new function will be.
-  const ary = (funct, amount) => {
+  /**
+    * Creates a function that invokes func, with up to n arguments, ignoring any additional arguments.
+    *
+    * @function ary
+    * @type {Function}
+    * @param {Function} func - The function to cap arguments for.
+    * @param {number} amount - The arity cap.
+    * @returns {Object} Returns the new capped function.
+    *
+    * @example
+    * ary((...args) => { return args;}, 2)(1,2,3);
+    * // => [1, 2]
+  */
+  const ary = (func, amount) => {
     return (...args) => {
-      return funct(...args.splice(0, amount));
+      return func(...args.splice(0, amount));
     };
   };
   assign($, {
@@ -2316,6 +2343,24 @@
     map
   });
 
+  /**
+    * Loops through an object or an array and binds the given object to all functions encountered.
+    *
+    * @function bindAll
+    * @type {Function}
+    * @param {Function} method - The function to be invoked if possible.
+    * @param {...Array} args - Arguments to pass to the method.
+    * @returns {*} Returns the method invoked or undefined.
+    *
+    * @example
+    * const collection = bindAll([() => { return this;}], 'Lucy');
+    * collection[0]();
+    * // => 'Lucy'
+    *
+    * const collection = bindAll({a() { return this;}}, 'Lucy');
+    * collection.a();
+    * // => 'Lucy'
+  */
   const bindAll = (bindThese, withThis) => {
     return map(bindThese, (item) => {
       return isFunction(item) ? item.bind(withThis) : item;
@@ -2827,7 +2872,7 @@
     *
     * @example
     * upperCase('upper case');
-    * // => UPPER CASE
+    * // => 'UPPER CASE'
   */
   const upperCase = (string) => {
     return string.replace(normalizeCase, ' ')
@@ -2844,7 +2889,7 @@
     *
     * @example
     * camelCase('camel case');
-    * // => camelCase
+    * // => 'camelCase'
   */
   const camelCase = (string) => {
     return string.toLowerCase()
@@ -2862,7 +2907,7 @@
     *
     * @example
     * kebabCase('kebab case');
-    * // => kebab-case
+    * // => 'kebab-case'
   */
   const kebabCase = (string) => {
     return string.replace(normalizeCase, ' ')
@@ -2880,7 +2925,7 @@
     *
     * @example
     * snakeCase('snake case');
-    * // => snake_case
+    * // => 'snake_case'
   */
   const snakeCase = (string) => {
     return string.replace(normalizeCase, ' ')
@@ -2907,7 +2952,7 @@
     *
     * @example
     * replaceList('Her name was @user.', ['@user'], 'Lucy');
-    * // => Her name was Lucy.
+    * // => 'Her name was Lucy.'
   */
   const replaceList = (string, array, value) => {
     return string.replace(new RegExp(`\b${array.join('|')}\b`, 'gi'), value);
@@ -2931,7 +2976,7 @@
     *
     * @example
     * rawURLDecode('Lucy%20saw%20diamonds%20in%20the%20sky.');
-    * // => Lucy saw diamonds in the sky.
+    * // => 'Lucy saw diamonds in the sky.'
   */
   const rawURLDecode = (string) => {
     return decodeURIComponent(string.replace(rawURLDecodeRegex, () => {
@@ -2948,7 +2993,7 @@
     *
     * @example
     * htmlEntities(`<script>console.log('Lucy & diamonds.')</script>`);
-    * // => &lt;script&gt;console.log('Lucy &amp; diamonds.')&lt;/script&gt;
+    * // => '&lt;script&gt;console.log('Lucy &amp; diamonds.')&lt;/script&gt;'
   */
   const htmlEntities = (string) => {
     return string.replace(andRegex, '&amp;')
@@ -2966,7 +3011,7 @@
     *
     * @example
     * sanitize(`<script>console.log('Lucy%20&%20diamonds.')</script>`);
-    * // => &lt;script&gt;console.log('Lucy &amp; diamonds.')&lt;/script&gt;
+    * // => '&lt;script&gt;console.log('Lucy &amp; diamonds.')&lt;/script&gt;'
   */
   const sanitize = (string) => {
     return htmlEntities(rawURLDecode(string));
@@ -3051,7 +3096,7 @@
     *
     * @example
     * truncate('Where is Lucy?', 2);
-    * // => Where
+    * // => 'Where'
   */
   const truncate = (string, maxLength) => {
     const stringLength = string.length;
@@ -3068,7 +3113,7 @@
     *
     * @example
     * truncateRight('Where is Lucy?', 6);
-    * // => Lucy?
+    * // => 'Lucy?'
   */
   const truncateRight = (string, maxLength) => {
     const stringLength = string.length;
@@ -3090,7 +3135,7 @@
     *
     * @example
     * upperFirstLetter('upper');
-    * // => U
+    * // => 'U'
   */
   const upperFirstLetter = (string) => {
     return string[0].toUpperCase();
@@ -3105,7 +3150,7 @@
     *
     * @example
     * upperFirstLetter('upper');
-    * // => Upper
+    * // => 'Upper'
   */
   const upperFirst = (string) => {
     return upperFirstLetter(string) + restString(string);
@@ -3120,7 +3165,7 @@
     *
     * @example
     * upperFirstAll('Lucy is next up.');
-    * // => Lucy Is Next Up.
+    * // => 'Lucy Is Next Up.'
   */
   const upperFirstAll = (string) => {
     return string.replace(spaceFirstLetter$1, (match) => {
@@ -3137,7 +3182,7 @@
     *
     * @example
     * upperFirstOnly('LYSERGIC ACID DIETHYLAMIDE');
-    * // => Lysergic acid diethylamide
+    * // => 'Lysergic acid diethylamide'
   */
   const upperFirstOnly = (string) => {
     return upperFirstLetter(string) + restString(string).toLowerCase();
@@ -3152,7 +3197,7 @@
     *
     * @example
     * upperFirstOnlyAll('LYSERGIC ACID DIETHYLAMIDE');
-    * // => Lysergic Acid Diethylamide
+    * // => 'Lysergic Acid Diethylamide'
   */
   const upperFirstOnlyAll = (string) => {
     return string.toLowerCase()
