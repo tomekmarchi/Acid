@@ -503,6 +503,20 @@
     remove
   });
 
+  /**
+    * Chunks an array according to a user defined number.
+    *
+    * @function chunk
+    * @type {Function}
+    * @param {Array} array - Array to be chunked.
+    * @param {number} size - Number which determines the size of each chunk.
+    * @returns {Array} - A chunked version of the source array.
+    *
+    * @example
+    *  chunk([1,2,3], 1);
+    * //=> [[1],[2],[3]]
+
+  */
   const chunk = (array, size = 1) => {
     const chunked = [];
     let index = 0;
@@ -549,6 +563,18 @@
     rest
   });
 
+  /**
+    * Clears the values out of an array.
+    *
+    * @function clear
+    * @type {Function}
+    * @param {Array} array - Takes an array to be emptied.
+    * @returns {Array} The originally given array.
+    *
+    * @example
+    * clear([1,'B', Cat]);
+    * //=> []
+  */
   const clear = (array) => {
     array.length = 0;
     return array;
@@ -565,8 +591,20 @@
     right
   });
 
+  /**
+    * Clears the values out of an array.
+    *
+    * @function cloneArray
+    * @type {Function}
+    * @param {Array} array - Takes an array to be cloned.
+    * @returns {Array} The originally given array.
+    *
+    * @example
+    * cloneArray([1,'B', Cat]);
+    * //=> [1, 'B', Cat]
+  */
   const cloneArray = (array) => {
-    return array.splice();
+    return array.slice();
   };
   assign($, {
     cloneArray
@@ -755,6 +793,18 @@
     sample
   });
 
+  /**
+    * Creates an array with all falsey values removed. The values false, null, 0, "", undefined, and NaN are falsey.
+    *
+    * @function compact
+    * @type {Function}
+    * @param {Array} array - Array to be compacted.
+    * @returns {Array} The new array of filtered values.
+    *
+    * @example
+    * cloneArray([1,'B', Cat, false, null, 0 , '', undefined, NaN]);
+    * //=> [1, 'B', Cat]
+  */
   const compact = (array) => {
     return array.filter((item) => {
       return isString(item) && !item.length ? false : item;
@@ -2910,7 +2960,7 @@
     * // => Her name was Lucy.
   */
   const replaceList = (string, array, value) => {
-    return string.replace(new RegExp(`\b${array.join('|')}\b`, 'gi'), value);
+    return string.replace(new RegExp(`${array.join('|')}`, 'gi'), value);
   };
   assign($, {
     replaceList
