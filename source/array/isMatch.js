@@ -11,7 +11,7 @@ import { eachWhile } from './each';
    * @returns {boolean} Returns the true or false.
    *
    * @example
-   * isMatchArray([1,2,3], [1,2,3]);
+   * isMatchArray([1, 2, 3], [1, 2, 3]);
    * // => true
  */
 export const isMatchArray = (source, compareArray) => {

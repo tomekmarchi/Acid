@@ -117,7 +117,7 @@
     }
   };
   /**
-    * IIterates based on a start index and end index. Creates an array with the results of the iteratee on every element in the calling array. The loop ends when the start index is equal to the end index.
+    * Iterates based on a start index and end index. Creates an array with the results of the iteratee on every element in the calling array. The loop ends when the start index is equal to the end index.
     *
     * @function timesMap
     * @category Utility
@@ -443,6 +443,21 @@
     isUndefined,
   });
 
+  /**
+    * Ensures the object is an array. If not wraps in array.
+    *
+    * @function ensureArray
+    * @type {Function}
+    * @param {*} object - Data to be checked.
+    * @returns {Array} - Returns an array.
+    *
+    * @example
+    * ensureArray('Hello');
+    * //=> ['Hello']
+    *
+    * ensureArray({a:1, b:2})
+    * //=> [{a:1, b:2}]
+  */
   const ensureArray = (object) => {
     return (isArray(object)) ? object : [object];
   };
@@ -515,7 +530,6 @@
     * @example
     *  chunk([1,2,3], 1);
     * //=> [[1],[2],[3]]
-
   */
   const chunk = (array, size = 1) => {
     const chunked = [];
@@ -802,7 +816,7 @@
     * @returns {Array} The new array of filtered values.
     *
     * @example
-    * cloneArray([1,'B', Cat, false, null, 0 , '', undefined, NaN]);
+    * compact([1,'B', Cat, false, null, 0 , '', undefined, NaN]);
     * //=> [1, 'B', Cat]
   */
   const compact = (array) => {
@@ -855,6 +869,19 @@
     smallest
   });
 
+  /**
+    * 
+    *
+    * @type {Function} rangeUp
+    * @param {Number} start - Array to be compacted.
+    * @param {Number} end - Array to be compacted.
+    * @param {Number} increment - Array to be compacted.
+    * @returns {Array} The new array of filtered values.
+    *
+    * @example
+    * rangeUp([1,'B', Cat, false, null, 0 , '', undefined, NaN]);
+    * //=> [1, 'B', Cat]
+  */
   const rangeUp = (start, end, increment) => {
     const rangeArray = [];
     let position = start;
@@ -946,6 +973,19 @@
     sortAlpha
   });
 
+  /**
+    * Checks for differences between arrays, then creates an array based on those differences.
+    *
+    * @function difference
+    * @type {Function}
+    * @param {Array} array - Source array.
+    * @param {Array} compare - Array source array is compared against.
+    * @returns {Array} An array which contains the differences between the source and compare array.
+    *
+    * @example
+    * compact([1, 2, 3], [1, 2]);
+    * //=> [3]
+  */
   const difference = (array, compare) => {
     return compactMapArray(array, (item) => {
       if (!compare.includes(item)) {
@@ -967,9 +1007,36 @@
     invoke
   });
 
+  /**
+    * Removes all items from an array after a specified index.
+    *
+    * @function drop
+    * @type {Function}
+    * @param {Array} array - Source array.
+    * @param {number} amount - Amount of items to drop from the array.
+    * @param {number} [arrayLength = array.length] - Length of array.
+    * @returns {Array} An array with all values removed after a user defined index.
+    *
+    * @example
+    * drop([1, 2, 3], [1]);
+    * //=> [1, 2]
+  */
   const drop = (array, amount, arrayLength = array.length) => {
     return array.splice(amount, arrayLength);
   };
+  /**
+    * Removes all items from an array before a specified index.
+    *
+    * @function dropRight
+    * @type {Function}
+    * @param {Array} array - Source array.
+    * @param {number} amount - Amount of items to drop from the array.
+    * @returns {Array} An array with all values removed before a user defined index.
+    *
+    * @example
+    * dropRight([1, 2, 3], [1]);
+    * //=> [2, 3]
+  */
   const dropRight = (array, amount) => {
     return drop(array, 0, array.length - amount);
   };
@@ -1134,6 +1201,19 @@
     union
   });
 
+  /**
+    * Asynchronously performs a function on the items within an array.
+    *
+    * @function compactMapAsync
+    * @type {Function}
+    * @param {Array} array - Array to be compacted.
+    * @param {Function} funct - Iteratee to be performed on array.
+    * @returns {Array} Array values after being put through an iterator.
+    *
+    * @example
+    * compactMapAsync([1,2,3], async () => {return item});
+    * //=> [1, 2, 3]
+  */
   const compactMapAsync = async (array, funct) => {
     const results = [];
     let result;
@@ -1222,6 +1302,23 @@
       return true;
     }
   };
+  /**
+    *
+    *
+    * @function findItem
+    * @type {Function}
+    * @param {Array} array - Takes an array from which a value is plucked.
+    * @param {number} indexMatch - Data to be checked.
+    * @param {String} [propertyName = 'id'] - Data to be checked.
+    * @returns {Array} - Returns an array.
+    *
+    * @example
+    * ensureArray('Hello');
+    * //=> ['Hello']
+    *
+    * ensureArray({a:1, b:2})
+    * //=> [{a:1, b:2}]
+  */
   const findItem = (array, indexMatch, propertyName = 'id') => {
     const result = array.find((element, index) => {
       return findIndexCache(element, index, array, indexMatch, propertyName);
@@ -3005,7 +3102,7 @@
     * // => 'Her name was Lucy.'
   */
   const replaceList = (string, array, value) => {
-    return string.replace(new RegExp(`${array.join('|')}`, 'gi'), value);
+    return string.replace(new RegExp(`\b${array.join('|')}\b`, 'gi'), value);
   };
   assign($, {
     replaceList

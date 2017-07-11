@@ -1,6 +1,19 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
 import { compactMapArray } from './each';
+/**
+  * Checks for differences between arrays, then creates an array based on those differences.
+  *
+  * @function difference
+  * @type {Function}
+  * @param {Array} array - Source array.
+  * @param {Array} compare - Array source array is compared against.
+  * @returns {Array} An array which contains the differences between the source and compare array.
+  *
+  * @example
+  * compact([1, 2, 3], [1, 2]);
+  * //=> [3]
+*/
 export const difference = (array, compare) => {
   return compactMapArray(array, (item) => {
     if (!compare.includes(item)) {

@@ -10,7 +10,7 @@ import { isString } from '../internal/is';
   * @returns {Array} The new array of filtered values.
   *
   * @example
-  * cloneArray([1,'B', Cat, false, null, 0 , '', undefined, NaN]);
+  * compact([1,'B', Cat, false, null, 0 , '', undefined, NaN]);
   * //=> [1, 'B', Cat]
 */
 export const compact = (array) => {
