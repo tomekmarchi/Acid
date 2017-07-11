@@ -12,7 +12,7 @@ import { assign } from '../internal/object';
   *
   * @example
   * replaceList('Her name was @user.', ['@user'], 'Lucy');
-  * // => Her name was Lucy.
+  * // => 'Her name was Lucy.'
 */
 export const replaceList = (string, array, value) => {
   return string.replace(new RegExp(`\\b${array.join('|')}\\b`, 'gi'), value);

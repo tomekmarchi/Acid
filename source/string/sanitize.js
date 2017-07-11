@@ -15,7 +15,7 @@ const doubleQuoteRegex = /"/g;
   *
   * @example
   * rawURLDecode('Lucy%20saw%20diamonds%20in%20the%20sky.');
-  * // => Lucy saw diamonds in the sky.
+  * // => 'Lucy saw diamonds in the sky.'
 */
 export const rawURLDecode = (string) => {
   return decodeURIComponent(string.replace(rawURLDecodeRegex, () => {
@@ -32,7 +32,7 @@ export const rawURLDecode = (string) => {
   *
   * @example
   * htmlEntities(`<script>console.log('Lucy & diamonds.')</script>`);
-  * // => &lt;script&gt;console.log('Lucy &amp; diamonds.')&lt;/script&gt;
+  * // => '&lt;script&gt;console.log('Lucy &amp; diamonds.')&lt;/script&gt;'
 */
 export const htmlEntities = (string) => {
   return string.replace(andRegex, '&amp;')
@@ -50,7 +50,7 @@ export const htmlEntities = (string) => {
   *
   * @example
   * sanitize(`<script>console.log('Lucy%20&%20diamonds.')</script>`);
-  * // => &lt;script&gt;console.log('Lucy &amp; diamonds.')&lt;/script&gt;
+  * // => '&lt;script&gt;console.log('Lucy &amp; diamonds.')&lt;/script&gt;'
 */
 export const sanitize = (string) => {
   return htmlEntities(rawURLDecode(string));
