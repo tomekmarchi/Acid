@@ -4,7 +4,7 @@ import { eachAsync } from './eachAsync';
 /**
   * Asynchronously Iterates through the calling array and creates an object with the results of the iteratee on every element in the calling array.
   *
-  * @function mapArray
+  * @function mapAsync
   * @category Utility
   * @type {Function}
   * @param {Array} callingArray - Array that will be looped through.
@@ -13,7 +13,7 @@ import { eachAsync } from './eachAsync';
   * @returns {Object} An array of the same calling array's type.
   *
   * @example
-  * mapArray({a: 1, b: 2, c: 3}, (item) => {
+  * mapAsync({a: 1, b: 2, c: 3}, (item) => {
   *   return item * 2;
   * });
   * // => {a: 2, b: 4, c: 6}
