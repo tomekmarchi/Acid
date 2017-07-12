@@ -1,6 +1,6 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-import { times } from '../array/each';
+import { times } from '../array/times';
 export const timer = (fn, time) => {
   return setTimeout(fn, time);
 };

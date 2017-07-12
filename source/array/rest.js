@@ -6,7 +6,7 @@ import { assign } from '../internal/object';
   * @function rest
   * @type {Function}
   * @param {Array} array - Array to be sliced.
-  * @returns {Array} -
+  * @returns {Array} - Returns the aggregated array.
   *
   * @example
   * rest([1, 2, 3, 4, 5]);

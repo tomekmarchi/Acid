@@ -3,11 +3,11 @@ import { assign } from '../internal/object';
 import { ensureArray } from '../array/ensure';
 import { isArray } from '../internal/is';
 /**
-  * Takes the first or multiple items from an array.
+  * Flattens an array up to the provided level.
   *
   * @function first
   * @type {Function}
-  * @param {Array} array - Array to flatten
+  * @param {Array} array - Array to flatten.
   * @param {number} [level = 1] - Number which determines how deep the array nest can be.
   * @returns {Array} - Returns an array.
   *
@@ -25,7 +25,7 @@ export const flatten = (arrayArg, level = 1) => {
   return array;
 };
 /**
-  * Takes the first or multiple items from an array.
+  * Flattens an array to a single level.
   *
   * @function flattenDeep
   * @type {Function}

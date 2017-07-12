@@ -9,7 +9,7 @@ import { assign } from '../internal/object';
   * @returns {Array} - Returns a completely flattened array.
   *
   * @example
-  * initial( [1, 2, 3, 4, 5]);
+  * initial([1, 2, 3, 4, 5]);
   * // => [1, 2, 3, 4]
 */
 export const initial = (array) => {

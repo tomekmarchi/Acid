@@ -7,7 +7,6 @@ import { assign } from '../internal/object';
   * @type {Function}
   * @param {Array} array - Array to extract from.
   * @param {number} upTo - Number which determines how many items after the first item are extracted from the array.
-
   * @returns {Array} - Returns an array.
   *
   * @example

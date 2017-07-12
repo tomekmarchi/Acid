@@ -1,4 +1,3 @@
-
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
 /**
@@ -14,10 +13,10 @@ import { assign } from '../internal/object';
   * // => 10
 */
 const sum = (array) => {
-  array.reduce((a, b) => {
+  return array.reduce((a, b) => {
     return a + b;
   }, 0);
 };
 assign(acid, {
-  sumOf
+  sum
 });
