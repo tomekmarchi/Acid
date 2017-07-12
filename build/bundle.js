@@ -993,8 +993,8 @@
      *
      * @function sortAlphabetical
      * @type {Function}
-     * @param {Array} array - Array from which smallest number is taken.
-     * @returns {number} The smallest number.
+     * @param {Array} array - Array to be sorted.
+     * @returns {Array} The sorted array.
      *
      * @example
      * sortAlphabetical([1,2,3]);
@@ -1110,7 +1110,7 @@
      * @function sortedIndex
      * @type {Function}
      * @param {Array} array - Array to be sorted.
-     * @returns {number} The sorted array.
+     * @returns {Array} The sorted array.
      *
      * @example
      * sortedIndex([1,2,3]);
@@ -1137,17 +1137,17 @@
 
   const mathNativeMax = Math.max;
   /**
-     * Plucks the largest value from an array.
-     *
-     * @function largest
-     * @type {Function}
-     * @param {Array} array - Array from which largest number is taken.
-     * @returns {number} The largest number.
-     *
-     * @example
-     * largest([1,2,3]);
-     * // => 3
-   */
+    * Plucks the largest value from an array.
+    *
+    * @function largest
+    * @type {Function}
+    * @param {Array} array - Array from which largest number is taken.
+    * @returns {number} The largest number.
+    *
+    * @example
+    * largest([1,2,3]);
+    * // => 3
+  */
   const largest = (array) => {
     return mathNativeMax(...array);
   };
@@ -1253,9 +1253,33 @@
     last
   });
 
+  /**
+    * Returns a shallow copy of the array up to an amount.
+    *
+    * @function take
+    * @type {Function}
+    * @param {Array} array - The array to be evaluated.
+    * @returns {Array} The aggregated array.
+    *
+    * @example
+    * take([1,2,3], 2);
+    * // => [1, 2]
+  */
   const take = (array, amount = 1) => {
     return array.slice(0, amount);
   };
+  /**
+    * Returns a shallow copy of the array up to an amount starting from the right.
+    *
+    * @function takeRight
+    * @type {Function}
+    * @param {Array} array - The array to be evaluated.
+    * @returns {Array} The aggregated array.
+    *
+    * @example
+    * takeRight([1,2,3], 2);
+    * // => [3, 2]
+  */
   const takeRight = (array, amount = 1) => {
     return array.slice(array.length - amount, amount);
   };
@@ -1298,6 +1322,18 @@
   const sortUnique = (item, index, array) => {
     return item !== array[index - 1];
   };
+  /**
+    * Filters the array down to unique elements.
+    *
+    * @function take
+    * @type {Function}
+    * @param {Array} array - The array to be filtered.
+    * @returns {Array} The filtered array.
+    *
+    * @example
+    * union([1, 2, 2, 4]);
+    * // => [1, 2, 4]
+  */
   const unique = (array, isSorted) => {
     if (isSorted) {
       return array.filter(sortUnique);
@@ -1308,10 +1344,21 @@
     unique
   });
 
-  // Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more of the arrays.
-  const union = (...args) => {
+  /**
+    * Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more of the arrays.
+    *
+    * @function take
+    * @type {Function}
+    * @param {...Array} arrays - The arrays to be evaluated.
+    * @returns {Array} The aggregated array.
+    *
+    * @example
+    * union([1,2,4], [1,2,3]);
+    * // => [1, 2]
+  */
+  const union = (...arrays) => {
     const result = [];
-    eachArray(args, (array) => {
+    eachArray(arrays, (array) => {
       eachArray(unique(array), (item) => {
         if (result.includes(item)) {
           result.push(item);
@@ -1399,10 +1446,22 @@
     arrayToObject
   });
 
-  // Returns a copy of the array with all instances of the values removed.
-  const without = (array, ...args) => {
+  /**
+    * Returns a copy of the array with all instances of the values removed.
+    *
+    * @function take
+    * @type {Function}
+    * @param {Array} array - The array to be filtered.
+    * @param {Array} removeThese - Items to be removed.
+    * @returns {Array} The filtered array.
+    *
+    * @example
+    * union([1, 2, 2, 4], 4);
+    * // => [1, 2, 2]
+  */
+  const without = (array, removeThese) => {
     return array.filter((item) => {
-      return !args.includes(item);
+      return !removeThese.includes(item);
     });
   };
   assign($, {
@@ -1492,10 +1551,22 @@
     partition
   });
 
-  // Creates an array that is the symmetric difference of the provided arrays. See Wikipedia for more details.
-  const xor = (others) => {
+  /**
+    * Creates an array that is the symmetric difference of the provided arrays.
+    *
+    * @function take
+    * @type {Function}
+    * @param {Array} array - The array to be filtered.
+    * @param {Array} removeThese - Items to be removed.
+    * @returns {Array} The filtered array.
+    *
+    * @example
+    * xor([2, 1], [2, 3]);
+    * // => [1, 3]
+  */
+  const xor = (arrays) => {
     const xored = [];
-    eachArray(others, (array) => {
+    eachArray(arrays, (array) => {
       eachArray(unique(array), (item) => {
         if (xored.includes(item)) {
           xored.splice(xored.indexOf(item), 1);

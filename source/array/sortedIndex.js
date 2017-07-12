@@ -7,7 +7,7 @@ import { eachWhile } from './each';
    * @function sortedIndex
    * @type {Function}
    * @param {Array} array - Array to be sorted.
-   * @returns {number} The sorted array.
+   * @returns {Array} The sorted array.
    *
    * @example
    * sortedIndex([1,2,3]);

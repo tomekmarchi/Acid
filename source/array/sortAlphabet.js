@@ -5,8 +5,8 @@ import { assign } from '../internal/object';
    *
    * @function sortAlphabetical
    * @type {Function}
-   * @param {Array} array - Array from which smallest number is taken.
-   * @returns {number} The smallest number.
+   * @param {Array} array - Array to be sorted.
+   * @returns {Array} The sorted array.
    *
    * @example
    * sortAlphabetical([1,2,3]);
