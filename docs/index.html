@@ -153,19 +153,9 @@
               
                 
                 <li><a
-                  href='#first'
+                  href='#flatten'
                   class="">
-                  first
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#first'
-                  class="">
-                  first
+                  flatten
                   
                 </a>
                 
@@ -676,6 +666,16 @@
                   href='#unzip'
                   class="">
                   unZip
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#first'
+                  class="">
+                  first
                   
                 </a>
                 
@@ -2580,8 +2580,8 @@ ensureArray({<span class="hljs-attr">a</span>:<span class="hljs-number">1</span>
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='first'>
-      first
+    <h3 class='fl m0' id='flatten'>
+      flatten
     </h3>
     
     
@@ -2591,7 +2591,7 @@ ensureArray({<span class="hljs-attr">a</span>:<span class="hljs-number">1</span>
   <p>Flattens an array up to the provided level.</p>
 
 
-  <div class='pre p1 fill-light mt0'>first(arrayArg: any, level: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, array: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  <div class='pre p1 fill-light mt0'>flatten(arrayArg: any, level: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, array: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
   
   
 
@@ -2656,94 +2656,6 @@ ensureArray({<span class="hljs-attr">a</span>:<span class="hljs-number">1</span>
       
       <pre class='p1 overflow-auto round fill-light'>flatten([<span class="hljs-number">1</span>, [<span class="hljs-number">2</span>, [<span class="hljs-number">3</span>, [<span class="hljs-number">4</span>]], <span class="hljs-number">5</span>]]);
  <span class="hljs-comment">// =&gt; [1, 2, [3, [4]], 5]</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='first'>
-      first
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Takes the first or multiple items from an array.</p>
-
-
-  <div class='pre p1 fill-light mt0'>first(array: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, upTo: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>array</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
-	    Array to extract from.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>upTo</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-	    Number which determines how many items after the first item are extracted from the array.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
-        Returns an array.
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>first([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]);
-<span class="hljs-comment">//=&gt; [1]</span>
-
-first([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], <span class="hljs-number">2</span>);
-<span class="hljs-comment">//=&gt; [1, 2, 3]</span></pre>
     
   
 
@@ -7098,6 +7010,94 @@ last([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <s
       
       <pre class='p1 overflow-auto round fill-light'>unZip([[<span class="hljs-string">'a'</span>, <span class="hljs-number">1</span>, <span class="hljs-literal">true</span>], [<span class="hljs-string">'b'</span>, <span class="hljs-number">2</span>, <span class="hljs-literal">false</span>]]);
 <span class="hljs-comment">// =&gt; [['a', 'b'], [1, 2], [true, false]]</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='first'>
+      first
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Takes the first or multiple items from an array.</p>
+
+
+  <div class='pre p1 fill-light mt0'>first(array: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, upTo: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>array</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    Array to extract from.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>upTo</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    Number which determines how many items after the first item are extracted from the array.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
+        Returns an array.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>first([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]);
+<span class="hljs-comment">//=&gt; [1]</span>
+
+first([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], <span class="hljs-number">2</span>);
+<span class="hljs-comment">//=&gt; [1, 2, 3]</span></pre>
     
   
 

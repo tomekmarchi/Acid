@@ -5,7 +5,7 @@ import { isArray } from '../internal/is';
 /**
   * Flattens an array up to the provided level.
   *
-  * @function first
+  * @function flatten
   * @type {Function}
   * @param {Array} array - Array to flatten.
   * @param {number} [level = 1] - Number which determines how deep the array nest can be.
