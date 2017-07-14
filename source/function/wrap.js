@@ -25,7 +25,7 @@ export const wrapBefore = (...args) => {
   };
   assign(wrapped, {
     add(...addThese) {
-      list.unshift(...addThese.reverse());
+      list.unshift(...addThese);
     },
     list,
   });

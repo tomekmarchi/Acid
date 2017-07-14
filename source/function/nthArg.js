@@ -1,12 +1,20 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-export const nthArg = (numArg) => {
-  let num = numArg;
+/**
+  * Creates a function that gets the argument at index n. If n is negative, the nth argument from the end is returned.
+  *
+  * @function nthArg
+  * @type {Function}
+  * @param {number} [index = 0] - The index of the argument to return.
+  * @returns {Function} Returns the new pass-thru function.
+  *
+  * @example
+  * nthArg(1)('a', 'b');
+  * // => 'b'
+*/
+export const nthArg = (index = 0) => {
   return (...args) => {
-    if (num < 0) {
-      num = args.length - (num * -1);
-    }
-    return args[num];
+    return args[index];
   };
 };
 assign(acid, {

@@ -1,15 +1,15 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
 import { times } from '../array/times';
-export const timer = (fn, time) => {
-  return setTimeout(fn, time);
+export const timer = (method, time) => {
+  return setTimeout(method, time);
 };
-export const interval = (fn, time) => {
-  return setInterval(fn, time);
+export const interval = (method, time) => {
+  return setInterval(method, time);
 };
 const generateClear = (method, clearMethod) => {
-  return (max) => {
-    times(0, method(() => {}, max || 1000), (index) => {
+  return () => {
+    times(0, method(() => {}, 0), (index) => {
       clearMethod(index);
     });
   };
@@ -18,7 +18,7 @@ export const clearTimers = generateClear(timer, clearTimeout);
 export const clearIntervals = generateClear(interval, clearInterval);
 export const debounce = (original, time) => {
   let timeout = false;
-  const fn = (...args) => {
+  const debounced = (...args) => {
     if (timeout !== false) {
       clearTimeout(timeout);
     }
@@ -27,35 +27,35 @@ export const debounce = (original, time) => {
       timeout = false;
     }, time);
   };
-  fn.clear = () => {
+  debounced.clear = () => {
     if (timeout) {
       clearTimeout(timeout);
       timeout = false;
     }
   };
-  return fn;
+  return debounced;
 };
-export const throttle = (func, time) => {
+export const throttle = (method, time) => {
   let timeout = false;
   let shouldThrottle;
-  const fn = (...args) => {
+  const throttled = (...args) => {
     if (timeout) {
       shouldThrottle = true;
       return;
     }
-    func(...args);
+    method(...args);
     timeout = timer(() => {
       if (shouldThrottle) {
-        func(...args);
+        method(...args);
       }
       timeout = false;
     }, time);
   };
-  fn.clear = () => {
+  throttled.clear = () => {
     clearTimeout(timeout);
     timeout = false;
   };
-  return fn;
+  return throttled;
 };
 assign(acid, {
   debounce,

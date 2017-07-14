@@ -2582,33 +2582,61 @@
     ary
   });
 
-  const curry = (funts) => {
-    const args = [];
+  /**
+    * Creates a function that accepts arguments of method and either invokes method returning its result, if at least arity number of arguments have been provided, or returns a function that accepts the remaining method arguments, and so on. The arity of method may be specified if method.length is not sufficient.
+    *
+    * @function curry
+    * @type {Function}
+    * @param {Function} methods - The function to curry.
+    * @param {number} arity - The arity of method.
+    * @returns {*} Returns the new curried function.
+    *
+    * @example
+    * const curried = curry((a, b, c) => {
+    *   return [a, b, c];
+    * });
+    * curried(1)(2)(3);
+    * // => [1, 2, 3]
+  */
+  const curry = (method, arity = method.length) => {
+    const curries = [];
     const curried = (...curryArgs) => {
-      eachArray(curryArgs, (item) => {
-        args.push(item);
-      });
+      curries.push(...curryArgs);
+      if (curries.length === arity) {
+        const result = method(...curries);
+        clear(curries);
+        return result;
+      }
       return curried;
-    };
-    curried.result = () => {
-      const results = funts(...args);
-      clear(args);
-      return results;
     };
     return curried;
   };
-  const curryRight = (funts) => {
-    const args = [];
+  /**
+    * Creates a function that accepts arguments of method and either invokes method returning its result, if at least arity number of arguments have been provided, or returns a function that accepts the remaining method arguments, and so on. The arity of method may be specified if method.length is not sufficient. The arguments are given in reverse order.
+    *
+    * @function curryRight
+    * @type {Function}
+    * @param {Function} methods - The function to curry.
+    * @param {number} arity - The arity of method.
+    * @returns {*} Returns the new curried function.
+    *
+    * @example
+    * const curried = curryRight((a, b, c) => {
+    *   return [a, b, c];
+    * });
+    * curried(1)(2)(3);
+    * // => [1, 2, 3]
+  */
+  const curryRight = (method, arity = method.length) => {
+    const curries = [];
     const curried = (...curryArgs) => {
-      eachArray(curryArgs, (item) => {
-        args.unshift(item);
-      });
+      curries.unshift(...curryArgs);
+      if (curries.length === arity) {
+        const result = method(...curries);
+        clear(curries);
+        return result;
+      }
       return curried;
-    };
-    curried.result = () => {
-      const results = funts(...args);
-      clear(args);
-      return results;
     };
     return curried;
   };
@@ -2617,50 +2645,100 @@
     curryRight
   });
 
-  // Creates a function that is restricted to execute func once. Repeat calls to the function will return the value of the first call. The func is executed with the this binding of the created function.
-  const once = (fn) => {
+  /**
+    * Creates a function that is restricted to execute method once. Repeat calls to the function will return the value of the first call. The method is executed with the this binding of the created function.
+    *
+    * @function once
+    * @type {Function}
+    * @param {Function} method - The function to be called.
+    * @returns {Function} Returns the new pass-thru function.
+    *
+    * @example
+    * const onceOnly = once(() => { return 1;});
+    * onceOnly();
+    * // => 1
+    * onceOnly();
+    * // => 1
+  */
+  const once = (method) => {
     let value;
     const onlyOnce = (...args) => {
-      if (!value) {
-        value = fn(...args);
+      if (hasValue(value)) {
+        value = method(...args);
       }
       return value;
     };
     return onlyOnce;
   };
-  // Creates a function that executes func, with the this binding and arguments of the created function, only after being called n times.
-  const afterFn = (amountArg, fn) => {
-    let amount = amountArg;
+  /**
+    * Creates a function that executes method, only after being called n times.
+    *
+    * @function after
+    * @type {Function}
+    * @param {number} amount - The number of calls until method is invoked.
+    * @param {Function} method - The function to be called.
+    * @returns {Function} Returns the new pass-thru function.
+    *
+    * @example
+    * const onlyAfter = after(1, () => { return 1;});
+    * onlyAfter();
+    * // => undefined
+    * onlyAfter();
+    * // => 1
+  */
+  const after = (amount, method) => {
+    let point = amount;
+    let value;
     const onlyAfter = (...args) => {
-      amount--;
-      if (amount < 0) {
-        return fn(...args);
+      if (point !== null) {
+        point--;
       }
+      if (point <= 0) {
+        value = method(...args);
+      } else {
+        point = null;
+      }
+      return value;
     };
     return onlyAfter;
   };
-  // Creates a function that executes func, with the this binding and arguments of the created function, only before being called n times.
-  const beforeFn = (amountArg, fn) => {
-    let amount = amountArg;
+  /**
+    * Creates a function that executes method, only before n times.
+    *
+    * @function before
+    * @type {Function}
+    * @param {number} amount - The number of calls before n.
+    * @param {Function} method - The function to be called.
+    * @returns {Function} Returns the new pass-thru function.
+    *
+    * @example
+    * const onlyBefore = before(3, () => { return 1;});
+    * onlyBefore(1);
+    * // => 1
+    * onlyBefore(2);
+    * // => 2
+    * onlyBefore(3);
+    * // => 2
+  */
+  const before = (amount, method) => {
+    let point = amount;
+    let value;
     const onlyBefore = (...args) => {
-      amount--;
-      if (amount > 0) {
-        return fn(...args);
+      if (point !== null) {
+        point--;
       }
+      if (point >= 1) {
+        value = method(...args);
+      } else {
+        point = null;
+      }
+      return value;
     };
     return onlyBefore;
   };
-  // Creates a function that executes func, with the this binding and arguments of the created function, only after or equal to being called n times.
-  const onAfter = (amount, fn) => {
-    return afterFn(amount - 1, fn);
-  };
-  // Creates a function that executes func, with the this binding and arguments of the created function, only before or equal to being called n times.
-  const onBefore = (amount, fn) => {
-    return beforeFn(amount + 1, fn);
-  };
   assign($, {
-    onAfter,
-    onBefore,
+    after,
+    before,
     once
   });
 
@@ -2683,12 +2761,12 @@
     return undefined;
   };
   assign($, {
-    stubObject,
+    noop,
     stubArray,
+    stubFalse,
+    stubObject,
     stubString,
     stubTrue,
-    stubFalse,
-    noop
   });
 
   const forEachWrap = (object, callback) => {
@@ -2829,10 +2907,21 @@
     bindAll
   });
 
-  // Creates a function that negates the result of the predicate func. The func predicate is invoked with the this binding and arguments of the created function.
-  const negate = (func) => {
+  /**
+    * Creates a function that negates the result of the predicate method.
+    *
+    * @function negate
+    * @type {Function}
+    * @param {Function} method - The function to be invoked.
+    * @returns {*} Returns the given methods result.
+    *
+    * @example
+    * negate(() => { return false;})();
+    * // => true
+  */
+  const negate = (method) => {
     return (...args) => {
-      return !func(...args);
+      return !method(...args);
     };
   };
   assign($, {
@@ -2861,17 +2950,17 @@
     overEvery,
   });
 
-  const timer = (fn, time) => {
-    return setTimeout(fn, time);
+  const timer = (method, time) => {
+    return setTimeout(method, time);
   };
-  const interval = (fn, time) => {
-    return setInterval(fn, time);
+  const interval = (method, time) => {
+    return setInterval(method, time);
   };
 
 
   const debounce = (original, time) => {
     let timeout = false;
-    const fn = (...args) => {
+    const debounced = (...args) => {
       if (timeout !== false) {
         clearTimeout(timeout);
       }
@@ -2880,35 +2969,35 @@
         timeout = false;
       }, time);
     };
-    fn.clear = () => {
+    debounced.clear = () => {
       if (timeout) {
         clearTimeout(timeout);
         timeout = false;
       }
     };
-    return fn;
+    return debounced;
   };
-  const throttle = (func, time) => {
+  const throttle = (method, time) => {
     let timeout = false;
     let shouldThrottle;
-    const fn = (...args) => {
+    const throttled = (...args) => {
       if (timeout) {
         shouldThrottle = true;
         return;
       }
-      func(...args);
+      method(...args);
       timeout = timer(() => {
         if (shouldThrottle) {
-          func(...args);
+          method(...args);
         }
         timeout = false;
       }, time);
     };
-    fn.clear = () => {
+    throttled.clear = () => {
       clearTimeout(timeout);
       timeout = false;
     };
-    return fn;
+    return throttled;
   };
   assign($, {
     debounce,
@@ -2962,13 +3051,43 @@
     chain
   });
 
-  const inSync = (fns, arg) => {
-    return each(fns, (item) => {
+  /**
+    * Invoke an array of functions.
+    *
+    * @function curry
+    * @type {Function}
+    * @param {Function} methods - The functions to be invoked.
+    * @param {*} arg - The object passed to each method.
+    * @returns {undefined} Returns undefined.
+    *
+    * @example
+    * inSync([() => {console.log(1);}, () => {console.log(2);}]);
+    * // 1
+    * // 2
+    * // => undefined
+  */
+  const inSync = (methods, arg) => {
+    return each(methods, (item) => {
       item(arg);
     });
   };
-  const inAsync = async (fns, arg) => {
-    await eachAsync(fns, async (item) => {
+  /**
+    * Invoke an array of functions asynchronously. Each function is awaited to ensure execution order.
+    *
+    * @function curry
+    * @type {Function}
+    * @param {Function} methods - The functions to be invoked.
+    * @param {*} arg - The object passed to each method.
+    * @returns {undefined} Returns undefined.
+    *
+    * @example
+    * inAsync([async () => {console.log(1);}, async () => {console.log(2);}]);
+    * // 1
+    * // 2
+    * // => undefined
+  */
+  const inAsync = async (methods, arg) => {
+    return eachAsync(methods, async (item) => {
       await item(arg);
     });
   };
@@ -2977,13 +3096,21 @@
     inSync,
   });
 
-  const nthArg = (numArg) => {
-    let num = numArg;
+  /**
+    * Creates a function that gets the argument at index n. If n is negative, the nth argument from the end is returned.
+    *
+    * @function nthArg
+    * @type {Function}
+    * @param {number} [index = 0] - The index of the argument to return.
+    * @returns {Function} Returns the new pass-thru function.
+    *
+    * @example
+    * nthArg(1)('a', 'b');
+    * // => 'b'
+  */
+  const nthArg = (index = 0) => {
     return (...args) => {
-      if (num < 0) {
-        num = args.length - (num * -1);
-      }
-      return args[num];
+      return args[index];
     };
   };
   assign($, {
@@ -3035,7 +3162,7 @@
     };
     assign(wrapped, {
       add(...addThese) {
-        list.unshift(...addThese.reverse());
+        list.unshift(...addThese);
       },
       list,
     });

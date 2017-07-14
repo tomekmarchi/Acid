@@ -19,10 +19,10 @@ export const noop = () => {
   return undefined;
 };
 assign(acid, {
-  stubObject,
+  noop,
   stubArray,
+  stubFalse,
+  stubObject,
   stubString,
   stubTrue,
-  stubFalse,
-  noop
 });
