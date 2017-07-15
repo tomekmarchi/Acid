@@ -1,7 +1,7 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-import { compactMapArray, eachArray, filterArray, mapArray } from '../array/each';
-import { compactMapObject, eachObject, filterObject, mapObject } from '../object/each';
+import { compactMapArray, eachArray, filterArray, mapArray, whileArray } from '../array/each';
+import { compactMapObject, eachObject, filterObject, mapObject, whileObject } from '../object/each';
 import { hasValue, isArray, isFunction, isPlainObject } from '../internal/is';
 const forEachWrap = (object, callback) => {
   return object.forEach(callback);
@@ -23,6 +23,22 @@ const generateCheckLoops = (arrayLoop, objectLoop) => {
     return returned(callingObject, iteratee, results);
   };
 };
+/**
+  * Iterates through the given object while the iteratee returns true.
+  *
+  * @function eachWhile
+  * @type {Function}
+  * @param {Object|Array|Function} callingObject - Object that will be looped through.
+  * @param {Function} iteratee - Transformation function which is passed item, key, calling array, and array length.
+  * @returns {boolean} Returns the true if all values returned are true or false if one value returns false.
+  *
+  * @example
+  * eachWhile({a: false, b: true, c: true}, (item) => {
+  *   return item;
+  *  });
+  * // => false
+*/
+export const eachWhile = generateCheckLoops(whileArray, whileObject);
 /**
   * Iterates through the given object.
   *

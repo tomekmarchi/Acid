@@ -1,6 +1,6 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-import { eachWhile } from './each';
+import { whileArray } from './each';
 /**
    * Uses a binary search to determine the index at which the value should be inserted into the list in order to maintain the list's sorted order.
    *
@@ -15,7 +15,7 @@ import { eachWhile } from './each';
  */
 const sortedIndex = (array, n) => {
   let min = 0;
-  eachWhile(array, (item, index) => {
+  whileArray(array, (item, index) => {
     if (n > item) {
       min = index;
     } else {

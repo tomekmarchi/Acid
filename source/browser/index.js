@@ -7,7 +7,7 @@ import './append';
 import './import';
 import './ready';
 import './attribute';
-import './saveDimentions';
+import './dimensions';
 import './batch';
 import './info';
 import './selector';

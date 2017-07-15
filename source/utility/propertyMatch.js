@@ -1,6 +1,6 @@
 import acid from '../namespace/index';
-import { eachWhile } from '../array/each';
 import { isEqual } from './isEqual';
+import { whileArray } from '../array/each';
 import { assign, keys } from '../internal/object';
 /**
   * Using a deep comparison it checks if properties of two objects using an array are equal.
@@ -22,12 +22,9 @@ import { assign, keys } from '../internal/object';
   * //-> true
 */
 export const propertyMatch = (object, compareObject, properties = keys(object)) => {
-  let result = false;
-  eachWhile(properties, (property) => {
-    result = isEqual(object[property], compareObject[property]);
-    return result;
+  return whileArray(properties, (property) => {
+    return isEqual(object[property], compareObject[property]);
   });
-  return result;
 };
 assign(acid, {
   propertyMatch,
