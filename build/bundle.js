@@ -3244,14 +3244,14 @@
   /**
     * Creates a function that invokes method with arguments arranged according to the specified indexes where the argument value at the first index is provided as the first argument, the argument value at the second index is provided as the second argument, and so on.
     *
-    * @function over
+    * @function reArg
     * @type {Function}
     * @param {Function} method - The function to be invoked.
     * @param {Array} indexes - The arranged argument indexes.
     * @returns {Function} Returns the new function.
     *
     * @example
-    * const reArged = ((a, b, c) => {
+    * const reArged = reArg((a, b, c) => {
     *   return [a, b, c];
     * }, [1,2,0]);
     * reArged(1,2,3);
