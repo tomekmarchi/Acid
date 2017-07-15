@@ -3681,7 +3681,7 @@
     * // => 'Her name was Lucy.'
   */
   const replaceList = (string, array, value) => {
-    return string.replace(new RegExp(`${array.join('|')}`, 'gi'), value);
+    return string.replace(new RegExp(`\b${array.join('|')}\b`, 'gi'), value);
   };
   assign($, {
     replaceList
