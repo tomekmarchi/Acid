@@ -2,7 +2,7 @@ import acid from '../namespace/index';
 import { assign } from '../internal/object';
 import { clear } from '../array/clear';
 /**
-  * Creates a function that accepts arguments of method and either invokes method returning its result, if at least arity number of arguments have been provided, or returns a function that accepts the remaining method arguments, and so on. The arity of method may be specified if method.length is not sufficient.
+  * Creates a function that accepts arguments of method and either invokes method returning its result, if at least arity number of arguments have been provided, or returns a function that accepts the remaining method arguments, and so on. The arity of method may be specified if method length is not sufficient.
   *
   * @function curry
   * @type {Function}

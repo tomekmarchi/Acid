@@ -10,7 +10,7 @@ import { randomInt } from '../number/math';
   *
   * @example
   * sample([1, 2, 3, 4] , 2);
-  * // -> [1, 3]
+  * // => [1, 3]
 */
 export const sample = (array, amount = 1) => {
   if (amount === 1) {

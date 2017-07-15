@@ -12,7 +12,7 @@ export const numericalCompareReverse = (a, b) => {
   *
   * @example
   * rNumSort([10, 0, 2, 1]);
-  * // -> [10, 2, 1, 0]
+  * // => [10, 2, 1, 0]
 */
 export const rNumSort = (numberList) => {
   return numberList.sort(numericalCompareReverse);

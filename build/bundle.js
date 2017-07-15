@@ -779,7 +779,7 @@
     *
     * @example
     * sample([1, 2, 3, 4] , 2);
-    * // -> [1, 3]
+    * // => [1, 3]
   */
   const sample = (array, amount = 1) => {
     if (amount === 1) {
@@ -1659,7 +1659,7 @@
     *
     * @example
     * rNumSort([10, 0, 2, 1]);
-    * // -> [10, 2, 1, 0]
+    * // => [10, 2, 1, 0]
   */
   const rNumSort = (numberList) => {
     return numberList.sort(numericalCompareReverse);
@@ -2177,6 +2177,7 @@
     clear(batchChanges);
     batchCancelFrame = false;
   };
+
   const batch = (...items) => {
     batchChanges.push(...items);
     if (!batchCancelFrame) {
