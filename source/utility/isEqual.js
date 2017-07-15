@@ -1,5 +1,5 @@
 import acid from '../namespace/index';
-import { eachWhile } from '../array/each';
+import { whileArray } from '../array/each';
 import { isMatchArray } from '../array/isMatch';
 import { assign, keys } from '../internal/object';
 import { isArray, isPlainObject } from '../internal/is';
@@ -23,13 +23,13 @@ export const isEqual = (object, compareObject) => {
     if (isPlainObject(object)) {
       const sourceProperties = keys(object);
       if (isMatchArray(sourceProperties, keys(compareObject))) {
-        return eachWhile(sourceProperties, (key) => {
+        return whileArray(sourceProperties, (key) => {
           return isEqual(object[key], compareObject[key]);
         });
       }
     } else if (isArray(object)) {
       if (object.length === compareObject.length) {
-        return eachWhile(object, (item, index) => {
+        return whileArray(object, (item, index) => {
           return isEqual(item, compareObject[index]);
         });
       }

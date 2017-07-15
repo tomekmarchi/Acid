@@ -1,5 +1,5 @@
 import acid from '../namespace/index';
-import { eachWhile } from '../array/each';
+import { whileArray } from '../array/each';
 import { isMatchArray } from '../array/isMatch';
 import { assign, keys } from '../internal/object';
 /**
@@ -18,7 +18,7 @@ import { assign, keys } from '../internal/object';
 export const isMatchObject = (source, compareObject) => {
   const sourceProperties = keys(source);
   if (isMatchArray(sourceProperties, keys(compareObject))) {
-    return eachWhile(sourceProperties, (key) => {
+    return whileArray(sourceProperties, (key) => {
       return source[key] === compareObject[key];
     });
   }

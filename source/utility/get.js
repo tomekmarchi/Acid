@@ -1,8 +1,8 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-import { eachWhile } from '../array/each';
 import { hasValue } from '../internal/is';
 import { toPath } from '../utility/toPath';
+import { whileArray } from '../array/each';
 /**
   * Returns property on an object.
   *
@@ -13,18 +13,16 @@ import { toPath } from '../utility/toPath';
   * @returns {Object} - Returns property from the given object.
   *
   * @example
-  * const api = {
-  *  post: {
-  *   like: ['a','b','c']
-  *  }
-  * }
-  * get('post.like[2]', api);
+  * get('post.like[2]', {
+  *   post: {
+  *     like: ['a','b','c']
+  *   }
+  * });
   * //=> c
-  *
 */
 export const get = (propertyString, objectChain = acid) => {
   let link = objectChain;
-  eachWhile(toPath(propertyString), (item) => {
+  whileArray(toPath(propertyString), (item) => {
     link = link[item];
     return hasValue(link);
   });

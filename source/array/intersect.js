@@ -1,6 +1,6 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-import { compactMapArray, eachWhile } from './each';
+import { compactMapArray, whileArray } from './each';
 /**
  * Returns an new array that is the [set intersection](http://en.wikipedia.org/wiki/Intersection_(set_theory))
  * of the array and the input array(s).
@@ -19,7 +19,7 @@ import { compactMapArray, eachWhile } from './each';
  */
 export const intersect = (array, ...arrays) => {
   return compactMapArray(array, (item) => {
-    const shouldReturn = eachWhile(arrays, (otherItem) => {
+    const shouldReturn = whileArray(arrays, (otherItem) => {
       return otherItem.includes(item);
     });
     if (shouldReturn) {

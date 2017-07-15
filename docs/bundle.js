@@ -136,14 +136,14 @@
   /**
     * Iterates through the given array while the iteratee returns true.
     *
-    * @function eachWhile
+    * @function whileArray
     * @type {Function}
     * @param {Array} callingArray - Array that will be looped through.
     * @param {Function} iteratee - Transformation function which is passed item, key, calling array, and array length.
     * @returns {boolean} Returns the true if all values returned are true or false if one value returns false.
     *
     * @example
-    * eachWhile([true, true, false], (item) => {
+    * whileArray([true, true, false], (item) => {
     *   console.log(item);
     *   return item;
     * });
@@ -151,7 +151,7 @@
     * //true
     * // => false
   */
-  const eachWhile = (callingArray, iteratee) => {
+  const whileArray = (callingArray, iteratee) => {
     const arrayLength = callingArray.length;
     for (let index = 0; index < arrayLength; index++) {
       if (iteratee(callingArray[index], index, callingArray, arrayLength) === false) {
@@ -284,11 +284,11 @@
     compactMapArray,
     eachArray,
     eachArrayRight,
-    eachWhile,
     filterArray,
     mapArray,
     mapArrayRight,
     mapWhile,
+    whileArray,
   });
 
   const objectStringGenerate = (objectName) => {
@@ -976,7 +976,7 @@
    */
   const intersect = (array, ...arrays) => {
     return compactMapArray(array, (item) => {
-      const shouldReturn = eachWhile(arrays, (otherItem) => {
+      const shouldReturn = whileArray(arrays, (otherItem) => {
         return otherItem.includes(item);
       });
       if (shouldReturn) {
@@ -1094,7 +1094,7 @@
    */
   const isMatchArray = (source, compareArray) => {
     if (compareArray.length === source.length) {
-      return eachWhile(source, (item, index) => {
+      return whileArray(source, (item, index) => {
         return compareArray[index] !== item;
       });
     }
@@ -1118,7 +1118,7 @@
    */
   const sortedIndex = (array, n) => {
     let min = 0;
-    eachWhile(array, (item, index) => {
+    whileArray(array, (item, index) => {
       if (n > item) {
         min = index;
       } else {
@@ -1803,13 +1803,13 @@
     });
   };
   /**
-  * Iterates through the given object while the iteratee returns true.
-  *
-  * @function whileObject
-  * @type {Function}
-  * @param {Object} callingObject - Object that will be looped through.
-  * @param {Function} iteratee - Transformation function which is passed item, key, calling array, and array length.
-  * @returns {boolean} Returns the true if all values returned are true or false if one value returns false.
+    * Iterates through the given object while the iteratee returns true.
+    *
+    * @function whileObject
+    * @type {Function}
+    * @param {Object} callingObject - Object that will be looped through.
+    * @param {Function} iteratee - Transformation function which is passed item, key, calling array, and array length.
+    * @returns {boolean} Returns the true if all values returned are true or false if one value returns false.
     *
     * @example
     * whileObject({a: false, b: true, c: true}, (item) => {
@@ -1818,7 +1818,7 @@
     * // => false
   */
   const whileObject = (callingObject, iteratee, results = {}) => {
-    return eachWhile(callingObject, (item, key, thisObject, propertyCount, objectKeys) => {
+    return whileArray(callingObject, (item, key, thisObject, propertyCount, objectKeys) => {
       return iteratee(item, key, results, thisObject, propertyCount, objectKeys);
     });
   };
@@ -2177,7 +2177,6 @@
     clear(batchChanges);
     batchCancelFrame = false;
   };
-
   const batch = (...items) => {
     batchChanges.push(...items);
     if (!batchCancelFrame) {
@@ -2571,7 +2570,7 @@
     * @returns {Object} Returns the new capped function.
     *
     * @example
-    * ary((...args) => { return args;}, 2)(1,2,3);
+    * ary((...args) => { return args;}, 2)(1, 2, 3);
     * // => [1, 2]
   */
   const ary = (func, amount) => {
@@ -2584,7 +2583,7 @@
   });
 
   /**
-    * Creates a function that accepts arguments of method and either invokes method returning its result, if at least arity number of arguments have been provided, or returns a function that accepts the remaining method arguments, and so on. The arity of method may be specified if method.length is not sufficient.
+    * Creates a function that accepts arguments of method and either invokes method returning its result, if at least arity number of arguments have been provided, or returns a function that accepts the remaining method arguments, and so on. The arity of method may be specified if method length is not sufficient.
     *
     * @function curry
     * @type {Function}
@@ -2743,21 +2742,87 @@
     once
   });
 
+  /**
+    * This method returns a new empty object.
+    *
+    * @function stubObject
+    * @type {Function}
+    * @returns {Object} Returns the new empty object.
+    *
+    * @example
+    * stubObject();
+    * // => {}
+  */
   const stubObject = () => {
     return {};
   };
+  /**
+    * This method returns a new empty array.
+    *
+    * @function stubArray
+    * @type {Function}
+    * @returns {Array} Returns the new empty array.
+    *
+    * @example
+    * stubArray();
+    * // => []
+  */
   const stubArray = () => {
     return [];
   };
+  /**
+    * This method returns a new empty string.
+    *
+    * @function stubString
+    * @type {Function}
+    * @returns {string} Returns the new empty string.
+    *
+    * @example
+    * stubString();
+    * // => ''
+  */
   const stubString = () => {
     return '';
   };
+  /**
+    * This method returns false.
+    *
+    * @function stubFalse
+    * @type {Function}
+    * @returns {boolean} Returns false.
+    *
+    * @example
+    * stubFalse();
+    * // => false
+  */
   const stubFalse = () => {
     return false;
   };
+  /**
+    * This method returns true.
+    *
+    * @function stubTrue
+    * @type {Function}
+    * @returns {boolean} Returns true.
+    *
+    * @example
+    * stubTrue();
+    * // => true
+  */
   const stubTrue = () => {
     return true;
   };
+  /**
+    * This method returns undefined.
+    *
+    * @function noop
+    * @type {Function}
+    * @returns {undefined} Returns undefined.
+    *
+    * @example
+    * noop();
+    * // => undefined
+  */
   const noop = () => {
     return undefined;
   };
@@ -2790,6 +2855,22 @@
       return returned(callingObject, iteratee, results);
     };
   };
+  /**
+    * Iterates through the given object while the iteratee returns true.
+    *
+    * @function eachWhile
+    * @type {Function}
+    * @param {Object|Array|Function} callingObject - Object that will be looped through.
+    * @param {Function} iteratee - Transformation function which is passed item, key, calling array, and array length.
+    * @returns {boolean} Returns the true if all values returned are true or false if one value returns false.
+    *
+    * @example
+    * eachWhile({a: false, b: true, c: true}, (item) => {
+    *   return item;
+    *  });
+    * // => false
+  */
+  const eachWhile = generateCheckLoops(whileArray, whileObject);
   /**
     * Iterates through the given object.
     *
@@ -2929,26 +3010,68 @@
     negate
   });
 
-  const overEvery = (array) => {
+  /**
+    * Checks if predicate returns truthy for all elements of collection. Iteration is stopped once predicate returns falsey. The predicate is invoked with three arguments: (value, index|key, collection).
+    *
+    * @function every
+    * @type {Function}
+    * @param {Array|Object} collection - The collection to iterate over.
+    * @param {Function} predicate - The function invoked per iteration.
+    * @returns {boolean} Returns true if all elements pass the predicate check, else false.
+    *
+    * @example
+    * every([[], true, 1, null, 'string'], Boolean);
+    * // => false
+  */
+  const every = eachWhile;
+  assign($, {
+    every,
+  });
+
+  /**
+    * Creates a function that invokes iteratees with the arguments it receives and returns their results.
+    *
+    * @function over
+    * @type {Function}
+    * @param {Array|Object} iteratees - The iteratees to invoke.
+    * @returns {Function} Returns the new function.
+    *
+    * @example
+    * over([Math.max, Math.min])(1, 2, 3, 4);
+    * // => [4, 1]
+  */
+  const over = (iteratees) => {
     return (...args) => {
-      let result;
-      array.find(array, (item) => {
-        result = Boolean(item(...args));
-        return result;
+      return map(iteratees, (item) => {
+        return item(...args);
       });
-      return result;
     };
   };
-  const over = (array) => {
+  /**
+    * Creates a function that checks if all of the predicates return truthy when invoked with the arguments it receives.
+    *
+    * @function overEvery
+    * @type {Function}
+    * @param {Array|Object} predicates -  The predicates to check.
+    * @returns {Function} Returns the new function.
+    *
+    * @example
+    * const overEveryThing = overEvery([Boolean, isFinite]);
+    * overEveryThing('1');
+    * // => true
+    * overEveryThing(null);
+    * // => false
+  */
+  const overEvery = (predicates) => {
     return (...args) => {
-      return array.map((item) => {
+      return eachWhile(predicates, (item) => {
         return item(...args);
       });
     };
   };
   assign($, {
     over,
-    overEvery,
+    overEvery
   });
 
   const timer = (method, time) => {
@@ -3118,22 +3241,29 @@
     nthArg
   });
 
-  // Creates a function that invokes func with arguments arranged according to the specified indexes where the argument value at the first index is provided as the first argument, the argument value at the second index is provided as the second argument, and so on.
-  const reArg = (funct, list) => {
+  /**
+    * Creates a function that invokes method with arguments arranged according to the specified indexes where the argument value at the first index is provided as the first argument, the argument value at the second index is provided as the second argument, and so on.
+    *
+    * @function reArg
+    * @type {Function}
+    * @param {Function} method - The function to be invoked.
+    * @param {Array} indexes - The arranged argument indexes.
+    * @returns {Function} Returns the new function.
+    *
+    * @example
+    * const reArged = reArg((a, b, c) => {
+    *   return [a, b, c];
+    * }, [1,2,0]);
+    * reArged(1,2,3);
+    * // => [2, 3, 1]
+  */
+  const reArg = (method, indexes) => {
     return (...args) => {
-      return funct(...list.map((item) => {
+      return method(...indexes.map((item) => {
         return args[item];
       }));
     };
   };
-  /*
-  var rearg=(function(a, b, c) {
-    return [a, b, c];
-  },[1,2,0]);
-
-  rearg(1,2,3);
-  -> [2, 3, 1]
-  */
   assign($, {
     reArg
   });
@@ -3255,13 +3385,10 @@
     * //=> false
   */
   const hasKeys = (object, properties) => {
-    let flag = false;
     const objectKeys = keys(object);
-    eachWhile(properties, (item) => {
-      flag = objectKeys.include(item);
-      return flag;
+    return whileArray(properties, (item) => {
+      return objectKeys.include(item);
     });
-    return flag;
   };
   /**
     * Checks to see if an object has any of the given property names.
@@ -3273,18 +3400,17 @@
     * @returns {boolean} - Returns true or false.
     *
     * @example
-    * hasAnyKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Lucy','John']);
-    * //=> true
-    *
     * hasAnyKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Lucy','Tom']);
     * //=> true
+    *
+    * hasAnyKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Other','Tom']);
+    * //=> false
   */
   const hasAnyKeys = (object, properties) => {
     const objectKeys = keys(object);
-    const flag = properties.find((item) => {
+    return properties.find((item) => {
       return objectKeys.include(item);
     });
-    return flag;
   };
   assign($, {
     hasAnyKeys,
@@ -3357,7 +3483,7 @@
   const isMatchObject = (source, compareObject) => {
     const sourceProperties = keys(source);
     if (isMatchArray(sourceProperties, keys(compareObject))) {
-      return eachWhile(sourceProperties, (key) => {
+      return whileArray(sourceProperties, (key) => {
         return source[key] === compareObject[key];
       });
     }
@@ -3906,13 +4032,13 @@
       if (isPlainObject(object)) {
         const sourceProperties = keys(object);
         if (isMatchArray(sourceProperties, keys(compareObject))) {
-          return eachWhile(sourceProperties, (key) => {
+          return whileArray(sourceProperties, (key) => {
             return isEqual(object[key], compareObject[key]);
           });
         }
       } else if (isArray(object)) {
         if (object.length === compareObject.length) {
-          return eachWhile(object, (item, index) => {
+          return whileArray(object, (item, index) => {
             return isEqual(item, compareObject[index]);
           });
         }
@@ -3944,12 +4070,9 @@
     * //-> true
   */
   const propertyMatch = (object, compareObject, properties = keys(object)) => {
-    let result = false;
-    eachWhile(properties, (property) => {
-      result = isEqual(object[property], compareObject[property]);
-      return result;
+    return whileArray(properties, (property) => {
+      return isEqual(object[property], compareObject[property]);
     });
-    return result;
   };
   assign($, {
     propertyMatch,
@@ -4045,18 +4168,16 @@
     * @returns {Object} - Returns property from the given object.
     *
     * @example
-    * const api = {
-    *  post: {
-    *   like: ['a','b','c']
-    *  }
-    * }
-    * get('post.like[2]', api);
+    * get('post.like[2]', {
+    *   post: {
+    *     like: ['a','b','c']
+    *   }
+    * });
     * //=> c
-    *
   */
   const get = (propertyString, objectChain = $) => {
     let link = objectChain;
-    eachWhile(toPath(propertyString), (item) => {
+    whileArray(toPath(propertyString), (item) => {
       link = link[item];
       return hasValue(link);
     });

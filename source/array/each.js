@@ -48,14 +48,14 @@ export const eachArrayRight = (callingArray, iteratee) => {
 /**
   * Iterates through the given array while the iteratee returns true.
   *
-  * @function eachWhile
+  * @function whileArray
   * @type {Function}
   * @param {Array} callingArray - Array that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, key, calling array, and array length.
   * @returns {boolean} Returns the true if all values returned are true or false if one value returns false.
   *
   * @example
-  * eachWhile([true, true, false], (item) => {
+  * whileArray([true, true, false], (item) => {
   *   console.log(item);
   *   return item;
   * });
@@ -63,7 +63,7 @@ export const eachArrayRight = (callingArray, iteratee) => {
   * //true
   * // => false
 */
-export const eachWhile = (callingArray, iteratee) => {
+export const whileArray = (callingArray, iteratee) => {
   const arrayLength = callingArray.length;
   for (let index = 0; index < arrayLength; index++) {
     if (iteratee(callingArray[index], index, callingArray, arrayLength) === false) {
@@ -196,9 +196,9 @@ assign(acid, {
   compactMapArray,
   eachArray,
   eachArrayRight,
-  eachWhile,
   filterArray,
   mapArray,
   mapArrayRight,
   mapWhile,
+  whileArray,
 });

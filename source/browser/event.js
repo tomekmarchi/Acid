@@ -1,6 +1,6 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-export const	eventAdd = (obj, eventName, func, capture) => {
+export const eventAdd = (obj, eventName, func, capture) => {
   obj.addEventListener(eventName, func, capture);
   return obj;
 };

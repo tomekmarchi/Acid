@@ -83,9 +83,9 @@
               
                 
                 <li><a
-                  href='#eachwhile'
+                  href='#whilearray'
                   class="">
-                  eachWhile
+                  whileArray
                   
                 </a>
                 
@@ -1063,6 +1063,76 @@
               
                 
                 <li><a
+                  href='#stubobject'
+                  class="">
+                  stubObject
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#stubarray'
+                  class="">
+                  stubArray
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#stubstring'
+                  class="">
+                  stubString
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#stubfalse'
+                  class="">
+                  stubFalse
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#stubtrue'
+                  class="">
+                  stubTrue
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#noop'
+                  class="">
+                  noop
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#eachwhile'
+                  class="">
+                  eachWhile
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#each'
                   class="">
                   each
@@ -1123,6 +1193,36 @@
               
                 
                 <li><a
+                  href='#every'
+                  class="">
+                  every
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#over'
+                  class="">
+                  over
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#overevery'
+                  class="">
+                  overEvery
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#chain'
                   class="">
                   chain
@@ -1136,6 +1236,16 @@
                   href='#ntharg'
                   class="">
                   nthArg
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#rearg'
+                  class="">
+                  reArg
                   
                 </a>
                 
@@ -2016,8 +2126,8 @@ Functions are given the supplied object, index, the calling array, and the array
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='eachwhile'>
-      eachWhile
+    <h3 class='fl m0' id='whilearray'>
+      whileArray
     </h3>
     
     
@@ -2027,7 +2137,7 @@ Functions are given the supplied object, index, the calling array, and the array
   <p>Iterates through the given array while the iteratee returns true.</p>
 
 
-  <div class='pre p1 fill-light mt0'>eachWhile(callingArray: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, iteratee: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  <div class='pre p1 fill-light mt0'>whileArray(callingArray: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, iteratee: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
   
   
 
@@ -2081,7 +2191,7 @@ Functions are given the supplied object, index, the calling array, and the array
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>eachWhile([<span class="hljs-literal">true</span>, <span class="hljs-literal">true</span>, <span class="hljs-literal">false</span>], (item) =&gt; {
+      <pre class='p1 overflow-auto round fill-light'>whileArray([<span class="hljs-literal">true</span>, <span class="hljs-literal">true</span>, <span class="hljs-literal">false</span>], (item) =&gt; {
   <span class="hljs-built_in">console</span>.log(item);
   <span class="hljs-keyword">return</span> item;
 });
@@ -10040,7 +10150,7 @@ Just like groupBy, but for when you know your keys are unique.</p>
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>ary(<span class="hljs-function">(<span class="hljs-params">...args</span>) =&gt;</span> { <span class="hljs-keyword">return</span> args;}, <span class="hljs-number">2</span>)(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>);
+      <pre class='p1 overflow-auto round fill-light'>ary(<span class="hljs-function">(<span class="hljs-params">...args</span>) =&gt;</span> { <span class="hljs-keyword">return</span> args;}, <span class="hljs-number">2</span>)(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>);
 <span class="hljs-comment">// =&gt; [1, 2]</span></pre>
     
   
@@ -10068,7 +10178,7 @@ Just like groupBy, but for when you know your keys are unique.</p>
   </div>
   
 
-  <p>Creates a function that accepts arguments of method and either invokes method returning its result, if at least arity number of arguments have been provided, or returns a function that accepts the remaining method arguments, and so on. The arity of method may be specified if method.length is not sufficient.</p>
+  <p>Creates a function that accepts arguments of method and either invokes method returning its result, if at least arity number of arguments have been provided, or returns a function that accepts the remaining method arguments, and so on. The arity of method may be specified if method length is not sufficient.</p>
 
 
   <div class='pre p1 fill-light mt0'>curry(method: any, arity: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, methods: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): any</div>
@@ -10685,6 +10795,465 @@ onlyBefore(<span class="hljs-number">3</span>);
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='stubobject'>
+      stubObject
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>This method returns a new empty object.</p>
+
+
+  <div class='pre p1 fill-light mt0'>stubObject(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
+        Returns the new empty object.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>stubObject();
+<span class="hljs-comment">// =&gt; {}</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='stubarray'>
+      stubArray
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>This method returns a new empty array.</p>
+
+
+  <div class='pre p1 fill-light mt0'>stubArray(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
+        Returns the new empty array.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>stubArray();
+<span class="hljs-comment">// =&gt; []</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='stubstring'>
+      stubString
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>This method returns a new empty string.</p>
+
+
+  <div class='pre p1 fill-light mt0'>stubString(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>:
+        Returns the new empty string.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>stubString();
+<span class="hljs-comment">// =&gt; ''</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='stubfalse'>
+      stubFalse
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>This method returns false.</p>
+
+
+  <div class='pre p1 fill-light mt0'>stubFalse(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        Returns false.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>stubFalse();
+<span class="hljs-comment">// =&gt; false</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='stubtrue'>
+      stubTrue
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>This method returns true.</p>
+
+
+  <div class='pre p1 fill-light mt0'>stubTrue(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        Returns true.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>stubTrue();
+<span class="hljs-comment">// =&gt; true</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='noop'>
+      noop
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>This method returns undefined.</p>
+
+
+  <div class='pre p1 fill-light mt0'>noop(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
+        Returns undefined.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>noop();
+<span class="hljs-comment">// =&gt; undefined</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='eachwhile'>
+      eachWhile
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Iterates through the given object while the iteratee returns true.</p>
+
+
+  <div class='pre p1 fill-light mt0'>eachWhile(callingObject: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>), iteratee: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>callingObject</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>))</code>
+	    Object that will be looped through.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>iteratee</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+	    Transformation function which is passed item, key, calling array, and array length.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        Returns the true if all values returned are true or false if one value returns false.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>eachWhile({<span class="hljs-attr">a</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">b</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">c</span>: <span class="hljs-literal">true</span>}, (item) =&gt; {
+  <span class="hljs-keyword">return</span> item;
+ });
+<span class="hljs-comment">// =&gt; false</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='each'>
       each
     </h3>
@@ -11261,6 +11830,246 @@ collection.a();
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='every'>
+      every
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Checks if predicate returns truthy for all elements of collection. Iteration is stopped once predicate returns falsey. The predicate is invoked with three arguments: (value, index|key, collection).</p>
+
+
+  <div class='pre p1 fill-light mt0'>every(collection: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>), predicate: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>collection</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>))</code>
+	    The collection to iterate over.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>predicate</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+	    The function invoked per iteration.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        Returns true if all elements pass the predicate check, else false.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>every([[], <span class="hljs-literal">true</span>, <span class="hljs-number">1</span>, <span class="hljs-literal">null</span>, <span class="hljs-string">'string'</span>], <span class="hljs-built_in">Boolean</span>);
+<span class="hljs-comment">// =&gt; false</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='over'>
+      over
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Creates a function that invokes iteratees with the arguments it receives and returns their results.</p>
+
+
+  <div class='pre p1 fill-light mt0'>over(iteratees: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>iteratees</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>))</code>
+	    The iteratees to invoke.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>:
+        Returns the new function.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>over([<span class="hljs-built_in">Math</span>.max, <span class="hljs-built_in">Math</span>.min])(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>);
+<span class="hljs-comment">// =&gt; [4, 1]</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='overevery'>
+      overEvery
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Creates a function that checks if all of the predicates return truthy when invoked with the arguments it receives.</p>
+
+
+  <div class='pre p1 fill-light mt0'>overEvery(predicates: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>predicates</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>))</code>
+	     The predicates to check.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>:
+        Returns the new function.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> overEveryThing = overEvery([<span class="hljs-built_in">Boolean</span>, <span class="hljs-built_in">isFinite</span>]);
+overEveryThing(<span class="hljs-string">'1'</span>);
+<span class="hljs-comment">// =&gt; true</span>
+overEveryThing(<span class="hljs-literal">null</span>);
+<span class="hljs-comment">// =&gt; false</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='chain'>
       chain
     </h3>
@@ -11397,6 +12206,94 @@ chained(<span class="hljs-string">'Acid'</span>).a();
       
       <pre class='p1 overflow-auto round fill-light'>nthArg(<span class="hljs-number">1</span>)(<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>);
 <span class="hljs-comment">// =&gt; 'b'</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='rearg'>
+      reArg
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Creates a function that invokes method with arguments arranged according to the specified indexes where the argument value at the first index is provided as the first argument, the argument value at the second index is provided as the second argument, and so on.</p>
+
+
+  <div class='pre p1 fill-light mt0'>reArg(method: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, indexes: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>method</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+	    The function to be invoked.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>indexes</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    The arranged argument indexes.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>:
+        Returns the new function.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> reArged = reArg(<span class="hljs-function">(<span class="hljs-params">a, b, c</span>) =&gt;</span> {
+  <span class="hljs-keyword">return</span> [a, b, c];
+}, [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">0</span>]);
+reArged(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>);
+<span class="hljs-comment">// =&gt; [2, 3, 1]</span></pre>
     
   
 
@@ -11910,11 +12807,11 @@ hasKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'<
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'</span>, <span class="hljs-attr">John</span>: <span class="hljs-string">'Malkovich'</span>, <span class="hljs-attr">Thor</span>: <span class="hljs-string">'Bobo'</span>}, [<span class="hljs-string">'Lucy'</span>,<span class="hljs-string">'John'</span>]);
+      <pre class='p1 overflow-auto round fill-light'>hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'</span>, <span class="hljs-attr">John</span>: <span class="hljs-string">'Malkovich'</span>, <span class="hljs-attr">Thor</span>: <span class="hljs-string">'Bobo'</span>}, [<span class="hljs-string">'Lucy'</span>,<span class="hljs-string">'Tom'</span>]);
 <span class="hljs-comment">//=&gt; true</span>
 
-hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'</span>, <span class="hljs-attr">John</span>: <span class="hljs-string">'Malkovich'</span>, <span class="hljs-attr">Thor</span>: <span class="hljs-string">'Bobo'</span>}, [<span class="hljs-string">'Lucy'</span>,<span class="hljs-string">'Tom'</span>]);
-<span class="hljs-comment">//=&gt; true</span></pre>
+hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'</span>, <span class="hljs-attr">John</span>: <span class="hljs-string">'Malkovich'</span>, <span class="hljs-attr">Thor</span>: <span class="hljs-string">'Bobo'</span>}, [<span class="hljs-string">'Other'</span>,<span class="hljs-string">'Tom'</span>]);
+<span class="hljs-comment">//=&gt; false</span></pre>
     
   
 
@@ -14449,12 +15346,11 @@ uid();
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> api = {
- <span class="hljs-attr">post</span>: {
-  <span class="hljs-attr">like</span>: [<span class="hljs-string">'a'</span>,<span class="hljs-string">'b'</span>,<span class="hljs-string">'c'</span>]
- }
-}
-get(<span class="hljs-string">'post.like[2]'</span>, api);
+      <pre class='p1 overflow-auto round fill-light'>get(<span class="hljs-string">'post.like[2]'</span>, {
+  <span class="hljs-attr">post</span>: {
+    <span class="hljs-attr">like</span>: [<span class="hljs-string">'a'</span>,<span class="hljs-string">'b'</span>,<span class="hljs-string">'c'</span>]
+  }
+});
 <span class="hljs-comment">//=&gt; c</span></pre>
     
   

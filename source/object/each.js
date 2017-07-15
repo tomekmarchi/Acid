@@ -1,7 +1,7 @@
 import acid from '../namespace/index';
 import { hasValue } from '../internal/is';
 import { assign, keys } from '../internal/object';
-import { eachArray, eachWhile } from '../array/each';
+import { eachArray, whileArray } from '../array/each';
 /**
   * Iterates through the given object.
   *
@@ -24,13 +24,13 @@ export const eachObject = (thisObject, iteratee) => {
   });
 };
 /**
-* Iterates through the given object while the iteratee returns true.
-*
-* @function whileObject
-* @type {Function}
-* @param {Object} callingObject - Object that will be looped through.
-* @param {Function} iteratee - Transformation function which is passed item, key, calling array, and array length.
-* @returns {boolean} Returns the true if all values returned are true or false if one value returns false.
+  * Iterates through the given object while the iteratee returns true.
+  *
+  * @function whileObject
+  * @type {Function}
+  * @param {Object} callingObject - Object that will be looped through.
+  * @param {Function} iteratee - Transformation function which is passed item, key, calling array, and array length.
+  * @returns {boolean} Returns the true if all values returned are true or false if one value returns false.
   *
   * @example
   * whileObject({a: false, b: true, c: true}, (item) => {
@@ -39,7 +39,7 @@ export const eachObject = (thisObject, iteratee) => {
   * // => false
 */
 export const whileObject = (callingObject, iteratee, results = {}) => {
-  return eachWhile(callingObject, (item, key, thisObject, propertyCount, objectKeys) => {
+  return whileArray(callingObject, (item, key, thisObject, propertyCount, objectKeys) => {
     return iteratee(item, key, results, thisObject, propertyCount, objectKeys);
   });
 };
