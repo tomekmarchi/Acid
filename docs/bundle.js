@@ -2177,7 +2177,6 @@
     clear(batchChanges);
     batchCancelFrame = false;
   };
-
   const batch = (...items) => {
     batchChanges.push(...items);
     if (!batchCancelFrame) {
@@ -2571,7 +2570,7 @@
     * @returns {Object} Returns the new capped function.
     *
     * @example
-    * ary((...args) => { return args }, 2)(1, 2, 3);
+    * ary((...args) => { return args;}, 2)(1, 2, 3);
     * // => [1, 2]
   */
   const ary = (func, amount) => {

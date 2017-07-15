@@ -10,7 +10,6 @@ const batchLoop = () => {
   clear(batchChanges);
   batchCancelFrame = false;
 };
-
 export const batch = (...items) => {
   batchChanges.push(...items);
   if (!batchCancelFrame) {
