@@ -2967,8 +2967,8 @@
     *
     * @function bindAll
     * @type {Function}
-    * @param {Function} method - The function to be invoked if possible.
-    * @param {...Array} args - Arguments to pass to the method.
+    * @param {Function} bindThese - The function to be invoked if possible.
+    * @param {...Array} withThis - Arguments to pass to the method.
     * @returns {*} Returns the method invoked or undefined.
     *
     * @example
@@ -3680,7 +3680,7 @@
     * // => 'Her name was Lucy.'
   */
   const replaceList = (string, array, value) => {
-    return string.replace(new RegExp(`${array.join('|')}`, 'gi'), value);
+    return string.replace(new RegExp(`\b${array.join('|')}\b`, 'gi'), value);
   };
   assign($, {
     replaceList
