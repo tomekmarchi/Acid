@@ -62,6 +62,7 @@
     *
     * @function asyncEach
     * @type {Function}
+    * @async
     * @param {Array} callingArray - Array of async functions that will be looped through.
     * Functions are given the supplied object, index, the calling array, and the array length.
     * @param {*} object - The first argument given to each function.
@@ -88,65 +89,6 @@
     asyncEach,
   });
 
-  /**
-    * Iterates based on a start index and an end index. The loop ends when the start index is equal to the end index.
-    *
-    * @function times
-    * @type {Function}
-    * @param {number} startIndex - The number to start loop from.
-    * @param {number} endIndex - The number to stop at the loop.
-    * @param {Function} iteratee - Transformation function which is passed position, start, and end.
-    * @returns {undefined} Nothing.
-    *
-    * @example
-    * times(0, 3, (item) => {
-    *   console.log(item);
-    * });
-    * //Will log
-    * // 0
-    * // 1
-    * // 2
-    * // => undefined
-  */
-  const times = (startIndex, endIndex, iteratee) => {
-    const start = (startIndex) ? startIndex : 0;
-    const end = (startIndex) ? endIndex : startIndex;
-    const iterateeMethod = iteratee || endIndex;
-    for (let position = start; position < end; position++) {
-      iterateeMethod(position, start, end);
-    }
-  };
-  /**
-    * Iterates based on a start index and end index. Creates an array with the results of the iteratee on every element in the calling array. The loop ends when the start index is equal to the end index.
-    *
-    * @function timesMap
-    * @category Utility
-    * @type {Function}
-    * @param {number} startIndex - The number to start loop from.
-    * @param {number} endIndex - The number to stop at the loop.
-    * @param {Function} iteratee - Transformation function which is passed position, start, and end.
-    * @param {Array} [results = []] - Array that will be used to assign results.
-    * @returns {Object} An array with iteratee's returned values.
-    *
-    * @example
-    * timesMap(0, 3, (item) => {
-    *   console.log(item);
-    * });
-    * // => [0, 1, 2]
-  */
-  const timesMap = (startIndex, endIndex, iteratee, results = []) => {
-    const start = (iteratee) ? startIndex : 0;
-    const end = (iteratee) ? endIndex : startIndex;
-    const iterateeMethod = iteratee || endIndex;
-    let result;
-    times(start, end, (position) => {
-      result = iterateeMethod(results, position, start, end);
-      if (hasValue(result)) {
-        results.push(result);
-      }
-    });
-    return results;
-  };
   /**
     * Iterates through the given array.
     *
@@ -194,14 +136,14 @@
   /**
     * Iterates through the given array while the iteratee returns true.
     *
-    * @function eachWhile
+    * @function whileArray
     * @type {Function}
     * @param {Array} callingArray - Array that will be looped through.
     * @param {Function} iteratee - Transformation function which is passed item, key, calling array, and array length.
     * @returns {boolean} Returns the true if all values returned are true or false if one value returns false.
     *
     * @example
-    * eachWhile([true, true, false], (item) => {
+    * whileArray([true, true, false], (item) => {
     *   console.log(item);
     *   return item;
     * });
@@ -209,7 +151,7 @@
     * //true
     * // => false
   */
-  const eachWhile = (callingArray, iteratee) => {
+  const whileArray = (callingArray, iteratee) => {
     const arrayLength = callingArray.length;
     for (let index = 0; index < arrayLength; index++) {
       if (iteratee(callingArray[index], index, callingArray, arrayLength) === false) {
@@ -342,13 +284,11 @@
     compactMapArray,
     eachArray,
     eachArrayRight,
-    eachWhile,
     filterArray,
     mapArray,
     mapArrayRight,
     mapWhile,
-    times,
-    timesMap,
+    whileArray,
   });
 
   const objectStringGenerate = (objectName) => {
@@ -466,11 +406,11 @@
   });
 
   /**
-    * Takes the first or multiple items from an array.
+    * Flattens an array up to the provided level.
     *
-    * @function first
+    * @function flatten
     * @type {Function}
-    * @param {Array} array - Array to flatten
+    * @param {Array} array - Array to flatten.
     * @param {number} [level = 1] - Number which determines how deep the array nest can be.
     * @returns {Array} - Returns an array.
     *
@@ -488,7 +428,7 @@
     return array;
   };
   /**
-    * Takes the first or multiple items from an array.
+    * Flattens an array to a single level.
     *
     * @function flattenDeep
     * @type {Function}
@@ -510,36 +450,59 @@
   });
 
   /**
-   * Removes all occurrences of the passed in items from the array and returns the array.
-   *
-   * @function remove
-   * @param {Array} array - Mutated Array without with removed occurrences.
-   * @param {Array} removeThese - Items to remove from the array.
-   * @returns {Array} The array this method was called on.
-   *
-   * @example
-   * const array = [1, 2, 3, 3, 4, 3, 5];
-   *
-   * remove(array,1);
-   * // -> [2, 3, 3, 4, 3, 5]
-   *
-   * remove(array,3);
-   * // -> [2, 4, 5]
-   *
-   * remove(array,[2, 5]);
-   * // -> [4]
-   */
-  const remove = (array, removeThese) => {
-    const removeTheseArray = ensureArray(removeThese);
-    eachArray(array, (item) => {
-      if (removeTheseArray.includes(item)) {
-        array.splice(array, removeTheseArray.indexOf(item), 1);
+    * Removes all occurrences of the passed in items from the array and returns the array. This mutates the given array. Clone the array if you desire to avoid mutation.
+    *
+    * @function remove
+    * @param {Array} array - Array to be mutated.
+    * @param {...(string|Array)} removeThese - Items to remove from the array.
+    * @returns {Array} The array this method was called on.
+    *
+    * @example
+    * remove([1, 2, 3, 3, 4, 3, 5], 1);
+    * // -> [2, 3, 3, 4, 3, 5]
+    *
+    * remove([3, 3, 4, 5], 3, 4);
+    * // -> [5]
+  */
+  const remove = (array, ...removeThese) => {
+    let arrayLength = array.length;
+    for (let index = 0; index < arrayLength; index++) {
+      const item = array[index];
+      if (removeThese.includes(item)) {
+        array.splice(index, 1);
+        index--;
+        arrayLength--;
       }
-    });
+    }
+    return array;
+  };
+  /**
+    * Removes items that pass the method's test. This mutates the given array. Clone the array if you desire to avoid mutation.
+    *
+    * @function remove
+    * @param {Array} array - Array to be mutated.
+    * @param {Function} method - Function used to check object. Return true to remove the value.
+    * @returns {Array} The array this method was called on.
+    *
+    * @example
+    * remove([1, 2, 3, 3, 4, 3, 5], (item) => { return Boolean(item % 2);}));
+    * // -> [2, 4]
+  */
+  const removeBy = (array, method) => {
+    let arrayLength = array.length;
+    for (let index = 0; index < arrayLength; index++) {
+      const item = array[index];
+      if (method(item, index)) {
+        array.splice(index, 1);
+        index--;
+        arrayLength--;
+      }
+    }
     return array;
   };
   assign($, {
-    remove
+    remove,
+    removeBy
   });
 
   /**
@@ -573,38 +536,18 @@
     chunk,
   });
 
-  const returnFlow = (method) => {
-    return (...funcs) => {
-      return (arg) => {
-        let value;
-        method(funcs, (item) => {
-          const temp = (hasValue(value)) ? value : arg;
-          value = item(temp);
-        });
-        return value;
-      };
-    };
-  };
   /**
-    * Creates a function that returns the result of invoking the given functions with the this binding of the created function, where each successive invocation is supplied the return value of the previous.
+    * Extracts all items in array except the first and last item.
     *
-    * @function flow
+    * @function rest
     * @type {Function}
-    * @param {Array} eachArray - Array to flatten
-    * @returns {*}
+    * @param {Array} array - Array to be sliced.
+    * @returns {Array} - Returns the aggregated array.
     *
     * @example
-    * flow()
-    *  // =>
+    * rest([1, 2, 3, 4, 5]);
+    * // => [2, 3, 4, 5]
   */
-  const flow = returnFlow(eachArray);
-  // Returns the composition of a list of functions, where each function consumes the return value of the function that follows. In math terms, composing the functions f(), g(), and h() produces f(g(h())).
-  const flowRight = returnFlow(eachArrayRight);
-  assign($, {
-    flow,
-    flowRight,
-  });
-
   const rest = (array) => {
     return array.slice(1, array.length - 1);
   };
@@ -632,7 +575,18 @@
     clear,
   });
 
-  // start from end array using amount as index
+  /**
+    * Get the item at the supplied index starting at the end of the array.
+    *
+    * @function right
+    * @type {Function}
+    * @param {Array} array - Array to be sliced.
+    * @returns {*} - Returns the object at the evaluated position.
+    *
+    * @example
+    * right([1, 2, 3, 4, 5] , 1);
+    * // => 4
+  */
   const right = (array, amount) => {
     return array[array.length - 1 - amount];
   };
@@ -816,9 +770,16 @@
     remainder,
   });
 
-  /*
-    Produce a random sample from the list. Pass a number to return n random elements from the list. Otherwise a single random item will be returned.
-    sample([1,2,3,4] , 2);
+  /**
+    * Produce a random sample from the list. Pass a number to return n random elements from the list. Otherwise a single random item will be returned.
+    *
+    * @function sample
+    * @param {Array} array - Array to pull sample(s).
+    * @returns {Array} An array of randomly pulled samples.
+    *
+    * @example
+    * sample([1, 2, 3, 4] , 2);
+    * // => [1, 3]
   */
   const sample = (array, amount = 1) => {
     if (amount === 1) {
@@ -869,8 +830,18 @@
     toArray,
   });
 
-  // shuffle an array and return a new array
-  const shuffle = (array, amount = 1) => {
+  /**
+    * Shuffle an array and return a new array.
+    *
+    * @function shuffle
+    * @param {Array} array - Array to be shuffled.
+    * @returns {Array} An array with the shuffled results.
+    *
+    * @example
+    * shuffle([1, 2, 3, 4]);
+    * // -> [3, 4, 2, 1]
+  */
+  const shuffle = (array, amount = array.length) => {
     const shuffleArray = toArray(array);
     let count = 0;
     let index;
@@ -897,7 +868,7 @@
     * @returns {Array} - Returns a completely flattened array.
     *
     * @example
-    * initial( [1, 2, 3, 4, 5]);
+    * initial([1, 2, 3, 4, 5]);
     * // => [1, 2, 3, 4]
   */
   const initial = (array) => {
@@ -908,7 +879,18 @@
   });
 
   const mathNativeMin = Math.min;
-  // get smallest number from array
+  /**
+     * Plucks the smallest value from an array.
+     *
+     * @function smallest
+     * @type {Function}
+     * @param {Array} array - Array from which smallest number is taken.
+     * @returns {number} The smallest number.
+     *
+     * @example
+     * smallest([1,2,3]);
+     * // => 1
+   */
   const smallest = (array) => {
     return mathNativeMin(...array);
   };
@@ -993,16 +975,11 @@
    * // -> [1, 2]
    */
   const intersect = (array, ...arrays) => {
-    let yes;
     return compactMapArray(array, (item) => {
-      yes = true;
-      eachWhile(arrays, (otherItem) => {
-        if (!otherItem.includes(item)) {
-          yes = false;
-        }
-        return yes;
+      const shouldReturn = whileArray(arrays, (otherItem) => {
+        return otherItem.includes(item);
       });
-      if (yes) {
+      if (shouldReturn) {
         return item;
       }
     });
@@ -1011,15 +988,22 @@
     intersect
   });
 
-  /*
-  	Perform alphabetical sort on collection on provided key name
-  */
-  const sortAlpha = (collection, key) => {
-    let currentKey;
-    let nextKey;
-    collection.sort((current, next) => {
-      currentKey = current[key];
-      nextKey = next[key];
+  /**
+     * Perform alphabetical sort on a collection with the provided key name. Mutates the array.
+     *
+     * @function sortAlphabetical
+     * @type {Function}
+     * @param {Array} array - Array to be sorted.
+     * @returns {Array} The sorted array.
+     *
+     * @example
+     * sortAlphabetical([1,2,3]);
+     * // => 1
+   */
+  const sortAlphabetical = (collection, key) => {
+    return collection.sort((current, next) => {
+      const currentKey = current[key];
+      const nextKey = next[key];
       if (currentKey < nextKey) {
         return -1;
       } else if (currentKey > nextKey) {
@@ -1027,10 +1011,9 @@
       }
       return 0;
     });
-    return collection;
   };
   assign($, {
-    sortAlpha
+    sortAlphabetical
   });
 
   /**
@@ -1058,44 +1041,21 @@
   });
 
   /**
-    * Runs a method on each item in an collection.
-    *
-    * @function invoke
-    * @type {Function}
-    * @param {Array} array - Array from which method will be taken.
-    * @param {String|Array} methodName - Value used to pluck method from array|object nest.
-    * @param {*} args - Values to be run through method.
-    * @returns {Array} - Returns the results of the invoked method.
-    *
-    * @example
-    * invoke()
-    * // =>
-  */
-  const invoke = (array, methodName, args) => {
-    return mapArray(array, (item) => {
-      return item[methodName](...args);
-    });
-  };
-  assign($, {
-    invoke
-  });
-
-  /**
     * Removes all items from an array after a specified index.
     *
     * @function drop
     * @type {Function}
     * @param {Array} array - Source array.
     * @param {number} amount - Amount of items to drop from the array.
-    * @param {number} [arrayLength = array.length] - Length of array.
+    * @param {number} [upTo = array.length] - Index to stop at.
     * @returns {Array} An array with all values removed after a user defined index.
     *
     * @example
-    * drop([1, 2, 3], [1]);
-    * //=> [1, 2]
+    * drop([1, 2, 3], 1);
+    * //=> [2, 3]
   */
-  const drop = (array, amount, arrayLength = array.length) => {
-    return array.splice(amount, arrayLength);
+  const drop = (array, amount, upTo = array.length) => {
+    return array.splice(amount, upTo);
   };
   /**
     * Removes all items from an array before a specified index.
@@ -1104,14 +1064,15 @@
     * @type {Function}
     * @param {Array} array - Source array.
     * @param {number} amount - Amount of items to drop from the array.
+    * @param {number} [upTo = array.length] - Index to stop at.
     * @returns {Array} An array with all values removed before a user defined index.
     *
     * @example
-    * dropRight([1, 2, 3], [1]);
-    * //=> [2, 3]
+    * dropRight([1, 2, 3], 1);
+    * //=> [1, 2]
   */
-  const dropRight = (array, amount) => {
-    return drop(array, 0, array.length - amount);
+  const dropRight = (array, amount, upTo = array.length) => {
+    return drop(array, 0, upTo - amount);
   };
   assign($, {
     drop,
@@ -1133,7 +1094,7 @@
    */
   const isMatchArray = (source, compareArray) => {
     if (compareArray.length === source.length) {
-      return eachWhile(source, (item, index) => {
+      return whileArray(source, (item, index) => {
         return compareArray[index] !== item;
       });
     }
@@ -1143,13 +1104,27 @@
     isMatchArray,
   });
 
-  // Uses a binary search to determine the index at which the value should be inserted into the list in order to maintain the list's sorted order.
+  /**
+     * Uses a binary search to determine the index at which the value should be inserted into the list in order to maintain the list's sorted order.
+     *
+     * @function sortedIndex
+     * @type {Function}
+     * @param {Array} array - Array to be sorted.
+     * @returns {Array} The sorted array.
+     *
+     * @example
+     * sortedIndex([1,2,3]);
+     * // => 1
+   */
   const sortedIndex = (array, n) => {
     let min = 0;
-    eachArray(array, (item, index) => {
+    whileArray(array, (item, index) => {
       if (n > item) {
         min = index;
+      } else {
+        return false;
       }
+      return true;
     });
     if (min > 0) {
       min = min + 1;
@@ -1162,17 +1137,17 @@
 
   const mathNativeMax = Math.max;
   /**
-     * Plucks the largest value from an array.
-     *
-     * @function largest
-     * @type {Function}
-     * @param {Array} array - Array from which largest number is taken.
-     * @returns {number} Returns largerst number in array.
-     *
-     * @example
-     * largest([1,2,3]);
-     * // => 3
-   */
+    * Plucks the largest value from an array.
+    *
+    * @function largest
+    * @type {Function}
+    * @param {Array} array - Array from which largest number is taken.
+    * @returns {number} The largest number.
+    *
+    * @example
+    * largest([1,2,3]);
+    * // => 3
+  */
   const largest = (array) => {
     return mathNativeMax(...array);
   };
@@ -1180,15 +1155,33 @@
     largest
   });
 
+  /**
+    * Reduces the values in an array into a single number.
+    *
+    * @function sum
+    * @type {Function}
+    * @param {Array} array - Array to be reduced.
+    * @returns {number} - Returns a single value.
+    *
+    * @example
+    * sum([1, 2, 3, 4]);
+    * // => 10
+  */
+  const sum = (array) => {
+    return array.reduce((a, b) => {
+      return a + b;
+    }, 0);
+  };
   assign($, {
-    sumOf
+    sum
   });
 
   /**
-    * Iterates through the given array using an async function. Each async function is awaited as to ensure synchronous order.
+    * Asynchronously Iterates through the given array. Each async function is awaited as to ensure synchronous order.
     *
     * @function eachAsync
     * @type {Function}
+    * @async
     * @param {Array} callingArray - Array that will be looped through.
     * @param {Function} iteratee - Transformation function which is passed item, index, calling array, and array length.
     * @returns {Object} The originally given array.
@@ -1207,8 +1200,33 @@
     }
     return callingArray;
   };
+  /**
+    * Asynchronously Iterates through the given array in reverse. Each async function is awaited as to ensure synchronous order.
+    *
+    * @function eachAsyncRight
+    * @type {Function}
+    * @async
+    * @param {Array} callingArray - Array that will be looped through.
+    * @param {Function} iteratee - Transformation function which is passed item, index, calling array, and array length.
+    * @returns {Object} The originally given array.
+    *
+    * @example
+    * eachAsyncRight([3,4], async (item, index) =>{
+    *  console.log(item, index);
+    * });
+    * // 4 1
+    * // 3 0
+  */
+  const eachAsyncRight = async (callingArray, iteratee) => {
+    const arrayLength = callingArray.length;
+    for (let index = arrayLength - 1; index >= 0; index--) {
+      await iteratee(callingArray[index], index, callingArray, arrayLength);
+    }
+    return callingArray;
+  };
   assign($, {
     eachAsync,
+    eachAsyncRight,
   });
 
   /**
@@ -1217,12 +1235,15 @@
     * @function last
     * @type {Function}
     * @param {Array} array - Array to have items extracted from.
-    * @param {number} indexFrom - Value which determines how many items are extracted from the array.
+    * @param {number} [indexFrom = 0] - Value which determines how many items are extracted from the array.
     * @returns {Array} Items from the array.
     *
     * @example
-    * last( [1, 2, 3, 4, 5] , 2);
+    * last([1, 2, 3, 4, 5] , 2);
     * // => [5, 4]
+    *
+    * last([1, 2, 3, 4, 5]);
+    * // => 5
   */
   const last = (array, indexFrom) => {
     const arrayLength = array.length;
@@ -1232,10 +1253,34 @@
     last
   });
 
-  const take = (array, amount) => {
+  /**
+    * Returns a shallow copy of the array up to an amount.
+    *
+    * @function take
+    * @type {Function}
+    * @param {Array} array - The array to be evaluated.
+    * @returns {Array} The aggregated array.
+    *
+    * @example
+    * take([1,2,3], 2);
+    * // => [1, 2]
+  */
+  const take = (array, amount = 1) => {
     return array.slice(0, amount);
   };
-  const takeRight = (array, amount) => {
+  /**
+    * Returns a shallow copy of the array up to an amount starting from the right.
+    *
+    * @function takeRight
+    * @type {Function}
+    * @param {Array} array - The array to be evaluated.
+    * @returns {Array} The aggregated array.
+    *
+    * @example
+    * takeRight([1,2,3], 2);
+    * // => [3, 2]
+  */
+  const takeRight = (array, amount = 1) => {
     return array.slice(array.length - amount, amount);
   };
   assign($, {
@@ -1243,6 +1288,23 @@
     takeRight
   });
 
+  /**
+    * Asynchronously Iterates through the calling array and creates an object with the results of the iteratee on every element in the calling array.
+    *
+    * @function mapAsync
+    * @category Utility
+    * @type {Function}
+    * @param {Array} callingArray - Array that will be looped through.
+    * @param {Function} iteratee - Transformation function which is passed item, index, the newly created array, calling array, and array length.
+    * @param {Array} [results = []] - Array that will be used to assign results.
+    * @returns {Object} An array of the same calling array's type.
+    *
+    * @example
+    * mapAsync({a: 1, b: 2, c: 3}, (item) => {
+    *   return item * 2;
+    * });
+    * // => {a: 2, b: 4, c: 6}
+  */
   const mapAsync = async (array, iteratee) => {
     const results = [];
     await eachAsync(array, async (item, index, arrayLength) => {
@@ -1260,6 +1322,18 @@
   const sortUnique = (item, index, array) => {
     return item !== array[index - 1];
   };
+  /**
+    * Filters the array down to unique elements.
+    *
+    * @function take
+    * @type {Function}
+    * @param {Array} array - The array to be filtered.
+    * @returns {Array} The filtered array.
+    *
+    * @example
+    * union([1, 2, 2, 4]);
+    * // => [1, 2, 4]
+  */
   const unique = (array, isSorted) => {
     if (isSorted) {
       return array.filter(sortUnique);
@@ -1270,10 +1344,21 @@
     unique
   });
 
-  // Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more of the arrays.
-  const union = (...args) => {
+  /**
+    * Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more of the arrays.
+    *
+    * @function take
+    * @type {Function}
+    * @param {...Array} arrays - The arrays to be evaluated.
+    * @returns {Array} The aggregated array.
+    *
+    * @example
+    * union([1,2,4], [1,2,3]);
+    * // => [1, 2]
+  */
+  const union = (...arrays) => {
     const result = [];
-    eachArray(args, (array) => {
+    eachArray(arrays, (array) => {
       eachArray(unique(array), (item) => {
         if (result.includes(item)) {
           result.push(item);
@@ -1291,19 +1376,20 @@
     *
     * @function compactMapAsync
     * @type {Function}
+    * @async
     * @param {Array} array - Array to be compacted.
-    * @param {Function} funct - Iteratee to be performed on array.
+    * @param {Function} method - Iteratee to be performed on array.
     * @returns {Array} Array values after being put through an iterator.
     *
     * @example
-    * compactMapAsync([1,2,3], async () => {return item});
+    * compactMapAsync([1, 2, 3, false], async () => {return item});
     * //=> [1, 2, 3]
   */
-  const compactMapAsync = async (array, funct) => {
+  const compactMapAsync = async (array, method) => {
     const results = [];
     let result;
     await eachAsync(array, async (item, index, arrayLength) => {
-      result = await funct(item, index, arrayLength);
+      result = await method(item, index, arrayLength);
       if (hasValue(result)) {
         results.push(result);
       }
@@ -1336,7 +1422,19 @@
     numSort
   });
 
-  // Converts arrays into objects.
+  /**
+    * Takes all but the last item in the array.
+    *
+    * @function arrayToObject
+    * @type {Function}
+    * @param {Array} array - Array to have items extracted from.
+    * @param {Array} properties - Array to have items extracted from.
+    * @returns {Array} - Returns a completely flattened array.
+    *
+    * @example
+    * arrayToObject([1, 2, 3], ['i', 'love', 'lucy']);
+    * // => {i:1, love:2, lucy: 3}
+  */
   const arrayToObject = (values, properties) => {
     const sortedObject = {};
     eachArray(values, (item, key) => {
@@ -1348,10 +1446,22 @@
     arrayToObject
   });
 
-  // Returns a copy of the array with all instances of the values removed.
-  const without = (array, ...args) => {
+  /**
+    * Returns a copy of the array with all instances of the values removed.
+    *
+    * @function take
+    * @type {Function}
+    * @param {Array} array - The array to be filtered.
+    * @param {Array} removeThese - Items to be removed.
+    * @returns {Array} The filtered array.
+    *
+    * @example
+    * union([1, 2, 2, 4], 4);
+    * // => [1, 2, 2]
+  */
+  const without = (array, removeThese) => {
     return array.filter((item) => {
-      return !args.includes(item);
+      return !removeThese.includes(item);
     });
   };
   assign($, {
@@ -1364,37 +1474,67 @@
     }
   };
   /**
-    * Checks if a value exists within an array. Returns true if it does and vice versa.
+    * Finds an object in a collection by the given id and property name.
     *
     * @function findItem
     * @type {Function}
-    * @param {Array} array - Array to be checked for an item
-    * @param {number} indexMatch -
-    * @param {String} [propertyName = 'id'] -
-    * @returns {boolean} - Returns a boolean.
+    * @param {Array} array - Collection to be checked for an item.
+    * @param {number|string} id - The value to look for.
+    * @param {string} [propertyName = 'id'] - The name of the property to compare.
+    * @returns {Object} - The found object.
     *
     * @example
-    * findItem([1, 2, 3], 1)
-    * //=>
+    * findItem([{id: 1}, {id: 2}], 1);
+    * //=> {id: 1}
   */
-  const findItem = (array, indexMatch, propertyName = 'id') => {
-    const result = array.find((element, index) => {
-      return findIndexCache(element, index, array, indexMatch, propertyName);
+  const findItem = (collection, id, propertyName = 'id') => {
+    const result = collection.find((element, index) => {
+      return findIndexCache(element, index, collection, id, propertyName);
     });
     return (result === -1) ? false : result;
   };
-  const findIndex = (array, indexMatch, propertyName = 'id') => {
-    const result = array.findIndex((element, index) => {
-      return findIndexCache(element, index, array, indexMatch, propertyName);
+  /**
+    * Finds an object in a collection by the given id and property name and returns the array index of the object.
+    *
+    * @function findIndex
+    * @type {Function}
+    * @param {Array} array - Collection to be checked for an item.
+    * @param {number|string} id - The value to look for.
+    * @param {string} [propertyName = 'id'] - The name of the property to compare.
+    * @returns {number} - The index of the object.
+    *
+    * @example
+    * findIndex([{id: 1}, {id: 2}], 1);
+    * //=> 0
+  */
+  const findIndex = (collection, id, propertyName = 'id') => {
+    const result = collection.findIndex((element, index) => {
+      return findIndexCache(element, index, collection, id, propertyName);
     });
     return (result === -1) ? false : result;
   };
   assign($, {
+    findIndex,
     findItem,
-    findIndex
   });
 
-  // Split array into two arrays: one whose elements all satisfy predicate and one whose elements all do not satisfy predicate.
+  /**
+    * Split array into two arrays: one whose elements all satisfy predicate and one whose elements all do not satisfy predicate.
+    *
+    * @function partition
+    * @type {Function}
+    * @param {Array} array - Takes an array to split.
+    * @param {Function} funct - Function run on each item in array.
+    * @returns {Array} - One array split into two arrays.
+    *
+    * @example
+    * partition([
+    *  {user: 'barney', age: 36, active: false},
+    *  {user: 'fred', age: 40, active: true},
+    *  {user: 'pebbles', age: 1,  active: false}
+    * ], (item) => { return item.active; });
+    * // => [['fred'], ['barney', 'pebbles']]
+  */
   const partition = (array, funct) => {
     const failed = [];
     return [
@@ -1411,10 +1551,22 @@
     partition
   });
 
-  // Creates an array that is the symmetric difference of the provided arrays. See Wikipedia for more details.
-  const xor = (others) => {
+  /**
+    * Creates an array that is the symmetric difference of the provided arrays.
+    *
+    * @function take
+    * @type {Function}
+    * @param {Array} array - The array to be filtered.
+    * @param {Array} removeThese - Items to be removed.
+    * @returns {Array} The filtered array.
+    *
+    * @example
+    * xor([2, 1], [2, 3]);
+    * // => [1, 3]
+  */
+  const xor = (arrays) => {
     const xored = [];
-    eachArray(others, (array) => {
+    eachArray(arrays, (array) => {
       eachArray(unique(array), (item) => {
         if (xored.includes(item)) {
           xored.splice(xored.indexOf(item), 1);
@@ -1479,7 +1631,6 @@
     * @type {Function}
     * @param {Array} array - Array to extract from.
     * @param {number} upTo - Number which determines how many items after the first item are extracted from the array.
-
     * @returns {Array} - Returns an array.
     *
     * @example
@@ -1508,13 +1659,77 @@
     *
     * @example
     * rNumSort([10, 0, 2, 1]);
-    * // -> [10, 2, 1, 0]
+    * // => [10, 2, 1, 0]
   */
   const rNumSort = (numberList) => {
     return numberList.sort(numericalCompareReverse);
   };
   assign($, {
     rNumSort
+  });
+
+  /**
+    * Iterates based on a start index and an end index. The loop ends when the start index is equal to the end index.
+    *
+    * @function times
+    * @type {Function}
+    * @param {number} startIndex - The number to start loop from.
+    * @param {number} endIndex - The number to stop at the loop.
+    * @param {Function} iteratee - Transformation function which is passed position, start, and end.
+    * @returns {undefined} Nothing.
+    *
+    * @example
+    * times(0, 3, (item) => {
+    *   console.log(item);
+    * });
+    * //Will log
+    * // 0
+    * // 1
+    * // 2
+    * // => undefined
+  */
+  const times = (startIndex, endIndex, iteratee) => {
+    const start = (startIndex) ? startIndex : 0;
+    const end = (startIndex) ? endIndex : startIndex;
+    const iterateeMethod = iteratee || endIndex;
+    for (let position = start; position < end; position++) {
+      iterateeMethod(position, start, end);
+    }
+  };
+  /**
+    * Iterates based on a start index and end index. Creates an array with the results of the iteratee on every element in the calling array. The loop ends when the start index is equal to the end index.
+    *
+    * @function timesMap
+    * @category Utility
+    * @type {Function}
+    * @param {number} startIndex - The number to start loop from.
+    * @param {number} endIndex - The number to stop at the loop.
+    * @param {Function} iteratee - Transformation function which is passed position, start, and end.
+    * @param {Array} [results = []] - Array that will be used to assign results.
+    * @returns {Object} An array with iteratee's returned values.
+    *
+    * @example
+    * timesMap(0, 3, (item) => {
+    *   console.log(item);
+    * });
+    * // => [0, 1, 2]
+  */
+  const timesMap = (startIndex, endIndex, iteratee, results = []) => {
+    const start = (iteratee) ? startIndex : 0;
+    const end = (iteratee) ? endIndex : startIndex;
+    const iterateeMethod = iteratee || endIndex;
+    let result;
+    times(start, end, (position) => {
+      result = iterateeMethod(results, position, start, end);
+      if (hasValue(result)) {
+        results.push(result);
+      }
+    });
+    return results;
+  };
+  assign($, {
+    times,
+    timesMap,
   });
 
   const isAgent = (string) => {
@@ -1588,13 +1803,13 @@
     });
   };
   /**
-  * Iterates through the given object while the iteratee returns true.
-  *
-  * @function whileObject
-  * @type {Function}
-  * @param {Object} callingObject - Object that will be looped through.
-  * @param {Function} iteratee - Transformation function which is passed item, key, calling array, and array length.
-  * @returns {boolean} Returns the true if all values returned are true or false if one value returns false.
+    * Iterates through the given object while the iteratee returns true.
+    *
+    * @function whileObject
+    * @type {Function}
+    * @param {Object} callingObject - Object that will be looped through.
+    * @param {Function} iteratee - Transformation function which is passed item, key, calling array, and array length.
+    * @returns {boolean} Returns the true if all values returned are true or false if one value returns false.
     *
     * @example
     * whileObject({a: false, b: true, c: true}, (item) => {
@@ -1603,7 +1818,7 @@
     * // => false
   */
   const whileObject = (callingObject, iteratee, results = {}) => {
-    return eachWhile(callingObject, (item, key, thisObject, propertyCount, objectKeys) => {
+    return whileArray(callingObject, (item, key, thisObject, propertyCount, objectKeys) => {
       return iteratee(item, key, results, thisObject, propertyCount, objectKeys);
     });
   };
@@ -2300,6 +2515,52 @@
   });
 
   /**
+    * Invokes a function on the provided property name in each object in the collection.
+    *
+    * @function invoke
+    * @type {Function}
+    * @param {Array} collection - Collection from which method will be taken.
+    * @param {string} methodName - Value used to pluck method from object.
+    * @param {*} args - Values to be run through method.
+    * @returns {Array} - Returns the results of the invoked method.
+    *
+    * @example
+    * invoke([{lucy(item, index) { return [item, index];}}, {lucy(item, index) { return [item, index];}}], 'lucy', 'Arity LLC');
+    * // => [['lucy', 'Arity LLC'], ['lucy', 'Arity LLC']]
+  */
+  const invoke = (collection, property, args) => {
+    return mapArray(collection, (item, index) => {
+      return item[property](args, index);
+    });
+  };
+  assign($, {
+    invoke
+  });
+
+  /**
+    * Asynchronously awaits & invokes a function on the provided property name in each object in the collection.
+    *
+    * @function invokeAsync
+    * @type {Function}
+    * @param {Array} collection - Collection from which method will be taken.
+    * @param {string} methodName - Value used to pluck method from object.
+    * @param {*} args - Values to be run through method.
+    * @returns {Array} - Returns the results of the invoked method.
+    *
+    * @example
+    * invokeAsync([{async lucy(item, index) { return [item, index];}}, {async lucy(item, index) { return [item, index];}}], 'lucy', 'Arity LLC');
+    * // => [['lucy', 'Arity LLC'], ['lucy', 'Arity LLC']]
+  */
+  const invokeAsync = (collection, property, args) => {
+    return mapAsync(collection, async (item, index) => {
+      return item[property](args, index);
+    });
+  };
+  assign($, {
+    invokeAsync
+  });
+
+  /**
     * Creates a function that invokes func, with up to n arguments, ignoring any additional arguments.
     *
     * @function ary
@@ -2309,7 +2570,7 @@
     * @returns {Object} Returns the new capped function.
     *
     * @example
-    * ary((...args) => { return args;}, 2)(1,2,3);
+    * ary((...args) => { return args;}, 2)(1, 2, 3);
     * // => [1, 2]
   */
   const ary = (func, amount) => {
@@ -2321,33 +2582,61 @@
     ary
   });
 
-  const curry = (funts) => {
-    const args = [];
+  /**
+    * Creates a function that accepts arguments of method and either invokes method returning its result, if at least arity number of arguments have been provided, or returns a function that accepts the remaining method arguments, and so on. The arity of method may be specified if method length is not sufficient.
+    *
+    * @function curry
+    * @type {Function}
+    * @param {Function} methods - The function to curry.
+    * @param {number} arity - The arity of method.
+    * @returns {*} Returns the new curried function.
+    *
+    * @example
+    * const curried = curry((a, b, c) => {
+    *   return [a, b, c];
+    * });
+    * curried(1)(2)(3);
+    * // => [1, 2, 3]
+  */
+  const curry = (method, arity = method.length) => {
+    const curries = [];
     const curried = (...curryArgs) => {
-      eachArray(curryArgs, (item) => {
-        args.push(item);
-      });
+      curries.push(...curryArgs);
+      if (curries.length === arity) {
+        const result = method(...curries);
+        clear(curries);
+        return result;
+      }
       return curried;
-    };
-    curried.result = () => {
-      const results = funts(...args);
-      clear(args);
-      return results;
     };
     return curried;
   };
-  const curryRight = (funts) => {
-    const args = [];
+  /**
+    * Creates a function that accepts arguments of method and either invokes method returning its result, if at least arity number of arguments have been provided, or returns a function that accepts the remaining method arguments, and so on. The arity of method may be specified if method.length is not sufficient. The arguments are given in reverse order.
+    *
+    * @function curryRight
+    * @type {Function}
+    * @param {Function} methods - The function to curry.
+    * @param {number} arity - The arity of method.
+    * @returns {*} Returns the new curried function.
+    *
+    * @example
+    * const curried = curryRight((a, b, c) => {
+    *   return [a, b, c];
+    * });
+    * curried(1)(2)(3);
+    * // => [1, 2, 3]
+  */
+  const curryRight = (method, arity = method.length) => {
+    const curries = [];
     const curried = (...curryArgs) => {
-      eachArray(curryArgs, (item) => {
-        args.unshift(item);
-      });
+      curries.unshift(...curryArgs);
+      if (curries.length === arity) {
+        const result = method(...curries);
+        clear(curries);
+        return result;
+      }
       return curried;
-    };
-    curried.result = () => {
-      const results = funts(...args);
-      clear(args);
-      return results;
     };
     return curried;
   };
@@ -2356,78 +2645,194 @@
     curryRight
   });
 
-  // Creates a function that is restricted to execute func once. Repeat calls to the function will return the value of the first call. The func is executed with the this binding of the created function.
-  const once = (fn) => {
+  /**
+    * Creates a function that is restricted to execute method once. Repeat calls to the function will return the value of the first call. The method is executed with the this binding of the created function.
+    *
+    * @function once
+    * @type {Function}
+    * @param {Function} method - The function to be called.
+    * @returns {Function} Returns the new pass-thru function.
+    *
+    * @example
+    * const onceOnly = once(() => { return 1;});
+    * onceOnly();
+    * // => 1
+    * onceOnly();
+    * // => 1
+  */
+  const once = (method) => {
     let value;
     const onlyOnce = (...args) => {
-      if (!value) {
-        value = fn(...args);
+      if (hasValue(value)) {
+        value = method(...args);
       }
       return value;
     };
     return onlyOnce;
   };
-  // Creates a function that executes func, with the this binding and arguments of the created function, only after being called n times.
-  const afterFn = (amountArg, fn) => {
-    let amount = amountArg;
+  /**
+    * Creates a function that executes method, only after being called n times.
+    *
+    * @function after
+    * @type {Function}
+    * @param {number} amount - The number of calls until method is invoked.
+    * @param {Function} method - The function to be called.
+    * @returns {Function} Returns the new pass-thru function.
+    *
+    * @example
+    * const onlyAfter = after(1, () => { return 1;});
+    * onlyAfter();
+    * // => undefined
+    * onlyAfter();
+    * // => 1
+  */
+  const after = (amount, method) => {
+    let point = amount;
+    let value;
     const onlyAfter = (...args) => {
-      amount--;
-      if (amount < 0) {
-        return fn(...args);
+      if (point !== null) {
+        point--;
       }
+      if (point <= 0) {
+        value = method(...args);
+      } else {
+        point = null;
+      }
+      return value;
     };
     return onlyAfter;
   };
-  // Creates a function that executes func, with the this binding and arguments of the created function, only before being called n times.
-  const beforeFn = (amountArg, fn) => {
-    let amount = amountArg;
+  /**
+    * Creates a function that executes method, only before n times.
+    *
+    * @function before
+    * @type {Function}
+    * @param {number} amount - The number of calls before n.
+    * @param {Function} method - The function to be called.
+    * @returns {Function} Returns the new pass-thru function.
+    *
+    * @example
+    * const onlyBefore = before(3, () => { return 1;});
+    * onlyBefore(1);
+    * // => 1
+    * onlyBefore(2);
+    * // => 2
+    * onlyBefore(3);
+    * // => 2
+  */
+  const before = (amount, method) => {
+    let point = amount;
+    let value;
     const onlyBefore = (...args) => {
-      amount--;
-      if (amount > 0) {
-        return fn(...args);
+      if (point !== null) {
+        point--;
       }
+      if (point >= 1) {
+        value = method(...args);
+      } else {
+        point = null;
+      }
+      return value;
     };
     return onlyBefore;
   };
-  // Creates a function that executes func, with the this binding and arguments of the created function, only after or equal to being called n times.
-  const onAfter = (amount, fn) => {
-    return afterFn(amount - 1, fn);
-  };
-  // Creates a function that executes func, with the this binding and arguments of the created function, only before or equal to being called n times.
-  const onBefore = (amount, fn) => {
-    return beforeFn(amount + 1, fn);
-  };
   assign($, {
-    onAfter,
-    onBefore,
+    after,
+    before,
     once
   });
 
+  /**
+    * This method returns a new empty object.
+    *
+    * @function stubObject
+    * @type {Function}
+    * @returns {Object} Returns the new empty object.
+    *
+    * @example
+    * stubObject();
+    * // => {}
+  */
   const stubObject = () => {
     return {};
   };
+  /**
+    * This method returns a new empty array.
+    *
+    * @function stubArray
+    * @type {Function}
+    * @returns {Array} Returns the new empty array.
+    *
+    * @example
+    * stubArray();
+    * // => []
+  */
   const stubArray = () => {
     return [];
   };
+  /**
+    * This method returns a new empty string.
+    *
+    * @function stubString
+    * @type {Function}
+    * @returns {string} Returns the new empty string.
+    *
+    * @example
+    * stubString();
+    * // => ''
+  */
   const stubString = () => {
     return '';
   };
+  /**
+    * This method returns false.
+    *
+    * @function stubFalse
+    * @type {Function}
+    * @returns {boolean} Returns false.
+    *
+    * @example
+    * stubFalse();
+    * // => false
+  */
   const stubFalse = () => {
     return false;
   };
+  /**
+    * This method returns true.
+    *
+    * @function stubTrue
+    * @type {Function}
+    * @returns {boolean} Returns true.
+    *
+    * @example
+    * stubTrue();
+    * // => true
+  */
   const stubTrue = () => {
     return true;
   };
+  /**
+    * This method returns undefined.
+    *
+    * @function noop
+    * @type {Function}
+    * @returns {undefined} Returns undefined.
+    *
+    * @example
+    * noop();
+    * // => undefined
+  */
   const noop = () => {
     return undefined;
   };
   assign($, {
-    stubObject,
+    noop,
     stubArray,
+    stubFalse,
+    stubObject,
     stubString,
     stubTrue,
-    stubFalse,
-    noop
   });
 
   const forEachWrap = (object, callback) => {
@@ -2450,6 +2855,22 @@
       return returned(callingObject, iteratee, results);
     };
   };
+  /**
+    * Iterates through the given object while the iteratee returns true.
+    *
+    * @function eachWhile
+    * @type {Function}
+    * @param {Object|Array|Function} callingObject - Object that will be looped through.
+    * @param {Function} iteratee - Transformation function which is passed item, key, calling array, and array length.
+    * @returns {boolean} Returns the true if all values returned are true or false if one value returns false.
+    *
+    * @example
+    * eachWhile({a: false, b: true, c: true}, (item) => {
+    *   return item;
+    *  });
+    * // => false
+  */
+  const eachWhile = generateCheckLoops(whileArray, whileObject);
   /**
     * Iterates through the given object.
     *
@@ -2546,8 +2967,8 @@
     *
     * @function bindAll
     * @type {Function}
-    * @param {Function} method - The function to be invoked if possible.
-    * @param {...Array} args - Arguments to pass to the method.
+    * @param {Function} bindThese - The function to be invoked if possible.
+    * @param {...Array} withThis - Arguments to pass to the method.
     * @returns {*} Returns the method invoked or undefined.
     *
     * @example
@@ -2568,49 +2989,167 @@
     bindAll
   });
 
-  // Creates a function that negates the result of the predicate func. The func predicate is invoked with the this binding and arguments of the created function.
-  const negate = (func) => {
+  /**
+    * Creates a function that negates the result of the predicate method.
+    *
+    * @function negate
+    * @type {Function}
+    * @param {Function} method - The function to be invoked.
+    * @returns {*} Returns the given methods result.
+    *
+    * @example
+    * negate(() => { return false;})();
+    * // => true
+  */
+  const negate = (method) => {
     return (...args) => {
-      return !func(...args);
+      return !method(...args);
     };
   };
   assign($, {
     negate
   });
 
-  const overEvery = (array) => {
+  /**
+    * Checks if predicate returns truthy for all elements of collection. Iteration is stopped once predicate returns falsey. The predicate is invoked with three arguments: (value, index|key, collection).
+    *
+    * @function every
+    * @type {Function}
+    * @param {Array|Object} collection - The collection to iterate over.
+    * @param {Function} predicate - The function invoked per iteration.
+    * @returns {boolean} Returns true if all elements pass the predicate check, else false.
+    *
+    * @example
+    * every([[], true, 1, null, 'string'], Boolean);
+    * // => false
+  */
+  const every = eachWhile;
+  assign($, {
+    every,
+  });
+
+  /**
+    * Creates a function that invokes iteratees with the arguments it receives and returns their results.
+    *
+    * @function over
+    * @type {Function}
+    * @param {Array|Object} iteratees - The iteratees to invoke.
+    * @returns {Function} Returns the new function.
+    *
+    * @example
+    * over([Math.max, Math.min])(1, 2, 3, 4);
+    * // => [4, 1]
+  */
+  const over = (iteratees) => {
     return (...args) => {
-      let result;
-      array.find(array, (item) => {
-        result = Boolean(item(...args));
-        return result;
+      return map(iteratees, (item) => {
+        return item(...args);
       });
-      return result;
     };
   };
-  const over = (array) => {
+  /**
+    * Creates a function that checks if all of the predicates return truthy when invoked with the arguments it receives.
+    *
+    * @function overEvery
+    * @type {Function}
+    * @param {Array|Object} predicates -  The predicates to check.
+    * @returns {Function} Returns the new function.
+    *
+    * @example
+    * const overEveryThing = overEvery([Boolean, isFinite]);
+    * overEveryThing('1');
+    * // => true
+    * overEveryThing(null);
+    * // => false
+  */
+  const overEvery = (predicates) => {
     return (...args) => {
-      return array.map((item) => {
+      return eachWhile(predicates, (item) => {
         return item(...args);
       });
     };
   };
   assign($, {
     over,
-    overEvery,
+    overEvery
   });
 
-  const timer = (fn, time) => {
-    return setTimeout(fn, time);
+  /**
+    * A wrapper around setTimeout.
+    *
+    * @function timer
+    * @param {Object} method - Function to be invoked.
+    * @param {number} time - The time in nanoseconds.
+    * @type {Function}
+    * @returns {number} Set timeout id.
+    *
+    * @example
+    * timer(() => { return 1}, 1);
+    * // => 0: 1
+  */
+  const timer = (method, time) => {
+    return setTimeout(method, time);
   };
-  const interval = (fn, time) => {
-    return setInterval(fn, time);
+  /**
+    * Wrapper around setInterval.
+    *
+    * @function interval
+    * @type {Function}
+    * @param {Object} method - Function to be invoked.
+    * @param {number} time - The time in nanoseconds.
+    * @returns {Object} Returns the new empty object.
+    *
+    * @example
+    * interval(() => { return 1}, 1);
+    * // => 0: 1
+  */
+  const interval = (method, time) => {
+    return setInterval(method, time);
   };
+  /**
+    * Clears setTimeout function.
+    *
+    * @function clearTimers
+    * @type {Function}
+    * @param {Object} timer - Timer to be cleared.
+    * @param {Function} clearTimeout - Invocation of time clear function.
+    * @returns {Number} Returns a number of the cleared setTimeout ID.
+    *
+    * @example
+    *
+    * // =>
+  */
 
+  /**
+    * Clears setInterval function.
+    *
+    * @function clearIntervals
+    * @type {Function}
+    * @param {Object} interval - Interval to be cleared.
+    * @param {Object} clearInterval - Invocation of interval clear function.
+    * @returns {Number} Returns a number of the cleared setInterval ID.
+    *
+    * @example
+    * clearIntervals();
+    * // =>
+  */
 
+  /**
+    *
+    *
+    * @function debounce
+    * @type {Function}
+    * @param {Object} original -
+    * @param {Object} time -
+    * @returns {Object}
+    *
+    * @example
+    * debounce();
+    * // =>
+  */
   const debounce = (original, time) => {
     let timeout = false;
-    const fn = (...args) => {
+    const debounced = (...args) => {
       if (timeout !== false) {
         clearTimeout(timeout);
       }
@@ -2619,35 +3158,48 @@
         timeout = false;
       }, time);
     };
-    fn.clear = () => {
+    debounced.clear = () => {
       if (timeout) {
         clearTimeout(timeout);
         timeout = false;
       }
     };
-    return fn;
+    return debounced;
   };
-  const throttle = (func, time) => {
+  /**
+    *
+    *
+    * @function throttle
+    * @type {Function}
+    * @param {Object} method -
+    * @param {Object} time -
+    * @returns {Object} Returns the new empty object.
+    *
+    * @example
+    * throttle();
+    * // =>
+  */
+  const throttle = (method, time) => {
     let timeout = false;
     let shouldThrottle;
-    const fn = (...args) => {
+    const throttled = (...args) => {
       if (timeout) {
         shouldThrottle = true;
         return;
       }
-      func(...args);
+      method(...args);
       timeout = timer(() => {
         if (shouldThrottle) {
-          func(...args);
+          method(...args);
         }
         timeout = false;
       }, time);
     };
-    fn.clear = () => {
+    throttled.clear = () => {
       clearTimeout(timeout);
       timeout = false;
     };
-    return fn;
+    return throttled;
   };
   assign($, {
     debounce,
@@ -2701,13 +3253,43 @@
     chain
   });
 
-  const inSync = (fns, arg) => {
-    return each(fns, (item) => {
+  /**
+    * Invoke an array of functions.
+    *
+    * @function curry
+    * @type {Function}
+    * @param {Function} methods - The functions to be invoked.
+    * @param {*} arg - The object passed to each method.
+    * @returns {undefined} Returns undefined.
+    *
+    * @example
+    * inSync([() => {console.log(1);}, () => {console.log(2);}]);
+    * // 1
+    * // 2
+    * // => undefined
+  */
+  const inSync = (methods, arg) => {
+    return each(methods, (item) => {
       item(arg);
     });
   };
-  const inAsync = async (fns, arg) => {
-    await eachAsync(fns, async (item) => {
+  /**
+    * Invoke an array of functions asynchronously. Each function is awaited to ensure execution order.
+    *
+    * @function curry
+    * @type {Function}
+    * @param {Function} methods - The functions to be invoked.
+    * @param {*} arg - The object passed to each method.
+    * @returns {undefined} Returns undefined.
+    *
+    * @example
+    * inAsync([async () => {console.log(1);}, async () => {console.log(2);}]);
+    * // 1
+    * // 2
+    * // => undefined
+  */
+  const inAsync = async (methods, arg) => {
+    return eachAsync(methods, async (item) => {
       await item(arg);
     });
   };
@@ -2716,35 +3298,50 @@
     inSync,
   });
 
-  const nthArg = (numArg) => {
-    let num = numArg;
+  /**
+    * Creates a function that gets the argument at index n. If n is negative, the nth argument from the end is returned.
+    *
+    * @function nthArg
+    * @type {Function}
+    * @param {number} [index = 0] - The index of the argument to return.
+    * @returns {Function} Returns the new pass-thru function.
+    *
+    * @example
+    * nthArg(1)('a', 'b');
+    * // => 'b'
+  */
+  const nthArg = (index = 0) => {
     return (...args) => {
-      if (num < 0) {
-        num = args.length - (num * -1);
-      }
-      return args[num];
+      return args[index];
     };
   };
   assign($, {
     nthArg
   });
 
-  // Creates a function that invokes func with arguments arranged according to the specified indexes where the argument value at the first index is provided as the first argument, the argument value at the second index is provided as the second argument, and so on.
-  const reArg = (funct, list) => {
+  /**
+    * Creates a function that invokes method with arguments arranged according to the specified indexes where the argument value at the first index is provided as the first argument, the argument value at the second index is provided as the second argument, and so on.
+    *
+    * @function reArg
+    * @type {Function}
+    * @param {Function} method - The function to be invoked.
+    * @param {Array} indexes - The arranged argument indexes.
+    * @returns {Function} Returns the new function.
+    *
+    * @example
+    * const reArged = reArg((a, b, c) => {
+    *   return [a, b, c];
+    * }, [1,2,0]);
+    * reArged(1,2,3);
+    * // => [2, 3, 1]
+  */
+  const reArg = (method, indexes) => {
     return (...args) => {
-      return funct(...list.map((item) => {
+      return method(...indexes.map((item) => {
         return args[item];
       }));
     };
   };
-  /*
-  var rearg=(function(a, b, c) {
-    return [a, b, c];
-  },[1,2,0]);
-
-  rearg(1,2,3);
-  -> [2, 3, 1]
-  */
   assign($, {
     reArg
   });
@@ -2757,10 +3354,10 @@
       });
     };
     assign(wrapped, {
-      list,
       add(...addTheseArg) {
         list.push(...addTheseArg);
       },
+      list,
     });
     wrapped.add(args);
     return wrapped;
@@ -2773,10 +3370,10 @@
       });
     };
     assign(wrapped, {
-      list,
       add(...addThese) {
-        list.unshift(...addThese.reverse());
+        list.unshift(...addThese);
       },
+      list,
     });
     wrapped.add(args);
     return wrapped;
@@ -2866,13 +3463,10 @@
     * //=> false
   */
   const hasKeys = (object, properties) => {
-    let flag = false;
     const objectKeys = keys(object);
-    eachWhile(properties, (item) => {
-      flag = objectKeys.include(item);
-      return flag;
+    return whileArray(properties, (item) => {
+      return objectKeys.include(item);
     });
-    return flag;
   };
   /**
     * Checks to see if an object has any of the given property names.
@@ -2884,18 +3478,17 @@
     * @returns {boolean} - Returns true or false.
     *
     * @example
-    * hasAnyKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Lucy','John']);
-    * //=> true
-    *
     * hasAnyKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Lucy','Tom']);
     * //=> true
+    *
+    * hasAnyKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Other','Tom']);
+    * //=> false
   */
   const hasAnyKeys = (object, properties) => {
     const objectKeys = keys(object);
-    const flag = properties.find((item) => {
+    return properties.find((item) => {
       return objectKeys.include(item);
     });
-    return flag;
   };
   assign($, {
     hasAnyKeys,
@@ -2968,7 +3561,7 @@
   const isMatchObject = (source, compareObject) => {
     const sourceProperties = keys(source);
     if (isMatchArray(sourceProperties, keys(compareObject))) {
-      return eachWhile(sourceProperties, (key) => {
+      return whileArray(sourceProperties, (key) => {
         return source[key] === compareObject[key];
       });
     }
@@ -3302,7 +3895,7 @@
     * @type {Function}
     * @param {string} string - String to be truncated.
     * @param {number} maxLength - The desired max length of the string.
-    * @returns {string} - An upper case letter.
+    * @returns {string} - The mutated string.
     *
     * @example
     * truncate('Where is Lucy?', 2);
@@ -3319,7 +3912,7 @@
     * @type {Function}
     * @param {string} string - String to be truncated.
     * @param {number} maxLength - The desired max length of the string.
-    * @returns {string} - An upper case letter.
+    * @returns {string} - The mutated string.
     *
     * @example
     * truncateRight('Where is Lucy?', 6);
@@ -3517,13 +4110,13 @@
       if (isPlainObject(object)) {
         const sourceProperties = keys(object);
         if (isMatchArray(sourceProperties, keys(compareObject))) {
-          return eachWhile(sourceProperties, (key) => {
+          return whileArray(sourceProperties, (key) => {
             return isEqual(object[key], compareObject[key]);
           });
         }
       } else if (isArray(object)) {
         if (object.length === compareObject.length) {
-          return eachWhile(object, (item, index) => {
+          return whileArray(object, (item, index) => {
             return isEqual(item, compareObject[index]);
           });
         }
@@ -3555,12 +4148,9 @@
     * //-> true
   */
   const propertyMatch = (object, compareObject, properties = keys(object)) => {
-    let result = false;
-    eachWhile(properties, (property) => {
-      result = isEqual(object[property], compareObject[property]);
-      return result;
+    return whileArray(properties, (property) => {
+      return isEqual(object[property], compareObject[property]);
     });
-    return result;
   };
   assign($, {
     propertyMatch,
@@ -3656,18 +4246,16 @@
     * @returns {Object} - Returns property from the given object.
     *
     * @example
-    * const api = {
-    *  post: {
-    *   like: ['a','b','c']
-    *  }
-    * }
-    * get('post.like[2]', api);
+    * get('post.like[2]', {
+    *   post: {
+    *     like: ['a','b','c']
+    *   }
+    * });
     * //=> c
-    *
   */
   const get = (propertyString, objectChain = $) => {
     let link = objectChain;
-    eachWhile(toPath(propertyString), (item) => {
+    whileArray(toPath(propertyString), (item) => {
       link = link[item];
       return hasValue(link);
     });
@@ -3723,6 +4311,90 @@
   };
   assign($, {
     toggle
+  });
+
+  const returnFlow = (method) => {
+    return (...methods) => {
+      return (arg) => {
+        let value = arg;
+        method(methods, (item) => {
+          value = item(value);
+        });
+        return value;
+      };
+    };
+  };
+  /**
+    * Creates a function that returns the result of invoking the given functions, where each successive invocation is supplied the return value of the previous.
+    *
+    * @function flow
+    * @type {Function}
+    * @param {Array} eachArray - Array to flatten
+    * @returns {*}
+    *
+    * @example
+    * flow(increment, increment, deduct)(0);
+    * // => 2
+  */
+  const flow = returnFlow(eachArray);
+  /**
+    * This method is like flow except that it creates a function that invokes the given functions from right to left.
+    *
+    * @function flowRight
+    * @type {Function}
+    * @param {Array} eachArray - Array to flatten
+    * @returns {*}
+    *
+    * @example
+    * flowRight(increment, increment, deduct)(0);
+    * // => 2
+  */
+  const flowRight = returnFlow(eachArrayRight);
+  assign($, {
+    flow,
+    flowRight,
+  });
+
+  const returnFlow$1 = (method) => {
+    return (...methods) => {
+      return async (arg) => {
+        let value = arg;
+        await method(methods, async (item) => {
+          value = await item(value);
+        });
+        return value;
+      };
+    };
+  };
+  /**
+    * Creates a function that returns the result of invoking the given functions, where each successive invocation is supplied the return value of the previous.
+    *
+    * @function flowAsync
+    * @type {Function}
+    * @param {Array} eachArray - Array to flatten
+    * @returns {*}
+    *
+    * @example
+    * flowAsync(increment, increment, deduct)(0);
+    * // => 2
+  */
+  const flowAsync = returnFlow$1(eachAsync);
+  /**
+    * This method is like flow except that it creates a function that invokes the given functions from right to left.
+    *
+    * @function flowRightAsync
+    * @type {Function}
+    * @param {Array} eachArray - Array to flatten
+    * @returns {*}
+    *
+    * @example
+    * flowRightAsync(increment, increment, deduct)(0);
+    * // => 2
+  */
+  const flowAsyncRight = returnFlow$1(eachAsyncRight);
+  assign($, {
+    flowAsync,
+    flowAsyncRight,
   });
 
   return $;

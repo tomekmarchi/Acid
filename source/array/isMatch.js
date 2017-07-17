@@ -1,6 +1,6 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-import { eachWhile } from './each';
+import { whileArray } from './each';
 /**
    * Performs a shallow strict comparison between two objects.
    *
@@ -16,7 +16,7 @@ import { eachWhile } from './each';
  */
 export const isMatchArray = (source, compareArray) => {
   if (compareArray.length === source.length) {
-    return eachWhile(source, (item, index) => {
+    return whileArray(source, (item, index) => {
       return compareArray[index] !== item;
     });
   }

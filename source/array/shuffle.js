@@ -1,9 +1,19 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-import { toArray } from '../internal/array';
 import { randomInt } from '../number/math';
-// shuffle an array and return a new array
-export const shuffle = (array, amount = 1) => {
+import { toArray } from '../internal/array';
+/**
+  * Shuffle an array and return a new array.
+  *
+  * @function shuffle
+  * @param {Array} array - Array to be shuffled.
+  * @returns {Array} An array with the shuffled results.
+  *
+  * @example
+  * shuffle([1, 2, 3, 4]);
+  * // -> [3, 4, 2, 1]
+*/
+export const shuffle = (array, amount = array.length) => {
   const shuffleArray = toArray(array);
   let count = 0;
   let index;

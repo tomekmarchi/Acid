@@ -33,7 +33,7 @@ const truncateUp = (string, maxLength, stringLength) => {
   * @type {Function}
   * @param {string} string - String to be truncated.
   * @param {number} maxLength - The desired max length of the string.
-  * @returns {string} - An upper case letter.
+  * @returns {string} - The mutated string.
   *
   * @example
   * truncate('Where is Lucy?', 2);
@@ -50,7 +50,7 @@ export const truncate = (string, maxLength) => {
   * @type {Function}
   * @param {string} string - String to be truncated.
   * @param {number} maxLength - The desired max length of the string.
-  * @returns {string} - An upper case letter.
+  * @returns {string} - The mutated string.
   *
   * @example
   * truncateRight('Where is Lucy?', 6);

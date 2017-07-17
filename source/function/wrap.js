@@ -8,10 +8,10 @@ export const wrap = (...args) => {
     });
   };
   assign(wrapped, {
-    list,
     add(...addTheseArg) {
       list.push(...addTheseArg);
     },
+    list,
   });
   wrapped.add(args);
   return wrapped;
@@ -24,10 +24,10 @@ export const wrapBefore = (...args) => {
     });
   };
   assign(wrapped, {
-    list,
     add(...addThese) {
-      list.unshift(...addThese.reverse());
+      list.unshift(...addThese);
     },
+    list,
   });
   wrapped.add(args);
   return wrapped;

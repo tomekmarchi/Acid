@@ -7,8 +7,8 @@ import { map } from '../utility/each';
   *
   * @function bindAll
   * @type {Function}
-  * @param {Function} method - The function to be invoked if possible.
-  * @param {...Array} args - Arguments to pass to the method.
+  * @param {Function} bindThese - The function to be invoked if possible.
+  * @param {...Array} withThis - Arguments to pass to the method.
   * @returns {*} Returns the method invoked or undefined.
   *
   * @example

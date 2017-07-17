@@ -2,65 +2,6 @@ import acid from '../namespace/index';
 import { assign } from '../internal/object';
 import { hasValue } from '../internal/is';
 /**
-  * Iterates based on a start index and an end index. The loop ends when the start index is equal to the end index.
-  *
-  * @function times
-  * @type {Function}
-  * @param {number} startIndex - The number to start loop from.
-  * @param {number} endIndex - The number to stop at the loop.
-  * @param {Function} iteratee - Transformation function which is passed position, start, and end.
-  * @returns {undefined} Nothing.
-  *
-  * @example
-  * times(0, 3, (item) => {
-  *   console.log(item);
-  * });
-  * //Will log
-  * // 0
-  * // 1
-  * // 2
-  * // => undefined
-*/
-export const times = (startIndex, endIndex, iteratee) => {
-  const start = (startIndex) ? startIndex : 0;
-  const end = (startIndex) ? endIndex : startIndex;
-  const iterateeMethod = iteratee || endIndex;
-  for (let position = start; position < end; position++) {
-    iterateeMethod(position, start, end);
-  }
-};
-/**
-  * Iterates based on a start index and end index. Creates an array with the results of the iteratee on every element in the calling array. The loop ends when the start index is equal to the end index.
-  *
-  * @function timesMap
-  * @category Utility
-  * @type {Function}
-  * @param {number} startIndex - The number to start loop from.
-  * @param {number} endIndex - The number to stop at the loop.
-  * @param {Function} iteratee - Transformation function which is passed position, start, and end.
-  * @param {Array} [results = []] - Array that will be used to assign results.
-  * @returns {Object} An array with iteratee's returned values.
-  *
-  * @example
-  * timesMap(0, 3, (item) => {
-  *   console.log(item);
-  * });
-  * // => [0, 1, 2]
-*/
-export const timesMap = (startIndex, endIndex, iteratee, results = []) => {
-  const start = (iteratee) ? startIndex : 0;
-  const end = (iteratee) ? endIndex : startIndex;
-  const iterateeMethod = iteratee || endIndex;
-  let result;
-  times(start, end, (position) => {
-    result = iterateeMethod(results, position, start, end);
-    if (hasValue(result)) {
-      results.push(result);
-    }
-  });
-  return results;
-};
-/**
   * Iterates through the given array.
   *
   * @function eachArray
@@ -107,14 +48,14 @@ export const eachArrayRight = (callingArray, iteratee) => {
 /**
   * Iterates through the given array while the iteratee returns true.
   *
-  * @function eachWhile
+  * @function whileArray
   * @type {Function}
   * @param {Array} callingArray - Array that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, key, calling array, and array length.
   * @returns {boolean} Returns the true if all values returned are true or false if one value returns false.
   *
   * @example
-  * eachWhile([true, true, false], (item) => {
+  * whileArray([true, true, false], (item) => {
   *   console.log(item);
   *   return item;
   * });
@@ -122,7 +63,7 @@ export const eachArrayRight = (callingArray, iteratee) => {
   * //true
   * // => false
 */
-export const eachWhile = (callingArray, iteratee) => {
+export const whileArray = (callingArray, iteratee) => {
   const arrayLength = callingArray.length;
   for (let index = 0; index < arrayLength; index++) {
     if (iteratee(callingArray[index], index, callingArray, arrayLength) === false) {
@@ -255,11 +196,9 @@ assign(acid, {
   compactMapArray,
   eachArray,
   eachArrayRight,
-  eachWhile,
   filterArray,
   mapArray,
   mapArrayRight,
   mapWhile,
-  times,
-  timesMap,
+  whileArray,
 });
