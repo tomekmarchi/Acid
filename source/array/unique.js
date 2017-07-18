@@ -9,13 +9,13 @@ const sortUnique = (item, index, array) => {
 /**
   * Filters the array down to unique elements.
   *
-  * @function take
+  * @function unique
   * @type {Function}
   * @param {Array} array - The array to be filtered.
   * @returns {Array} The filtered array.
   *
   * @example
-  * union([1, 2, 2, 4]);
+  * unique([1, 2, 2, 4]);
   * // => [1, 2, 4]
 */
 export const unique = (array, isSorted) => {

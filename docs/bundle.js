@@ -1424,13 +1424,13 @@
   /**
     * Filters the array down to unique elements.
     *
-    * @function take
+    * @function unique
     * @type {Function}
     * @param {Array} array - The array to be filtered.
     * @returns {Array} The filtered array.
     *
     * @example
-    * union([1, 2, 2, 4]);
+    * unique([1, 2, 2, 4]);
     * // => [1, 2, 4]
   */
   const unique = (array, isSorted) => {
@@ -1446,7 +1446,7 @@
   /**
     * Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more of the arrays.
     *
-    * @function take
+    * @function union
     * @type {Function}
     * @param {...Array} arrays - The arrays to be evaluated.
     * @returns {Array} The aggregated array.
@@ -1548,14 +1548,14 @@
   /**
     * Returns a copy of the array with all instances of the values removed.
     *
-    * @function take
+    * @function without
     * @type {Function}
     * @param {Array} array - The array to be filtered.
     * @param {Array} removeThese - Items to be removed.
     * @returns {Array} The filtered array.
     *
     * @example
-    * union([1, 2, 2, 4], 4);
+    * without([1, 2, 2, 4], 4);
     * // => [1, 2, 2]
   */
   const without = (array, removeThese) => {
@@ -1653,7 +1653,7 @@
   /**
     * Creates an array that is the symmetric difference of the provided arrays.
     *
-    * @function take
+    * @function xor
     * @type {Function}
     * @param {Array} array - The array to be filtered.
     * @param {Array} removeThese - Items to be removed.
