@@ -1323,16 +1323,6 @@
               
                 
                 <li><a
-                  href='#groupby'
-                  class="">
-                  groupBy
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
                   href='#countby'
                   class="">
                   countBy
@@ -1363,9 +1353,9 @@
               
                 
                 <li><a
-                  href='#pick'
+                  href='#indexby'
                   class="">
-                  pick
+                  indexBy
                   
                 </a>
                 
@@ -1373,9 +1363,9 @@
               
                 
                 <li><a
-                  href='#pick'
+                  href='#pluck'
                   class="">
-                  pick
+                  pluck
                   
                 </a>
                 
@@ -1796,6 +1786,16 @@
                   href='#hasanykeys'
                   class="">
                   hasAnyKeys
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#pick'
+                  class="">
+                  pick
                   
                 </a>
                 
@@ -13094,108 +13094,6 @@ The corresponding value of each key is an array of elements responsible for gene
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='groupby'>
-      groupBy
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Given a list, and an iteratee function that returns a key for each element in the list (or a property name), returns an object with an index of each item.
-Just like groupBy, but for when you know your keys are unique.</p>
-
-
-  <div class='pre p1 fill-light mt0'>groupBy(array: any, key: any, collection: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, iteratee: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>array</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>key</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>collection</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
-	    Array of objects.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>iteratee</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
-	    The iteratee to transform keys.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
-        Returns the composed aggregate object.
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>groupBy([{<span class="hljs-attr">name</span>: <span class="hljs-string">'Lucy'</span>, <span class="hljs-attr">id</span>: <span class="hljs-number">0</span>}, {<span class="hljs-attr">name</span>: <span class="hljs-string">'Erick'</span>, <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>}], <span class="hljs-built_in">Math</span>.floor);
-<span class="hljs-comment">// =&gt; { "0": {name: 'Lucy', id: 0}, "1": {name: 'Erick', id: 1}}</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
     <h3 class='fl m0' id='countby'>
       countBy
     </h3>
@@ -13475,8 +13373,110 @@ Just like groupBy, but for when you know your keys are unique.</p>
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='pick'>
-      pick
+    <h3 class='fl m0' id='indexby'>
+      indexBy
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Given a list, and an iteratee function that returns a key for each element in the list (or a property name), returns an object with an index of each item.
+Just like groupBy, but for when you know your keys are unique.</p>
+
+
+  <div class='pre p1 fill-light mt0'>indexBy(array: any, key: any, collection: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, iteratee: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>array</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>key</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>collection</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    Array of objects.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>iteratee</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+	    The iteratee to transform keys.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
+        Returns the composed aggregate object.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>indexBy([{<span class="hljs-attr">name</span>: <span class="hljs-string">'Lucy'</span>, <span class="hljs-attr">id</span>: <span class="hljs-number">0</span>}, {<span class="hljs-attr">name</span>: <span class="hljs-string">'Erick'</span>, <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>}], <span class="hljs-built_in">Math</span>.floor);
+<span class="hljs-comment">// =&gt; { "0": {name: 'Lucy', id: 0}, "1": {name: 'Erick', id: 1}}</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='pluck'>
+      pluck
     </h3>
     
     
@@ -13486,7 +13486,7 @@ Just like groupBy, but for when you know your keys are unique.</p>
   <p>Returns an array of the plucked values from the collection.</p>
 
 
-  <div class='pre p1 fill-light mt0'>pick(collection: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, pluckThis: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  <div class='pre p1 fill-light mt0'>pluck(collection: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, pluckThis: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
   
   
 
@@ -13540,103 +13540,8 @@ Just like groupBy, but for when you know your keys are unique.</p>
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>pick([{<span class="hljs-attr">lucy</span>: <span class="hljs-string">'Ants moving around on the walls.'</span>}, {<span class="hljs-attr">lucy</span>: <span class="hljs-string">'In the sky with diamonds.'</span>}], [<span class="hljs-string">'a'</span>,<span class="hljs-string">'b'</span>]);
+      <pre class='p1 overflow-auto round fill-light'>pluck([{<span class="hljs-attr">lucy</span>: <span class="hljs-string">'Ants moving around on the walls.'</span>}, {<span class="hljs-attr">lucy</span>: <span class="hljs-string">'In the sky with diamonds.'</span>}], [<span class="hljs-string">'a'</span>,<span class="hljs-string">'b'</span>]);
 <span class="hljs-comment">// =&gt; ['Ants moving around on the walls.', 'In the sky with diamonds.']</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='pick'>
-      pick
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Returns a clone of the source object with the plucked properties.</p>
-
-
-  <div class='pre p1 fill-light mt0'>pick(source: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, array: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, newObject: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>source</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    Object to be cloned.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>array</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
-	    Array used to determine what values to be plucked.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>newObject</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
-            = <code>{}</code>)</code>
-	    Object to be populated with plucked values.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
-        A new object with plucked properties.
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>pick({<span class="hljs-attr">a</span>:<span class="hljs-number">1</span>, <span class="hljs-attr">b</span>:<span class="hljs-number">2</span>, <span class="hljs-attr">c</span>:<span class="hljs-number">3</span>}, [<span class="hljs-string">'a'</span>,<span class="hljs-string">'b'</span>]);
-<span class="hljs-comment">// =&gt; {a:1, b:2}</span></pre>
     
   
 
@@ -17146,6 +17051,101 @@ hasKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'<
 
 hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'</span>, <span class="hljs-attr">John</span>: <span class="hljs-string">'Malkovich'</span>, <span class="hljs-attr">Thor</span>: <span class="hljs-string">'Bobo'</span>}, [<span class="hljs-string">'Other'</span>,<span class="hljs-string">'Tom'</span>]);
 <span class="hljs-comment">// =&gt; false</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='pick'>
+      pick
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Returns a clone of the source object with the plucked properties.</p>
+
+
+  <div class='pre p1 fill-light mt0'>pick(source: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, array: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, newObject: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>source</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    Object to be cloned.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>array</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    Array used to determine what values to be plucked.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>newObject</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+            = <code>{}</code>)</code>
+	    Object to be populated with plucked values.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
+        A new object with plucked properties.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>pick({<span class="hljs-attr">a</span>:<span class="hljs-number">1</span>, <span class="hljs-attr">b</span>:<span class="hljs-number">2</span>, <span class="hljs-attr">c</span>:<span class="hljs-number">3</span>}, [<span class="hljs-string">'a'</span>,<span class="hljs-string">'b'</span>]);
+<span class="hljs-comment">// =&gt; {a:1, b:2}</span></pre>
     
   
 

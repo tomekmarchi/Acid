@@ -2944,14 +2944,14 @@
     * Given a list, and an iteratee function that returns a key for each element in the list (or a property name), returns an object with an index of each item.
     * Just like groupBy, but for when you know your keys are unique.
     *
-    * @function groupBy
+    * @function indexBy
     * @type {Function}
     * @param {Array} collection - Array of objects.
     * @param {Function} iteratee - The iteratee to transform keys.
     * @returns {Object} Returns the composed aggregate object.
     *
     * @example
-    * groupBy([{name: 'Lucy', id: 0}, {name: 'Erick', id: 1}], Math.floor);
+    * indexBy([{name: 'Lucy', id: 0}, {name: 'Erick', id: 1}], Math.floor);
     * // => { "0": {name: 'Lucy', id: 0}, "1": {name: 'Erick', id: 1}}
   */
   const indexBy = (array, key) => {
@@ -2968,14 +2968,14 @@
   /**
     * Returns an array of the plucked values from the collection.
     *
-    * @function pick
+    * @function pluck
     * @type {Function}
     * @param {Array} collection - Array used to determine what values to be plucked.
     * @param {string} pluckThis - Property name.
     * @returns {Array} - An array of plucked values.
     *
     * @example
-    * pick([{lucy: 'Ants moving around on the walls.'}, {lucy: 'In the sky with diamonds.'}], ['a','b']);
+    * pluck([{lucy: 'Ants moving around on the walls.'}, {lucy: 'In the sky with diamonds.'}], ['a','b']);
     * // => ['Ants moving around on the walls.', 'In the sky with diamonds.']
   */
   const pluck = (collection, pluckThis) => {
