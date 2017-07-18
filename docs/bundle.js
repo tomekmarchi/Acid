@@ -124,7 +124,7 @@
   /**
    * Returns the amount of keys on the object.
    *
-   * @function getOwnPropertyNames
+   * @function objectSize
    * @param {Object} obj - The target object.
    * @returns {number} The amount of keys.
    *
