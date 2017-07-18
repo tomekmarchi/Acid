@@ -12,7 +12,7 @@ import { mapArray } from '../array/each';
   *
   * @example
   * pick([{lucy: 'Ants moving around on the walls.'}, {lucy: 'In the sky with diamonds.'}], ['a','b']);
-  * //=> ['Ants moving around on the walls.', 'In the sky with diamonds.']
+  * // => ['Ants moving around on the walls.', 'In the sky with diamonds.']
 */
 export const pluck = (collection, pluckThis) => {
   return mapArray(collection, (item) => {

@@ -12,7 +12,7 @@ import { hasValue } from '../internal/is';
   *
   * @example
   * compactKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: undefined, other: false, that: null});
-  * //=> ['Lucy', 'John', 'other']
+  * // => ['Lucy', 'John', 'other']
   *
 */
 export const compactKeys = (object) => {

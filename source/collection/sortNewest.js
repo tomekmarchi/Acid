@@ -12,7 +12,7 @@ import { assign } from '../internal/object';
   *
   * @example
   * sortNewest([{id: 1}, {id: 0}], 'id');
-  * // -> [{id: 1}, {id: 0}]
+  * // => [{id: 1}, {id: 0}]
 */
 export const sortNewest = (collection, key, pureMode = true) => {
   const array = (pureMode) ? collection : [...collection];
@@ -40,7 +40,7 @@ export const sortNewest = (collection, key, pureMode = true) => {
   *
   * @example
   * getNewest([{id: 1}, {id: 0}], 'id');
-  * // -> {id: 1}
+  * // => {id: 1}
 */
 export const getNewest = (collection, key) => {
   return sortNewest(collection, key, false)[0];

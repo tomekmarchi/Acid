@@ -53,6 +53,76 @@
               
                 
                 <li><a
+                  href='#keys'
+                  class="">
+                  keys
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#is'
+                  class="">
+                  is
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#assign'
+                  class="">
+                  assign
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#getownpropertydescriptor'
+                  class="">
+                  getOwnPropertyDescriptor
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#defineproperty'
+                  class="">
+                  defineProperty
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#getownpropertynames'
+                  class="">
+                  getOwnPropertyNames
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#getownpropertynames'
+                  class="">
+                  getOwnPropertyNames
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#asynceach'
                   class="">
                   asyncEach
@@ -346,6 +416,16 @@
                   href='#compact'
                   class="">
                   compact
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#toarray'
+                  class="">
+                  toArray
                   
                 </a>
                 
@@ -1243,16 +1323,6 @@
               
                 
                 <li><a
-                  href='#clearintervals'
-                  class="">
-                  clearIntervals
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
                   href='#cleartimers'
                   class="">
                   clearTimers
@@ -1273,9 +1343,19 @@
               
                 
                 <li><a
-                  href='#throttle'
+                  href='#debounce'
                   class="">
-                  throttle
+                  debounce
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#clearintervals'
+                  class="">
+                  clearIntervals
                   
                 </a>
                 
@@ -1306,6 +1386,16 @@
                   href='#rearg'
                   class="">
                   reArg
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#wrap'
+                  class="">
+                  wrap
                   
                 </a>
                 
@@ -1820,7 +1910,7 @@
     
       
       <pre class='p1 overflow-auto round fill-light'>$(<span class="hljs-string">'modelName'</span>, {<span class="hljs-attr">example</span>: <span class="hljs-number">1</span>});
-<span class="hljs-comment">// -&gt; {example: 1}</span></pre>
+<span class="hljs-comment">// =&gt; {example: 1}</span></pre>
     
   
 
@@ -1832,7 +1922,7 @@
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>superMethod(method)</span>
+            <span class='code strong strong truncate'>superMethod(callable)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -1843,7 +1933,7 @@
   <p>Re-assigns the main method for $.</p>
 
 
-  <div class='pre p1 fill-light mt0'>superMethod(method: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
+  <div class='pre p1 fill-light mt0'>superMethod(callable: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
   
   
 
@@ -1860,8 +1950,8 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>method</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
-	    The function that will become the main object's method.
+            <span class='code bold'>callable</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+	    The function that will become the main object's subroutine.
 
           </div>
           
@@ -1889,8 +1979,8 @@
     
       
       <pre class='p1 overflow-auto round fill-light'>superMethod($.get);
-<span class="hljs-comment">// -&gt; $('flow', $);</span>
-<span class="hljs-comment">// -&gt; $.flow</span></pre>
+<span class="hljs-comment">// =&gt; $('flow', $);</span>
+<span class="hljs-comment">// =&gt; $.flow</span></pre>
     
   
 
@@ -1905,6 +1995,596 @@
     </div>
   
 </div>
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='keys'>
+      keys
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Get object's keys.</p>
+
+
+  <div class='pre p1 fill-light mt0'>keys(object: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>object</span> <code class='quiet'>(any)</code>
+	    Object to pull keys from.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
+        Array of keys.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>keys({<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>});
+<span class="hljs-comment">// =&gt; ['a', 'b']</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='is'>
+      is
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Determines whether two values are the same value.</p>
+
+
+  <div class='pre p1 fill-light mt0'>is(object: any, object: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>object</span> <code class='quiet'>(any)</code>
+	    Value to compare to.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>object</span> <code class='quiet'>(any)</code>
+	    A value to compare.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>:
+        A Boolean indicating whether or not the two arguments are the same value.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>is(<span class="hljs-string">'foo'</span>, <span class="hljs-string">'foo'</span>);
+<span class="hljs-comment">// =&gt; true</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='assign'>
+      assign
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Copy the values of all enumerable own properties from one or more source objects to a target object. It will return the target object.</p>
+
+
+  <div class='pre p1 fill-light mt0'>assign(target: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, sources: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>target</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    The target object.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>sources</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    The source object(s).
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
+        Returns the target object.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>assign({<span class="hljs-attr">b</span>: <span class="hljs-number">2</span>}, {<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>});
+<span class="hljs-comment">// =&gt; {b: 2, a: 1}</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='getownpropertydescriptor'>
+      getOwnPropertyDescriptor
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Returns a property descriptor for an own property (that is, one directly present on an object and not in the object's prototype chain) of a given object.</p>
+
+
+  <div class='pre p1 fill-light mt0'>getOwnPropertyDescriptor(obj: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, property: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>obj</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    The target object.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>property</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    The name of the property whose description is to be retrieved.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
+        A property descriptor of the given property if it exists on the object, undefined otherwise.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>getOwnPropertyDescriptor({ <span class="hljs-attr">bar</span>: <span class="hljs-number">42</span> }, <span class="hljs-string">'foo'</span>);
+<span class="hljs-comment">// =&gt; { configurable: true, enumerable: true, value: 42, writable: true }</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='defineproperty'>
+      defineProperty
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Defines a new property directly on an object, or modifies an existing property on an object, and returns the object.</p>
+
+
+  <div class='pre p1 fill-light mt0'>defineProperty(obj: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, property: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, descriptor: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>obj</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    The object on which to define the property.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>property</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    The name of the property whose description is to be retrieved.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>descriptor</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    The descriptor for the property being defined or modified.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
+        The object that was passed to the function.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> obj = {};
+defineProperty(obj, <span class="hljs-string">'key'</span>, {
+ <span class="hljs-attr">enumerable</span>: <span class="hljs-literal">false</span>,
+ <span class="hljs-attr">configurable</span>: <span class="hljs-literal">false</span>,
+ <span class="hljs-attr">writable</span>: <span class="hljs-literal">false</span>,
+ <span class="hljs-attr">value</span>: <span class="hljs-string">'static'</span>
+});</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='getownpropertynames'>
+      getOwnPropertyNames
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Returns an array of all properties (enumerable or not) found directly upon a given object.</p>
+
+
+  <div class='pre p1 fill-light mt0'>getOwnPropertyNames(obj: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>obj</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    The object whose enumerable and non-enumerable own properties are to be returned.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
+        An array of strings that correspond to the properties found directly upon the given object.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>getOwnPropertyNames({ <span class="hljs-number">0</span>: <span class="hljs-string">'a'</span>, <span class="hljs-number">1</span>: <span class="hljs-string">'b'</span>, <span class="hljs-number">2</span>: <span class="hljs-string">'c'</span> });
+<span class="hljs-comment">// =&gt; ['0', '1', '2']</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='getownpropertynames'>
+      getOwnPropertyNames
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Returns the amount of keys on the object.</p>
+
+
+  <div class='pre p1 fill-light mt0'>getOwnPropertyNames(target: any, obj: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>target</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>obj</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    The target object.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>:
+        The amount of keys.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>objectSize({ <span class="hljs-number">0</span>: <span class="hljs-string">'a'</span>, <span class="hljs-number">1</span>: <span class="hljs-string">'b'</span>, <span class="hljs-number">2</span>: <span class="hljs-string">'c'</span> });
+<span class="hljs-comment">// =&gt; 3</span></pre>
+    
+  
 
   
 
@@ -2818,10 +3498,10 @@ Functions are given the supplied object, index, the calling array, and the array
     
       
       <pre class='p1 overflow-auto round fill-light'>ensureArray(<span class="hljs-string">'Hello'</span>);
-<span class="hljs-comment">//=&gt; ['Hello']</span>
+<span class="hljs-comment">// =&gt; ['Hello']</span>
 
 ensureArray({<span class="hljs-attr">a</span>:<span class="hljs-number">1</span>, <span class="hljs-attr">b</span>:<span class="hljs-number">2</span>})
-<span class="hljs-comment">//=&gt; [{a:1, b:2}]</span></pre>
+<span class="hljs-comment">// =&gt; [{a:1, b:2}]</span></pre>
     
   
 
@@ -3076,10 +3756,10 @@ ensureArray({<span class="hljs-attr">a</span>:<span class="hljs-number">1</span>
     
       
       <pre class='p1 overflow-auto round fill-light'>remove([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>], <span class="hljs-number">1</span>);
-<span class="hljs-comment">// -&gt; [2, 3, 3, 4, 3, 5]</span>
+<span class="hljs-comment">// =&gt; [2, 3, 3, 4, 3, 5]</span>
 
 remove([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>], <span class="hljs-number">3</span>, <span class="hljs-number">4</span>);
-<span class="hljs-comment">// -&gt; [5]</span></pre>
+<span class="hljs-comment">// =&gt; [5]</span></pre>
     
   
 
@@ -3109,7 +3789,7 @@ remove([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>, 
   <p>Removes items that pass the method's test. This mutates the given array. Clone the array if you desire to avoid mutation.</p>
 
 
-  <div class='pre p1 fill-light mt0'>remove(array: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, method: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  <div class='pre p1 fill-light mt0'>remove(array: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, iteratee: any, method: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
   
   
 
@@ -3129,6 +3809,14 @@ remove([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>, 
             <span class='code bold'>array</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
 	    Array to be mutated.
 
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>iteratee</span> <code class='quiet'>(any)</code>
+	    
           </div>
           
         </div>
@@ -3164,7 +3852,7 @@ remove([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>, 
     
       
       <pre class='p1 overflow-auto round fill-light'>remove([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>], (item) =&gt; { <span class="hljs-keyword">return</span> <span class="hljs-built_in">Boolean</span>(item % <span class="hljs-number">2</span>);}));
-<span class="hljs-comment">// -&gt; [2, 4]</span></pre>
+<span class="hljs-comment">// =&gt; [2, 4]</span></pre>
     
   
 
@@ -3250,7 +3938,7 @@ remove([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>, 
     
       
       <pre class='p1 overflow-auto round fill-light'>chunk([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>], <span class="hljs-number">1</span>);
-<span class="hljs-comment">//=&gt; [[1],[2],[3]]</span></pre>
+<span class="hljs-comment">// =&gt; [[1],[2],[3]]</span></pre>
     
   
 
@@ -3402,7 +4090,7 @@ remove([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>, 
     
       
       <pre class='p1 overflow-auto round fill-light'>clear([<span class="hljs-number">1</span>,<span class="hljs-string">'B'</span>, Cat]);
-<span class="hljs-comment">//=&gt; []</span></pre>
+<span class="hljs-comment">// =&gt; []</span></pre>
     
   
 
@@ -3562,7 +4250,7 @@ remove([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>, 
     
       
       <pre class='p1 overflow-auto round fill-light'>cloneArray([<span class="hljs-number">1</span>,<span class="hljs-string">'B'</span>, Cat]);
-<span class="hljs-comment">//=&gt; [1, 'B', Cat]</span></pre>
+<span class="hljs-comment">// =&gt; [1, 'B', Cat]</span></pre>
     
   
 
@@ -4472,7 +5160,83 @@ remove([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>, 
     
       
       <pre class='p1 overflow-auto round fill-light'>compact([<span class="hljs-number">1</span>,<span class="hljs-string">'B'</span>, Cat, <span class="hljs-literal">false</span>, <span class="hljs-literal">null</span>, <span class="hljs-number">0</span> , <span class="hljs-string">''</span>, <span class="hljs-literal">undefined</span>, <span class="hljs-literal">NaN</span>]);
-<span class="hljs-comment">//=&gt; [1, 'B', Cat]</span></pre>
+<span class="hljs-comment">// =&gt; [1, 'B', Cat]</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='toarray'>
+      toArray
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Takes an array like object and creates a new Array from it.</p>
+
+
+  <div class='pre p1 fill-light mt0'>toArray(arrayLike: any): any</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>arrayLike</span> <code class='quiet'>(any)</code>
+	    Array like object.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>any</code>:
+        new array.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>toArray([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]);
+<span class="hljs-comment">// =&gt; [1, 2, 3]</span></pre>
     
   
 
@@ -4557,7 +5321,7 @@ remove([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>, 
     
       
       <pre class='p1 overflow-auto round fill-light'>shuffle([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]);
-<span class="hljs-comment">// -&gt; [3, 4, 2, 1]</span></pre>
+<span class="hljs-comment">// =&gt; [3, 4, 2, 1]</span></pre>
     
   
 
@@ -4803,7 +5567,7 @@ remove([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>, 
     
       
       <pre class='p1 overflow-auto round fill-light'>range([<span class="hljs-number">1</span>,<span class="hljs-string">'B'</span>, Cat, <span class="hljs-literal">false</span>, <span class="hljs-literal">null</span>, <span class="hljs-number">0</span> , <span class="hljs-string">''</span>, <span class="hljs-literal">undefined</span>, <span class="hljs-literal">NaN</span>]);
-<span class="hljs-comment">//=&gt; [1, 'B', Cat]</span></pre>
+<span class="hljs-comment">// =&gt; [1, 'B', Cat]</span></pre>
     
   
 
@@ -4897,7 +5661,7 @@ remove([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>, 
     
       
       <pre class='p1 overflow-auto round fill-light'>rangeRight([<span class="hljs-number">1</span>,<span class="hljs-string">'B'</span>, Cat, <span class="hljs-literal">false</span>, <span class="hljs-literal">null</span>, <span class="hljs-number">0</span> , <span class="hljs-string">''</span>, <span class="hljs-literal">undefined</span>, <span class="hljs-literal">NaN</span>]);
-<span class="hljs-comment">//=&gt; [1, 'B', Cat]</span></pre>
+<span class="hljs-comment">// =&gt; [1, 'B', Cat]</span></pre>
     
   
 
@@ -4983,10 +5747,10 @@ of the array and the input array(s).</p>
     
       
       <pre class='p1 overflow-auto round fill-light'>intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]);
-<span class="hljs-comment">// -&gt; [2, 3]</span>
+<span class="hljs-comment">// =&gt; [2, 3]</span>
 
 intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">101</span>, <span class="hljs-number">2</span>, <span class="hljs-number">50</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">2</span>, <span class="hljs-number">1</span>]);
-<span class="hljs-comment">// -&gt; [1, 2]</span></pre>
+<span class="hljs-comment">// =&gt; [1, 2]</span></pre>
     
   
 
@@ -5163,7 +5927,7 @@ intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span
     
       
       <pre class='p1 overflow-auto round fill-light'>compact([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]);
-<span class="hljs-comment">//=&gt; [3]</span></pre>
+<span class="hljs-comment">// =&gt; [3]</span></pre>
     
   
 
@@ -5258,7 +6022,7 @@ intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span
     
       
       <pre class='p1 overflow-auto round fill-light'>drop([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], <span class="hljs-number">1</span>);
-<span class="hljs-comment">//=&gt; [2, 3]</span></pre>
+<span class="hljs-comment">// =&gt; [2, 3]</span></pre>
     
   
 
@@ -5353,7 +6117,7 @@ intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span
     
       
       <pre class='p1 overflow-auto round fill-light'>dropRight([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], <span class="hljs-number">1</span>);
-<span class="hljs-comment">//=&gt; [1, 2]</span></pre>
+<span class="hljs-comment">// =&gt; [1, 2]</span></pre>
     
   
 
@@ -6582,7 +7346,7 @@ last([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <s
   <p>Asynchronously performs a function on the items within an array.</p>
 
 
-  <div class='pre p1 fill-light mt0'>compactMapAsync(array: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, method: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  <div class='pre p1 fill-light mt0'>compactMapAsync(array: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, iteratee: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
   
   
 
@@ -6608,7 +7372,7 @@ last([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <s
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>method</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+            <span class='code bold'>iteratee</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
 	    Iteratee to be performed on array.
 
           </div>
@@ -6637,7 +7401,7 @@ last([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <s
     
       
       <pre class='p1 overflow-auto round fill-light'>compactMapAsync([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-literal">false</span>], <span class="hljs-keyword">async</span> () =&gt; {<span class="hljs-keyword">return</span> item});
-<span class="hljs-comment">//=&gt; [1, 2, 3]</span></pre>
+<span class="hljs-comment">// =&gt; [1, 2, 3]</span></pre>
     
   
 
@@ -6713,7 +7477,7 @@ last([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <s
     
       
       <pre class='p1 overflow-auto round fill-light'>numSort([<span class="hljs-number">10</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>]);
-<span class="hljs-comment">// -&gt; [0, 1, 2, 10]</span></pre>
+<span class="hljs-comment">// =&gt; [0, 1, 2, 10]</span></pre>
     
   
 
@@ -6909,7 +7673,7 @@ last([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <s
     
       
       <pre class='p1 overflow-auto round fill-light'>findItem([{<span class="hljs-attr">id</span>: <span class="hljs-number">1</span>}, {<span class="hljs-attr">id</span>: <span class="hljs-number">2</span>}], <span class="hljs-number">1</span>);
-<span class="hljs-comment">//=&gt; {id: 1}</span></pre>
+<span class="hljs-comment">// =&gt; {id: 1}</span></pre>
     
   
 
@@ -7012,7 +7776,7 @@ last([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <s
     
       
       <pre class='p1 overflow-auto round fill-light'>findIndex([{<span class="hljs-attr">id</span>: <span class="hljs-number">1</span>}, {<span class="hljs-attr">id</span>: <span class="hljs-number">2</span>}], <span class="hljs-number">1</span>);
-<span class="hljs-comment">//=&gt; 0</span></pre>
+<span class="hljs-comment">// =&gt; 0</span></pre>
     
   
 
@@ -7354,10 +8118,10 @@ last([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <s
     
       
       <pre class='p1 overflow-auto round fill-light'>first([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]);
-<span class="hljs-comment">//=&gt; [1]</span>
+<span class="hljs-comment">// =&gt; [1]</span>
 
 first([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], <span class="hljs-number">2</span>);
-<span class="hljs-comment">//=&gt; [1, 2, 3]</span></pre>
+<span class="hljs-comment">// =&gt; [1, 2, 3]</span></pre>
     
   
 
@@ -8221,7 +8985,7 @@ first([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <
     
       
       <pre class='p1 overflow-auto round fill-light'>promise(<span class="hljs-function">(<span class="hljs-params">a</span>) =&gt;</span> {});
-<span class="hljs-comment">//=&gt; promise((a) =&gt; {})</span></pre>
+<span class="hljs-comment">// =&gt; promise((a) =&gt; {})</span></pre>
     
   
 
@@ -8489,7 +9253,7 @@ rightString(<span class="hljs-string">'rightString'</span>, <span class="hljs-nu
     
       
       <pre class='p1 overflow-auto round fill-light'>chunkString(<span class="hljs-string">'chunk'</span>, <span class="hljs-number">2</span>);
-<span class="hljs-comment">//-&gt; ['ch', 'un', 'k']</span></pre>
+<span class="hljs-comment">// =&gt; ['ch', 'un', 'k']</span></pre>
     
   
 
@@ -8575,10 +9339,10 @@ rightString(<span class="hljs-string">'rightString'</span>, <span class="hljs-nu
     
       
       <pre class='p1 overflow-auto round fill-light'>initialString(<span class="hljs-string">'initialString'</span>);
-<span class="hljs-comment">//-&gt; 'initialStrin'</span>
+<span class="hljs-comment">// =&gt; 'initialStrin'</span>
 
 initialString(<span class="hljs-string">'initialString'</span>, <span class="hljs-number">2</span>);
-<span class="hljs-comment">//-&gt; 'initialStri'</span></pre>
+<span class="hljs-comment">// =&gt; 'initialStri'</span></pre>
     
   
 
@@ -8664,10 +9428,10 @@ initialString(<span class="hljs-string">'initialString'</span>, <span class="hlj
     
       
       <pre class='p1 overflow-auto round fill-light'>restString(<span class="hljs-string">'restString'</span>);
-<span class="hljs-comment">//-&gt; 'estString'</span>
+<span class="hljs-comment">// =&gt; 'estString'</span>
 
 restString(<span class="hljs-string">'restString'</span>, <span class="hljs-number">2</span>);
-<span class="hljs-comment">//-&gt; 'stString'</span></pre>
+<span class="hljs-comment">// =&gt; 'stString'</span></pre>
     
   
 
@@ -8697,7 +9461,7 @@ restString(<span class="hljs-string">'restString'</span>, <span class="hljs-numb
   <p>Checks if the given method is a function. If it is then it invokes it with the given arguments.</p>
 
 
-  <div class='pre p1 fill-light mt0'>ifInvoke(method: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, args: ...<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): any</div>
+  <div class='pre p1 fill-light mt0'>ifInvoke(callable: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, args: ...<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): any</div>
   
   
 
@@ -8714,7 +9478,7 @@ restString(<span class="hljs-string">'restString'</span>, <span class="hljs-numb
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>method</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+            <span class='code bold'>callable</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
 	    The function to be invoked if possible.
 
           </div>
@@ -9001,7 +9765,7 @@ ifInvoke(<span class="hljs-literal">undefined</span>, <span class="hljs-number">
     
       
       <pre class='p1 overflow-auto round fill-light'>sortNewest([{<span class="hljs-attr">id</span>: <span class="hljs-number">1</span>}, {<span class="hljs-attr">id</span>: <span class="hljs-number">0</span>}], <span class="hljs-string">'id'</span>);
-<span class="hljs-comment">// -&gt; [{id: 1}, {id: 0}]</span></pre>
+<span class="hljs-comment">// =&gt; [{id: 1}, {id: 0}]</span></pre>
     
   
 
@@ -9086,7 +9850,7 @@ ifInvoke(<span class="hljs-literal">undefined</span>, <span class="hljs-number">
     
       
       <pre class='p1 overflow-auto round fill-light'>getNewest([{<span class="hljs-attr">id</span>: <span class="hljs-number">1</span>}, {<span class="hljs-attr">id</span>: <span class="hljs-number">0</span>}], <span class="hljs-string">'id'</span>);
-<span class="hljs-comment">// -&gt; {id: 1}</span></pre>
+<span class="hljs-comment">// =&gt; {id: 1}</span></pre>
     
   
 
@@ -9181,7 +9945,7 @@ ifInvoke(<span class="hljs-literal">undefined</span>, <span class="hljs-number">
     
       
       <pre class='p1 overflow-auto round fill-light'>sortOldest([{<span class="hljs-attr">id</span>: <span class="hljs-number">1</span>}, {<span class="hljs-attr">id</span>: <span class="hljs-number">0</span>}], <span class="hljs-string">'id'</span>);
-<span class="hljs-comment">// -&gt; [{id: 0}, {id: 1}]</span></pre>
+<span class="hljs-comment">// =&gt; [{id: 0}, {id: 1}]</span></pre>
     
   
 
@@ -9266,7 +10030,7 @@ ifInvoke(<span class="hljs-literal">undefined</span>, <span class="hljs-number">
     
       
       <pre class='p1 overflow-auto round fill-light'>sortOldest([{<span class="hljs-attr">id</span>: <span class="hljs-number">1</span>}, {<span class="hljs-attr">id</span>: <span class="hljs-number">0</span>}], <span class="hljs-string">'id'</span>);
-<span class="hljs-comment">// -&gt; {id: 0}</span></pre>
+<span class="hljs-comment">// =&gt; {id: 0}</span></pre>
     
   
 
@@ -9827,7 +10591,7 @@ Just like groupBy, but for when you know your keys are unique.</p>
     
       
       <pre class='p1 overflow-auto round fill-light'>pick([{<span class="hljs-attr">lucy</span>: <span class="hljs-string">'Ants moving around on the walls.'</span>}, {<span class="hljs-attr">lucy</span>: <span class="hljs-string">'In the sky with diamonds.'</span>}], [<span class="hljs-string">'a'</span>,<span class="hljs-string">'b'</span>]);
-<span class="hljs-comment">//=&gt; ['Ants moving around on the walls.', 'In the sky with diamonds.']</span></pre>
+<span class="hljs-comment">// =&gt; ['Ants moving around on the walls.', 'In the sky with diamonds.']</span></pre>
     
   
 
@@ -9922,7 +10686,7 @@ Just like groupBy, but for when you know your keys are unique.</p>
     
       
       <pre class='p1 overflow-auto round fill-light'>pick({<span class="hljs-attr">a</span>:<span class="hljs-number">1</span>, <span class="hljs-attr">b</span>:<span class="hljs-number">2</span>, <span class="hljs-attr">c</span>:<span class="hljs-number">3</span>}, [<span class="hljs-string">'a'</span>,<span class="hljs-string">'b'</span>]);
-<span class="hljs-comment">//=&gt; {a:1, b:2}</span></pre>
+<span class="hljs-comment">// =&gt; {a:1, b:2}</span></pre>
     
   
 
@@ -10153,10 +10917,10 @@ Just like groupBy, but for when you know your keys are unique.</p>
   </div>
   
 
-  <p>Creates a function that invokes func, with up to n arguments, ignoring any additional arguments.</p>
+  <p>Creates a function that invokes callable, with up to n arguments, ignoring any additional arguments.</p>
 
 
-  <div class='pre p1 fill-light mt0'>ary(func: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, amount: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>ary(callable: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, amount: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
   
   
 
@@ -10173,7 +10937,7 @@ Just like groupBy, but for when you know your keys are unique.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>func</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+            <span class='code bold'>callable</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
 	    The function to cap arguments for.
 
           </div>
@@ -10241,7 +11005,7 @@ Just like groupBy, but for when you know your keys are unique.</p>
   <p>Creates a function that accepts arguments of method and either invokes method returning its result, if at least arity number of arguments have been provided, or returns a function that accepts the remaining method arguments, and so on. The arity of method may be specified if method length is not sufficient.</p>
 
 
-  <div class='pre p1 fill-light mt0'>curry(method: any, arity: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, methods: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): any</div>
+  <div class='pre p1 fill-light mt0'>curry(callable: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, arity: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): any</div>
   
   
 
@@ -10258,17 +11022,8 @@ Just like groupBy, but for when you know your keys are unique.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>method</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>arity</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
-            = <code>method.length</code>)</code>
-	    The arity of method.
+            <span class='code bold'>callable</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+	    The function to curry.
 
           </div>
           
@@ -10276,8 +11031,9 @@ Just like groupBy, but for when you know your keys are unique.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>methods</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
-	    The function to curry.
+            <span class='code bold'>arity</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
+            = <code>callable.length</code>)</code>
+	    The arity of method.
 
           </div>
           
@@ -10338,7 +11094,7 @@ curried(<span class="hljs-number">1</span>)(<span class="hljs-number">2</span>)(
   <p>Invoke an array of functions.</p>
 
 
-  <div class='pre p1 fill-light mt0'>curry(methods: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, arg: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
+  <div class='pre p1 fill-light mt0'>curry(collection: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>), arg: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
   
   
 
@@ -10355,7 +11111,7 @@ curried(<span class="hljs-number">1</span>)(<span class="hljs-number">2</span>)(
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>methods</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+            <span class='code bold'>collection</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>))</code>
 	    The functions to be invoked.
 
           </div>
@@ -10365,7 +11121,7 @@ curried(<span class="hljs-number">1</span>)(<span class="hljs-number">2</span>)(
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>arg</span> <code class='quiet'>(any)</code>
-	    The object passed to each method.
+	    The object passed as an argument to each method.
 
           </div>
           
@@ -10425,7 +11181,7 @@ curried(<span class="hljs-number">1</span>)(<span class="hljs-number">2</span>)(
   <p>Invoke an array of functions asynchronously. Each function is awaited to ensure execution order.</p>
 
 
-  <div class='pre p1 fill-light mt0'>curry(methods: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, arg: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
+  <div class='pre p1 fill-light mt0'>curry(collection: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>), arg: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
   
   
 
@@ -10442,7 +11198,7 @@ curried(<span class="hljs-number">1</span>)(<span class="hljs-number">2</span>)(
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>methods</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+            <span class='code bold'>collection</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>))</code>
 	    The functions to be invoked.
 
           </div>
@@ -10452,7 +11208,7 @@ curried(<span class="hljs-number">1</span>)(<span class="hljs-number">2</span>)(
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>arg</span> <code class='quiet'>(any)</code>
-	    The object passed to each method.
+	    The object passed as an argument to each method.
 
           </div>
           
@@ -10512,7 +11268,7 @@ curried(<span class="hljs-number">1</span>)(<span class="hljs-number">2</span>)(
   <p>Creates a function that accepts arguments of method and either invokes method returning its result, if at least arity number of arguments have been provided, or returns a function that accepts the remaining method arguments, and so on. The arity of method may be specified if method.length is not sufficient. The arguments are given in reverse order.</p>
 
 
-  <div class='pre p1 fill-light mt0'>curryRight(method: any, arity: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, methods: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): any</div>
+  <div class='pre p1 fill-light mt0'>curryRight(callable: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, arity: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): any</div>
   
   
 
@@ -10529,17 +11285,8 @@ curried(<span class="hljs-number">1</span>)(<span class="hljs-number">2</span>)(
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>method</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>arity</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
-            = <code>method.length</code>)</code>
-	    The arity of method.
+            <span class='code bold'>callable</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+	    The function to curry.
 
           </div>
           
@@ -10547,8 +11294,9 @@ curried(<span class="hljs-number">1</span>)(<span class="hljs-number">2</span>)(
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>methods</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
-	    The function to curry.
+            <span class='code bold'>arity</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
+            = <code>callable.length</code>)</code>
+	    The arity of method.
 
           </div>
           
@@ -10609,7 +11357,7 @@ curried(<span class="hljs-number">1</span>)(<span class="hljs-number">2</span>)(
   <p>Creates a function that is restricted to execute method once. Repeat calls to the function will return the value of the first call. The method is executed with the this binding of the created function.</p>
 
 
-  <div class='pre p1 fill-light mt0'>once(method: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></div>
+  <div class='pre p1 fill-light mt0'>once(callable: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></div>
   
   
 
@@ -10626,7 +11374,7 @@ curried(<span class="hljs-number">1</span>)(<span class="hljs-number">2</span>)(
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>method</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+            <span class='code bold'>callable</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
 	    The function to be called.
 
           </div>
@@ -10685,10 +11433,10 @@ onceOnly();
   </div>
   
 
-  <p>Creates a function that executes method, only after being called n times.</p>
+  <p>Creates a function that executes callable, only after being called n times.</p>
 
 
-  <div class='pre p1 fill-light mt0'>after(amount: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, method: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></div>
+  <div class='pre p1 fill-light mt0'>after(callable: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, amount: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></div>
   
   
 
@@ -10705,8 +11453,8 @@ onceOnly();
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>amount</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-	    The number of calls until method is invoked.
+            <span class='code bold'>callable</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+	    The function to be called.
 
           </div>
           
@@ -10714,8 +11462,8 @@ onceOnly();
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>method</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
-	    The function to be called.
+            <span class='code bold'>amount</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    The number of calls until method is invoked.
 
           </div>
           
@@ -10773,10 +11521,10 @@ onlyAfter();
   </div>
   
 
-  <p>Creates a function that executes method, only before n times.</p>
+  <p>Creates a function that executes callable, only before n times.</p>
 
 
-  <div class='pre p1 fill-light mt0'>before(amount: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, method: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></div>
+  <div class='pre p1 fill-light mt0'>before(callable: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, amount: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></div>
   
   
 
@@ -10793,8 +11541,8 @@ onlyAfter();
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>amount</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-	    The number of calls before n.
+            <span class='code bold'>callable</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+	    The function to be called.
 
           </div>
           
@@ -10802,8 +11550,8 @@ onlyAfter();
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>method</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
-	    The function to be called.
+            <span class='code bold'>amount</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    The number of calls before n.
 
           </div>
           
@@ -11719,7 +12467,7 @@ compactMap({<span class="hljs-attr">a</span>: <span class="hljs-number">0</span>
   <p>Loops through an object or an array and binds the given object to all functions encountered.</p>
 
 
-  <div class='pre p1 fill-light mt0'>bindAll(bindThese: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, withThis: ...<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): any</div>
+  <div class='pre p1 fill-light mt0'>bindAll(collection: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>), bindThis: any): (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</div>
   
   
 
@@ -11736,8 +12484,8 @@ compactMap({<span class="hljs-attr">a</span>: <span class="hljs-number">0</span>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>bindThese</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
-	    The function to be invoked if possible.
+            <span class='code bold'>collection</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>))</code>
+	    The functions to bind.
 
           </div>
           
@@ -11745,8 +12493,8 @@ compactMap({<span class="hljs-attr">a</span>: <span class="hljs-number">0</span>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>withThis</span> <code class='quiet'>(...<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
-	    Arguments to pass to the method.
+            <span class='code bold'>bindThis</span> <code class='quiet'>(any)</code>
+	    Object to be bound to functions.
 
           </div>
           
@@ -11760,7 +12508,7 @@ compactMap({<span class="hljs-attr">a</span>: <span class="hljs-number">0</span>
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>any</code>:
+      <code>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>:
         Returns the method invoked or undefined.
 
       
@@ -11806,10 +12554,10 @@ collection.a();
   </div>
   
 
-  <p>Creates a function that negates the result of the predicate method.</p>
+  <p>Creates a function that negates the result of the predicate callable.</p>
 
 
-  <div class='pre p1 fill-light mt0'>negate(method: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): any</div>
+  <div class='pre p1 fill-light mt0'>negate(callable: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): any</div>
   
   
 
@@ -11826,7 +12574,7 @@ collection.a();
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>method</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+            <span class='code bold'>callable</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
 	    The function to be invoked.
 
           </div>
@@ -12122,10 +12870,10 @@ overEveryThing(<span class="hljs-literal">null</span>);
   </div>
   
 
-  <p>A wrapper around setTimeout.</p>
+  <p>Timer wrapper.</p>
 
 
-  <div class='pre p1 fill-light mt0'>timer(method: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, time: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></div>
+  <div class='pre p1 fill-light mt0'>timer(callable: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, time: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
   
   
 
@@ -12142,8 +12890,8 @@ overEveryThing(<span class="hljs-literal">null</span>);
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>method</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    Function to be invoked.
+            <span class='code bold'>callable</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+	    The function to be invoked.
 
           </div>
           
@@ -12151,8 +12899,8 @@ overEveryThing(<span class="hljs-literal">null</span>);
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>time</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
-	    The time in nanoseconds.
+            <span class='code bold'>time</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    The time in milliseconds.
 
           </div>
           
@@ -12166,8 +12914,8 @@ overEveryThing(<span class="hljs-literal">null</span>);
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>:
-        Set timeout id.
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
+        Returns setTimeout ID.
 
       
     
@@ -12179,8 +12927,8 @@ overEveryThing(<span class="hljs-literal">null</span>);
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>timer(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> { <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>}, <span class="hljs-number">1</span>);
-<span class="hljs-comment">// =&gt; 0: 1</span></pre>
+      <pre class='p1 overflow-auto round fill-light'>timer(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {}, <span class="hljs-number">100</span>);
+<span class="hljs-comment">// =&gt; 0</span></pre>
     
   
 
@@ -12207,10 +12955,10 @@ overEveryThing(<span class="hljs-literal">null</span>);
   </div>
   
 
-  <p>Wrapper around setInterval.</p>
+  <p>Interval wrapper.</p>
 
 
-  <div class='pre p1 fill-light mt0'>interval(method: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, time: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>interval(callable: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, time: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
   
   
 
@@ -12227,8 +12975,8 @@ overEveryThing(<span class="hljs-literal">null</span>);
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>method</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    Function to be invoked.
+            <span class='code bold'>callable</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+	    The function to be invoked.
 
           </div>
           
@@ -12237,7 +12985,7 @@ overEveryThing(<span class="hljs-literal">null</span>);
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>time</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-	    The time in nanoseconds.
+	    The time in milliseconds.
 
           </div>
           
@@ -12252,7 +13000,7 @@ overEveryThing(<span class="hljs-literal">null</span>);
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
       <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
-        Returns the new empty object.
+        Returns setInterval ID.
 
       
     
@@ -12264,109 +13012,8 @@ overEveryThing(<span class="hljs-literal">null</span>);
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>interval(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> { <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>}, <span class="hljs-number">1</span>);
-<span class="hljs-comment">// =&gt; 0: 1</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='clearintervals'>
-      clearIntervals
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Clears setInterval function.</p>
-
-
-  <div class='pre p1 fill-light mt0'>clearIntervals(original: any, time: any, interval: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, clearInterval: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>original</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>time</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>interval</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    Interval to be cleared.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>clearInterval</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    Invocation of interval clear function.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>:
-        Returns a number of the cleared setInterval ID.
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>clearIntervals();
-<span class="hljs-comment">// =&gt;</span></pre>
+      <pre class='p1 overflow-auto round fill-light'>interval(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {}, <span class="hljs-number">100</span>);
+<span class="hljs-comment">// =&gt; 0</span></pre>
     
   
 
@@ -12393,10 +13040,10 @@ overEveryThing(<span class="hljs-literal">null</span>);
   </div>
   
 
-  <p>Clears setTimeout function.</p>
+  <p>Clear all active timers.</p>
 
 
-  <div class='pre p1 fill-light mt0'>clearTimers(original: any, time: any, timer: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, clearTimeout: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></div>
+  <div class='pre p1 fill-light mt0'>clearTimers(callable: any, time: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
   
   
 
@@ -12413,7 +13060,7 @@ overEveryThing(<span class="hljs-literal">null</span>);
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>original</span> <code class='quiet'>(any)</code>
+            <span class='code bold'>callable</span> <code class='quiet'>(any)</code>
 	    
           </div>
           
@@ -12427,24 +13074,6 @@ overEveryThing(<span class="hljs-literal">null</span>);
           
         </div>
       
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>timer</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    Timer to be cleared.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>clearTimeout</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
-	    Invocation of time clear function.
-
-          </div>
-          
-        </div>
-      
     </div>
   
 
@@ -12453,8 +13082,8 @@ overEveryThing(<span class="hljs-literal">null</span>);
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>:
-        Returns a number of the cleared setTimeout ID.
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
+        Returns undefined.
 
       
     
@@ -12466,7 +13095,8 @@ overEveryThing(<span class="hljs-literal">null</span>);
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// =&gt;</span></pre>
+      <pre class='p1 overflow-auto round fill-light'>clearTimers();
+<span class="hljs-comment">// =&gt; undefined</span></pre>
     
   
 
@@ -12493,9 +13123,10 @@ overEveryThing(<span class="hljs-literal">null</span>);
   </div>
   
 
-  
+  <p>Creates a debounced function that delays invoking callable until after wait milliseconds have elapsed since the last time the debounced function was invoked. The debounce function has a clear method to cancel the timer.</p>
 
-  <div class='pre p1 fill-light mt0'>debounce(original: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, time: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+
+  <div class='pre p1 fill-light mt0'>debounce(callable: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, time: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></div>
   
   
 
@@ -12512,8 +13143,8 @@ overEveryThing(<span class="hljs-literal">null</span>);
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>original</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    -
+            <span class='code bold'>callable</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+	    The function to be invoked.
 
           </div>
           
@@ -12521,8 +13152,8 @@ overEveryThing(<span class="hljs-literal">null</span>);
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>time</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    -
+            <span class='code bold'>time</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    The time in milliseconds.
 
           </div>
           
@@ -12536,8 +13167,8 @@ overEveryThing(<span class="hljs-literal">null</span>);
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
-        
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>:
+        The debounced function.
 
       
     
@@ -12549,8 +13180,8 @@ overEveryThing(<span class="hljs-literal">null</span>);
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>debounce();
-<span class="hljs-comment">// =&gt;</span></pre>
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> debounced = debounce(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> { <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'debounced'</span>); }, <span class="hljs-number">0</span>);
+<span class="hljs-comment">// =&gt; debounced();</span></pre>
     
   
 
@@ -12569,17 +13200,18 @@ overEveryThing(<span class="hljs-literal">null</span>);
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='throttle'>
-      throttle
+    <h3 class='fl m0' id='debounce'>
+      debounce
     </h3>
     
     
   </div>
   
 
-  
+  <p>Creates a throttled function that only invokes callable at most once per every wait milliseconds. The throttle function has a clear method to cancel the timer.</p>
 
-  <div class='pre p1 fill-light mt0'>throttle(method: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, time: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+
+  <div class='pre p1 fill-light mt0'>debounce(callable: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, time: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></div>
   
   
 
@@ -12596,8 +13228,8 @@ overEveryThing(<span class="hljs-literal">null</span>);
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>method</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    -
+            <span class='code bold'>callable</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+	    The function to be invoked.
 
           </div>
           
@@ -12605,8 +13237,8 @@ overEveryThing(<span class="hljs-literal">null</span>);
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>time</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    -
+            <span class='code bold'>time</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    The time in milliseconds.
 
           </div>
           
@@ -12620,8 +13252,8 @@ overEveryThing(<span class="hljs-literal">null</span>);
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
-        Returns the new empty object.
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>:
+        The throttled function.
 
       
     
@@ -12633,8 +13265,91 @@ overEveryThing(<span class="hljs-literal">null</span>);
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>throttle();
-<span class="hljs-comment">// =&gt;</span></pre>
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> throttled = throttle(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> { <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'debounced'</span>); }, <span class="hljs-number">0</span>);
+<span class="hljs-comment">// =&gt; throttled();</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='clearintervals'>
+      clearIntervals
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Clear all active intervals.</p>
+
+
+  <div class='pre p1 fill-light mt0'>clearIntervals(callable: any, time: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>callable</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>time</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
+        Returns undefined.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>clearIntervals();
+<span class="hljs-comment">// =&gt; undefined</span></pre>
     
   
 
@@ -12818,7 +13533,7 @@ chained(<span class="hljs-string">'Acid'</span>).a();
   <p>Creates a function that invokes method with arguments arranged according to the specified indexes where the argument value at the first index is provided as the first argument, the argument value at the second index is provided as the second argument, and so on.</p>
 
 
-  <div class='pre p1 fill-light mt0'>reArg(method: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, indexes: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></div>
+  <div class='pre p1 fill-light mt0'>reArg(callable: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, indexes: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></div>
   
   
 
@@ -12835,7 +13550,7 @@ chained(<span class="hljs-string">'Acid'</span>).a();
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>method</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+            <span class='code bold'>callable</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
 	    The function to be invoked.
 
           </div>
@@ -12877,6 +13592,92 @@ chained(<span class="hljs-string">'Acid'</span>).a();
 }, [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">0</span>]);
 reArged(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>);
 <span class="hljs-comment">// =&gt; [2, 3, 1]</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='wrap'>
+      wrap
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Creates a function that provides value to wrapper as its first argument. The wrapper function is given two arguments the value and the provided argument from the newly created function.</p>
+
+
+  <div class='pre p1 fill-light mt0'>wrap(value: any, wrapper: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>value</span> <code class='quiet'>(any)</code>
+	    The value to wrap.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>wrapper</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+	    The wrapper function.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>:
+        The new function.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> wrapped = wrap(<span class="hljs-string">'Lucy'</span>, (firstName, lastName) =&gt; {<span class="hljs-built_in">console</span>.log(<span class="hljs-string">`My name is <span class="hljs-subst">${firstName}</span> <span class="hljs-subst">${lastName}</span>.`</span>);});
+wrapped(<span class="hljs-string">'Diamonds'</span>);
+<span class="hljs-comment">// =&gt; 'My name is Lucy Diamonds.'</span></pre>
     
   
 
@@ -13227,10 +14028,10 @@ isNumberInRange(<span class="hljs-number">1</span>, <span class="hljs-number">-1
     
       
       <pre class='p1 overflow-auto round fill-light'>hasKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'</span>, <span class="hljs-attr">John</span>: <span class="hljs-string">'Malkovich'</span>, <span class="hljs-attr">Thor</span>: <span class="hljs-string">'Bobo'</span>}, [<span class="hljs-string">'Lucy'</span>,<span class="hljs-string">'Thor'</span>]);
-<span class="hljs-comment">//=&gt; true</span>
+<span class="hljs-comment">// =&gt; true</span>
 
 hasKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'</span>, <span class="hljs-attr">John</span>: <span class="hljs-string">'Malkovich'</span>, <span class="hljs-attr">Thor</span>: <span class="hljs-string">'Bobo'</span>}, [<span class="hljs-string">'Lucy'</span>,<span class="hljs-string">'Tom'</span>]);
-<span class="hljs-comment">//=&gt; false</span></pre>
+<span class="hljs-comment">// =&gt; false</span></pre>
     
   
 
@@ -13306,7 +14107,7 @@ hasKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'<
     
       
       <pre class='p1 overflow-auto round fill-light'>compactKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'</span>, <span class="hljs-attr">John</span>: <span class="hljs-string">'Malkovich'</span>, <span class="hljs-attr">Thor</span>: <span class="hljs-literal">undefined</span>, <span class="hljs-attr">other</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">that</span>: <span class="hljs-literal">null</span>});
-<span class="hljs-comment">//=&gt; ['Lucy', 'John', 'other']</span></pre>
+<span class="hljs-comment">// =&gt; ['Lucy', 'John', 'other']</span></pre>
     
   
 
@@ -13391,10 +14192,10 @@ hasKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'<
     
       
       <pre class='p1 overflow-auto round fill-light'>hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'</span>, <span class="hljs-attr">John</span>: <span class="hljs-string">'Malkovich'</span>, <span class="hljs-attr">Thor</span>: <span class="hljs-string">'Bobo'</span>}, [<span class="hljs-string">'Lucy'</span>,<span class="hljs-string">'Tom'</span>]);
-<span class="hljs-comment">//=&gt; true</span>
+<span class="hljs-comment">// =&gt; true</span>
 
 hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'</span>, <span class="hljs-attr">John</span>: <span class="hljs-string">'Malkovich'</span>, <span class="hljs-attr">Thor</span>: <span class="hljs-string">'Bobo'</span>}, [<span class="hljs-string">'Other'</span>,<span class="hljs-string">'Tom'</span>]);
-<span class="hljs-comment">//=&gt; false</span></pre>
+<span class="hljs-comment">// =&gt; false</span></pre>
     
   
 
@@ -13726,7 +14527,7 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
     
       
       <pre class='p1 overflow-auto round fill-light'>invert({<span class="hljs-attr">a</span>:<span class="hljs-number">1</span>});
-<span class="hljs-comment">//=&gt; {1:a}</span></pre>
+<span class="hljs-comment">// =&gt; {1:a}</span></pre>
     
   
 
@@ -13811,7 +14612,7 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
     
       
       <pre class='p1 overflow-auto round fill-light'>omit({<span class="hljs-attr">a</span>:<span class="hljs-number">1</span>, <span class="hljs-attr">b</span>:<span class="hljs-number">2</span>, [<span class="hljs-string">'a'</span>]});
-<span class="hljs-comment">//=&gt; {b:2}</span></pre>
+<span class="hljs-comment">// =&gt; {b:2}</span></pre>
     
   
 
@@ -15234,7 +16035,7 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
     
       
       <pre class='p1 overflow-auto round fill-light'>assignDeep({<span class="hljs-attr">a</span>:<span class="hljs-number">1</span>}, {<span class="hljs-attr">b</span>:<span class="hljs-number">2</span>})
-<span class="hljs-comment">//=&gt; {a:1, b:2}</span></pre>
+<span class="hljs-comment">// =&gt; {a:1, b:2}</span></pre>
     
   
 
@@ -15613,7 +16414,7 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
   <span class="hljs-attr">a</span>: <span class="hljs-number">1</span>,
   <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>
 }, [<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>]);
-<span class="hljs-comment">//-&gt; true</span></pre>
+<span class="hljs-comment">// =&gt; true</span></pre>
     
   
 
@@ -15689,7 +16490,7 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
     
       
       <pre class='p1 overflow-auto round fill-light'>toPath(<span class="hljs-string">'post.like[2]'</span>);
-<span class="hljs-comment">//=&gt; ['post', 'like', '2']</span></pre>
+<span class="hljs-comment">// =&gt; ['post', 'like', '2']</span></pre>
     
   
 
@@ -15751,10 +16552,10 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
     
       
       <pre class='p1 overflow-auto round fill-light'>uid();
-<span class="hljs-comment">//=&gt; 0</span>
+<span class="hljs-comment">// =&gt; 0</span>
 
 uid();
-<span class="hljs-comment">//=&gt; 1</span></pre>
+<span class="hljs-comment">// =&gt; 1</span></pre>
     
   
 
@@ -15823,16 +16624,16 @@ uid();
     
       
       <pre class='p1 overflow-auto round fill-light'>uid();
-<span class="hljs-comment">//=&gt; 0</span>
+<span class="hljs-comment">// =&gt; 0</span>
 
 uid();
-<span class="hljs-comment">//=&gt; 1</span>
+<span class="hljs-comment">// =&gt; 1</span>
 
 uid.free(<span class="hljs-number">0</span>);
-<span class="hljs-comment">//=&gt; undefined</span>
+<span class="hljs-comment">// =&gt; undefined</span>
 
 uid();
-<span class="hljs-comment">//=&gt; 0</span></pre>
+<span class="hljs-comment">// =&gt; 0</span></pre>
     
   
 
@@ -15934,7 +16735,7 @@ uid();
     <span class="hljs-attr">like</span>: [<span class="hljs-string">'a'</span>,<span class="hljs-string">'b'</span>,<span class="hljs-string">'c'</span>]
   }
 });
-<span class="hljs-comment">//=&gt; c</span></pre>
+<span class="hljs-comment">// =&gt; c</span></pre>
     
   
 
@@ -16030,10 +16831,10 @@ uid();
     
       
       <pre class='p1 overflow-auto round fill-light'>model(<span class="hljs-string">'test'</span>, {<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>});
-<span class="hljs-comment">//=&gt; {a: 1}</span>
+<span class="hljs-comment">// =&gt; {a: 1}</span>
 
 model(<span class="hljs-string">'test'</span>);
-<span class="hljs-comment">//=&gt; {a: 1}</span></pre>
+<span class="hljs-comment">// =&gt; {a: 1}</span></pre>
     
   
 
@@ -16127,7 +16928,7 @@ model(<span class="hljs-string">'test'</span>);
     
       
       <pre class='p1 overflow-auto round fill-light'>toggle(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>);
-<span class="hljs-comment">//=&gt; 2</span></pre>
+<span class="hljs-comment">// =&gt; 2</span></pre>
     
   
 
@@ -16157,7 +16958,7 @@ model(<span class="hljs-string">'test'</span>);
   <p>Creates a function that returns the result of invoking the given functions, where each successive invocation is supplied the return value of the previous.</p>
 
 
-  <div class='pre p1 fill-light mt0'>flow(eachArray: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): any</div>
+  <div class='pre p1 fill-light mt0'>flow(collection: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></div>
   
   
 
@@ -16174,8 +16975,8 @@ model(<span class="hljs-string">'test'</span>);
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>eachArray</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
-	    Array to flatten
+            <span class='code bold'>collection</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    Methods to invoke.
 
           </div>
           
@@ -16189,8 +16990,8 @@ model(<span class="hljs-string">'test'</span>);
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>any</code>:
-        
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>:
+        Returns the new composite function.
 
       
     
@@ -16233,7 +17034,7 @@ model(<span class="hljs-string">'test'</span>);
   <p>This method is like flow except that it creates a function that invokes the given functions from right to left.</p>
 
 
-  <div class='pre p1 fill-light mt0'>flowRight(eachArray: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): any</div>
+  <div class='pre p1 fill-light mt0'>flowRight(collection: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></div>
   
   
 
@@ -16250,8 +17051,8 @@ model(<span class="hljs-string">'test'</span>);
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>eachArray</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
-	    Array to flatten
+            <span class='code bold'>collection</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    Methods to invoke.
 
           </div>
           
@@ -16265,8 +17066,8 @@ model(<span class="hljs-string">'test'</span>);
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>any</code>:
-        
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>:
+        Returns the new composite function.
 
       
     
@@ -16309,7 +17110,7 @@ model(<span class="hljs-string">'test'</span>);
   <p>Creates a function that returns the result of invoking the given functions, where each successive invocation is supplied the return value of the previous.</p>
 
 
-  <div class='pre p1 fill-light mt0'>flowAsync(eachArray: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): any</div>
+  <div class='pre p1 fill-light mt0'>flowAsync(collection: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></div>
   
   
 
@@ -16326,8 +17127,8 @@ model(<span class="hljs-string">'test'</span>);
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>eachArray</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
-	    Array to flatten
+            <span class='code bold'>collection</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    Methods to invoke.
 
           </div>
           
@@ -16341,8 +17142,8 @@ model(<span class="hljs-string">'test'</span>);
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>any</code>:
-        
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>:
+        Returns the new composite function.
 
       
     
@@ -16385,7 +17186,7 @@ model(<span class="hljs-string">'test'</span>);
   <p>This method is like flow except that it creates a function that invokes the given functions from right to left.</p>
 
 
-  <div class='pre p1 fill-light mt0'>flowRightAsync(eachArray: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): any</div>
+  <div class='pre p1 fill-light mt0'>flowRightAsync(collection: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></div>
   
   
 
@@ -16402,8 +17203,8 @@ model(<span class="hljs-string">'test'</span>);
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>eachArray</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
-	    Array to flatten
+            <span class='code bold'>collection</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    Methods to invoke.
 
           </div>
           
@@ -16417,8 +17218,8 @@ model(<span class="hljs-string">'test'</span>);
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>any</code>:
-        
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>:
+        Returns the new composite function.
 
       
     

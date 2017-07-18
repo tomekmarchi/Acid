@@ -10,10 +10,10 @@ import { assign } from '../internal/object';
   *
   * @example
   * remove([1, 2, 3, 3, 4, 3, 5], 1);
-  * // -> [2, 3, 3, 4, 3, 5]
+  * // => [2, 3, 3, 4, 3, 5]
   *
   * remove([3, 3, 4, 5], 3, 4);
-  * // -> [5]
+  * // => [5]
 */
 export const remove = (array, ...removeThese) => {
   let arrayLength = array.length;
@@ -37,7 +37,7 @@ export const remove = (array, ...removeThese) => {
   *
   * @example
   * remove([1, 2, 3, 3, 4, 3, 5], (item) => { return Boolean(item % 2);}));
-  * // -> [2, 4]
+  * // => [2, 4]
 */
 export const removeBy = (array, iteratee) => {
   let arrayLength = array.length;

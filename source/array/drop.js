@@ -12,7 +12,7 @@ import { assign } from '../internal/object';
   *
   * @example
   * drop([1, 2, 3], 1);
-  * //=> [2, 3]
+  * // => [2, 3]
 */
 export const drop = (array, amount, upTo = array.length) => {
   return array.splice(amount, upTo);
@@ -29,7 +29,7 @@ export const drop = (array, amount, upTo = array.length) => {
   *
   * @example
   * dropRight([1, 2, 3], 1);
-  * //=> [1, 2]
+  * // => [1, 2]
 */
 export const dropRight = (array, amount, upTo = array.length) => {
   return drop(array, 0, upTo - amount);

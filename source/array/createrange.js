@@ -30,7 +30,7 @@ const rangeDown = (start, end, incrementArg) => {
   *
   * @example
   * range([1,'B', Cat, false, null, 0 , '', undefined, NaN]);
-  * //=> [1, 'B', Cat]
+  * // => [1, 'B', Cat]
 */
 export const range = (start, end, increment = 1) => {
   if (start < end) {
@@ -50,7 +50,7 @@ export const range = (start, end, increment = 1) => {
   *
   * @example
   * rangeRight([1,'B', Cat, false, null, 0 , '', undefined, NaN]);
-  * //=> [1, 'B', Cat]
+  * // => [1, 'B', Cat]
 */
 export const rangeRight = (start, end, increment = 1) => {
   return rangeDown(end, start, increment);

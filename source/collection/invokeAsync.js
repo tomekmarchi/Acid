@@ -6,6 +6,7 @@ import { mapAsync } from '../array/mapAsync';
   *
   * @function invokeAsync
   * @type {Function}
+  * @async
   * @param {Array} collection - Collection from which method will be taken.
   * @param {string} methodName - Value used to pluck method from object.
   * @param {*} args - Values to be run through method.

@@ -27,6 +27,7 @@ export const inSync = (collection, arg) => {
   *
   * @function curry
   * @type {Function}
+  * @async
   * @param {Array|Object|Function} collection - The functions to be invoked.
   * @param {*} arg - The object passed as an argument to each method.
   * @returns {undefined} Returns undefined.

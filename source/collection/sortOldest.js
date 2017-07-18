@@ -12,7 +12,7 @@ import { assign } from '../internal/object';
   *
   * @example
   * sortOldest([{id: 1}, {id: 0}], 'id');
-  * // -> [{id: 0}, {id: 1}]
+  * // => [{id: 0}, {id: 1}]
 */
 export const sortOldest = (collection, key, pureMode = true) => {
   const array = (pureMode) ? collection : [...collection];
@@ -40,7 +40,7 @@ export const sortOldest = (collection, key, pureMode = true) => {
   *
   * @example
   * sortOldest([{id: 1}, {id: 0}], 'id');
-  * // -> {id: 0}
+  * // => {id: 0}
 */
 export const getOldest = (collection, key) => {
   return sortOldest(collection, key)[0];

@@ -11,7 +11,7 @@ import { toArray } from '../internal/array';
   *
   * @example
   * shuffle([1, 2, 3, 4]);
-  * // -> [3, 4, 2, 1]
+  * // => [3, 4, 2, 1]
 */
 export const shuffle = (array, amount = array.length) => {
   const shuffleArray = toArray(array);

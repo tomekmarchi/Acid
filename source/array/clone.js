@@ -10,7 +10,7 @@ import { assign } from '../internal/object';
   *
   * @example
   * cloneArray([1,'B', Cat]);
-  * //=> [1, 'B', Cat]
+  * // => [1, 'B', Cat]
 */
 export const cloneArray = (array) => {
   return array.slice();

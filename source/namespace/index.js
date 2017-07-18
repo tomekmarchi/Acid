@@ -7,7 +7,7 @@ let cacheSuper;
  *
  * @example
  * $('modelName', {example: 1});
- * // -> {example: 1}
+ * // => {example: 1}
  */
 const $ = (...args) => {
   return cacheSuper(...args);
@@ -22,8 +22,8 @@ const $ = (...args) => {
  *
  * @example
  * superMethod($.get);
- * // -> $('flow', $);
- * // -> $.flow
+ * // => $('flow', $);
+ * // => $.flow
  */
 const superMethod = (callable) => {
   cacheSuper = callable;

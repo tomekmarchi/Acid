@@ -14,7 +14,7 @@ import { hasValue } from '../internal/is';
   *
   * @example
   * compactMapAsync([1, 2, 3, false], async () => {return item});
-  * //=> [1, 2, 3]
+  * // => [1, 2, 3]
 */
 export const compactMapAsync = async (array, iteratee) => {
   const results = [];

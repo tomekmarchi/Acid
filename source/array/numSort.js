@@ -13,7 +13,7 @@ export const numericalCompare = (a, b) => {
   *
   * @example
   * numSort([10, 0, 2, 1]);
-  * // -> [0, 1, 2, 10]
+  * // => [0, 1, 2, 10]
 */
 export const numSort = (numberList) => {
   return numberList.sort(numericalCompare);
