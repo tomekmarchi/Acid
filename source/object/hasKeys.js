@@ -4,7 +4,7 @@ import { assign, keys } from '../internal/object';
 /**
   * Checks to see if an object has all of the given property names.
   *
-  * @function compactKeys
+  * @function hasKeys
   * @type {Function}
   * @param {Object} object - Object from which keys are extracted.
   * @param {Array} properties - Array of object keys.

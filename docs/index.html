@@ -1413,26 +1413,6 @@
               
                 
                 <li><a
-                  href='#curry'
-                  class="">
-                  curry
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#curry'
-                  class="">
-                  curry
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
                   href='#curryright'
                   class="">
                   curryRight
@@ -1683,9 +1663,9 @@
               
                 
                 <li><a
-                  href='#debounce'
+                  href='#throttle'
                   class="">
-                  debounce
+                  throttle
                   
                 </a>
                 
@@ -1696,6 +1676,26 @@
                   href='#chain'
                   class="">
                   chain
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#insync'
+                  class="">
+                  inSync
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#inasync'
+                  class="">
+                  inAsync
                   
                 </a>
                 
@@ -1763,19 +1763,9 @@
               
                 
                 <li><a
-                  href='#compactkeys'
+                  href='#haskeys'
                   class="">
-                  compactKeys
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#compactkeys'
-                  class="">
-                  compactKeys
+                  hasKeys
                   
                 </a>
                 
@@ -1796,6 +1786,16 @@
                   href='#pick'
                   class="">
                   pick
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#compactkeys'
+                  class="">
+                  compactKeys
                   
                 </a>
                 
@@ -13938,180 +13938,6 @@ curried(<span class="hljs-number">1</span>)(<span class="hljs-number">2</span>)(
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='curry'>
-      curry
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Invoke an array of functions.</p>
-
-
-  <div class='pre p1 fill-light mt0'>curry(collection: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>), arg: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>collection</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>))</code>
-	    The functions to be invoked.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>arg</span> <code class='quiet'>(any)</code>
-	    The object passed as an argument to each method.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
-        Returns undefined.
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>inSync([<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {<span class="hljs-built_in">console</span>.log(<span class="hljs-number">1</span>);}, () =&gt; {<span class="hljs-built_in">console</span>.log(<span class="hljs-number">2</span>);}]);
-<span class="hljs-comment">// 1</span>
-<span class="hljs-comment">// 2</span>
-<span class="hljs-comment">// =&gt; undefined</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='curry'>
-      curry
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Invoke an array of functions asynchronously. Each function is awaited to ensure execution order.</p>
-
-
-  <div class='pre p1 fill-light mt0'>curry(collection: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>), arg: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>collection</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>))</code>
-	    The functions to be invoked.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>arg</span> <code class='quiet'>(any)</code>
-	    The object passed as an argument to each method.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
-        Returns undefined.
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>inAsync([<span class="hljs-keyword">async</span> () =&gt; {<span class="hljs-built_in">console</span>.log(<span class="hljs-number">1</span>);}, <span class="hljs-keyword">async</span> () =&gt; {<span class="hljs-built_in">console</span>.log(<span class="hljs-number">2</span>);}]);
-<span class="hljs-comment">// 1</span>
-<span class="hljs-comment">// 2</span>
-<span class="hljs-comment">// =&gt; undefined</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
     <h3 class='fl m0' id='curryright'>
       curryRight
     </h3>
@@ -16138,8 +15964,8 @@ overEveryThing(<span class="hljs-literal">null</span>);
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='debounce'>
-      debounce
+    <h3 class='fl m0' id='throttle'>
+      throttle
     </h3>
     
     
@@ -16149,7 +15975,7 @@ overEveryThing(<span class="hljs-literal">null</span>);
   <p>Creates a throttled function that only invokes callable at most once per every wait milliseconds. The throttle function has a clear method to cancel the timer.</p>
 
 
-  <div class='pre p1 fill-light mt0'>debounce(callable: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, time: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></div>
+  <div class='pre p1 fill-light mt0'>throttle(callable: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>, time: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></div>
   
   
 
@@ -16282,6 +16108,180 @@ overEveryThing(<span class="hljs-literal">null</span>);
       <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> chained = chain({a(item) { <span class="hljs-keyword">return</span> item;}});
 chained(<span class="hljs-string">'Acid'</span>).a();
 <span class="hljs-comment">// =&gt; 'Acid'</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='insync'>
+      inSync
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Invoke an array of functions.</p>
+
+
+  <div class='pre p1 fill-light mt0'>inSync(collection: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>), arg: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>collection</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>))</code>
+	    The functions to be invoked.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>arg</span> <code class='quiet'>(any)</code>
+	    The object passed as an argument to each method.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
+        Returns undefined.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>inSync([<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {<span class="hljs-built_in">console</span>.log(<span class="hljs-number">1</span>);}, () =&gt; {<span class="hljs-built_in">console</span>.log(<span class="hljs-number">2</span>);}]);
+<span class="hljs-comment">// 1</span>
+<span class="hljs-comment">// 2</span>
+<span class="hljs-comment">// =&gt; undefined</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='inasync'>
+      inAsync
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Invoke an array of functions asynchronously. Each function is awaited to ensure execution order.</p>
+
+
+  <div class='pre p1 fill-light mt0'>inAsync(collection: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>), arg: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>collection</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>))</code>
+	    The functions to be invoked.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>arg</span> <code class='quiet'>(any)</code>
+	    The object passed as an argument to each method.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
+        Returns undefined.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>inAsync([<span class="hljs-keyword">async</span> () =&gt; {<span class="hljs-built_in">console</span>.log(<span class="hljs-number">1</span>);}, <span class="hljs-keyword">async</span> () =&gt; {<span class="hljs-built_in">console</span>.log(<span class="hljs-number">2</span>);}]);
+<span class="hljs-comment">// 1</span>
+<span class="hljs-comment">// 2</span>
+<span class="hljs-comment">// =&gt; undefined</span></pre>
     
   
 
@@ -16817,8 +16817,8 @@ isNumberInRange(<span class="hljs-number">1</span>, <span class="hljs-number">-1
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='compactkeys'>
-      compactKeys
+    <h3 class='fl m0' id='haskeys'>
+      hasKeys
     </h3>
     
     
@@ -16828,7 +16828,7 @@ isNumberInRange(<span class="hljs-number">1</span>, <span class="hljs-number">-1
   <p>Checks to see if an object has all of the given property names.</p>
 
 
-  <div class='pre p1 fill-light mt0'>compactKeys(object: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, properties: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  <div class='pre p1 fill-light mt0'>hasKeys(object: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, properties: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
   
   
 
@@ -16887,82 +16887,6 @@ isNumberInRange(<span class="hljs-number">1</span>, <span class="hljs-number">-1
 
 hasKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'</span>, <span class="hljs-attr">John</span>: <span class="hljs-string">'Malkovich'</span>, <span class="hljs-attr">Thor</span>: <span class="hljs-string">'Bobo'</span>}, [<span class="hljs-string">'Lucy'</span>,<span class="hljs-string">'Tom'</span>]);
 <span class="hljs-comment">// =&gt; false</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='compactkeys'>
-      compactKeys
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Extracts all key values from an object.</p>
-
-
-  <div class='pre p1 fill-light mt0'>compactKeys(object: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>object</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    Object from which keys are extracted.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
-        Returns an array of key values.
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>compactKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'</span>, <span class="hljs-attr">John</span>: <span class="hljs-string">'Malkovich'</span>, <span class="hljs-attr">Thor</span>: <span class="hljs-literal">undefined</span>, <span class="hljs-attr">other</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">that</span>: <span class="hljs-literal">null</span>});
-<span class="hljs-comment">// =&gt; ['Lucy', 'John', 'other']</span></pre>
     
   
 
@@ -17146,6 +17070,82 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
       
       <pre class='p1 overflow-auto round fill-light'>pick({<span class="hljs-attr">a</span>:<span class="hljs-number">1</span>, <span class="hljs-attr">b</span>:<span class="hljs-number">2</span>, <span class="hljs-attr">c</span>:<span class="hljs-number">3</span>}, [<span class="hljs-string">'a'</span>,<span class="hljs-string">'b'</span>]);
 <span class="hljs-comment">// =&gt; {a:1, b:2}</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='compactkeys'>
+      compactKeys
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Extracts all key values from an object.</p>
+
+
+  <div class='pre p1 fill-light mt0'>compactKeys(object: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>object</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    Object from which keys are extracted.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
+        Returns an array of key values.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>compactKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'</span>, <span class="hljs-attr">John</span>: <span class="hljs-string">'Malkovich'</span>, <span class="hljs-attr">Thor</span>: <span class="hljs-literal">undefined</span>, <span class="hljs-attr">other</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">that</span>: <span class="hljs-literal">null</span>});
+<span class="hljs-comment">// =&gt; ['Lucy', 'John', 'other']</span></pre>
     
   
 

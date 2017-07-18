@@ -3638,7 +3638,7 @@
   /**
     * Creates a throttled function that only invokes callable at most once per every wait milliseconds. The throttle function has a clear method to cancel the timer.
     *
-    * @function debounce
+    * @function throttle
     * @type {Function}
     * @param {Function} callable - The function to be invoked.
     * @param {number} time - The time in milliseconds.
@@ -3725,7 +3725,7 @@
   /**
     * Invoke an array of functions.
     *
-    * @function curry
+    * @function inSync
     * @type {Function}
     * @param {Array|Object|Function} collection - The functions to be invoked.
     * @param {*} arg - The object passed as an argument to each method.
@@ -3745,7 +3745,7 @@
   /**
     * Invoke an array of functions asynchronously. Each function is awaited to ensure execution order.
     *
-    * @function curry
+    * @function inAsync
     * @type {Function}
     * @async
     * @param {Array|Object|Function} collection - The functions to be invoked.
@@ -3905,7 +3905,7 @@
   /**
     * Checks to see if an object has all of the given property names.
     *
-    * @function compactKeys
+    * @function hasKeys
     * @type {Function}
     * @param {Object} object - Object from which keys are extracted.
     * @param {Array} properties - Array of object keys.

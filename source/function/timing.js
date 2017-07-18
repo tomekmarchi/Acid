@@ -97,7 +97,7 @@ export const debounce = (callable, time) => {
 /**
   * Creates a throttled function that only invokes callable at most once per every wait milliseconds. The throttle function has a clear method to cancel the timer.
   *
-  * @function debounce
+  * @function throttle
   * @type {Function}
   * @param {Function} callable - The function to be invoked.
   * @param {number} time - The time in milliseconds.
