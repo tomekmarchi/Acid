@@ -48,11 +48,11 @@
     "connect-livereload": "*",
     "docredux": "^1.0.2",
     "esformatter": "*",
-    "eslint": "*",
+    "eslint": "^4.2.0",
     "eslint-plugin-jsdoc": "*",
     "express": "*",
     "node-watch": "*",
-    "rollup": "*",
+    "rollup": "^0.45.2",
     "rollup-plugin-babili": "*",
     "tiny-lr": "*",
     "vinyl-fs": "*"
