@@ -2967,8 +2967,8 @@
     *
     * @function bindAll
     * @type {Function}
-    * @param {Function} method - The function to be invoked if possible.
-    * @param {...Array} args - Arguments to pass to the method.
+    * @param {Function} bindThese - The function to be invoked if possible.
+    * @param {...Array} withThis - Arguments to pass to the method.
     * @returns {*} Returns the method invoked or undefined.
     *
     * @example
@@ -3074,14 +3074,79 @@
     overEvery
   });
 
+  /**
+    * A wrapper around setTimeout.
+    *
+    * @function timer
+    * @param {Object} method - Function to be invoked.
+    * @param {number} time - The time in nanoseconds.
+    * @type {Function}
+    * @returns {number} Set timeout id.
+    *
+    * @example
+    * timer(() => { return 1}, 1);
+    * // => 0: 1
+  */
   const timer = (method, time) => {
     return setTimeout(method, time);
   };
+  /**
+    * Wrapper around setInterval.
+    *
+    * @function interval
+    * @type {Function}
+    * @param {Object} method - Function to be invoked.
+    * @param {number} time - The time in nanoseconds.
+    * @returns {Object} Returns the new empty object.
+    *
+    * @example
+    * interval(() => { return 1}, 1);
+    * // => 0: 1
+  */
   const interval = (method, time) => {
     return setInterval(method, time);
   };
+  /**
+    * Clears setTimeout function.
+    *
+    * @function clearTimers
+    * @type {Function}
+    * @param {Object} timer - Timer to be cleared.
+    * @param {Function} clearTimeout - Invocation of time clear function.
+    * @returns {Number} Returns a number of the cleared setTimeout ID.
+    *
+    * @example
+    *
+    * // =>
+  */
 
+  /**
+    * Clears setInterval function.
+    *
+    * @function clearIntervals
+    * @type {Function}
+    * @param {Object} interval - Interval to be cleared.
+    * @param {Object} clearInterval - Invocation of interval clear function.
+    * @returns {Number} Returns a number of the cleared setInterval ID.
+    *
+    * @example
+    * clearIntervals();
+    * // =>
+  */
 
+  /**
+    *
+    *
+    * @function debounce
+    * @type {Function}
+    * @param {Object} original -
+    * @param {Object} time -
+    * @returns {Object}
+    *
+    * @example
+    * debounce();
+    * // =>
+  */
   const debounce = (original, time) => {
     let timeout = false;
     const debounced = (...args) => {
@@ -3101,6 +3166,19 @@
     };
     return debounced;
   };
+  /**
+    *
+    *
+    * @function throttle
+    * @type {Function}
+    * @param {Object} method -
+    * @param {Object} time -
+    * @returns {Object} Returns the new empty object.
+    *
+    * @example
+    * throttle();
+    * // =>
+  */
   const throttle = (method, time) => {
     let timeout = false;
     let shouldThrottle;
