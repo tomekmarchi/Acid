@@ -145,36 +145,39 @@
     objectSize
   });
 
+  const arrayNative = Array;
   /**
-    * Iterates through the given array of async function(s). Each async function is awaited as to ensure synchronous order and is given the supplied object.
-    *
-    * @function asyncEach
-    * @type {Function}
-    * @async
-    * @param {Array} callingArray - Array of async functions that will be looped through.
-    * Functions are given the supplied object, index, the calling array, and the array length.
-    * @param {*} object - The first argument given to each function.
-    * @returns {Object} The originally given array.
-    *
-    * @example
-    * asyncEach([async (item, index) =>{
-    *  console.log(item, index);
-    * }, async (item) =>{
-    *  console.log(item, index);
-    * }], {a:1});
-    * // {a:1} 0
-    * // {a:1} 1
+   * Takes an array like object and creates a new Array from it.
+   *
+   * @function toArray
+   * @param {*} arrayLike - Array like object.
+   * @returns {*} new array.
+   *
+   * @example
+   * toArray([1, 2, 3]);
+   * // => [1, 2, 3]
   */
-  const asyncEach = async (callingArray, object) => {
-    const arrayLength = callingArray.length;
-    for (let index = 0; index < arrayLength; index++) {
-      const item = callingArray[index];
-      await item(object, index, callingArray, arrayLength);
-    }
-    return callingArray;
-  };
+  const toArray = arrayNative.from;
   assign($, {
-    asyncEach,
+    toArray,
+  });
+
+  /**
+   * Calls a target function with arguments as specified.
+   *
+   * @function apply
+   * @param {Function} target - The target function to call.
+   * @param {*} thisArgument - Array like object.
+   * @param {Array} argumentsList - An array-like object specifying the arguments with which target should be called.
+   * @returns {*} The result of calling the given target function with the specified this value and arguments.
+   *
+   * @example
+   * apply((a) => {return [this, a];}, 1, 2);
+   * // => [1, 2]
+  */
+  const apply = Reflect.apply;
+  assign($, {
+    apply
   });
 
   /**
@@ -846,6 +849,38 @@
   });
 
   /**
+    * Iterates through the given array of async function(s). Each async function is awaited as to ensure synchronous order and is given the supplied object.
+    *
+    * @function asyncEach
+    * @type {Function}
+    * @async
+    * @param {Array} callingArray - Array of async functions that will be looped through.
+    * Functions are given the supplied object, index, the calling array, and the array length.
+    * @param {*} object - The first argument given to each function.
+    * @returns {Object} The originally given array.
+    *
+    * @example
+    * asyncEach([async (item, index) =>{
+    *  console.log(item, index);
+    * }, async (item) =>{
+    *  console.log(item, index);
+    * }], {a:1});
+    * // {a:1} 0
+    * // {a:1} 1
+  */
+  const asyncEach = async (callingArray, object) => {
+    const arrayLength = callingArray.length;
+    for (let index = 0; index < arrayLength; index++) {
+      const item = callingArray[index];
+      await item(object, index, callingArray, arrayLength);
+    }
+    return callingArray;
+  };
+  assign($, {
+    asyncEach,
+  });
+
+  /**
     * Ensures the object is an array. If not wraps in array.
     *
     * @function ensureArray
@@ -1284,23 +1319,6 @@
   };
   assign($, {
     compact,
-  });
-
-  const arrayNative = Array;
-  /**
-   * Takes an array like object and creates a new Array from it.
-   *
-   * @function toArray
-   * @param {*} arrayLike - Array like object.
-   * @returns {*} new array.
-   *
-   * @example
-   * toArray([1, 2, 3]);
-   * // => [1, 2, 3]
-  */
-  const toArray = arrayNative.from;
-  assign($, {
-    toArray,
   });
 
   /**
