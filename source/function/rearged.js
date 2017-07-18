@@ -5,7 +5,7 @@ import { assign } from '../internal/object';
   *
   * @function reArg
   * @type {Function}
-  * @param {Function} method - The function to be invoked.
+  * @param {Function} callable - The function to be invoked.
   * @param {Array} indexes - The arranged argument indexes.
   * @returns {Function} Returns the new function.
   *
@@ -16,9 +16,9 @@ import { assign } from '../internal/object';
   * reArged(1,2,3);
   * // => [2, 3, 1]
 */
-export const reArg = (method, indexes) => {
+export const reArg = (callable, indexes) => {
   return (...args) => {
-    return method(...indexes.map((item) => {
+    return callable(...indexes.map((item) => {
       return args[item];
     }));
   };

@@ -39,11 +39,11 @@ export const remove = (array, ...removeThese) => {
   * remove([1, 2, 3, 3, 4, 3, 5], (item) => { return Boolean(item % 2);}));
   * // -> [2, 4]
 */
-export const removeBy = (array, method) => {
+export const removeBy = (array, iteratee) => {
   let arrayLength = array.length;
   for (let index = 0; index < arrayLength; index++) {
     const item = array[index];
-    if (method(item, index)) {
+    if (iteratee(item, index)) {
       array.splice(index, 1);
       index--;
       arrayLength--;

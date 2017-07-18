@@ -1,38 +1,24 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-export const wrap = (...args) => {
-  const list = [];
-  const wrapped = (...wrappedArgs) => {
-    return list.map((item) => {
-      return item(...wrappedArgs);
-    });
+/**
+  * Creates a function that provides value to wrapper as its first argument. The wrapper function is given two arguments the value and the provided argument from the newly created function.
+  *
+  * @function wrap
+  * @type {Function}
+  * @param {*} value - The value to wrap.
+  * @param {Function} wrapper - The wrapper function.
+  * @returns {Function} The new function.
+  *
+  * @example
+  * const wrapped = wrap('Lucy', (firstName, lastName) => {console.log(`My name is ${firstName} ${lastName}.`);});
+  * wrapped('Diamonds');
+  * // => 'My name is Lucy Diamonds.'
+*/
+export const wrap = (value, wrapper) => {
+  return (arg) => {
+    return wrapper(value, arg);
   };
-  assign(wrapped, {
-    add(...addTheseArg) {
-      list.push(...addTheseArg);
-    },
-    list,
-  });
-  wrapped.add(args);
-  return wrapped;
-};
-export const wrapBefore = (...args) => {
-  const list = [];
-  const wrapped = (...wrappedArgs) => {
-    return list.map((item) => {
-      return item(...wrappedArgs);
-    });
-  };
-  assign(wrapped, {
-    add(...addThese) {
-      list.unshift(...addThese);
-    },
-    list,
-  });
-  wrapped.add(args);
-  return wrapped;
 };
 assign(acid, {
   wrap,
-  wrapBefore
 });

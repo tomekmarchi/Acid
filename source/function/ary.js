@@ -1,11 +1,11 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
 /**
-  * Creates a function that invokes func, with up to n arguments, ignoring any additional arguments.
+  * Creates a function that invokes callable, with up to n arguments, ignoring any additional arguments.
   *
   * @function ary
   * @type {Function}
-  * @param {Function} func - The function to cap arguments for.
+  * @param {Function} callable - The function to cap arguments for.
   * @param {number} amount - The arity cap.
   * @returns {Object} Returns the new capped function.
   *
@@ -13,9 +13,9 @@ import { assign } from '../internal/object';
   * ary((...args) => { return args;}, 2)(1, 2, 3);
   * // => [1, 2]
 */
-export const ary = (func, amount) => {
+export const ary = (callable, amount) => {
   return (...args) => {
-    return func(...args.splice(0, amount));
+    return callable(...args.splice(0, amount));
   };
 };
 assign(acid, {

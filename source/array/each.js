@@ -96,9 +96,9 @@ export const filterArray = (callingArray, iteratee, results = []) => {
   });
   return results;
 };
-const generateMap = (method) => {
+const generateMap = (callable) => {
   return (callingArray, iteratee, results = []) => {
-    method(callingArray, (item, index, arrayOriginal, arrayLength) => {
+    callable(callingArray, (item, index, arrayOriginal, arrayLength) => {
       results[index] = iteratee(item, index, results, arrayOriginal, arrayLength);
     });
     return results;

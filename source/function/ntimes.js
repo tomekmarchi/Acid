@@ -6,7 +6,7 @@ import { hasValue } from '../internal/is';
   *
   * @function once
   * @type {Function}
-  * @param {Function} method - The function to be called.
+  * @param {Function} callable - The function to be called.
   * @returns {Function} Returns the new pass-thru function.
   *
   * @example
@@ -16,23 +16,23 @@ import { hasValue } from '../internal/is';
   * onceOnly();
   * // => 1
 */
-export const once = (method) => {
+export const once = (callable) => {
   let value;
   const onlyOnce = (...args) => {
     if (hasValue(value)) {
-      value = method(...args);
+      value = callable(...args);
     }
     return value;
   };
   return onlyOnce;
 };
 /**
-  * Creates a function that executes method, only after being called n times.
+  * Creates a function that executes callable, only after being called n times.
   *
   * @function after
   * @type {Function}
+  * @param {Function} callable - The function to be called.
   * @param {number} amount - The number of calls until method is invoked.
-  * @param {Function} method - The function to be called.
   * @returns {Function} Returns the new pass-thru function.
   *
   * @example
@@ -42,7 +42,7 @@ export const once = (method) => {
   * onlyAfter();
   * // => 1
 */
-const after = (amount, method) => {
+const after = (callable, amount) => {
   let point = amount;
   let value;
   const onlyAfter = (...args) => {
@@ -50,7 +50,7 @@ const after = (amount, method) => {
       point--;
     }
     if (point <= 0) {
-      value = method(...args);
+      value = callable(...args);
     } else {
       point = null;
     }
@@ -59,12 +59,12 @@ const after = (amount, method) => {
   return onlyAfter;
 };
 /**
-  * Creates a function that executes method, only before n times.
+  * Creates a function that executes callable, only before n times.
   *
   * @function before
   * @type {Function}
+  * @param {Function} callable - The function to be called.
   * @param {number} amount - The number of calls before n.
-  * @param {Function} method - The function to be called.
   * @returns {Function} Returns the new pass-thru function.
   *
   * @example
@@ -76,7 +76,7 @@ const after = (amount, method) => {
   * onlyBefore(3);
   * // => 2
 */
-const before = (amount, method) => {
+const before = (callable, amount) => {
   let point = amount;
   let value;
   const onlyBefore = (...args) => {
@@ -84,7 +84,7 @@ const before = (amount, method) => {
       point--;
     }
     if (point >= 1) {
-      value = method(...args);
+      value = callable(...args);
     } else {
       point = null;
     }

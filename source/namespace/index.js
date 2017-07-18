@@ -17,7 +17,7 @@ const $ = (...args) => {
  *
  * @function superMethod
  * @memberof $
- * @param {Function} method - The function that will become the main object's method.
+ * @param {Function} callable - The function that will become the main object's subroutine.
  * @returns {undefined} - Returns nothing.
  *
  * @example
@@ -25,8 +25,8 @@ const $ = (...args) => {
  * // -> $('flow', $);
  * // -> $.flow
  */
-const superMethod = (method) => {
-  cacheSuper = method;
+const superMethod = (callable) => {
+  cacheSuper = callable;
 };
 $.superMethod = superMethod;
 export default $;

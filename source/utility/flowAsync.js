@@ -1,11 +1,11 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
 import { eachAsync, eachAsyncRight } from '../array/eachAsync';
-const returnFlow = (method) => {
+const returnFlow = (callable) => {
   return (...methods) => {
     return async (arg) => {
       let value = arg;
-      await method(methods, async (item) => {
+      await callable(methods, async (item) => {
         value = await item(value);
       });
       return value;
@@ -17,8 +17,9 @@ const returnFlow = (method) => {
   *
   * @function flowAsync
   * @type {Function}
-  * @param {Array} eachArray - Array to flatten
-  * @returns {*}
+  * @async
+  * @param {Array} collection - Methods to invoke.
+  * @returns {Function} Returns the new composite function.
   *
   * @example
   * flowAsync(increment, increment, deduct)(0);
@@ -30,8 +31,9 @@ export const flowAsync = returnFlow(eachAsync);
   *
   * @function flowRightAsync
   * @type {Function}
-  * @param {Array} eachArray - Array to flatten
-  * @returns {*}
+  * @async
+  * @param {Array} collection - Methods to invoke.
+  * @returns {Function} Returns the new composite function.
   *
   * @example
   * flowRightAsync(increment, increment, deduct)(0);
