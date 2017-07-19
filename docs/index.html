@@ -399,9 +399,9 @@
               
                 
                 <li><a
-                  href='#isuint8array'
+                  href='#isboolean'
                   class="">
-                  isUint8Array
+                  isBoolean
                   
                 </a>
                 
@@ -409,9 +409,9 @@
               
                 
                 <li><a
-                  href='#isboolean'
+                  href='#isdate'
                   class="">
-                  isBoolean
+                  isDate
                   
                 </a>
                 
@@ -499,9 +499,9 @@
               
                 
                 <li><a
-                  href='#isregexp'
+                  href='#isint32array'
                   class="">
-                  isRegExp
+                  isInt32Array
                   
                 </a>
                 
@@ -509,9 +509,9 @@
               
                 
                 <li><a
-                  href='#isdate'
+                  href='#isarguments'
                   class="">
-                  isDate
+                  isArguments
                   
                 </a>
                 
@@ -549,9 +549,9 @@
               
                 
                 <li><a
-                  href='#isarguments'
+                  href='#isregexp'
                   class="">
-                  isArguments
+                  isRegExp
                   
                 </a>
                 
@@ -559,9 +559,9 @@
               
                 
                 <li><a
-                  href='#isint32array'
+                  href='#isuint8array'
                   class="">
-                  isInt32Array
+                  isUint8Array
                   
                 </a>
                 
@@ -1159,6 +1159,26 @@
               
                 
                 <li><a
+                  href='#eventadd'
+                  class="">
+                  eventAdd
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#eventremove'
+                  class="">
+                  eventRemove
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#isenter'
                   class="">
                   isEnter
@@ -1459,16 +1479,6 @@
               
                 
                 <li><a
-                  href='#ishtmlcollection'
-                  class="">
-                  isHTMLCollection
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
                   href='#isnodelist'
                   class="">
                   isNodeList
@@ -1482,6 +1492,16 @@
                   href='#sortnewest'
                   class="">
                   sortNewest
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#ishtmlcollection'
+                  class="">
+                  isHTMLCollection
                   
                 </a>
                 
@@ -5410,82 +5430,6 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='isuint8array'>
-      isUint8Array
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Checks if the value is a Uint8Array.</p>
-
-
-  <div class='pre p1 fill-light mt0'>isUint8Array(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>value</span> <code class='quiet'>(any)</code>
-	    Object to be checked.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
-        True or false.
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>isUint8Array(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Uint8Array</span>());
-<span class="hljs-comment">// =&gt; true</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
     <h3 class='fl m0' id='isboolean'>
       isBoolean
     </h3>
@@ -5543,6 +5487,82 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
     
       
       <pre class='p1 overflow-auto round fill-light'>isBoolean(<span class="hljs-literal">true</span>);
+<span class="hljs-comment">// =&gt; true</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='isdate'>
+      isDate
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Checks if the value is a Date.</p>
+
+
+  <div class='pre p1 fill-light mt0'>isDate(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>value</span> <code class='quiet'>(any)</code>
+	    Object to be checked.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        True or false.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>isDate(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>());
 <span class="hljs-comment">// =&gt; true</span></pre>
     
   
@@ -6170,18 +6190,18 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='isregexp'>
-      isRegExp
+    <h3 class='fl m0' id='isint32array'>
+      isInt32Array
     </h3>
     
     
   </div>
   
 
-  <p>Checks if the value is a RegExp.</p>
+  <p>Checks if the value is a Int32Array.</p>
 
 
-  <div class='pre p1 fill-light mt0'>isRegExp(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  <div class='pre p1 fill-light mt0'>isInt32Array(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
   
   
 
@@ -6226,7 +6246,7 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>isRegExp(<span class="hljs-regexp">/test/</span>);
+      <pre class='p1 overflow-auto round fill-light'>isInt32Array(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Int32Array</span>());
 <span class="hljs-comment">// =&gt; true</span></pre>
     
   
@@ -6246,18 +6266,18 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='isdate'>
-      isDate
+    <h3 class='fl m0' id='isarguments'>
+      isArguments
     </h3>
     
     
   </div>
   
 
-  <p>Checks if the value is a Date.</p>
+  <p>Checks if the value is an Arguments object.</p>
 
 
-  <div class='pre p1 fill-light mt0'>isDate(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  <div class='pre p1 fill-light mt0'>isArguments(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
   
   
 
@@ -6302,8 +6322,8 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>isDate(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>());
-<span class="hljs-comment">// =&gt; true</span></pre>
+      <pre class='p1 overflow-auto round fill-light'>isArguments([]);
+<span class="hljs-comment">// =&gt; false</span></pre>
     
   
 
@@ -6550,18 +6570,18 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='isarguments'>
-      isArguments
+    <h3 class='fl m0' id='isregexp'>
+      isRegExp
     </h3>
     
     
   </div>
   
 
-  <p>Checks if the value is an Arguments object.</p>
+  <p>Checks if the value is a RegExp.</p>
 
 
-  <div class='pre p1 fill-light mt0'>isArguments(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  <div class='pre p1 fill-light mt0'>isRegExp(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
   
   
 
@@ -6606,8 +6626,8 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>isArguments([]);
-<span class="hljs-comment">// =&gt; false</span></pre>
+      <pre class='p1 overflow-auto round fill-light'>isRegExp(<span class="hljs-regexp">/test/</span>);
+<span class="hljs-comment">// =&gt; true</span></pre>
     
   
 
@@ -6626,18 +6646,18 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='isint32array'>
-      isInt32Array
+    <h3 class='fl m0' id='isuint8array'>
+      isUint8Array
     </h3>
     
     
   </div>
   
 
-  <p>Checks if the value is a Int32Array.</p>
+  <p>Checks if the value is a Uint8Array.</p>
 
 
-  <div class='pre p1 fill-light mt0'>isInt32Array(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  <div class='pre p1 fill-light mt0'>isUint8Array(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
   
   
 
@@ -6682,7 +6702,7 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>isInt32Array(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Int32Array</span>());
+      <pre class='p1 overflow-auto round fill-light'>isUint8Array(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Uint8Array</span>());
 <span class="hljs-comment">// =&gt; true</span></pre>
     
   
@@ -11774,6 +11794,228 @@ first([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='eventadd'>
+      eventAdd
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Attaches an event listener to a node.</p>
+
+
+  <div class='pre p1 fill-light mt0'>eventAdd(node: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/nextSibling">Node</a>, args: ...any, type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, listener: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>), options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/nextSibling">Node</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>node</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/nextSibling">Node</a>)</code>
+	    Given node.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>args</span> <code class='quiet'>(...any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>type</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    A string representing the event type.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>listener</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>))</code>
+	    The object which receives a notification when an event of the specified type occurs.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    An options object that specifies characteristics about the event listener.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/nextSibling">Node</a></code>:
+        Returns given node.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>eventAdd(<span class="hljs-built_in">document</span>.body, <span class="hljs-string">'click'</span>, () =&gt; {<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'CLICKED'</span>);});
+<span class="hljs-comment">// = &gt; document.body</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='eventremove'>
+      eventRemove
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Attaches an event listener to a node.</p>
+
+
+  <div class='pre p1 fill-light mt0'>eventRemove(node: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/nextSibling">Node</a>, args: ...any, type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, listener: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>), options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>node</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/nextSibling">Node</a>)</code>
+	    Given node.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>args</span> <code class='quiet'>(...any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>type</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    A string representing the event type.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>listener</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>))</code>
+	    An object|function representing the listener.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    An options object that specifies characteristics about the event listener.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
+        Undefined.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>eventRemove(<span class="hljs-built_in">document</span>.body, () =&gt; {<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'CLICKED'</span>);});
+<span class="hljs-comment">// = &gt; Undefined</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='isenter'>
       isEnter
     </h3>
@@ -14138,107 +14380,6 @@ ifInvoke(<span class="hljs-literal">undefined</span>, <span class="hljs-number">
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='ishtmlcollection'>
-      isHTMLCollection
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Checks if the value is a HTMLCollection.</p>
-
-
-  <div class='pre p1 fill-light mt0'>isHTMLCollection(collection: any, key: any, pureMode: any, value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>collection</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>key</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>pureMode</span> <code class='quiet'>(any
-            = <code>true</code>)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>value</span> <code class='quiet'>(any)</code>
-	    Object to be checked.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
-        True or false.
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>isHTMLCollection(<span class="hljs-built_in">document</span>.getElementsByClassName(<span class="hljs-string">'test'</span>));
-<span class="hljs-comment">// =&gt; true</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
     <h3 class='fl m0' id='isnodelist'>
       isNodeList
     </h3>
@@ -14417,6 +14558,107 @@ ifInvoke(<span class="hljs-literal">undefined</span>, <span class="hljs-number">
       
       <pre class='p1 overflow-auto round fill-light'>sortNewest([{<span class="hljs-attr">id</span>: <span class="hljs-number">1</span>}, {<span class="hljs-attr">id</span>: <span class="hljs-number">0</span>}], <span class="hljs-string">'id'</span>);
 <span class="hljs-comment">// =&gt; [{id: 1}, {id: 0}]</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='ishtmlcollection'>
+      isHTMLCollection
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Checks if the value is a HTMLCollection.</p>
+
+
+  <div class='pre p1 fill-light mt0'>isHTMLCollection(collection: any, key: any, pureMode: any, value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>collection</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>key</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>pureMode</span> <code class='quiet'>(any
+            = <code>true</code>)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>value</span> <code class='quiet'>(any)</code>
+	    Object to be checked.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        True or false.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>isHTMLCollection(<span class="hljs-built_in">document</span>.getElementsByClassName(<span class="hljs-string">'test'</span>));
+<span class="hljs-comment">// =&gt; true</span></pre>
     
   
 
