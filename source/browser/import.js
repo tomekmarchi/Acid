@@ -13,14 +13,17 @@ const nodeAttachLoadingEvents = (node) => {
     append(querySelector('head'), node);
   });
 };
-export const importcss = (url) => {
-  const node = nodeAttribute(createTag('link'), {
-    href: `${url}.css`,
-    rel: 'stylesheet',
-    type: 'text/css',
-  });
-  return nodeAttachLoadingEvents(node);
-};
+/**
+  * Asynchronously import a js file and append it to the head node.
+  *
+  * @function importjs
+  * @type {Function}
+  * @async
+  * @returns {Promise} Returns a promise.
+  *
+  * @example
+  * importjs('core.js');
+*/
 export const importjs = (url) => {
   const node = nodeAttribute(createTag('script'), {
     async: '',
@@ -29,6 +32,5 @@ export const importjs = (url) => {
   return nodeAttachLoadingEvents(node);
 };
 assign(acid, {
-  importcss,
   importjs,
 });

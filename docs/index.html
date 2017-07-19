@@ -393,9 +393,9 @@
               
                 
                 <li><a
-                  href='#isint8array'
+                  href='#isint16array'
                   class="">
-                  isInt8Array
+                  isInt16Array
                   
                 </a>
                 
@@ -453,9 +453,9 @@
               
                 
                 <li><a
-                  href='#isregexp'
+                  href='#isfloat32array'
                   class="">
-                  isRegExp
+                  isFloat32Array
                   
                 </a>
                 
@@ -483,9 +483,9 @@
               
                 
                 <li><a
-                  href='#isint16array'
+                  href='#isboolean'
                   class="">
-                  isInt16Array
+                  isBoolean
                   
                 </a>
                 
@@ -543,9 +543,9 @@
               
                 
                 <li><a
-                  href='#isboolean'
+                  href='#isregexp'
                   class="">
-                  isBoolean
+                  isRegExp
                   
                 </a>
                 
@@ -553,9 +553,9 @@
               
                 
                 <li><a
-                  href='#isfloat32array'
+                  href='#isint8array'
                   class="">
-                  isFloat32Array
+                  isInt8Array
                   
                 </a>
                 
@@ -1143,6 +1143,16 @@
               
                 
                 <li><a
+                  href='#isagent'
+                  class="">
+                  isAgent
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#eachobject'
                   class="">
                   eachObject
@@ -1253,9 +1263,39 @@
               
                 
                 <li><a
+                  href='#importjs'
+                  class="">
+                  importjs
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#updatedimensions'
+                  class="">
+                  updateDimensions
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#ifinvoke'
                   class="">
                   ifInvoke
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#batch'
+                  class="">
+                  batch
                   
                 </a>
                 
@@ -1276,6 +1316,26 @@
                   href='#stringify'
                   class="">
                   stringify
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#cnsl'
+                  class="">
+                  cnsl
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#cnsltheme'
+                  class="">
+                  cnslTheme
                   
                 </a>
                 
@@ -5188,18 +5248,18 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='isint8array'>
-      isInt8Array
+    <h3 class='fl m0' id='isint16array'>
+      isInt16Array
     </h3>
     
     
   </div>
   
 
-  <p>Checks if the value is a Int8Array.</p>
+  <p>Checks if the value is a Int16Array.</p>
 
 
-  <div class='pre p1 fill-light mt0'>isInt8Array(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  <div class='pre p1 fill-light mt0'>isInt16Array(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
   
   
 
@@ -5244,7 +5304,7 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>isInt8Array(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Int8Array</span>());
+      <pre class='p1 overflow-auto round fill-light'>isInt16Array(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Int16Array</span>());
 <span class="hljs-comment">// =&gt; true</span></pre>
     
   
@@ -5644,18 +5704,18 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='isregexp'>
-      isRegExp
+    <h3 class='fl m0' id='isfloat32array'>
+      isFloat32Array
     </h3>
     
     
   </div>
   
 
-  <p>Checks if the value is a RegExp.</p>
+  <p>Checks if the value is a Float32Array.</p>
 
 
-  <div class='pre p1 fill-light mt0'>isRegExp(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  <div class='pre p1 fill-light mt0'>isFloat32Array(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
   
   
 
@@ -5700,7 +5760,7 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>isRegExp(<span class="hljs-regexp">/test/</span>);
+      <pre class='p1 overflow-auto round fill-light'>isFloat32Array(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Float32Array</span>());
 <span class="hljs-comment">// =&gt; true</span></pre>
     
   
@@ -5872,18 +5932,18 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='isint16array'>
-      isInt16Array
+    <h3 class='fl m0' id='isboolean'>
+      isBoolean
     </h3>
     
     
   </div>
   
 
-  <p>Checks if the value is a Int16Array.</p>
+  <p>Checks if the value is a Boolean.</p>
 
 
-  <div class='pre p1 fill-light mt0'>isInt16Array(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  <div class='pre p1 fill-light mt0'>isBoolean(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
   
   
 
@@ -5928,7 +5988,7 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>isInt16Array(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Int16Array</span>());
+      <pre class='p1 overflow-auto round fill-light'>isBoolean(<span class="hljs-literal">true</span>);
 <span class="hljs-comment">// =&gt; true</span></pre>
     
   
@@ -6328,18 +6388,18 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='isboolean'>
-      isBoolean
+    <h3 class='fl m0' id='isregexp'>
+      isRegExp
     </h3>
     
     
   </div>
   
 
-  <p>Checks if the value is a Boolean.</p>
+  <p>Checks if the value is a RegExp.</p>
 
 
-  <div class='pre p1 fill-light mt0'>isBoolean(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  <div class='pre p1 fill-light mt0'>isRegExp(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
   
   
 
@@ -6384,7 +6444,7 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>isBoolean(<span class="hljs-literal">true</span>);
+      <pre class='p1 overflow-auto round fill-light'>isRegExp(<span class="hljs-regexp">/test/</span>);
 <span class="hljs-comment">// =&gt; true</span></pre>
     
   
@@ -6404,18 +6464,18 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='isfloat32array'>
-      isFloat32Array
+    <h3 class='fl m0' id='isint8array'>
+      isInt8Array
     </h3>
     
     
   </div>
   
 
-  <p>Checks if the value is a Float32Array.</p>
+  <p>Checks if the value is a Int8Array.</p>
 
 
-  <div class='pre p1 fill-light mt0'>isFloat32Array(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  <div class='pre p1 fill-light mt0'>isInt8Array(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
   
   
 
@@ -6460,7 +6520,7 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>isFloat32Array(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Float32Array</span>());
+      <pre class='p1 overflow-auto round fill-light'>isInt8Array(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Int8Array</span>());
 <span class="hljs-comment">// =&gt; true</span></pre>
     
   
@@ -11476,6 +11536,82 @@ first([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='isagent'>
+      isAgent
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Checks to see of the browser agent has a string.</p>
+
+
+  <div class='pre p1 fill-light mt0'>isAgent(value: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>value</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    The string to search for.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        Returns true or false.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>isAgent(<span class="hljs-string">'mobile'</span>);
+<span class="hljs-comment">// =&gt; false</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='eachobject'>
       eachObject
     </h3>
@@ -12504,6 +12640,141 @@ restString(<span class="hljs-string">'restString'</span>, <span class="hljs-numb
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='importjs'>
+      importjs
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Asynchronously import a js file and append it to the head node.</p>
+
+
+  <div class='pre p1 fill-light mt0'>importjs(url: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>url</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></code>:
+        Returns a promise.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>importjs(<span class="hljs-string">'core.js'</span>);</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='updatedimensions'>
+      updateDimensions
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Save current document &#x26; window dimensions to the info property.</p>
+
+
+  <div class='pre p1 fill-light mt0'>updateDimensions(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
+        Returns undefined.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>updateDimensions();</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='ifinvoke'>
       ifInvoke
     </h3>
@@ -12572,6 +12843,82 @@ restString(<span class="hljs-string">'restString'</span>, <span class="hljs-numb
       <pre class='p1 overflow-auto round fill-light'>ifInvoke(<span class="hljs-function">(<span class="hljs-params">...args</span>) =&gt;</span> { <span class="hljs-keyword">return</span> args;}, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
 <span class="hljs-comment">// =&gt; [1, 2]</span>
 ifInvoke(<span class="hljs-literal">undefined</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+<span class="hljs-comment">// =&gt; undefined</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='batch'>
+      batch
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Batch processing using requestAnimationFrame.</p>
+
+
+  <div class='pre p1 fill-light mt0'>batch(items: ...<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>items</span> <code class='quiet'>(...<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
+	    The functions to add to the current batch.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
+        Returns undefined.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>batch(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {});
 <span class="hljs-comment">// =&gt; undefined</span></pre>
     
   
@@ -12725,6 +13072,184 @@ ifInvoke(<span class="hljs-literal">undefined</span>, <span class="hljs-number">
       
       <pre class='p1 overflow-auto round fill-light'>stringify({});
 <span class="hljs-comment">// =&gt; '{}'</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='cnsl'>
+      cnsl
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Console.trace wrapper with theme support.</p>
+
+
+  <div class='pre p1 fill-light mt0'>cnsl(value: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, themeName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>value</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    The value to be logged.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>themeName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    The theme to be used.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
+        Returns undefined.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>cnsl(<span class="hljs-string">'Lucy'</span>, <span class="hljs-string">'notify'</span>);
+<span class="hljs-comment">// 'Lucy'</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='cnsltheme'>
+      cnslTheme
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Create color themes for cnsl method.</p>
+
+
+  <div class='pre p1 fill-light mt0'>cnslTheme(themeName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, color: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, background: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>themeName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    The name of the theme.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>color</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    The text color.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>background</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    The background color of the block.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
+        Returns undefined.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>cnslTheme(<span class="hljs-string">'BlackNWhite'</span>, <span class="hljs-string">'#fff'</span>, <span class="hljs-string">'#000'</span>);</pre>
     
   
 

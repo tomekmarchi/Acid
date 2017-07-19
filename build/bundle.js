@@ -2224,8 +2224,20 @@
     timesMap,
   });
 
-  const isAgent = (string) => {
-    return (string) ? isAgent[string] : keys(isAgent);
+  /**
+    * Checks to see of the browser agent has a string.
+    *
+    * @function isAgent
+    * @type {Function}
+    * @param {string} value - The string to search for.
+    * @returns {boolean} Returns true or false.
+    *
+    * @example
+    * isAgent('mobile');
+    * // => false
+  */
+  const isAgent = (value) => {
+    return (value) ? isAgent[value] : keys(isAgent);
   };
   let userAgentNormalized = navigator.userAgent.toLowerCase();
   userAgentNormalized = userAgentNormalized.replace(/_/g, '.');
@@ -2238,13 +2250,13 @@
     isAgent
   });
 
-  const eventAdd = (obj, eventName, func, capture) => {
-    obj.addEventListener(eventName, func, capture);
-    return obj;
+  const eventAdd = (node, ...args) => {
+    node.addEventListener(...args);
+    return node;
   };
-  const eventRemove = (obj, eventName, func, capture) => {
-    obj.removeEventListener(eventName, func, capture);
-    return obj;
+  const eventRemove = (node, ...args) => {
+    node.removeEventListener(...args);
+    return node;
   };
   assign($, {
     eventAdd,
@@ -2258,19 +2270,21 @@
     isEnter
   });
 
-  const appState = {};
-  assign($, {
-    appState
-  });
-
   const createFragment = document.createDocumentFragment.bind(document);
-  assign($, {
-    createFragment
-  });
 
-  const append = (node, child) => {
-    node.appendChild(child);
-    return node;
+  /**
+    * Append a DOM node.
+    *
+    * @function append
+    * @type {Function}
+    * @ignore
+    * @param {Node} parentNode - The parent node.
+    * @param {Node} child - The node to be appended.
+    * @returns {undefined} Returns the child.
+  */
+  const append = (parentNode, child) => {
+    parentNode.appendChild(child);
+    return child;
   };
 
   /**
@@ -2394,16 +2408,16 @@
     whileObject,
   });
 
-  const nodeAttribute = (node, keys$$1, value) => {
+  const nodeAttribute = (node, keys, value) => {
     let results;
-    if (isString(keys$$1)) {
+    if (isString(keys)) {
       if (hasValue(value)) {
-        node.setAttribute(keys$$1, value);
+        node.setAttribute(keys, value);
       } else {
-        return node.getAttribute(keys$$1);
+        return node.getAttribute(keys);
       }
-    } else if (isPlainObject(keys$$1)) {
-      results = mapObject(keys$$1, (item, key) => {
+    } else if (isPlainObject(keys)) {
+      results = mapObject(keys, (item, key) => {
         return nodeAttribute(node, key, item);
       });
       if (value) {
@@ -2412,9 +2426,6 @@
     }
     return node;
   };
-  assign($, {
-    nodeAttribute
-  });
 
   /**
     * A wrapper around the promise constructor.
@@ -2581,14 +2592,17 @@
       append(querySelector('head'), node);
     });
   };
-  const importcss = (url) => {
-    const node = nodeAttribute(createTag('link'), {
-      href: `${url}.css`,
-      rel: 'stylesheet',
-      type: 'text/css',
-    });
-    return nodeAttachLoadingEvents(node);
-  };
+  /**
+    * Asynchronously import a js file and append it to the head node.
+    *
+    * @function importjs
+    * @type {Function}
+    * @async
+    * @returns {Promise} Returns a promise.
+    *
+    * @example
+    * importjs('core.js');
+  */
   const importjs = (url) => {
     const node = nodeAttribute(createTag('script'), {
       async: '',
@@ -2597,7 +2611,6 @@
     return nodeAttachLoadingEvents(node);
   };
   assign($, {
-    importcss,
     importjs,
   });
 
@@ -2619,14 +2632,41 @@
     importjs('index');
   });
 
+  const protocol = location.protocol;
+  const protocolSocket = (protocol === 'http:') ? 'ws' : 'wss';
+  const hostname = location.hostname;
+  const info = {
+    hardware: {
+      cores: navigator.hardwareConcurrency
+    },
+    host: {
+      name: hostname,
+      protocol,
+      protocolSocket,
+    }
+  };
+  assign($, {
+    info
+  });
+
   const saveDimensions = () => {
-    assign($.appState, {
+    assign(info, {
       bodyHeight: document.body.offsetHeight,
       bodyWidth: document.body.offsetWidth,
       windowHeight: window.innerHeight,
       windowWidth: window.innerWidth,
     });
   };
+  /**
+    * Save current document & window dimensions to the info property.
+    *
+    * @function updateDimensions
+    * @type {Function}
+    * @returns {undefined} Returns undefined.
+    *
+    * @example
+    * updateDimensions();
+  */
   const updateDimensions = () => {
     requestAnimationFrame(saveDimensions);
   };
@@ -2669,6 +2709,18 @@
     clear(batchChanges);
     batchCancelFrame = false;
   };
+  /**
+    * Batch processing using requestAnimationFrame.
+    *
+    * @function batch
+    * @type {Function}
+    * @param {...Function} items - The functions to add to the current batch.
+    * @returns {undefined} Returns undefined.
+    *
+    * @example
+    * batch(() => {});
+    * // => undefined
+  */
   const batch = (...items) => {
     batchChanges.push(...items);
     if (!batchCancelFrame) {
@@ -2677,23 +2729,6 @@
   };
   assign($, {
     batch
-  });
-
-  const protocol = location.protocol;
-  const protocolSocket = (protocol === 'http:') ? 'ws' : 'wss';
-  const hostname = location.hostname;
-  const info = {
-    hardware: {
-      cores: navigator.hardwareConcurrency
-    },
-    host: {
-      name: hostname,
-      protocol,
-      protocolSocket,
-    }
-  };
-  assign($, {
-    info
   });
 
   const jsonNative = JSON;
@@ -2737,16 +2772,42 @@
     notify: generateTheme('#fff', '#651FFF'),
     warning: generateTheme('#000', '#FFEA00'),
   };
-  const cnsl = (dataArg, themeName) => {
-    const data = isString(dataArg) ? dataArg : stringify(dataArg);
+  /**
+    * Console.trace wrapper with theme support.
+    *
+    * @function cnsl
+    * @type {Function}
+    * @param {Object} value - The value to be logged.
+    * @param {string} themeName - The theme to be used.
+    * @returns {undefined} Returns undefined.
+    *
+    * @example
+    * cnsl('Lucy', 'notify');
+    * // 'Lucy'
+  */
+  const cnsl = (value, themeName) => {
+    const data = isString(value) ? value : stringify(value);
     console.trace(`%c${data}`, `${themes[themeName]}font-size:13px;padding:2px 5px;border-radius:2px;`);
   };
-  const addConsoleTheme = (themeName, color, bg) => {
-    themes[themeName] = generateTheme(color, bg);
+  /**
+    * Create color themes for cnsl method.
+    *
+    * @function cnslTheme
+    * @type {Function}
+    * @param {string} themeName - The name of the theme.
+    * @param {string} color - The text color.
+    * @param {string} background - The background color of the block.
+    * @returns {undefined} Returns undefined.
+    *
+    * @example
+    * cnslTheme('BlackNWhite', '#fff', '#000');
+  */
+  const cnslTheme = (themeName, color, background) => {
+    themes[themeName] = generateTheme(color, background);
   };
   assign($, {
-    addConsoleTheme,
     cnsl,
+    cnslTheme,
   });
 
   eachArray(['HTMLCollection', 'NodeList'], (item) => {

@@ -1,7 +1,6 @@
 import './agent';
 import './event';
 import './isEnter';
-import './appState';
 import './frag';
 import './append';
 import './import';
