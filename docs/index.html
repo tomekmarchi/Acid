@@ -393,9 +393,9 @@
               
                 
                 <li><a
-                  href='#isint16array'
+                  href='#isint32array'
                   class="">
-                  isInt16Array
+                  isInt32Array
                   
                 </a>
                 
@@ -483,9 +483,9 @@
               
                 
                 <li><a
-                  href='#isboolean'
+                  href='#isint16array'
                   class="">
-                  isBoolean
+                  isInt16Array
                   
                 </a>
                 
@@ -493,9 +493,9 @@
               
                 
                 <li><a
-                  href='#isint32array'
+                  href='#isboolean'
                   class="">
-                  isInt32Array
+                  isBoolean
                   
                 </a>
                 
@@ -1203,6 +1203,36 @@
               
                 
                 <li><a
+                  href='#zipobject'
+                  class="">
+                  zipObject
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#unzipobject'
+                  class="">
+                  unZipObject
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#nodeattribute'
+                  class="">
+                  nodeAttribute
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#promise'
                   class="">
                   promise
@@ -1343,9 +1373,29 @@
               
                 
                 <li><a
+                  href='#isnodelist'
+                  class="">
+                  isNodeList
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#sortnewest'
                   class="">
                   sortNewest
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#ishtmlcollection'
+                  class="">
+                  isHTMLCollection
                   
                 </a>
                 
@@ -1876,26 +1926,6 @@
                   href='#ismatchobject'
                   class="">
                   isMatchObject
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#zipobject'
-                  class="">
-                  zipObject
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#unzipobject'
-                  class="">
-                  unZipObject
                   
                 </a>
                 
@@ -5248,18 +5278,18 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='isint16array'>
-      isInt16Array
+    <h3 class='fl m0' id='isint32array'>
+      isInt32Array
     </h3>
     
     
   </div>
   
 
-  <p>Checks if the value is a Int16Array.</p>
+  <p>Checks if the value is a Int32Array.</p>
 
 
-  <div class='pre p1 fill-light mt0'>isInt16Array(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  <div class='pre p1 fill-light mt0'>isInt32Array(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
   
   
 
@@ -5304,7 +5334,7 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>isInt16Array(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Int16Array</span>());
+      <pre class='p1 overflow-auto round fill-light'>isInt32Array(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Int32Array</span>());
 <span class="hljs-comment">// =&gt; true</span></pre>
     
   
@@ -5932,6 +5962,82 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='isint16array'>
+      isInt16Array
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Checks if the value is a Int16Array.</p>
+
+
+  <div class='pre p1 fill-light mt0'>isInt16Array(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>value</span> <code class='quiet'>(any)</code>
+	    Object to be checked.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        True or false.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>isInt16Array(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Int16Array</span>());
+<span class="hljs-comment">// =&gt; true</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='isboolean'>
       isBoolean
     </h3>
@@ -5989,82 +6095,6 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
     
       
       <pre class='p1 overflow-auto round fill-light'>isBoolean(<span class="hljs-literal">true</span>);
-<span class="hljs-comment">// =&gt; true</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='isint32array'>
-      isInt32Array
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Checks if the value is a Int32Array.</p>
-
-
-  <div class='pre p1 fill-light mt0'>isInt32Array(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>value</span> <code class='quiet'>(any)</code>
-	    Object to be checked.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
-        True or false.
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>isInt32Array(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Int32Array</span>());
 <span class="hljs-comment">// =&gt; true</span></pre>
     
   
@@ -12118,6 +12148,251 @@ first([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='zipobject'>
+      zipObject
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Creates an object from two arrays, one of property identifiers and one of corresponding values.</p>
+
+
+  <div class='pre p1 fill-light mt0'>zipObject(properties: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, values: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>properties</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    The property identifiers.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>values</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    The property values.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
+        Returns the new object.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>zipObject([<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>], [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]);
+<span class="hljs-comment">// =&gt; { 'a': 1, 'b': 2 }</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='unzipobject'>
+      unZipObject
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Takes an array of grouped elements and creates an array regrouping the elements to their pre-zip object configuration.</p>
+
+
+  <div class='pre p1 fill-light mt0'>unZipObject(object: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>object</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    The object to process.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
+        Returns two arrays one of keys and the other of values inside a single array.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>unZipObject({ <span class="hljs-string">'a'</span>: <span class="hljs-number">1</span>, <span class="hljs-string">'b'</span>: <span class="hljs-number">2</span> });
+<span class="hljs-comment">// =&gt; [['a', 'b'], [1, 2]]</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='nodeattribute'>
+      nodeAttribute
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Assign attributes to a DOM node.</p>
+
+
+  <div class='pre p1 fill-light mt0'>nodeAttribute(node: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/nextSibling">Node</a>, object: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)): (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/nextSibling">Node</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>node</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/nextSibling">Node</a>)</code>
+	    The DOM node.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>object</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>))</code>
+	    Object with key being the attribute name and the value being the attribute value. If an array is given it will get the values corresponding to the array items.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/nextSibling">Node</a>)</code>:
+        If using an array this returns an object of attribute names as keys and their values as the property value. If using an object this will return the provided node.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>nodeAttribute(<span class="hljs-built_in">document</span>.body, { <span class="hljs-string">'data-example'</span>: <span class="hljs-string">'test'</span>});</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='promise'>
       promise
     </h3>
@@ -13268,6 +13543,107 @@ ifInvoke(<span class="hljs-literal">undefined</span>, <span class="hljs-number">
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='isnodelist'>
+      isNodeList
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Checks if the value is a NodeList.</p>
+
+
+  <div class='pre p1 fill-light mt0'>isNodeList(collection: any, key: any, pureMode: any, value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>collection</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>key</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>pureMode</span> <code class='quiet'>(any
+            = <code>true</code>)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>value</span> <code class='quiet'>(any)</code>
+	    Object to be checked.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        True or false.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>isNodeList(<span class="hljs-built_in">document</span>.querySelectorAll(<span class="hljs-string">'.test'</span>));
+<span class="hljs-comment">// =&gt; true</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='sortnewest'>
       sortNewest
     </h3>
@@ -13345,6 +13721,107 @@ ifInvoke(<span class="hljs-literal">undefined</span>, <span class="hljs-number">
       
       <pre class='p1 overflow-auto round fill-light'>sortNewest([{<span class="hljs-attr">id</span>: <span class="hljs-number">1</span>}, {<span class="hljs-attr">id</span>: <span class="hljs-number">0</span>}], <span class="hljs-string">'id'</span>);
 <span class="hljs-comment">// =&gt; [{id: 1}, {id: 0}]</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='ishtmlcollection'>
+      isHTMLCollection
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Checks if the value is a HTMLCollection.</p>
+
+
+  <div class='pre p1 fill-light mt0'>isHTMLCollection(collection: any, key: any, pureMode: any, value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>collection</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>key</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>pureMode</span> <code class='quiet'>(any
+            = <code>true</code>)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>value</span> <code class='quiet'>(any)</code>
+	    Object to be checked.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        True or false.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>isHTMLCollection(<span class="hljs-built_in">document</span>.getElementsByClassName(<span class="hljs-string">'test'</span>));
+<span class="hljs-comment">// =&gt; true</span></pre>
     
   
 
@@ -17860,167 +18337,6 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
       
       <pre class='p1 overflow-auto round fill-light'>isMatchObject({<span class="hljs-attr">a</span>: [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]}, {<span class="hljs-attr">a</span>: [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]});
 <span class="hljs-comment">// =&gt; true</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='zipobject'>
-      zipObject
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Creates an object from two arrays, one of property identifiers and one of corresponding values.</p>
-
-
-  <div class='pre p1 fill-light mt0'>zipObject(properties: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, values: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>properties</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
-	    The property identifiers.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>values</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
-	    The property values.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
-        Returns the new object.
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>zipObject([<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>], [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]);
-<span class="hljs-comment">// =&gt; { 'a': 1, 'b': 2 }</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='unzipobject'>
-      unZipObject
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Takes an array of grouped elements and creates an array regrouping the elements to their pre-zip object configuration.</p>
-
-
-  <div class='pre p1 fill-light mt0'>unZipObject(object: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>object</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    The object to process.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
-        Returns two arrays one of keys and the other of values inside a single array.
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>unZipObject({ <span class="hljs-string">'a'</span>: <span class="hljs-number">1</span>, <span class="hljs-string">'b'</span>: <span class="hljs-number">2</span> });
-<span class="hljs-comment">// =&gt; [['a', 'b'], [1, 2]]</span></pre>
     
   
 
