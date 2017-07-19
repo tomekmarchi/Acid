@@ -2263,6 +2263,18 @@
     eventRemove,
   });
 
+  /**
+    * Checks if the keycode of the event is strictly equal to 13.
+    *
+    * @function isEnter
+    * @type {Function}
+    * @param {Object} eventObject - Object to be checked.
+    * @returns {boolean} Returns true if the keycode property of the object equals 13.
+    *
+    * @example
+    * isEnter('click');
+    * // => false
+  */
   const isEnter = (eventObject) => {
     return eventObject.keyCode === 13;
   };
@@ -2270,6 +2282,14 @@
     isEnter
   });
 
+  /**
+    * Create a document fragment.
+    *
+    * @function createFragment
+    * @type {Function}
+    * @ignore
+    * @returns {Fragment} Returns a new document fragment.
+  */
   const createFragment = document.createDocumentFragment.bind(document);
 
   /**
@@ -2408,24 +2428,79 @@
     whileObject,
   });
 
-  const nodeAttribute = (node, keys, value) => {
-    let results;
-    if (isString(keys)) {
-      if (hasValue(value)) {
-        node.setAttribute(keys, value);
-      } else {
-        return node.getAttribute(keys);
-      }
-    } else if (isPlainObject(keys)) {
-      results = mapObject(keys, (item, key) => {
-        return nodeAttribute(node, key, item);
-      });
-      if (value) {
-        return results;
-      }
+  /**
+    * Creates an object from two arrays, one of property identifiers and one of corresponding values.
+    *
+    * @function zipObject
+    * @type {Function}
+    * @param {Array} properties - The property identifiers.
+    * @param {Array} values - The property values.
+    * @returns {Object} - Returns the new object.
+    *
+    * @example
+    * zipObject(['a', 'b'], [1, 2]);
+    * // => { 'a': 1, 'b': 2 }
+  */
+  const zipObject = (properties, values) => {
+    const zipedObject = {};
+    eachArray(properties, (item, key) => {
+      zipedObject[item] = values[key];
+    });
+    return zipedObject;
+  };
+  /**
+    * Takes an array of grouped elements and creates an array regrouping the elements to their pre-zip object configuration.
+    *
+    * @function unZipObject
+    * @type {Function}
+    * @param {Object} object - The object to process.
+    * @returns {Array} - Returns two arrays one of keys and the other of values inside a single array.
+    *
+    * @example
+    * unZipObject({ 'a': 1, 'b': 2 });
+    * // => [['a', 'b'], [1, 2]]
+  */
+  const unZipObject = (object) => {
+    const keys$$1 = [];
+    const values = [];
+    eachObject(object, (item, key) => {
+      keys$$1.push(key);
+      values.push(item);
+    });
+    return [keys$$1, values];
+  };
+  assign($, {
+    unZipObject,
+    zipObject,
+  });
+
+  /**
+    * Assign attributes to a DOM node.
+    *
+    * @function nodeAttribute
+    * @type {Function}
+    * @async
+    * @param {Node} node - The DOM node.
+    * @param {Object|Array} object - Object with key being the attribute name and the value being the attribute value. If an array is given it will get the values corresponding to the array items.
+    * @returns {Object|Node} If using an array this returns an object of attribute names as keys and their values as the property value. If using an object this will return the provided node.
+    *
+    * @example
+    * nodeAttribute(document.body, { 'data-example': 'test'});
+  */
+  const nodeAttribute = (node, object) => {
+    if (isArray(object)) {
+      return zipObject(object, mapArray(object, (item) => {
+        return node.getAttribute(item);
+      }));
     }
+    eachObject(object, (item, key) => {
+      node.setAttribute(key, item);
+    });
     return node;
   };
+  assign($, {
+    nodeAttribute
+  });
 
   /**
     * A wrapper around the promise constructor.
@@ -2614,14 +2689,26 @@
     importjs,
   });
 
-  const isDocumentReady = (func) => {
+  /**
+    * Runs a function if the document has finished loading.
+    *
+    * @function  isDocumentReady
+    * @type {Function}
+    * @param {Function} callable - Object to be checked.
+    * @returns {boolean} Returns true if the keycode property of the object equals thirteen and vice versa.
+    *
+    * @example
+    * isEnter('click')
+    * // => false
+  */
+  const isDocumentReady = (callable) => {
     const state = document.readyState;
     const checkStatus = state === 'interactive' || state === 'completed' || state === 'complete';
     if (checkStatus) {
-      return (func) ? func() : true;
+      return (callable) ? callable() : true;
     }
-    if (func) {
-      eventAdd(document, 'DOMContentLoaded', func);
+    if (callable) {
+      eventAdd(document, 'DOMContentLoaded', callable);
     }
     return false;
   };
@@ -2635,6 +2722,12 @@
   const protocol = location.protocol;
   const protocolSocket = (protocol === 'http:') ? 'ws' : 'wss';
   const hostname = location.hostname;
+  /**
+    *
+    * @memberof $
+    * @property info
+    * @type {Object}
+  */
   const info = {
     hardware: {
       cores: navigator.hardwareConcurrency
@@ -2813,6 +2906,28 @@
   eachArray(['HTMLCollection', 'NodeList'], (item) => {
     $[`is${item}`] = isSameObjectGenerator(objectStringGenerate(item));
   });
+  /**
+   * Checks if the value is a HTMLCollection.
+   *
+   * @function isHTMLCollection
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isHTMLCollection(document.getElementsByClassName('test'));
+   * // => true
+  */
+  /**
+   * Checks if the value is a NodeList.
+   *
+   * @function isNodeList
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isNodeList(document.querySelectorAll('.test'));
+   * // => true
+  */
 
   /**
     * Sorts an array in place using a key from newest to oldest.
@@ -4104,52 +4219,6 @@
   };
   assign($, {
     isMatchObject,
-  });
-
-  /**
-    * Creates an object from two arrays, one of property identifiers and one of corresponding values.
-    *
-    * @function zipObject
-    * @type {Function}
-    * @param {Array} properties - The property identifiers.
-    * @param {Array} values - The property values.
-    * @returns {Object} - Returns the new object.
-    *
-    * @example
-    * zipObject(['a', 'b'], [1, 2]);
-    * // => { 'a': 1, 'b': 2 }
-  */
-  const zipObject = (properties, values) => {
-    const zipedObject = {};
-    eachArray(properties, (item, key) => {
-      zipedObject[item] = values[key];
-    });
-    return zipedObject;
-  };
-  /**
-    * Takes an array of grouped elements and creates an array regrouping the elements to their pre-zip object configuration.
-    *
-    * @function unZipObject
-    * @type {Function}
-    * @param {Object} object - The object to process.
-    * @returns {Array} - Returns two arrays one of keys and the other of values inside a single array.
-    *
-    * @example
-    * unZipObject({ 'a': 1, 'b': 2 });
-    * // => [['a', 'b'], [1, 2]]
-  */
-  const unZipObject = (object) => {
-    const keys$$1 = [];
-    const values = [];
-    eachObject(object, (item, key) => {
-      keys$$1.push(key);
-      values.push(item);
-    });
-    return [keys$$1, values];
-  };
-  assign($, {
-    unZipObject,
-    zipObject,
   });
 
   /**

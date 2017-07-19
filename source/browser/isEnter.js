@@ -6,10 +6,10 @@ import { assign } from '../internal/object';
   * @function isEnter
   * @type {Function}
   * @param {Object} eventObject - Object to be checked.
-  * @returns {boolean} Returns true if the keycode property of the object equals thirteen and vice versa.
+  * @returns {boolean} Returns true if the keycode property of the object equals 13.
   *
   * @example
-  * isEnter('click')
+  * isEnter('click');
   * // => false
 */
 export const isEnter = (eventObject) => {
