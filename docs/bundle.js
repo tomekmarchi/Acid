@@ -2625,11 +2625,53 @@
   const classTest = /^.[\w_-]+$/;
   const tagTest = /^[A-Za-z]+$/;
   const regexSpace = /\s/;
+  /**
+    * Wrapper around getElementsByClassName.
+    *
+    * @function getByClass
+    * @type {Function}
+  */
   const getByClass = document.getElementsByClassName.bind(document);
+  /**
+    * Wrapper around getElementsByTagName.
+    *
+    * @function getByTag
+    * @type {Function}
+  */
   const getByTag = document.getElementsByTagName.bind(document);
+  /**
+    * Wrapper around getElementsByIdName.
+    *
+    * @function getById
+    * @type {Function}
+  */
   const getById = document.getElementById.bind(document);
+  /**
+    * Wrapper around querySelector.
+    *
+    * @function querySelector
+    * @type {Function}
+  */
   const querySelector = document.querySelector.bind(document);
+  /**
+    * Wrapper around querySelectorAll.
+    *
+    * @function querySelectorAll
+    * @type {Function}
+  */
   const querySelectorAll = document.querySelectorAll.bind(document);
+  /**
+    * Returns relevant DOM node.
+    *
+    * @function selector
+    * @param {string} select - String to be evaluated.
+    * @type {Function}
+    * @returns {Node} - Returns a DOM node.
+    *
+    * @example
+    * selector('#node');
+    * // => <div id="node"></div>
+  */
   const selector = (select) => {
     const firstLetter = select[0];
     switch (firstLetter) {
@@ -2690,16 +2732,16 @@
   });
 
   /**
-    * Runs a function if the document has finished loading.
+    * Runs a function if the document has finished loading. If not, add an eventlistener.
     *
-    * @function  isDocumentReady
+    * @function isDocumentReady
     * @type {Function}
-    * @param {Function} callable - Object to be checked.
-    * @returns {boolean} Returns true if the keycode property of the object equals thirteen and vice versa.
+    * @param {Function} callable - Function to be run.
+    * @returns {Boolean|Function} - If the document is ready, returns a function. If not, return false.
     *
     * @example
-    * isEnter('click')
-    * // => false
+    * isDocumentReady(() => {return 1});
+    * // => 1
   */
   const isDocumentReady = (callable) => {
     const state = document.readyState;
@@ -2723,6 +2765,7 @@
   const protocolSocket = (protocol === 'http:') ? 'ws' : 'wss';
   const hostname = location.hostname;
   /**
+    * Holds client hardware and host info.
     *
     * @memberof $
     * @property info
