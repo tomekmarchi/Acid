@@ -976,13 +976,13 @@
   /**
     * Removes items that pass the method's test. This mutates the given array. Clone the array if you desire to avoid mutation.
     *
-    * @function remove
+    * @function removeBy
     * @param {Array} array - Array to be mutated.
     * @param {Function} method - Function used to check object. Return true to remove the value.
     * @returns {Array} The array this method was called on.
     *
     * @example
-    * remove([1, 2, 3, 3, 4, 3, 5], (item) => { return Boolean(item % 2);}));
+    * removeBy([1, 2, 3, 3, 4, 3, 5], (item) => { return Boolean(item % 2);}));
     * // => [2, 4]
   */
   const removeBy = (array, iteratee) => {

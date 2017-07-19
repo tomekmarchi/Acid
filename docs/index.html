@@ -619,9 +619,9 @@
               
                 
                 <li><a
-                  href='#remove'
+                  href='#removeby'
                   class="">
-                  remove
+                  removeBy
                   
                 </a>
                 
@@ -7150,8 +7150,8 @@ remove([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>, 
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='remove'>
-      remove
+    <h3 class='fl m0' id='removeby'>
+      removeBy
     </h3>
     
     
@@ -7161,7 +7161,7 @@ remove([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>, 
   <p>Removes items that pass the method's test. This mutates the given array. Clone the array if you desire to avoid mutation.</p>
 
 
-  <div class='pre p1 fill-light mt0'>remove(array: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, iteratee: any, method: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  <div class='pre p1 fill-light mt0'>removeBy(array: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, iteratee: any, method: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
   
   
 
@@ -7223,7 +7223,7 @@ remove([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>, 
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>remove([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>], (item) =&gt; { <span class="hljs-keyword">return</span> <span class="hljs-built_in">Boolean</span>(item % <span class="hljs-number">2</span>);}));
+      <pre class='p1 overflow-auto round fill-light'>removeBy([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>], (item) =&gt; { <span class="hljs-keyword">return</span> <span class="hljs-built_in">Boolean</span>(item % <span class="hljs-number">2</span>);}));
 <span class="hljs-comment">// =&gt; [2, 4]</span></pre>
     
   
