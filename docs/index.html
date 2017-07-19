@@ -489,9 +489,9 @@
               
                 
                 <li><a
-                  href='#isregexp'
+                  href='#isint16array'
                   class="">
-                  isRegExp
+                  isInt16Array
                   
                 </a>
                 
@@ -499,9 +499,9 @@
               
                 
                 <li><a
-                  href='#isint32array'
+                  href='#isregexp'
                   class="">
-                  isInt32Array
+                  isRegExp
                   
                 </a>
                 
@@ -559,9 +559,9 @@
               
                 
                 <li><a
-                  href='#isint16array'
+                  href='#isint32array'
                   class="">
-                  isInt16Array
+                  isInt32Array
                   
                 </a>
                 
@@ -1309,6 +1309,66 @@
               
                 
                 <li><a
+                  href='#getbyclass'
+                  class="">
+                  getByClass
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#getbytag'
+                  class="">
+                  getByTag
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#getbyid'
+                  class="">
+                  getById
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#queryselector'
+                  class="">
+                  querySelector
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#queryselectorall'
+                  class="">
+                  querySelectorAll
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#selector'
+                  class="">
+                  selector
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#importjs'
                   class="">
                   importjs
@@ -1409,9 +1469,9 @@
               
                 
                 <li><a
-                  href='#sortnewest'
+                  href='#isnodelist'
                   class="">
-                  sortNewest
+                  isNodeList
                   
                 </a>
                 
@@ -1419,9 +1479,9 @@
               
                 
                 <li><a
-                  href='#isnodelist'
+                  href='#sortnewest'
                   class="">
-                  isNodeList
+                  sortNewest
                   
                 </a>
                 
@@ -1779,6 +1839,16 @@
               
                 
                 <li><a
+                  href='#clearintervals'
+                  class="">
+                  clearIntervals
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#debounce'
                   class="">
                   debounce
@@ -1792,16 +1862,6 @@
                   href='#cleartimers'
                   class="">
                   clearTimers
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#clearintervals'
-                  class="">
-                  clearIntervals
                   
                 </a>
                 
@@ -2473,7 +2533,8 @@ $(<span class="hljs-string">'flow'</span>, $);
 
   
 
-  
+  <p>Holds client hardware and host info.</p>
+
 
   <div class='pre p1 fill-light mt0'>info</div>
   
@@ -6033,6 +6094,82 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='isint16array'>
+      isInt16Array
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Checks if the value is a Int16Array.</p>
+
+
+  <div class='pre p1 fill-light mt0'>isInt16Array(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>value</span> <code class='quiet'>(any)</code>
+	    Object to be checked.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        True or false.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>isInt16Array(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Int16Array</span>());
+<span class="hljs-comment">// =&gt; true</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='isregexp'>
       isRegExp
     </h3>
@@ -6090,82 +6227,6 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
     
       
       <pre class='p1 overflow-auto round fill-light'>isRegExp(<span class="hljs-regexp">/test/</span>);
-<span class="hljs-comment">// =&gt; true</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='isint32array'>
-      isInt32Array
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Checks if the value is a Int32Array.</p>
-
-
-  <div class='pre p1 fill-light mt0'>isInt32Array(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>value</span> <code class='quiet'>(any)</code>
-	    Object to be checked.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
-        True or false.
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>isInt32Array(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Int32Array</span>());
 <span class="hljs-comment">// =&gt; true</span></pre>
     
   
@@ -6565,18 +6626,18 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='isint16array'>
-      isInt16Array
+    <h3 class='fl m0' id='isint32array'>
+      isInt32Array
     </h3>
     
     
   </div>
   
 
-  <p>Checks if the value is a Int16Array.</p>
+  <p>Checks if the value is a Int32Array.</p>
 
 
-  <div class='pre p1 fill-light mt0'>isInt16Array(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  <div class='pre p1 fill-light mt0'>isInt32Array(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
   
   
 
@@ -6621,7 +6682,7 @@ defineProperty(obj, <span class="hljs-string">'key'</span>, {
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>isInt16Array(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Int16Array</span>());
+      <pre class='p1 overflow-auto round fill-light'>isInt32Array(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Int32Array</span>());
 <span class="hljs-comment">// =&gt; true</span></pre>
     
   
@@ -13062,6 +13123,317 @@ restString(<span class="hljs-string">'restString'</span>, <span class="hljs-numb
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='getbyclass'>
+      getByClass
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Wrapper around getElementsByClassName.</p>
+
+
+  <div class='pre p1 fill-light mt0'>getByClass()</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='getbytag'>
+      getByTag
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Wrapper around getElementsByTagName.</p>
+
+
+  <div class='pre p1 fill-light mt0'>getByTag()</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='getbyid'>
+      getById
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Wrapper around getElementsByIdName.</p>
+
+
+  <div class='pre p1 fill-light mt0'>getById()</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='queryselector'>
+      querySelector
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Wrapper around querySelector.</p>
+
+
+  <div class='pre p1 fill-light mt0'>querySelector()</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='queryselectorall'>
+      querySelectorAll
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Wrapper around querySelectorAll.</p>
+
+
+  <div class='pre p1 fill-light mt0'>querySelectorAll()</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='selector'>
+      selector
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Returns relevant DOM node.</p>
+
+
+  <div class='pre p1 fill-light mt0'>selector(select: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/nextSibling">Node</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>select</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    String to be evaluated.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/nextSibling">Node</a></code>:
+        Returns a DOM node.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>selector(<span class="hljs-string">'#node'</span>);
+<span class="hljs-comment">// =&gt; &lt;div id="node"&gt;&lt;/div&gt;</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='importjs'>
       importjs
     </h3>
@@ -13144,10 +13516,10 @@ restString(<span class="hljs-string">'restString'</span>, <span class="hljs-numb
   </div>
   
 
-  <p>Runs a function if the document has finished loading.</p>
+  <p>Runs a function if the document has finished loading. If not, add an eventlistener.</p>
 
 
-  <div class='pre p1 fill-light mt0'>isDocumentReady(callable: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  <div class='pre p1 fill-light mt0'>isDocumentReady(callable: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>): (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</div>
   
   
 
@@ -13165,7 +13537,7 @@ restString(<span class="hljs-string">'restString'</span>, <span class="hljs-numb
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>callable</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
-	    Object to be checked.
+	    Function to be run.
 
           </div>
           
@@ -13179,8 +13551,8 @@ restString(<span class="hljs-string">'restString'</span>, <span class="hljs-numb
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
-        Returns true if the keycode property of the object equals thirteen and vice versa.
+      <code>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>:
+        If the document is ready, returns a function. If not, return false.
 
       
     
@@ -13192,8 +13564,8 @@ restString(<span class="hljs-string">'restString'</span>, <span class="hljs-numb
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>isEnter(<span class="hljs-string">'click'</span>)
-<span class="hljs-comment">// =&gt; false</span></pre>
+      <pre class='p1 overflow-auto round fill-light'>isDocumentReady(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>});
+<span class="hljs-comment">// =&gt; 1</span></pre>
     
   
 
@@ -13867,101 +14239,6 @@ ifInvoke(<span class="hljs-literal">undefined</span>, <span class="hljs-number">
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='sortnewest'>
-      sortNewest
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Sorts an array in place using a key from newest to oldest.</p>
-
-
-  <div class='pre p1 fill-light mt0'>sortNewest(collection: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, key: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, pureMode: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>collection</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
-	    Collection to be sorted.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>key</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    The property name to sort by based on it's value.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>pureMode</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>
-            = <code>true</code>)</code>
-	    Mutates the source array. If set to false creates a new array.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
-        The sorted array and or a clone of the array sorted.
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>sortNewest([{<span class="hljs-attr">id</span>: <span class="hljs-number">1</span>}, {<span class="hljs-attr">id</span>: <span class="hljs-number">0</span>}], <span class="hljs-string">'id'</span>);
-<span class="hljs-comment">// =&gt; [{id: 1}, {id: 0}]</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
     <h3 class='fl m0' id='isnodelist'>
       isNodeList
     </h3>
@@ -14045,6 +14322,101 @@ ifInvoke(<span class="hljs-literal">undefined</span>, <span class="hljs-number">
       
       <pre class='p1 overflow-auto round fill-light'>isNodeList(<span class="hljs-built_in">document</span>.querySelectorAll(<span class="hljs-string">'.test'</span>));
 <span class="hljs-comment">// =&gt; true</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='sortnewest'>
+      sortNewest
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Sorts an array in place using a key from newest to oldest.</p>
+
+
+  <div class='pre p1 fill-light mt0'>sortNewest(collection: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, key: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, pureMode: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>collection</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    Collection to be sorted.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>key</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    The property name to sort by based on it's value.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>pureMode</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>
+            = <code>true</code>)</code>
+	    Mutates the source array. If set to false creates a new array.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
+        The sorted array and or a clone of the array sorted.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>sortNewest([{<span class="hljs-attr">id</span>: <span class="hljs-number">1</span>}, {<span class="hljs-attr">id</span>: <span class="hljs-number">0</span>}], <span class="hljs-string">'id'</span>);
+<span class="hljs-comment">// =&gt; [{id: 1}, {id: 0}]</span></pre>
     
   
 
@@ -17042,6 +17414,89 @@ overEveryThing(<span class="hljs-literal">null</span>);
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='clearintervals'>
+      clearIntervals
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Clear all active intervals.</p>
+
+
+  <div class='pre p1 fill-light mt0'>clearIntervals(callable: any, time: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>callable</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>time</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
+        Returns undefined.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>clearIntervals();
+<span class="hljs-comment">// =&gt; undefined</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='debounce'>
       debounce
     </h3>
@@ -17191,89 +17646,6 @@ overEveryThing(<span class="hljs-literal">null</span>);
     
       
       <pre class='p1 overflow-auto round fill-light'>clearTimers();
-<span class="hljs-comment">// =&gt; undefined</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='clearintervals'>
-      clearIntervals
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>Clear all active intervals.</p>
-
-
-  <div class='pre p1 fill-light mt0'>clearIntervals(callable: any, time: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>callable</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>time</span> <code class='quiet'>(any)</code>
-	    
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
-        Returns undefined.
-
-      
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>clearIntervals();
 <span class="hljs-comment">// =&gt; undefined</span></pre>
     
   

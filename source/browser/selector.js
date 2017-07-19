@@ -30,28 +30,28 @@ export const getById = document.getElementById.bind(document);
 /**
   * Wrapper around querySelector.
   *
-  * @function  querySelector
+  * @function querySelector
   * @type {Function}
 */
 export const querySelector = document.querySelector.bind(document);
 /**
   * Wrapper around querySelectorAll.
   *
-  * @function  querySelectorAll
+  * @function querySelectorAll
   * @type {Function}
 */
 export const querySelectorAll = document.querySelectorAll.bind(document);
 /**
   * Returns relevant DOM node.
   *
-  * @function  selector
+  * @function selector
   * @param {string} select - String to be evaluated.
   * @type {Function}
   * @returns {Node} - Returns a DOM node.
   *
   * @example
   * selector('#node');
-  * // => <div id = node></div>
+  * // => <div id="node"></div>
 */
 export const selector = (select) => {
   const firstLetter = select[0];
