@@ -35,14 +35,14 @@ const cnsl = (value, themeName) => {
   * @type {Function}
   * @param {string} themeName - The name of the theme.
   * @param {string} color - The text color.
-  * @param {string} bg - The background color of the block.
+  * @param {string} background - The background color of the block.
   * @returns {undefined} Returns undefined.
   *
   * @example
   * cnslTheme('BlackNWhite', '#fff', '#000');
 */
-const cnslTheme = (themeName, color, bg) => {
-  themes[themeName] = generateTheme(color, bg);
+const cnslTheme = (themeName, color, background) => {
+  themes[themeName] = generateTheme(color, background);
 };
 assign(acid, {
   cnsl,
