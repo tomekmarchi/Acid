@@ -6,7 +6,7 @@ import { isFunction } from '../internal/is';
   *
   * @function ifInvoke
   * @type {Function}
-  * @param {Function} method - The function to be invoked if possible.
+  * @param {Function} callable - The function to be invoked if possible.
   * @param {...Array} args - Arguments to pass to the method.
   * @returns {*} Returns the method invoked or undefined.
   *
@@ -16,9 +16,9 @@ import { isFunction } from '../internal/is';
   * ifInvoke(undefined, 1, 2);
   * // => undefined
 */
-export const ifInvoke = (method, ...args) => {
-  if (isFunction(method)) {
-    return method(...args);
+export const ifInvoke = (callable, ...args) => {
+  if (isFunction(callable)) {
+    return callable(...args);
   }
 };
 assign(acid, {

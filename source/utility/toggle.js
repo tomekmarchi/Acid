@@ -13,7 +13,7 @@ import { isEqual } from './isEqual';
   *
   * @example
   * toggle(1, 2, 3);
-  * //=> 2
+  * // => 2
 */
 export const toggle = (value, on, off) => {
   return (isEqual(on, value)) ? off : on;

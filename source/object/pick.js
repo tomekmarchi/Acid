@@ -13,7 +13,7 @@ import { eachArray } from '../array/each';
   *
   * @example
   * pick({a:1, b:2, c:3}, ['a','b']);
-  * //=> {a:1, b:2}
+  * // => {a:1, b:2}
 */
 const pick = (source, array, newObject = {}) => {
   eachArray(array, (item) => {

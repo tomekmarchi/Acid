@@ -2,93 +2,87 @@ import acid from '../namespace/index';
 import { assign } from '../internal/object';
 import { times } from '../array/times';
 /**
-  * A wrapper around setTimeout.
+  * Timer wrapper.
   *
   * @function timer
-  * @param {Object} method - Function to be invoked.
-  * @param {number} time - The time in nanoseconds.
   * @type {Function}
-  * @returns {number} Set timeout id.
+  * @param {Function} callable - The function to be invoked.
+  * @param {number} time - The time in milliseconds.
+  * @returns {Object} Returns setTimeout ID.
   *
   * @example
-  * timer(() => { return 1}, 1);
-  * // => 0: 1
+  * timer(() => {}, 100);
+  * // => 0
 */
-export const timer = (method, time) => {
-  return setTimeout(method, time);
+export const timer = (callable, time) => {
+  return setTimeout(callable, time);
 };
 /**
-  * Wrapper around setInterval.
+  * Interval wrapper.
   *
   * @function interval
   * @type {Function}
-  * @param {Object} method - Function to be invoked.
-  * @param {number} time - The time in nanoseconds.
-  * @returns {Object} Returns the new empty object.
+  * @param {Function} callable - The function to be invoked.
+  * @param {number} time - The time in milliseconds.
+  * @returns {Object} Returns setInterval ID.
   *
   * @example
-  * interval(() => { return 1}, 1);
-  * // => 0: 1
+  * interval(() => {}, 100);
+  * // => 0
 */
-export const interval = (method, time) => {
-  return setInterval(method, time);
+export const interval = (callable, time) => {
+  return setInterval(callable, time);
 };
-const generateClear = (method, clearMethod) => {
+const generateClear = (callable, clearMethod) => {
   return () => {
-    times(0, method(() => {}, 0), (index) => {
+    times(0, callable(() => {}, 0), (index) => {
       clearMethod(index);
     });
   };
 };
 /**
-  * Clears setTimeout function.
+  * Clear all active timers.
   *
   * @function clearTimers
-  * @type {Function}
-  * @param {Object} timer - Timer to be cleared.
-  * @param {Function} clearTimeout - Invocation of time clear function.
-  * @returns {Number} Returns a number of the cleared setTimeout ID.
+  * @returns {undefined} Returns undefined.
   *
   * @example
-  *
-  * // =>
+  * clearTimers();
+  * // => undefined
 */
 export const clearTimers = generateClear(timer, clearTimeout);
 /**
-  * Clears setInterval function.
+  * Clear all active intervals.
   *
   * @function clearIntervals
-  * @type {Function}
-  * @param {Object} interval - Interval to be cleared.
-  * @param {Object} clearInterval - Invocation of interval clear function.
-  * @returns {Number} Returns a number of the cleared setInterval ID.
+  * @returns {undefined} Returns undefined.
   *
   * @example
   * clearIntervals();
-  * // =>
+  * // => undefined
 */
 export const clearIntervals = generateClear(interval, clearInterval);
 /**
-  *
+  * Creates a debounced function that delays invoking callable until after wait milliseconds have elapsed since the last time the debounced function was invoked. The debounce function has a clear method to cancel the timer.
   *
   * @function debounce
   * @type {Function}
-  * @param {Object} original -
-  * @param {Object} time -
-  * @returns {Object}
+  * @param {Function} callable - The function to be invoked.
+  * @param {number} time - The time in milliseconds.
+  * @returns {Function} The debounced function.
   *
   * @example
-  * debounce();
-  * // =>
+  * const debounced = debounce(() => { console.log('debounced'); }, 0);
+  * // => debounced();
 */
-export const debounce = (original, time) => {
+export const debounce = (callable, time) => {
   let timeout = false;
   const debounced = (...args) => {
     if (timeout !== false) {
       clearTimeout(timeout);
     }
     timeout = timer(() => {
-      original(...args);
+      callable(...args);
       timeout = false;
     }, time);
   };
@@ -101,19 +95,19 @@ export const debounce = (original, time) => {
   return debounced;
 };
 /**
-  *
+  * Creates a throttled function that only invokes callable at most once per every wait milliseconds. The throttle function has a clear method to cancel the timer.
   *
   * @function throttle
   * @type {Function}
-  * @param {Object} method -
-  * @param {Object} time -
-  * @returns {Object} Returns the new empty object.
+  * @param {Function} callable - The function to be invoked.
+  * @param {number} time - The time in milliseconds.
+  * @returns {Function} The throttled function.
   *
   * @example
-  * throttle();
-  * // =>
+  * const throttled = throttle(() => { console.log('debounced'); }, 0);
+  * // => throttled();
 */
-export const throttle = (method, time) => {
+export const throttle = (callable, time) => {
   let timeout = false;
   let shouldThrottle;
   const throttled = (...args) => {
@@ -121,10 +115,10 @@ export const throttle = (method, time) => {
       shouldThrottle = true;
       return;
     }
-    method(...args);
+    callable(...args);
     timeout = timer(() => {
       if (shouldThrottle) {
-        method(...args);
+        callable(...args);
       }
       timeout = false;
     }, time);

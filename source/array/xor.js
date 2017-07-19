@@ -5,7 +5,7 @@ import { unique } from './unique';
 /**
   * Creates an array that is the symmetric difference of the provided arrays.
   *
-  * @function take
+  * @function xor
   * @type {Function}
   * @param {Array} array - The array to be filtered.
   * @param {Array} removeThese - Items to be removed.

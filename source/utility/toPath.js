@@ -13,7 +13,7 @@ const emptyString = '';
   * 
   * @example
   * toPath('post.like[2]');
-  * //=> ['post', 'like', '2']
+  * // => ['post', 'like', '2']
 */
 export const toPath = (string) => {
   return string.replace(regexCloseBracket, emptyString).split(regexToPath);

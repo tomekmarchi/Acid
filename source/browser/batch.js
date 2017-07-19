@@ -10,6 +10,18 @@ const batchLoop = () => {
   clear(batchChanges);
   batchCancelFrame = false;
 };
+/**
+  * Batch processing using requestAnimationFrame.
+  *
+  * @function batch
+  * @type {Function}
+  * @param {...Function} items - The functions to add to the current batch.
+  * @returns {undefined} Returns undefined.
+  *
+  * @example
+  * batch(() => {});
+  * // => undefined
+*/
 export const batch = (...items) => {
   batchChanges.push(...items);
   if (!batchCancelFrame) {

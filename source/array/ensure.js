@@ -11,10 +11,10 @@ import { isArray } from '../internal/is';
   *
   * @example
   * ensureArray('Hello');
-  * //=> ['Hello']
+  * // => ['Hello']
   *
   * ensureArray({a:1, b:2})
-  * //=> [{a:1, b:2}]
+  * // => [{a:1, b:2}]
 */
 export const ensureArray = (object) => {
   return (isArray(object)) ? object : [object];

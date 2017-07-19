@@ -14,7 +14,7 @@ import { isArray, isPlainObject } from '../internal/is';
   *
   * @example
   * assignDeep({a:1}, {b:2})
-  * //=> {a:1, b:2}
+  * // => {a:1, b:2}
   *
 */
 export const assignDeep = (object, otherObject, mergeArrays = true) => {

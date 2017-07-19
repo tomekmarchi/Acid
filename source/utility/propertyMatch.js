@@ -19,7 +19,7 @@ import { assign, keys } from '../internal/object';
   *   a: 1,
   *   b: 2
   * }, ['a', 'b']);
-  * //-> true
+  * // => true
 */
 export const propertyMatch = (object, compareObject, properties = keys(object)) => {
   return whileArray(properties, (property) => {

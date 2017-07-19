@@ -12,7 +12,7 @@ import { compactMapArray } from './each';
   *
   * @example
   * compact([1, 2, 3], [1, 2]);
-  * //=> [3]
+  * // => [3]
 */
 export const difference = (array, compare) => {
   return compactMapArray(array, (item) => {

@@ -1,5 +1,3 @@
-import acid from '../namespace/index';
-import { assign } from '../internal/object';
 import { mapObject } from '../object/each';
 import { hasValue, isPlainObject, isString } from '../internal/is';
 export const nodeAttribute = (node, keys, value) => {
@@ -20,6 +18,3 @@ export const nodeAttribute = (node, keys, value) => {
   }
   return node;
 };
-assign(acid, {
-  nodeAttribute
-});

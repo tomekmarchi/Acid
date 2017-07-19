@@ -14,10 +14,10 @@ const uidClosed = {};
   *
   * @example
   * uid();
-  * //=> 0
+  * // => 0
   *
   * uid();
-  * //=> 1
+  * // => 1
 */
 export const uid = () => {
   let result = uidFree.shift(uidFree);
@@ -39,16 +39,16 @@ export const uid = () => {
   *
   * @example
   * uid();
-  * //=> 0
+  * // => 0
   *
   * uid();
-  * //=> 1
+  * // => 1
   *
   * uid.free(0);
-  * //=> undefined
+  * // => undefined
   *
   * uid();
-  * //=> 0
+  * // => 0
 */
 const free = (id) => {
   uidClosed[id] = null;

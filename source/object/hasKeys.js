@@ -4,7 +4,7 @@ import { assign, keys } from '../internal/object';
 /**
   * Checks to see if an object has all of the given property names.
   *
-  * @function compactKeys
+  * @function hasKeys
   * @type {Function}
   * @param {Object} object - Object from which keys are extracted.
   * @param {Array} properties - Array of object keys.
@@ -12,10 +12,10 @@ import { assign, keys } from '../internal/object';
   *
   * @example
   * hasKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Lucy','Thor']);
-  * //=> true
+  * // => true
   *
   * hasKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Lucy','Tom']);
-  * //=> false
+  * // => false
 */
 export const hasKeys = (object, properties) => {
   const objectKeys = keys(object);
@@ -34,10 +34,10 @@ export const hasKeys = (object, properties) => {
   *
   * @example
   * hasAnyKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Lucy','Tom']);
-  * //=> true
+  * // => true
   *
   * hasAnyKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Other','Tom']);
-  * //=> false
+  * // => false
 */
 export const hasAnyKeys = (object, properties) => {
   const objectKeys = keys(object);

@@ -5,10 +5,10 @@ import { eachAsync } from '../array/eachAsync';
 /**
   * Invoke an array of functions.
   *
-  * @function curry
+  * @function inSync
   * @type {Function}
-  * @param {Function} methods - The functions to be invoked.
-  * @param {*} arg - The object passed to each method.
+  * @param {Array|Object|Function} collection - The functions to be invoked.
+  * @param {*} arg - The object passed as an argument to each method.
   * @returns {undefined} Returns undefined.
   *
   * @example
@@ -17,18 +17,19 @@ import { eachAsync } from '../array/eachAsync';
   * // 2
   * // => undefined
 */
-export const inSync = (methods, arg) => {
-  return each(methods, (item) => {
+export const inSync = (collection, arg) => {
+  return each(collection, (item) => {
     item(arg);
   });
 };
 /**
   * Invoke an array of functions asynchronously. Each function is awaited to ensure execution order.
   *
-  * @function curry
+  * @function inAsync
   * @type {Function}
-  * @param {Function} methods - The functions to be invoked.
-  * @param {*} arg - The object passed to each method.
+  * @async
+  * @param {Array|Object|Function} collection - The functions to be invoked.
+  * @param {*} arg - The object passed as an argument to each method.
   * @returns {undefined} Returns undefined.
   *
   * @example
@@ -37,8 +38,8 @@ export const inSync = (methods, arg) => {
   * // 2
   * // => undefined
 */
-export const inAsync = async (methods, arg) => {
-  return eachAsync(methods, async (item) => {
+export const inAsync = async (collection, arg) => {
+  return eachAsync(collection, async (item) => {
     await item(arg);
   });
 };

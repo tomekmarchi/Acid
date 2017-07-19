@@ -7,9 +7,9 @@ import { map } from '../utility/each';
   *
   * @function bindAll
   * @type {Function}
-  * @param {Function} bindThese - The function to be invoked if possible.
-  * @param {...Array} withThis - Arguments to pass to the method.
-  * @returns {*} Returns the method invoked or undefined.
+  * @param {Object|Function|Array} collection - The functions to bind.
+  * @param {*} bindThis - Object to be bound to functions.
+  * @returns {Object|Function|Array} Returns the method invoked or undefined.
   *
   * @example
   * const collection = bindAll([() => { return this;}], 'Lucy');
@@ -20,9 +20,9 @@ import { map } from '../utility/each';
   * collection.a();
   * // => 'Lucy'
 */
-export const bindAll = (bindThese, withThis) => {
-  return map(bindThese, (item) => {
-    return isFunction(item) ? item.bind(withThis) : item;
+export const bindAll = (collection, bindThis) => {
+  return map(collection, (item) => {
+    return isFunction(item) ? item.bind(bindThis) : item;
   });
 };
 assign(acid, {

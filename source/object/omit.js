@@ -12,7 +12,7 @@ import { filterObject } from './each';
   *
   * @example
   * omit({a:1, b:2, ['a']});
-  * //=> {b:2}
+  * // => {b:2}
   *
 */
 export const omit = (originalObject, array) => {

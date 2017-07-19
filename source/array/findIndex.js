@@ -17,7 +17,7 @@ const findIndexCache = (element, index, array, indexMatch, propertyName) => {
   *
   * @example
   * findItem([{id: 1}, {id: 2}], 1);
-  * //=> {id: 1}
+  * // => {id: 1}
 */
 export const findItem = (collection, id, propertyName = 'id') => {
   const result = collection.find((element, index) => {
@@ -37,7 +37,7 @@ export const findItem = (collection, id, propertyName = 'id') => {
   *
   * @example
   * findIndex([{id: 1}, {id: 2}], 1);
-  * //=> 0
+  * // => 0
 */
 export const findIndex = (collection, id, propertyName = 'id') => {
   const result = collection.findIndex((element, index) => {

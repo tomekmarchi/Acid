@@ -10,7 +10,7 @@ import { assign } from '../internal/object';
   *
   * @example
   * promise((a) => {});
-  * //=> promise((a) => {})
+  * // => promise((a) => {})
 */
 export const promise = (callback) => {
   return new Promise(callback);

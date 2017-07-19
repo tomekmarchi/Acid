@@ -1,11 +1,11 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
 import { eachArray, eachArrayRight } from '../array/each';
-const returnFlow = (method) => {
+const returnFlow = (callable) => {
   return (...methods) => {
     return (arg) => {
       let value = arg;
-      method(methods, (item) => {
+      callable(methods, (item) => {
         value = item(value);
       });
       return value;
@@ -17,8 +17,8 @@ const returnFlow = (method) => {
   *
   * @function flow
   * @type {Function}
-  * @param {Array} eachArray - Array to flatten
-  * @returns {*}
+  * @param {Array} collection - Methods to invoke.
+  * @returns {Function} Returns the new composite function.
   *
   * @example
   * flow(increment, increment, deduct)(0);
@@ -30,8 +30,8 @@ export const flow = returnFlow(eachArray);
   *
   * @function flowRight
   * @type {Function}
-  * @param {Array} eachArray - Array to flatten
-  * @returns {*}
+  * @param {Array} collection - Methods to invoke.
+  * @returns {Function} Returns the new composite function.
   *
   * @example
   * flowRight(increment, increment, deduct)(0);

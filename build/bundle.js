@@ -14,7 +14,7 @@
    *
    * @example
    * $('modelName', {example: 1});
-   * // -> {example: 1}
+   * // => {example: 1}
    */
   const $ = (...args) => {
     return cacheSuper(...args);
@@ -24,69 +24,160 @@
    *
    * @function superMethod
    * @memberof $
-   * @param {Function} method - The function that will become the main object's method.
+   * @param {Function} callable - The function that will become the main object's subroutine.
    * @returns {undefined} - Returns nothing.
    *
    * @example
    * superMethod($.get);
-   * // -> $('flow', $);
-   * // -> $.flow
+   * // => undefined
+   * $('flow', $);
+   * // => $.flow
    */
-  const superMethod = (method) => {
-    cacheSuper = method;
+  const superMethod = (callable) => {
+    cacheSuper = callable;
   };
   $.superMethod = superMethod;
 
   const objectNative$1 = Object;
+  /**
+   * Get object's keys.
+   *
+   * @function keys
+   * @param {*} object - Object to pull keys from.
+   * @returns {Array} Array of keys.
+   *
+   * @example
+   * keys({a: 1, b: 2});
+   * // => ['a', 'b']
+  */
   const keys = objectNative$1.keys;
+  /**
+   * Determines whether two values are the same value.
+   *
+   * @function is
+   * @param {*} object - Value to compare to.
+   * @param {*} object - A value to compare.
+   * @returns {Boolean} A Boolean indicating whether or not the two arguments are the same value.
+   *
+   * @example
+   * is('foo', 'foo');
+   * // => true
+  */
   const is = objectNative$1.is;
+  /**
+   * Copy the values of all enumerable own properties from one or more source objects to a target object. It will return the target object.
+   *
+   * @function assign
+   * @param {Object} target - The target object.
+   * @param {Object} sources - The source object(s).
+   * @returns {Object} Returns the target object.
+   *
+   * @example
+   * assign({b: 2}, {a: 1});
+   * // => {b: 2, a: 1}
+  */
   const assign = objectNative$1.assign;
+  /**
+   * Returns a property descriptor for an own property (that is, one directly present on an object and not in the object's prototype chain) of a given object.
+   *
+   * @function getOwnPropertyDescriptor
+   * @param {Object} obj - The target object.
+   * @param {String} property - The name of the property whose description is to be retrieved.
+   * @returns {Object} A property descriptor of the given property if it exists on the object, undefined otherwise.
+   *
+   * @example
+   * getOwnPropertyDescriptor({ bar: 42 }, 'foo');
+   * // => { configurable: true, enumerable: true, value: 42, writable: true }
+  */
   const getOwnPropertyDescriptor = objectNative$1.getOwnPropertyDescriptor;
+  /**
+   * Defines a new property directly on an object, or modifies an existing property on an object, and returns the object.
+   *
+   * @function defineProperty
+   * @param {Object} obj - The object on which to define the property.
+   * @param {String} property - The name of the property whose description is to be retrieved.
+   * @param {Object} descriptor - The descriptor for the property being defined or modified.
+   * @returns {Object} The object that was passed to the function.
+   *
+   * @example
+   * const obj = {};
+   * defineProperty(obj, 'key', {
+   *  enumerable: false,
+   *  configurable: false,
+   *  writable: false,
+   *  value: 'static'
+   * });
+  */
   const defineProperty = objectNative$1.defineProperty;
+  /**
+   * Returns an array of all properties (enumerable or not) found directly upon a given object.
+   *
+   * @function getOwnPropertyNames
+   * @param {Object} obj - The object whose enumerable and non-enumerable own properties are to be returned.
+   * @returns {Object} An array of strings that correspond to the properties found directly upon the given object.
+   *
+   * @example
+   * getOwnPropertyNames({ 0: 'a', 1: 'b', 2: 'c' });
+   * // => ['0', '1', '2']
+  */
   const getOwnPropertyNames = objectNative$1.getOwnPropertyNames;
-  const objectSize = (thisObject) => {
-    return keys(thisObject).length;
+  /**
+   * Returns the amount of keys on the object.
+   *
+   * @function objectSize
+   * @param {Object} obj - The target object.
+   * @returns {number} The amount of keys.
+   *
+   * @example
+   * objectSize({ 0: 'a', 1: 'b', 2: 'c' });
+   * // => 3
+  */
+  const objectSize = (target) => {
+    return keys(target).length;
   };
   assign($, {
-    keys,
-    is,
     assign,
-    getOwnPropertyDescriptor,
     defineProperty,
+    getOwnPropertyDescriptor,
     getOwnPropertyNames,
+    is,
+    keys,
     objectSize
   });
 
+  const arrayNative = Array;
   /**
-    * Iterates through the given array of async function(s). Each async function is awaited as to ensure synchronous order and is given the supplied object.
-    *
-    * @function asyncEach
-    * @type {Function}
-    * @async
-    * @param {Array} callingArray - Array of async functions that will be looped through.
-    * Functions are given the supplied object, index, the calling array, and the array length.
-    * @param {*} object - The first argument given to each function.
-    * @returns {Object} The originally given array.
-    *
-    * @example
-    * asyncEach([async (item, index) =>{
-    *  console.log(item, index);
-    * }, async (item) =>{
-    *  console.log(item, index);
-    * }], {a:1});
-    * // {a:1} 0
-    * // {a:1} 1
+   * Takes an array like object and creates a new Array from it.
+   *
+   * @function toArray
+   * @param {*} arrayLike - Array like object.
+   * @returns {*} new array.
+   *
+   * @example
+   * toArray([1, 2, 3]);
+   * // => [1, 2, 3]
   */
-  const asyncEach = async (callingArray, object) => {
-    const arrayLength = callingArray.length;
-    for (let index = 0; index < arrayLength; index++) {
-      const item = callingArray[index];
-      await item(object, index, callingArray, arrayLength);
-    }
-    return callingArray;
-  };
+  const toArray = arrayNative.from;
   assign($, {
-    asyncEach,
+    toArray,
+  });
+
+  /**
+   * Calls a target function with arguments as specified.
+   *
+   * @function apply
+   * @param {Function} target - The target function to call.
+   * @param {*} thisArgument - Array like object.
+   * @param {Array} argumentsList - An array-like object specifying the arguments with which target should be called.
+   * @returns {*} The result of calling the given target function with the specified this value and arguments.
+   *
+   * @example
+   * apply((a) => {return [this, a];}, 1, 2);
+   * // => [1, 2]
+  */
+  const apply = Reflect.apply;
+  assign($, {
+    apply
   });
 
   /**
@@ -184,9 +275,9 @@
     });
     return results;
   };
-  const generateMap = (method) => {
+  const generateMap = (callable) => {
     return (callingArray, iteratee, results = []) => {
-      method(callingArray, (item, index, arrayOriginal, arrayLength) => {
+      callable(callingArray, (item, index, arrayOriginal, arrayLength) => {
         results[index] = iteratee(item, index, results, arrayOriginal, arrayLength);
       });
       return results;
@@ -294,14 +385,47 @@
   const objectStringGenerate = (objectName) => {
     return `[object ${objectName}]`;
   };
-  const isUndefined = function(obj) {
-    return obj === undefined;
+  /**
+   * Checks if the value is undefined.
+   *
+   * @function isUndefined
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isUndefined(undefined);
+   * // => true
+  */
+  const isUndefined = function(value) {
+    return value === undefined;
   };
-  const isNull = (obj) => {
-    return obj === null;
+  /**
+   * Checks if the value is null.
+   *
+   * @function isNull
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isNull(null);
+   * // => true
+  */
+  const isNull = (value) => {
+    return value === null;
   };
-  const hasValue = (item) => {
-    return !isUndefined(item) && !isNull(item);
+  /**
+   * Checks if the value is not null or undefined.
+   *
+   * @function hasValue
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * hasValue(1);
+   * // => true
+  */
+  const hasValue = (value) => {
+    return !isUndefined(value) && !isNull(value);
   };
   const isSameObjectGenerator = (type) => {
     return (obj) => {
@@ -314,28 +438,128 @@
     };
   };
   const decimalCheck = /\.|\+/;
-  const isDecimal = (string) => {
-    return string.toString().match(decimalCheck);
+  /**
+   * Checks if the value is a decimal.
+   *
+   * @function isDecimal
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isDecimal(1.01);
+   * // => true
+  */
+  const isDecimal = (value) => {
+    return value.toString().match(decimalCheck);
   };
+  /**
+   * Checks if the value is an array.
+   *
+   * @function isArray
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isArray([]);
+   * // => true
+  */
   const isArray = Array.isArray;
+  /**
+   * Checks if the value is a string.
+   *
+   * @function isString
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isString('Lucy');
+   * // => true
+  */
   const isString = isConstructor(String);
+  /**
+   * Checks if the value is a number.
+   *
+   * @function isNumber
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isNumber(1);
+   * // => true
+  */
   const isNumber = isConstructor(Number);
-  const isPlainObject = (obj) => {
-    if (hasValue(obj)) {
-      return obj.constructor.toString().trim()
+  /**
+   * Checks if the value is a plain object.
+   *
+   * @function isPlainObject
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isPlainObject({});
+   * // => true
+  */
+  const isPlainObject = (value) => {
+    if (hasValue(value)) {
+      return value.constructor.toString().trim()
           .slice(9, 16) === 'Object(';
     }
     return false;
   };
-  const isFunction = (obj) => {
-    return (hasValue(obj)) ? obj instanceof Function : false;
+  /**
+   * Checks if the value is a plain object.
+   *
+   * @function isFunction
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isFunction({});
+   * // => true
+  */
+  const isFunction = (value) => {
+    return (hasValue(value)) ? value instanceof Function : false;
   };
-  const has = (string, ...search) => {
-    return string.includes(...search);
+  /**
+   * Checks if the value includes something.
+   *
+   * @function has
+   * @param {Array|String} value - Object to be checked.
+   * @param {*} search - Object that is being searched for.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * has('My name is Acidjs', 'Acidjs');
+   * // => true
+  */
+  const has = (value, ...search) => {
+    return value.includes(...search);
   };
-  const hasLength = (obj) => {
-    return Boolean(obj.length);
+  /**
+   * Checks if the value has length greater than 0.
+   *
+   * @function hasLength
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * hasLength([1]);
+   * // => true
+  */
+  const hasLength = (value) => {
+    return Boolean(value.length);
   };
+  /**
+   * Checks if the value is empty.
+   *
+   * @function isEmpty
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isEmpty([]);
+   * // => true
+  */
   const isEmpty = (obj) => {
     if (isString(obj) || isArray(obj)) {
       return !hasLength(obj);
@@ -349,18 +573,259 @@
       return (hasValue(item)) ? regexType.test(item) : false;
     };
   };
+  /**
+   * Checks if the string has a .css extension.
+   *
+   * @function isFileCSS
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isFileCSS('test.css');
+   * // => true
+  */
   const isFileCSS = regexGenerator(/\.css$/);
+  /**
+   * Checks if the string has a .json extension.
+   *
+   * @function isFileCSS
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isFileCSS('test.json');
+   * // => true
+  */
   const isFileJSON = regexGenerator(/\.json$/);
+  /**
+   * Checks if the string has a .js extension.
+   *
+   * @function isFileCSS
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isFileCSS('test.js');
+   * // => true
+  */
   const isFileJS = regexGenerator(/\.js$/);
+  /**
+   * Checks if the string has a '.'.
+   *
+   * @function hasDot
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * hasDot('test.js');
+   * // => true
+  */
 
   const getExtensionRegex = /\.([0-9a-z]+)/;
+  /**
+   * Return the file extension.
+   *
+   * @function getFileExtension
+   * @param {*} value - Object to be checked.
+   * @returns {string} Returns the extension.
+   *
+   * @example
+   * getFileExtension('test.js');
+   * // => 'js'
+  */
   const getFileExtension = (string) => {
     return string.match(getExtensionRegex);
   };
-  const nativeObjectNames = ['RegExp', 'Arguments', 'Boolean', 'Date', 'Error', 'Map', 'Object', 'Set', 'WeakMap',
+  /**
+   * Checks if the value is a RegExp.
+   *
+   * @function isRegExp
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isRegExp(/test/);
+   * // => true
+  */
+  /**
+   * Checks if the value is an Arguments object.
+   *
+   * @function isArguments
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isArguments([]);
+   * // => false
+  */
+  /**
+   * Checks if the value is a Boolean.
+   *
+   * @function isBoolean
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isBoolean(true);
+   * // => true
+  */
+  /**
+   * Checks if the value is a Date.
+   *
+   * @function isDate
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isDate(new Date());
+   * // => true
+  */
+  /**
+   * Checks if the value is a Map.
+   *
+   * @function isMap
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isMap(new Map());
+   * // => true
+  */
+  /**
+   * Checks if the value is a Set.
+   *
+   * @function isSet
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isSet(new Set());
+   * // => true
+  */
+  /**
+   * Checks if the value is a WeakMap.
+   *
+   * @function isWeakMap
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isWeakMap(new WeakMap());
+   * // => true
+  */
+  /**
+   * Checks if the value is a ArrayBuffer.
+   *
+   * @function isArrayBuffer
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isArrayBuffer(new ArrayBuffer());
+   * // => true
+  */
+  /**
+   * Checks if the value is a Float32Array.
+   *
+   * @function isFloat32Array
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isFloat32Array(new Float32Array());
+   * // => true
+  */
+  /**
+   * Checks if the value is a Float64Array.
+   *
+   * @function isFloat64Array
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isFloat64Array(new Float64Array());
+   * // => true
+  */
+  /**
+   * Checks if the value is a Int8Array.
+   *
+   * @function isInt8Array
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isInt8Array(new Int8Array());
+   * // => true
+  */
+  /**
+   * Checks if the value is a Int16Array.
+   *
+   * @function isInt16Array
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isInt16Array(new Int16Array());
+   * // => true
+  */
+  /**
+   * Checks if the value is a Int32Array.
+   *
+   * @function isInt32Array
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isInt32Array(new Int32Array());
+   * // => true
+  */
+  /**
+   * Checks if the value is a Uint8Array.
+   *
+   * @function isUint8Array
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isUint8Array(new Uint8Array());
+   * // => true
+  */
+  /**
+   * Checks if the value is a Uint8ClampedArray.
+   *
+   * @function isUint8ClampedArray
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isUint8ClampedArray(new Uint8ClampedArray());
+   * // => true
+  */
+  /**
+   * Checks if the value is a Uint16Array.
+   *
+   * @function isUint16Array
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isUint16Array(new Uint16Array());
+   * // => true
+  */
+  /**
+   * Checks if the value is a Uint32Array.
+   *
+   * @function isUint32Array
+   * @param {*} value - Object to be checked.
+   * @returns {boolean} True or false.
+   *
+   * @example
+   * isUint32Array(new Uint32Array());
+   * // => true
+  */
+  const nativeObjectNames = ['RegExp', 'Arguments', 'Boolean', 'Date', 'Map', 'Set', 'WeakMap',
     'ArrayBuffer', 'Float32Array', 'Float64Array', 'Int8Array', 'Int16Array', 'Int32Array',
-    'Uint8Array', 'Uint8ClampedArray',
-    'Uint16Array', 'Uint32Array'];
+    'Uint8Array', 'Uint8ClampedArray', 'Uint16Array', 'Uint32Array'];
   eachArray(nativeObjectNames, (item) => {
     $[`is${item}`] = isSameObjectGenerator(objectStringGenerate(item));
   });
@@ -384,6 +849,38 @@
   });
 
   /**
+    * Iterates through the given array of async function(s). Each async function is awaited as to ensure synchronous order and is given the supplied object.
+    *
+    * @function asyncEach
+    * @type {Function}
+    * @async
+    * @param {Array} callingArray - Array of async functions that will be looped through.
+    * Functions are given the supplied object, index, the calling array, and the array length.
+    * @param {*} object - The first argument given to each function.
+    * @returns {Object} The originally given array.
+    *
+    * @example
+    * asyncEach([async (item, index) =>{
+    *  console.log(item, index);
+    * }, async (item) =>{
+    *  console.log(item, index);
+    * }], {a:1});
+    * // {a:1} 0
+    * // {a:1} 1
+  */
+  const asyncEach = async (callingArray, object) => {
+    const arrayLength = callingArray.length;
+    for (let index = 0; index < arrayLength; index++) {
+      const item = callingArray[index];
+      await item(object, index, callingArray, arrayLength);
+    }
+    return callingArray;
+  };
+  assign($, {
+    asyncEach,
+  });
+
+  /**
     * Ensures the object is an array. If not wraps in array.
     *
     * @function ensureArray
@@ -393,10 +890,10 @@
     *
     * @example
     * ensureArray('Hello');
-    * //=> ['Hello']
+    * // => ['Hello']
     *
     * ensureArray({a:1, b:2})
-    * //=> [{a:1, b:2}]
+    * // => [{a:1, b:2}]
   */
   const ensureArray = (object) => {
     return (isArray(object)) ? object : [object];
@@ -459,10 +956,10 @@
     *
     * @example
     * remove([1, 2, 3, 3, 4, 3, 5], 1);
-    * // -> [2, 3, 3, 4, 3, 5]
+    * // => [2, 3, 3, 4, 3, 5]
     *
     * remove([3, 3, 4, 5], 3, 4);
-    * // -> [5]
+    * // => [5]
   */
   const remove = (array, ...removeThese) => {
     let arrayLength = array.length;
@@ -486,13 +983,13 @@
     *
     * @example
     * remove([1, 2, 3, 3, 4, 3, 5], (item) => { return Boolean(item % 2);}));
-    * // -> [2, 4]
+    * // => [2, 4]
   */
-  const removeBy = (array, method) => {
+  const removeBy = (array, iteratee) => {
     let arrayLength = array.length;
     for (let index = 0; index < arrayLength; index++) {
       const item = array[index];
-      if (method(item, index)) {
+      if (iteratee(item, index)) {
         array.splice(index, 1);
         index--;
         arrayLength--;
@@ -516,7 +1013,7 @@
     *
     * @example
     *  chunk([1,2,3], 1);
-    * //=> [[1],[2],[3]]
+    * // => [[1],[2],[3]]
   */
   const chunk = (array, size = 1) => {
     const chunked = [];
@@ -565,7 +1062,7 @@
     *
     * @example
     * clear([1,'B', Cat]);
-    * //=> []
+    * // => []
   */
   const clear = (array) => {
     array.length = 0;
@@ -604,7 +1101,7 @@
     *
     * @example
     * cloneArray([1,'B', Cat]);
-    * //=> [1, 'B', Cat]
+    * // => [1, 'B', Cat]
   */
   const cloneArray = (array) => {
     return array.slice();
@@ -813,7 +1310,7 @@
     *
     * @example
     * compact([1,'B', Cat, false, null, 0 , '', undefined, NaN]);
-    * //=> [1, 'B', Cat]
+    * // => [1, 'B', Cat]
   */
   const compact = (array) => {
     return array.filter((item) => {
@@ -822,12 +1319,6 @@
   };
   assign($, {
     compact,
-  });
-
-  const arrayNative = Array;
-  const toArray = arrayNative.from;
-  assign($, {
-    toArray,
   });
 
   /**
@@ -839,7 +1330,7 @@
     *
     * @example
     * shuffle([1, 2, 3, 4]);
-    * // -> [3, 4, 2, 1]
+    * // => [3, 4, 2, 1]
   */
   const shuffle = (array, amount = array.length) => {
     const shuffleArray = toArray(array);
@@ -928,7 +1419,7 @@
     *
     * @example
     * range([1,'B', Cat, false, null, 0 , '', undefined, NaN]);
-    * //=> [1, 'B', Cat]
+    * // => [1, 'B', Cat]
   */
   const range = (start, end, increment = 1) => {
     if (start < end) {
@@ -948,7 +1439,7 @@
     *
     * @example
     * rangeRight([1,'B', Cat, false, null, 0 , '', undefined, NaN]);
-    * //=> [1, 'B', Cat]
+    * // => [1, 'B', Cat]
   */
   const rangeRight = (start, end, increment = 1) => {
     return rangeDown(end, start, increment);
@@ -969,10 +1460,10 @@
    *
    * @example
    * intersect([1, 2, 3], [2, 3, 4]);
-   * // -> [2, 3]
+   * // => [2, 3]
    *
    * intersect([1, 2, 3], [101, 2, 50, 1], [2, 1]);
-   * // -> [1, 2]
+   * // => [1, 2]
    */
   const intersect = (array, ...arrays) => {
     return compactMapArray(array, (item) => {
@@ -1027,7 +1518,7 @@
     *
     * @example
     * compact([1, 2, 3], [1, 2]);
-    * //=> [3]
+    * // => [3]
   */
   const difference = (array, compare) => {
     return compactMapArray(array, (item) => {
@@ -1052,7 +1543,7 @@
     *
     * @example
     * drop([1, 2, 3], 1);
-    * //=> [2, 3]
+    * // => [2, 3]
   */
   const drop = (array, amount, upTo = array.length) => {
     return array.splice(amount, upTo);
@@ -1069,7 +1560,7 @@
     *
     * @example
     * dropRight([1, 2, 3], 1);
-    * //=> [1, 2]
+    * // => [1, 2]
   */
   const dropRight = (array, amount, upTo = array.length) => {
     return drop(array, 0, upTo - amount);
@@ -1294,6 +1785,7 @@
     * @function mapAsync
     * @category Utility
     * @type {Function}
+    * @async
     * @param {Array} callingArray - Array that will be looped through.
     * @param {Function} iteratee - Transformation function which is passed item, index, the newly created array, calling array, and array length.
     * @param {Array} [results = []] - Array that will be used to assign results.
@@ -1325,13 +1817,13 @@
   /**
     * Filters the array down to unique elements.
     *
-    * @function take
+    * @function unique
     * @type {Function}
     * @param {Array} array - The array to be filtered.
     * @returns {Array} The filtered array.
     *
     * @example
-    * union([1, 2, 2, 4]);
+    * unique([1, 2, 2, 4]);
     * // => [1, 2, 4]
   */
   const unique = (array, isSorted) => {
@@ -1347,7 +1839,7 @@
   /**
     * Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more of the arrays.
     *
-    * @function take
+    * @function union
     * @type {Function}
     * @param {...Array} arrays - The arrays to be evaluated.
     * @returns {Array} The aggregated array.
@@ -1378,18 +1870,18 @@
     * @type {Function}
     * @async
     * @param {Array} array - Array to be compacted.
-    * @param {Function} method - Iteratee to be performed on array.
+    * @param {Function} iteratee - Iteratee to be performed on array.
     * @returns {Array} Array values after being put through an iterator.
     *
     * @example
     * compactMapAsync([1, 2, 3, false], async () => {return item});
-    * //=> [1, 2, 3]
+    * // => [1, 2, 3]
   */
-  const compactMapAsync = async (array, method) => {
+  const compactMapAsync = async (array, iteratee) => {
     const results = [];
     let result;
     await eachAsync(array, async (item, index, arrayLength) => {
-      result = await method(item, index, arrayLength);
+      result = await iteratee(item, index, arrayLength);
       if (hasValue(result)) {
         results.push(result);
       }
@@ -1413,7 +1905,7 @@
     *
     * @example
     * numSort([10, 0, 2, 1]);
-    * // -> [0, 1, 2, 10]
+    * // => [0, 1, 2, 10]
   */
   const numSort = (numberList) => {
     return numberList.sort(numericalCompare);
@@ -1449,14 +1941,14 @@
   /**
     * Returns a copy of the array with all instances of the values removed.
     *
-    * @function take
+    * @function without
     * @type {Function}
     * @param {Array} array - The array to be filtered.
     * @param {Array} removeThese - Items to be removed.
     * @returns {Array} The filtered array.
     *
     * @example
-    * union([1, 2, 2, 4], 4);
+    * without([1, 2, 2, 4], 4);
     * // => [1, 2, 2]
   */
   const without = (array, removeThese) => {
@@ -1485,7 +1977,7 @@
     *
     * @example
     * findItem([{id: 1}, {id: 2}], 1);
-    * //=> {id: 1}
+    * // => {id: 1}
   */
   const findItem = (collection, id, propertyName = 'id') => {
     const result = collection.find((element, index) => {
@@ -1505,7 +1997,7 @@
     *
     * @example
     * findIndex([{id: 1}, {id: 2}], 1);
-    * //=> 0
+    * // => 0
   */
   const findIndex = (collection, id, propertyName = 'id') => {
     const result = collection.findIndex((element, index) => {
@@ -1554,7 +2046,7 @@
   /**
     * Creates an array that is the symmetric difference of the provided arrays.
     *
-    * @function take
+    * @function xor
     * @type {Function}
     * @param {Array} array - The array to be filtered.
     * @param {Array} removeThese - Items to be removed.
@@ -1635,10 +2127,10 @@
     *
     * @example
     * first([1, 2, 3]);
-    * //=> [1]
+    * // => [1]
     *
     * first([1, 2, 3], 2);
-    * //=> [1, 2, 3]
+    * // => [1, 2, 3]
   */
   const first = (array, upTo) => {
     return (upTo) ? array.slice(0, upTo) : array[0];
@@ -1732,8 +2224,20 @@
     timesMap,
   });
 
-  const isAgent = (string) => {
-    return (string) ? isAgent[string] : keys(isAgent);
+  /**
+    * Checks to see of the browser agent has a string.
+    *
+    * @function isAgent
+    * @type {Function}
+    * @param {string} value - The string to search for.
+    * @returns {boolean} Returns true or false.
+    *
+    * @example
+    * isAgent('mobile');
+    * // => false
+  */
+  const isAgent = (value) => {
+    return (value) ? isAgent[value] : keys(isAgent);
   };
   let userAgentNormalized = navigator.userAgent.toLowerCase();
   userAgentNormalized = userAgentNormalized.replace(/_/g, '.');
@@ -1746,13 +2250,13 @@
     isAgent
   });
 
-  const eventAdd = (obj, eventName, func, capture) => {
-    obj.addEventListener(eventName, func, capture);
-    return obj;
+  const eventAdd = (node, ...args) => {
+    node.addEventListener(...args);
+    return node;
   };
-  const eventRemove = (obj, eventName, func, capture) => {
-    obj.removeEventListener(eventName, func, capture);
-    return obj;
+  const eventRemove = (node, ...args) => {
+    node.removeEventListener(...args);
+    return node;
   };
   assign($, {
     eventAdd,
@@ -1766,19 +2270,21 @@
     isEnter
   });
 
-  const appState = {};
-  assign($, {
-    appState
-  });
-
   const createFragment = document.createDocumentFragment.bind(document);
-  assign($, {
-    createFragment
-  });
 
-  const append = (node, child) => {
-    node.appendChild(child);
-    return node;
+  /**
+    * Append a DOM node.
+    *
+    * @function append
+    * @type {Function}
+    * @ignore
+    * @param {Node} parentNode - The parent node.
+    * @param {Node} child - The node to be appended.
+    * @returns {undefined} Returns the child.
+  */
+  const append = (parentNode, child) => {
+    parentNode.appendChild(child);
+    return child;
   };
 
   /**
@@ -1902,16 +2408,16 @@
     whileObject,
   });
 
-  const nodeAttribute = (node, keys$$1, value) => {
+  const nodeAttribute = (node, keys, value) => {
     let results;
-    if (isString(keys$$1)) {
+    if (isString(keys)) {
       if (hasValue(value)) {
-        node.setAttribute(keys$$1, value);
+        node.setAttribute(keys, value);
       } else {
-        return node.getAttribute(keys$$1);
+        return node.getAttribute(keys);
       }
-    } else if (isPlainObject(keys$$1)) {
-      results = mapObject(keys$$1, (item, key) => {
+    } else if (isPlainObject(keys)) {
+      results = mapObject(keys, (item, key) => {
         return nodeAttribute(node, key, item);
       });
       if (value) {
@@ -1920,9 +2426,6 @@
     }
     return node;
   };
-  assign($, {
-    nodeAttribute
-  });
 
   /**
     * A wrapper around the promise constructor.
@@ -1934,7 +2437,7 @@
     *
     * @example
     * promise((a) => {});
-    * //=> promise((a) => {})
+    * // => promise((a) => {})
   */
   const promise = (callback) => {
     return new Promise(callback);
@@ -1990,7 +2493,7 @@
     *
     * @example
     * chunkString('chunk', 2);
-    * //-> ['ch', 'un', 'k']
+    * // => ['ch', 'un', 'k']
   */
   const chunkString = (string, size) => {
     return string.match(new RegExp(`(.|[
@@ -2007,10 +2510,10 @@
     *
     * @example
     * initialString('initialString');
-    * //-> 'initialStrin'
+    * // => 'initialStrin'
     *
     * initialString('initialString', 2);
-    * //-> 'initialStri'
+    * // => 'initialStri'
   */
   const initialString = (string, index = 1) => {
     return string.slice(0, index * -1);
@@ -2026,10 +2529,10 @@
     *
     * @example
     * restString('restString');
-    * //-> 'estString'
+    * // => 'estString'
     *
     * restString('restString', 2);
-    * //-> 'stString'
+    * // => 'stString'
   */
   const restString = (string, index = 1) => {
     return string.substr(index);
@@ -2089,14 +2592,17 @@
       append(querySelector('head'), node);
     });
   };
-  const importcss = (url) => {
-    const node = nodeAttribute(createTag('link'), {
-      href: `${url}.css`,
-      rel: 'stylesheet',
-      type: 'text/css',
-    });
-    return nodeAttachLoadingEvents(node);
-  };
+  /**
+    * Asynchronously import a js file and append it to the head node.
+    *
+    * @function importjs
+    * @type {Function}
+    * @async
+    * @returns {Promise} Returns a promise.
+    *
+    * @example
+    * importjs('core.js');
+  */
   const importjs = (url) => {
     const node = nodeAttribute(createTag('script'), {
       async: '',
@@ -2105,7 +2611,6 @@
     return nodeAttachLoadingEvents(node);
   };
   assign($, {
-    importcss,
     importjs,
   });
 
@@ -2127,14 +2632,41 @@
     importjs('index');
   });
 
+  const protocol = location.protocol;
+  const protocolSocket = (protocol === 'http:') ? 'ws' : 'wss';
+  const hostname = location.hostname;
+  const info = {
+    hardware: {
+      cores: navigator.hardwareConcurrency
+    },
+    host: {
+      name: hostname,
+      protocol,
+      protocolSocket,
+    }
+  };
+  assign($, {
+    info
+  });
+
   const saveDimensions = () => {
-    assign($.appState, {
+    assign(info, {
       bodyHeight: document.body.offsetHeight,
       bodyWidth: document.body.offsetWidth,
       windowHeight: window.innerHeight,
       windowWidth: window.innerWidth,
     });
   };
+  /**
+    * Save current document & window dimensions to the info property.
+    *
+    * @function updateDimensions
+    * @type {Function}
+    * @returns {undefined} Returns undefined.
+    *
+    * @example
+    * updateDimensions();
+  */
   const updateDimensions = () => {
     requestAnimationFrame(saveDimensions);
   };
@@ -2151,7 +2683,7 @@
     *
     * @function ifInvoke
     * @type {Function}
-    * @param {Function} method - The function to be invoked if possible.
+    * @param {Function} callable - The function to be invoked if possible.
     * @param {...Array} args - Arguments to pass to the method.
     * @returns {*} Returns the method invoked or undefined.
     *
@@ -2161,9 +2693,9 @@
     * ifInvoke(undefined, 1, 2);
     * // => undefined
   */
-  const ifInvoke = (method, ...args) => {
-    if (isFunction(method)) {
-      return method(...args);
+  const ifInvoke = (callable, ...args) => {
+    if (isFunction(callable)) {
+      return callable(...args);
     }
   };
   assign($, {
@@ -2177,6 +2709,18 @@
     clear(batchChanges);
     batchCancelFrame = false;
   };
+  /**
+    * Batch processing using requestAnimationFrame.
+    *
+    * @function batch
+    * @type {Function}
+    * @param {...Function} items - The functions to add to the current batch.
+    * @returns {undefined} Returns undefined.
+    *
+    * @example
+    * batch(() => {});
+    * // => undefined
+  */
   const batch = (...items) => {
     batchChanges.push(...items);
     if (!batchCancelFrame) {
@@ -2185,23 +2729,6 @@
   };
   assign($, {
     batch
-  });
-
-  const protocol = location.protocol;
-  const protocolSocket = (protocol === 'http:') ? 'ws' : 'wss';
-  const hostname = location.hostname;
-  const info = {
-    hardware: {
-      cores: navigator.hardwareConcurrency
-    },
-    host: {
-      name: hostname,
-      protocol,
-      protocolSocket,
-    }
-  };
-  assign($, {
-    info
   });
 
   const jsonNative = JSON;
@@ -2245,16 +2772,42 @@
     notify: generateTheme('#fff', '#651FFF'),
     warning: generateTheme('#000', '#FFEA00'),
   };
-  const cnsl = (dataArg, themeName) => {
-    const data = isString(dataArg) ? dataArg : stringify(dataArg);
+  /**
+    * Console.trace wrapper with theme support.
+    *
+    * @function cnsl
+    * @type {Function}
+    * @param {Object} value - The value to be logged.
+    * @param {string} themeName - The theme to be used.
+    * @returns {undefined} Returns undefined.
+    *
+    * @example
+    * cnsl('Lucy', 'notify');
+    * // 'Lucy'
+  */
+  const cnsl = (value, themeName) => {
+    const data = isString(value) ? value : stringify(value);
     console.trace(`%c${data}`, `${themes[themeName]}font-size:13px;padding:2px 5px;border-radius:2px;`);
   };
-  const addConsoleTheme = (themeName, color, bg) => {
-    themes[themeName] = generateTheme(color, bg);
+  /**
+    * Create color themes for cnsl method.
+    *
+    * @function cnslTheme
+    * @type {Function}
+    * @param {string} themeName - The name of the theme.
+    * @param {string} color - The text color.
+    * @param {string} background - The background color of the block.
+    * @returns {undefined} Returns undefined.
+    *
+    * @example
+    * cnslTheme('BlackNWhite', '#fff', '#000');
+  */
+  const cnslTheme = (themeName, color, background) => {
+    themes[themeName] = generateTheme(color, background);
   };
   assign($, {
-    addConsoleTheme,
     cnsl,
+    cnslTheme,
   });
 
   eachArray(['HTMLCollection', 'NodeList'], (item) => {
@@ -2273,7 +2826,7 @@
     *
     * @example
     * sortNewest([{id: 1}, {id: 0}], 'id');
-    * // -> [{id: 1}, {id: 0}]
+    * // => [{id: 1}, {id: 0}]
   */
   const sortNewest = (collection, key, pureMode = true) => {
     const array = (pureMode) ? collection : [...collection];
@@ -2301,7 +2854,7 @@
     *
     * @example
     * getNewest([{id: 1}, {id: 0}], 'id');
-    * // -> {id: 1}
+    * // => {id: 1}
   */
   const getNewest = (collection, key) => {
     return sortNewest(collection, key, false)[0];
@@ -2323,7 +2876,7 @@
     *
     * @example
     * sortOldest([{id: 1}, {id: 0}], 'id');
-    * // -> [{id: 0}, {id: 1}]
+    * // => [{id: 0}, {id: 1}]
   */
   const sortOldest = (collection, key, pureMode = true) => {
     const array = (pureMode) ? collection : [...collection];
@@ -2351,7 +2904,7 @@
     *
     * @example
     * sortOldest([{id: 1}, {id: 0}], 'id');
-    * // -> {id: 0}
+    * // => {id: 0}
   */
   const getOldest = (collection, key) => {
     return sortOldest(collection, key)[0];
@@ -2470,14 +3023,14 @@
     * Given a list, and an iteratee function that returns a key for each element in the list (or a property name), returns an object with an index of each item.
     * Just like groupBy, but for when you know your keys are unique.
     *
-    * @function groupBy
+    * @function indexBy
     * @type {Function}
     * @param {Array} collection - Array of objects.
     * @param {Function} iteratee - The iteratee to transform keys.
     * @returns {Object} Returns the composed aggregate object.
     *
     * @example
-    * groupBy([{name: 'Lucy', id: 0}, {name: 'Erick', id: 1}], Math.floor);
+    * indexBy([{name: 'Lucy', id: 0}, {name: 'Erick', id: 1}], Math.floor);
     * // => { "0": {name: 'Lucy', id: 0}, "1": {name: 'Erick', id: 1}}
   */
   const indexBy = (array, key) => {
@@ -2494,15 +3047,15 @@
   /**
     * Returns an array of the plucked values from the collection.
     *
-    * @function pick
+    * @function pluck
     * @type {Function}
     * @param {Array} collection - Array used to determine what values to be plucked.
     * @param {string} pluckThis - Property name.
     * @returns {Array} - An array of plucked values.
     *
     * @example
-    * pick([{lucy: 'Ants moving around on the walls.'}, {lucy: 'In the sky with diamonds.'}], ['a','b']);
-    * //=> ['Ants moving around on the walls.', 'In the sky with diamonds.']
+    * pluck([{lucy: 'Ants moving around on the walls.'}, {lucy: 'In the sky with diamonds.'}], ['a','b']);
+    * // => ['Ants moving around on the walls.', 'In the sky with diamonds.']
   */
   const pluck = (collection, pluckThis) => {
     return mapArray(collection, (item) => {
@@ -2542,6 +3095,7 @@
     *
     * @function invokeAsync
     * @type {Function}
+    * @async
     * @param {Array} collection - Collection from which method will be taken.
     * @param {string} methodName - Value used to pluck method from object.
     * @param {*} args - Values to be run through method.
@@ -2561,11 +3115,11 @@
   });
 
   /**
-    * Creates a function that invokes func, with up to n arguments, ignoring any additional arguments.
+    * Creates a function that invokes callable, with up to n arguments, ignoring any additional arguments.
     *
     * @function ary
     * @type {Function}
-    * @param {Function} func - The function to cap arguments for.
+    * @param {Function} callable - The function to cap arguments for.
     * @param {number} amount - The arity cap.
     * @returns {Object} Returns the new capped function.
     *
@@ -2573,9 +3127,9 @@
     * ary((...args) => { return args;}, 2)(1, 2, 3);
     * // => [1, 2]
   */
-  const ary = (func, amount) => {
+  const ary = (callable, amount) => {
     return (...args) => {
-      return func(...args.splice(0, amount));
+      return callable(...args.splice(0, amount));
     };
   };
   assign($, {
@@ -2587,7 +3141,7 @@
     *
     * @function curry
     * @type {Function}
-    * @param {Function} methods - The function to curry.
+    * @param {Function} callable - The function to curry.
     * @param {number} arity - The arity of method.
     * @returns {*} Returns the new curried function.
     *
@@ -2598,12 +3152,12 @@
     * curried(1)(2)(3);
     * // => [1, 2, 3]
   */
-  const curry = (method, arity = method.length) => {
+  const curry = (callable, arity = callable.length) => {
     const curries = [];
     const curried = (...curryArgs) => {
       curries.push(...curryArgs);
       if (curries.length === arity) {
-        const result = method(...curries);
+        const result = callable(...curries);
         clear(curries);
         return result;
       }
@@ -2616,7 +3170,7 @@
     *
     * @function curryRight
     * @type {Function}
-    * @param {Function} methods - The function to curry.
+    * @param {Function} callable - The function to curry.
     * @param {number} arity - The arity of method.
     * @returns {*} Returns the new curried function.
     *
@@ -2627,12 +3181,12 @@
     * curried(1)(2)(3);
     * // => [1, 2, 3]
   */
-  const curryRight = (method, arity = method.length) => {
+  const curryRight = (callable, arity = callable.length) => {
     const curries = [];
     const curried = (...curryArgs) => {
       curries.unshift(...curryArgs);
       if (curries.length === arity) {
-        const result = method(...curries);
+        const result = callable(...curries);
         clear(curries);
         return result;
       }
@@ -2650,7 +3204,7 @@
     *
     * @function once
     * @type {Function}
-    * @param {Function} method - The function to be called.
+    * @param {Function} callable - The function to be called.
     * @returns {Function} Returns the new pass-thru function.
     *
     * @example
@@ -2660,23 +3214,23 @@
     * onceOnly();
     * // => 1
   */
-  const once = (method) => {
+  const once = (callable) => {
     let value;
     const onlyOnce = (...args) => {
       if (hasValue(value)) {
-        value = method(...args);
+        value = callable(...args);
       }
       return value;
     };
     return onlyOnce;
   };
   /**
-    * Creates a function that executes method, only after being called n times.
+    * Creates a function that executes callable, only after being called n times.
     *
     * @function after
     * @type {Function}
+    * @param {Function} callable - The function to be called.
     * @param {number} amount - The number of calls until method is invoked.
-    * @param {Function} method - The function to be called.
     * @returns {Function} Returns the new pass-thru function.
     *
     * @example
@@ -2686,7 +3240,7 @@
     * onlyAfter();
     * // => 1
   */
-  const after = (amount, method) => {
+  const after = (callable, amount) => {
     let point = amount;
     let value;
     const onlyAfter = (...args) => {
@@ -2694,7 +3248,7 @@
         point--;
       }
       if (point <= 0) {
-        value = method(...args);
+        value = callable(...args);
       } else {
         point = null;
       }
@@ -2703,12 +3257,12 @@
     return onlyAfter;
   };
   /**
-    * Creates a function that executes method, only before n times.
+    * Creates a function that executes callable, only before n times.
     *
     * @function before
     * @type {Function}
+    * @param {Function} callable - The function to be called.
     * @param {number} amount - The number of calls before n.
-    * @param {Function} method - The function to be called.
     * @returns {Function} Returns the new pass-thru function.
     *
     * @example
@@ -2720,7 +3274,7 @@
     * onlyBefore(3);
     * // => 2
   */
-  const before = (amount, method) => {
+  const before = (callable, amount) => {
     let point = amount;
     let value;
     const onlyBefore = (...args) => {
@@ -2728,7 +3282,7 @@
         point--;
       }
       if (point >= 1) {
-        value = method(...args);
+        value = callable(...args);
       } else {
         point = null;
       }
@@ -2967,9 +3521,9 @@
     *
     * @function bindAll
     * @type {Function}
-    * @param {Function} bindThese - The function to be invoked if possible.
-    * @param {...Array} withThis - Arguments to pass to the method.
-    * @returns {*} Returns the method invoked or undefined.
+    * @param {Object|Function|Array} collection - The functions to bind.
+    * @param {*} bindThis - Object to be bound to functions.
+    * @returns {Object|Function|Array} Returns the method invoked or undefined.
     *
     * @example
     * const collection = bindAll([() => { return this;}], 'Lucy');
@@ -2980,9 +3534,9 @@
     * collection.a();
     * // => 'Lucy'
   */
-  const bindAll = (bindThese, withThis) => {
-    return map(bindThese, (item) => {
-      return isFunction(item) ? item.bind(withThis) : item;
+  const bindAll = (collection, bindThis) => {
+    return map(collection, (item) => {
+      return isFunction(item) ? item.bind(bindThis) : item;
     });
   };
   assign($, {
@@ -2990,20 +3544,20 @@
   });
 
   /**
-    * Creates a function that negates the result of the predicate method.
+    * Creates a function that negates the result of the predicate callable.
     *
     * @function negate
     * @type {Function}
-    * @param {Function} method - The function to be invoked.
+    * @param {Function} callable - The function to be invoked.
     * @returns {*} Returns the given methods result.
     *
     * @example
     * negate(() => { return false;})();
     * // => true
   */
-  const negate = (method) => {
+  const negate = (callable) => {
     return (...args) => {
-      return !method(...args);
+      return !callable(...args);
     };
   };
   assign($, {
@@ -3075,86 +3629,80 @@
   });
 
   /**
-    * A wrapper around setTimeout.
+    * Timer wrapper.
     *
     * @function timer
-    * @param {Object} method - Function to be invoked.
-    * @param {number} time - The time in nanoseconds.
     * @type {Function}
-    * @returns {number} Set timeout id.
+    * @param {Function} callable - The function to be invoked.
+    * @param {number} time - The time in milliseconds.
+    * @returns {Object} Returns setTimeout ID.
     *
     * @example
-    * timer(() => { return 1}, 1);
-    * // => 0: 1
+    * timer(() => {}, 100);
+    * // => 0
   */
-  const timer = (method, time) => {
-    return setTimeout(method, time);
+  const timer = (callable, time) => {
+    return setTimeout(callable, time);
   };
   /**
-    * Wrapper around setInterval.
+    * Interval wrapper.
     *
     * @function interval
     * @type {Function}
-    * @param {Object} method - Function to be invoked.
-    * @param {number} time - The time in nanoseconds.
-    * @returns {Object} Returns the new empty object.
+    * @param {Function} callable - The function to be invoked.
+    * @param {number} time - The time in milliseconds.
+    * @returns {Object} Returns setInterval ID.
     *
     * @example
-    * interval(() => { return 1}, 1);
-    * // => 0: 1
+    * interval(() => {}, 100);
+    * // => 0
   */
-  const interval = (method, time) => {
-    return setInterval(method, time);
+  const interval = (callable, time) => {
+    return setInterval(callable, time);
   };
   /**
-    * Clears setTimeout function.
+    * Clear all active timers.
     *
     * @function clearTimers
-    * @type {Function}
-    * @param {Object} timer - Timer to be cleared.
-    * @param {Function} clearTimeout - Invocation of time clear function.
-    * @returns {Number} Returns a number of the cleared setTimeout ID.
+    * @returns {undefined} Returns undefined.
     *
     * @example
-    *
-    * // =>
+    * clearTimers();
+    * // => undefined
   */
 
   /**
-    * Clears setInterval function.
+    * Clear all active intervals.
     *
     * @function clearIntervals
-    * @type {Function}
-    * @param {Object} interval - Interval to be cleared.
-    * @param {Object} clearInterval - Invocation of interval clear function.
-    * @returns {Number} Returns a number of the cleared setInterval ID.
+    * @returns {undefined} Returns undefined.
     *
     * @example
     * clearIntervals();
-    * // =>
+    * // => undefined
   */
 
   /**
-    *
+    * Creates a debounced function that delays invoking callable until after wait milliseconds have elapsed since the last time the debounced function was invoked. The debounce function has a clear method to cancel the timer.
     *
     * @function debounce
     * @type {Function}
-    * @param {Object} original -
-    * @param {Object} time -
-    * @returns {Object}
+    * @param {Function} callable - The function to be invoked.
+    * @param {number} time - The time in milliseconds.
+    * @returns {Function} The debounced function.
     *
     * @example
-    * debounce();
-    * // =>
+    * const debounced = debounce(() => { console.log('debounced'); }, 0);
+    * // => debounced();
   */
-  const debounce = (original, time) => {
+  const debounce = (callable, time) => {
     let timeout = false;
     const debounced = (...args) => {
       if (timeout !== false) {
         clearTimeout(timeout);
       }
       timeout = timer(() => {
-        original(...args);
+        callable(...args);
         timeout = false;
       }, time);
     };
@@ -3167,19 +3715,19 @@
     return debounced;
   };
   /**
-    *
+    * Creates a throttled function that only invokes callable at most once per every wait milliseconds. The throttle function has a clear method to cancel the timer.
     *
     * @function throttle
     * @type {Function}
-    * @param {Object} method -
-    * @param {Object} time -
-    * @returns {Object} Returns the new empty object.
+    * @param {Function} callable - The function to be invoked.
+    * @param {number} time - The time in milliseconds.
+    * @returns {Function} The throttled function.
     *
     * @example
-    * throttle();
-    * // =>
+    * const throttled = throttle(() => { console.log('debounced'); }, 0);
+    * // => throttled();
   */
-  const throttle = (method, time) => {
+  const throttle = (callable, time) => {
     let timeout = false;
     let shouldThrottle;
     const throttled = (...args) => {
@@ -3187,10 +3735,10 @@
         shouldThrottle = true;
         return;
       }
-      method(...args);
+      callable(...args);
       timeout = timer(() => {
         if (shouldThrottle) {
-          method(...args);
+          callable(...args);
         }
         timeout = false;
       }, time);
@@ -3256,10 +3804,10 @@
   /**
     * Invoke an array of functions.
     *
-    * @function curry
+    * @function inSync
     * @type {Function}
-    * @param {Function} methods - The functions to be invoked.
-    * @param {*} arg - The object passed to each method.
+    * @param {Array|Object|Function} collection - The functions to be invoked.
+    * @param {*} arg - The object passed as an argument to each method.
     * @returns {undefined} Returns undefined.
     *
     * @example
@@ -3268,18 +3816,19 @@
     * // 2
     * // => undefined
   */
-  const inSync = (methods, arg) => {
-    return each(methods, (item) => {
+  const inSync = (collection, arg) => {
+    return each(collection, (item) => {
       item(arg);
     });
   };
   /**
     * Invoke an array of functions asynchronously. Each function is awaited to ensure execution order.
     *
-    * @function curry
+    * @function inAsync
     * @type {Function}
-    * @param {Function} methods - The functions to be invoked.
-    * @param {*} arg - The object passed to each method.
+    * @async
+    * @param {Array|Object|Function} collection - The functions to be invoked.
+    * @param {*} arg - The object passed as an argument to each method.
     * @returns {undefined} Returns undefined.
     *
     * @example
@@ -3288,8 +3837,8 @@
     * // 2
     * // => undefined
   */
-  const inAsync = async (methods, arg) => {
-    return eachAsync(methods, async (item) => {
+  const inAsync = async (collection, arg) => {
+    return eachAsync(collection, async (item) => {
       await item(arg);
     });
   };
@@ -3324,7 +3873,7 @@
     *
     * @function reArg
     * @type {Function}
-    * @param {Function} method - The function to be invoked.
+    * @param {Function} callable - The function to be invoked.
     * @param {Array} indexes - The arranged argument indexes.
     * @returns {Function} Returns the new function.
     *
@@ -3335,9 +3884,9 @@
     * reArged(1,2,3);
     * // => [2, 3, 1]
   */
-  const reArg = (method, indexes) => {
+  const reArg = (callable, indexes) => {
     return (...args) => {
-      return method(...indexes.map((item) => {
+      return callable(...indexes.map((item) => {
         return args[item];
       }));
     };
@@ -3346,41 +3895,27 @@
     reArg
   });
 
-  const wrap = (...args) => {
-    const list = [];
-    const wrapped = (...wrappedArgs) => {
-      return list.map((item) => {
-        return item(...wrappedArgs);
-      });
+  /**
+    * Creates a function that provides value to wrapper as its first argument. The wrapper function is given two arguments the value and the provided argument from the newly created function.
+    *
+    * @function wrap
+    * @type {Function}
+    * @param {*} value - The value to wrap.
+    * @param {Function} wrapper - The wrapper function.
+    * @returns {Function} The new function.
+    *
+    * @example
+    * const wrapped = wrap('Lucy', (firstName, lastName) => {console.log(`My name is ${firstName} ${lastName}.`);});
+    * wrapped('Diamonds');
+    * // => 'My name is Lucy Diamonds.'
+  */
+  const wrap = (value, wrapper) => {
+    return (arg) => {
+      return wrapper(value, arg);
     };
-    assign(wrapped, {
-      add(...addTheseArg) {
-        list.push(...addTheseArg);
-      },
-      list,
-    });
-    wrapped.add(args);
-    return wrapped;
-  };
-  const wrapBefore = (...args) => {
-    const list = [];
-    const wrapped = (...wrappedArgs) => {
-      return list.map((item) => {
-        return item(...wrappedArgs);
-      });
-    };
-    assign(wrapped, {
-      add(...addThese) {
-        list.unshift(...addThese);
-      },
-      list,
-    });
-    wrapped.add(args);
-    return wrapped;
   };
   assign($, {
     wrap,
-    wrapBefore
   });
 
   /**
@@ -3449,7 +3984,7 @@
   /**
     * Checks to see if an object has all of the given property names.
     *
-    * @function compactKeys
+    * @function hasKeys
     * @type {Function}
     * @param {Object} object - Object from which keys are extracted.
     * @param {Array} properties - Array of object keys.
@@ -3457,10 +3992,10 @@
     *
     * @example
     * hasKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Lucy','Thor']);
-    * //=> true
+    * // => true
     *
     * hasKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Lucy','Tom']);
-    * //=> false
+    * // => false
   */
   const hasKeys = (object, properties) => {
     const objectKeys = keys(object);
@@ -3479,10 +4014,10 @@
     *
     * @example
     * hasAnyKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Lucy','Tom']);
-    * //=> true
+    * // => true
     *
     * hasAnyKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Other','Tom']);
-    * //=> false
+    * // => false
   */
   const hasAnyKeys = (object, properties) => {
     const objectKeys = keys(object);
@@ -3507,7 +4042,7 @@
     *
     * @example
     * pick({a:1, b:2, c:3}, ['a','b']);
-    * //=> {a:1, b:2}
+    * // => {a:1, b:2}
   */
   const pick = (source, array, newObject = {}) => {
     eachArray(array, (item) => {
@@ -3529,7 +4064,7 @@
     *
     * @example
     * compactKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: undefined, other: false, that: null});
-    * //=> ['Lucy', 'John', 'other']
+    * // => ['Lucy', 'John', 'other']
     *
   */
   const compactKeys = (object) => {
@@ -3628,7 +4163,7 @@
     *
     * @example
     * invert({a:1});
-    * //=> {1:a}
+    * // => {1:a}
   */
   const invert = (thisObject, invertedObject = {}) => {
     eachObject(thisObject, (item, key) => {
@@ -3651,7 +4186,7 @@
     *
     * @example
     * omit({a:1, b:2, ['a']});
-    * //=> {b:2}
+    * // => {b:2}
     *
   */
   const omit = (originalObject, array) => {
@@ -4027,7 +4562,7 @@
     *
     * @example
     * assignDeep({a:1}, {b:2})
-    * //=> {a:1, b:2}
+    * // => {a:1, b:2}
     *
   */
   const assignDeep = (object, otherObject, mergeArrays = true) => {
@@ -4145,7 +4680,7 @@
     *   a: 1,
     *   b: 2
     * }, ['a', 'b']);
-    * //-> true
+    * // => true
   */
   const propertyMatch = (object, compareObject, properties = keys(object)) => {
     return whileArray(properties, (property) => {
@@ -4169,7 +4704,7 @@
     * 
     * @example
     * toPath('post.like[2]');
-    * //=> ['post', 'like', '2']
+    * // => ['post', 'like', '2']
   */
   const toPath = (string) => {
     return string.replace(regexCloseBracket, emptyString).split(regexToPath);
@@ -4191,10 +4726,10 @@
     *
     * @example
     * uid();
-    * //=> 0
+    * // => 0
     *
     * uid();
-    * //=> 1
+    * // => 1
   */
   const uid = () => {
     let result = uidFree.shift(uidFree);
@@ -4216,16 +4751,16 @@
     *
     * @example
     * uid();
-    * //=> 0
+    * // => 0
     *
     * uid();
-    * //=> 1
+    * // => 1
     *
     * uid.free(0);
-    * //=> undefined
+    * // => undefined
     *
     * uid();
-    * //=> 0
+    * // => 0
   */
   const free = (id) => {
     uidClosed[id] = null;
@@ -4251,7 +4786,7 @@
     *     like: ['a','b','c']
     *   }
     * });
-    * //=> c
+    * // => c
   */
   const get = (propertyString, objectChain = $) => {
     let link = objectChain;
@@ -4276,10 +4811,10 @@
     *
     * @example
     * model('test', {a: 1});
-    * //=> {a: 1}
+    * // => {a: 1}
     *
     * model('test');
-    * //=> {a: 1}
+    * // => {a: 1}
   */
   const model = (modelName, object) => {
     if (hasValue(object)) {
@@ -4304,7 +4839,7 @@
     *
     * @example
     * toggle(1, 2, 3);
-    * //=> 2
+    * // => 2
   */
   const toggle = (value, on, off) => {
     return (isEqual(on, value)) ? off : on;
@@ -4313,11 +4848,11 @@
     toggle
   });
 
-  const returnFlow = (method) => {
+  const returnFlow = (callable) => {
     return (...methods) => {
       return (arg) => {
         let value = arg;
-        method(methods, (item) => {
+        callable(methods, (item) => {
           value = item(value);
         });
         return value;
@@ -4329,8 +4864,8 @@
     *
     * @function flow
     * @type {Function}
-    * @param {Array} eachArray - Array to flatten
-    * @returns {*}
+    * @param {Array} collection - Methods to invoke.
+    * @returns {Function} Returns the new composite function.
     *
     * @example
     * flow(increment, increment, deduct)(0);
@@ -4342,8 +4877,8 @@
     *
     * @function flowRight
     * @type {Function}
-    * @param {Array} eachArray - Array to flatten
-    * @returns {*}
+    * @param {Array} collection - Methods to invoke.
+    * @returns {Function} Returns the new composite function.
     *
     * @example
     * flowRight(increment, increment, deduct)(0);
@@ -4355,11 +4890,11 @@
     flowRight,
   });
 
-  const returnFlow$1 = (method) => {
+  const returnFlow$1 = (callable) => {
     return (...methods) => {
       return async (arg) => {
         let value = arg;
-        await method(methods, async (item) => {
+        await callable(methods, async (item) => {
           value = await item(value);
         });
         return value;
@@ -4371,8 +4906,9 @@
     *
     * @function flowAsync
     * @type {Function}
-    * @param {Array} eachArray - Array to flatten
-    * @returns {*}
+    * @async
+    * @param {Array} collection - Methods to invoke.
+    * @returns {Function} Returns the new composite function.
     *
     * @example
     * flowAsync(increment, increment, deduct)(0);
@@ -4384,8 +4920,9 @@
     *
     * @function flowRightAsync
     * @type {Function}
-    * @param {Array} eachArray - Array to flatten
-    * @returns {*}
+    * @async
+    * @param {Array} collection - Methods to invoke.
+    * @returns {Function} Returns the new composite function.
     *
     * @example
     * flowRightAsync(increment, increment, deduct)(0);

@@ -7,7 +7,7 @@ let cacheSuper;
  *
  * @example
  * $('modelName', {example: 1});
- * // -> {example: 1}
+ * // => {example: 1}
  */
 const $ = (...args) => {
   return cacheSuper(...args);
@@ -17,16 +17,17 @@ const $ = (...args) => {
  *
  * @function superMethod
  * @memberof $
- * @param {Function} method - The function that will become the main object's method.
+ * @param {Function} callable - The function that will become the main object's subroutine.
  * @returns {undefined} - Returns nothing.
  *
  * @example
  * superMethod($.get);
- * // -> $('flow', $);
- * // -> $.flow
+ * // => undefined
+ * $('flow', $);
+ * // => $.flow
  */
-const superMethod = (method) => {
-  cacheSuper = method;
+const superMethod = (callable) => {
+  cacheSuper = callable;
 };
 $.superMethod = superMethod;
 export default $;

@@ -6,7 +6,7 @@ import { clear } from '../array/clear';
   *
   * @function curry
   * @type {Function}
-  * @param {Function} methods - The function to curry.
+  * @param {Function} callable - The function to curry.
   * @param {number} arity - The arity of method.
   * @returns {*} Returns the new curried function.
   *
@@ -17,12 +17,12 @@ import { clear } from '../array/clear';
   * curried(1)(2)(3);
   * // => [1, 2, 3]
 */
-export const curry = (method, arity = method.length) => {
+export const curry = (callable, arity = callable.length) => {
   const curries = [];
   const curried = (...curryArgs) => {
     curries.push(...curryArgs);
     if (curries.length === arity) {
-      const result = method(...curries);
+      const result = callable(...curries);
       clear(curries);
       return result;
     }
@@ -35,7 +35,7 @@ export const curry = (method, arity = method.length) => {
   *
   * @function curryRight
   * @type {Function}
-  * @param {Function} methods - The function to curry.
+  * @param {Function} callable - The function to curry.
   * @param {number} arity - The arity of method.
   * @returns {*} Returns the new curried function.
   *
@@ -46,12 +46,12 @@ export const curry = (method, arity = method.length) => {
   * curried(1)(2)(3);
   * // => [1, 2, 3]
 */
-export const curryRight = (method, arity = method.length) => {
+export const curryRight = (callable, arity = callable.length) => {
   const curries = [];
   const curried = (...curryArgs) => {
     curries.unshift(...curryArgs);
     if (curries.length === arity) {
-      const result = method(...curries);
+      const result = callable(...curries);
       clear(curries);
       return result;
     }
