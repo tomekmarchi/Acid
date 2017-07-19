@@ -13,7 +13,7 @@ import { assign, keys } from '../internal/object';
   * isAgent('mobile');
   * // => false
 */
-const isAgent = (value) => {
+export const isAgent = (value) => {
   return (value) ? isAgent[value] : keys(isAgent);
 };
 let userAgentNormalized = navigator.userAgent.toLowerCase();
