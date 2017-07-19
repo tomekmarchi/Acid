@@ -2795,7 +2795,7 @@
   const protocolSocket = (protocol === 'http:') ? 'ws' : 'wss';
   const hostname = location.hostname;
   /**
-    * Holds client hardware and host info.
+    * Holds client hardware, browser, and host info.
     *
     * @memberof $
     * @property info
