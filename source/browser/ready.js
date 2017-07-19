@@ -3,16 +3,16 @@ import { assign } from '../internal/object';
 import { eventAdd } from './event';
 import { importjs } from './import';
 /**
-  * Runs a function if the document has finished loading.
+  * Runs a function if the document has finished loading. If not, add an eventlistener.
   *
   * @function  isDocumentReady
   * @type {Function}
-  * @param {Function} callable - Object to be checked.
-  * @returns {boolean} Returns true if the keycode property of the object equals thirteen and vice versa.
+  * @param {Function} callable - Function to be run.
+  * @returns {Boolean|Function} - If the document is ready, returns a function. If not, return false.
   *
   * @example
-  * isEnter('click')
-  * // => false
+  * isDocumentReady(() => {return 1});
+  * // => 1
 */
 export const isDocumentReady = (callable) => {
   const state = document.readyState;
