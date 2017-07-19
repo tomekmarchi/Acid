@@ -2263,6 +2263,18 @@
     eventRemove,
   });
 
+  /**
+    * Checks if the keycode of the event is strictly equal to 13.
+    *
+    * @function isEnter
+    * @type {Function}
+    * @param {Object} eventObject - Object to be checked.
+    * @returns {boolean} Returns true if the keycode property of the object equals 13.
+    *
+    * @example
+    * isEnter('click');
+    * // => false
+  */
   const isEnter = (eventObject) => {
     return eventObject.keyCode === 13;
   };
@@ -2677,6 +2689,18 @@
     importjs,
   });
 
+  /**
+    * Runs a function if the document has finished loading.
+    *
+    * @function  isDocumentReady
+    * @type {Function}
+    * @param {Function} callable - Object to be checked.
+    * @returns {boolean} Returns true if the keycode property of the object equals thirteen and vice versa.
+    *
+    * @example
+    * isEnter('click')
+    * // => false
+  */
   const isDocumentReady = (callable) => {
     const state = document.readyState;
     const checkStatus = state === 'interactive' || state === 'completed' || state === 'complete';
@@ -2698,6 +2722,12 @@
   const protocol = location.protocol;
   const protocolSocket = (protocol === 'http:') ? 'ws' : 'wss';
   const hostname = location.hostname;
+  /**
+    *
+    * @memberof $
+    * @property info
+    * @type {Object}
+  */
   const info = {
     hardware: {
       cores: navigator.hardwareConcurrency
