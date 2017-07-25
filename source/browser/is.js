@@ -1,6 +1,21 @@
 import acid from '../namespace/index';
 import { eachArray } from '../array/each';
 import { isSameObjectGenerator, objectStringGenerate } from '../internal/is';
+/**
+ * Checks if value is a plain DOM Node.
+ *
+ * @function isDom
+ * @param {*} value - Object to be checked.
+ * @returns {boolean} True or false.
+ *
+ * @example
+ * isDom(document.querySelectorAll('.test'));
+ * // => true
+*/
+export const isDom = (value) => {
+  return value && value.nodeType !== 9;
+};
+acid.isDom = isDom;
 eachArray(['HTMLCollection', 'NodeList'], (item) => {
   acid[`is${item}`] = isSameObjectGenerator(objectStringGenerate(item));
 });

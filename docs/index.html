@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>Acid 2.0.0 | Documentation</title>
+  <title>Acid 2.0.3 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
@@ -14,7 +14,7 @@
       <div class='fixed xs-hide fix-3 overflow-auto max-height-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>Acid</h3>
-          <div class='mb1'><code>2.0.0</code></div>
+          <div class='mb1'><code>2.0.3</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -1472,6 +1472,16 @@
                   href='#cnsltheme'
                   class="">
                   cnslTheme
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#isdom'
+                  class="">
+                  isDom
                   
                 </a>
                 
@@ -14362,6 +14372,82 @@ ifInvoke(<span class="hljs-literal">undefined</span>, <span class="hljs-number">
     
       
       <pre class='p1 overflow-auto round fill-light'>cnslTheme(<span class="hljs-string">'BlackNWhite'</span>, <span class="hljs-string">'#fff'</span>, <span class="hljs-string">'#000'</span>);</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='isdom'>
+      isDom
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Checks if value is a plain DOM Node.</p>
+
+
+  <div class='pre p1 fill-light mt0'>isDom(value: any): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>value</span> <code class='quiet'>(any)</code>
+	    Object to be checked.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        True or false.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>isDom(<span class="hljs-built_in">document</span>.querySelectorAll(<span class="hljs-string">'.test'</span>));
+<span class="hljs-comment">// =&gt; true</span></pre>
     
   
 

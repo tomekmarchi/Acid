@@ -22,8 +22,8 @@ import { hasValue } from '../internal/is';
   * // => undefined
 */
 export const times = (startIndex, endIndex, iteratee) => {
-  const start = (startIndex) ? startIndex : 0;
-  const end = (startIndex) ? endIndex : startIndex;
+  const start = (iteratee) ? startIndex : 0;
+  const end = (iteratee) ? endIndex : startIndex;
   const iterateeMethod = iteratee || endIndex;
   for (let position = start; position < end; position++) {
     iterateeMethod(position, start, end);

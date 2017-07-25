@@ -1,6 +1,6 @@
 {
   "name": "Acid",
-  "version": "2.0.0",
+  "version": "2.0.3",
   "description": "Utility library for building CWAs (Conscious Web Apps) for browsers.",
   "bugs": {
     "url": "https://github.com/tomekmarchi/Acid/issues"
