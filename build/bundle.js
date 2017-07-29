@@ -3257,7 +3257,7 @@
     * @returns {Array} - An array of plucked values.
     *
     * @example
-    * pluck([{lucy: 'Ants moving around on the walls.'}, {lucy: 'In the sky with diamonds.'}], ['a','b']);
+    * pluck([{lucy: 'Ants moving around on the walls.'}, {lucy: 'In the sky with diamonds.'}], ['lucy']);
     * // => ['Ants moving around on the walls.', 'In the sky with diamonds.']
   */
   const pluck = (collection, pluckThis) => {
