@@ -1,7 +1,6 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
 import { eachObject } from '../object/each';
-import { hasValue } from '../internal/is';
 /**
   * Extracts all key values from an object.
   *
@@ -18,7 +17,7 @@ import { hasValue } from '../internal/is';
 export const compactKeys = (object) => {
   const keys = [];
   eachObject(object, (item, key) => {
-    if (hasValue(item)) {
+    if (item) {
       keys.push(key);
     }
   });

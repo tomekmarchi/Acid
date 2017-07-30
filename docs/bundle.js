@@ -620,7 +620,7 @@
    * hasDot('test.js');
    * // => true
   */
-
+  const hasDot = regexGenerator(/\./);
   const getExtensionRegex = /\.([0-9a-z]+)/;
   /**
    * Return the file extension.
@@ -832,6 +832,7 @@
   assign($, {
     getFileExtension,
     has,
+    hasDot,
     hasLength,
     hasValue,
     isArray,
@@ -2953,7 +2954,7 @@
   */
   const cnsl = (value, themeName) => {
     const data = isString(value) ? value : stringify(value);
-    console.trace(`%c${data}`, `${themes[themeName]}font-size:13px;padding:2px 5px;border-radius:2px;`);
+    console.log(`%c${data}`, `${themes[themeName]}font-size:13px;padding:2px 5px;border-radius:2px;`);
   };
   /**
     * Create color themes for cnsl method.
@@ -4273,7 +4274,7 @@
   const compactKeys = (object) => {
     const keys$$1 = [];
     eachObject(object, (item, key) => {
-      if (hasValue(item)) {
+      if (item) {
         keys$$1.push(key);
       }
     });

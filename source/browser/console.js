@@ -26,7 +26,7 @@ const themes = {
 */
 const cnsl = (value, themeName) => {
   const data = isString(value) ? value : stringify(value);
-  console.trace(`%c${data}`, `${themes[themeName]}font-size:13px;padding:2px 5px;border-radius:2px;`);
+  console.log(`%c${data}`, `${themes[themeName]}font-size:13px;padding:2px 5px;border-radius:2px;`);
 };
 /**
   * Create color themes for cnsl method.

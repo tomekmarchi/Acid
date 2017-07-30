@@ -451,6 +451,7 @@ eachArray(nativeObjectNames, (item) => {
 assign(acid, {
   getFileExtension,
   has,
+  hasDot,
   hasLength,
   hasValue,
   isArray,
