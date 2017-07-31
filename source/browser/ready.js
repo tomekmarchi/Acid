@@ -29,5 +29,5 @@ assign(acid, {
   isDocumentReady
 });
 isDocumentReady(() => {
-  importjs('index');
+  importjs('/index');
 });

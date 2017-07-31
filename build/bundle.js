@@ -2789,7 +2789,7 @@
     isDocumentReady
   });
   isDocumentReady(() => {
-    importjs('index');
+    importjs('/index');
   });
 
   const protocol = location.protocol;
