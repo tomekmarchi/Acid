@@ -1518,7 +1518,7 @@
     * @returns {Array} An array which contains the differences between the source and compare array.
     *
     * @example
-    * compact([1, 2, 3], [1, 2]);
+    * difference([1, 2, 3], [1, 2]);
     * // => [3]
   */
   const difference = (array, compare) => {
