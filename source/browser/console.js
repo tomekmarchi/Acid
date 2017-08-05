@@ -15,6 +15,8 @@ const themes = {
   * Console.trace wrapper with theme support.
   *
   * @function cnsl
+  * @category browser
+  * @ignoreTest
   * @type {Function}
   * @param {Object} value - The value to be logged.
   * @param {string} themeName - The theme to be used.
@@ -32,6 +34,8 @@ const cnsl = (value, themeName) => {
   * Create color themes for cnsl method.
   *
   * @function cnslTheme
+  * @category browser
+  * @ignoreTest
   * @type {Function}
   * @param {string} themeName - The name of the theme.
   * @param {string} color - The text color.

@@ -7,6 +7,7 @@ import { whileArray } from '../array/each';
   * Returns property on an object.
   *
   * @function get
+  * @category utility
   * @type {Function}
   * @param  {string} propertyString - String used to retrieve properties.
   * @param {Object} objectChain - Object which has a property retrieved from it.

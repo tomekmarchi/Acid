@@ -4,6 +4,7 @@ import { assign } from '../internal/object';
   * Sorts an array in place using a key from oldest to newest.
   *
   * @function sortOldest
+  * @category collection
   * @type {Function}
   * @param {Array} collection - Collection to be sorted.
   * @param {string} key - The property name to sort by based on it's value.
@@ -33,6 +34,7 @@ export const sortOldest = (collection, key, pureMode = true) => {
   * Sorts an array in place using a key from oldest to newest and returns the oldest. Does not mutate the array.
   *
   * @function getOldest
+  * @category collection
   * @type {Function}
   * @param {Array} collection - Collection to be sorted.
   * @param {string} key - The property name to sort by based on it's value.

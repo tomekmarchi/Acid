@@ -5,6 +5,7 @@ const functionPrototype = Function.prototype;
   * Caches a prototype method.
   *
   * @function cacheNativeMethod
+  * @category utility
   * @type {Function}
   * @param {Function} method - Prototype method.
   * @returns {Function} - Cached method.

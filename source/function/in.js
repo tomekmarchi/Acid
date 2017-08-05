@@ -6,6 +6,7 @@ import { eachAsync } from '../array/eachAsync';
   * Invoke an array of functions.
   *
   * @function inSync
+  * @category function
   * @type {Function}
   * @param {Array|Object|Function} collection - The functions to be invoked.
   * @param {*} arg - The object passed as an argument to each method.
@@ -26,6 +27,7 @@ export const inSync = (collection, arg) => {
   * Invoke an array of functions asynchronously. Each function is awaited to ensure execution order.
   *
   * @function inAsync
+  * @category function
   * @type {Function}
   * @async
   * @param {Array|Object|Function} collection - The functions to be invoked.

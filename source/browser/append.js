@@ -2,6 +2,8 @@
   * Append a DOM node.
   *
   * @function append
+  * @category browser
+  * @ignoreTest
   * @type {Function}
   * @ignore
   * @param {Node} parentNode - The parent node.

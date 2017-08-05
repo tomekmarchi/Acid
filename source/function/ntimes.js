@@ -5,6 +5,7 @@ import { hasValue } from '../internal/is';
   * Creates a function that is restricted to execute method once. Repeat calls to the function will return the value of the first call. The method is executed with the this binding of the created function.
   *
   * @function once
+  * @category function
   * @type {Function}
   * @param {Function} callable - The function to be called.
   * @returns {Function} Returns the new pass-thru function.
@@ -30,6 +31,7 @@ export const once = (callable) => {
   * Creates a function that executes callable, only after being called n times.
   *
   * @function after
+  * @category function
   * @type {Function}
   * @param {Function} callable - The function to be called.
   * @param {number} amount - The number of calls until method is invoked.
@@ -62,6 +64,7 @@ const after = (callable, amount) => {
   * Creates a function that executes callable, only before n times.
   *
   * @function before
+  * @category function
   * @type {Function}
   * @param {Function} callable - The function to be called.
   * @param {number} amount - The number of calls before n.

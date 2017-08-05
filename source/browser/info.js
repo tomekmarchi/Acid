@@ -7,6 +7,8 @@ const hostname = location.hostname;
   * Holds client hardware, browser, and host info.
   *
   * @memberof $
+  * @category browser
+  * @ignoreTest
   * @property info
   * @type {Object}
 */

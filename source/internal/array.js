@@ -5,6 +5,7 @@ const arrayNative = Array;
  * Takes an array like object and creates a new Array from it.
  *
  * @function toArray
+ * @category array
  * @param {*} arrayLike - Array like object.
  * @returns {*} new array.
  *

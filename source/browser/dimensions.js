@@ -15,6 +15,8 @@ export const saveDimensions = () => {
   * Save current document & window dimensions to the info property.
   *
   * @function updateDimensions
+  * @category browser
+  * @ignoreTest
   * @type {Function}
   * @returns {undefined} Returns undefined.
   *

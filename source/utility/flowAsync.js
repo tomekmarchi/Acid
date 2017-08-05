@@ -16,6 +16,7 @@ const returnFlow = (callable) => {
   * Creates a function that returns the result of invoking the given functions, where each successive invocation is supplied the return value of the previous.
   *
   * @function flowAsync
+  * @category utility
   * @type {Function}
   * @async
   * @param {Array} collection - Methods to invoke.
@@ -30,6 +31,7 @@ export const flowAsync = returnFlow(eachAsync);
   * This method is like flow except that it creates a function that invokes the given functions from right to left.
   *
   * @function flowRightAsync
+  * @category utility
   * @type {Function}
   * @async
   * @param {Array} collection - Methods to invoke.

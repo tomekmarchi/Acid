@@ -5,6 +5,8 @@ import { assign, keys } from '../internal/object';
   * Checks to see of the browser agent has a string.
   *
   * @function isAgent
+  * @category browser
+  * @ignoreTest
   * @type {Function}
   * @param {string} value - The string to search for.
   * @returns {boolean} Returns true or false.

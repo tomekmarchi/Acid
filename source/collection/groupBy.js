@@ -7,6 +7,7 @@ import { eachArray } from '../array/each';
   * The corresponding value of each key is an array of elements responsible for generating the key.
   *
   * @function groupBy
+  * @category collection
   * @type {Function}
   * @param {Array} collection - Array of objects.
   * @param {Function} iteratee - The iteratee to transform keys.

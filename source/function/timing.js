@@ -5,6 +5,7 @@ import { times } from '../array/times';
   * Timer wrapper.
   *
   * @function timer
+  * @category function
   * @type {Function}
   * @param {Function} callable - The function to be invoked.
   * @param {number} time - The time in milliseconds.
@@ -21,6 +22,7 @@ export const timer = (callable, time) => {
   * Interval wrapper.
   *
   * @function interval
+  * @category function
   * @type {Function}
   * @param {Function} callable - The function to be invoked.
   * @param {number} time - The time in milliseconds.
@@ -44,6 +46,7 @@ const generateClear = (callable, clearMethod) => {
   * Clear all active timers.
   *
   * @function clearTimers
+  * @category function
   * @returns {undefined} Returns undefined.
   *
   * @example
@@ -55,6 +58,7 @@ export const clearTimers = generateClear(timer, clearTimeout);
   * Clear all active intervals.
   *
   * @function clearIntervals
+  * @category function
   * @returns {undefined} Returns undefined.
   *
   * @example
@@ -66,6 +70,7 @@ export const clearIntervals = generateClear(interval, clearInterval);
   * Creates a debounced function that delays invoking callable until after wait milliseconds have elapsed since the last time the debounced function was invoked. The debounce function has a clear method to cancel the timer.
   *
   * @function debounce
+  * @category function
   * @type {Function}
   * @param {Function} callable - The function to be invoked.
   * @param {number} time - The time in milliseconds.
@@ -98,6 +103,7 @@ export const debounce = (callable, time) => {
   * Creates a throttled function that only invokes callable at most once per every wait milliseconds. The throttle function has a clear method to cancel the timer.
   *
   * @function throttle
+  * @category function
   * @type {Function}
   * @param {Function} callable - The function to be invoked.
   * @param {number} time - The time in milliseconds.

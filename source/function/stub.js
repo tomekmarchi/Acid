@@ -4,6 +4,7 @@ import { assign } from '../internal/object';
   * This method returns a new empty object.
   *
   * @function stubObject
+  * @category function
   * @type {Function}
   * @returns {Object} Returns the new empty object.
   *
@@ -18,6 +19,7 @@ export const stubObject = () => {
   * This method returns a new empty array.
   *
   * @function stubArray
+  * @category function
   * @type {Function}
   * @returns {Array} Returns the new empty array.
   *
@@ -32,6 +34,7 @@ export const stubArray = () => {
   * This method returns a new empty string.
   *
   * @function stubString
+  * @category function
   * @type {Function}
   * @returns {string} Returns the new empty string.
   *
@@ -46,6 +49,7 @@ export const stubString = () => {
   * This method returns false.
   *
   * @function stubFalse
+  * @category function
   * @type {Function}
   * @returns {boolean} Returns false.
   *
@@ -60,6 +64,7 @@ export const stubFalse = () => {
   * This method returns true.
   *
   * @function stubTrue
+  * @category function
   * @type {Function}
   * @returns {boolean} Returns true.
   *
@@ -74,6 +79,7 @@ export const stubTrue = () => {
   * This method returns undefined.
   *
   * @function noop
+  * @category function
   * @type {Function}
   * @returns {undefined} Returns undefined.
   *

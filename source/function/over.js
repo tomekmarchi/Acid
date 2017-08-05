@@ -5,6 +5,7 @@ import { eachWhile, map } from '../utility/each';
   * Creates a function that invokes iteratees with the arguments it receives and returns their results.
   *
   * @function over
+  * @category function
   * @type {Function}
   * @param {Array|Object} iteratees - The iteratees to invoke.
   * @returns {Function} Returns the new function.
@@ -24,6 +25,7 @@ export const over = (iteratees) => {
   * Creates a function that checks if all of the predicates return truthy when invoked with the arguments it receives.
   *
   * @function overEvery
+  * @category function
   * @type {Function}
   * @param {Array|Object} predicates -  The predicates to check.
   * @returns {Function} Returns the new function.

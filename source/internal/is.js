@@ -8,6 +8,7 @@ export const objectStringGenerate = (objectName) => {
  * Checks if the value is undefined.
  *
  * @function isUndefined
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -22,6 +23,7 @@ export const isUndefined = function(value) {
  * Checks if the value is null.
  *
  * @function isNull
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -36,6 +38,7 @@ export const isNull = (value) => {
  * Checks if the value is not null or undefined.
  *
  * @function hasValue
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -61,6 +64,7 @@ export const decimalCheck = /\.|\+/;
  * Checks if the value is a decimal.
  *
  * @function isDecimal
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -75,6 +79,7 @@ export const isDecimal = (value) => {
  * Checks if the value is an array.
  *
  * @function isArray
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -87,6 +92,7 @@ export const isArray = Array.isArray;
  * Checks if the value is a string.
  *
  * @function isString
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -99,6 +105,7 @@ export const isString = isConstructor(String);
  * Checks if the value is a number.
  *
  * @function isNumber
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -111,6 +118,7 @@ export const isNumber = isConstructor(Number);
  * Checks if the value is a plain object.
  *
  * @function isPlainObject
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -129,6 +137,7 @@ export const isPlainObject = (value) => {
  * Checks if the value is a plain object.
  *
  * @function isFunction
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -143,6 +152,7 @@ export const isFunction = (value) => {
  * Checks if the value includes something.
  *
  * @function has
+ * @category utility
  * @param {Array|String} value - Object to be checked.
  * @param {*} search - Object that is being searched for.
  * @returns {boolean} True or false.
@@ -158,6 +168,7 @@ export const has = (value, ...search) => {
  * Checks if the value has length greater than 0.
  *
  * @function hasLength
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -172,6 +183,7 @@ export const hasLength = (value) => {
  * Checks if the value is empty.
  *
  * @function isEmpty
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -196,6 +208,7 @@ export const regexGenerator = (regexType) => {
  * Checks if the string has a .css extension.
  *
  * @function isFileCSS
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -208,6 +221,7 @@ export const isFileCSS = regexGenerator(/\.css$/);
  * Checks if the string has a .json extension.
  *
  * @function isFileCSS
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -220,6 +234,7 @@ export const isFileJSON = regexGenerator(/\.json$/);
  * Checks if the string has a .js extension.
  *
  * @function isFileCSS
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -232,6 +247,7 @@ export const isFileJS = regexGenerator(/\.js$/);
  * Checks if the string has a '.'.
  *
  * @function hasDot
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -245,6 +261,7 @@ export const getExtensionRegex = /\.([0-9a-z]+)/;
  * Return the file extension.
  *
  * @function getFileExtension
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {string} Returns the extension.
  *
@@ -259,6 +276,7 @@ export const getFileExtension = (string) => {
  * Checks if the value is a RegExp.
  *
  * @function isRegExp
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -270,6 +288,7 @@ export const getFileExtension = (string) => {
  * Checks if the value is an Arguments object.
  *
  * @function isArguments
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -281,6 +300,7 @@ export const getFileExtension = (string) => {
  * Checks if the value is a Boolean.
  *
  * @function isBoolean
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -292,6 +312,7 @@ export const getFileExtension = (string) => {
  * Checks if the value is a Date.
  *
  * @function isDate
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -303,6 +324,7 @@ export const getFileExtension = (string) => {
  * Checks if the value is a Map.
  *
  * @function isMap
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -314,6 +336,7 @@ export const getFileExtension = (string) => {
  * Checks if the value is a Set.
  *
  * @function isSet
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -325,6 +348,7 @@ export const getFileExtension = (string) => {
  * Checks if the value is a WeakMap.
  *
  * @function isWeakMap
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -336,6 +360,7 @@ export const getFileExtension = (string) => {
  * Checks if the value is a ArrayBuffer.
  *
  * @function isArrayBuffer
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -347,6 +372,7 @@ export const getFileExtension = (string) => {
  * Checks if the value is a Float32Array.
  *
  * @function isFloat32Array
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -358,6 +384,7 @@ export const getFileExtension = (string) => {
  * Checks if the value is a Float64Array.
  *
  * @function isFloat64Array
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -369,6 +396,7 @@ export const getFileExtension = (string) => {
  * Checks if the value is a Int8Array.
  *
  * @function isInt8Array
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -380,6 +408,7 @@ export const getFileExtension = (string) => {
  * Checks if the value is a Int16Array.
  *
  * @function isInt16Array
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -391,6 +420,7 @@ export const getFileExtension = (string) => {
  * Checks if the value is a Int32Array.
  *
  * @function isInt32Array
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -402,6 +432,7 @@ export const getFileExtension = (string) => {
  * Checks if the value is a Uint8Array.
  *
  * @function isUint8Array
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -413,6 +444,7 @@ export const getFileExtension = (string) => {
  * Checks if the value is a Uint8ClampedArray.
  *
  * @function isUint8ClampedArray
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -424,6 +456,7 @@ export const getFileExtension = (string) => {
  * Checks if the value is a Uint16Array.
  *
  * @function isUint16Array
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -435,6 +468,7 @@ export const getFileExtension = (string) => {
  * Checks if the value is a Uint32Array.
  *
  * @function isUint32Array
+ * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *

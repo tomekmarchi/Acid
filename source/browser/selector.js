@@ -10,6 +10,8 @@ const regexSpace = /\s/;
   * Wrapper around getElementsByClassName.
   *
   * @function getByClass
+  * @category browser
+  * @ignoreTest
   * @type {Function}
 */
 export const getByClass = document.getElementsByClassName.bind(document);
@@ -17,6 +19,8 @@ export const getByClass = document.getElementsByClassName.bind(document);
   * Wrapper around getElementsByTagName.
   *
   * @function getByTag
+  * @category browser
+  * @ignoreTest
   * @type {Function}
 */
 export const getByTag = document.getElementsByTagName.bind(document);
@@ -24,6 +28,8 @@ export const getByTag = document.getElementsByTagName.bind(document);
   * Wrapper around getElementsByIdName.
   *
   * @function getById
+  * @category browser
+  * @ignoreTest
   * @type {Function}
 */
 export const getById = document.getElementById.bind(document);
@@ -31,6 +37,8 @@ export const getById = document.getElementById.bind(document);
   * Wrapper around querySelector.
   *
   * @function querySelector
+  * @category browser
+  * @ignoreTest
   * @type {Function}
 */
 export const querySelector = document.querySelector.bind(document);
@@ -38,6 +46,8 @@ export const querySelector = document.querySelector.bind(document);
   * Wrapper around querySelectorAll.
   *
   * @function querySelectorAll
+  * @category browser
+  * @ignoreTest
   * @type {Function}
 */
 export const querySelectorAll = document.querySelectorAll.bind(document);
@@ -45,6 +55,8 @@ export const querySelectorAll = document.querySelectorAll.bind(document);
   * Returns relevant DOM node.
   *
   * @function selector
+  * @category browser
+  * @ignoreTest
   * @param {string} select - String to be evaluated.
   * @type {Function}
   * @returns {Node} - Returns a DOM node.

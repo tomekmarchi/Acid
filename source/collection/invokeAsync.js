@@ -5,6 +5,7 @@ import { mapAsync } from '../array/mapAsync';
   * Asynchronously awaits & invokes a function on the provided property name in each object in the collection.
   *
   * @function invokeAsync
+  * @category collection
   * @type {Function}
   * @async
   * @param {Array} collection - Collection from which method will be taken.
