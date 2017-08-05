@@ -5,6 +5,7 @@ const jsonNative = JSON;
    * Parses JSON string.
    *
    * @function jsonParse
+   * @category Utility
    * @type {Function}
    * @param {string} string - String to be parsed.
    * @returns {Object} Returns the parsed object.
@@ -18,6 +19,7 @@ export const jsonParse = jsonNative.jsonParse;
    * Stringify an object into a JSON string.
    *
    * @function stringify
+   * @category Utility
    * @type {Function}
    * @param {Object} object - Object to Stringify.
    * @returns {string} Returns the object as a valid JSON string.

@@ -5,6 +5,7 @@ import { assign } from '../internal/object';
   *
   * @function insertInRange
   * @type {Function}
+  * @category String
   * @param {string} string - String to insert the text into.
   * @param {number} index - Point of insertion.
   * @param {string} text - The string to be inserted.

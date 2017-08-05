@@ -5,6 +5,7 @@ import { whileArray } from './each';
    * Uses a binary search to determine the index at which the value should be inserted into the list in order to maintain the list's sorted order.
    *
    * @function sortedIndex
+   * @category Array
    * @type {Function}
    * @param {Array} array - Array to be sorted.
    * @returns {Array} The sorted array.

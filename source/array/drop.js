@@ -4,6 +4,7 @@ import { assign } from '../internal/object';
   * Removes all items from an array after a specified index.
   *
   * @function drop
+  * @category array
   * @type {Function}
   * @param {Array} array - Source array.
   * @param {number} amount - Amount of items to drop from the array.
@@ -22,6 +23,7 @@ export const drop = (array, amount, upTo = array.length) => {
   *
   * @function dropRight
   * @type {Function}
+  * @category array
   * @param {Array} array - Source array.
   * @param {number} amount - Amount of items to drop from the array.
   * @param {number} [upTo = array.length] - Index to stop at.

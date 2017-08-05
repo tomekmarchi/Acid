@@ -5,6 +5,7 @@ import { assign } from '../internal/object';
   *
   * @function first
   * @type {Function}
+  * @category Array
   * @param {Array} array - Array to extract from.
   * @param {number} upTo - Number which determines how many items after the first item are extracted from the array.
   * @returns {Array} - Returns an array.
@@ -13,6 +14,7 @@ import { assign } from '../internal/object';
   * first([1, 2, 3]);
   * // => [1]
   *
+  * @example
   * first([1, 2, 3], 2);
   * // => [1, 2, 3]
 */

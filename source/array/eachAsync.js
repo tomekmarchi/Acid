@@ -5,6 +5,7 @@ import { assign } from '../internal/object';
   *
   * @function eachAsync
   * @type {Function}
+  * @category Array
   * @async
   * @param {Array} callingArray - Array that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, index, calling array, and array length.
@@ -14,8 +15,7 @@ import { assign } from '../internal/object';
   * eachAsync([3,4], async (item, index) =>{
   *  console.log(item, index);
   * });
-  * // 3 0
-  * // 4 1
+  * // => {3:0, 4:1}
 */
 export const eachAsync = async (callingArray, iteratee) => {
   const arrayLength = callingArray.length;
@@ -28,6 +28,7 @@ export const eachAsync = async (callingArray, iteratee) => {
   * Asynchronously Iterates through the given array in reverse. Each async function is awaited as to ensure synchronous order.
   *
   * @function eachAsyncRight
+  * @category Array
   * @type {Function}
   * @async
   * @param {Array} callingArray - Array that will be looped through.
@@ -38,8 +39,7 @@ export const eachAsync = async (callingArray, iteratee) => {
   * eachAsyncRight([3,4], async (item, index) =>{
   *  console.log(item, index);
   * });
-  * // 4 1
-  * // 3 0
+  * // {3:0, 4:1}
 */
 export const eachAsyncRight = async (callingArray, iteratee) => {
   const arrayLength = callingArray.length;

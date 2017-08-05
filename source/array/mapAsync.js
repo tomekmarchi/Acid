@@ -5,7 +5,7 @@ import { eachAsync } from './eachAsync';
   * Asynchronously Iterates through the calling array and creates an object with the results of the iteratee on every element in the calling array.
   *
   * @function mapAsync
-  * @category Utility
+  * @category Array
   * @type {Function}
   * @async
   * @param {Array} callingArray - Array that will be looped through.

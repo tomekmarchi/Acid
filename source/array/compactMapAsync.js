@@ -7,6 +7,7 @@ import { hasValue } from '../internal/is';
   *
   * @function compactMapAsync
   * @type {Function}
+  * @category array
   * @async
   * @param {Array} array - Array to be compacted.
   * @param {Function} iteratee - Iteratee to be performed on array.

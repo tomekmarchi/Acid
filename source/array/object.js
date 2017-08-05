@@ -6,6 +6,7 @@ import { eachArray } from './each';
   *
   * @function arrayToObject
   * @type {Function}
+  * @category Array
   * @param {Array} array - Array to have items extracted from.
   * @param {Array} properties - Array to have items extracted from.
   * @returns {Array} - Returns a completely flattened array.

@@ -7,6 +7,7 @@ import { hasValue } from '../internal/is';
   *
   * @function model
   * @type {Function}
+  * @category Utility
   * @param {string} modelName - Name of the model.
   * @property {Object} - The model object.
   * @returns {*} Returns the associated model.

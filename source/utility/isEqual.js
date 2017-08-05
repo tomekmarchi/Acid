@@ -8,6 +8,7 @@ import { isArray, isPlainObject } from '../internal/is';
    *
    * @function isEqual
    * @type {Function}
+   * @category Utility
    * @param {Object} source - Source object.
    * @param {Object} compareObject - Object to compare to source.
    * @returns {boolean} Returns the true or false.

@@ -6,6 +6,7 @@ import { flattenDeep } from './flatten';
   * Checks for differences between arrays, then creates an array based on those differences.
   *
   * @function difference
+  * @category array
   * @type {Function}
   * @param {Array} array - Source array.
   * @param {Array} compare - Array source array is compared against.

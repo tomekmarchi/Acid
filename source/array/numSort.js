@@ -7,6 +7,7 @@ export const numericalCompare = (a, b) => {
   * Sorts an array in place using a numerical comparison algorithm from lowest to highest.
   *
   * @function numSort
+  * @category Array
   * @type {Function}
   * @param {Array} numberList - Array of numbers.
   * @returns {Array} The array this method was called on.

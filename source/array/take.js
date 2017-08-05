@@ -4,6 +4,7 @@ import { assign } from '../internal/object';
   * Returns a shallow copy of the array up to an amount.
   *
   * @function take
+  * @category Array
   * @type {Function}
   * @param {Array} array - The array to be evaluated.
   * @returns {Array} The aggregated array.

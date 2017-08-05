@@ -5,6 +5,7 @@ import { assign } from '../internal/object';
   *
   * @function right
   * @type {Function}
+  * @category Array
   * @param {Array} array - Array to be sliced.
   * @returns {*} - Returns the object at the evaluated position.
   *

@@ -5,6 +5,7 @@ import { assign } from '../internal/object';
   *
   * @function replaceList
   * @type {Function}
+  * @category String
   * @param {string} string - String to be replaced.
   * @param {Array} array - Strings to replace.
   * @param {string} value - The match replacement.

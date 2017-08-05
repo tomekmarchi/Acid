@@ -10,6 +10,7 @@ const doubleQuoteRegex = /"/g;
   *
   * @function rawURLDecode
   * @type {Function}
+  * @category String
   * @param {string} string - String to be replaced.
   * @returns {string} - Converted string into the decoded URI Component .
   *

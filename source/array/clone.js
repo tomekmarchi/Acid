@@ -4,6 +4,7 @@ import { assign } from '../internal/object';
   * Clears the values out of an array.
   *
   * @function cloneArray
+  * @category array
   * @type {Function}
   * @param {Array} array - Takes an array to be cloned.
   * @returns {Array} The originally given array.

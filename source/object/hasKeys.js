@@ -5,6 +5,7 @@ import { assign, keys } from '../internal/object';
   * Checks to see if an object has all of the given property names.
   *
   * @function hasKeys
+  * @category Object
   * @type {Function}
   * @param {Object} object - Object from which keys are extracted.
   * @param {Array} properties - Array of object keys.
@@ -14,6 +15,7 @@ import { assign, keys } from '../internal/object';
   * hasKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Lucy','Thor']);
   * // => true
   *
+  * @example
   * hasKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Lucy','Tom']);
   * // => false
 */

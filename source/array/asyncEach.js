@@ -5,6 +5,7 @@ import { assign } from '../internal/object';
   *
   * @function asyncEach
   * @type {Function}
+  * @category array
   * @async
   * @param {Array} callingArray - Array of async functions that will be looped through.
   * Functions are given the supplied object, index, the calling array, and the array length.

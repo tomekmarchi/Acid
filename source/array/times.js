@@ -5,6 +5,7 @@ import { hasValue } from '../internal/is';
   * Iterates based on a start index and an end index. The loop ends when the start index is equal to the end index.
   *
   * @function times
+  * @category Array
   * @type {Function}
   * @param {number} startIndex - The number to start loop from.
   * @param {number} endIndex - The number to stop at the loop.

@@ -4,6 +4,7 @@ import { assign } from '../internal/object';
   * Takes all but the last item in the array.
   *
   * @function initial
+  * @category Array
   * @type {Function}
   * @param {Array} array - Array to have items extracted from.
   * @returns {Array} - Returns a completely flattened array.

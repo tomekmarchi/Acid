@@ -6,6 +6,7 @@ import { eachArray, whileArray } from '../array/each';
   * Iterates through the given object.
   *
   * @function eachObject
+  * @category Object
   * @type {Function}
   * @param {Object|Function} callingObject - Object that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, key, calling object, key count, and array of keys.

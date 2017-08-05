@@ -6,6 +6,7 @@ import { isEqual } from './isEqual';
   *
   * @function toggle
   * @type {Function}
+  * @category Utility
   * @param  {(string|number|Object|Array)} value - Strictly compared against the on argument.
   * @param {(string|number|Object|Array)} on -  Strictly compared against the value argument.
   * @param {(string|number|Object|Array)} off -  Value to be returned.

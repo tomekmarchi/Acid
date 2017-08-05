@@ -23,6 +23,7 @@ const rangeDown = (start, end, incrementArg) => {
   *
   *
   * @type {Function} range
+  * @category array
   * @param {Number} start - Value which determines the start of the range.
   * @param {Number} end - Value which determines the end of the range.
   * @param {Number} increment - Value which determines the rate of incrementation.

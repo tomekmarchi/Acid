@@ -10,6 +10,7 @@ const sortUnique = (item, index, array) => {
   * Filters the array down to unique elements.
   *
   * @function unique
+  * @category Array
   * @type {Function}
   * @param {Array} array - The array to be filtered.
   * @returns {Array} The filtered array.

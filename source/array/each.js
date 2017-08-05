@@ -49,6 +49,7 @@ export const eachArrayRight = (callingArray, iteratee) => {
   * Iterates through the given array while the iteratee returns true.
   *
   * @function whileArray
+  * @category array
   * @type {Function}
   * @param {Array} callingArray - Array that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, key, calling array, and array length.
@@ -77,6 +78,7 @@ export const whileArray = (callingArray, iteratee) => {
   *
   * @function filterArray
   * @type {Function}
+  * @category array
   * @param {Array} callingArray - Array that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, index, the newly created object, calling array, and array length.
   * @param {Array} [results = []] - Array that will be used to assign results.
@@ -108,7 +110,7 @@ const generateMap = (callable) => {
   * Iterates through the calling array and creates an object with the results of the iteratee on every element in the calling array.
   *
   * @function mapArray
-  * @category Utility
+  * @category Array
   * @type {Function}
   * @param {Array} callingArray - Array that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, index, the newly created array, calling array, and array length.

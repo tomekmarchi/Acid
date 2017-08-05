@@ -5,6 +5,7 @@ import { assign } from '../internal/object';
   *
   * @function without
   * @type {Function}
+  * @category Array
   * @param {Array} array - The array to be filtered.
   * @param {Array} removeThese - Items to be removed.
   * @returns {Array} The filtered array.

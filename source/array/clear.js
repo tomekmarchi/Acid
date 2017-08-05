@@ -4,6 +4,7 @@ import { assign } from '../internal/object';
   * Clears the values out of an array.
   *
   * @function clear
+  * @category array
   * @type {Function}
   * @param {Array} array - Takes an array to be emptied.
   * @returns {Array} The originally given array.
