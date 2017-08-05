@@ -6,6 +6,7 @@ import { isArray, isPlainObject } from '../internal/is';
   * Creates new object with deeply assigned values from another object/array.
   *
   * @function assignDeep
+  * @category utility
   * @type {Function}
   * @param {Object} object - Object to be assigned new properties.
   * @param {Object} otherObject - Object from which properties are extracted.

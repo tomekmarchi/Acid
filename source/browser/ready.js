@@ -6,6 +6,8 @@ import { importjs } from './import';
   * Runs a function if the document has finished loading. If not, add an eventlistener.
   *
   * @function isDocumentReady
+  * @category browser
+  * @ignoreTest
   * @type {Function}
   * @param {Function} callable - Function to be run.
   * @returns {Boolean|Function} - If the document is ready, returns a function. If not, return false.

@@ -5,6 +5,7 @@ import { mapArray } from '../array/each';
   * Invokes a function on the provided property name in each object in the collection.
   *
   * @function invoke
+  * @category collection
   * @type {Function}
   * @param {Array} collection - Collection from which method will be taken.
   * @param {string} methodName - Value used to pluck method from object.

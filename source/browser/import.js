@@ -17,6 +17,8 @@ const nodeAttachLoadingEvents = (node) => {
   * Asynchronously import a js file and append it to the head node.
   *
   * @function importjs
+  * @category browser
+  * @ignoreTest
   * @type {Function}
   * @async
   * @returns {Promise} Returns a promise.

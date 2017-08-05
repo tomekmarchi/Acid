@@ -5,6 +5,8 @@ import { isSameObjectGenerator, objectStringGenerate } from '../internal/is';
  * Checks if value is a plain DOM Node.
  *
  * @function isDom
+ * @category browser
+ * @ignoreTest
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -23,6 +25,8 @@ eachArray(['HTMLCollection', 'NodeList'], (item) => {
  * Checks if the value is a HTMLCollection.
  *
  * @function isHTMLCollection
+ * @category browser
+ * @ignoreTest
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
@@ -34,6 +38,8 @@ eachArray(['HTMLCollection', 'NodeList'], (item) => {
  * Checks if the value is a NodeList.
  *
  * @function isNodeList
+ * @category browser
+ * @ignoreTest
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *

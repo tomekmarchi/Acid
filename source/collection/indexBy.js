@@ -6,6 +6,7 @@ import { eachArray } from '../array/each';
   * Just like groupBy, but for when you know your keys are unique.
   *
   * @function indexBy
+  * @category collection
   * @type {Function}
   * @param {Array} collection - Array of objects.
   * @param {Function} iteratee - The iteratee to transform keys.

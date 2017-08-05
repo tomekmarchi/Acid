@@ -5,6 +5,7 @@ import { eachArray } from '../array/each';
   * Creates an object composed of keys generated from the results of running each element of collection through iteratee.
   *
   * @function countBy
+  * @category collection
   * @type {Function}
   * @param {Array} collection - Array of objects.
   * @param {Function} iteratee - The iteratee to transform keys.
@@ -30,6 +31,7 @@ export const countBy = (collection, iteratee) => {
   * Count the amount of times a key is present in a colleciton.
   *
   * @function countKey
+  * @category collection
   * @type {Function}
   * @param {Array} collection - Array of objects.
   * @param {Function} property - The name of the key.
@@ -52,6 +54,7 @@ export const countKey = (array, property) => {
   * Count the amount of times a key is not present in a colleciton.
   *
   * @function countWithoutKey
+  * @category collection
   * @type {Function}
   * @param {Array} collection - Array of objects.
   * @param {string} property - The name of the key.

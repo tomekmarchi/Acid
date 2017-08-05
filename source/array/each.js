@@ -5,6 +5,7 @@ import { hasValue } from '../internal/is';
   * Iterates through the given array.
   *
   * @function eachArray
+  * @category array
   * @type {Function}
   * @param {Array} callingArray - Array that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, index, calling array, and array length.
@@ -27,6 +28,7 @@ export const eachArray = (callingArray, iteratee) => {
   * Iterates through the given array in reverse.
   *
   * @function eachArrayRight
+  * @category array
   * @type {Function}
   * @param {Array} callingArray - Array that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, index, calling array, and array length.
@@ -77,6 +79,7 @@ export const whileArray = (callingArray, iteratee) => {
   * Iterates through the calling array and creates an array with all elements that pass the test implemented by the iteratee.
   *
   * @function filterArray
+  * @category array
   * @type {Function}
   * @category array
   * @param {Array} callingArray - Array that will be looped through.
@@ -128,7 +131,7 @@ export const mapArray = generateMap(eachArray);
   * Iterates through the calling array and creates an object with the results of the iteratee on every element in the calling array in reverse.
   *
   * @function mapArrayRight
-  * @category Utility
+  * @category array
   * @type {Function}
   * @param {Array} callingArray - Array that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, index, the newly created array, calling array, and array length.
@@ -146,6 +149,7 @@ export const mapArrayRight = generateMap(eachArrayRight);
   * Iterates through the calling array and creates an array with the results, (excludes results which are null or undefined), of the iteratee on every element in the calling array.
   *
   * @function compactMapArray
+  * @category array
   * @type {Function}
   * @param {Array} callingArray - Array that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, index, the newly created array, calling array, and array length.
@@ -171,6 +175,7 @@ export const compactMapArray = (callingArray, iteratee, results = []) => {
   * Iterates through the given and creates an object with all elements that pass the test implemented by the iteratee.
   *
   * @function mapWhile
+  * @category array
   * @type {Function}
   * @param {Array} callingArray - Array that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, index, the newly created array, calling array, and array length.

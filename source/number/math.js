@@ -7,6 +7,7 @@ const randomMethod = mathNative.random;
   * Adds two numbers.
   *
   * @function add
+  * @category number
   * @type {Function}
   * @param {number} number - First number.
   * @param {number} value - Second number.
@@ -23,6 +24,7 @@ export const add = (number, value) => {
   * Subtracts two numbers.
   *
   * @function minus
+  * @category number
   * @type {Function}
   * @param {number} number - First number.
   * @param {number} value - Second number.
@@ -39,6 +41,7 @@ export const minus = (number, value) => {
   * Divides two numbers.
   *
   * @function divide
+  * @category number
   * @type {Function}
   * @param {number} number - First number.
   * @param {number} value - Second number.
@@ -55,6 +58,7 @@ export const divide = (number, value) => {
   * Multiplies two numbers.
   *
   * @function multiply
+  * @category number
   * @type {Function}
   * @param {number} number - First number.
   * @param {number} value - Second number.
@@ -71,6 +75,7 @@ export const multiply = (number, value) => {
   *  Extracts the remainder between two numbers.
   *
   * @function remainder
+  * @category number
   * @type {Function}
   * @param {number} number - First number.
   * @param {number} value - Second number.
@@ -87,6 +92,7 @@ export const remainder = (number, value) => {
   *  Increments a number.
   *
   * @function increment
+  * @category number
   * @type {Function}
   * @param {number} number - First number.
   * @returns {number} - Returns an incremented version of the number.
@@ -102,6 +108,7 @@ export const increment = (number) => {
   *  Decrements a number.
   *
   * @function deduct
+  * @category number
   * @type {Function}
   * @param {number} number - First number.
   * @returns {number} - Returns a decremented version of the number.
@@ -117,6 +124,7 @@ export const deduct = (number) => {
   *  Produces a random number between min (included) and max (excluded).
   *
   * @function randomArbitrary
+  * @category number
   * @type {Function}
   * @param {number} max - Establishes highest possible value for the random number.
   * @param {number} [min = 0] - Establishes lowest possible value for the random number.
@@ -133,6 +141,7 @@ export const randomArbitrary = (max, min = 0) => {
   *  Produces a random integer between min (included) and max (excluded).
   *
   * @function randomInt
+  * @category number
   * @type {Function}
   * @param {number} max - Establishes highest possible value for the random number.
   * @param {number} [min = 0] - Establishes lowest possible value for the random number.

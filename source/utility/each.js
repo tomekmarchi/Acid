@@ -27,6 +27,7 @@ const generateCheckLoops = (arrayLoop, objectLoop) => {
   * Iterates through the given object while the iteratee returns true.
   *
   * @function eachWhile
+  * @category utility
   * @type {Function}
   * @param {Object|Array|Function} callingObject - Object that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, key, calling array, and array length.
@@ -43,6 +44,7 @@ export const eachWhile = generateCheckLoops(whileArray, whileObject);
   * Iterates through the given object.
   *
   * @function each
+  * @category utility
   * @type {Function}
   * @param {Array|Object|Function} callingObject - Object that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, key, the newly created map object and arguments unique to mapArray or mapObject depending on the object type.
@@ -63,6 +65,7 @@ export const each = generateCheckLoops(eachArray, eachObject);
   * Iterates through the calling object and creates a new object of the same calling object's type with all elements that pass the test implemented by the iteratee.
   *
   * @function filter
+  * @category utility
   * @type {Function}
   * @param {Array|Object|Function} callingObject - Object that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, key, the newly created map object and arguments unique to mapArray or mapObject depending on the object type.
@@ -106,6 +109,7 @@ export const map = generateCheckLoops(mapArray, mapObject);
   * Iterates through the calling object and creates a new object based on the calling object's type with the results, (excludes results which are null or undefined), of the iteratee on every element in the calling object.
   *
   * @function compactMap
+  * @category utility
   * @type {Function}
   * @param {Array|Object|Function} callingObject - Object that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, key, the newly created map object and arguments unique to mapArray or mapObject depending on the object type.

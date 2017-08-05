@@ -16,6 +16,7 @@ const returnFlow = (callable) => {
   * Creates a function that returns the result of invoking the given functions, where each successive invocation is supplied the return value of the previous.
   *
   * @function flow
+  * @category utility
   * @type {Function}
   * @param {Array} collection - Methods to invoke.
   * @returns {Function} Returns the new composite function.
@@ -29,6 +30,7 @@ export const flow = returnFlow(eachArray);
   * This method is like flow except that it creates a function that invokes the given functions from right to left.
   *
   * @function flowRight
+  * @category utility
   * @type {Function}
   * @param {Array} collection - Methods to invoke.
   * @returns {Function} Returns the new composite function.

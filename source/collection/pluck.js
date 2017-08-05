@@ -5,6 +5,7 @@ import { mapArray } from '../array/each';
   * Returns an array of the plucked values from the collection.
   *
   * @function pluck
+  * @category collection
   * @type {Function}
   * @param {Array} collection - Array used to determine what values to be plucked.
   * @param {string} pluckThis - Property name.

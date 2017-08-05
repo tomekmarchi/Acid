@@ -4,6 +4,7 @@ import { assign } from '../internal/object';
   * Creates a function that invokes callable, with up to n arguments, ignoring any additional arguments.
   *
   * @function ary
+  * @category function
   * @type {Function}
   * @param {Function} callable - The function to cap arguments for.
   * @param {number} amount - The arity cap.

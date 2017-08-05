@@ -4,6 +4,8 @@ import { assign } from '../internal/object';
   * Attaches an event listener to a node.
   *
   * @function eventAdd
+  * @category browser
+  * @ignoreTest
   * @type {Function}
   * @param {Node} node - Given node.
   * @param {string} type - A string representing the event type.
@@ -23,6 +25,8 @@ export const eventAdd = (node, ...args) => {
   * Attaches an event listener to a node.
   *
   * @function eventRemove
+  * @category browser
+  * @ignoreTest
   * @type {Function}
   * @param {Node} node - Given node.
   * @param {string} type - A string representing the event type.

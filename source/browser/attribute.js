@@ -8,6 +8,8 @@ import { zipObject } from '../object/zip';
   * Assign attributes to a DOM node.
   *
   * @function nodeAttribute
+  * @category browser
+  * @ignoreTest
   * @type {Function}
   * @async
   * @param {Node} node - The DOM node.

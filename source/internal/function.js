@@ -4,6 +4,7 @@ import { assign } from './object';
  * Calls a target function with arguments as specified.
  *
  * @function apply
+ * @category function
  * @param {Function} target - The target function to call.
  * @param {*} thisArgument - Array like object.
  * @param {Array} argumentsList - An array-like object specifying the arguments with which target should be called.

@@ -4,6 +4,7 @@ import { assign } from '../internal/object';
   * Strictly checks if a number is zero.
   *
   * @function isZero
+  * @category number
   * @type {Function}
   * @param {number} item - Number to be checked.
   * @returns {boolean} True or False.
@@ -22,6 +23,7 @@ export const isZero = (item) => {
   * Strictly checks if a number equal to another number.
   *
   * @function isNumberEqual
+  * @category number
   * @type {Function}
   * @param {number} item - Number to be checked against num.
   * @param {number} num - Number to be checked against item.
@@ -41,6 +43,7 @@ export const isNumberEqual = (item, num) => {
   * Checks if a number is within a range.
   *
   * @function isNumberInRange
+  * @category number
   * @type {Function}
   * @param {number} num - Number to be checked.
   * @param {number} [start = 0] - Beginning of range.

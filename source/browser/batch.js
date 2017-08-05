@@ -14,6 +14,8 @@ const batchLoop = () => {
   * Batch processing using requestAnimationFrame.
   *
   * @function batch
+  * @category browser
+  * @ignoreTest
   * @type {Function}
   * @param {...Function} items - The functions to add to the current batch.
   * @returns {undefined} Returns undefined.

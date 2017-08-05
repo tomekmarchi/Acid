@@ -5,6 +5,7 @@ import { hasValue } from '../internal/is';
    * Checks if a property on an object has a value. If not, it will assign a value.
    *
    * @function ifNotEqual
+   * @category utility
    * @type {Function}
    * @param {Object} rootObject - The object to check.
    * @param {string} property - The property name which is to be checked.
