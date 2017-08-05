@@ -4,7 +4,7 @@ import { assign } from '../internal/object';
   * Chunks an array according to a user defined number.
   *
   * @function chunk
-  * @category array
+  * @category Array
   * @type {Function}
   * @param {Array} array - Array to be chunked.
   * @param {number} size - Number which determines the size of each chunk.

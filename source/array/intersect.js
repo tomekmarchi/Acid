@@ -14,7 +14,7 @@ import { compactMapArray, whileArray } from './each';
  * @example
  * intersect([1, 2, 3], [2, 3, 4]);
  * // => [2, 3]
- *
+ * @example
  * intersect([1, 2, 3], [101, 2, 50, 1], [2, 1]);
  * // => [1, 2]
  */

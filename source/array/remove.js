@@ -11,7 +11,6 @@ import { assign } from '../internal/object';
   * @example
   * remove([1, 2, 3, 3, 4, 3, 5], 1);
   * // => [2, 3, 3, 4, 3, 5]
-  *
   * @example
   * remove([3, 3, 4, 5], 3, 4);
   * // => [5]
