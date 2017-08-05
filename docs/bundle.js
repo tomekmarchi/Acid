@@ -1518,10 +1518,11 @@
     * @returns {Array} An array which contains the differences between the source and compare array.
     *
     * @example
-    * difference([1, 2, 3], [1, 2]);
+    * compact([1, 2, 3], [1, 2]);
     * // => [3]
   */
-  const difference = (array, compare) => {
+  const difference = (array, ...compares) => {
+    const compare = flattenDeep(compares);
     return compactMapArray(array, (item) => {
       if (!compare.includes(item)) {
         return item;
@@ -1882,7 +1883,7 @@
     const results = [];
     let result;
     await eachAsync(array, async (item, index, arrayLength) => {
-      result = await iteratee(item, index, arrayLength);
+      result = await iteratee(item, index, results, arrayLength);
       if (hasValue(result)) {
         results.push(result);
       }

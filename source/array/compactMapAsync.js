@@ -20,7 +20,7 @@ export const compactMapAsync = async (array, iteratee) => {
   const results = [];
   let result;
   await eachAsync(array, async (item, index, arrayLength) => {
-    result = await iteratee(item, index, arrayLength);
+    result = await iteratee(item, index, results, arrayLength);
     if (hasValue(result)) {
       results.push(result);
     }
