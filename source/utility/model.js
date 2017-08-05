@@ -14,7 +14,7 @@ import { hasValue } from '../internal/is';
   * @example
   * model('test', {a: 1});
   * // => {a: 1}
-  *
+  * @example
   * model('test');
   * // => {a: 1}
 */
