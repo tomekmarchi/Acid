@@ -16,7 +16,6 @@ const uidClosed = {};
   * @example
   * uid();
   * // => 0
-  *
   * @example
   * uid();
   * // => 1
@@ -42,13 +41,13 @@ export const uid = () => {
   * @example
   * uid();
   * // => 0
-  *
+  * @example
   * uid();
   * // => 1
-  *
+  * @example
   * uid.free(0);
   * // => undefined
-  *
+  * @example
   * uid();
   * // => 0
 */
