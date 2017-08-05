@@ -113,7 +113,7 @@ const generateMap = (callable) => {
   * Iterates through the calling array and creates an object with the results of the iteratee on every element in the calling array.
   *
   * @function mapArray
-  * @category Array
+  * @category array
   * @type {Function}
   * @param {Array} callingArray - Array that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, index, the newly created array, calling array, and array length.

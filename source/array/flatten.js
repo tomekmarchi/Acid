@@ -7,7 +7,7 @@ import { isArray } from '../internal/is';
   *
   * @function flatten
   * @type {Function}
-  * @category Array
+  * @category array
   * @param {Array} array - Array to flatten.
   * @param {number} [level = 1] - Number which determines how deep the array nest can be.
   * @returns {Array} - Returns an array.
@@ -30,7 +30,7 @@ export const flatten = (arrayArg, level = 1) => {
   *
   * @function flattenDeep
   * @type {Function}
-  * @category Array
+  * @category array
   * @param {Array} array - Array to flatten.
   * @returns {Array} - Returns a completely flattened array.
   *

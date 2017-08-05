@@ -5,7 +5,7 @@ import { randomInt } from '../number/math';
   * Produce a random sample from the list. Pass a number to return n random elements from the list. Otherwise a single random item will be returned.
   *
   * @function sample
-  * @category Array
+  * @category array
   * @param {Array} array - Array to pull sample(s).
   * @returns {Array} An array of randomly pulled samples.
   *

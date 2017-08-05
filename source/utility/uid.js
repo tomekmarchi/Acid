@@ -10,7 +10,7 @@ const uidClosed = {};
   * @function uid
   * @category utility
   * @type {Function}
-  * @category Utility
+  * @category utility
   * @returns {number} - Returns a unique id.
   *
   * @example

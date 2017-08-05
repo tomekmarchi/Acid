@@ -8,7 +8,7 @@ import { compactMapArray, whileArray } from './each';
  * @function intersect
  * @param {Array} array - Array to compare other arrays to.
  * @param {...Array} arrays - A variable number of arrays.
- * @category Array
+ * @category array
  * @returns {Array} The new array of unique values shared by all of the arrays.
  *
  * @example

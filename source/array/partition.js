@@ -6,7 +6,7 @@ import { compactMapArray } from './each';
   *
   * @function partition
   * @type {Function}
-  * @category Array
+  * @category array
   * @param {Array} array - Takes an array to split.
   * @param {Function} funct - Function run on each item in array.
   * @returns {Array} - One array split into two arrays.

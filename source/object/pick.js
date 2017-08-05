@@ -6,7 +6,7 @@ import { eachArray } from '../array/each';
   *
   * @function pick
   * @type {Function}
-  * @category Object
+  * @category object
   * @param {Object} source - Object to be cloned.
   * @param {Array} array - Array used to determine what values to be plucked.
   * @param {Object} [newObject = {}] - Object to be populated with plucked values.

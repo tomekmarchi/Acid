@@ -5,7 +5,7 @@ import { assign } from '../internal/object';
   *
   * @function rest
   * @type {Function}
-  * @category Array
+  * @category array
   * @param {Array} array - Array to be sliced.
   * @returns {Array} - Returns the aggregated array.
   *

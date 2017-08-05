@@ -7,7 +7,7 @@ import { assign, keys } from '../internal/object';
   *
   * @function propertyMatch
   * @type {Function}
-  * @category Utility
+  * @category utility
   * @property {Object} - takes an object.
   * @property {Object} - takes an object.
   * @property {Array} - takes in an array of properties.

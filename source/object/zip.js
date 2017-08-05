@@ -7,7 +7,7 @@ import { eachObject } from './each';
   *
   * @function zipObject
   * @type {Function}
-  * @category Object
+  * @category object
   * @param {Array} properties - The property identifiers.
   * @param {Array} values - The property values.
   * @returns {Object} - Returns the new object.

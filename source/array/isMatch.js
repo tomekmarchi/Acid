@@ -6,7 +6,7 @@ import { whileArray } from './each';
    *
    * @function isMatchArray
    * @type {Function}
-   * @category Array
+   * @category array
    * @param {Array} source - Source object.
    * @param {Array} compareArray - Object to compare to source.
    * @returns {boolean} Returns the true or false.

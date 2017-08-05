@@ -6,7 +6,7 @@ import { eachObject } from './each';
   *
   * @function invert
   * @type {Function}
-  * @category Object
+  * @category object
   * @param {Object} thisObject - Object to be inverted.
   * @param {Array} [invertedObject = {}] - Empty object to be populated with inverted values from thisObject.
   * @returns {Object} - Returns object with keys and values switched.

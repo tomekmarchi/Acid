@@ -4,8 +4,8 @@ import { assign } from '../internal/object';
   * Asynchronously Iterates through the given array. Each async function is awaited as to ensure synchronous order.
   *
   * @function eachAsync
+  * @category array
   * @type {Function}
-  * @category Array
   * @async
   * @param {Array} callingArray - Array that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, index, calling array, and array length.
@@ -28,7 +28,7 @@ export const eachAsync = async (callingArray, iteratee) => {
   * Asynchronously Iterates through the given array in reverse. Each async function is awaited as to ensure synchronous order.
   *
   * @function eachAsyncRight
-  * @category Array
+  * @category array
   * @type {Function}
   * @async
   * @param {Array} callingArray - Array that will be looped through.

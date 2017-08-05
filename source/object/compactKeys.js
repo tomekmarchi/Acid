@@ -5,7 +5,7 @@ import { eachObject } from '../object/each';
   * Extracts all key values from an object.
   *
   * @function compactKeys
-  * @category Object
+  * @category object
   * @type {Function}
   * @param {Object} object - Object from which keys are extracted.
   * @returns {Array} - Returns an array of key values.

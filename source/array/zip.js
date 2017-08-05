@@ -5,7 +5,7 @@ import { assign } from '../internal/object';
   *
   * @function zip
   * @type {Function}
-  * @category Array
+  * @category array
   * @param {Array} properties - The arrays to process.
   * @returns {Array} - Returns the new array of regrouped elements.
   *
@@ -25,7 +25,7 @@ export const zip = (...args) => {
   *
   * @function unZip
   * @type {Function}
-  * @category Array
+  * @category array
   * @param {Array} properties - The array of grouped elements to process.
   * @returns {Array} - Returns the new array of regrouped elements.
   *

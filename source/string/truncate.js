@@ -31,7 +31,7 @@ const truncateUp = (string, maxLength, stringLength) => {
   *
   * @function truncate
   * @type {Function}
-  * @category String
+  * @category string
   * @param {string} string - String to be truncated.
   * @param {number} maxLength - The desired max length of the string.
   * @returns {string} - The mutated string.
@@ -49,7 +49,7 @@ export const truncate = (string, maxLength) => {
   *
   * @function truncateRight
   * @type {Function}
-  * @category String
+  * @category string
   * @param {string} string - String to be truncated.
   * @param {number} maxLength - The desired max length of the string.
   * @returns {string} - The mutated string.

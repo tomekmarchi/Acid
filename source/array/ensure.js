@@ -5,7 +5,7 @@ import { isArray } from '../internal/is';
   * Ensures the object is an array. If not wraps in array.
   *
   * @function ensureArray
-  * @category Array
+  * @category array
   * @type {Function}
   * @param {*} object - Data to be checked.
   * @returns {Array} - Returns an array.

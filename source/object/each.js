@@ -6,7 +6,7 @@ import { eachArray, whileArray } from '../array/each';
   * Iterates through the given object.
   *
   * @function eachObject
-  * @category Object
+  * @category object
   * @type {Function}
   * @param {Object|Function} callingObject - Object that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, key, calling object, key count, and array of keys.
@@ -72,7 +72,7 @@ export const filterObject = (object, iteratee, results = {}) => {
   * Iterates through the calling object and creates an object with the results of the iteratee on every element in the calling object.
   *
   * @function mapObject
-  * @category Utility
+  * @category utility
   * @type {Function}
   * @param {Object|Function} callingObject - Object that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, key, the newly created object, calling object, key count, and array of keys.

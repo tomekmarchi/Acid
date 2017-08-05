@@ -7,7 +7,7 @@ const spaceFirstLetter = / (.)/g;
   *
   * @function upperFirstLetter
   * @type {Function}
-  * @category String
+  * @category string
   * @param {string} string - String to extract first letter from.
   * @returns {string} - An upper case letter.
   *
@@ -23,7 +23,7 @@ export const upperFirstLetter = (string) => {
   *
   * @function upperFirst
   * @type {Function}
-  * @category String
+  * @category string
   * @param {string} string - String to be mutated.
   * @returns {string} - String with first letter capitalized.
   *
@@ -39,7 +39,7 @@ export const upperFirst = (string) => {
   *
   * @function upperFirstAll
   * @type {Function}
-  * @category String
+  * @category string
   * @param {string} string - String to be mutated.
   * @returns {string} - String with all first letters capitalized.
   *
@@ -57,7 +57,7 @@ export const upperFirstAll = (string) => {
   *
   * @function upperFirstOnly
   * @type {Function}
-  * @category String
+  * @category string
   * @param {string} string - String to be mutated.
   * @returns {string} - String with first letter capitalized.
   *
@@ -73,7 +73,7 @@ export const upperFirstOnly = (string) => {
   *
   * @function upperFirstOnlyAll
   * @type {Function}
-  * @category String
+  * @category string
   * @param {string} string - String to be mutated.
   * @returns {string} - String with all first letters capitalized.
   *
