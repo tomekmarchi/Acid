@@ -10,12 +10,17 @@ import { hasValue } from '../internal/is';
   * @param {Function} callable - The function to be called.
   * @returns {Function} Returns the new pass-thru function.
   *
+  * @test
+  * const onceOnly = once(3, (item) => { return item;});
+  * assert(onceOnly(5), 5);
+  * assert(onceOnly(2), 5);
+  *
   * @example
-  * const onceOnly = once(() => { return 1;});
-  * onceOnly();
-  * // => 1
-  * onceOnly();
-  * // => 1
+  * const onceOnly = once((item) => { return item;});
+  * onceOnly(5);
+  * // => 5
+  * onceOnly(1);
+  * // => 5
 */
 export const once = (callable) => {
   let value;
@@ -37,12 +42,17 @@ export const once = (callable) => {
   * @param {number} amount - The number of calls until method is invoked.
   * @returns {Function} Returns the new pass-thru function.
   *
+  * @test
+  * const onlyAfter = after(3, (item) => { return item;});
+  * assert(onlyAfter(1), undefined);
+  * assert(onlyAfter(2), 2);
+  *
   * @example
-  * const onlyAfter = after(1, () => { return 1;});
-  * onlyAfter();
+  * const onlyAfter = after(1, (item) => { return item;});
+  * onlyAfter(1);
   * // => undefined
-  * onlyAfter();
-  * // => 1
+  * onlyAfter(2);
+  * // => 2
 */
 const after = (callable, amount) => {
   let point = amount;
@@ -69,6 +79,12 @@ const after = (callable, amount) => {
   * @param {Function} callable - The function to be called.
   * @param {number} amount - The number of calls before n.
   * @returns {Function} Returns the new pass-thru function.
+  *
+  * @test
+  * const onlyBefore = before(3, (item) => { return item;});
+  * assert(onlyBefore(1), 1);
+  * assert(onlyBefore(2), 2);
+  * assert(onlyBefore(3), 2);
   *
   * @example
   * const onlyBefore = before(3, () => { return 1;});

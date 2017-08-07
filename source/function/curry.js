@@ -12,10 +12,9 @@ import { clear } from '../array/clear';
   * @returns {*} Returns the new curried function.
   *
   * @example
-  * const curried = curry((a, b, c) => {
+  * curry((a, b, c) => {
   *   return [a, b, c];
-  * });
-  * curried(1)(2)(3);
+  * })(1)(2)(3);
   * // => [1, 2, 3]
 */
 export const curry = (callable, arity = callable.length) => {
@@ -41,10 +40,9 @@ export const curry = (callable, arity = callable.length) => {
   * @returns {*} Returns the new curried function.
   *
   * @example
-  * const curried = curryRight((a, b, c) => {
+  * curryRight((a, b, c) => {
   *   return [a, b, c];
-  * });
-  * curried(1)(2)(3);
+  * })(1)(2)(3);
   * // => [1, 2, 3]
 */
 export const curryRight = (callable, arity = callable.length) => {

@@ -11,8 +11,7 @@ import { assign } from '../internal/object';
   * @returns {Function} The new function.
   *
   * @example
-  * const wrapped = wrap('Lucy', (firstName, lastName) => {console.log(`My name is ${firstName} ${lastName}.`);});
-  * wrapped('Diamonds');
+  * wrap('Lucy', (firstName, lastName) => {console.log(`My name is ${firstName} ${lastName}.`);})('Diamonds');
   * // => 'My name is Lucy Diamonds.'
 */
 export const wrap = (value, wrapper) => {

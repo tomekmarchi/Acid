@@ -35,8 +35,8 @@ const generateCheckLoops = (arrayLoop, objectLoop) => {
   *
   * @example
   * eachWhile({a: false, b: true, c: true}, (item) => {
-  *   return item;
-  *  });
+  *  return item;
+  * });
   * // => false
 */
 export const eachWhile = generateCheckLoops(whileArray, whileObject);
@@ -55,6 +55,7 @@ export const eachWhile = generateCheckLoops(whileArray, whileObject);
   *   console.log(item);
   * });
   * // => [1, 2, 3]
+  * @example
   * each({a: 1, b: 2, c: 3}, (item) => {
   *   console.log(item);
   * });
@@ -77,6 +78,7 @@ export const each = generateCheckLoops(eachArray, eachObject);
   *   return item;
   * });
   * // => [true, true]
+  * @example
   * filter({a: false, b: true, c: true}, (item) => {
   *   return true;
   * });
@@ -99,6 +101,7 @@ export const filter = generateCheckLoops(filterArray, filterObject);
   *   return item * 2;
   * });
   * // => [2, 4, 6]
+  * @example
   * map({a: 1, b: 2, c: 3}, (item) => {
   *   return item * 2;
   * });
@@ -121,6 +124,7 @@ export const map = generateCheckLoops(mapArray, mapObject);
   *   return item * 2;
   * });
   * // => [4, 6]
+  * @example
   * compactMap({a: 0, b: 2, c: 3}, (item) => {
   *   return item * 2;
   * });

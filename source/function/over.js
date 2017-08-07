@@ -31,10 +31,10 @@ export const over = (iteratees) => {
   * @returns {Function} Returns the new function.
   *
   * @example
-  * const overEveryThing = overEvery([Boolean, isFinite]);
-  * overEveryThing('1');
+  * overEvery([Boolean, isFinite])('1');
   * // => true
-  * overEveryThing(null);
+  * @example
+  * overEvery([Boolean, isFinite])(null);
   * // => false
 */
 export const overEvery = (predicates) => {

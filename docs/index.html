@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>Acid 2.0.15 | Documentation</title>
+  <title>Acid 2.0.16 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
@@ -14,7 +14,7 @@
       <div class='fixed xs-hide fix-3 overflow-auto max-height-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>Acid</h3>
-          <div class='mb1'><code>2.0.15</code></div>
+          <div class='mb1'><code>2.0.16</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -2535,8 +2535,10 @@
     
       
       <pre class='p1 overflow-auto round fill-light'>superMethod($.get);
-<span class="hljs-comment">// =&gt; undefined</span>
-$(<span class="hljs-string">'flow'</span>, $);
+<span class="hljs-comment">// =&gt; undefined</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>$(<span class="hljs-string">'flow'</span>, $);
 <span class="hljs-comment">// =&gt; $.flow</span></pre>
     
   
@@ -2925,7 +2927,7 @@ $(<span class="hljs-string">'flow'</span>, $);
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>getOwnPropertyDescriptor({ <span class="hljs-attr">bar</span>: <span class="hljs-number">42</span> }, <span class="hljs-string">'foo'</span>);
+      <pre class='p1 overflow-auto round fill-light'>getOwnPropertyDescriptor({ <span class="hljs-attr">bar</span>: <span class="hljs-number">42</span> }, <span class="hljs-string">'bar'</span>);
 <span class="hljs-comment">// =&gt; { configurable: true, enumerable: true, value: 42, writable: true }</span></pre>
     
   
@@ -3019,13 +3021,13 @@ $(<span class="hljs-string">'flow'</span>, $);
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> obj = {};
-defineProperty(obj, <span class="hljs-string">'key'</span>, {
+      <pre class='p1 overflow-auto round fill-light'>defineProperty({}, <span class="hljs-string">'key'</span>, {
  <span class="hljs-attr">enumerable</span>: <span class="hljs-literal">false</span>,
  <span class="hljs-attr">configurable</span>: <span class="hljs-literal">false</span>,
  <span class="hljs-attr">writable</span>: <span class="hljs-literal">false</span>,
  <span class="hljs-attr">value</span>: <span class="hljs-string">'static'</span>
-});</pre>
+}).key;
+<span class="hljs-comment">// =&gt; 'static'</span></pre>
     
   
 
@@ -6880,9 +6882,10 @@ Functions are given the supplied object, index, the calling array, and the array
     
       
       <pre class='p1 overflow-auto round fill-light'>ensureArray(<span class="hljs-string">'Hello'</span>);
-<span class="hljs-comment">// =&gt; ['Hello']</span>
-
-ensureArray({<span class="hljs-attr">a</span>:<span class="hljs-number">1</span>, <span class="hljs-attr">b</span>:<span class="hljs-number">2</span>})
+<span class="hljs-comment">// =&gt; ['Hello']</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>ensureArray({<span class="hljs-attr">a</span>:<span class="hljs-number">1</span>, <span class="hljs-attr">b</span>:<span class="hljs-number">2</span>})
 <span class="hljs-comment">// =&gt; [{a:1, b:2}]</span></pre>
     
   
@@ -7053,7 +7056,7 @@ ensureArray({<span class="hljs-attr">a</span>:<span class="hljs-number">1</span>
     
       
       <pre class='p1 overflow-auto round fill-light'>flattenDeep([<span class="hljs-number">1</span>, [<span class="hljs-number">2</span>, [<span class="hljs-number">3</span>, [<span class="hljs-number">4</span>]], <span class="hljs-number">5</span>]]);
-<span class="hljs-comment">// =&gt; [1, 2, 3, 4, 5]</span></pre>
+ <span class="hljs-comment">// =&gt; [1, 2, 3, 4, 5]</span></pre>
     
   
 
@@ -7138,9 +7141,10 @@ ensureArray({<span class="hljs-attr">a</span>:<span class="hljs-number">1</span>
     
       
       <pre class='p1 overflow-auto round fill-light'>remove([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>], <span class="hljs-number">1</span>);
-<span class="hljs-comment">// =&gt; [2, 3, 3, 4, 3, 5]</span>
-
-remove([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>], <span class="hljs-number">3</span>, <span class="hljs-number">4</span>);
+<span class="hljs-comment">// =&gt; [2, 3, 3, 4, 3, 5]</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>remove([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>], <span class="hljs-number">3</span>, <span class="hljs-number">4</span>);
 <span class="hljs-comment">// =&gt; [5]</span></pre>
     
   
@@ -7233,7 +7237,7 @@ remove([<span class="hljs-number">3</span>, <span class="hljs-number">3</span>, 
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>removeBy([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>], (item) =&gt; { <span class="hljs-keyword">return</span> <span class="hljs-built_in">Boolean</span>(item % <span class="hljs-number">2</span>);}));
+      <pre class='p1 overflow-auto round fill-light'>removeBy([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>], (item) =&gt; { <span class="hljs-keyword">return</span> <span class="hljs-built_in">Boolean</span>(item % <span class="hljs-number">2</span>);});
 <span class="hljs-comment">// =&gt; [2, 4]</span></pre>
     
   
@@ -9053,9 +9057,10 @@ of the array and the input array(s).</p>
     
       
       <pre class='p1 overflow-auto round fill-light'>intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]);
-<span class="hljs-comment">// =&gt; [2, 3]</span>
-
-intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">101</span>, <span class="hljs-number">2</span>, <span class="hljs-number">50</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">2</span>, <span class="hljs-number">1</span>]);
+<span class="hljs-comment">// =&gt; [2, 3]</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">101</span>, <span class="hljs-number">2</span>, <span class="hljs-number">50</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">2</span>, <span class="hljs-number">1</span>]);
 <span class="hljs-comment">// =&gt; [1, 2]</span></pre>
     
   
@@ -9839,8 +9844,7 @@ intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span
       <pre class='p1 overflow-auto round fill-light'>eachAsync([<span class="hljs-number">3</span>,<span class="hljs-number">4</span>], <span class="hljs-keyword">async</span> (item, index) =&gt;{
  <span class="hljs-built_in">console</span>.log(item, index);
 });
-<span class="hljs-comment">// 3 0</span>
-<span class="hljs-comment">// 4 1</span></pre>
+<span class="hljs-comment">// =&gt; {3:0, 4:1}</span></pre>
     
   
 
@@ -9927,8 +9931,7 @@ intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span
       <pre class='p1 overflow-auto round fill-light'>eachAsyncRight([<span class="hljs-number">3</span>,<span class="hljs-number">4</span>], <span class="hljs-keyword">async</span> (item, index) =&gt;{
  <span class="hljs-built_in">console</span>.log(item, index);
 });
-<span class="hljs-comment">// 4 1</span>
-<span class="hljs-comment">// 3 0</span></pre>
+<span class="hljs-comment">// {3:0, 4:1}</span></pre>
     
   
 
@@ -10014,9 +10017,10 @@ intersect([<span class="hljs-number">1</span>, <span class="hljs-number">2</span
     
       
       <pre class='p1 overflow-auto round fill-light'>last([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>] , <span class="hljs-number">2</span>);
-<span class="hljs-comment">// =&gt; [5, 4]</span>
-
-last([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]);
+<span class="hljs-comment">// =&gt; [5, 4]</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>last([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]);
 <span class="hljs-comment">// =&gt; 5</span></pre>
     
   
@@ -11432,9 +11436,10 @@ last([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <s
     
       
       <pre class='p1 overflow-auto round fill-light'>first([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]);
-<span class="hljs-comment">// =&gt; [1]</span>
-
-first([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], <span class="hljs-number">2</span>);
+<span class="hljs-comment">// =&gt; [1]</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>first([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], <span class="hljs-number">2</span>);
 <span class="hljs-comment">// =&gt; [1, 2, 3]</span></pre>
     
   
@@ -13098,9 +13103,10 @@ first([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <
     
       
       <pre class='p1 overflow-auto round fill-light'>rightString(<span class="hljs-string">'rightString'</span>);
-<span class="hljs-comment">// =&gt; 'g'</span>
-
-rightString(<span class="hljs-string">'rightString'</span>, <span class="hljs-number">2</span>);
+<span class="hljs-comment">// =&gt; 'g'</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>rightString(<span class="hljs-string">'rightString'</span>, <span class="hljs-number">2</span>);
 <span class="hljs-comment">// =&gt; 'n'</span></pre>
     
   
@@ -13272,9 +13278,10 @@ rightString(<span class="hljs-string">'rightString'</span>, <span class="hljs-nu
     
       
       <pre class='p1 overflow-auto round fill-light'>initialString(<span class="hljs-string">'initialString'</span>);
-<span class="hljs-comment">// =&gt; 'initialStrin'</span>
-
-initialString(<span class="hljs-string">'initialString'</span>, <span class="hljs-number">2</span>);
+<span class="hljs-comment">// =&gt; 'initialStrin'</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>initialString(<span class="hljs-string">'initialString'</span>, <span class="hljs-number">2</span>);
 <span class="hljs-comment">// =&gt; 'initialStri'</span></pre>
     
   
@@ -13361,9 +13368,10 @@ initialString(<span class="hljs-string">'initialString'</span>, <span class="hlj
     
       
       <pre class='p1 overflow-auto round fill-light'>restString(<span class="hljs-string">'restString'</span>);
-<span class="hljs-comment">// =&gt; 'estString'</span>
-
-restString(<span class="hljs-string">'restString'</span>, <span class="hljs-number">2</span>);
+<span class="hljs-comment">// =&gt; 'estString'</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>restString(<span class="hljs-string">'restString'</span>, <span class="hljs-number">2</span>);
 <span class="hljs-comment">// =&gt; 'stString'</span></pre>
     
   
@@ -13971,8 +13979,10 @@ restString(<span class="hljs-string">'restString'</span>, <span class="hljs-numb
     
       
       <pre class='p1 overflow-auto round fill-light'>ifInvoke(<span class="hljs-function">(<span class="hljs-params">...args</span>) =&gt;</span> { <span class="hljs-keyword">return</span> args;}, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
-<span class="hljs-comment">// =&gt; [1, 2]</span>
-ifInvoke(<span class="hljs-literal">undefined</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+<span class="hljs-comment">// =&gt; [1, 2]</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>ifInvoke(<span class="hljs-literal">undefined</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
 <span class="hljs-comment">// =&gt; undefined</span></pre>
     
   
@@ -15196,7 +15206,7 @@ The corresponding value of each key is an array of elements responsible for gene
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>countBy([{<span class="hljs-attr">a</span>:<span class="hljs-number">1</span>}, {<span class="hljs-attr">a</span>:<span class="hljs-number">3</span>}], (item) =&gt; { <span class="hljs-keyword">return</span> <span class="hljs-string">'a'</span>;}));
+      <pre class='p1 overflow-auto round fill-light'>countBy([{<span class="hljs-attr">a</span>:<span class="hljs-number">1</span>}, {<span class="hljs-attr">a</span>:<span class="hljs-number">3</span>}], (item) =&gt; { <span class="hljs-keyword">return</span> <span class="hljs-string">'a'</span>;});
 <span class="hljs-comment">// =&gt; {a: 2}</span></pre>
     
   
@@ -15952,10 +15962,9 @@ Just like groupBy, but for when you know your keys are unique.</p>
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> curried = curry(<span class="hljs-function">(<span class="hljs-params">a, b, c</span>) =&gt;</span> {
+      <pre class='p1 overflow-auto round fill-light'>curry(<span class="hljs-function">(<span class="hljs-params">a, b, c</span>) =&gt;</span> {
   <span class="hljs-keyword">return</span> [a, b, c];
-});
-curried(<span class="hljs-number">1</span>)(<span class="hljs-number">2</span>)(<span class="hljs-number">3</span>);
+})(<span class="hljs-number">1</span>)(<span class="hljs-number">2</span>)(<span class="hljs-number">3</span>);
 <span class="hljs-comment">// =&gt; [1, 2, 3]</span></pre>
     
   
@@ -16041,10 +16050,9 @@ curried(<span class="hljs-number">1</span>)(<span class="hljs-number">2</span>)(
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> curried = curryRight(<span class="hljs-function">(<span class="hljs-params">a, b, c</span>) =&gt;</span> {
+      <pre class='p1 overflow-auto round fill-light'>curryRight(<span class="hljs-function">(<span class="hljs-params">a, b, c</span>) =&gt;</span> {
   <span class="hljs-keyword">return</span> [a, b, c];
-});
-curried(<span class="hljs-number">1</span>)(<span class="hljs-number">2</span>)(<span class="hljs-number">3</span>);
+})(<span class="hljs-number">1</span>)(<span class="hljs-number">2</span>)(<span class="hljs-number">3</span>);
 <span class="hljs-comment">// =&gt; [1, 2, 3]</span></pre>
     
   
@@ -16120,11 +16128,11 @@ curried(<span class="hljs-number">1</span>)(<span class="hljs-number">2</span>)(
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> onceOnly = once(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> { <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;});
-onceOnly();
-<span class="hljs-comment">// =&gt; 1</span>
-onceOnly();
-<span class="hljs-comment">// =&gt; 1</span></pre>
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> onceOnly = once(<span class="hljs-function">(<span class="hljs-params">item</span>) =&gt;</span> { <span class="hljs-keyword">return</span> item;});
+onceOnly(<span class="hljs-number">5</span>);
+<span class="hljs-comment">// =&gt; 5</span>
+onceOnly(<span class="hljs-number">1</span>);
+<span class="hljs-comment">// =&gt; 5</span></pre>
     
   
 
@@ -16208,11 +16216,11 @@ onceOnly();
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> onlyAfter = after(<span class="hljs-number">1</span>, () =&gt; { <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;});
-onlyAfter();
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> onlyAfter = after(<span class="hljs-number">1</span>, (item) =&gt; { <span class="hljs-keyword">return</span> item;});
+onlyAfter(<span class="hljs-number">1</span>);
 <span class="hljs-comment">// =&gt; undefined</span>
-onlyAfter();
-<span class="hljs-comment">// =&gt; 1</span></pre>
+onlyAfter(<span class="hljs-number">2</span>);
+<span class="hljs-comment">// =&gt; 2</span></pre>
     
   
 
@@ -16759,8 +16767,8 @@ onlyBefore(<span class="hljs-number">3</span>);
     
       
       <pre class='p1 overflow-auto round fill-light'>eachWhile({<span class="hljs-attr">a</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">b</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">c</span>: <span class="hljs-literal">true</span>}, (item) =&gt; {
-  <span class="hljs-keyword">return</span> item;
- });
+ <span class="hljs-keyword">return</span> item;
+});
 <span class="hljs-comment">// =&gt; false</span></pre>
     
   
@@ -16848,8 +16856,10 @@ onlyBefore(<span class="hljs-number">3</span>);
       <pre class='p1 overflow-auto round fill-light'>each([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], (item) =&gt; {
   <span class="hljs-built_in">console</span>.log(item);
 });
-<span class="hljs-comment">// =&gt; [1, 2, 3]</span>
-each({<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">c</span>: <span class="hljs-number">3</span>}, (item) =&gt; {
+<span class="hljs-comment">// =&gt; [1, 2, 3]</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>each({<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">c</span>: <span class="hljs-number">3</span>}, (item) =&gt; {
   <span class="hljs-built_in">console</span>.log(item);
 });
 <span class="hljs-comment">// =&gt; {a: 1, b: 2, c: 3}</span></pre>
@@ -16949,8 +16959,10 @@ each({<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <spa
       <pre class='p1 overflow-auto round fill-light'>filter([<span class="hljs-literal">false</span>, <span class="hljs-literal">true</span>, <span class="hljs-literal">true</span>], (item) =&gt; {
   <span class="hljs-keyword">return</span> item;
 });
-<span class="hljs-comment">// =&gt; [true, true]</span>
-filter({<span class="hljs-attr">a</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">b</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">c</span>: <span class="hljs-literal">true</span>}, (item) =&gt; {
+<span class="hljs-comment">// =&gt; [true, true]</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>filter({<span class="hljs-attr">a</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">b</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">c</span>: <span class="hljs-literal">true</span>}, (item) =&gt; {
   <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
 });
 <span class="hljs-comment">// =&gt; {b: true, c: true}</span></pre>
@@ -17050,8 +17062,10 @@ filter({<span class="hljs-attr">a</span>: <span class="hljs-literal">false</span
       <pre class='p1 overflow-auto round fill-light'>map([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], (item) =&gt; {
   <span class="hljs-keyword">return</span> item * <span class="hljs-number">2</span>;
 });
-<span class="hljs-comment">// =&gt; [2, 4, 6]</span>
-map({<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">c</span>: <span class="hljs-number">3</span>}, (item) =&gt; {
+<span class="hljs-comment">// =&gt; [2, 4, 6]</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>map({<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">c</span>: <span class="hljs-number">3</span>}, (item) =&gt; {
   <span class="hljs-keyword">return</span> item * <span class="hljs-number">2</span>;
 });
 <span class="hljs-comment">// =&gt; {a: 2, b: 4, c: 6}</span></pre>
@@ -17151,8 +17165,10 @@ map({<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span
       <pre class='p1 overflow-auto round fill-light'>compactMap([<span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], (item) =&gt; {
   <span class="hljs-keyword">return</span> item * <span class="hljs-number">2</span>;
 });
-<span class="hljs-comment">// =&gt; [4, 6]</span>
-compactMap({<span class="hljs-attr">a</span>: <span class="hljs-number">0</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">c</span>: <span class="hljs-number">3</span>}, (item) =&gt; {
+<span class="hljs-comment">// =&gt; [4, 6]</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>compactMap({<span class="hljs-attr">a</span>: <span class="hljs-number">0</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">c</span>: <span class="hljs-number">3</span>}, (item) =&gt; {
   <span class="hljs-keyword">return</span> item * <span class="hljs-number">2</span>;
 });
 <span class="hljs-comment">// =&gt; {b: 4, c: 6}</span></pre>
@@ -17239,12 +17255,11 @@ compactMap({<span class="hljs-attr">a</span>: <span class="hljs-number">0</span>
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> collection = bindAll([<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> { <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;}], <span class="hljs-string">'Lucy'</span>);
-collection[<span class="hljs-number">0</span>]();
-<span class="hljs-comment">// =&gt; 'Lucy'</span>
-
-<span class="hljs-keyword">const</span> collection = bindAll({a() { <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;}}, <span class="hljs-string">'Lucy'</span>);
-collection.a();
+      <pre class='p1 overflow-auto round fill-light'>bindAll([<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> { <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;}], <span class="hljs-string">'Lucy'</span>)[<span class="hljs-number">0</span>]();
+<span class="hljs-comment">// =&gt; 'Lucy'</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>bindAll({a() { <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;}}, <span class="hljs-string">'Lucy'</span>).a();
 <span class="hljs-comment">// =&gt; 'Lucy'</span></pre>
     
   
@@ -17557,10 +17572,11 @@ collection.a();
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> overEveryThing = overEvery([<span class="hljs-built_in">Boolean</span>, <span class="hljs-built_in">isFinite</span>]);
-overEveryThing(<span class="hljs-string">'1'</span>);
-<span class="hljs-comment">// =&gt; true</span>
-overEveryThing(<span class="hljs-literal">null</span>);
+      <pre class='p1 overflow-auto round fill-light'>overEvery([<span class="hljs-built_in">Boolean</span>, <span class="hljs-built_in">isFinite</span>])(<span class="hljs-string">'1'</span>);
+<span class="hljs-comment">// =&gt; true</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>overEvery([<span class="hljs-built_in">Boolean</span>, <span class="hljs-built_in">isFinite</span>])(<span class="hljs-literal">null</span>);
 <span class="hljs-comment">// =&gt; false</span></pre>
     
   
@@ -17898,8 +17914,8 @@ overEveryThing(<span class="hljs-literal">null</span>);
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> debounced = debounce(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> { <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'debounced'</span>); }, <span class="hljs-number">0</span>);
-<span class="hljs-comment">// =&gt; debounced();</span></pre>
+      <pre class='p1 overflow-auto round fill-light'>debounce(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> { <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'debounced'</span>); }, <span class="hljs-number">0</span>)();
+<span class="hljs-comment">// 'debounced'</span></pre>
     
   
 
@@ -18066,8 +18082,8 @@ overEveryThing(<span class="hljs-literal">null</span>);
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> throttled = throttle(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> { <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'debounced'</span>); }, <span class="hljs-number">0</span>);
-<span class="hljs-comment">// =&gt; throttled();</span></pre>
+      <pre class='p1 overflow-auto round fill-light'>throttle(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> { <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'throttle'</span>); }, <span class="hljs-number">0</span>)();
+<span class="hljs-comment">// 'throttle'</span></pre>
     
   
 
@@ -18142,8 +18158,7 @@ overEveryThing(<span class="hljs-literal">null</span>);
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> chained = chain({a(item) { <span class="hljs-keyword">return</span> item;}});
-chained(<span class="hljs-string">'Acid'</span>).a();
+      <pre class='p1 overflow-auto round fill-light'>chain({a(item) { <span class="hljs-keyword">return</span> item;}})(<span class="hljs-string">'Acid'</span>).a();
 <span class="hljs-comment">// =&gt; 'Acid'</span></pre>
     
   
@@ -18479,10 +18494,9 @@ chained(<span class="hljs-string">'Acid'</span>).a();
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> reArged = reArg(<span class="hljs-function">(<span class="hljs-params">a, b, c</span>) =&gt;</span> {
+      <pre class='p1 overflow-auto round fill-light'>reArg(<span class="hljs-function">(<span class="hljs-params">a, b, c</span>) =&gt;</span> {
   <span class="hljs-keyword">return</span> [a, b, c];
-}, [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">0</span>]);
-reArged(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>);
+}, [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">0</span>])(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>);
 <span class="hljs-comment">// =&gt; [2, 3, 1]</span></pre>
     
   
@@ -18567,8 +18581,7 @@ reArged(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<s
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> wrapped = wrap(<span class="hljs-string">'Lucy'</span>, (firstName, lastName) =&gt; {<span class="hljs-built_in">console</span>.log(<span class="hljs-string">`My name is <span class="hljs-subst">${firstName}</span> <span class="hljs-subst">${lastName}</span>.`</span>);});
-wrapped(<span class="hljs-string">'Diamonds'</span>);
+      <pre class='p1 overflow-auto round fill-light'>wrap(<span class="hljs-string">'Lucy'</span>, (firstName, lastName) =&gt; {<span class="hljs-built_in">console</span>.log(<span class="hljs-string">`My name is <span class="hljs-subst">${firstName}</span> <span class="hljs-subst">${lastName}</span>.`</span>);})(<span class="hljs-string">'Diamonds'</span>);
 <span class="hljs-comment">// =&gt; 'My name is Lucy Diamonds.'</span></pre>
     
   
@@ -18645,9 +18658,10 @@ wrapped(<span class="hljs-string">'Diamonds'</span>);
     
       
       <pre class='p1 overflow-auto round fill-light'>isZero(<span class="hljs-number">0</span>);
-<span class="hljs-comment">// =&gt; true</span>
-
-isZero(<span class="hljs-number">1</span>);
+<span class="hljs-comment">// =&gt; true</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>isZero(<span class="hljs-number">1</span>);
 <span class="hljs-comment">// =&gt; False</span></pre>
     
   
@@ -18733,9 +18747,10 @@ isZero(<span class="hljs-number">1</span>);
     
       
       <pre class='p1 overflow-auto round fill-light'>isNumberEqual(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
-<span class="hljs-comment">// =&gt; true</span>
-
-isNumberEqual(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>);
+<span class="hljs-comment">// =&gt; true</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>isNumberEqual(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>);
 <span class="hljs-comment">// =&gt; False</span></pre>
     
   
@@ -18832,9 +18847,10 @@ isNumberEqual(<span class="hljs-number">0</span>, <span class="hljs-number">1</s
     
       
       <pre class='p1 overflow-auto round fill-light'>isNumberInRange(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>);
-<span class="hljs-comment">// =&gt; True</span>
-
-isNumberInRange(<span class="hljs-number">1</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">0</span>);
+<span class="hljs-comment">// =&gt; True</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>isNumberInRange(<span class="hljs-number">1</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">0</span>);
 <span class="hljs-comment">// =&gt; False</span></pre>
     
   
@@ -18920,9 +18936,10 @@ isNumberInRange(<span class="hljs-number">1</span>, <span class="hljs-number">-1
     
       
       <pre class='p1 overflow-auto round fill-light'>hasKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'</span>, <span class="hljs-attr">John</span>: <span class="hljs-string">'Malkovich'</span>, <span class="hljs-attr">Thor</span>: <span class="hljs-string">'Bobo'</span>}, [<span class="hljs-string">'Lucy'</span>,<span class="hljs-string">'Thor'</span>]);
-<span class="hljs-comment">// =&gt; true</span>
-
-hasKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'</span>, <span class="hljs-attr">John</span>: <span class="hljs-string">'Malkovich'</span>, <span class="hljs-attr">Thor</span>: <span class="hljs-string">'Bobo'</span>}, [<span class="hljs-string">'Lucy'</span>,<span class="hljs-string">'Tom'</span>]);
+<span class="hljs-comment">// =&gt; true</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>hasKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'</span>, <span class="hljs-attr">John</span>: <span class="hljs-string">'Malkovich'</span>, <span class="hljs-attr">Thor</span>: <span class="hljs-string">'Bobo'</span>}, [<span class="hljs-string">'Lucy'</span>,<span class="hljs-string">'Tom'</span>]);
 <span class="hljs-comment">// =&gt; false</span></pre>
     
   
@@ -19007,10 +19024,11 @@ hasKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'<
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'</span>, <span class="hljs-attr">John</span>: <span class="hljs-string">'Malkovich'</span>, <span class="hljs-attr">Thor</span>: <span class="hljs-string">'Bobo'</span>}, [<span class="hljs-string">'Lucy'</span>,<span class="hljs-string">'Tom'</span>]);
-<span class="hljs-comment">// =&gt; true</span>
-
-hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'</span>, <span class="hljs-attr">John</span>: <span class="hljs-string">'Malkovich'</span>, <span class="hljs-attr">Thor</span>: <span class="hljs-string">'Bobo'</span>}, [<span class="hljs-string">'Other'</span>,<span class="hljs-string">'Tom'</span>]);
+      <pre class='p1 overflow-auto round fill-light'>hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'</span>, <span class="hljs-attr">John</span>: <span class="hljs-string">'Malkovich'</span>, <span class="hljs-attr">Thor</span>: <span class="hljs-string">'Bobo'</span>}, [<span class="hljs-string">'Lucy'</span>, <span class="hljs-string">'Tom'</span>]);
+<span class="hljs-comment">// =&gt; true</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ringo'</span>, <span class="hljs-attr">John</span>: <span class="hljs-string">'Malkovich'</span>, <span class="hljs-attr">Thor</span>: <span class="hljs-string">'Bobo'</span>}, [<span class="hljs-string">'Other'</span>, <span class="hljs-string">'Tom'</span>]);
 <span class="hljs-comment">// =&gt; false</span></pre>
     
   
@@ -19437,7 +19455,7 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>omit({<span class="hljs-attr">a</span>:<span class="hljs-number">1</span>, <span class="hljs-attr">b</span>:<span class="hljs-number">2</span>, [<span class="hljs-string">'a'</span>]});
+      <pre class='p1 overflow-auto round fill-light'>omit({<span class="hljs-attr">a</span>:<span class="hljs-number">1</span>, <span class="hljs-attr">b</span>:<span class="hljs-number">2</span>}, [<span class="hljs-string">'a'</span>]);
 <span class="hljs-comment">// =&gt; {b:2}</span></pre>
     
   
@@ -19988,7 +20006,7 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
     
       
       <pre class='p1 overflow-auto round fill-light'>htmlEntities(<span class="hljs-string">`&lt;script&gt;console.log('Lucy &amp; diamonds.')&lt;/script&gt;`</span>);
-<span class="hljs-comment">// =&gt; '&amp;lt;script&amp;gt;console.log('Lucy &amp;amp; diamonds.')&amp;lt;/script&amp;gt;'</span></pre>
+<span class="hljs-comment">// =&gt; `&amp;lt;script&amp;gt;console.log('Lucy &amp;amp; diamonds.')&amp;lt;/script&amp;gt;`</span></pre>
     
   
 
@@ -20064,7 +20082,7 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
     
       
       <pre class='p1 overflow-auto round fill-light'>sanitize(<span class="hljs-string">`&lt;script&gt;console.log('Lucy%20&amp;%20diamonds.')&lt;/script&gt;`</span>);
-<span class="hljs-comment">// =&gt; '&amp;lt;script&amp;gt;console.log('Lucy &amp;amp; diamonds.')&amp;lt;/script&amp;gt;'</span></pre>
+<span class="hljs-comment">// =&gt; `&amp;lt;script&amp;gt;console.log('Lucy &amp;amp; diamonds.')&amp;lt;/script&amp;gt;`</span></pre>
     
   
 
@@ -20936,8 +20954,8 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>cacheNativeMethod(<span class="hljs-built_in">Array</span>.prototype.push);
-<span class="hljs-comment">// =&gt; function call() { [native code] }</span></pre>
+      <pre class='p1 overflow-auto round fill-light'>cacheNativeMethod(<span class="hljs-built_in">Array</span>.prototype.push)([], <span class="hljs-number">1</span>);
+<span class="hljs-comment">// =&gt; 1</span></pre>
     
   
 
@@ -21379,7 +21397,6 @@ hasAnyKeys({<span class="hljs-attr">Lucy</span>: <span class="hljs-string">'Ring
       
       <pre class='p1 overflow-auto round fill-light'>uid();
 <span class="hljs-comment">// =&gt; 0</span>
-
 uid();
 <span class="hljs-comment">// =&gt; 1</span></pre>
     
@@ -21450,15 +21467,18 @@ uid();
     
       
       <pre class='p1 overflow-auto round fill-light'>uid();
-<span class="hljs-comment">// =&gt; 0</span>
-
-uid();
-<span class="hljs-comment">// =&gt; 1</span>
-
-uid.free(<span class="hljs-number">0</span>);
-<span class="hljs-comment">// =&gt; undefined</span>
-
-uid();
+<span class="hljs-comment">// =&gt; 0</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>uid();
+<span class="hljs-comment">// =&gt; 1</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>uid.free(<span class="hljs-number">0</span>);
+<span class="hljs-comment">// =&gt; undefined</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>uid();
 <span class="hljs-comment">// =&gt; 0</span></pre>
     
   
@@ -21561,7 +21581,7 @@ uid();
     <span class="hljs-attr">like</span>: [<span class="hljs-string">'a'</span>,<span class="hljs-string">'b'</span>,<span class="hljs-string">'c'</span>]
   }
 });
-<span class="hljs-comment">// =&gt; c</span></pre>
+<span class="hljs-comment">// =&gt; 'c'</span></pre>
     
   
 
@@ -21657,9 +21677,10 @@ uid();
     
       
       <pre class='p1 overflow-auto round fill-light'>model(<span class="hljs-string">'test'</span>, {<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>});
-<span class="hljs-comment">// =&gt; {a: 1}</span>
-
-model(<span class="hljs-string">'test'</span>);
+<span class="hljs-comment">// =&gt; {a: 1}</span></pre>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>model(<span class="hljs-string">'test'</span>);
 <span class="hljs-comment">// =&gt; {a: 1}</span></pre>
     
   

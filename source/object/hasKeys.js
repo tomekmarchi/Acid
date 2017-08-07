@@ -35,10 +35,10 @@ export const hasKeys = (object, properties) => {
   * @returns {boolean} - Returns true or false.
   *
   * @example
-  * hasAnyKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Lucy','Tom']);
+  * hasAnyKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Lucy', 'Tom']);
   * // => true
-  *
-  * hasAnyKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Other','Tom']);
+  * @example
+  * hasAnyKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Other', 'Tom']);
   * // => false
 */
 export const hasAnyKeys = (object, properties) => {

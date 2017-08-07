@@ -30,7 +30,7 @@ export const insertInRange = (string, index, text) => {
   * @example
   * rightString('rightString');
   * // => 'g'
-  *
+  * @example
   * rightString('rightString', 2);
   * // => 'n'
 */
@@ -65,7 +65,7 @@ export const chunkString = (string, size) => {
   * @example
   * initialString('initialString');
   * // => 'initialStrin'
-  *
+  * @example
   * initialString('initialString', 2);
   * // => 'initialStri'
 */
@@ -84,7 +84,7 @@ export const initialString = (string, index = 1) => {
   * @example
   * restString('restString');
   * // => 'estString'
-  *
+  * @example
   * restString('restString', 2);
   * // => 'stString'
 */

@@ -13,10 +13,13 @@ const uidClosed = {};
   * @category utility
   * @returns {number} - Returns a unique id.
   *
+  * @test
+  * assert(uid(), 0);
+  * assert(uid(), 1);
+  *
   * @example
   * uid();
   * // => 0
-  * @example
   * uid();
   * // => 1
 */
@@ -37,6 +40,12 @@ export const uid = () => {
   * @type {Function}
   * @param {number} id - Number to be freed.
   * @returns {undefined} - Nothing is returned.
+  *
+  * @test
+  * assert(uid(), 0);
+  * assert(uid(), 1);
+  * assert(uid().free(0), undefined);
+  * assert(uid(), 0);
   *
   * @example
   * uid();

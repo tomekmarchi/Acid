@@ -12,7 +12,7 @@ import { assign } from '../internal/object';
   * @example
   * isZero(0);
   * // => true
-  *
+  * @example
   * isZero(1);
   * // => False
 */
@@ -32,7 +32,7 @@ export const isZero = (item) => {
   * @example
   * isNumberEqual(0, 0);
   * // => true
-  *
+  * @example
   * isNumberEqual(0, 1);
   * // => False
 */
@@ -53,7 +53,7 @@ export const isNumberEqual = (item, num) => {
   * @example
   * isNumberInRange(1, 0, 2);
   * // => True
-  *
+  * @example
   * isNumberInRange(1, -1, 0);
   * // => False
 */

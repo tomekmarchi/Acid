@@ -6,6 +6,7 @@ import { times } from '../array/times';
   *
   * @function timer
   * @category function
+  * @ignoreTest
   * @type {Function}
   * @param {Function} callable - The function to be invoked.
   * @param {number} time - The time in milliseconds.
@@ -23,6 +24,7 @@ export const timer = (callable, time) => {
   *
   * @function interval
   * @category function
+  * @ignoreTest
   * @type {Function}
   * @param {Function} callable - The function to be invoked.
   * @param {number} time - The time in milliseconds.
@@ -71,14 +73,15 @@ export const clearIntervals = generateClear(interval, clearInterval);
   *
   * @function debounce
   * @category function
+  * @ignoreTest
   * @type {Function}
   * @param {Function} callable - The function to be invoked.
   * @param {number} time - The time in milliseconds.
   * @returns {Function} The debounced function.
   *
   * @example
-  * const debounced = debounce(() => { console.log('debounced'); }, 0);
-  * // => debounced();
+  * debounce(() => { console.log('debounced'); }, 0)();
+  * // 'debounced'
 */
 export const debounce = (callable, time) => {
   let timeout = false;
@@ -104,14 +107,15 @@ export const debounce = (callable, time) => {
   *
   * @function throttle
   * @category function
+  * @ignoreTest
   * @type {Function}
   * @param {Function} callable - The function to be invoked.
   * @param {number} time - The time in milliseconds.
   * @returns {Function} The throttled function.
   *
   * @example
-  * const throttled = throttle(() => { console.log('debounced'); }, 0);
-  * // => throttled();
+  * throttle(() => { console.log('throttle'); }, 0)();
+  * // 'throttle'
 */
 export const throttle = (callable, time) => {
   let timeout = false;

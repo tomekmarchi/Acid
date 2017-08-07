@@ -20,8 +20,7 @@ const add = (link, methods) => {
   * @returns {*} Returns a function which has value, methods, add, and done. When invoking the function the argument is saved as the value property for further chaining.
   *
   * @example
-  * const chained = chain({a(item) { return item;}});
-  * chained('Acid').a();
+  * chain({a(item) { return item;}})('Acid').a();
   * // => 'Acid'
 */
 export const chain = (methods) => {

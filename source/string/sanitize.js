@@ -33,7 +33,7 @@ export const rawURLDecode = (string) => {
   *
   * @example
   * htmlEntities(`<script>console.log('Lucy & diamonds.')</script>`);
-  * // => '&lt;script&gt;console.log('Lucy &amp; diamonds.')&lt;/script&gt;'
+  * // => `&lt;script&gt;console.log('Lucy &amp; diamonds.')&lt;/script&gt;`
 */
 export const htmlEntities = (string) => {
   return string.replace(andRegex, '&amp;')
@@ -51,7 +51,7 @@ export const htmlEntities = (string) => {
   *
   * @example
   * sanitize(`<script>console.log('Lucy%20&%20diamonds.')</script>`);
-  * // => '&lt;script&gt;console.log('Lucy &amp; diamonds.')&lt;/script&gt;'
+  * // => `&lt;script&gt;console.log('Lucy &amp; diamonds.')&lt;/script&gt;`
 */
 export const sanitize = (string) => {
   return htmlEntities(rawURLDecode(string));
