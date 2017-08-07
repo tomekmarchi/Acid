@@ -4045,7 +4045,10 @@
     *
     * @function timer
     * @category function
+<<<<<<< HEAD
     * @ignoreTest
+=======
+>>>>>>> origin/master
     * @type {Function}
     * @param {Function} callable - The function to be invoked.
     * @param {number} time - The time in milliseconds.
@@ -4063,7 +4066,10 @@
     *
     * @function interval
     * @category function
+<<<<<<< HEAD
     * @ignoreTest
+=======
+>>>>>>> origin/master
     * @type {Function}
     * @param {Function} callable - The function to be invoked.
     * @param {number} time - The time in milliseconds.
@@ -4105,7 +4111,10 @@
     *
     * @function debounce
     * @category function
+<<<<<<< HEAD
     * @ignoreTest
+=======
+>>>>>>> origin/master
     * @type {Function}
     * @param {Function} callable - The function to be invoked.
     * @param {number} time - The time in milliseconds.
@@ -4139,7 +4148,10 @@
     *
     * @function throttle
     * @category function
+<<<<<<< HEAD
     * @ignoreTest
+=======
+>>>>>>> origin/master
     * @type {Function}
     * @param {Function} callable - The function to be invoked.
     * @param {number} time - The time in milliseconds.
@@ -4962,7 +4974,6 @@
     * @example
     * assignDeep({a:1}, {b:2})
     * // => {a:1, b:2}
-    *
   */
   const assignDeep = (object, otherObject, mergeArrays = true) => {
     each(otherObject, (item, key) => {
@@ -5136,6 +5147,10 @@
     * @example
     * uid();
     * // => 0
+<<<<<<< HEAD
+=======
+    * @example
+>>>>>>> origin/master
     * uid();
     * // => 1
   */
