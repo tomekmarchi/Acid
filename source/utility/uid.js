@@ -13,10 +13,14 @@ const uidClosed = {};
   * @category utility
   * @returns {number} - Returns a unique id.
   *
+  * @test
+  * (async () => {
+  *   return await assert(uid(), 0) && await assert(uid(), 1);
+  * });
+  *
   * @example
   * uid();
   * // => 0
-  * @example
   * uid();
   * // => 1
 */
@@ -37,6 +41,14 @@ export const uid = () => {
   * @type {Function}
   * @param {number} id - Number to be freed.
   * @returns {undefined} - Nothing is returned.
+  *
+  * @test
+  * (async () => {
+  *   return await assert(uid(), 0) &&
+  *    await assert(uid(), 1) &&
+  *    await assert(uid.free(0), undefined) &&
+  *    await assert(uid(), 0);
+  * });
   *
   * @example
   * uid();

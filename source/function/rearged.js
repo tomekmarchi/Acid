@@ -11,10 +11,9 @@ import { assign } from '../internal/object';
   * @returns {Function} Returns the new function.
   *
   * @example
-  * const reArged = reArg((a, b, c) => {
+  * reArg((a, b, c) => {
   *   return [a, b, c];
-  * }, [1,2,0]);
-  * reArged(1,2,3);
+  * }, [1,2,0])(1,2,3);
   * // => [2, 3, 1]
 */
 export const reArg = (callable, indexes) => {

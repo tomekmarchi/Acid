@@ -1,3 +1,8 @@
+const lucy = require('Lucy');
+const nbome25 = require('nbome25');
+const {
+  keys
+} = lucy;
 const rollup = require('rollup').rollup;
 const babel = require('rollup-plugin-babili');
 const esformatter = require('esformatter');

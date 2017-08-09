@@ -13,7 +13,7 @@ import { assign, keys } from '../internal/object';
    * @returns {boolean} Returns the true or false.
    *
    * @example
-   * isMatchObject({a: [1,2,3]}, {a: [1,2,3]});
+   * isMatchObject({a: 1}, {a: 1});
    * // => true
  */
 export const isMatchObject = (source, compareObject) => {

@@ -9,8 +9,8 @@ const doubleQuoteRegex = /"/g;
   * Raw URL decoder.
   *
   * @function rawURLDecode
-  * @type {Function}
   * @category string
+  * @type {Function}
   * @param {string} string - String to be replaced.
   * @returns {string} - Converted string into the decoded URI Component .
   *
@@ -27,13 +27,14 @@ export const rawURLDecode = (string) => {
   * Replaced sensitive characters with their matching html entity.
   *
   * @function htmlEntities
+  * @category string
   * @type {Function}
   * @param {string} string - String to be replaced.
   * @returns {string} Replaced string.
   *
   * @example
   * htmlEntities(`<script>console.log('Lucy & diamonds.')</script>`);
-  * // => '&lt;script&gt;console.log('Lucy &amp; diamonds.')&lt;/script&gt;'
+  * // => `&lt;script&gt;console.log('Lucy &amp; diamonds.')&lt;/script&gt;`
 */
 export const htmlEntities = (string) => {
   return string.replace(andRegex, '&amp;')
@@ -45,13 +46,14 @@ export const htmlEntities = (string) => {
   * Executes rawURLDecode followd by htmlEntities methods on a string.
   *
   * @function sanitize
+  * @category string
   * @type {Function}
   * @param {string} string - String to be replaced.
   * @returns {string} Replaced string.
   *
   * @example
   * sanitize(`<script>console.log('Lucy%20&%20diamonds.')</script>`);
-  * // => '&lt;script&gt;console.log('Lucy &amp; diamonds.')&lt;/script&gt;'
+  * // => `&lt;script&gt;console.log('Lucy &amp; diamonds.')&lt;/script&gt;`
 */
 export const sanitize = (string) => {
   return htmlEntities(rawURLDecode(string));

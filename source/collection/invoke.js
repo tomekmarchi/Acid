@@ -8,17 +8,17 @@ import { mapArray } from '../array/each';
   * @category collection
   * @type {Function}
   * @param {Array} collection - Collection from which method will be taken.
-  * @param {string} methodName - Value used to pluck method from object.
-  * @param {*} args - Values to be run through method.
+  * @param {string} property - Value used to pluck method from object.
+  * @param {*} value - Value to be passed to callable property.
   * @returns {Array} - Returns the results of the invoked method.
   *
   * @example
   * invoke([{lucy(item, index) { return [item, index];}}, {lucy(item, index) { return [item, index];}}], 'lucy', 'Arity LLC');
-  * // => [['lucy', 'Arity LLC'], ['lucy', 'Arity LLC']]
+  * // => [['Arity LLC', 0], ['Arity LLC', 1]]
 */
-const invoke = (collection, property, args) => {
+const invoke = (collection, property, value) => {
   return mapArray(collection, (item, index) => {
-    return item[property](args, index);
+    return item[property](value, index);
   });
 };
 assign(acid, {

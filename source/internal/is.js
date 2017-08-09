@@ -73,7 +73,7 @@ export const decimalCheck = /\.|\+/;
  * // => true
 */
 export const isDecimal = (value) => {
-  return value.toString().match(decimalCheck);
+  return decimalCheck.test(value.toString());
 };
 /**
  * Checks if the value is an array.
@@ -142,7 +142,7 @@ export const isPlainObject = (value) => {
  * @returns {boolean} True or false.
  *
  * @example
- * isFunction({});
+ * isFunction(() => {});
  * // => true
 */
 export const isFunction = (value) => {
@@ -220,26 +220,26 @@ export const isFileCSS = regexGenerator(/\.css$/);
 /**
  * Checks if the string has a .json extension.
  *
- * @function isFileCSS
+ * @function isFileJSON
  * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
  * @example
- * isFileCSS('test.json');
+ * isFileJSON('test.json');
  * // => true
 */
 export const isFileJSON = regexGenerator(/\.json$/);
 /**
  * Checks if the string has a .js extension.
  *
- * @function isFileCSS
+ * @function isFileJS
  * @category utility
  * @param {*} value - Object to be checked.
  * @returns {boolean} True or false.
  *
  * @example
- * isFileCSS('test.js');
+ * isFileJS('test.js');
  * // => true
 */
 export const isFileJS = regexGenerator(/\.js$/);
@@ -270,7 +270,10 @@ export const getExtensionRegex = /\.([0-9a-z]+)/;
  * // => 'js'
 */
 export const getFileExtension = (string) => {
-  return string.match(getExtensionRegex);
+  const match = string.match(getExtensionRegex);
+  if (match) {
+    return match[1];
+  }
 };
 /**
  * Checks if the value is a RegExp.
@@ -284,6 +287,9 @@ export const getFileExtension = (string) => {
  * isRegExp(/test/);
  * // => true
 */
+const isRegExp = (value) => {
+  return value instanceof RegExp;
+};
 /**
  * Checks if the value is an Arguments object.
  *
@@ -308,6 +314,9 @@ export const getFileExtension = (string) => {
  * isBoolean(true);
  * // => true
 */
+const isBoolean = (value) => {
+  return value.constructor.name === 'Boolean';
+};
 /**
  * Checks if the value is a Date.
  *
@@ -320,6 +329,9 @@ export const getFileExtension = (string) => {
  * isDate(new Date());
  * // => true
 */
+const isDate = (value) => {
+  return value instanceof Date;
+};
 /**
  * Checks if the value is a Map.
  *
@@ -476,11 +488,17 @@ export const getFileExtension = (string) => {
  * isUint32Array(new Uint32Array());
  * // => true
 */
-const nativeObjectNames = ['RegExp', 'Arguments', 'Boolean', 'Date', 'Map', 'Set', 'WeakMap',
-  'ArrayBuffer', 'Float32Array', 'Float64Array', 'Int8Array', 'Int16Array', 'Int32Array',
-  'Uint8Array', 'Uint8ClampedArray', 'Uint16Array', 'Uint32Array'];
+const nativeObjectNames = ['Arguments', 'Map', 'Set', 'WeakMap'];
 eachArray(nativeObjectNames, (item) => {
   acid[`is${item}`] = isSameObjectGenerator(objectStringGenerate(item));
+});
+const arrayLikeObjects = ['ArrayBuffer', 'Float32Array', 'Float64Array',
+  'Int8Array', 'Int16Array', 'Int32Array', 'Uint8Array',
+  'Uint8ClampedArray', 'Uint16Array', 'Uint32Array'];
+eachArray(arrayLikeObjects, (item) => {
+  acid[`is${item}`] = (value) => {
+    return (hasValue(value)) ? value.constructor.name === item : false;
+  };
 });
 assign(acid, {
   getFileExtension,
@@ -489,6 +507,8 @@ assign(acid, {
   hasLength,
   hasValue,
   isArray,
+  isBoolean,
+  isDate,
   isDecimal,
   isEmpty,
   isFileCSS,
@@ -498,6 +518,7 @@ assign(acid, {
   isNull,
   isNumber,
   isPlainObject,
+  isRegExp,
   isString,
   isUndefined,
 });

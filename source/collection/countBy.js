@@ -12,7 +12,7 @@ import { eachArray } from '../array/each';
   * @returns {Object} Returns the composed aggregate object.
   *
   * @example
-  * countBy([{a:1}, {a:3}], (item) => { return 'a';}));
+  * countBy([{a:1}, {a:3}], (item) => { return 'a';});
   * // => {a: 2}
 */
 export const countBy = (collection, iteratee) => {

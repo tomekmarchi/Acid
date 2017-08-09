@@ -12,6 +12,13 @@ import { eachAsync } from '../array/eachAsync';
   * @param {*} arg - The object passed as an argument to each method.
   * @returns {undefined} Returns undefined.
   *
+  * @test
+  * (async () => {
+  *   const tempList = [];
+  *   inSync([() => {tempList.push(1);}, () => {tempList.push(2);}]);
+  *   return assert(tempList, [1, 2]);
+  * });
+  *
   * @example
   * inSync([() => {console.log(1);}, () => {console.log(2);}]);
   * // 1
@@ -33,6 +40,13 @@ export const inSync = (collection, arg) => {
   * @param {Array|Object|Function} collection - The functions to be invoked.
   * @param {*} arg - The object passed as an argument to each method.
   * @returns {undefined} Returns undefined.
+  *
+  * @test
+  * (async () => {
+  *   const tempList = [];
+  *   await inAsync([async () => {tempList.push(1);}, async () => {tempList.push(2);}]);
+  *   return assert(tempList, [1, 2]);
+  * });
   *
   * @example
   * inAsync([async () => {console.log(1);}, async () => {console.log(2);}]);

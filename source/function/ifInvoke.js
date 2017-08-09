@@ -14,6 +14,7 @@ import { isFunction } from '../internal/is';
   * @example
   * ifInvoke((...args) => { return args;}, 1, 2);
   * // => [1, 2]
+  * @example
   * ifInvoke(undefined, 1, 2);
   * // => undefined
 */

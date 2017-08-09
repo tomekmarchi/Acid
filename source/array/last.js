@@ -12,7 +12,7 @@ import { assign } from '../internal/object';
   *
   * @example
   * last([1, 2, 3, 4, 5] , 2);
-  * // => [5, 4]
+  * // => [4, 5]
   * @example
   * last([1, 2, 3, 4, 5]);
   * // => 5

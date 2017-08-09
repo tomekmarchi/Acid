@@ -16,9 +16,9 @@ import { whileArray } from './each';
    * // => true
  */
 export const isMatchArray = (source, compareArray) => {
-  if (compareArray.length === source.length) {
+  if (source.length === compareArray.length) {
     return whileArray(source, (item, index) => {
-      return compareArray[index] !== item;
+      return compareArray[index] === item;
     });
   }
   return false;

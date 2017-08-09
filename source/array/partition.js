@@ -17,7 +17,10 @@ import { compactMapArray } from './each';
   *  {user: 'fred', age: 40, active: true},
   *  {user: 'pebbles', age: 1,  active: false}
   * ], (item) => { return item.active; });
-  * // => [['fred'], ['barney', 'pebbles']]
+  * // => [
+  * [{"user":"fred","age":40,"active":true}],
+  *   [{"user":"barney","age":36,"active":false},
+  *   {"user":"pebbles","age":1,"active":false}]]
 */
 export const partition = (array, funct) => {
   const failed = [];

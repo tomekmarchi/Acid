@@ -23,7 +23,7 @@ const returnFlow = (callable) => {
   *
   * @example
   * flow(increment, increment, deduct)(0);
-  * // => 2
+  * // => 1
 */
 export const flow = returnFlow(eachArray);
 /**
@@ -37,7 +37,7 @@ export const flow = returnFlow(eachArray);
   *
   * @example
   * flowRight(increment, increment, deduct)(0);
-  * // => 2
+  * // => 1
 */
 export const flowRight = returnFlow(eachArrayRight);
 assign(acid, {

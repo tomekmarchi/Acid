@@ -36,7 +36,7 @@ export const remove = (array, ...removeThese) => {
   * @returns {Array} The array this method was called on.
   *
   * @example
-  * removeBy([1, 2, 3, 3, 4, 3, 5], (item) => { return Boolean(item % 2);}));
+  * removeBy([1, 2, 3, 3, 4, 3, 5], (item) => { return Boolean(item % 2);});
   * // => [2, 4]
 */
 export const removeBy = (array, iteratee) => {

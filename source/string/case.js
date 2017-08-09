@@ -6,8 +6,8 @@ const spaceFirstLetter = / (.)/g;
   * Converts a string and converts it entirely into uppercase.
   *
   * @function upperCase
-  * @type {Function}
   * @category string
+  * @type {Function}
   * @param {string} string - String to be converted into upper case.
   * @returns {string} - Converted string in upper case.
   *
@@ -35,7 +35,7 @@ export const upperCase = (string) => {
 export const camelCase = (string) => {
   return string.toLowerCase()
     .replace(spaceFirstLetter, (match) => {
-      return match.toUpperCase();
+      return match.toUpperCase().replace(/ /g,'');
     });
 };
 /**

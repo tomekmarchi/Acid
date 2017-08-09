@@ -14,7 +14,7 @@ import { assign } from '../internal/object';
   * // => [2, 3, 4, 5]
 */
 export const rest = (array) => {
-  return array.slice(1, array.length - 1);
+  return array.slice(1, array.length);
 };
 assign(acid, {
   rest

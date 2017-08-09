@@ -14,7 +14,7 @@ import { isArray } from '../internal/is';
   * ensureArray('Hello');
   * // => ['Hello']
   *
-  * @example 
+  * @example
   * ensureArray({a:1, b:2})
   * // => [{a:1, b:2}]
 */

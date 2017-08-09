@@ -22,9 +22,14 @@ const $ = (...args) => {
  * @param {Function} callable - The function that will become the main object's subroutine.
  * @returns {undefined} - Returns nothing.
  *
+ * @test
+ * (async () => {
+ *  superMethod($.get);
+ *  return assert($('flow', $), $.flow);
+ * });
+ *
  * @example
  * superMethod($.get);
- * // => undefined
  * $('flow', $);
  * // => $.flow
  */

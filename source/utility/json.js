@@ -14,7 +14,7 @@ const jsonNative = JSON;
    * jsonParse('{}');
    * // => {}
  */
-export const jsonParse = jsonNative.jsonParse;
+export const jsonParse = jsonNative.parse;
 /**
    * Stringify an object into a JSON string.
    *

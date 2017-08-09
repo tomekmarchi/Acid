@@ -22,7 +22,7 @@ import { assign, keys } from '../internal/object';
 export const hasKeys = (object, properties) => {
   const objectKeys = keys(object);
   return whileArray(properties, (item) => {
-    return objectKeys.include(item);
+    return objectKeys.includes(item);
   });
 };
 /**
@@ -35,17 +35,17 @@ export const hasKeys = (object, properties) => {
   * @returns {boolean} - Returns true or false.
   *
   * @example
-  * hasAnyKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Lucy','Tom']);
+  * hasAnyKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Lucy', 'Tom']);
   * // => true
-  *
-  * hasAnyKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Other','Tom']);
+  * @example
+  * hasAnyKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: 'Bobo'}, ['Other', 'Tom']);
   * // => false
 */
 export const hasAnyKeys = (object, properties) => {
   const objectKeys = keys(object);
-  return properties.find((item) => {
-    return objectKeys.include(item);
-  });
+  return Boolean(properties.find((item) => {
+    return objectKeys.includes(item);
+  }));
 };
 assign(acid, {
   hasAnyKeys,

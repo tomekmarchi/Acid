@@ -10,7 +10,7 @@ import { assign } from '../internal/object';
   * @returns {Array} The originally given array.
   *
   * @example
-  * clear([1,'B', Cat]);
+  * clear([1,'B', 'Cat']);
   * // => []
 */
 export const clear = (array) => {

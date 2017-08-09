@@ -11,7 +11,7 @@ import { assign } from '../internal/object';
   * @returns {Array} The filtered array.
   *
   * @example
-  * without([1, 2, 2, 4], 4);
+  * without([1, 2, 2, 4], [4]);
   * // => [1, 2, 2]
 */
 const without = (array, removeThese) => {

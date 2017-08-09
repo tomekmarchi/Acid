@@ -12,6 +12,15 @@ import { hasValue } from '../internal/is';
   * @param {Function} iteratee - Transformation function which is passed position, start, and end.
   * @returns {undefined} Nothing.
   *
+  * @test
+  * (async () => {
+  *   const tempList = [];
+  *   times(0, 3, (item) => {
+  *     tempList.push(item);
+  *   });
+  *   return assert(tempList, [0, 1, 2]);
+  * });
+  *
   * @example
   * times(0, 3, (item) => {
   *   console.log(item);
@@ -44,7 +53,7 @@ export const times = (startIndex, endIndex, iteratee) => {
   *
   * @example
   * timesMap(0, 3, (item) => {
-  *   console.log(item);
+  *   return item;
   * });
   * // => [0, 1, 2]
 */
@@ -54,7 +63,7 @@ export const timesMap = (startIndex, endIndex, iteratee, results = []) => {
   const iterateeMethod = iteratee || endIndex;
   let result;
   times(start, end, (position) => {
-    result = iterateeMethod(results, position, start, end);
+    result = iterateeMethod(position, start, end, results);
     if (hasValue(result)) {
       results.push(result);
     }

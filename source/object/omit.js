@@ -11,9 +11,8 @@ import { filterObject } from './each';
   * @returns {Object} - A new object with the removed.
   *
   * @example
-  * omit({a:1, b:2, ['a']});
+  * omit({a:1, b:2}, ['a']);
   * // => {b:2}
-  *
 */
 export const omit = (originalObject, array) => {
   return filterObject(originalObject, (item, key) => {

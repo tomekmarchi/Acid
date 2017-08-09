@@ -3,7 +3,7 @@ import { assign } from '../internal/object';
 import { eachAsync } from './eachAsync';
 import { hasValue } from '../internal/is';
 /**
-  * Asynchronously performs a function on the items within an array.
+  * Asynchronously iterates through the calling array and creates an array with the results, (excludes results which are null or undefined), of the iteratee on every element in the calling array.
   *
   * @function compactMapAsync
   * @type {Function}
@@ -14,7 +14,7 @@ import { hasValue } from '../internal/is';
   * @returns {Array} Array values after being put through an iterator.
   *
   * @example
-  * compactMapAsync([1, 2, 3, false], async () => {return item});
+  * compactMapAsync([1, 2, 3, null], async (item) => {return item;});
   * // => [1, 2, 3]
 */
 export const compactMapAsync = async (array, iteratee) => {

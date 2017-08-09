@@ -36,11 +36,11 @@ export const flatten = (arrayArg, level = 1) => {
   *
   * @example
   * flattenDeep([1, [2, [3, [4]], 5]]);
-  *  // => [1, 2, 3, 4, 5]
+  * // => [1, 2, 3, 4, 5]
 */
 export const flattenDeep = (array) => {
   return array.reduce((previousValue, currentValue) => {
-    return previousValue.concat((isArray(currentValue)) ? flatten(currentValue) : currentValue);
+    return previousValue.concat((isArray(currentValue)) ? flattenDeep(currentValue) : currentValue);
   }, []);
 };
 assign(acid, {

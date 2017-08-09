@@ -13,7 +13,7 @@ import { eachObject } from './each';
   *
   * @example
   * invert({a:1});
-  * // => {1:a}
+  * // => {1:'a'}
 */
 export const invert = (thisObject, invertedObject = {}) => {
   eachObject(thisObject, (item, key) => {

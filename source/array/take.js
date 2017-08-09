@@ -26,10 +26,11 @@ export const take = (array, amount = 1) => {
   *
   * @example
   * takeRight([1,2,3], 2);
-  * // => [3, 2]
+  * // => [2, 3]
 */
 export const takeRight = (array, amount = 1) => {
-  return array.slice(array.length - amount, amount);
+  const arrayLength = array.length;
+  return array.slice(arrayLength - amount, arrayLength);
 };
 assign(acid, {
   take,

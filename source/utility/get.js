@@ -19,7 +19,7 @@ import { whileArray } from '../array/each';
   *     like: ['a','b','c']
   *   }
   * });
-  * // => c
+  * // => 'c'
 */
 export const get = (propertyString, objectChain = acid) => {
   let link = objectChain;

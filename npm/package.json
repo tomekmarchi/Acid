@@ -1,9 +1,10 @@
 {
   "name": "Acid",
-  "version": "2.0.16",
+  "company": "Arity",
+  "version": "2.0.62",
   "description": "Utility library for building CWAs (Conscious Web Apps) for browsers.",
   "bugs": {
-    "url": "https://github.com/tomekmarchi/Acid/issues"
+    "url": "https://github.com/ArityLLCNJ/Acid/issues"
   },
   "homepage": "https://acidjs.com",
   "directories": {
@@ -18,9 +19,10 @@
     "utility",
     "Lucy",
     "CWA",
+    "Arity",
     "self constructing"
   ],
-  "license": "MIT",
+  "license": "ISC",
   "main": "index.js",
   "maintainers": [
     {
@@ -34,10 +36,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tomekmarchi/Acid.git"
+    "url": "git+https://github.com/ArityLLCNJ/Acid.git"
   },
   "devDependencies": {
-    "Lucy": "*",
+    "Lucy": "^2.0.62",
     "babel-core": "*",
     "babel-eslint": "*",
     "babel-plugin-minify-empty-function": "*",
@@ -47,17 +49,18 @@
     "connect-livereload": "*",
     "docredux": "^1.0.2",
     "esformatter": "*",
-    "eslint": "^4.2.0",
-    "eslint-plugin-jsdoc": "*",
-    "express": "*",
+    "eslint": "^4.4.1",
+    "eslint-plugin-jsdoc": "^3.1.2",
+    "express": "^4.15.4",
+    "nbome25": "^1.0.4",
     "node-watch": "*",
     "rollup": "^0.45.2",
     "rollup-plugin-babili": "*",
     "tiny-lr": "*",
     "vinyl-fs": "*"
   },
-  "dependencies": {},
   "scripts": {
-    "build": "node index.js"
+    "build": "node index.js",
+    "test": "node test.js"
   }
 }

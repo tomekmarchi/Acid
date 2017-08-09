@@ -10,8 +10,8 @@ import { assign } from '../internal/object';
   * @returns {Array} The originally given array.
   *
   * @example
-  * cloneArray([1,'B', Cat]);
-  * // => [1, 'B', Cat]
+  * cloneArray([1,'B', 'Cat']);
+  * // => [1, 'B', 'Cat']
 */
 export const cloneArray = (array) => {
   return array.slice();

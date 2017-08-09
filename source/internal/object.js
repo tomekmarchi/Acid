@@ -51,7 +51,7 @@ export const assign = objectNative.assign;
  * @returns {Object} A property descriptor of the given property if it exists on the object, undefined otherwise.
  *
  * @example
- * getOwnPropertyDescriptor({ bar: 42 }, 'foo');
+ * getOwnPropertyDescriptor({ bar: 42 }, 'bar');
  * // => { configurable: true, enumerable: true, value: 42, writable: true }
 */
 export const getOwnPropertyDescriptor = objectNative.getOwnPropertyDescriptor;
@@ -66,13 +66,13 @@ export const getOwnPropertyDescriptor = objectNative.getOwnPropertyDescriptor;
  * @returns {Object} The object that was passed to the function.
  *
  * @example
- * const obj = {};
- * defineProperty(obj, 'key', {
+ * defineProperty({}, 'key', {
  *  enumerable: false,
  *  configurable: false,
  *  writable: false,
  *  value: 'static'
- * });
+ * }).key;
+ * // => 'static'
 */
 export const defineProperty = objectNative.defineProperty;
 /**

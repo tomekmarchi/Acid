@@ -130,6 +130,11 @@ export const deduct = (number) => {
   * @param {number} [min = 0] - Establishes lowest possible value for the random number.
   * @returns {number} - Returns random integer between the max and min range.
   *
+  * @test
+  * (async () => {
+  *   return assert(isNumber(randomArbitrary(10)), true);
+  * });
+  *
   * @example
   * randomArbitrary(10);
   * // => 9.1
@@ -146,6 +151,11 @@ export const randomArbitrary = (max, min = 0) => {
   * @param {number} max - Establishes highest possible value for the random number.
   * @param {number} [min = 0] - Establishes lowest possible value for the random number.
   * @returns {number} - Returns random integer between the max and min range.
+  *
+  * @test
+  * (async () => {
+  *   return assert(isNumber(randomInt(10)), true);
+  * });
   *
   * @example
   * randomInt(10);

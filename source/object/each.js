@@ -12,6 +12,15 @@ import { eachArray, whileArray } from '../array/each';
   * @param {Function} iteratee - Transformation function which is passed item, key, calling object, key count, and array of keys.
   * @returns {Object|Function} The originally given object.
   *
+  * @test
+  * (async () => {
+  *   const tempList = {};
+  *   eachObject({a: 1, b: 2, c: 3}, (item, key) => {
+  *     tempList[key] = item;
+  *   });
+  *   return assert(tempList, {a: 1, b: 2, c: 3});
+  * });
+  *
   * @example
   * eachObject({a: 1, b: 2, c: 3}, (item) => {
   *   console.log(item);
@@ -36,12 +45,18 @@ export const eachObject = (thisObject, iteratee) => {
   * @example
   * whileObject({a: false, b: true, c: true}, (item) => {
   *   return item;
-  *  });
+  * });
   * // => false
+  * @example
+  * whileObject({a: true, b: true, c: true}, (item) => {
+  *   return item;
+  * });
+  * // => true
 */
-export const whileObject = (callingObject, iteratee, results = {}) => {
-  return whileArray(callingObject, (item, key, thisObject, propertyCount, objectKeys) => {
-    return iteratee(item, key, results, thisObject, propertyCount, objectKeys);
+export const whileObject = (callingObject, iteratee) => {
+  const objectKeys = keys(callingObject);
+  return whileArray(objectKeys, (key, index, callingArray, propertyCount) => {
+    return iteratee(callingObject[key], key, callingObject, propertyCount, callingArray);
   });
 };
 /**
@@ -56,7 +71,7 @@ export const whileObject = (callingObject, iteratee, results = {}) => {
   *
   * @example
   * filterObject({a: false, b: true, c: true}, (item) => {
-  *   return true;
+  *   return item;
   * });
   * // => {b: true, c: true}
 */
@@ -102,10 +117,10 @@ export const mapObject = (object, iteratee, results = {}) => {
   * @returns {Object|Function} An object with mapped properties that are not null or undefined.
   *
   * @example
-  * compactMapObject({a: 0, b: 2, c: 3}, (item) => {
-  *   return item * 2;
+  * compactMapObject({a: undefined, b: 2, c: 3}, (item) => {
+  *   return item;
   * });
-  * // => {b: 4, c: 6}
+  * // => {b: 2, c: 3}
 */
 export const compactMapObject = (object, iteratee, results = {}) => {
   eachObject(object, (item, key, thisObject, propertyCount, objectKeys) => {

@@ -1,6 +1,6 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
-import { eachArray } from './each';
+import { flattenDeep } from './flatten';
 import { unique } from './unique';
 /**
   * Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more of the arrays.
@@ -13,18 +13,10 @@ import { unique } from './unique';
   *
   * @example
   * union([1,2,4], [1,2,3]);
-  * // => [1, 2]
+  * // => [1, 2, 4, 3]
 */
 export const union = (...arrays) => {
-  const result = [];
-  eachArray(arrays, (array) => {
-    eachArray(unique(array), (item) => {
-      if (result.includes(item)) {
-        result.push(item);
-      }
-    });
-  });
-  return result;
+  return unique(flattenDeep(arrays));
 };
 assign(acid, {
   union
