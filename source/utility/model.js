@@ -13,10 +13,7 @@ import { hasValue } from '../internal/is';
   * @returns {*} Returns the associated model.
   *
   * @example
-  * model('test', {a: 1});
-  * // => {a: 1}
-  * @example
-  * model('test');
+  * model('test', {a: 1}) && model('test');
   * // => {a: 1}
 */
 export const model = (modelName, object) => {

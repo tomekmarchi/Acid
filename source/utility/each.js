@@ -50,11 +50,15 @@ export const eachWhile = generateCheckLoops(whileArray, whileObject);
   * @param {Function} iteratee - Transformation function which is passed item, key, the newly created map object and arguments unique to mapArray or mapObject depending on the object type.
   * @returns {Array|Object|Function} The originally given object.
   *
-  * @example
-  * each([1, 2, 3], (item) => {
-  *   console.log(item);
+  * @test
+  * (async () => {
+  *   const tempList = [];
+  *   each({a: 1, b: 2, c: 3}, (item) => {
+  *     tempList.push(item);
+  *   });
+  *   return assert(tempList, [1, 2, 3]);
   * });
-  * // => [1, 2, 3]
+  *
   * @example
   * each({a: 1, b: 2, c: 3}, (item) => {
   *   console.log(item);
@@ -74,13 +78,8 @@ export const each = generateCheckLoops(eachArray, eachObject);
   * @returns {Array|Object|Function} - A new object of the same calling object's type.
   *
   * @example
-  * filter([false, true, true], (item) => {
-  *   return item;
-  * });
-  * // => [true, true]
-  * @example
   * filter({a: false, b: true, c: true}, (item) => {
-  *   return true;
+  *   return item;
   * });
   * // => {b: true, c: true}
 */
@@ -96,11 +95,6 @@ export const filter = generateCheckLoops(filterArray, filterObject);
   * @param {Object|Function} [results = {}] - Object that will be used to assign results.
   * @returns {Array|Object|Function} A new object of the same calling object's type.
   *
-  * @example
-  * map([1, 2, 3], (item) => {
-  *   return item * 2;
-  * });
-  * // => [2, 4, 6]
   * @example
   * map({a: 1, b: 2, c: 3}, (item) => {
   *   return item * 2;
@@ -120,20 +114,16 @@ export const map = generateCheckLoops(mapArray, mapObject);
   * @returns {Array|Object|Function} A new object of the same calling object's type.
   *
   * @example
-  * compactMap([0, 2, 3], (item) => {
-  *   return item * 2;
+  * compactMap({a: null, b: 2, c: 3}, (item) => {
+  *   return item;
   * });
-  * // => [4, 6]
-  * @example
-  * compactMap({a: 0, b: 2, c: 3}, (item) => {
-  *   return item * 2;
-  * });
-  * // => {b: 4, c: 6}
+  * // => {b: 2, c: 3}
 */
 export const compactMap = generateCheckLoops(compactMapArray, compactMapObject);
 assign(acid, {
   compactMap,
   each,
+  eachWhile,
   filter,
   map
 });

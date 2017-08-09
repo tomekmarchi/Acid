@@ -11,11 +11,21 @@ import { assign } from '../internal/object';
   * @param {Function} iteratee - Transformation function which is passed item, index, calling array, and array length.
   * @returns {Object} The originally given array.
   *
+  * @test
+  * (async () => {
+  *   const tempList = [];
+  *   await eachAsync([1, 2, 3], async (item) => {
+  *     tempList.push(item);
+  *   });
+  *   return assert(tempList, [1, 2, 3]);
+  * });
+  *
   * @example
   * eachAsync([3,4], async (item, index) =>{
   *  console.log(item, index);
   * });
-  * // => {3:0, 4:1}
+  * // 3 0
+  * // 4 1
 */
 export const eachAsync = async (callingArray, iteratee) => {
   const arrayLength = callingArray.length;
@@ -35,11 +45,21 @@ export const eachAsync = async (callingArray, iteratee) => {
   * @param {Function} iteratee - Transformation function which is passed item, index, calling array, and array length.
   * @returns {Object} The originally given array.
   *
+  * @test
+  * (async () => {
+  *   const tempList = [];
+  *   await eachAsyncRight([1, 2, 3], async (item) => {
+  *     tempList.push(item);
+  *   });
+  *   return assert(tempList, [3, 2, 1]);
+  * });
+  *
   * @example
   * eachAsyncRight([3,4], async (item, index) =>{
   *  console.log(item, index);
   * });
-  * // {3:0, 4:1}
+  * // 4 0
+  * // 3 1
 */
 export const eachAsyncRight = async (callingArray, iteratee) => {
   const arrayLength = callingArray.length;

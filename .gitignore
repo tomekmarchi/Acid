@@ -24,6 +24,10 @@
 ############
 node_modules
 
+# Test cases #
+############
+tests/*
+
 # Logs and databases #
 ######################
 *.log

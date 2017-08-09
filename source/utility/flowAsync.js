@@ -23,14 +23,14 @@ const returnFlow = (callable) => {
   * @returns {Function} Returns the new composite function.
   *
   * @example
-  * flowAsync(increment, increment, deduct)(0);
+  * flowAsync(async (item) => {return increment(item);}, async (item) => {return increment(item);})(0);
   * // => 2
 */
 export const flowAsync = returnFlow(eachAsync);
 /**
   * This method is like flow except that it creates a function that invokes the given functions from right to left.
   *
-  * @function flowRightAsync
+  * @function flowAsyncRight
   * @category utility
   * @type {Function}
   * @async
@@ -38,7 +38,7 @@ export const flowAsync = returnFlow(eachAsync);
   * @returns {Function} Returns the new composite function.
   *
   * @example
-  * flowRightAsync(increment, increment, deduct)(0);
+  * flowAsyncRight(async (item) => {return increment(item);}, async (item) => {return increment(item);})(0);
   * // => 2
 */
 export const flowAsyncRight = returnFlow(eachAsyncRight);

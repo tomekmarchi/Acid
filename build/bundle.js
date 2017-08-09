@@ -29,10 +29,14 @@
    * @param {Function} callable - The function that will become the main object's subroutine.
    * @returns {undefined} - Returns nothing.
    *
+   * @test
+   * (async () => {
+   *  superMethod($.get);
+   *  return assert($('flow', $), $.flow);
+   * });
+   *
    * @example
    * superMethod($.get);
-   * // => undefined
-   * @example
    * $('flow', $);
    * // => $.flow
    */
@@ -184,8 +188,8 @@
    * @returns {*} The result of calling the given target function with the specified this value and arguments.
    *
    * @example
-   * apply((a) => {return [this, a];}, 1, 2);
-   * // => [1, 2]
+   * apply(function (a) {return a;}, undefined, [2]);
+   * // => 2
   */
   const apply = Reflect.apply;
   assign($, {
@@ -201,6 +205,15 @@
     * @param {Array} callingArray - Array that will be looped through.
     * @param {Function} iteratee - Transformation function which is passed item, index, calling array, and array length.
     * @returns {Object} The originally given array.
+    *
+    * @test
+    * (async () => {
+    *   const tempList = [];
+    *   eachArray([1, 2, 3], (item) => {
+    *     tempList.push(item);
+    *   });
+    *   return assert(tempList, [1, 2, 3]);
+    * });
     *
     * @example
     * eachArray([1, 2, 3], (item) => {
@@ -225,11 +238,20 @@
     * @param {Function} iteratee - Transformation function which is passed item, index, calling array, and array length.
     * @returns {Object} The originally given array.
     *
+    * @test
+    * (async () => {
+    *   const tempList = [];
+    *   eachArrayRight([1, 2, 3], (item) => {
+    *     tempList.push(item);
+    *   });
+    *   return assert(tempList, [3, 2, 1]);
+    * });
+    *
     * @example
     * eachArrayRight([1, 2, 3], (item) => {
     *   console.log(item);
     * });
-    * // => [3, 2, 1]
+    * // => [1, 2, 3]
   */
   const eachArrayRight = (callingArray, iteratee) => {
     const arrayLength = callingArray.length;
@@ -250,11 +272,8 @@
     *
     * @example
     * whileArray([true, true, false], (item) => {
-    *   console.log(item);
     *   return item;
     * });
-    * //true
-    * //true
     * // => false
   */
   const whileArray = (callingArray, iteratee) => {
@@ -312,10 +331,10 @@
     * @returns {Object} An array of the same calling array's type.
     *
     * @example
-    * mapArray({a: 1, b: 2, c: 3}, (item) => {
+    * mapArray([1, 2, 3], (item) => {
     *   return item * 2;
     * });
-    * // => {a: 2, b: 4, c: 6}
+    * // => [2, 4, 6]
   */
   const mapArray = generateMap(eachArray);
   /**
@@ -330,12 +349,20 @@
     * @returns {Object} An array of the same calling array's type.
     *
     * @example
-    * mapArrayRight({a: 1, b: 2, c: 3}, (item) => {
+    * mapArrayRight([1, 2, 3], (item) => {
     *   return item * 2;
     * });
-    * // => {a: 2, b: 4, c: 6}
+    * // => [6, 4, 2]
   */
-  const mapArrayRight = generateMap(eachArrayRight);
+  const mapArrayRight = (callingArray, iteratee, results = []) => {
+    let trueIndex = 0;
+    const arrayLength = callingArray.length;
+    for (let index = arrayLength - 1; index >= 0; index--) {
+      results[trueIndex] = iteratee(callingArray[index], index, callingArray, arrayLength);
+      trueIndex++;
+    }
+    return results;
+  };
   /**
     * Iterates through the calling array and creates an array with the results, (excludes results which are null or undefined), of the iteratee on every element in the calling array.
     *
@@ -348,10 +375,10 @@
     * @returns {Object} An array with mapped properties that are not null or undefined.
     *
     * @example
-    * compactMapArray([0, 2, 3], (item) => {
-    *   return item * 2;
+    * compactMapArray([null, 2, 3], (item) => {
+    *   return item;
     * });
-    * // => [4, 6]
+    * // => [2, 3]
   */
   const compactMapArray = (callingArray, iteratee, results = []) => {
     eachArray(callingArray, (item, index, arrayOriginal, arrayLength) => {
@@ -374,16 +401,16 @@
     * @returns {Array} An array with properties that passed the test.
     *
     * @example
-    * mapWhile({a: false, b: true, c: true}, (item) => {
-    *   return true;
+    * mapWhile([true, true, false], (item) => {
+    *   return item;
     * });
-    * // => {b: true, c: true}
+    * // => [true, true]
   */
   const mapWhile = (callingArray, iteratee, results = []) => {
     const arrayLength = callingArray.length;
     for (let index = 0; index < arrayLength; index++) {
       const returned = iteratee(callingArray[index], index, results, callingArray, arrayLength);
-      if (!returned) {
+      if (returned === false) {
         break;
       }
       results[index] = returned;
@@ -473,7 +500,7 @@
    * // => true
   */
   const isDecimal = (value) => {
-    return value.toString().match(decimalCheck);
+    return decimalCheck.test(value.toString());
   };
   /**
    * Checks if the value is an array.
@@ -542,7 +569,7 @@
    * @returns {boolean} True or false.
    *
    * @example
-   * isFunction({});
+   * isFunction(() => {});
    * // => true
   */
   const isFunction = (value) => {
@@ -620,26 +647,26 @@
   /**
    * Checks if the string has a .json extension.
    *
-   * @function isFileCSS
+   * @function isFileJSON
    * @category utility
    * @param {*} value - Object to be checked.
    * @returns {boolean} True or false.
    *
    * @example
-   * isFileCSS('test.json');
+   * isFileJSON('test.json');
    * // => true
   */
   const isFileJSON = regexGenerator(/\.json$/);
   /**
    * Checks if the string has a .js extension.
    *
-   * @function isFileCSS
+   * @function isFileJS
    * @category utility
    * @param {*} value - Object to be checked.
    * @returns {boolean} True or false.
    *
    * @example
-   * isFileCSS('test.js');
+   * isFileJS('test.js');
    * // => true
   */
   const isFileJS = regexGenerator(/\.js$/);
@@ -670,7 +697,10 @@
    * // => 'js'
   */
   const getFileExtension = (string) => {
-    return string.match(getExtensionRegex);
+    const match = string.match(getExtensionRegex);
+    if (match) {
+      return match[1];
+    }
   };
   /**
    * Checks if the value is a RegExp.
@@ -684,6 +714,9 @@
    * isRegExp(/test/);
    * // => true
   */
+  const isRegExp = (value) => {
+    return value instanceof RegExp;
+  };
   /**
    * Checks if the value is an Arguments object.
    *
@@ -708,6 +741,9 @@
    * isBoolean(true);
    * // => true
   */
+  const isBoolean = (value) => {
+    return value.constructor.name === 'Boolean';
+  };
   /**
    * Checks if the value is a Date.
    *
@@ -720,6 +756,9 @@
    * isDate(new Date());
    * // => true
   */
+  const isDate = (value) => {
+    return value instanceof Date;
+  };
   /**
    * Checks if the value is a Map.
    *
@@ -876,11 +915,17 @@
    * isUint32Array(new Uint32Array());
    * // => true
   */
-  const nativeObjectNames = ['RegExp', 'Arguments', 'Boolean', 'Date', 'Map', 'Set', 'WeakMap',
-    'ArrayBuffer', 'Float32Array', 'Float64Array', 'Int8Array', 'Int16Array', 'Int32Array',
-    'Uint8Array', 'Uint8ClampedArray', 'Uint16Array', 'Uint32Array'];
+  const nativeObjectNames = ['Arguments', 'Map', 'Set', 'WeakMap'];
   eachArray(nativeObjectNames, (item) => {
     $[`is${item}`] = isSameObjectGenerator(objectStringGenerate(item));
+  });
+  const arrayLikeObjects = ['ArrayBuffer', 'Float32Array', 'Float64Array',
+    'Int8Array', 'Int16Array', 'Int32Array', 'Uint8Array',
+    'Uint8ClampedArray', 'Uint16Array', 'Uint32Array'];
+  eachArray(arrayLikeObjects, (item) => {
+    $[`is${item}`] = (value) => {
+      return (hasValue(value)) ? value.constructor.name === item : false;
+    };
   });
   assign($, {
     getFileExtension,
@@ -889,6 +934,8 @@
     hasLength,
     hasValue,
     isArray,
+    isBoolean,
+    isDate,
     isDecimal,
     isEmpty,
     isFileCSS,
@@ -898,6 +945,7 @@
     isNull,
     isNumber,
     isPlainObject,
+    isRegExp,
     isString,
     isUndefined,
   });
@@ -914,6 +962,17 @@
     * @param {*} object - The first argument given to each function.
     * @returns {Object} The originally given array.
     *
+    * @test
+    * (async () => {
+    *   const tempList = [];
+    *   await asyncEach([async (item, index) => {
+    *     tempList.push(index);
+    *   }, async (item, index) => {
+    *     tempList.push(index);
+    *   }], {a:1});
+    *   return assert(tempList, [0, 1]);
+    * });
+    *
     * @example
     * asyncEach([async (item, index) =>{
     *  console.log(item, index);
@@ -923,11 +982,11 @@
     * // {a:1} 0
     * // {a:1} 1
   */
-  const asyncEach = async (callingArray, object) => {
+  const asyncEach = async (callingArray, value) => {
     const arrayLength = callingArray.length;
     for (let index = 0; index < arrayLength; index++) {
       const item = callingArray[index];
-      await item(object, index, callingArray, arrayLength);
+      await item(value, index, callingArray, arrayLength);
     }
     return callingArray;
   };
@@ -948,7 +1007,7 @@
     * ensureArray('Hello');
     * // => ['Hello']
     *
-    * @example 
+    * @example
     * ensureArray({a:1, b:2})
     * // => [{a:1, b:2}]
   */
@@ -993,11 +1052,11 @@
     *
     * @example
     * flattenDeep([1, [2, [3, [4]], 5]]);
-    *  // => [1, 2, 3, 4, 5]
+    * // => [1, 2, 3, 4, 5]
   */
   const flattenDeep = (array) => {
     return array.reduce((previousValue, currentValue) => {
-      return previousValue.concat((isArray(currentValue)) ? flatten(currentValue) : currentValue);
+      return previousValue.concat((isArray(currentValue)) ? flattenDeep(currentValue) : currentValue);
     }, []);
   };
   assign($, {
@@ -1107,7 +1166,7 @@
     * // => [2, 3, 4, 5]
   */
   const rest = (array) => {
-    return array.slice(1, array.length - 1);
+    return array.slice(1, array.length);
   };
   assign($, {
     rest
@@ -1123,7 +1182,7 @@
     * @returns {Array} The originally given array.
     *
     * @example
-    * clear([1,'B', Cat]);
+    * clear([1,'B', 'Cat']);
     * // => []
   */
   const clear = (array) => {
@@ -1164,8 +1223,8 @@
     * @returns {Array} The originally given array.
     *
     * @example
-    * cloneArray([1,'B', Cat]);
-    * // => [1, 'B', Cat]
+    * cloneArray([1,'B', 'Cat']);
+    * // => [1, 'B', 'Cat']
   */
   const cloneArray = (array) => {
     return array.slice();
@@ -1304,6 +1363,11 @@
     * @param {number} [min = 0] - Establishes lowest possible value for the random number.
     * @returns {number} - Returns random integer between the max and min range.
     *
+    * @test
+    * (async () => {
+    *   return assert(isNumber(randomArbitrary(10)), true);
+    * });
+    *
     * @example
     * randomArbitrary(10);
     * // => 9.1
@@ -1320,6 +1384,11 @@
     * @param {number} max - Establishes highest possible value for the random number.
     * @param {number} [min = 0] - Establishes lowest possible value for the random number.
     * @returns {number} - Returns random integer between the max and min range.
+    *
+    * @test
+    * (async () => {
+    *   return assert(isNumber(randomInt(10)), true);
+    * });
     *
     * @example
     * randomInt(10);
@@ -1341,6 +1410,45 @@
   });
 
   /**
+    * Shuffle an array and return a new array.
+    *
+    * @function shuffle
+    * @category array
+    * @param {Array} array - Array to be shuffled.
+    * @returns {Array} An array with the shuffled results.
+    *
+    * @test
+    * (async () => {
+    *   const tempResult = shuffle([1, 2]);
+    *   return assert(tempResult.includes(1) && tempResult.includes(2), true);
+    * });
+    *
+    * @example
+    * shuffle([1, 2, 3, 4]);
+    * // => [3, 4, 2, 1]
+  */
+  const shuffle = (array, amount = array.length) => {
+    if (array.length <= 1) {
+      return toArray(array);
+    }
+    const shuffleArray = toArray(array);
+    let count = 0;
+    let index;
+    let value;
+    while (count < amount) {
+      index = randomInt(shuffleArray.length - 1, 0);
+      value = shuffleArray[count];
+      shuffleArray[count] = shuffleArray[index];
+      shuffleArray[index] = value;
+      count++;
+    }
+    return shuffleArray;
+  };
+  assign($, {
+    shuffle
+  });
+
+  /**
     * Produce a random sample from the list. Pass a number to return n random elements from the list. Otherwise a single random item will be returned.
     *
     * @function sample
@@ -1348,13 +1456,26 @@
     * @param {Array} array - Array to pull sample(s).
     * @returns {Array} An array of randomly pulled samples.
     *
+    * @test
+    * (async () => {
+    *   const tempResult = sample([1, 2] , 2);
+    *   return assert(tempResult.includes(1) && tempResult.includes(2), true);
+    * });
+    *
     * @example
     * sample([1, 2, 3, 4] , 2);
     * // => [1, 3]
   */
   const sample = (array, amount = 1) => {
+    if (!array) {
+      return false;
+    }
+    const arrayLength = array.length;
+    if (arrayLength === amount || amount > arrayLength) {
+      return shuffle(array);
+    }
     if (amount === 1) {
-      return array[randomInt(array.length - 1, 0)];
+      return [array[randomInt(arrayLength - 1, 0)]];
     }
     const sampleArray = [];
     const used = {};
@@ -1363,7 +1484,7 @@
     while (count < amount) {
       index = randomInt(array.length - 1, 0);
       if (!used[index]) {
-        sampleArray.push(sampleArray[index]);
+        sampleArray.push(array[index]);
         used[index] = true;
         count++;
       }
@@ -1384,8 +1505,8 @@
     * @returns {Array} The new array of filtered values.
     *
     * @example
-    * compact([1,'B', Cat, false, null, 0 , '', undefined, NaN]);
-    * // => [1, 'B', Cat]
+    * compact([1,'B', 'Cat', false, null, 0 , '', undefined, NaN]);
+    * // => [1, 'B', 'Cat']
   */
   const compact = (array) => {
     return array.filter((item) => {
@@ -1394,36 +1515,6 @@
   };
   assign($, {
     compact,
-  });
-
-  /**
-    * Shuffle an array and return a new array.
-    *
-    * @function shuffle
-    * @category array
-    * @param {Array} array - Array to be shuffled.
-    * @returns {Array} An array with the shuffled results.
-    *
-    * @example
-    * shuffle([1, 2, 3, 4]);
-    * // => [3, 4, 2, 1]
-  */
-  const shuffle = (array, amount = array.length) => {
-    const shuffleArray = toArray(array);
-    let count = 0;
-    let index;
-    let value;
-    while (count < amount) {
-      index = randomInt(shuffleArray.length - 1, 0);
-      value = shuffleArray[count];
-      shuffleArray[count] = shuffleArray[index];
-      shuffleArray[index] = value;
-      count++;
-    }
-    return shuffleArray;
-  };
-  assign($, {
-    shuffle
   });
 
   /**
@@ -1560,35 +1651,6 @@
   });
 
   /**
-     * Perform alphabetical sort on a collection with the provided key name. Mutates the array.
-     *
-     * @function sortAlphabetical
-     * @category array
-     * @type {Function}
-     * @param {Array} array - Array to be sorted.
-     * @returns {Array} The sorted array.
-     *
-     * @example
-     * sortAlphabetical([1,2,3]);
-     * // => 1
-   */
-  const sortAlphabetical = (collection, key) => {
-    return collection.sort((current, next) => {
-      const currentKey = current[key];
-      const nextKey = next[key];
-      if (currentKey < nextKey) {
-        return -1;
-      } else if (currentKey > nextKey) {
-        return 1;
-      }
-      return 0;
-    });
-  };
-  assign($, {
-    sortAlphabetical
-  });
-
-  /**
     * Checks for differences between arrays, then creates an array based on those differences.
     *
     * @function difference
@@ -1599,7 +1661,7 @@
     * @returns {Array} An array which contains the differences between the source and compare array.
     *
     * @example
-    * compact([1, 2, 3], [1, 2]);
+    * difference([1, 2, 3], [1, 2]);
     * // => [3]
   */
   const difference = (array, ...compares) => {
@@ -1670,7 +1732,7 @@
      * // => true
    */
   const isMatchArray = (source, compareArray) => {
-    if (compareArray.length === source.length) {
+    if (source.length === compareArray.length) {
       return whileArray(source, (item, index) => {
         return compareArray[index] === item;
       });
@@ -1688,25 +1750,23 @@
      * @category array
      * @type {Function}
      * @param {Array} array - Array to be sorted.
-     * @returns {Array} The sorted array.
+     * @param {number} insertThis - Number to be inserted.
+     * @returns {number} The index at which to insert.
      *
      * @example
-     * sortedIndex([1,2,3]);
+     * sortedIndex([30, 50], 40);
      * // => 1
    */
-  const sortedIndex = (array, n) => {
+  const sortedIndex = (array, insertThis) => {
     let min = 0;
     whileArray(array, (item, index) => {
-      if (n > item) {
-        min = index;
+      min = index;
+      if (insertThis > item) {
+        return true;
       } else {
         return false;
       }
-      return true;
     });
-    if (min > 0) {
-      min = min + 1;
-    }
     return min;
   };
   assign($, {
@@ -1767,11 +1827,21 @@
     * @param {Function} iteratee - Transformation function which is passed item, index, calling array, and array length.
     * @returns {Object} The originally given array.
     *
+    * @test
+    * (async () => {
+    *   const tempList = [];
+    *   await eachAsync([1, 2, 3], async (item) => {
+    *     tempList.push(item);
+    *   });
+    *   return assert(tempList, [1, 2, 3]);
+    * });
+    *
     * @example
     * eachAsync([3,4], async (item, index) =>{
     *  console.log(item, index);
     * });
-    * // => {3:0, 4:1}
+    * // 3 0
+    * // 4 1
   */
   const eachAsync = async (callingArray, iteratee) => {
     const arrayLength = callingArray.length;
@@ -1791,11 +1861,21 @@
     * @param {Function} iteratee - Transformation function which is passed item, index, calling array, and array length.
     * @returns {Object} The originally given array.
     *
+    * @test
+    * (async () => {
+    *   const tempList = [];
+    *   await eachAsyncRight([1, 2, 3], async (item) => {
+    *     tempList.push(item);
+    *   });
+    *   return assert(tempList, [3, 2, 1]);
+    * });
+    *
     * @example
     * eachAsyncRight([3,4], async (item, index) =>{
     *  console.log(item, index);
     * });
-    * // {3:0, 4:1}
+    * // 4 0
+    * // 3 1
   */
   const eachAsyncRight = async (callingArray, iteratee) => {
     const arrayLength = callingArray.length;
@@ -1821,7 +1901,7 @@
     *
     * @example
     * last([1, 2, 3, 4, 5] , 2);
-    * // => [5, 4]
+    * // => [4, 5]
     * @example
     * last([1, 2, 3, 4, 5]);
     * // => 5
@@ -1860,10 +1940,11 @@
     *
     * @example
     * takeRight([1,2,3], 2);
-    * // => [3, 2]
+    * // => [2, 3]
   */
   const takeRight = (array, amount = 1) => {
-    return array.slice(array.length - amount, amount);
+    const arrayLength = array.length;
+    return array.slice(arrayLength - amount, arrayLength);
   };
   assign($, {
     take,
@@ -1871,7 +1952,7 @@
   });
 
   /**
-    * Asynchronously Iterates through the calling array and creates an object with the results of the iteratee on every element in the calling array.
+    * Asynchronously iterates through the calling array and creates an object with the results of the iteratee on every element in the calling array.
     *
     * @function mapAsync
     * @category array
@@ -1880,13 +1961,13 @@
     * @param {Array} callingArray - Array that will be looped through.
     * @param {Function} iteratee - Transformation function which is passed item, index, the newly created array, calling array, and array length.
     * @param {Array} [results = []] - Array that will be used to assign results.
-    * @returns {Object} An array of the same calling array's type.
+    * @returns {Array} An array of the same calling array's type.
     *
     * @example
-    * mapAsync({a: 1, b: 2, c: 3}, (item) => {
+    * mapAsync([1, 2, 3], (item) => {
     *   return item * 2;
     * });
-    * // => {a: 2, b: 4, c: 6}
+    * // => [2, 4, 6]
   */
   const mapAsync = async (array, iteratee) => {
     const results = [];
@@ -1939,25 +2020,17 @@
     *
     * @example
     * union([1,2,4], [1,2,3]);
-    * // => [1, 2]
+    * // => [1, 2, 4, 3]
   */
   const union = (...arrays) => {
-    const result = [];
-    eachArray(arrays, (array) => {
-      eachArray(unique(array), (item) => {
-        if (result.includes(item)) {
-          result.push(item);
-        }
-      });
-    });
-    return result;
+    return unique(flattenDeep(arrays));
   };
   assign($, {
     union
   });
 
   /**
-    * Asynchronously performs a function on the items within an array.
+    * Asynchronously iterates through the calling array and creates an array with the results, (excludes results which are null or undefined), of the iteratee on every element in the calling array.
     *
     * @function compactMapAsync
     * @type {Function}
@@ -1968,7 +2041,7 @@
     * @returns {Array} Array values after being put through an iterator.
     *
     * @example
-    * compactMapAsync([1, 2, 3, false], async () => {return item});
+    * compactMapAsync([1, 2, 3, null], async (item) => {return item;});
     * // => [1, 2, 3]
   */
   const compactMapAsync = async (array, iteratee) => {
@@ -2045,7 +2118,7 @@
     * @returns {Array} The filtered array.
     *
     * @example
-    * without([1, 2, 2, 4], 4);
+    * without([1, 2, 2, 4], [4]);
     * // => [1, 2, 2]
   */
   const without = (array, removeThese) => {
@@ -2055,58 +2128,6 @@
   };
   assign($, {
     without
-  });
-
-  const findIndexCache = (element, index, array, indexMatch, propertyName) => {
-    if (element[propertyName] === indexMatch) {
-      return true;
-    }
-  };
-  /**
-    * Finds an object in a collection by the given id and property name.
-    *
-    * @function findItem
-    * @type {Function}
-    * @category array
-    * @param {Array} array - Collection to be checked for an item.
-    * @param {number|string} id - The value to look for.
-    * @param {string} [propertyName = 'id'] - The name of the property to compare.
-    * @returns {Object} - The found object.
-    *
-    * @example
-    * findItem([{id: 1}, {id: 2}], 1);
-    * // => {id: 1}
-  */
-  const findItem = (collection, id, propertyName = 'id') => {
-    const result = collection.find((element, index) => {
-      return findIndexCache(element, index, collection, id, propertyName);
-    });
-    return (result === -1) ? false : result;
-  };
-  /**
-    * Finds an object in a collection by the given id and property name and returns the array index of the object.
-    *
-    * @function findIndex
-    * @type {Function}
-    * @category array
-    * @param {Array} array - Collection to be checked for an item.
-    * @param {number|string} id - The value to look for.
-    * @param {string} [propertyName = 'id'] - The name of the property to compare.
-    * @returns {number} - The index of the object.
-    *
-    * @example
-    * findIndex([{id: 1}, {id: 2}], 1);
-    * // => 0
-  */
-  const findIndex = (collection, id, propertyName = 'id') => {
-    const result = collection.findIndex((element, index) => {
-      return findIndexCache(element, index, collection, id, propertyName);
-    });
-    return (result === -1) ? false : result;
-  };
-  assign($, {
-    findIndex,
-    findItem,
   });
 
   /**
@@ -2125,7 +2146,10 @@
     *  {user: 'fred', age: 40, active: true},
     *  {user: 'pebbles', age: 1,  active: false}
     * ], (item) => { return item.active; });
-    * // => [['fred'], ['barney', 'pebbles']]
+    * // => [
+    * [{"user":"fred","age":40,"active":true}],
+    *   [{"user":"barney","age":36,"active":false},
+    *   {"user":"pebbles","age":1,"active":false}]]
   */
   const partition = (array, funct) => {
     const failed = [];
@@ -2157,7 +2181,7 @@
     * xor([2, 1], [2, 3]);
     * // => [1, 3]
   */
-  const xor = (arrays) => {
+  const xor = (...arrays) => {
     const xored = [];
     eachArray(arrays, (array) => {
       eachArray(unique(array), (item) => {
@@ -2231,11 +2255,10 @@
     *
     * @example
     * first([1, 2, 3]);
-    * // => [1]
-    *
+    * // => 1
     * @example
     * first([1, 2, 3], 2);
-    * // => [1, 2, 3]
+    * // => [1, 2]
   */
   const first = (array, upTo) => {
     return (upTo) ? array.slice(0, upTo) : array[0];
@@ -2277,6 +2300,15 @@
     * @param {Function} iteratee - Transformation function which is passed position, start, and end.
     * @returns {undefined} Nothing.
     *
+    * @test
+    * (async () => {
+    *   const tempList = [];
+    *   times(0, 3, (item) => {
+    *     tempList.push(item);
+    *   });
+    *   return assert(tempList, [0, 1, 2]);
+    * });
+    *
     * @example
     * times(0, 3, (item) => {
     *   console.log(item);
@@ -2309,7 +2341,7 @@
     *
     * @example
     * timesMap(0, 3, (item) => {
-    *   console.log(item);
+    *   return item;
     * });
     * // => [0, 1, 2]
   */
@@ -2319,7 +2351,7 @@
     const iterateeMethod = iteratee || endIndex;
     let result;
     times(start, end, (position) => {
-      result = iterateeMethod(results, position, start, end);
+      result = iterateeMethod(position, start, end, results);
       if (hasValue(result)) {
         results.push(result);
       }
@@ -2340,7 +2372,7 @@
     * @type {Function}
     * @param {string} value - The string to search for.
     * @returns {boolean} Returns true or false.
-    *
+    * @ignoreTest
     * @example
     * isAgent('mobile');
     * // => false
@@ -2466,6 +2498,15 @@
     * @param {Function} iteratee - Transformation function which is passed item, key, calling object, key count, and array of keys.
     * @returns {Object|Function} The originally given object.
     *
+    * @test
+    * (async () => {
+    *   const tempList = {};
+    *   eachObject({a: 1, b: 2, c: 3}, (item, key) => {
+    *     tempList[key] = item;
+    *   });
+    *   return assert(tempList, {a: 1, b: 2, c: 3});
+    * });
+    *
     * @example
     * eachObject({a: 1, b: 2, c: 3}, (item) => {
     *   console.log(item);
@@ -2490,12 +2531,18 @@
     * @example
     * whileObject({a: false, b: true, c: true}, (item) => {
     *   return item;
-    *  });
+    * });
     * // => false
+    * @example
+    * whileObject({a: true, b: true, c: true}, (item) => {
+    *   return item;
+    * });
+    * // => true
   */
-  const whileObject = (callingObject, iteratee, results = {}) => {
-    return whileArray(callingObject, (item, key, thisObject, propertyCount, objectKeys) => {
-      return iteratee(item, key, results, thisObject, propertyCount, objectKeys);
+  const whileObject = (callingObject, iteratee) => {
+    const objectKeys = keys(callingObject);
+    return whileArray(objectKeys, (key, index, callingArray, propertyCount) => {
+      return iteratee(callingObject[key], key, callingObject, propertyCount, callingArray);
     });
   };
   /**
@@ -2510,7 +2557,7 @@
     *
     * @example
     * filterObject({a: false, b: true, c: true}, (item) => {
-    *   return true;
+    *   return item;
     * });
     * // => {b: true, c: true}
   */
@@ -2556,10 +2603,10 @@
     * @returns {Object|Function} An object with mapped properties that are not null or undefined.
     *
     * @example
-    * compactMapObject({a: 0, b: 2, c: 3}, (item) => {
-    *   return item * 2;
+    * compactMapObject({a: undefined, b: 2, c: 3}, (item) => {
+    *   return item;
     * });
-    * // => {b: 4, c: 6}
+    * // => {b: 2, c: 3}
   */
   const compactMapObject = (object, iteratee, results = {}) => {
     eachObject(object, (item, key, thisObject, propertyCount, objectKeys) => {
@@ -2664,9 +2711,17 @@
     * @param {Function} callback - Function to be called back.
     * @returns {Object} - A constructor with a callback function.
     *
+    * @test
+    * (async () => {
+    *   const result = await promise((accept) => {
+    *     accept(true);
+    *   });
+    *   return assert(result, true);
+    * });
+    *
     * @example
     * promise((a) => {});
-    * // => promise((a) => {})
+    * // => Promise {[[PromiseStatus]]: "pending", [[PromiseValue]]: undefined}
   */
   const promise = (callback) => {
     return new Promise(callback);
@@ -2679,8 +2734,8 @@
     * Inserts text into a string at a given position.
     *
     * @function insertInRange
-    * @type {Function}
     * @category string
+    * @type {Function}
     * @param {string} string - String to insert the text into.
     * @param {number} index - Point of insertion.
     * @param {string} text - The string to be inserted.
@@ -2727,7 +2782,7 @@
   */
   const chunkString = (string, size) => {
     return string.match(new RegExp(`(.|[
-]){1, ${size}}`, 'g'));
+]){1,${size}}`, 'g'));
   };
   /**
     * Truncates everything before the index starting from the right.
@@ -3060,7 +3115,7 @@
      * jsonParse('{}');
      * // => {}
    */
-  const jsonParse = jsonNative.jsonParse;
+  const jsonParse = jsonNative.parse;
   /**
      * Stringify an object into a JSON string.
      *
@@ -3245,17 +3300,17 @@
     * sortOldest([{id: 1}, {id: 0}], 'id');
     * // => [{id: 0}, {id: 1}]
   */
-  const sortOldest = (collection, key, pureMode = true) => {
+  const sortOldest = (collection, key = 'id', pureMode = true) => {
     const array = (pureMode) ? collection : [...collection];
     return array.sort((previous, next) => {
       if (!next[key]) {
-        return -1;
+        return 1;
       } else if (!previous[key]) {
-        return 1;
-      } else if (previous[key] < next[key]) {
-        return 1;
-      } else if (previous[key] > next[key]) {
         return -1;
+      } else if (previous[key] < next[key]) {
+        return -1;
+      } else if (previous[key] > next[key]) {
+        return 1;
       }
       return 0;
     });
@@ -3271,10 +3326,10 @@
     * @returns {Object} The newest object in the collection.
     *
     * @example
-    * sortOldest([{id: 1}, {id: 0}], 'id');
+    * getOldest([{id: 1}, {id: 0}], 'id');
     * // => {id: 0}
   */
-  const getOldest = (collection, key) => {
+  const getOldest = (collection, key = 'id') => {
     return sortOldest(collection, key)[0];
   };
   assign($, {
@@ -3392,21 +3447,20 @@
   });
 
   /**
-    * Given a list, and an iteratee function that returns a key for each element in the list (or a property name), returns an object with an index of each item.
-    * Just like groupBy, but for when you know your keys are unique.
+    * Given a list, and an iteratee function that returns a key for each element in the list (or a property name), returns an object with an index of each item. Just like groupBy, but for when you know the keys are unique.
     *
     * @function indexBy
     * @category collection
     * @type {Function}
     * @param {Array} collection - Array of objects.
-    * @param {Function} iteratee - The iteratee to transform keys.
+    * @param {string} key - The property name to index by.
     * @returns {Object} Returns the composed aggregate object.
     *
     * @example
-    * indexBy([{name: 'Lucy', id: 0}, {name: 'Erick', id: 1}], Math.floor);
+    * indexBy([{name: 'Lucy', id: 0}, {name: 'Erick', id: 1}], 'id');
     * // => { "0": {name: 'Lucy', id: 0}, "1": {name: 'Erick', id: 1}}
   */
-  const indexBy = (array, key) => {
+  const indexBy = (array, key = 'id') => {
     const sortedObject = {};
     eachArray(array, (item) => {
       sortedObject[item[key]] = item;
@@ -3448,17 +3502,17 @@
     * @category collection
     * @type {Function}
     * @param {Array} collection - Collection from which method will be taken.
-    * @param {string} methodName - Value used to pluck method from object.
-    * @param {*} args - Values to be run through method.
+    * @param {string} property - Value used to pluck method from object.
+    * @param {*} value - Value to be passed to callable property.
     * @returns {Array} - Returns the results of the invoked method.
     *
     * @example
     * invoke([{lucy(item, index) { return [item, index];}}, {lucy(item, index) { return [item, index];}}], 'lucy', 'Arity LLC');
-    * // => [['lucy', 'Arity LLC'], ['lucy', 'Arity LLC']]
+    * // => [['Arity LLC', 0], ['Arity LLC', 1]]
   */
-  const invoke = (collection, property, args) => {
+  const invoke = (collection, property, value) => {
     return mapArray(collection, (item, index) => {
-      return item[property](args, index);
+      return item[property](value, index);
     });
   };
   assign($, {
@@ -3473,21 +3527,108 @@
     * @type {Function}
     * @async
     * @param {Array} collection - Collection from which method will be taken.
-    * @param {string} methodName - Value used to pluck method from object.
-    * @param {*} args - Values to be run through method.
+    * @param {string} property - Value used to pluck method from object.
+    * @param {*} value - Value to be passed to callable property.
     * @returns {Array} - Returns the results of the invoked method.
+    *
+    * @test
+    * (async () => {
+    *   const result = await invokeAsync([{async lucy(item, index) { return [item, index];}}, {async lucy(item, index) { return [item, index];}}], 'lucy', 'Arity LLC');
+    *   return assert(result, [['Arity LLC', 0], ['Arity LLC', 1]]);
+    * });
     *
     * @example
     * invokeAsync([{async lucy(item, index) { return [item, index];}}, {async lucy(item, index) { return [item, index];}}], 'lucy', 'Arity LLC');
-    * // => [['lucy', 'Arity LLC'], ['lucy', 'Arity LLC']]
+    * // => [['Arity LLC', 0], ['Arity LLC', 1]]
   */
-  const invokeAsync = (collection, property, args) => {
+  const invokeAsync = (collection, property, value) => {
     return mapAsync(collection, async (item, index) => {
-      return item[property](args, index);
+      return item[property](value, index);
     });
   };
   assign($, {
     invokeAsync
+  });
+
+  const findIndexCache = (element, index, array, indexMatch, propertyName) => {
+    if (element[propertyName] === indexMatch) {
+      return true;
+    }
+  };
+  /**
+    * Finds an object in a collection by the given id and property name.
+    *
+    * @function findItem
+    * @type {Function}
+    * @category array
+    * @param {Array} collection - Collection to be checked for an item.
+    * @param {number|string} id - The value to look for.
+    * @param {string} [propertyName = 'id'] - The name of the property to compare.
+    * @returns {Object} - The found object.
+    *
+    * @example
+    * findItem([{id: 1}, {id: 2}], 1);
+    * // => {id: 1}
+  */
+  const findItem = (collection, id, propertyName = 'id') => {
+    const result = collection.find((element, index) => {
+      return findIndexCache(element, index, collection, id, propertyName);
+    });
+    return (result === -1) ? false : result;
+  };
+  /**
+    * Finds an object in a collection by the given id and property name and returns the array index of the object.
+    *
+    * @function findIndex
+    * @type {Function}
+    * @category array
+    * @param {Array} collection - Collection to be checked for an item.
+    * @param {number|string} id - The value to look for.
+    * @param {string} [propertyName = 'id'] - The name of the property to compare.
+    * @returns {number} - The index of the object.
+    *
+    * @example
+    * findIndex([{id: 1}, {id: 2}], 1);
+    * // => 0
+  */
+  const findIndex = (collection, id, propertyName = 'id') => {
+    const result = collection.findIndex((element, index) => {
+      return findIndexCache(element, index, collection, id, propertyName);
+    });
+    return (result === -1) ? false : result;
+  };
+  assign($, {
+    findIndex,
+    findItem,
+  });
+
+  /**
+     * Perform alphabetical sort on a collection with the provided key name. Mutates the array.
+     *
+     * @function sortAlphabetical
+     * @category array
+     * @type {Function}
+     * @param {Array} array - Array to be sorted.
+     * @returns {Array} The sorted array.
+     *
+     * @example
+     * sortAlphabetical([{letter:'a'}, {letter:'f'}, {letter:'c'}], 'letter');
+     * // => [{"letter":"a"},{"letter":"c"},{"letter":"f"}]
+   */
+  const sortAlphabetical = (collection, key) => {
+    return collection.sort((current, next) => {
+      const currentKey = current[key];
+      const nextKey = next[key];
+      if (currentKey < nextKey) {
+        return -1;
+      } else if (currentKey > nextKey) {
+        return 1;
+      }
+      return 0;
+    });
+  };
+  assign($, {
+    sortAlphabetical
   });
 
   /**
@@ -3555,7 +3696,7 @@
     * curryRight((a, b, c) => {
     *   return [a, b, c];
     * })(1)(2)(3);
-    * // => [1, 2, 3]
+    * // => [3, 2, 1]
   */
   const curryRight = (callable, arity = callable.length) => {
     const curries = [];
@@ -3585,21 +3726,21 @@
     * @returns {Function} Returns the new pass-thru function.
     *
     * @test
-    * const onceOnly = once(3, (item) => { return item;});
-    * assert(onceOnly(5), 5);
-    * assert(onceOnly(2), 5);
+    * (async () => {
+    *   const onceOnly = once((item) => { return item;});
+    *   return await assert(onceOnly(5), 5) && await assert(onceOnly(2), 5);
+    * });
     *
     * @example
     * const onceOnly = once((item) => { return item;});
     * onceOnly(5);
-    * // => 5
-    * onceOnly(1);
+    * onceOnly(3);
     * // => 5
   */
   const once = (callable) => {
     let value;
     const onlyOnce = (...args) => {
-      if (hasValue(value)) {
+      if (!hasValue(value)) {
         value = callable(...args);
       }
       return value;
@@ -3617,9 +3758,10 @@
     * @returns {Function} Returns the new pass-thru function.
     *
     * @test
-    * const onlyAfter = after(3, (item) => { return item;});
-    * assert(onlyAfter(1), undefined);
-    * assert(onlyAfter(2), 2);
+    * (async () => {
+    *   const onlyAfter = after(2, (item) => { return item;});
+    *   return await assert(onlyAfter(1), undefined) && await assert(onlyAfter(2), 2);
+    * });
     *
     * @example
     * const onlyAfter = after(1, (item) => { return item;});
@@ -3628,7 +3770,7 @@
     * onlyAfter(2);
     * // => 2
   */
-  const after = (callable, amount) => {
+  const after = (amount, callable) => {
     let point = amount;
     let value;
     const onlyAfter = (...args) => {
@@ -3637,7 +3779,6 @@
       }
       if (point <= 0) {
         value = callable(...args);
-      } else {
         point = null;
       }
       return value;
@@ -3655,10 +3796,10 @@
     * @returns {Function} Returns the new pass-thru function.
     *
     * @test
-    * const onlyBefore = before(3, (item) => { return item;});
-    * assert(onlyBefore(1), 1);
-    * assert(onlyBefore(2), 2);
-    * assert(onlyBefore(3), 2);
+    * (async () => {
+    *   const onlyBefore = before(3, (item) => { return item;});
+    *   return await assert(onlyBefore(1), 1) && await assert(onlyBefore(2), 2) && await assert(onlyBefore(3), 2);
+    * });
     *
     * @example
     * const onlyBefore = before(3, () => { return 1;});
@@ -3669,7 +3810,7 @@
     * onlyBefore(3);
     * // => 2
   */
-  const before = (callable, amount) => {
+  const before = (amount, callable) => {
     let point = amount;
     let value;
     const onlyBefore = (...args) => {
@@ -3837,11 +3978,15 @@
     * @param {Function} iteratee - Transformation function which is passed item, key, the newly created map object and arguments unique to mapArray or mapObject depending on the object type.
     * @returns {Array|Object|Function} The originally given object.
     *
-    * @example
-    * each([1, 2, 3], (item) => {
-    *   console.log(item);
+    * @test
+    * (async () => {
+    *   const tempList = [];
+    *   each({a: 1, b: 2, c: 3}, (item) => {
+    *     tempList.push(item);
+    *   });
+    *   return assert(tempList, [1, 2, 3]);
     * });
-    * // => [1, 2, 3]
+    *
     * @example
     * each({a: 1, b: 2, c: 3}, (item) => {
     *   console.log(item);
@@ -3861,13 +4006,8 @@
     * @returns {Array|Object|Function} - A new object of the same calling object's type.
     *
     * @example
-    * filter([false, true, true], (item) => {
-    *   return item;
-    * });
-    * // => [true, true]
-    * @example
     * filter({a: false, b: true, c: true}, (item) => {
-    *   return true;
+    *   return item;
     * });
     * // => {b: true, c: true}
   */
@@ -3883,11 +4023,6 @@
     * @param {Object|Function} [results = {}] - Object that will be used to assign results.
     * @returns {Array|Object|Function} A new object of the same calling object's type.
     *
-    * @example
-    * map([1, 2, 3], (item) => {
-    *   return item * 2;
-    * });
-    * // => [2, 4, 6]
     * @example
     * map({a: 1, b: 2, c: 3}, (item) => {
     *   return item * 2;
@@ -3907,20 +4042,16 @@
     * @returns {Array|Object|Function} A new object of the same calling object's type.
     *
     * @example
-    * compactMap([0, 2, 3], (item) => {
-    *   return item * 2;
+    * compactMap({a: null, b: 2, c: 3}, (item) => {
+    *   return item;
     * });
-    * // => [4, 6]
-    * @example
-    * compactMap({a: 0, b: 2, c: 3}, (item) => {
-    *   return item * 2;
-    * });
-    * // => {b: 4, c: 6}
+    * // => {b: 2, c: 3}
   */
   const compactMap = generateCheckLoops(compactMapArray, compactMapObject);
   assign($, {
     compactMap,
     each,
+    eachWhile,
     filter,
     map
   });
@@ -3936,10 +4067,10 @@
     * @returns {Object|Function|Array} Returns the method invoked or undefined.
     *
     * @example
-    * bindAll([() => { return this;}], 'Lucy')[0]();
+    * bindAll([function () { return this;}], 'Lucy')[0]().toString();
     * // => 'Lucy'
     * @example
-    * bindAll({a() { return this;}}, 'Lucy').a();
+    * bindAll({a() { return this;}}, 'Lucy').a().toString();
     * // => 'Lucy'
   */
   const bindAll = (collection, bindThis) => {
@@ -4081,6 +4212,7 @@
     *
     * @function clearTimers
     * @category function
+    * @ignoreTest
     * @returns {undefined} Returns undefined.
     *
     * @example
@@ -4093,6 +4225,7 @@
     *
     * @function clearIntervals
     * @category function
+    * @ignoreTest
     * @returns {undefined} Returns undefined.
     *
     * @example
@@ -4196,8 +4329,17 @@
     * @param {Array|Object} methods - The object to take methods from.
     * @returns {*} Returns a function which has value, methods, add, and done. When invoking the function the argument is saved as the value property for further chaining.
     *
+    * @test
+    * (async () => {
+    *   const chained = chain({a(item) { return item;}});
+    *   chained('Acid').a();
+    *   return assert(chained.done(), 'Acid');
+    * });
+    *
     * @example
-    * chain({a(item) { return item;}})('Acid').a();
+    * const chained = chain({a(item) { return item;}});
+    * chained('Acid').a();
+    * chained.done();
     * // => 'Acid'
   */
   const chain = (methods) => {
@@ -4216,7 +4358,7 @@
       },
       methods: {},
     });
-    link.link(methods);
+    link.add(methods);
     return link;
   };
   assign($, {
@@ -4232,6 +4374,13 @@
     * @param {Array|Object|Function} collection - The functions to be invoked.
     * @param {*} arg - The object passed as an argument to each method.
     * @returns {undefined} Returns undefined.
+    *
+    * @test
+    * (async () => {
+    *   const tempList = [];
+    *   inSync([() => {tempList.push(1);}, () => {tempList.push(2);}]);
+    *   return assert(tempList, [1, 2]);
+    * });
     *
     * @example
     * inSync([() => {console.log(1);}, () => {console.log(2);}]);
@@ -4254,6 +4403,13 @@
     * @param {Array|Object|Function} collection - The functions to be invoked.
     * @param {*} arg - The object passed as an argument to each method.
     * @returns {undefined} Returns undefined.
+    *
+    * @test
+    * (async () => {
+    *   const tempList = [];
+    *   await inAsync([async () => {tempList.push(1);}, async () => {tempList.push(2);}]);
+    *   return assert(tempList, [1, 2]);
+    * });
     *
     * @example
     * inAsync([async () => {console.log(1);}, async () => {console.log(2);}]);
@@ -4331,12 +4487,14 @@
     * @returns {Function} The new function.
     *
     * @example
-    * wrap('Lucy', (firstName, lastName) => {console.log(`My name is ${firstName} ${lastName}.`);})('Diamonds');
+    * wrap('Lucy', (firstName, lastName) => {
+    *  return `My name is ${firstName} ${lastName}.`;
+    * })('Diamonds');
     * // => 'My name is Lucy Diamonds.'
   */
   const wrap = (value, wrapper) => {
-    return (arg) => {
-      return wrapper(value, arg);
+    return (...arg) => {
+      return wrapper(value, ...arg);
     };
   };
   assign($, {
@@ -4357,7 +4515,7 @@
     * // => true
     * @example
     * isZero(1);
-    * // => False
+    * // => false
   */
   const isZero = (item) => {
     return item === 0;
@@ -4377,7 +4535,7 @@
     * // => true
     * @example
     * isNumberEqual(0, 1);
-    * // => False
+    * // => false
   */
   const isNumberEqual = (item, num) => {
     return item === num;
@@ -4389,18 +4547,18 @@
     * @category number
     * @type {Function}
     * @param {number} num - Number to be checked.
-    * @param {number} [start = 0] - Beginning of range.
-    * @param {number} [end] - End of range.
+    * @param {number} start - Beginning of range.
+    * @param {number} end - End of range.
     * @returns {boolean} True or False.
     *
     * @example
     * isNumberInRange(1, 0, 2);
-    * // => True
+    * // => true
     * @example
     * isNumberInRange(1, -1, 0);
-    * // => False
+    * // => false
   */
-  const isNumberInRange = (num, start = 0, end = start) => {
+  const isNumberInRange = (num, start, end) => {
     return num > start && num < end;
   };
   assign($, {
@@ -4430,7 +4588,7 @@
   const hasKeys = (object, properties) => {
     const objectKeys = keys(object);
     return whileArray(properties, (item) => {
-      return objectKeys.include(item);
+      return objectKeys.includes(item);
     });
   };
   /**
@@ -4451,9 +4609,9 @@
   */
   const hasAnyKeys = (object, properties) => {
     const objectKeys = keys(object);
-    return properties.find((item) => {
-      return objectKeys.include(item);
-    });
+    return Boolean(properties.find((item) => {
+      return objectKeys.includes(item);
+    }));
   };
   assign($, {
     hasAnyKeys,
@@ -4494,15 +4652,20 @@
     * @param {Object} object - Object from which keys are extracted.
     * @returns {Array} - Returns an array of key values.
     *
+    * @test
+    * (async () => {
+    *   const results = compactKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: undefined, other: false, that: null});
+    *   return assert(results.includes('Lucy') && results.includes('John') && results.includes('other'), true);
+    * });
+    *
     * @example
     * compactKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: undefined, other: false, that: null});
     * // => ['Lucy', 'John', 'other']
-    *
   */
   const compactKeys = (object) => {
     const keys$$1 = [];
     eachObject(object, (item, key) => {
-      if (item) {
+      if (hasValue(item)) {
         keys$$1.push(key);
       }
     });
@@ -4523,7 +4686,7 @@
      * @returns {boolean} Returns the true or false.
      *
      * @example
-     * isMatchObject({a: [1,2,3]}, {a: [1,2,3]});
+     * isMatchObject({a: 1}, {a: 1});
      * // => true
    */
   const isMatchObject = (source, compareObject) => {
@@ -4551,7 +4714,7 @@
     *
     * @example
     * invert({a:1});
-    * // => {1:a}
+    * // => {1:'a'}
   */
   const invert = (thisObject, invertedObject = {}) => {
     eachObject(thisObject, (item, key) => {
@@ -4591,8 +4754,8 @@
     * Converts a string and converts it entirely into uppercase.
     *
     * @function upperCase
-    * @type {Function}
     * @category string
+    * @type {Function}
     * @param {string} string - String to be converted into upper case.
     * @returns {string} - Converted string in upper case.
     *
@@ -4620,7 +4783,7 @@
   const camelCase = (string) => {
     return string.toLowerCase()
       .replace(spaceFirstLetter, (match) => {
-        return match.toUpperCase();
+        return match.toUpperCase().replace(/ /g, '');
       });
   };
   /**
@@ -4670,19 +4833,19 @@
     * Replaces all occurrences of strings in an array with a value.
     *
     * @function replaceList
-    * @type {Function}
     * @category string
+    * @type {Function}
     * @param {string} string - String to be replaced.
-    * @param {Array} array - Strings to replace.
+    * @param {Array} words - Strings to replace.
     * @param {string} value - The match replacement.
     * @returns {string} - The string with the replacement.
     *
     * @example
-    * replaceList('Her name was @user.', ['@user'], 'Lucy');
+    * replaceList('Her name was user.', ['user'], 'Lucy');
     * // => 'Her name was Lucy.'
   */
-  const replaceList = (string, array, value) => {
-    return string.replace(new RegExp(`\b${array.join('|')}\b`, 'gi'), value);
+  const replaceList = (string, words, value) => {
+    return string.replace(new RegExp('\\b' + words.join('|') + '\\b', 'gi'), value);
   };
   assign($, {
     replaceList
@@ -4697,8 +4860,8 @@
     * Raw URL decoder.
     *
     * @function rawURLDecode
-    * @type {Function}
     * @category string
+    * @type {Function}
     * @param {string} string - String to be replaced.
     * @returns {string} - Converted string into the decoded URI Component .
     *
@@ -4715,6 +4878,7 @@
     * Replaced sensitive characters with their matching html entity.
     *
     * @function htmlEntities
+    * @category string
     * @type {Function}
     * @param {string} string - String to be replaced.
     * @returns {string} Replaced string.
@@ -4733,6 +4897,7 @@
     * Executes rawURLDecode followd by htmlEntities methods on a string.
     *
     * @function sanitize
+    * @category string
     * @type {Function}
     * @param {string} string - String to be replaced.
     * @returns {string} Replaced string.
@@ -4826,7 +4991,7 @@
     *
     * @example
     * truncate('Where is Lucy?', 2);
-    * // => 'Where'
+    * // => 'Where is'
   */
   const truncate = (string, maxLength) => {
     const stringLength = string.length;
@@ -4867,7 +5032,7 @@
     *
     * @example
     * upperFirstLetter('upper');
-    * // => 'U'
+    * // => "U"
   */
   const upperFirstLetter = (string) => {
     return string[0].toUpperCase();
@@ -4882,7 +5047,7 @@
     * @returns {string} - String with first letter capitalized.
     *
     * @example
-    * upperFirstLetter('upper');
+    * upperFirst('upper');
     * // => 'Upper'
   */
   const upperFirst = (string) => {
@@ -4936,14 +5101,14 @@
     * // => 'Lysergic Acid Diethylamide'
   */
   const upperFirstOnlyAll = (string) => {
-    return string.toLowerCase()
-      .replace(spaceFirstLetter$1, (match) => {
-        return match.toUpperCase();
-      });
+    return upperFirstOnly(string.toLowerCase()).replace(spaceFirstLetter$1, (match) => {
+      return match.toUpperCase();
+    });
   };
   assign($, {
     upperFirst,
     upperFirstAll,
+    upperFirstLetter,
     upperFirstOnly,
     upperFirstOnlyAll,
   });
@@ -5045,7 +5210,7 @@
     } else if (object.toString() === compareObject.toString()) {
       if (isPlainObject(object)) {
         const sourceProperties = keys(object);
-        if (isMatchArray(sourceProperties, keys(compareObject))) {
+        if (hasKeys(compareObject, sourceProperties)) {
           return whileArray(sourceProperties, (key) => {
             return isEqual(object[key], compareObject[key]);
           });
@@ -5129,8 +5294,9 @@
     * @returns {number} - Returns a unique id.
     *
     * @test
-    * assert(uid(), 0);
-    * assert(uid(), 1);
+    * (async () => {
+    *   return await assert(uid(), 0) && await assert(uid(), 1);
+    * });
     *
     * @example
     * uid();
@@ -5157,10 +5323,12 @@
     * @returns {undefined} - Nothing is returned.
     *
     * @test
-    * assert(uid(), 0);
-    * assert(uid(), 1);
-    * assert(uid().free(0), undefined);
-    * assert(uid(), 0);
+    * (async () => {
+    *   return await assert(uid(), 0) &&
+    *    await assert(uid(), 1) &&
+    *    await assert(uid.free(0), undefined) &&
+    *    await assert(uid(), 0);
+    * });
     *
     * @example
     * uid();
@@ -5225,10 +5393,7 @@
     * @returns {*} Returns the associated model.
     *
     * @example
-    * model('test', {a: 1});
-    * // => {a: 1}
-    * @example
-    * model('test');
+    * model('test', {a: 1}) && model('test');
     * // => {a: 1}
   */
   const model = (modelName, object) => {
@@ -5286,7 +5451,7 @@
     *
     * @example
     * flow(increment, increment, deduct)(0);
-    * // => 2
+    * // => 1
   */
   const flow = returnFlow(eachArray);
   /**
@@ -5300,7 +5465,7 @@
     *
     * @example
     * flowRight(increment, increment, deduct)(0);
-    * // => 2
+    * // => 1
   */
   const flowRight = returnFlow(eachArrayRight);
   assign($, {
@@ -5330,14 +5495,14 @@
     * @returns {Function} Returns the new composite function.
     *
     * @example
-    * flowAsync(increment, increment, deduct)(0);
+    * flowAsync(async (item) => {return increment(item);}, async (item) => {return increment(item);})(0);
     * // => 2
   */
   const flowAsync = returnFlow$1(eachAsync);
   /**
     * This method is like flow except that it creates a function that invokes the given functions from right to left.
     *
-    * @function flowRightAsync
+    * @function flowAsyncRight
     * @category utility
     * @type {Function}
     * @async
@@ -5345,7 +5510,7 @@
     * @returns {Function} Returns the new composite function.
     *
     * @example
-    * flowRightAsync(increment, increment, deduct)(0);
+    * flowAsyncRight(async (item) => {return increment(item);}, async (item) => {return increment(item);})(0);
     * // => 2
   */
   const flowAsyncRight = returnFlow$1(eachAsyncRight);

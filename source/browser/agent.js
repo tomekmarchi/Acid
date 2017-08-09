@@ -10,7 +10,7 @@ import { assign, keys } from '../internal/object';
   * @type {Function}
   * @param {string} value - The string to search for.
   * @returns {boolean} Returns true or false.
-  *
+  * @ignoreTest
   * @example
   * isAgent('mobile');
   * // => false

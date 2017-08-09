@@ -1,6 +1,6 @@
 import acid from '../namespace/index';
+import { hasKeys } from '../object/hasKeys.js';
 import { whileArray } from '../array/each';
-import { isMatchArray } from '../array/isMatch';
 import { assign, keys } from '../internal/object';
 import { isArray, isPlainObject } from '../internal/is';
 /**
@@ -23,7 +23,7 @@ export const isEqual = (object, compareObject) => {
   } else if (object.toString() === compareObject.toString()) {
     if (isPlainObject(object)) {
       const sourceProperties = keys(object);
-      if (isMatchArray(sourceProperties, keys(compareObject))) {
+      if (hasKeys(compareObject, sourceProperties)) {
         return whileArray(sourceProperties, (key) => {
           return isEqual(object[key], compareObject[key]);
         });

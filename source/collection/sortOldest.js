@@ -15,17 +15,17 @@ import { assign } from '../internal/object';
   * sortOldest([{id: 1}, {id: 0}], 'id');
   * // => [{id: 0}, {id: 1}]
 */
-export const sortOldest = (collection, key, pureMode = true) => {
+export const sortOldest = (collection, key = 'id', pureMode = true) => {
   const array = (pureMode) ? collection : [...collection];
   return array.sort((previous, next) => {
     if (!next[key]) {
-      return -1;
+      return 1;
     } else if (!previous[key]) {
-      return 1;
-    } else if (previous[key] < next[key]) {
-      return 1;
-    } else if (previous[key] > next[key]) {
       return -1;
+    } else if (previous[key] < next[key]) {
+      return -1;
+    } else if (previous[key] > next[key]) {
+      return 1;
     }
     return 0;
   });
@@ -41,10 +41,10 @@ export const sortOldest = (collection, key, pureMode = true) => {
   * @returns {Object} The newest object in the collection.
   *
   * @example
-  * sortOldest([{id: 1}, {id: 0}], 'id');
+  * getOldest([{id: 1}, {id: 0}], 'id');
   * // => {id: 0}
 */
-export const getOldest = (collection, key) => {
+export const getOldest = (collection, key = 'id') => {
   return sortOldest(collection, key)[0];
 };
 assign(acid, {

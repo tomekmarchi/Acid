@@ -11,8 +11,8 @@ import { isString } from '../internal/is';
   * @returns {Array} The new array of filtered values.
   *
   * @example
-  * compact([1,'B', Cat, false, null, 0 , '', undefined, NaN]);
-  * // => [1, 'B', Cat]
+  * compact([1,'B', 'Cat', false, null, 0 , '', undefined, NaN]);
+  * // => [1, 'B', 'Cat']
 */
 export const compact = (array) => {
   return array.filter((item) => {

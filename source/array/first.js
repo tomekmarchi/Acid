@@ -12,11 +12,10 @@ import { assign } from '../internal/object';
   *
   * @example
   * first([1, 2, 3]);
-  * // => [1]
-  *
+  * // => 1
   * @example
   * first([1, 2, 3], 2);
-  * // => [1, 2, 3]
+  * // => [1, 2]
 */
 export const first = (array, upTo) => {
   return (upTo) ? array.slice(0, upTo) : array[0];

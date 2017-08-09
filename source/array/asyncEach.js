@@ -12,6 +12,17 @@ import { assign } from '../internal/object';
   * @param {*} object - The first argument given to each function.
   * @returns {Object} The originally given array.
   *
+  * @test
+  * (async () => {
+  *   const tempList = [];
+  *   await asyncEach([async (item, index) => {
+  *     tempList.push(index);
+  *   }, async (item, index) => {
+  *     tempList.push(index);
+  *   }], {a:1});
+  *   return assert(tempList, [0, 1]);
+  * });
+  *
   * @example
   * asyncEach([async (item, index) =>{
   *  console.log(item, index);
@@ -21,11 +32,11 @@ import { assign } from '../internal/object';
   * // {a:1} 0
   * // {a:1} 1
 */
-export const asyncEach = async (callingArray, object) => {
+export const asyncEach = async (callingArray, value) => {
   const arrayLength = callingArray.length;
   for (let index = 0; index < arrayLength; index++) {
     const item = callingArray[index];
-    await item(object, index, callingArray, arrayLength);
+    await item(value, index, callingArray, arrayLength);
   }
   return callingArray;
 };

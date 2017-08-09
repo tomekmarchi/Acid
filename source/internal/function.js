@@ -11,8 +11,8 @@ import { assign } from './object';
  * @returns {*} The result of calling the given target function with the specified this value and arguments.
  *
  * @example
- * apply((a) => {return [this, a];}, 1, 2);
- * // => [1, 2]
+ * apply(function (a) {return a;}, undefined, [2]);
+ * // => 2
 */
 export const apply = Reflect.apply;
 assign(acid, {

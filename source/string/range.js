@@ -4,8 +4,8 @@ import { assign } from '../internal/object';
   * Inserts text into a string at a given position.
   *
   * @function insertInRange
-  * @type {Function}
   * @category string
+  * @type {Function}
   * @param {string} string - String to insert the text into.
   * @param {number} index - Point of insertion.
   * @param {string} text - The string to be inserted.
@@ -51,7 +51,7 @@ export const rightString = (string, index = 1) => {
   * // => ['ch', 'un', 'k']
 */
 export const chunkString = (string, size) => {
-  return string.match(new RegExp(`(.|[\r\n]){1, ${size}}`, 'g'));
+  return string.match(new RegExp(`(.|[\r\n]){1,${size}}`, 'g'));
 };
 /**
   * Truncates everything before the index starting from the right.

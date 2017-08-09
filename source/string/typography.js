@@ -13,7 +13,7 @@ const spaceFirstLetter = / (.)/g;
   *
   * @example
   * upperFirstLetter('upper');
-  * // => 'U'
+  * // => "U"
 */
 export const upperFirstLetter = (string) => {
   return string[0].toUpperCase();
@@ -28,7 +28,7 @@ export const upperFirstLetter = (string) => {
   * @returns {string} - String with first letter capitalized.
   *
   * @example
-  * upperFirstLetter('upper');
+  * upperFirst('upper');
   * // => 'Upper'
 */
 export const upperFirst = (string) => {
@@ -82,14 +82,14 @@ export const upperFirstOnly = (string) => {
   * // => 'Lysergic Acid Diethylamide'
 */
 export const upperFirstOnlyAll = (string) => {
-  return string.toLowerCase()
-    .replace(spaceFirstLetter, (match) => {
-      return match.toUpperCase();
-    });
+  return upperFirstOnly(string.toLowerCase()).replace(spaceFirstLetter, (match) => {
+    return match.toUpperCase();
+  });
 };
 assign(acid, {
   upperFirst,
   upperFirstAll,
+  upperFirstLetter,
   upperFirstOnly,
   upperFirstOnlyAll,
 });

@@ -6,3 +6,5 @@ import './indexBy';
 import './pluck';
 import './invoke';
 import './invokeAsync';
+import './findIndex';
+import './sortAlphabet';

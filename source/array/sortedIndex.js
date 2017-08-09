@@ -8,25 +8,23 @@ import { whileArray } from './each';
    * @category array
    * @type {Function}
    * @param {Array} array - Array to be sorted.
-   * @returns {Array} The sorted array.
+   * @param {number} insertThis - Number to be inserted.
+   * @returns {number} The index at which to insert.
    *
    * @example
-   * sortedIndex([1,2,3]);
+   * sortedIndex([30, 50], 40);
    * // => 1
  */
-const sortedIndex = (array, n) => {
+const sortedIndex = (array, insertThis) => {
   let min = 0;
   whileArray(array, (item, index) => {
-    if (n > item) {
-      min = index;
+    min = index;
+    if (insertThis > item) {
+      return true;
     } else {
       return false;
     }
-    return true;
   });
-  if (min > 0) {
-    min = min + 1;
-  }
   return min;
 };
 assign(acid, {

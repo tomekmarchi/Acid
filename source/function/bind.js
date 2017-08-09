@@ -13,10 +13,10 @@ import { map } from '../utility/each';
   * @returns {Object|Function|Array} Returns the method invoked or undefined.
   *
   * @example
-  * bindAll([() => { return this;}], 'Lucy')[0]();
+  * bindAll([function () { return this;}], 'Lucy')[0]().toString();
   * // => 'Lucy'
   * @example
-  * bindAll({a() { return this;}}, 'Lucy').a();
+  * bindAll({a() { return this;}}, 'Lucy').a().toString();
   * // => 'Lucy'
 */
 export const bindAll = (collection, bindThis) => {

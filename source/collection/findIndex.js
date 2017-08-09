@@ -11,7 +11,7 @@ const findIndexCache = (element, index, array, indexMatch, propertyName) => {
   * @function findItem
   * @type {Function}
   * @category array
-  * @param {Array} array - Collection to be checked for an item.
+  * @param {Array} collection - Collection to be checked for an item.
   * @param {number|string} id - The value to look for.
   * @param {string} [propertyName = 'id'] - The name of the property to compare.
   * @returns {Object} - The found object.
@@ -32,7 +32,7 @@ export const findItem = (collection, id, propertyName = 'id') => {
   * @function findIndex
   * @type {Function}
   * @category array
-  * @param {Array} array - Collection to be checked for an item.
+  * @param {Array} collection - Collection to be checked for an item.
   * @param {number|string} id - The value to look for.
   * @param {string} [propertyName = 'id'] - The name of the property to compare.
   * @returns {number} - The index of the object.

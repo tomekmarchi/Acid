@@ -10,8 +10,8 @@ import { assign } from '../internal/object';
    * @returns {Array} The sorted array.
    *
    * @example
-   * sortAlphabetical([1,2,3]);
-   * // => 1
+   * sortAlphabetical([{letter:'a'}, {letter:'f'}, {letter:'c'}], 'letter');
+   * // => [{"letter":"a"},{"letter":"c"},{"letter":"f"}]
  */
 export const sortAlphabetical = (collection, key) => {
   return collection.sort((current, next) => {

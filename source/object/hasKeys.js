@@ -22,7 +22,7 @@ import { assign, keys } from '../internal/object';
 export const hasKeys = (object, properties) => {
   const objectKeys = keys(object);
   return whileArray(properties, (item) => {
-    return objectKeys.include(item);
+    return objectKeys.includes(item);
   });
 };
 /**
@@ -43,9 +43,9 @@ export const hasKeys = (object, properties) => {
 */
 export const hasAnyKeys = (object, properties) => {
   const objectKeys = keys(object);
-  return properties.find((item) => {
-    return objectKeys.include(item);
-  });
+  return Boolean(properties.find((item) => {
+    return objectKeys.includes(item);
+  }));
 };
 assign(acid, {
   hasAnyKeys,

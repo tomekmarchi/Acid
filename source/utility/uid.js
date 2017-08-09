@@ -14,8 +14,9 @@ const uidClosed = {};
   * @returns {number} - Returns a unique id.
   *
   * @test
-  * assert(uid(), 0);
-  * assert(uid(), 1);
+  * (async () => {
+  *   return await assert(uid(), 0) && await assert(uid(), 1);
+  * });
   *
   * @example
   * uid();
@@ -42,10 +43,12 @@ export const uid = () => {
   * @returns {undefined} - Nothing is returned.
   *
   * @test
-  * assert(uid(), 0);
-  * assert(uid(), 1);
-  * assert(uid().free(0), undefined);
-  * assert(uid(), 0);
+  * (async () => {
+  *   return await assert(uid(), 0) &&
+  *    await assert(uid(), 1) &&
+  *    await assert(uid.free(0), undefined) &&
+  *    await assert(uid(), 0);
+  * });
   *
   * @example
   * uid();

@@ -9,8 +9,8 @@ const doubleQuoteRegex = /"/g;
   * Raw URL decoder.
   *
   * @function rawURLDecode
-  * @type {Function}
   * @category string
+  * @type {Function}
   * @param {string} string - String to be replaced.
   * @returns {string} - Converted string into the decoded URI Component .
   *
@@ -27,6 +27,7 @@ export const rawURLDecode = (string) => {
   * Replaced sensitive characters with their matching html entity.
   *
   * @function htmlEntities
+  * @category string
   * @type {Function}
   * @param {string} string - String to be replaced.
   * @returns {string} Replaced string.
@@ -45,6 +46,7 @@ export const htmlEntities = (string) => {
   * Executes rawURLDecode followd by htmlEntities methods on a string.
   *
   * @function sanitize
+  * @category string
   * @type {Function}
   * @param {string} string - String to be replaced.
   * @returns {string} Replaced string.

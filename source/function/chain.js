@@ -19,8 +19,17 @@ const add = (link, methods) => {
   * @param {Array|Object} methods - The object to take methods from.
   * @returns {*} Returns a function which has value, methods, add, and done. When invoking the function the argument is saved as the value property for further chaining.
   *
+  * @test
+  * (async () => {
+  *   const chained = chain({a(item) { return item;}});
+  *   chained('Acid').a();
+  *   return assert(chained.done(), 'Acid');
+  * });
+  *
   * @example
-  * chain({a(item) { return item;}})('Acid').a();
+  * const chained = chain({a(item) { return item;}});
+  * chained('Acid').a();
+  * chained.done();
   * // => 'Acid'
 */
 export const chain = (methods) => {
@@ -39,7 +48,7 @@ export const chain = (methods) => {
     },
     methods: {},
   });
-  link.link(methods);
+  link.add(methods);
   return link;
 };
 assign(acid, {

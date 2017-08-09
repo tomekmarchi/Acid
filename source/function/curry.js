@@ -43,7 +43,7 @@ export const curry = (callable, arity = callable.length) => {
   * curryRight((a, b, c) => {
   *   return [a, b, c];
   * })(1)(2)(3);
-  * // => [1, 2, 3]
+  * // => [3, 2, 1]
 */
 export const curryRight = (callable, arity = callable.length) => {
   const curries = [];

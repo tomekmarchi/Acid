@@ -11,12 +11,14 @@ import { assign } from '../internal/object';
   * @returns {Function} The new function.
   *
   * @example
-  * wrap('Lucy', (firstName, lastName) => {console.log(`My name is ${firstName} ${lastName}.`);})('Diamonds');
+  * wrap('Lucy', (firstName, lastName) => {
+  *  return `My name is ${firstName} ${lastName}.`;
+  * })('Diamonds');
   * // => 'My name is Lucy Diamonds.'
 */
 export const wrap = (value, wrapper) => {
-  return (arg) => {
-    return wrapper(value, arg);
+  return (...arg) => {
+    return wrapper(value, ...arg);
   };
 };
 assign(acid, {

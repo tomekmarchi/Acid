@@ -11,21 +11,21 @@ import { hasValue } from '../internal/is';
   * @returns {Function} Returns the new pass-thru function.
   *
   * @test
-  * const onceOnly = once(3, (item) => { return item;});
-  * assert(onceOnly(5), 5);
-  * assert(onceOnly(2), 5);
+  * (async () => {
+  *   const onceOnly = once((item) => { return item;});
+  *   return await assert(onceOnly(5), 5) && await assert(onceOnly(2), 5);
+  * });
   *
   * @example
   * const onceOnly = once((item) => { return item;});
   * onceOnly(5);
-  * // => 5
-  * onceOnly(1);
+  * onceOnly(3);
   * // => 5
 */
 export const once = (callable) => {
   let value;
   const onlyOnce = (...args) => {
-    if (hasValue(value)) {
+    if (!hasValue(value)) {
       value = callable(...args);
     }
     return value;
@@ -43,9 +43,10 @@ export const once = (callable) => {
   * @returns {Function} Returns the new pass-thru function.
   *
   * @test
-  * const onlyAfter = after(3, (item) => { return item;});
-  * assert(onlyAfter(1), undefined);
-  * assert(onlyAfter(2), 2);
+  * (async () => {
+  *   const onlyAfter = after(2, (item) => { return item;});
+  *   return await assert(onlyAfter(1), undefined) && await assert(onlyAfter(2), 2);
+  * });
   *
   * @example
   * const onlyAfter = after(1, (item) => { return item;});
@@ -54,7 +55,7 @@ export const once = (callable) => {
   * onlyAfter(2);
   * // => 2
 */
-const after = (callable, amount) => {
+const after = (amount, callable) => {
   let point = amount;
   let value;
   const onlyAfter = (...args) => {
@@ -63,7 +64,6 @@ const after = (callable, amount) => {
     }
     if (point <= 0) {
       value = callable(...args);
-    } else {
       point = null;
     }
     return value;
@@ -81,10 +81,10 @@ const after = (callable, amount) => {
   * @returns {Function} Returns the new pass-thru function.
   *
   * @test
-  * const onlyBefore = before(3, (item) => { return item;});
-  * assert(onlyBefore(1), 1);
-  * assert(onlyBefore(2), 2);
-  * assert(onlyBefore(3), 2);
+  * (async () => {
+  *   const onlyBefore = before(3, (item) => { return item;});
+  *   return await assert(onlyBefore(1), 1) && await assert(onlyBefore(2), 2) && await assert(onlyBefore(3), 2);
+  * });
   *
   * @example
   * const onlyBefore = before(3, () => { return 1;});
@@ -95,7 +95,7 @@ const after = (callable, amount) => {
   * onlyBefore(3);
   * // => 2
 */
-const before = (callable, amount) => {
+const before = (amount, callable) => {
   let point = amount;
   let value;
   const onlyBefore = (...args) => {

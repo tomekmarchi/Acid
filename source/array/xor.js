@@ -16,7 +16,7 @@ import { unique } from './unique';
   * xor([2, 1], [2, 3]);
   * // => [1, 3]
 */
-export const xor = (arrays) => {
+export const xor = (...arrays) => {
   const xored = [];
   eachArray(arrays, (array) => {
     eachArray(unique(array), (item) => {

@@ -11,6 +11,15 @@ import { hasValue } from '../internal/is';
   * @param {Function} iteratee - Transformation function which is passed item, index, calling array, and array length.
   * @returns {Object} The originally given array.
   *
+  * @test
+  * (async () => {
+  *   const tempList = [];
+  *   eachArray([1, 2, 3], (item) => {
+  *     tempList.push(item);
+  *   });
+  *   return assert(tempList, [1, 2, 3]);
+  * });
+  *
   * @example
   * eachArray([1, 2, 3], (item) => {
   *   console.log(item);
@@ -34,11 +43,20 @@ export const eachArray = (callingArray, iteratee) => {
   * @param {Function} iteratee - Transformation function which is passed item, index, calling array, and array length.
   * @returns {Object} The originally given array.
   *
+  * @test
+  * (async () => {
+  *   const tempList = [];
+  *   eachArrayRight([1, 2, 3], (item) => {
+  *     tempList.push(item);
+  *   });
+  *   return assert(tempList, [3, 2, 1]);
+  * });
+  *
   * @example
   * eachArrayRight([1, 2, 3], (item) => {
   *   console.log(item);
   * });
-  * // => [3, 2, 1]
+  * // => [1, 2, 3]
 */
 export const eachArrayRight = (callingArray, iteratee) => {
   const arrayLength = callingArray.length;
@@ -59,11 +77,8 @@ export const eachArrayRight = (callingArray, iteratee) => {
   *
   * @example
   * whileArray([true, true, false], (item) => {
-  *   console.log(item);
   *   return item;
   * });
-  * //true
-  * //true
   * // => false
 */
 export const whileArray = (callingArray, iteratee) => {
@@ -121,10 +136,10 @@ const generateMap = (callable) => {
   * @returns {Object} An array of the same calling array's type.
   *
   * @example
-  * mapArray({a: 1, b: 2, c: 3}, (item) => {
+  * mapArray([1, 2, 3], (item) => {
   *   return item * 2;
   * });
-  * // => {a: 2, b: 4, c: 6}
+  * // => [2, 4, 6]
 */
 export const mapArray = generateMap(eachArray);
 /**
@@ -139,12 +154,20 @@ export const mapArray = generateMap(eachArray);
   * @returns {Object} An array of the same calling array's type.
   *
   * @example
-  * mapArrayRight({a: 1, b: 2, c: 3}, (item) => {
+  * mapArrayRight([1, 2, 3], (item) => {
   *   return item * 2;
   * });
-  * // => {a: 2, b: 4, c: 6}
+  * // => [6, 4, 2]
 */
-export const mapArrayRight = generateMap(eachArrayRight);
+export const mapArrayRight = (callingArray, iteratee, results = []) => {
+  let trueIndex = 0;
+  const arrayLength = callingArray.length;
+  for (let index = arrayLength - 1; index >= 0; index--) {
+    results[trueIndex] = iteratee(callingArray[index], index, callingArray, arrayLength);
+    trueIndex++;
+  }
+  return results;
+};
 /**
   * Iterates through the calling array and creates an array with the results, (excludes results which are null or undefined), of the iteratee on every element in the calling array.
   *
@@ -157,10 +180,10 @@ export const mapArrayRight = generateMap(eachArrayRight);
   * @returns {Object} An array with mapped properties that are not null or undefined.
   *
   * @example
-  * compactMapArray([0, 2, 3], (item) => {
-  *   return item * 2;
+  * compactMapArray([null, 2, 3], (item) => {
+  *   return item;
   * });
-  * // => [4, 6]
+  * // => [2, 3]
 */
 export const compactMapArray = (callingArray, iteratee, results = []) => {
   eachArray(callingArray, (item, index, arrayOriginal, arrayLength) => {
@@ -183,16 +206,16 @@ export const compactMapArray = (callingArray, iteratee, results = []) => {
   * @returns {Array} An array with properties that passed the test.
   *
   * @example
-  * mapWhile({a: false, b: true, c: true}, (item) => {
-  *   return true;
+  * mapWhile([true, true, false], (item) => {
+  *   return item;
   * });
-  * // => {b: true, c: true}
+  * // => [true, true]
 */
 export const mapWhile = (callingArray, iteratee, results = []) => {
   const arrayLength = callingArray.length;
   for (let index = 0; index < arrayLength; index++) {
     const returned = iteratee(callingArray[index], index, results, callingArray, arrayLength);
-    if (!returned) {
+    if (returned === false) {
       break;
     }
     results[index] = returned;

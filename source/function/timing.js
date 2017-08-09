@@ -49,6 +49,7 @@ const generateClear = (callable, clearMethod) => {
   *
   * @function clearTimers
   * @category function
+  * @ignoreTest
   * @returns {undefined} Returns undefined.
   *
   * @example
@@ -61,6 +62,7 @@ export const clearTimers = generateClear(timer, clearTimeout);
   *
   * @function clearIntervals
   * @category function
+  * @ignoreTest
   * @returns {undefined} Returns undefined.
   *
   * @example

@@ -9,9 +9,17 @@ import { assign } from '../internal/object';
   * @param {Function} callback - Function to be called back.
   * @returns {Object} - A constructor with a callback function.
   *
+  * @test
+  * (async () => {
+  *   const result = await promise((accept) => {
+  *     accept(true);
+  *   });
+  *   return assert(result, true);
+  * });
+  *
   * @example
   * promise((a) => {});
-  * // => promise((a) => {})
+  * // => Promise {[[PromiseStatus]]: "pending", [[PromiseValue]]: undefined}
 */
 export const promise = (callback) => {
   return new Promise(callback);
