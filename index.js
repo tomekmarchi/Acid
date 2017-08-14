@@ -1,17 +1,16 @@
-const lucy = require('Lucy');
-const nbome25 = require('nbome25');
-const {
-  keys
-} = lucy;
+const docredux = require('docredux');
+const buildDocs = () => {
+  return docredux.build.json({
+    destination: `${__dirname}/docs/`,
+    source: `${__dirname}/docs/bundle.js`,
+  });
+};
 const rollup = require('rollup').rollup;
 const babel = require('rollup-plugin-babili');
 const esformatter = require('esformatter');
 const tinyLR = require('tiny-lr')();
 const liveReload = require('connect-livereload');
-const documentation = require('docredux');
-const streamArray = require('stream-array');
 const fs = require('fs');
-const vfs = require('vinyl-fs');
 const watch = require('node-watch');
 const express = require('express');
 const path = require('path');
@@ -76,15 +75,7 @@ const build = async () => {
   copyFile('./build/index.js', './docs/bundle.min.js');
   console.log('Build Complete');
   console.log('Docs Started');
-  const docs = await documentation.build('./build/bundle.js', {
-    hljs: {
-      highlightAuto: true
-    },
-  });
-  console.log('Doc config');
-  const htmlDocs = await documentation.formats.html(docs, {});
-  console.log('HTML Docs compiled');
-  await streamArray(htmlDocs).pipe(vfs.dest('./docs'));
+  await buildDocs();
   console.log('Docs Complete');
   console.log('NPM Started');
   copyFile('./build/index.js', './npm/index.js');
