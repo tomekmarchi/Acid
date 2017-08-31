@@ -142,6 +142,8 @@ export const throttle = (callable, time) => {
   return throttled;
 };
 assign(acid, {
+  clearIntervals,
+  clearTimers,
   debounce,
   interval,
   throttle,

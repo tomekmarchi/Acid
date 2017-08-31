@@ -4207,6 +4207,14 @@
   const interval = (callable, time) => {
     return setInterval(callable, time);
   };
+  const generateClear = (callable, clearMethod) => {
+    return () => {
+      times(0, callable(() => {
+      }, 0), (index) => {
+        clearMethod(index);
+      });
+    };
+  };
   /**
     * Clear all active timers.
     *
@@ -4219,7 +4227,7 @@
     * clearTimers();
     * // => undefined
   */
-
+  const clearTimers = generateClear(timer, clearTimeout);
   /**
     * Clear all active intervals.
     *
@@ -4232,7 +4240,7 @@
     * clearIntervals();
     * // => undefined
   */
-
+  const clearIntervals = generateClear(interval, clearInterval);
   /**
     * Creates a debounced function that delays invoking callable until after wait milliseconds have elapsed since the last time the debounced function was invoked. The debounce function has a clear method to cancel the timer.
     *
@@ -4305,6 +4313,8 @@
     return throttled;
   };
   assign($, {
+    clearIntervals,
+    clearTimers,
     debounce,
     interval,
     throttle,
@@ -4644,7 +4654,7 @@
   });
 
   /**
-    * Extracts all key values from an object that are not falsey.
+    * Extracts all keys from an object whose values are not falsey. The values false, null, 0, "", undefined, and NaN are falsey.
     *
     * @function compactKeys
     * @category object
