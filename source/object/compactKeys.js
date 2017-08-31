@@ -1,9 +1,8 @@
 import acid from '../namespace/index';
 import { assign } from '../internal/object';
 import { eachObject } from '../object/each';
-import { hasValue } from '../internal/is';
 /**
-  * Extracts all key values from an object.
+  * Extracts all keys from an object whose values are not falsey. The values false, null, 0, "", undefined, and NaN are falsey.
   *
   * @function compactKeys
   * @category object
@@ -14,17 +13,17 @@ import { hasValue } from '../internal/is';
   * @test
   * (async () => {
   *   const results = compactKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: undefined, other: false, that: null});
-  *   return assert(results.includes('Lucy') && results.includes('John') && results.includes('other'), true);
+  *   return assert(results.includes('Lucy') && results.includes('John'), true);
   * });
   *
   * @example
   * compactKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: undefined, other: false, that: null});
-  * // => ['Lucy', 'John', 'other']
+  * // => ['Lucy', 'John']
 */
 export const compactKeys = (object) => {
   const keys = [];
   eachObject(object, (item, key) => {
-    if (hasValue(item)) {
+    if (item) {
       keys.push(key);
     }
   });

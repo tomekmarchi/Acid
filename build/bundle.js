@@ -4644,7 +4644,7 @@
   });
 
   /**
-    * Extracts all key values from an object.
+    * Extracts all key values from an object that are not falsey.
     *
     * @function compactKeys
     * @category object
@@ -4655,17 +4655,17 @@
     * @test
     * (async () => {
     *   const results = compactKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: undefined, other: false, that: null});
-    *   return assert(results.includes('Lucy') && results.includes('John') && results.includes('other'), true);
+    *   return assert(results.includes('Lucy') && results.includes('John'), true);
     * });
     *
     * @example
     * compactKeys({Lucy: 'Ringo', John: 'Malkovich', Thor: undefined, other: false, that: null});
-    * // => ['Lucy', 'John', 'other']
+    * // => ['Lucy', 'John']
   */
   const compactKeys = (object) => {
     const keys$$1 = [];
     eachObject(object, (item, key) => {
-      if (hasValue(item)) {
+      if (item) {
         keys$$1.push(key);
       }
     });
