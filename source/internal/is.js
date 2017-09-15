@@ -209,7 +209,7 @@ export const regexGenerator = (regexType) => {
  *
  * @function isFileCSS
  * @category utility
- * @param {*} value - Object to be checked.
+ * @param {string} value - Object to be checked.
  * @returns {boolean} True or false.
  *
  * @example
@@ -222,7 +222,7 @@ export const isFileCSS = regexGenerator(/\.css$/);
  *
  * @function isFileJSON
  * @category utility
- * @param {*} value - Object to be checked.
+ * @param {string} value - Object to be checked.
  * @returns {boolean} True or false.
  *
  * @example
@@ -235,7 +235,7 @@ export const isFileJSON = regexGenerator(/\.json$/);
  *
  * @function isFileJS
  * @category utility
- * @param {*} value - Object to be checked.
+ * @param {string} value - Object to be checked.
  * @returns {boolean} True or false.
  *
  * @example
@@ -243,6 +243,19 @@ export const isFileJSON = regexGenerator(/\.json$/);
  * // => true
 */
 export const isFileJS = regexGenerator(/\.js$/);
+/**
+ * Checks if the string has a .html extension.
+ *
+ * @function isFileHTML
+ * @category utility
+ * @param {string} value - Object to be checked.
+ * @returns {boolean} True or false.
+ *
+ * @example
+ * isFileHTML('test.html');
+ * // => true
+*/
+export const isFileHTML = regexGenerator(/\.html$/);
 /**
  * Checks if the string has a '.'.
  *
@@ -512,6 +525,7 @@ assign(acid, {
   isDecimal,
   isEmpty,
   isFileCSS,
+  isFileHTML,
   isFileJS,
   isFileJSON,
   isFunction,
