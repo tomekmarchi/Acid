@@ -1354,6 +1354,7 @@ ul.textList ul ul li {
   box-shadow: 0 1px 16px 0 rgba(0, 0, 0, 0.08), 0 0 1px 0 rgba(0, 0, 0, 0.4);
   margin-bottom: 10px;
   padding: 15px;
+  transition: all .5s ease;
 }
 
 .card .cardText {
@@ -1411,4 +1412,36 @@ code {
 
 .param {
   margin-bottom: 10px;
+}
+
+.paramName {
+  font-weight: bold;
+}
+
+.paramArray {
+  color: #5754ad;
+}
+
+.paramFunction {
+  color: #79a0e3;
+}
+
+.paramstring {
+  color: #cb95a3;
+}
+
+.paramObject {
+  color: #81537a;
+}
+
+.paramnumber {
+  color: #44bf95;
+}
+
+.paramundefined {
+  color: #000000;
+}
+
+.paramany {
+  color: #a63352;
 }

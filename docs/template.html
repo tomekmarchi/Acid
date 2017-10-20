@@ -1,5 +1,6 @@
 <div id="container" class="scroll absolute sidebar left">
   <div class="padded">
+    <h4>{{libraryName}}</h4> by <bold>{{company}}</bold>
     <input value="{{searchFilter}}" type="text" placeholder="Search"/>
     {{#searchFilter}}
       {{#categories}}
@@ -34,17 +35,21 @@
       {{#this.items}}
         {{#getDocItem(this)}}
           <div class="card contentWrap" id="{{this.name}}">
-            <h5>{{this.name}}</h5>
+            <h5>{{this.name}}</h5> <br />
+            <span class="smallTitle">Description</span>
             <p>
-              Description: {{description}}
-            </p>
+              {{description}}
+            </p> <hr />
             <div class="full">
               {{#params}}
-                <div class="full param">{{this.source}}</div>
+                <div class="full param">{{{this.source}}}</div>
               {{/}}
             </div>
+            {{#params && params.length}}
+              <hr />
+            {{/}}
             {{#returns}}
-              <div class="full param">{{this.source}}</div>
+              <div class="full param">{{{this.source}}}</div>
             {{/}}
             <h6>Examples</h6>
             <div class="full">

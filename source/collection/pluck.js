@@ -7,12 +7,12 @@ import { mapArray } from '../array/each';
   * @function pluck
   * @category collection
   * @type {Function}
-  * @param {Array} collection - Array used to determine what values to be plucked.
+  * @param {Array} collection - Array used to determine what value to be plucked.
   * @param {string} pluckThis - Property name.
   * @returns {Array} - An array of plucked values.
   *
   * @example
-  * pluck([{lucy: 'Ants moving around on the walls.'}, {lucy: 'In the sky with diamonds.'}], ['lucy']);
+  * pluck([{lucy: 'Ants moving around on the walls.'}, {lucy: 'In the sky with diamonds.'}], 'lucy');
   * // => ['Ants moving around on the walls.', 'In the sky with diamonds.']
 */
 export const pluck = (collection, pluckThis) => {

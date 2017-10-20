@@ -3491,12 +3491,12 @@
     * @function pluck
     * @category collection
     * @type {Function}
-    * @param {Array} collection - Array used to determine what values to be plucked.
+    * @param {Array} collection - Array used to determine what value to be plucked.
     * @param {string} pluckThis - Property name.
     * @returns {Array} - An array of plucked values.
     *
     * @example
-    * pluck([{lucy: 'Ants moving around on the walls.'}, {lucy: 'In the sky with diamonds.'}], ['lucy']);
+    * pluck([{lucy: 'Ants moving around on the walls.'}, {lucy: 'In the sky with diamonds.'}], 'lucy');
     * // => ['Ants moving around on the walls.', 'In the sky with diamonds.']
   */
   const pluck = (collection, pluckThis) => {
@@ -3507,6 +3507,52 @@
   };
   assign($, {
     pluck
+  });
+
+  /**
+    * Returns an array of the plucked values from the object. Values are plucked in the order given by the array.
+    *
+    * @function pluckObject
+    * @category object
+    * @type {Function}
+    * @param {Object} value - Array used to determine what values to be plucked.
+    * @param {string|Array} pluckThese - Property name.
+    * @returns {Array} - An array of plucked values.
+    *
+    * @example
+    * pluckObject({a: 1, b:3}, ['a','b']);
+    * // => [1, 3]
+  */
+  const pluckObject = (value, pluckThese) => {
+    return mapArray(pluckThese, (item) => {
+      return value[item];
+    });
+  };
+  assign($, {
+    pluckObject
+  });
+
+  /**
+    * Returns an array of the arrays of plucked values from the collection.
+    *
+    * @function pluckValues
+    * @category collection
+    * @type {Function}
+    * @param {Array} collection - Array used to determine what values to be plucked.
+    * @param {Array} pluckThese - Property names.
+    * @returns {Array} - An array of arrays of plucked values.
+    *
+    * @example
+    * pluckValues([{a: 1, b:3}, {a: 1, b:3}], ['a','b']);
+    * // => [[1, 3], [1, 3]]
+  */
+  const pluckValues = (collection, pluckThese) => {
+    return mapArray(collection, (item) => {
+      return pluckObject(item, pluckThese);
+    });
+  };
+  assign($, {
+    pluckValues
   });
 
   /**

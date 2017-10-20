@@ -4,14 +4,53 @@
   const app = new window.Ractive({
     data() {
       const context = this;
+      const items = window.docMap.items;
+      const {
+        eachObject,
+        eachArray,
+        mapArray,
+        upperFirst
+      } = $;
+      const paramName = (string) => {
+        const split = string.trim().split('-');
+        if (split[0] && split[0].trim().length) {
+          const param = split[0].trim();
+          return ` - <span class="paramName">${param}</span>  - ${split[1]}`;
+        }
+        return string;
+      };
+      const colorize = (item, secondMethod) => {
+        const split = item.split('}');
+        const items = split[0].replace(/[{}]/g, '').split('|');
+        return mapArray(items, (value) => {
+          if (!value) {
+            return '';
+          }
+          return `<span class="param${value.replace(/[{})()]/g, '').replace('*','any').replace('...', '').trim()}">${upperFirst(value.replace(/[{})()]/g, '').replace('*','Anything').trim())}</span>`;
+        }).join(' | ') + secondMethod(split[1]);
+      };
+      eachObject(items, (item, value) => {
+        if (item.params) {
+          eachArray(item.params, (param, key) => {
+            item.params[key].source = colorize(param.source, paramName);
+          });
+        }
+        if (item.returns) {
+          item.returns.source = colorize(item.returns.source, (string) => {
+            return string;
+          });
+        }
+      });
       return {
+        libraryName: 'Acid',
+        company: 'Arity',
         search: '',
         $: window.$,
         categories: window.docMap.categories,
         getDocItem(item) {
-          return context.get(`items.${item}`);
+          return items[item];
         },
-        items: window.docMap.items,
+        items,
       };
     },
     el: 'body',

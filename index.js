@@ -93,3 +93,8 @@ watch('./source/', {
   await build();
   notifyLiveReload(evt, filename);
 });
+watch('./docs/', {
+  recursive: true
+}, async (evt, filename) => {
+  notifyLiveReload(evt, filename);
+});
