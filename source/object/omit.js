@@ -5,6 +5,7 @@ import { filterObject } from './each';
   * Returns a clone of the given object without the given properties.
   *
   * @function omit
+  * @category object
   * @type {Function}
   * @param {Object} originalObject - Object from which keys are extracted.
   * @param {Array} array - Array of object keys.

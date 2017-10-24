@@ -4,6 +4,7 @@ import { assign } from '../internal/object';
   * Removes all occurrences of the passed in items from the array and returns the array. This mutates the given array. Clone the array if you desire to avoid mutation.
   *
   * @function remove
+  * @category array
   * @param {Array} array - Array to be mutated.
   * @param {...(string|Array)} removeThese - Items to remove from the array.
   * @returns {Array} The array this method was called on.
@@ -31,6 +32,7 @@ export const remove = (array, ...removeThese) => {
   * Removes items that pass the method's test. This mutates the given array. Clone the array if you desire to avoid mutation.
   *
   * @function removeBy
+  * @category array
   * @param {Array} array - Array to be mutated.
   * @param {Function} method - Function used to check object. Return true to remove the value.
   * @returns {Array} The array this method was called on.

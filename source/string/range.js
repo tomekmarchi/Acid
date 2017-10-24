@@ -22,6 +22,7 @@ export const insertInRange = (string, index, text) => {
   * Plucks a letter using the index starting from the right.
   *
   * @function rightString
+  * @category string
   * @type {Function}
   * @param {string} string - String to extract the letter from.
   * @param {number} [index=1] - The starting position.
@@ -41,6 +42,7 @@ export const rightString = (string, index = 1) => {
   * Splits up a string into chunks.
   *
   * @function chunkString
+  * @category string
   * @type {Function}
   * @param {string} string - String to chunked.
   * @param {number} [size] - The max string length per chunk.
@@ -57,6 +59,7 @@ export const chunkString = (string, size) => {
   * Truncates everything before the index starting from the right.
   *
   * @function initialString
+  * @category string
   * @type {Function}
   * @param {string} string - String to extract the initial letters from.
   * @param {number} [index=1] - Starting point from the right.
@@ -76,6 +79,7 @@ export const initialString = (string, index = 1) => {
   * Truncates everything after a index.
   *
   * @function restString
+  * @category string
   * @type {Function}
   * @param {string} string - String to extract the rest of the letters from.
   * @param {number} [index=1] - Starting point.

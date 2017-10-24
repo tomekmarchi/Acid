@@ -7,3 +7,5 @@ import './each';
 import './invert';
 import './omit';
 import './pluckObject';
+import './eachAsync';
+import './eachMapAsync';

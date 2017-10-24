@@ -29,6 +29,7 @@ export const hasKeys = (object, properties) => {
   * Checks to see if an object has any of the given property names.
   *
   * @function hasAnyKeys
+  * @category object
   * @type {Function}
   * @param {Object} object - Object from which keys are extracted.
   * @param {Array} properties - Array of object keys.

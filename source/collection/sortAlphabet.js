@@ -4,7 +4,7 @@ import { assign } from '../internal/object';
    * Perform alphabetical sort on a collection with the provided key name. Mutates the array.
    *
    * @function sortAlphabetical
-   * @category array
+   * @category collection
    * @type {Function}
    * @param {Array} array - Array to be sorted.
    * @returns {Array} The sorted array.

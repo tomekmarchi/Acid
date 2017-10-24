@@ -10,7 +10,7 @@ import { eachArray, whileArray } from '../array/each';
   * @type {Function}
   * @param {Object|Function} callingObject - Object that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, key, calling object, key count, and array of keys.
-  * @returns {Object|Function} The originally given object.
+  * @returns {Object|Function} Returns the calling object.
   *
   * @test
   * (async () => {
@@ -37,6 +37,7 @@ export const eachObject = (thisObject, iteratee) => {
   * Iterates through the given object while the iteratee returns true.
   *
   * @function whileObject
+  * @category object
   * @type {Function}
   * @param {Object} callingObject - Object that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, key, calling array, and array length.
@@ -63,6 +64,7 @@ export const whileObject = (callingObject, iteratee) => {
   * Iterates through the calling object and creates an object with all elements that pass the test implemented by the iteratee.
   *
   * @function filterObject
+  * @category object
   * @type {Function}
   * @param {Object|Function} callingObject - Object that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, key, the newly created object, calling object, key count, and array of keys.
@@ -87,7 +89,7 @@ export const filterObject = (object, iteratee, results = {}) => {
   * Iterates through the calling object and creates an object with the results of the iteratee on every element in the calling object.
   *
   * @function mapObject
-  * @category utility
+  * @category object
   * @type {Function}
   * @param {Object|Function} callingObject - Object that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, key, the newly created object, calling object, key count, and array of keys.
@@ -110,6 +112,7 @@ export const mapObject = (object, iteratee, results = {}) => {
   * Iterates through the calling object and creates an object with the results, (excludes results which are null or undefined), of the iteratee on every element in the calling object.
   *
   * @function compactMapObject
+  * @category object
   * @type {Function}
   * @param {Object|Function} callingObject - Object that will be looped through.
   * @param {Function} iteratee - Transformation function which is passed item, key, the newly created object, calling object, key count, and array of keys.

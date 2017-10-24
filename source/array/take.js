@@ -20,6 +20,7 @@ export const take = (array, amount = 1) => {
   * Returns a shallow copy of the array up to an amount starting from the right.
   *
   * @function takeRight
+  * @category array
   * @type {Function}
   * @param {Array} array - The array to be evaluated.
   * @returns {Array} The aggregated array.

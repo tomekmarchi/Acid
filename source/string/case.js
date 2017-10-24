@@ -24,6 +24,7 @@ export const upperCase = (string) => {
   * Converts a string into Camel case format.
   *
   * @function camelCase
+  * @category string
   * @type {Function}
   * @param {string} string - String to be converted into Camel case.
   * @returns {string} - Converted string in Camel case.
@@ -35,13 +36,14 @@ export const upperCase = (string) => {
 export const camelCase = (string) => {
   return string.toLowerCase()
     .replace(spaceFirstLetter, (match) => {
-      return match.toUpperCase().replace(/ /g,'');
+      return match.toUpperCase().replace(/ /g, '');
     });
 };
 /**
   * Converts a string into Kebab case format.
   *
   * @function kebabCase
+  * @category string
   * @type {Function}
   * @param {string} string - String to be converted into Kebab case.
   * @returns {string} - Converted string in Kebab case.
@@ -60,6 +62,7 @@ export const kebabCase = (string) => {
   * Converts a string into snake case format.
   *
   * @function snakeCase
+  * @category string
   * @type {Function}
   * @param {string} string - String to be converted into snake case.
   * @returns {string} - Converted string in Snake case.

@@ -1,7 +1,7 @@
 {
   "name": "Acid",
   "company": "Arity",
-  "version": "2.0.68",
+  "version": "2.0.69",
   "description": "Utility library for building CWAs (Conscious Web Apps) for browsers.",
   "bugs": {
     "url": "https://github.com/ArityLLCNJ/Acid/issues"

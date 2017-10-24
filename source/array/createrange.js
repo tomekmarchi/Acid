@@ -13,25 +13,25 @@ const rangeDown = (start, end, incrementArg) => {
   const increment = (incrementArg < 0) ? incrementArg * -1 : incrementArg;
   const rangeArray = [];
   let position = start;
-  while (position < end) {
+  while (position > end) {
     rangeArray.push(position);
     position -= increment;
   }
   return rangeArray;
 };
 /**
-  *
+  * Create a numbered list of integers.
   *
   * @type {Function} range
   * @category array
-  * @param {Number} start - Value which determines the start of the range.
-  * @param {Number} end - Value which determines the end of the range.
-  * @param {Number} increment - Value which determines the rate of incrementation.
-  * @returns {Array}
+  * @param {number} start - Value which determines the start of the range.
+  * @param {number} end - Value which determines the end of the range.
+  * @param {number} increment - Value used to step between integers.
+  * @returns {Array} An array of integers.
   *
   * @example
-  * range([1,'B', Cat, false, null, 0 , '', undefined, NaN]);
-  * // => [1, 'B', Cat]
+  * range(0, 30, 5);
+  * // => [0, 5, 10, 15, 20, 25]
 */
 export const range = (start, end, increment = 1) => {
   if (start < end) {
@@ -40,23 +40,6 @@ export const range = (start, end, increment = 1) => {
     return rangeDown(start, end, increment);
   }
 };
-/**
-  *
-  *
-  * @type {Function} rangeRight
-  * @param {Number} start - Value which determines the start of the range.
-  * @param {Number} end - Value which determines the end of the range.
-  * @param {Number} increment - Value which determines the rate of incrementation.
-  * @returns {Array}
-  *
-  * @example
-  * rangeRight([1,'B', Cat, false, null, 0 , '', undefined, NaN]);
-  * // => [1, 'B', Cat]
-*/
-export const rangeRight = (start, end, increment = 1) => {
-  return rangeDown(end, start, increment);
-};
 assign(acid, {
-  range,
-  rangeRight
+  range
 });

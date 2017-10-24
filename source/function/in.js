@@ -25,9 +25,9 @@ import { eachAsync } from '../array/eachAsync';
   * // 2
   * // => undefined
 */
-export const inSync = (collection, arg) => {
+export const inSync = (collection, value) => {
   return each(collection, (item) => {
-    item(arg);
+    item(value);
   });
 };
 /**
@@ -54,9 +54,9 @@ export const inSync = (collection, arg) => {
   * // 2
   * // => undefined
 */
-export const inAsync = async (collection, arg) => {
+export const inAsync = async (collection, value) => {
   return eachAsync(collection, async (item) => {
-    await item(arg);
+    await item(value);
   });
 };
 assign(acid, {

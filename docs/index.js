@@ -50,6 +50,7 @@
         getDocItem(item) {
           return items[item];
         },
+        methodCount: Object.keys(window.docMap.items).length,
         items,
       };
     },
@@ -61,5 +62,4 @@
     },
     template,
   });
-  console.log(app);
 })();

@@ -1,6 +1,6 @@
 import acid from '../namespace/index';
-import { whileArray } from '../array/each';
 import { isMatchArray } from '../array/isMatch';
+import { whileArray } from '../array/each';
 import { assign, keys } from '../internal/object';
 /**
    * Performs a shallow strict comparison between two objects.
