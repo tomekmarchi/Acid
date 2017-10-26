@@ -20,14 +20,14 @@
         return string;
       };
       const colorize = (item, secondMethod) => {
-        const split = item.split('}');
-        const items = split[0].replace(/[{}]/g, '').split('|');
-        return mapArray(items, (value) => {
+        const split = item.substring(0, item.indexOf('}') + 1);
+        const colorizedItems = split.replace(/[{}]/g, '').split('|');
+        return mapArray(colorizedItems, (value) => {
           if (!value) {
             return '';
           }
-          return `<span class="param${value.replace(/[{})()]/g, '').replace('*','any').replace('...', '').trim()}">${upperFirst(value.replace(/[{})()]/g, '').replace('*','Anything').trim())}</span>`;
-        }).join(' | ') + secondMethod(split[1]);
+          return `<span class="param${value.replace(/[{})()]/g, '').replace('...', '').replace('*','any')}">${upperFirst(value.replace(/[{})()]/g, '').replace('*','Anything').trim())}</span>`;
+        }).join(' | ') + secondMethod(item.substring(item.indexOf('}')+1));
       };
       eachObject(items, (item, value) => {
         if (item.params) {
@@ -37,7 +37,7 @@
         }
         if (item.returns) {
           item.returns.source = colorize(item.returns.source, (string) => {
-            return string;
+            return ` - ${string.replace('-', '')}`;
           });
         }
       });

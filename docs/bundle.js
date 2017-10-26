@@ -5587,10 +5587,10 @@
     * @function toggle
     * @type {Function}
     * @category utility
-    * @param  {(string|number|Object|Array)} value - Strictly compared against the on argument.
-    * @param {(string|number|Object|Array)} on -  Strictly compared against the value argument.
-    * @param {(string|number|Object|Array)} off -  Value to be returned.
-    * @returns {(string|number|Object|Array)} - The opposing value to the current.
+    * @param  {string|number|Object|Array} value - Strictly compared against the on argument.
+    * @param {string|number|Object|Array} on -  Strictly compared against the value argument.
+    * @param {string|number|Object|Array} off -  Value to be returned.
+    * @returns {string|number|Object|Array} - The opposing value to the current.
     *
     * @example
     * toggle(1, 2, 3);
