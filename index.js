@@ -6,7 +6,7 @@ const buildDocs = () => {
   });
 };
 const rollup = require('rollup').rollup;
-const babel = require('rollup-plugin-babili');
+const babel = require('rollup-plugin-babel-minify');
 const esformatter = require('esformatter');
 const tinyLR = require('tiny-lr')();
 const liveReload = require('connect-livereload');
@@ -47,17 +47,17 @@ const copyFile = (start, end) => {
 const build = async () => {
   console.log('Build Start');
   const bundle = await rollup({
-    entry: './source/index.js',
+    input: './source/index.js',
   });
   await bundle.write({
-    dest: './build/bundle.js',
+    file: './build/bundle.js',
     format: 'umd',
-    moduleName: '$',
+    name: '$',
     sourceMap: true
   });
   beautify();
   const production = await rollup({
-    entry: './source/index.js',
+    input: './source/index.js',
     plugins: [
       babel({
         banner: `/* Acid 2.0.0 */`,
@@ -66,9 +66,9 @@ const build = async () => {
     ]
   });
   await production.write({
-    dest: './build/index.js',
+    file: './build/index.js',
     format: 'umd',
-    moduleName: '$',
+    name: '$',
     sourceMap: true
   });
   copyFile('./build/bundle.js', './docs/bundle.js');
@@ -80,7 +80,6 @@ const build = async () => {
   console.log('NPM Started');
   copyFile('./build/index.js', './npm/index.js');
   copyFile('./LICENSE', './npm/LICENSE');
-  copyFile('./package.json', './npm/package.json');
   copyFile('./README.md', './npm/README.md');
   console.log('NPM Complete');
   console.log('Build Complete');

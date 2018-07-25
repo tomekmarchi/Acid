@@ -45,7 +45,7 @@
   };
   $.superMethod = superMethod;
 
-  const objectNative$1 = Object;
+  const objectNative = Object;
   /**
    * Get object's keys.
    *
@@ -58,7 +58,7 @@
    * keys({a: 1, b: 2});
    * // => ['a', 'b']
   */
-  const keys = objectNative$1.keys;
+  const keys = objectNative.keys;
   /**
    * Determines whether two values are the same value.
    *
@@ -72,7 +72,7 @@
    * is('foo', 'foo');
    * // => true
   */
-  const is = objectNative$1.is;
+  const is = objectNative.is;
   /**
    * Copy the values of all enumerable own properties from one or more source objects to a target object. It will return the target object.
    *
@@ -86,7 +86,7 @@
    * assign({b: 2}, {a: 1});
    * // => {b: 2, a: 1}
   */
-  const assign = objectNative$1.assign;
+  const assign = objectNative.assign;
   /**
    * Returns a property descriptor for an own property (that is, one directly present on an object and not in the object's prototype chain) of a given object.
    *
@@ -100,7 +100,7 @@
    * getOwnPropertyDescriptor({ bar: 42 }, 'bar');
    * // => { configurable: true, enumerable: true, value: 42, writable: true }
   */
-  const getOwnPropertyDescriptor = objectNative$1.getOwnPropertyDescriptor;
+  const getOwnPropertyDescriptor = objectNative.getOwnPropertyDescriptor;
   /**
    * Defines a new property directly on an object, or modifies an existing property on an object, and returns the object.
    *
@@ -120,7 +120,7 @@
    * }).key;
    * // => 'static'
   */
-  const defineProperty = objectNative$1.defineProperty;
+  const defineProperty = objectNative.defineProperty;
   /**
    * Returns an array of all properties (enumerable or not) found directly upon a given object.
    *
@@ -133,7 +133,7 @@
    * getOwnPropertyNames({ 0: 'a', 1: 'b', 2: 'c' });
    * // => ['0', '1', '2']
   */
-  const getOwnPropertyNames = objectNative$1.getOwnPropertyNames;
+  const getOwnPropertyNames = objectNative.getOwnPropertyNames;
   /**
    * Returns the amount of keys on the object.
    *
@@ -197,241 +197,6 @@
   });
 
   /**
-    * Iterates through the given array.
-    *
-    * @function eachArray
-    * @category array
-    * @type {Function}
-    * @param {Array} callingArray - Array that will be looped through.
-    * @param {Function} iteratee - Transformation function which is passed item, index, calling array, and array length.
-    * @returns {Object} The originally given array.
-    *
-    * @test
-    * (async () => {
-    *   const tempList = [];
-    *   eachArray([1, 2, 3], (item) => {
-    *     tempList.push(item);
-    *   });
-    *   return assert(tempList, [1, 2, 3]);
-    * });
-    *
-    * @example
-    * eachArray([1, 2, 3], (item) => {
-    *   console.log(item);
-    * });
-    * // => [1, 2, 3]
-  */
-  const eachArray = (callingArray, iteratee) => {
-    const arrayLength = callingArray.length;
-    for (let index = 0; index < arrayLength; index++) {
-      iteratee(callingArray[index], index, callingArray, arrayLength);
-    }
-    return callingArray;
-  };
-  /**
-    * Iterates through the given array in reverse.
-    *
-    * @function eachArrayRight
-    * @category array
-    * @type {Function}
-    * @param {Array} callingArray - Array that will be looped through.
-    * @param {Function} iteratee - Transformation function which is passed item, index, calling array, and array length.
-    * @returns {Object} The originally given array.
-    *
-    * @test
-    * (async () => {
-    *   const tempList = [];
-    *   eachArrayRight([1, 2, 3], (item) => {
-    *     tempList.push(item);
-    *   });
-    *   return assert(tempList, [3, 2, 1]);
-    * });
-    *
-    * @example
-    * eachArrayRight([1, 2, 3], (item) => {
-    *   console.log(item);
-    * });
-    * // => [1, 2, 3]
-  */
-  const eachArrayRight = (callingArray, iteratee) => {
-    const arrayLength = callingArray.length;
-    for (let index = arrayLength - 1; index >= 0; index--) {
-      iteratee(callingArray[index], index, callingArray, arrayLength);
-    }
-    return callingArray;
-  };
-  /**
-    * Iterates through the given array while the iteratee returns true.
-    *
-    * @function whileArray
-    * @category array
-    * @type {Function}
-    * @param {Array} callingArray - Array that will be looped through.
-    * @param {Function} iteratee - Transformation function which is passed item, key, calling array, and array length.
-    * @returns {boolean} Returns the true if all values returned are true or false if one value returns false.
-    *
-    * @example
-    * whileArray([true, true, false], (item) => {
-    *   return item;
-    * });
-    * // => false
-  */
-  const whileArray = (callingArray, iteratee) => {
-    const arrayLength = callingArray.length;
-    for (let index = 0; index < arrayLength; index++) {
-      if (iteratee(callingArray[index], index, callingArray, arrayLength) === false) {
-        return false;
-      }
-    }
-    return true;
-  };
-  /**
-    * Iterates through the calling array and creates an array with all elements that pass the test implemented by the iteratee.
-    *
-    * @function filterArray
-    * @category array
-    * @type {Function}
-    * @category array
-    * @param {Array} callingArray - Array that will be looped through.
-    * @param {Function} iteratee - Transformation function which is passed item, index, the newly created object, calling array, and array length.
-    * @param {Array} [results = []] - Array that will be used to assign results.
-    * @returns {Object} An array with properties that passed the test.
-    *
-    * @example
-    * filterArray([false, true, true], (item) => {
-    *   return item;
-    * });
-    * // => [true, true]
-  */
-  const filterArray = (callingArray, iteratee, results = []) => {
-    eachArray(callingArray, (item, index, arrayOriginal, arrayLength) => {
-      if (iteratee(item, index, results, arrayOriginal, arrayLength) === true) {
-        results.push(item);
-      }
-    });
-    return results;
-  };
-  const generateMap = (callable) => {
-    return (callingArray, iteratee, results = []) => {
-      callable(callingArray, (item, index, arrayOriginal, arrayLength) => {
-        results[index] = iteratee(item, index, results, arrayOriginal, arrayLength);
-      });
-      return results;
-    };
-  };
-  /**
-    * Iterates through the calling array and creates an object with the results of the iteratee on every element in the calling array.
-    *
-    * @function mapArray
-    * @category array
-    * @type {Function}
-    * @param {Array} callingArray - Array that will be looped through.
-    * @param {Function} iteratee - Transformation function which is passed item, index, the newly created array, calling array, and array length.
-    * @param {Array} [results = []] - Array that will be used to assign results.
-    * @returns {Object} An array of the same calling array's type.
-    *
-    * @example
-    * mapArray([1, 2, 3], (item) => {
-    *   return item * 2;
-    * });
-    * // => [2, 4, 6]
-  */
-  const mapArray = generateMap(eachArray);
-  /**
-    * Iterates through the calling array and creates an object with the results of the iteratee on every element in the calling array in reverse.
-    *
-    * @function mapArrayRight
-    * @category array
-    * @type {Function}
-    * @param {Array} callingArray - Array that will be looped through.
-    * @param {Function} iteratee - Transformation function which is passed item, index, the newly created array, calling array, and array length.
-    * @param {Array} [results = []] - Array that will be used to assign results.
-    * @returns {Object} An array of the same calling array's type.
-    *
-    * @example
-    * mapArrayRight([1, 2, 3], (item) => {
-    *   return item * 2;
-    * });
-    * // => [6, 4, 2]
-  */
-  const mapArrayRight = (callingArray, iteratee, results = []) => {
-    let trueIndex = 0;
-    const arrayLength = callingArray.length;
-    for (let index = arrayLength - 1; index >= 0; index--) {
-      results[trueIndex] = iteratee(callingArray[index], index, callingArray, arrayLength);
-      trueIndex++;
-    }
-    return results;
-  };
-  /**
-    * Iterates through the calling array and creates an array with the results, (excludes results which are null or undefined), of the iteratee on every element in the calling array.
-    *
-    * @function compactMapArray
-    * @category array
-    * @type {Function}
-    * @param {Array} callingArray - Array that will be looped through.
-    * @param {Function} iteratee - Transformation function which is passed item, index, the newly created array, calling array, and array length.
-    * @param {Array} [results = []] - Array that will be used to assign results.
-    * @returns {Object} An array with mapped properties that are not null or undefined.
-    *
-    * @example
-    * compactMapArray([null, 2, 3], (item) => {
-    *   return item;
-    * });
-    * // => [2, 3]
-  */
-  const compactMapArray = (callingArray, iteratee, results = []) => {
-    eachArray(callingArray, (item, index, arrayOriginal, arrayLength) => {
-      const returned = iteratee(item, index, results, arrayOriginal, arrayLength);
-      if (hasValue(returned)) {
-        results.push(returned);
-      }
-    });
-    return results;
-  };
-  /**
-    * Iterates through the given and creates an object with all elements that pass the test implemented by the iteratee.
-    *
-    * @function mapWhile
-    * @category array
-    * @type {Function}
-    * @param {Array} callingArray - Array that will be looped through.
-    * @param {Function} iteratee - Transformation function which is passed item, index, the newly created array, calling array, and array length.
-    * @param {Array} [results = []] - Array that will be used to assign results.
-    * @returns {Array} An array with properties that passed the test.
-    *
-    * @example
-    * mapWhile([true, true, false], (item) => {
-    *   return item;
-    * });
-    * // => [true, true]
-  */
-  const mapWhile = (callingArray, iteratee, results = []) => {
-    const arrayLength = callingArray.length;
-    for (let index = 0; index < arrayLength; index++) {
-      const returned = iteratee(callingArray[index], index, results, callingArray, arrayLength);
-      if (returned === false) {
-        break;
-      }
-      results[index] = returned;
-    }
-    return results;
-  };
-  assign($, {
-    compactMapArray,
-    eachArray,
-    eachArrayRight,
-    filterArray,
-    mapArray,
-    mapArrayRight,
-    mapWhile,
-    whileArray,
-  });
-
-  const objectStringGenerate = (objectName) => {
-    return `[object ${objectName}]`;
-  };
-  /**
    * Checks if the value is undefined.
    *
    * @function isUndefined
@@ -475,11 +240,6 @@
   */
   const hasValue = (value) => {
     return !isUndefined(value) && !isNull(value);
-  };
-  const isSameObjectGenerator = (type) => {
-    return (obj) => {
-      return (hasValue(obj)) ? obj.toString() === type : false;
-    };
   };
   const isConstructor = (nativeObject) => {
     return (obj) => {
@@ -772,6 +532,270 @@
   const isDate = (value) => {
     return value instanceof Date;
   };
+  assign($, {
+    getFileExtension,
+    has,
+    hasDot,
+    hasLength,
+    hasValue,
+    isArray,
+    isBoolean,
+    isDate,
+    isDecimal,
+    isEmpty,
+    isFileCSS,
+    isFileHTML,
+    isFileJS,
+    isFileJSON,
+    isFunction,
+    isNull,
+    isNumber,
+    isPlainObject,
+    isRegExp,
+    isString,
+    isUndefined,
+  });
+
+  /**
+    * Iterates through the given array.
+    *
+    * @function eachArray
+    * @category array
+    * @type {Function}
+    * @param {Array} callingArray - Array that will be looped through.
+    * @param {Function} iteratee - Transformation function which is passed item, index, calling array, and array length.
+    * @returns {Object} The originally given array.
+    *
+    * @test
+    * (async () => {
+    *   const tempList = [];
+    *   eachArray([1, 2, 3], (item) => {
+    *     tempList.push(item);
+    *   });
+    *   return assert(tempList, [1, 2, 3]);
+    * });
+    *
+    * @example
+    * eachArray([1, 2, 3], (item) => {
+    *   console.log(item);
+    * });
+    * // => [1, 2, 3]
+  */
+  const eachArray = (callingArray, iteratee) => {
+    const arrayLength = callingArray.length;
+    for (let index = 0; index < arrayLength; index++) {
+      iteratee(callingArray[index], index, callingArray, arrayLength);
+    }
+    return callingArray;
+  };
+  /**
+    * Iterates through the given array in reverse.
+    *
+    * @function eachArrayRight
+    * @category array
+    * @type {Function}
+    * @param {Array} callingArray - Array that will be looped through.
+    * @param {Function} iteratee - Transformation function which is passed item, index, calling array, and array length.
+    * @returns {Object} The originally given array.
+    *
+    * @test
+    * (async () => {
+    *   const tempList = [];
+    *   eachArrayRight([1, 2, 3], (item) => {
+    *     tempList.push(item);
+    *   });
+    *   return assert(tempList, [3, 2, 1]);
+    * });
+    *
+    * @example
+    * eachArrayRight([1, 2, 3], (item) => {
+    *   console.log(item);
+    * });
+    * // => [1, 2, 3]
+  */
+  const eachArrayRight = (callingArray, iteratee) => {
+    const arrayLength = callingArray.length;
+    for (let index = arrayLength - 1; index >= 0; index--) {
+      iteratee(callingArray[index], index, callingArray, arrayLength);
+    }
+    return callingArray;
+  };
+  /**
+    * Iterates through the given array while the iteratee returns true.
+    *
+    * @function whileArray
+    * @category array
+    * @type {Function}
+    * @param {Array} callingArray - Array that will be looped through.
+    * @param {Function} iteratee - Transformation function which is passed item, key, calling array, and array length.
+    * @returns {boolean} Returns the true if all values returned are true or false if one value returns false.
+    *
+    * @example
+    * whileArray([true, true, false], (item) => {
+    *   return item;
+    * });
+    * // => false
+  */
+  const whileArray = (callingArray, iteratee) => {
+    const arrayLength = callingArray.length;
+    for (let index = 0; index < arrayLength; index++) {
+      if (iteratee(callingArray[index], index, callingArray, arrayLength) === false) {
+        return false;
+      }
+    }
+    return true;
+  };
+  /**
+    * Iterates through the calling array and creates an array with all elements that pass the test implemented by the iteratee.
+    *
+    * @function filterArray
+    * @category array
+    * @type {Function}
+    * @category array
+    * @param {Array} callingArray - Array that will be looped through.
+    * @param {Function} iteratee - Transformation function which is passed item, index, the newly created object, calling array, and array length.
+    * @param {Array} [results = []] - Array that will be used to assign results.
+    * @returns {Object} An array with properties that passed the test.
+    *
+    * @example
+    * filterArray([false, true, true], (item) => {
+    *   return item;
+    * });
+    * // => [true, true]
+  */
+  const filterArray = (callingArray, iteratee, results = []) => {
+    eachArray(callingArray, (item, index, arrayOriginal, arrayLength) => {
+      if (iteratee(item, index, results, arrayOriginal, arrayLength) === true) {
+        results.push(item);
+      }
+    });
+    return results;
+  };
+  const generateMap = (callable) => {
+    return (callingArray, iteratee, results = []) => {
+      callable(callingArray, (item, index, arrayOriginal, arrayLength) => {
+        results[index] = iteratee(item, index, results, arrayOriginal, arrayLength);
+      });
+      return results;
+    };
+  };
+  /**
+    * Iterates through the calling array and creates an object with the results of the iteratee on every element in the calling array.
+    *
+    * @function mapArray
+    * @category array
+    * @type {Function}
+    * @param {Array} callingArray - Array that will be looped through.
+    * @param {Function} iteratee - Transformation function which is passed item, index, the newly created array, calling array, and array length.
+    * @param {Array} [results = []] - Array that will be used to assign results.
+    * @returns {Object} An array of the same calling array's type.
+    *
+    * @example
+    * mapArray([1, 2, 3], (item) => {
+    *   return item * 2;
+    * });
+    * // => [2, 4, 6]
+  */
+  const mapArray = generateMap(eachArray);
+  /**
+    * Iterates through the calling array and creates an object with the results of the iteratee on every element in the calling array in reverse.
+    *
+    * @function mapArrayRight
+    * @category array
+    * @type {Function}
+    * @param {Array} callingArray - Array that will be looped through.
+    * @param {Function} iteratee - Transformation function which is passed item, index, the newly created array, calling array, and array length.
+    * @param {Array} [results = []] - Array that will be used to assign results.
+    * @returns {Object} An array of the same calling array's type.
+    *
+    * @example
+    * mapArrayRight([1, 2, 3], (item) => {
+    *   return item * 2;
+    * });
+    * // => [6, 4, 2]
+  */
+  const mapArrayRight = (callingArray, iteratee, results = []) => {
+    let trueIndex = 0;
+    const arrayLength = callingArray.length;
+    for (let index = arrayLength - 1; index >= 0; index--) {
+      results[trueIndex] = iteratee(callingArray[index], index, callingArray, arrayLength);
+      trueIndex++;
+    }
+    return results;
+  };
+  /**
+    * Iterates through the calling array and creates an array with the results, (excludes results which are null or undefined), of the iteratee on every element in the calling array.
+    *
+    * @function compactMapArray
+    * @category array
+    * @type {Function}
+    * @param {Array} callingArray - Array that will be looped through.
+    * @param {Function} iteratee - Transformation function which is passed item, index, the newly created array, calling array, and array length.
+    * @param {Array} [results = []] - Array that will be used to assign results.
+    * @returns {Object} An array with mapped properties that are not null or undefined.
+    *
+    * @example
+    * compactMapArray([null, 2, 3], (item) => {
+    *   return item;
+    * });
+    * // => [2, 3]
+  */
+  const compactMapArray = (callingArray, iteratee, results = []) => {
+    eachArray(callingArray, (item, index, arrayOriginal, arrayLength) => {
+      const returned = iteratee(item, index, results, arrayOriginal, arrayLength);
+      if (hasValue(returned)) {
+        results.push(returned);
+      }
+    });
+    return results;
+  };
+  /**
+    * Iterates through the given and creates an object with all elements that pass the test implemented by the iteratee.
+    *
+    * @function mapWhile
+    * @category array
+    * @type {Function}
+    * @param {Array} callingArray - Array that will be looped through.
+    * @param {Function} iteratee - Transformation function which is passed item, index, the newly created array, calling array, and array length.
+    * @param {Array} [results = []] - Array that will be used to assign results.
+    * @returns {Array} An array with properties that passed the test.
+    *
+    * @example
+    * mapWhile([true, true, false], (item) => {
+    *   return item;
+    * });
+    * // => [true, true]
+  */
+  const mapWhile = (callingArray, iteratee, results = []) => {
+    const arrayLength = callingArray.length;
+    for (let index = 0; index < arrayLength; index++) {
+      const returned = iteratee(callingArray[index], index, results, callingArray, arrayLength);
+      if (returned === false) {
+        break;
+      }
+      results[index] = returned;
+    }
+    return results;
+  };
+  assign($, {
+    compactMapArray,
+    eachArray,
+    eachArrayRight,
+    filterArray,
+    mapArray,
+    mapArrayRight,
+    mapWhile,
+    whileArray,
+  });
+
+  const objectStringGenerate = (objectName) => {
+    return `[object ${objectName}]`;
+  };
+  const isSameObjectGenerator = (type) => {
+    return (obj) => {
+      return (hasValue(obj)) ? obj.toString() === type : false;
+    };
+  };
   /**
    * Checks if the value is a Map.
    *
@@ -939,29 +963,6 @@
     $[`is${item}`] = (value) => {
       return (hasValue(value)) ? value.constructor.name === item : false;
     };
-  });
-  assign($, {
-    getFileExtension,
-    has,
-    hasDot,
-    hasLength,
-    hasValue,
-    isArray,
-    isBoolean,
-    isDate,
-    isDecimal,
-    isEmpty,
-    isFileCSS,
-    isFileHTML,
-    isFileJS,
-    isFileJSON,
-    isFunction,
-    isNull,
-    isNumber,
-    isPlainObject,
-    isRegExp,
-    isString,
-    isUndefined,
   });
 
   /**
@@ -4862,7 +4863,7 @@
     *
     * @test
     * (async () => {
-    *   const tempList await mapObjectAsync({a: 1, b: 2, c: 3}, async (item, key) => {
+    *   const tempList = await mapObjectAsync({a: 1, b: 2, c: 3}, async (item, key) => {
     *     return item;
     *   });
     *   return assert(tempList, {a: 1, b: 2, c: 3});
@@ -4893,7 +4894,7 @@
     *
     * @test
     * (async () => {
-    *   const tempList await compactMapObjectAsync({a: 1, b: 2, c: 3}, async (item, key) => {
+    *   const tempList = await compactMapObjectAsync({a: 1, b: 2, c: 3}, async (item, key) => {
     *     return item;
     *   });
     *   return assert(tempList, {a: 1, b: 2, c: 3});
@@ -5457,7 +5458,6 @@
 
   let count = 0;
   const uidFree = [];
-  const uidClosed = {};
   /**
     * Creates a numerical unique ID and recycles old ones. UID numerically ascends however freed UIDs are later reused.
     *
@@ -5482,7 +5482,6 @@
     let result = uidFree.shift(uidFree);
     if (!hasValue(result)) {
       result = count;
-      uidClosed[result] = true;
       count++;
     }
     return result;
@@ -5518,7 +5517,6 @@
     * // => 0
   */
   const free = (id) => {
-    uidClosed[id] = null;
     uidFree.push(id);
   };
   uid.free = free;
@@ -5696,4 +5694,3 @@
   return $;
 
 })));
-//# sourceMappingURL=bundle.js.map

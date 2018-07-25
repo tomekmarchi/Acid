@@ -8,4 +8,4 @@ import './invert';
 import './omit';
 import './pluckObject';
 import './eachAsync';
-import './eachMapAsync';
+import './mapAsync';

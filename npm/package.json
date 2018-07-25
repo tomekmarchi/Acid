@@ -1,7 +1,7 @@
 {
   "name": "Acid",
   "company": "Arity",
-  "version": "2.0.69",
+  "version": "2.1.1",
   "description": "Utility library for building CWAs (Conscious Web Apps) for browsers.",
   "bugs": {
     "url": "https://github.com/ArityLLCNJ/Acid/issues"
@@ -37,30 +37,5 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ArityLLCNJ/Acid.git"
-  },
-  "devDependencies": {
-    "Lucy": "^2.0.62",
-    "babel-core": "*",
-    "babel-eslint": "*",
-    "babel-plugin-minify-empty-function": "*",
-    "babel-preset-babili": "^1.0.0",
-    "babel-preset-es2015": "*",
-    "body-parser": "*",
-    "connect-livereload": "*",
-    "docredux": "^1.0.5",
-    "esformatter": "*",
-    "eslint": "^4.4.1",
-    "eslint-plugin-jsdoc": "^3.1.2",
-    "express": "^4.15.4",
-    "nbome25": "^1.0.4",
-    "node-watch": "*",
-    "rollup": "^0.45.2",
-    "rollup-plugin-babili": "^3.1.1",
-    "tiny-lr": "*"
-  },
-  "scripts": {
-    "build": "node index.js",
-    "test": "node test.js"
-  },
-  "dependencies": {}
+  }
 }

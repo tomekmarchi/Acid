@@ -1,6 +1,6 @@
 import acid from '../namespace/index';
 import { eachArray } from '../array/each';
-import { isSameObjectGenerator, objectStringGenerate } from '../internal/is';
+import { isSameObjectGenerator, objectStringGenerate } from '../internal/isGenerate';
 /**
  * Checks if value is a plain DOM Node.
  *

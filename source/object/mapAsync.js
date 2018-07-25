@@ -15,7 +15,7 @@ import { hasValue } from '../internal/is';
   *
   * @test
   * (async () => {
-  *   const tempList await mapObjectAsync({a: 1, b: 2, c: 3}, async (item, key) => {
+  *   const tempList = await mapObjectAsync({a: 1, b: 2, c: 3}, async (item, key) => {
   *     return item;
   *   });
   *   return assert(tempList, {a: 1, b: 2, c: 3});
@@ -46,7 +46,7 @@ export const mapObjectAsync = async (object, iteratee, results = {}) => {
   *
   * @test
   * (async () => {
-  *   const tempList await compactMapObjectAsync({a: 1, b: 2, c: 3}, async (item, key) => {
+  *   const tempList = await compactMapObjectAsync({a: 1, b: 2, c: 3}, async (item, key) => {
   *     return item;
   *   });
   *   return assert(tempList, {a: 1, b: 2, c: 3});
