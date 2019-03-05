@@ -1,10 +1,10 @@
 {
   "name": "Acid",
   "company": "Arity",
-  "version": "2.1.1",
+  "version": "2.2.1",
   "description": "Utility library for building CWAs (Conscious Web Apps) for browsers. The main front-end utility library for the Universal web. https://sentivate.com",
   "bugs": {
-    "url": "https://github.com/ArityLLCNJ/Acid/issues"
+    "url": "https://github.com/ArityOfficial/Acid/issues"
   },
   "homepage": "https://acidjs.com",
   "directories": {
@@ -28,38 +28,31 @@
     {
       "email": "tommarchi@protonmail.com",
       "name": "Tom Marchi"
-    },
-    {
-      "email": "erickdelgado@protonmail.com",
-      "name": "Erick Delgado"
     }
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ArityLLCNJ/Acid.git"
+    "url": "git+https://github.com/ArityOfficial/Acid.git"
   },
   "devDependencies": {
-    "Lucy": "^2.1.1",
-    "babel-core": "*",
+    "@babel/core": "*",
+    "@babel/helpers": "*",
+    "@babel/preset-env": "*",
     "babel-eslint": "*",
-    "babel-plugin-minify-empty-function": "*",
-    "babel-preset-env": "*",
-    "babel-preset-minify": "*",
     "body-parser": "*",
     "connect-livereload": "*",
-    "docredux": "^1.1.2",
-    "esformatter": "*",
+    "docredux": "^2.0.0",
     "eslint": "*",
     "express": "*",
     "node-watch": "*",
+    "prettier-eslint": "*",
     "rollup": "*",
     "rollup-plugin-babel-minify": "*",
-    "testatron": "^1.1.1",
+    "testatron": "^2.0.2",
     "tiny-lr": "*"
   },
   "scripts": {
-    "build": "node index.js",
-    "test": "node test.js"
+    "build": "node index.js"
   },
   "dependencies": {}
 }

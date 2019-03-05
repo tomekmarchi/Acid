@@ -1,10 +1,10 @@
 {
   "name": "Acid",
   "company": "Arity",
-  "version": "2.1.1",
-  "description": "Utility library for building CWAs (Conscious Web Apps) for browsers.",
+  "version": "2.2.1",
+  "description": "Front-end async ready utility library for hApps.",
   "bugs": {
-    "url": "https://github.com/ArityLLCNJ/Acid/issues"
+    "url": "https://github.com/ArityOfficial/Acid/issues"
   },
   "homepage": "https://acidjs.com",
   "directories": {
@@ -28,14 +28,11 @@
     {
       "email": "tommarchi@protonmail.com",
       "name": "Tom Marchi"
-    },
-    {
-      "email": "erickdelgado@protonmail.com",
-      "name": "Erick Delgado"
     }
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ArityLLCNJ/Acid.git"
-  }
+    "url": "git+https://github.com/ArityOfficial/Acid.git"
+  },
+  "dependencies": {}
 }

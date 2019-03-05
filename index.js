@@ -7,7 +7,7 @@ const buildDocs = () => {
 };
 const rollup = require('rollup').rollup;
 const babel = require('rollup-plugin-babel-minify');
-const esformatter = require('esformatter');
+const format = require('prettier-eslint');
 const tinyLR = require('tiny-lr')();
 const liveReload = require('connect-livereload');
 const fs = require('fs');
@@ -33,11 +33,12 @@ const notifyLiveReload = (evt, filename) => {
   });
 };
 const beautify = () => {
-  const code = fs.readFileSync('./build/bundle.js').toString();
-  const formattedCode = esformatter.format(code, {
-    indent: {
-      value: '  '
-    }
+  console.log('Beautify');
+  const text = fs.readFileSync('./build/bundle.js').toString();
+  const eslintConfig = JSON.parse(fs.readFileSync('./.eslintrc').toString());
+  const formattedCode = format({
+    eslintConfig,
+    text,
   });
   fs.writeFileSync('./build/bundle.js', formattedCode, 'utf8');
 };
@@ -50,7 +51,7 @@ const build = async () => {
     input: './source/index.js',
   });
   await bundle.write({
-    file: './build/bundle.js',
+    file: 'bundle.js',
     format: 'umd',
     name: '$',
     sourceMap: true
@@ -60,7 +61,7 @@ const build = async () => {
     input: './source/index.js',
     plugins: [
       babel({
-        banner: `/* Acid 2.0.0 */`,
+        banner: `/* ACIDjs by ARITY 2.2.1 - ARITY.COMPANY - SENTIVATE.COM */`,
         comments: false,
       })
     ]
