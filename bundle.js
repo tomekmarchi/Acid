@@ -1,7 +1,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global.$ = factory());
+  (global = global || self, global.$ = factory());
 }(this, (function () { 'use strict';
 
   let cacheSuper;
@@ -1047,13 +1047,13 @@
     *  // => [1, 2, [3, [4]], 5]
   */
   const flatten = (arrayArg, level = 1) => {
-    let array = arrayArg;
-    for (let i = 0; i < level; i++) {
-      array = array.reduce((previousValue, currentValue) => {
-        return previousValue.concat(ensureArray(currentValue));
-      }, []);
-    }
-    return array;
+  	let array = arrayArg;
+  	for (let i = 0; i < level; i++) {
+  		array = array.reduce((previousValue, currentValue) => {
+  			return previousValue.concat(ensureArray(currentValue));
+  		}, []);
+  	}
+  	return array;
   };
   /**
     * Flattens an array to a single level.
@@ -1068,14 +1068,12 @@
     * flattenDeep([1, [2, [3, [4]], 5]]);
     * // => [1, 2, 3, 4, 5]
   */
-  const flattenDeep = (array) => {
-    return array.reduce((previousValue, currentValue) => {
-      return previousValue.concat((isArray(currentValue)) ? flattenDeep(currentValue) : currentValue);
-    }, []);
+  const flattenDeep = (arrayToFlatten) => {
+  	return arrayToFlatten.flat(Infinity);
   };
   assign($, {
-    flatten,
-    flattenDeep,
+  	flatten,
+  	flattenDeep,
   });
 
   /**
@@ -1084,7 +1082,7 @@
     * @function remove
     * @category array
     * @param {Array} array - Array to be mutated.
-    * @param {...(string|Array)} removeThese - Items to remove from the array.
+    * @param {string|Array} removeThese - Items to remove from the array.
     * @returns {Array} The array this method was called on.
     *
     * @example
@@ -1094,7 +1092,7 @@
     * remove([3, 3, 4, 5], 3, 4);
     * // => [5]
   */
-  const remove = (array, ...removeThese) => {
+  const remove = (array, removeThese) => {
     let arrayLength = array.length;
     for (let index = 0; index < arrayLength; index++) {
       const item = array[index];
@@ -2662,13 +2660,13 @@
     * // => [['a', 'b'], [1, 2]]
   */
   const unZipObject = (object) => {
-    const keys$$1 = [];
+    const keys = [];
     const values = [];
     eachObject(object, (item, key) => {
-      keys$$1.push(key);
+      keys.push(key);
       values.push(item);
     });
-    return [keys$$1, values];
+    return [keys, values];
   };
   assign($, {
     unZipObject,
@@ -4725,13 +4723,13 @@
     * // => ['Lucy', 'John']
   */
   const compactKeys = (object) => {
-    const keys$$1 = [];
+    const keys = [];
     eachObject(object, (item, key) => {
       if (item) {
-        keys$$1.push(key);
+        keys.push(key);
       }
     });
-    return keys$$1;
+    return keys;
   };
   assign($, {
     compactKeys

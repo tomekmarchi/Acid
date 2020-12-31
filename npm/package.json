@@ -1,38 +1,35 @@
 {
-  "name": "Acid",
-  "company": "Arity",
-  "version": "2.2.1",
-  "description": "Front-end async ready utility library for hApps.",
-  "bugs": {
-    "url": "https://github.com/ArityOfficial/Acid/issues"
-  },
-  "homepage": "https://acidjs.com",
-  "directories": {
-    "doc": "docs",
-    "source": "source",
-    "build": "build",
-    "test": "tests"
-  },
-  "readme": "README.md",
-  "keywords": [
-    "Acid",
-    "utility",
-    "Lucy",
-    "CWA",
-    "Arity",
-    "self constructing"
-  ],
-  "license": "ISC",
-  "main": "index.js",
-  "maintainers": [
-    {
-      "email": "tommarchi@protonmail.com",
-      "name": "Tom Marchi"
-    }
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ArityOfficial/Acid.git"
-  },
-  "dependencies": {}
+	"name": "Acid",
+	"company": "Universal Web, Inc",
+	"version": "2.2.9",
+	"description": "A modern, performant, robust, asynchronous, and compact utility library. https://acidjs.com",
+	"bugs": {
+		"url": "https://github.com/tomekmarchi/Acid/issues"
+	},
+	"homepage": "https://acidjs.com",
+	"directories": {
+		"doc": "docs",
+		"source": "source",
+		"build": "build",
+		"test": "tests"
+	},
+	"readme": "README.md",
+	"keywords": [
+		"Acid",
+		"utility",
+		"Lucy",
+		"Universal Web"
+	],
+	"license": "ISC",
+	"main": "index.js",
+	"maintainers": [
+		{
+			"email": "tommarchi@protonmail.com",
+			"name": "Tom Marchi"
+		}
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/tomekmarchi/Acid.git"
+	}
 }

@@ -6,7 +6,7 @@ import { assign } from '../internal/object';
   * @function remove
   * @category array
   * @param {Array} array - Array to be mutated.
-  * @param {...(string|Array)} removeThese - Items to remove from the array.
+  * @param {string|Array} removeThese - Items to remove from the array.
   * @returns {Array} The array this method was called on.
   *
   * @example
@@ -16,7 +16,7 @@ import { assign } from '../internal/object';
   * remove([3, 3, 4, 5], 3, 4);
   * // => [5]
 */
-export const remove = (array, ...removeThese) => {
+export const remove = (array, removeThese) => {
   let arrayLength = array.length;
   for (let index = 0; index < arrayLength; index++) {
     const item = array[index];

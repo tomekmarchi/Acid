@@ -1,7 +1,10 @@
 import acid from '../namespace/index';
-import { assign } from '../internal/object';
-import { ensureArray } from '../array/ensure';
-import { isArray } from '../internal/is';
+import {
+	assign
+} from '../internal/object';
+import {
+	ensureArray
+} from '../array/ensure';
 /**
   * Flattens an array up to the provided level.
   *
@@ -17,13 +20,13 @@ import { isArray } from '../internal/is';
   *  // => [1, 2, [3, [4]], 5]
 */
 export const flatten = (arrayArg, level = 1) => {
-  let array = arrayArg;
-  for (let i = 0; i < level; i++) {
-    array = array.reduce((previousValue, currentValue) => {
-      return previousValue.concat(ensureArray(currentValue));
-    }, []);
-  }
-  return array;
+	let array = arrayArg;
+	for (let i = 0; i < level; i++) {
+		array = array.reduce((previousValue, currentValue) => {
+			return previousValue.concat(ensureArray(currentValue));
+		}, []);
+	}
+	return array;
 };
 /**
   * Flattens an array to a single level.
@@ -38,12 +41,10 @@ export const flatten = (arrayArg, level = 1) => {
   * flattenDeep([1, [2, [3, [4]], 5]]);
   * // => [1, 2, 3, 4, 5]
 */
-export const flattenDeep = (array) => {
-  return array.reduce((previousValue, currentValue) => {
-    return previousValue.concat((isArray(currentValue)) ? flattenDeep(currentValue) : currentValue);
-  }, []);
+export const flattenDeep = (arrayToFlatten) => {
+	return arrayToFlatten.flat(Infinity);
 };
 assign(acid, {
-  flatten,
-  flattenDeep,
+	flatten,
+	flattenDeep,
 });

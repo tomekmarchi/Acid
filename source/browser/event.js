@@ -1,5 +1,7 @@
 import acid from '../namespace/index';
-import { assign } from '../internal/object';
+import {
+	assign
+} from '../internal/object';
 /**
   * Attaches an event listener to a node.
   *
@@ -18,8 +20,8 @@ import { assign } from '../internal/object';
   * // = > document.body
 */
 export const eventAdd = (node, ...args) => {
-  node.addEventListener(...args);
-  return node;
+	node.addEventListener(...args);
+	return node;
 };
 /**
   * Attaches an event listener to a node.
@@ -39,10 +41,10 @@ export const eventAdd = (node, ...args) => {
   * // = > Undefined
 */
 export const eventRemove = (node, ...args) => {
-  node.removeEventListener(...args);
-  return node;
+	node.removeEventListener(...args);
+	return node;
 };
 assign(acid, {
-  eventAdd,
-  eventRemove,
+	eventAdd,
+	eventRemove,
 });

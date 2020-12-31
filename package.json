@@ -1,58 +1,53 @@
 {
-  "name": "Acid",
-  "company": "Arity",
-  "version": "2.2.1",
-  "description": "Utility library for building CWAs (Conscious Web Apps) for browsers. The main front-end utility library for the Universal web. https://sentivate.com",
-  "bugs": {
-    "url": "https://github.com/ArityOfficial/Acid/issues"
-  },
-  "homepage": "https://acidjs.com",
-  "directories": {
-    "doc": "docs",
-    "source": "source",
-    "build": "build",
-    "test": "tests"
-  },
-  "readme": "README.md",
-  "keywords": [
-    "Acid",
-    "utility",
-    "Lucy",
-    "CWA",
-    "Arity",
-    "self constructing"
-  ],
-  "license": "ISC",
-  "main": "index.js",
-  "maintainers": [
-    {
-      "email": "tommarchi@protonmail.com",
-      "name": "Tom Marchi"
-    }
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ArityOfficial/Acid.git"
-  },
-  "devDependencies": {
-    "@babel/core": "*",
-    "@babel/helpers": "*",
-    "@babel/preset-env": "*",
-    "babel-eslint": "*",
-    "body-parser": "*",
-    "connect-livereload": "*",
-    "docredux": "^2.0.0",
-    "eslint": "*",
-    "express": "*",
-    "node-watch": "*",
-    "prettier-eslint": "*",
-    "rollup": "*",
-    "rollup-plugin-babel-minify": "*",
-    "testatron": "^2.0.2",
-    "tiny-lr": "*"
-  },
-  "scripts": {
-    "build": "node index.js"
-  },
-  "dependencies": {}
+	"name": "Acid",
+	"company": "Universal Web, Inc",
+	"version": "2.2.9",
+	"description": "A modern, performant, robust, asynchronous, and compact utility library. https://acidjs.com",
+	"bugs": {
+		"url": "https://github.com/tomekmarchi/Acid/issues"
+	},
+	"homepage": "https://acidjs.com",
+	"directories": {
+		"doc": "docs",
+		"source": "source",
+		"build": "build",
+		"test": "tests"
+	},
+	"readme": "README.md",
+	"keywords": [
+		"Acid",
+		"utility",
+		"Lucy",
+		"Universal Web"
+	],
+	"license": "ISC",
+	"main": "index.js",
+	"maintainers": [
+		{
+			"email": "tommarchi@protonmail.com",
+			"name": "Tom Marchi"
+		}
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/tomekmarchi/Acid.git"
+	},
+	"devDependencies": {
+		"babel-eslint": "*",
+		"body-parser": "*",
+		"connect-livereload": "*",
+		"docredux": "^2.0.9",
+		"eslint": "^7.16.0",
+		"express": "*",
+		"magic-string": "*",
+		"node-watch": "^0.7.1",
+		"rollup": "^2.35.1",
+		"rollup-plugin-terser": "^7.0.2",
+		"testatron": "^2.0.8",
+		"tiny-lr": "^2.0.0"
+	},
+	"scripts": {
+		"build": "node index.js"
+	},
+	"dependencies": {}
 }
