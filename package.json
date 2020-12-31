@@ -1,7 +1,7 @@
 {
 	"name": "Acid",
 	"company": "Universal Web, Inc",
-	"version": "2.3.0",
+	"version": "2.3.1",
 	"description": "A modern, performant, robust, asynchronous, and compact utility library. https://acidjs.com",
 	"bugs": {
 		"url": "https://github.com/tomekmarchi/Acid/issues"
@@ -36,7 +36,7 @@
 		"babel-eslint": "*",
 		"body-parser": "*",
 		"connect-livereload": "*",
-		"docredux": "^2.1.0",
+		"docredux": "^2.1.2",
 		"eslint": "^7.16.0",
 		"express": "*",
 		"magic-string": "*",
