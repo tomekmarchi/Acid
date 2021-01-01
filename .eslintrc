@@ -1,8 +1,9 @@
 {
+  "parser": "babel-eslint",
   "extends": "eslint:recommended",
   "env": {
     "browser": true,
-    "node": false,
+    "node": true,
     "es6": true,
     "serviceworker": false,
     "worker": false
@@ -14,23 +15,23 @@
     "Ractive": false
   },
   "parserOptions": {
-    "sourceType": "module",
-    "ecmaVersion": 11,
-    "allowImportExportEverywhere": true
+    "sourceType": "script",
+    "ecmaVersion": 12,
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true,
+      "allowImportExportEverywhere": true
+    }
   },
   "rules": {
     "object-curly-newline": [
       "error",
       {
         "ObjectExpression": {
-          "minProperties": 2
+          "minProperties": 1
         },
         "ObjectPattern": "always",
         "ImportDeclaration": "always",
-        "ExportDeclaration": {
-          "multiline": true,
-          "minProperties": 3
-        }
+        "ExportDeclaration": "always"
       }
     ],
     "object-property-newline": [
@@ -417,8 +418,7 @@
       "error",
       {
         "ignoreCase": true,
-        "ignoreDeclarationSort": true,
-        "ignoreMemberSort": true,
+        "ignoreMemberSort": false,
         "memberSyntaxSortOrder": [
           "single",
           "multiple",
