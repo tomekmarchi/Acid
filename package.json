@@ -33,7 +33,6 @@
 		"url": "git+https://github.com/tomekmarchi/Acid.git"
 	},
 	"devDependencies": {
-		"babel-eslint": "*",
 		"body-parser": "*",
 		"connect-livereload": "*",
 		"docredux": "^2.1.2",
@@ -48,6 +47,5 @@
 	},
 	"scripts": {
 		"build": "node index.js"
-	},
-	"dependencies": {}
+	}
 }
